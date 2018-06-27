@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- saved from url=(0057)https://blackrockdigital.github.io/startbootstrap-resume/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Megatech</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/css.css" rel="stylesheet">
+    <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/css(1).css" rel="stylesheet">
+    <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/font-awesome.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/devicons.min.css" rel="stylesheet">
+    <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/simple-line-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/resume.min.css" rel="stylesheet">
+   <style>
+   h1,.navbar,h2,h3,h4{
+    font-family: 'Prompt'!important;
+   }
+
+  
+    </style>
+  
+  </head>
+
+  <body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+      <a class="navbar-brand js-scroll-trigger" href="https://blackrockdigital.github.io/startbootstrap-resume/#page-top">
+        <span class="d-block d-lg-none"></span>
+        <span class="d-none d-lg-block">
+        </span>
+      </a>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">การขาย</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">การซื้อ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">คงคลัง</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link js-scroll-trigger dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">การเงิน
+             <span class="sr-only">Toggle Dropdown</span></a>
+           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="{{url('/')}}/debtorindex">Debtor</a>
+              <a class="dropdown-item" href="#">Creditor</a>
+              <a class="dropdown-item" href="#">Bank</a>
+              <a class="dropdown-item" href="#">Check</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">บัญชี</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#">อื่นๆ</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+<div class="container-fluid p-0">
+<div class="container-fluid p-0">
+
+      <section class="resume-section p-3 p-lg-5 d-flex d-column">
+        <div class="my-auto">
+          
+
+        @yield('content')
+        </div>
+      </section>
+    
+    </div>
+  </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url('/')}}/Resume-StartBootstrapTheme_files/jquery.min.js"></script>
+    <script src="{{url('/')}}/Resume-StartBootstrapTheme_files/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{{url('/')}}/Resume-StartBootstrapTheme_files/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{{url('/')}}/Resume-StartBootstrapTheme_files/resume.min.js"></script>
+</body>
+</html>
