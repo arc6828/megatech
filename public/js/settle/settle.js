@@ -24,36 +24,89 @@ function date(date_settle,debt_period) {
 }
 
 function calculate(total_settle,discount,tax,cash_receipt,total_deposit) {
-  var total_settle = document.getElementById("total_settle").value;
+  var total_settle = parseInt(document.getElementById("total_settle").value);
   var discount = document.getElementById("discount").value;
-  var tax = document.getElementById("tax").value;
+  var tax = parseInt(document.getElementById("tax").value);
   var cash_receipt = document.getElementById("cash_receipt").value;
   var total_deposit = document.getElementById("total_deposit").value;
-  var tax_value = document.getElementById("tax_value");
-  var total = document.getElementById("total");
-  if (discount == "" && total_deposit == null) {
-    tax_value.value = (total_settle*tax)/100;
-    total = total_settle+tax_value;
-    document.getElementById("tax_value").innerHTML = tax_value;
-  } else if (discount !== "" && discount.includes("%")) {
-    console.log(discount.includes("%"));
+  var tax_value = document.getElementById("tax_value").value;
+  var total = document.getElementById("total").value;
+  if (discount == "" || total_deposit == null) {
+    if (total_deposit == 0) {
+    var x = (total_settle*tax)/100;
+    document.getElementById("tax_value").innerHTML = x;
+    total = total_settle + x;
+    document.getElementById("total").value = total;
+  } else if (total_deposit !== 0) {
+    total = total_settle - total_deposit;
+    var x = (total*tax)/100;
+    document.getElementById("tax_value").innerHTML = x;
+    total = total + x;
+    console.log(total);
+    document.getElementById("total").value = total;
+  }
+    if (cash_receipt !== null) {
+      total = total - cash_receipt;
+      total = total.toFixed(2);
+      document.getElementById("total").value = total;
+    } 
+  } else if (discount.includes("%")) {
+    if (total_deposit == 0) {
     var x = isNaN(discount);
     x = parseInt(discount);
     x = x/100;
     var y = total_settle*x;
-    total = total_settle-y;
-    var a = (total*tax)/100;
-    tax_value.value = a.toFixed(2);
+    y = total_settle-y;
+    var a = (y*tax)/100;
+    tax_value = a.toFixed(2);
     document.getElementById("tax_value").innerHTML = tax_value;
-  } else if(discount !== "" && !discount.includes("%")) {
-    console.log(discount.includes("%"));
+    total = y + a;
+    total = total.toFixed(2);
+    document.getElementById("total").value = total;
+    } else if (total_deposit !==0) {
+      var x = isNaN(discount);
+      x = parseInt(discount);
+      x = x/100;
+      var y = total_settle*x;
+      y = total_settle-y;
+      y = y - total_deposit;
+      var a = (y*tax)/100;
+      tax_value = a.toFixed(2);
+      console.log(a);
+      document.getElementById("tax_value").innerHTML = tax_value;
+      total = y + a;
+      total = total.toFixed(2);
+      document.getElementById("total").value = total;
+    }
+    if (cash_receipt !== 0) {
+      total = total - cash_receipt;
+      total = total.toFixed(2);
+      document.getElementById("total").value = total;
+    } 
+  } else if(!discount.includes("%")) {
+    if (total_deposit == 0) {
     var x = parseInt(discount);
-    console.log(x);
     total = total_settle-x;
-    console.log(total);
     var y = (total*tax)/100;
-    console.log(y);
     var tax_value = y.toFixed(2);
-    document.getElementById("tax_value").innerHTML = tax_value;
+    document.getElementById("tax_value").value = tax_value;
+    total = total + y;
+    total = total.toFixed(2);
+    document.getElementById("total").value = total; 
+    } else if (total_deposit !== 0) {
+      var x = parseInt(discount);
+      total = total_settle - total_deposit - x ;
+      var y = (total*tax)/100;
+      var tax_value = y.toFixed(2);
+      document.getElementById("tax_value").value = tax_value;
+      total = total + y;
+      total = total.toFixed(2);
+      document.getElementById("total").value = total;
+    }
+    if (cash_receipt !== 0) {
+      var total = total - cash_receipt;
+      total = total.toFixed(2);
+      document.getElementById("total").value = total;
+   }
   }
 }

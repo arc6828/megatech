@@ -134,7 +134,7 @@
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="total_settle">ยอดรวม: </label>
  			<div class="col-sm-5">
- 				<input type="float" name="total_settle" id="total_settle" class="form-control" onchange="calculate(total_settle)">
+ 				<input type="number" name="total_settle" id="total_settle" class="form-control" onchange="calculate(total_settle)">
  			</div>
  		  </div>
  		  <div class="form-group">
@@ -146,7 +146,7 @@
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="tax">อัตรภาษี: </label>
  			<div class="col-sm-5">
- 				<input type="float" name="tax" id="tax" class="form-control" onchange="calculate(tax)">
+ 				<input type="number" name="tax" id="tax" class="form-control" value="7" onchange="calculate(tax)">
  			</div>
  		  </div>
  		   <div class="form-group">
@@ -158,13 +158,13 @@
  		   <div class="form-group">
  			<label class="control-label col-sm-3" for="cash_receipt">ยอดรับเงินสด: </label>
  			<div class="col-sm-5">
- 				<input type="float" name="cash_receipt" id="cash_receipt" class="form-control" onchange="calculate(cash_receipt)">
+ 				<input type="number" name="cash_receipt" id="cash_receipt" class="form-control" onchange="calculate(cash_receipt)">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="total">หนี้ทั้งหมด: </label>
  			<div class="col-sm-5">
- 				<textarea name="total" id="total" class="form-control" disabled=""></textarea>
+ 				<textarea id="total" type="float" name="total" id="total" class="form-control"></textarea>
  			</div>
  		  </div>
 

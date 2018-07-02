@@ -98,12 +98,14 @@ class SettleController extends Controller
 
         $id_settle = "AR".$id_settle;
 
-        $debt_balance = $debt_balance+($total-$cash_receipt);
+
+        $debt_balance = ($total+$cash_receipt);
 
         $model_settle = new SettleModel();
         $model_customer = new CustomerModel();
         $model_settle->insert($id_settle, $id_customer, $type_tax, $id_user, $id_department, $sale_area, $tax_liability, $date_settle, $debt_period, $deadline_settle, $id_job, $ref_number, $tax_filing, $id_account, $total_settle, $id_deposit, $discount, $total_deposit, $tax, $tax_value, $cash_receipt, $total);
-        $model_customer->update($debt_balance, $id_customer);
+
+        $model_customer->update_dept($debt_balance, $id_customer);
 
         return redirect('/settle');
     }
