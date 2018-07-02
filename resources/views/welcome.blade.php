@@ -92,8 +92,8 @@
                     <a href="https://github.com/arc6828/megatech.git">GitHub</a>
                 </div>
 
-                <div class="" style="margin-top:20px;">
-                    <a class="btn btn-success" href="{{ url('/') }}/index">Get Started</a>
+                <div class="" style="margin-top:40px; ">
+                    <a class="btn btn-success" style="font-weight: bold;" href="{{ url('/') }}/index">Get Started</a>
                 </div>
             </div>
 
