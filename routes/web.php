@@ -14,21 +14,20 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/test', function () {
-    return view('test');
-});
-
 Route::get('/index',function(){
 	return view('index');
 });
 Route::get('/debtorindex',function(){
 	return view('/debtorindex');
 });
-Route::get('/debout/index',function(){
-	return view('/debout/index');
-});
-Route::resource('/debtor','CustomerController');
+
+//Process Deptor
+Route::resource('/debtor', 'CustomerController');
+
+Route::resource('/debtout', 'DebtoutController');
+
+Route::resource('/settle', 'SettleController');
+
 
 Auth::routes();
 

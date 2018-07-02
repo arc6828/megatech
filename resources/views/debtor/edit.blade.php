@@ -1,37 +1,10 @@
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link href="{{ url('/') }}/style.css" rel="stylesheet" type="text/css">
-	</style>
-	 <script type="text/javascript">
-  $(document).ready(function(){
-    $("#save").click(function(){
-        //read name from textbox to variable name
-        var name = $('input[name=account]:checked').val()
-        
-        //put name into textbox named result
-        $("#account").val(name);
-        $(this).prev().click();
-    });
-});
-  $(document).ready(function(){
-    $("#save_user").click(function(){
-        //read name from textbox to variable name
-        var name = $('input[name=id_user]:checked').val()
-        
-        //put name into textbox named result
-        $("#id_user").val(name);
-        $(this).prev().click();
-    });
-});
-</script> 
+@extends('template/template-1')
+@section('content')
+<script type="text/javascript" src="{{url('/')}}/js/debtor/debtor.js"></script> 
 </head>
 <h1>เพิ่มลูกค้า</h1>
 @forelse($table_customer as $row)
-	<form action="{{ url('/') }}/debtor/{{ $row->id }}" method="POST">
+	<form action="{{ url('/') }}/debtor/{{ $row->id }}" method="POST" class="form-horizontal">
 		{{ csrf_field() }}
 		{{ method_field('PUT') }}
 		<div class="row">
@@ -191,11 +164,12 @@
         </button>
       </div>
       <div class="modal-body">
-         @foreach($table_account as $row_account)
+      
         <table class="table">
           <th></th>
         	<th>รหัสผังบัญชี</th>
         	<th>รายละเอียด</th>
+             @foreach($table_account as $row_account)
           <tr>
             <td><input type="radio" name="account" value="{{ $row_account->id_account }}"></td>
             <td>{{ $row_account->id_account }}</td>
@@ -221,11 +195,12 @@
         </button>
       </div>
       <div class="modal-body">
-        @foreach($table_user as $row_user)
+       
         <table class="table">
            <th></th>
         	<th>รหัสพนักงาน</th>
         	<th>ชื่อพนักงาน</th>
+           @foreach($table_user as $row_user)
           <tr>
             <td><input type="radio" name="id_user" value="{{ $row_user->id_user }}"></td>
             <td>{{ $row_user->id_user }}</td>
@@ -256,4 +231,4 @@
 @empty	
 	<div>This Customer id does not exist</div>
 @endforelse
-
+@endsection

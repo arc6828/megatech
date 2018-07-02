@@ -82,9 +82,11 @@ class CustomerController extends Controller
         $branch = $request->input('branch');
         $fax_number = $request->input('fax_number');
 
+        $debt_balance = 0;
+
 
         $model = new CustomerModel();
-        $model->insert($id_customer, $type_customer, $name_company, $id_account, $name_customer, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number);
+        $model->insert($id_customer, $type_customer, $name_company, $id_account, $name_customer, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number, $debt_balance);
         return redirect('/debtor');
     }
 
@@ -137,8 +139,6 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        
         $type_customer = $request->input('type_customer');
         $name_company = $request->input('name_company');
         $id_account = $request->input('id_account');

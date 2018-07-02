@@ -21,9 +21,9 @@ class CustomerModel
 		return DB::select($sql, []);
 	}
 
-	function insert($id_customer ,$type_customer, $name_company, $id_account, $name_customer, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number){
-		$sql = "insert into customer (id_customer, type_customer, name_company, id_account, name_customer, address, place_delivery, id_user, telephone, sales_area, transpot, note, credit, debt_period, degree_product, deposit_discount, tax_number, bill_condition, check_condition, location, branch, fax_number) 
-			values('{$id_customer}', '{$type_customer}', '{$name_company}', {$id_account}, '{$name_customer}', '{$address}', '{$place_delivery}', {$id_user}, '{$telephone}', '{$sales_area}', '{$transpot}', '{$note}', {$credit}, {$debt_period}, {$degree_product}, {$deposit_discount}, {$tax_number}, '{$bill_condition}', '{$check_condition}', '{$location}', '{$branch}', '{$fax_number}')";
+	function insert($id_customer ,$type_customer, $name_company, $id_account, $name_customer, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number, $debt_balance){
+		$sql = "insert into customer (id_customer, type_customer, name_company, id_account, name_customer, address, place_delivery, id_user, telephone, sales_area, transpot, note, credit, debt_period, degree_product, deposit_discount, tax_number, bill_condition, check_condition, location, branch, fax_number, debt_balance) 
+			values('{$id_customer}', '{$type_customer}', '{$name_company}', {$id_account}, '{$name_customer}', '{$address}', '{$place_delivery}', {$id_user}, '{$telephone}', '{$sales_area}', '{$transpot}', '{$note}', {$credit}, {$debt_period}, {$degree_product}, {$deposit_discount}, {$tax_number}, '{$bill_condition}', '{$check_condition}', '{$location}', '{$branch}', '{$fax_number}', {$debt_balance})";
 		DB::insert($sql, []);
 	}
 
@@ -38,5 +38,9 @@ class CustomerModel
 		$sql = "delete from customer where id = {$id}";
 		DB::delete($sql, []);
 	}
-
+	function update_dept($debt_balance, $id_customer) {
+		$sql = "update customer set debt_balance = {$debt_balance}
+		where id_customer = '{$id_customer}'";
+		DB::update($sql, []);
+	}
 }

@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Megatech</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Custom fonts for this template -->
     <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/css.css" rel="stylesheet">
@@ -53,15 +56,8 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#">คงคลัง</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link js-scroll-trigger dropdown-toggle" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">การเงิน
-             <span class="sr-only">Toggle Dropdown</span></a>
-           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="{{url('/')}}/debtorindex">Debtor</a>
-              <a class="dropdown-item" href="#">Creditor</a>
-              <a class="dropdown-item" href="#">Bank</a>
-              <a class="dropdown-item" href="#">Check</a>
-            </div>
+           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{{url('/')}}/debtorindex">การเงิน</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#">บัญชี</a>
@@ -77,8 +73,6 @@
 
       <section class="resume-section p-3 p-lg-5 d-flex d-column">
         <div class="my-auto">
-          
-
         @yield('content')
         </div>
       </section>
@@ -89,7 +83,8 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{url('/')}}/Resume-StartBootstrapTheme_files/jquery.min.js"></script>
     <script src="{{url('/')}}/Resume-StartBootstrapTheme_files/bootstrap.bundle.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Plugin JavaScript -->
     <script src="{{url('/')}}/Resume-StartBootstrapTheme_files/jquery.easing.min.js"></script>
 

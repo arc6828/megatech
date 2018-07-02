@@ -6,9 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
-        
         <link rel="icon" type="image/png" href="{{url('/')}}/images/megatech-icon.png">
-
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
@@ -80,7 +78,7 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                 <div class="title m-b-md">
                     <img src="{{ url('/') }}/images/megatech-logo.jpg" width="500">
                 </div>
 
