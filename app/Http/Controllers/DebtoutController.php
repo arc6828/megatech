@@ -145,8 +145,11 @@ class DebtoutController extends Controller
      * @param  \App\DeptoutModel  $deptoutModel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DeptoutModel $deptoutModel)
+    public function destroy($id)
     {
-        //
+        $model = new DebtoutModel();
+        $model->delete($id);
+
+        return redirect('/debtout');
     }
 }

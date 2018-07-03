@@ -8,9 +8,10 @@
     <li class="active"><a data-toggle="tab" href="#home">การตั้งหนี้</a></li>
     <li><a data-toggle="tab" href="#menu1">รายละเอียดการลงบัญชี</a></li>
   </ul>
-<form action="{{ url('/') }}/settle" method="POST" class="form-horizontal">
+@forelse($table_settle as $row_settle)
+<form action="{{ url('/') }}/settle/{{$row_settle->id}}" method="POST" class="form-horizontal">
 		{{ csrf_field() }}
-		{{ method_field('POST') }}
+		{{ method_field('PUT') }}
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
 		<br>
@@ -18,20 +19,20 @@
 		<div class="form-group">
  			<label class="control-label col-sm-3" for="id_settle">เลขที่เอกสาร: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_settle" id="id_settle" class="form-control">
+ 				<input type="text" name="id_settle" id="id_settle" class="form-control" value="{{$row_settle->id_settle}}" disabled>
  			</div>
  		  </div>
  		<div class="form-group">
  			<label class="control-label col-sm-3" for="id_customer">รหัสลูกค้า: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_customer" id="id_customer" class="form-control col-sm-5">
+ 				<input type="text" name="id_customer" id="id_customer" class="form-control col-sm-5" value="{{$row_settle->id_customer}}">
  				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal1">รหัสลูกค้า</button>
  			</div>
  		</div>
  		   <div class="form-group">
  			<label for="type_tax" class="control-label col-sm-3">ชนิดภาษี: </label>
  			<div class="col-sm-5">
- 				<select class="form-control" id="type_tax" style="height: 2.5em" name="type_tax">
+ 				<select class="form-control" id="type_tax" style="height: 2.5em" name="type_tax" value="{{$row_settle->type_tax}}">
         			<option value disabled="" selected>เลือกชนิดภาษี</option>
         			<option value="include">1. ราคาสินค้ารวมภาษี</option>
         			<option value="separate">2. ราคาสินค้าแยกภาษี</option>
@@ -42,21 +43,21 @@
  		<div class="form-group">
  			<label class="control-label col-sm-3" for="id_user">รหัสพนักงาน: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_user" id="id_user" class="form-control col-sm-5">
+ 				<input type="text" name="id_user" id="id_user" class="form-control col-sm-5" value="{{$row_settle->id_user}}">
  				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal2">รหัสพนักงาน</button>
  			</div>
  		</div>
  		<div class="form-group">
  			<label class="control-label col-sm-3" for="id_department">รหัสแผนก: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_department" id="id_department" class="form-control col-sm-5">
+ 				<input type="text" name="id_department" id="id_department" class="form-control col-sm-5" value="{{$row_settle->id_department}}">
  				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal3">รหัสแผนก</button>
  			</div>
  		</div>
  		 <div class="form-group">
  			<label for="sales_area" class="control-label col-sm-3">เขตการขาย: </label>
  			<div class="col-sm-5">
- 				<select class="form-control" id="sale_area" style="height: 2.5em" name="sale_area">
+ 				<select class="form-control" id="sale_area" style="height: 2.5em" name="sale_area" value="{{$row_settle->sale_area}}">
         			<option value disabled="" selected>เลือกเขตการขาย</option>
         			<option value="right">เขตกรุงเทพฯ</option>
         			<option value="cash">ภาคใต้</option>
@@ -70,7 +71,7 @@
  		 <div class="form-group">
  			<label for="tax_liability" class="control-label col-sm-3">ภาระภาษี: </label>
  			<div class="col-sm-5">
- 				<select class="form-control" id="tax_liability" style="height: 2.5em" name="tax_liability">
+ 				<select class="form-control" id="tax_liability" style="height: 2.5em" name="tax_liability" value="{{$row_settle->tax_liability}}">
         			<option value disabled="" selected>เลือกภาระภาษี</option>
         			<option value="right">เกณฑ์สิทธิ์</option>
         			<option value="cash">เกณฑ์เงินสด</option>
@@ -80,14 +81,14 @@
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="id_account">รหัสผังบัญชี: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_account" id="id_account" class="form-control col-sm-5">
+ 				<input type="text" name="id_account" id="id_account" class="form-control col-sm-5" value="{{$row_settle->id_account}}">
  				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal4">รหัสผังบัญชี</button>
  			</div>
  		</div>
  		<div class="form-group">
  			<label class="control-label col-sm-3" for="id_deposit">เลขที่มัดจำ: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_deposit" id="id_deposit" class="form-control col-sm-5">
+ 				<input type="text" name="id_deposit" id="id_deposit" class="form-control col-sm-5" value="{{$row_settle->id_deposit}}">
  				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal5">เลขที่มัดจำ</button>
  				<input type="number" name="total_deposit" id="total_deposit" class="form-control" placeholder="ยอดหลังหักค่ามัดจำ" onchange="calculate(total_deposit)">
  			</div>
@@ -97,74 +98,74 @@
 		<div class="form-group">
  			<label class="control-label col-sm-3" for="date_settle">วันที่เอกสาร: </label>
  			<div class="col-sm-5">
- 				<input type="date" name="date_settle" id="date_settle" class="form-control" onchange="date(date_settle)">
+ 				<input type="date" name="date_settle" id="date_settle" class="form-control" onchange="date(date_settle)" value="{{$row_settle->date_settle}}">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="debt_period">ระยะเวลาหนี้: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="debt_period" id="debt_period" class="form-control" onchange="date(debt_period)">
+ 				<input type="text" name="debt_period" id="debt_period" class="form-control" onchange="date(debt_period)" value="{{$row_settle->debt_period}}">
  			</div>
  		  </div>
  		 <div class="form-group">
  			<label class="control-label col-sm-3" for="deadline_settle">วันครบกำหนด: </label>
  			<div class="col-sm-5">
- 				<input type="date" name="deadline_settle" id="deadline_settle" class="form-control">
+ 				<input type="date" name="deadline_settle" id="deadline_settle" class="form-control" value="{{$row_settle->deadline_settle}}">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="id_job">รหัสJob: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_job" id="id_job" class="form-control col-sm-5">
+ 				<input type="text" name="id_job" id="id_job" class="form-control col-sm-5" value="{{$row_settle->id_job}}">
  				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal6">รหัสJob</button>
  			</div>
  		</div>
  		<div class="form-group">
  			<label class="control-label col-sm-3" for="ref_number">เลขที่อ้างอิง: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="ref_number" id="ref_number" class="form-control">
+ 				<input type="text" name="ref_number" id="ref_number" class="form-control" value="{{$row_settle->ref_number}}">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="tax_filing">ยื่นภาษีในงวด: </label>
  			<div class="col-sm-5">
- 				<textarea type="text" id="tax_filing" name="tax_filing" id="tax_filing" class="form-control"></textarea>
+ 				<textarea type="text" id="tax_filing" name="tax_filing" id="tax_filing" class="form-control" value="{{$row_settle->tax_filing}}"></textarea>
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="total_settle">ยอดรวม: </label>
  			<div class="col-sm-5">
- 				<input type="number" name="total_settle" id="total_settle" class="form-control" onchange="calculate(total_settle)">
+ 				<input type="number" name="total_settle" id="total_settle" class="form-control" onchange="calculate(total_settle)" value="{{$row_settle->total_settle}}">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="discount">ส่วนลด: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="discount" id="discount" class="form-control" onchange="calculate(discount)">
+ 				<input type="text" name="discount" id="discount" class="form-control" onchange="calculate(discount)" value="{{$row_settle->discount}}">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="tax">อัตรภาษี: </label>
  			<div class="col-sm-5">
- 				<input type="number" name="tax" id="tax" class="form-control" value="7" onchange="calculate(tax)">
+ 				<input type="number" name="tax" id="tax" class="form-control" value="7" onchange="calculate(tax)" value="{{$row_settle->tax}}">
  			</div>
  		  </div>
  		   <div class="form-group">
  			<label class="control-label col-sm-3" for="tax_value">มูลค่าภาษี: </label>
  			<div class="col-sm-5">
- 				<textarea id="tax_value" type="float" name="tax_value" id="tax_value" class="form-control"></textarea> 
+ 				<textarea id="tax_value" type="float" name="tax_value" id="tax_value" class="form-control" value="{{$row_settle->tax_value}}"></textarea> 
  			</div>
  		  </div>
  		   <div class="form-group">
  			<label class="control-label col-sm-3" for="cash_receipt">ยอดรับเงินสด: </label>
  			<div class="col-sm-5">
- 				<input type="number" name="cash_receipt" id="cash_receipt" class="form-control" onchange="calculate(cash_receipt)">
+ 				<input type="number" name="cash_receipt" id="cash_receipt" class="form-control" onchange="calculate(cash_receipt)" value="{{$row_settle->cash_receipt}}">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="total">หนี้ทั้งหมด: </label>
  			<div class="col-sm-5">
- 				<textarea id="total" type="float" name="total" id="total" class="form-control"></textarea>
+ 				<textarea id="total" type="float" name="total" id="total" class="form-control" value="{{$row_settle->total}}"></textarea>
  			</div>
  		  </div>
 
@@ -176,7 +177,7 @@
     </div>
   </div>
 <button type="submit" class="btn btn-success btn-right">Save</button>
-		<a href="{{url('/')}}/settle" class="btn btn-danger " style="text-align: right;">Back</a>
+<a href="{{url('/')}}/settle" class="btn btn-danger " style="text-align: right;">Back</a>
 </form>
   <!-- Modal1 -->
 <div id="myModal1" class="modal fade" role="dialog">
@@ -377,4 +378,6 @@
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script src="{{url('/')}}/js/settle/settle.js"></script>
+@empty
+@endforelse
 @endsection
