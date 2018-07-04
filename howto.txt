@@ -3,6 +3,7 @@ Check List When to deploy to server 000webhost.com
 2. On server, .env will disable then use cache file instead. The location is in bootstrap/cache/config.php
 	mysql
 	id5594390_arctech id5594390_arctech 123456
+	app_key
 
 3. this server neeed ,
     mysql =>[ 
