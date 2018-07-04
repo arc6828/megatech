@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Megatech</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{url('/')}}/Resume-StartBootstrapTheme_files/bootstrap.min.css" rel="stylesheet">
