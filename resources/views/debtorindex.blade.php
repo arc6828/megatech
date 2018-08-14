@@ -1,40 +1,93 @@
-@extends('template/template')
-@section('content')
-<h1>เมนูหลัก</h1>
-<section class="resume-section p-3 p-lg-5 d-flex d-column">
- 	<div class="container">
- 		<ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#home">ลูกหนี้</a></li>
-      <li><a data-toggle="tab" href="#menu1">เจ้าหนี้</a></li>
-      <li><a data-toggle="tab" href="#menu2">ธนาคาร</a></li>
-      <li><a data-toggle="tab" href="#menu3">ใบวางบิล</a></li>
-    </ul>
+@extends('monster-lite/layouts/theme')
 
-    <div class="tab-content">
-      <div id="home" class="tab-pane fade in active">
-      	<br><br>
-        <div class="container">
-        <a class="btn btn-outline-primary" href="{{url('/')}}/debtout">ตั้งหนี้คงค้าง</a>
-    	<a class="btn btn-outline-primary" href="{{url('/')}}/settle">ตั้งหนี้/ลูกหนี้</a>
-    	<a class="btn btn-outline-primary" href="#">ลดหนี้ลูกหนี้</a>
-    	<a class="btn btn-outline-primary" href="#">ใบวางบิล</a><br><br>
-    	<a class="btn btn-outline-primary" href="#">ชำระเงิน</a>
-    	<a class="btn btn-outline-primary" href="{{url('/')}}/debtor">แฟ้มลูกหนี้</a>
-    	</div>
-      </div>
-      <div id="menu1" class="tab-pane fade">
-        <h3>Menu 1</h3>
-        <p>Some content in menu 1.</p>
-      </div>
-      <div id="menu2" class="tab-pane fade">
-        <h3>Menu 2</h3>
-        <p>Some content in menu 2.</p>
-      </div>
-      <div id="menu3" class="tab-pane fade">
-        <h3>Menu 3</h3>
-        <p>Some content in menu 3.</p>
-      </div>
-    </div>
+@section('title','เมนูหลักการเงิน')
+
+@section('breadcrumb-menu')
+<a href="{{ url('/') }}/activity/create" class="hide btn pull-right hidden-sm-down btn-success"> 
+  <i class="fa fa-plus"></i> New Activity
+</a>
+@endsection
+
+@section('content')
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="debtor-tab" data-toggle="tab" href="#debtor" role="tab" aria-controls="debtor" aria-selected="true">ลูกหนี้</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="creditor-tab" data-toggle="tab" href="#creditor" role="tab" aria-controls="creditor" aria-selected="false">เจ้าหนี้</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="bank" aria-selected="false">ธนาคาร</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="bill-tab" data-toggle="tab" href="#bill" role="tab" aria-controls="bill" aria-selected="false">ใบวางบิล</a>
+  </li>
+</ul>
+<div class="tab-content" id="tabContent">
+  <div class="tab-pane fade show active" id="debtor" role="tabpanel" aria-labelledby="debtor-tab">
+    <div class="card">
+      <div class="card-block">      
+        <div class="row text-center">
+          <div class="col-md-4 ">
+            <a class="btn btn-outline-primary my-3" href="{{url('/')}}/debtout">
+              <div><i class="fa fa-book fa-2x px-3 py-2"></i></div>
+              <div>ตั้งหนี้คงค้าง</div>
+            </a>
+          </div>
+          <div class="col-md-4 ">
+            <a class="btn btn-outline-primary my-3" href="{{url('/')}}/settle">
+              <div><i class="fa fa-book fa-2x px-3 py-2"></i></div>
+              <div>ตั้งหนี้/ลูกหนี้</div>            
+            </a>
+          </div>
+          <div class="col-md-4 ">
+            <a class="btn btn-outline-primary my-3" href="#">
+              <div><i class="fa fa-book fa-2x px-3 py-2"></i></div>
+              <div>ลดหนี้ลูกหนี้</div>            
+            </a>
+          </div>
+          <div class="col-md-4 ">
+            <a class="btn btn-outline-primary my-3" href="#">            
+              <div><i class="fa fa-book fa-2x px-3 py-2"></i></div>
+              <div>ใบวางบิล</div>
+            </a>
+          </div>
+          <div class="col-md-4 ">
+            <a class="btn btn-outline-primary my-3" href="#">
+              <div><i class="fa fa-book fa-2x px-3 py-2"></i></div>
+              <div>ชำระเงิน</div>            
+            </a>
+          </div>
+          <div class="col-md-4 ">
+            <a class="btn btn-outline-primary my-3" href="{{url('/')}}/debtor">
+              <div><i class="fa fa-book fa-2x px-3 py-2"></i></div>
+              <div>แฟ้มลูกหนี้</div>             
+            </a>
+          </div>          
+        </div>      
+      </div>  
+    </div>    
   </div>
-</section>
+  <div class="tab-pane fade" id="creditor" role="tabpanel" aria-labelledby="creditor-tab">
+    <div class="card">
+      <div class="card-block">      
+         
+      </div>  
+    </div> 
+  </div>
+  <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="bank-tab">
+    <div class="card">
+      <div class="card-block">      
+         
+      </div>  
+    </div> 
+  </div>
+  <div class="tab-pane fade" id="bill" role="tabpanel" aria-labelledby="bill-tab">
+    <div class="card">
+      <div class="card-block">      
+         
+      </div>  
+    </div> 
+  </div>
+</div>
 @endsection
