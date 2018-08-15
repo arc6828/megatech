@@ -22,7 +22,7 @@
                     <a href="{{url('/')}}/" class="waves-effect"><i class="fa fa-cubes m-r-10" aria-hidden="true"></i>คงคลัง</a>
                 </li>
                 <li>
-                    <a href="{{url('/')}}/debtorindex" class="waves-effect"><i class="fa fa-credit-card m-r-10" aria-hidden="true"></i>การเงิน (in progress)</a>
+                    <a href="{{url('/')}}/finance" class="waves-effect"><i class="fa fa-credit-card m-r-10" aria-hidden="true"></i>การเงิน (in progress)</a>
                 </li>
                 <li>
                     <a href="{{url('/')}}/" class="waves-effect"><i class="fa fa-book m-r-10" aria-hidden="true"></i>บัญชี (disable)</a>

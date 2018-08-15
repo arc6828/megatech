@@ -5,19 +5,21 @@
         <!-- ============================================================== -->
         <div class="navbar-header">
             <a class="navbar-brand" href="{{url('/')}}">
+
+                
                 <!-- Logo icon -->
                 <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                     <!-- Dark Logo icon -->
                     <!--img src="{{url('/')}}/assets/images/logo-icon.png" alt="homepage" class="dark-logo" /-->
-                    <img src="{{url('/')}}/assets/icon/logo-icon.png" alt="homepage" class="dark-logo" />
-                    
+                    <img src="{{url('/')}}/assets/icon/logo-icon.png" alt="homepage" class="dark-logo hide" />
+                    <img src="{{ url('/') }}/images/megatech-logo-small.jpg" alt="homepage" class="dark-logo" style="max-width: 148px; width:100%;" />
                 </b>
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span>
                     <!-- dark Logo text -->
-                    <img src="{{url('/')}}/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                    <img src="{{url('/')}}/assets/images/logo-text.png" alt="homepage" class="hide dark-logo" />
                 </span>
             </a>
         </div>

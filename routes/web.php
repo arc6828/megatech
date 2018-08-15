@@ -17,8 +17,8 @@ Route::get('/', function () {
 Route::get('/index',function(){
 	return view('index');
 });
-Route::get('/debtorindex',function(){
-	return view('/debtorindex');
+Route::get('/finance',function(){
+	return view('finance/index');
 });
 
 //Process Deptor

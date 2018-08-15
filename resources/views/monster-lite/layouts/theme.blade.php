@@ -8,9 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/')}}/assets/icon/if_Hand_1021018.png">
+    
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Favicon icon -->
+    <!--link rel="icon" type="image/png" sizes="16x16" href="{{url('/')}}/assets/icon/if_Hand_1021018.png"-->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('/')}}/images/megatech-icon.png">
+
     <!-- Bootstrap Core CSS -->
     <link href="{{url('/')}}/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
