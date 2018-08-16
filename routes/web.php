@@ -15,10 +15,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/index',function(){
-	return view('index');
+	return redirect('/sale');
+});
+
+//Main Menu
+Route::get('/sale',function(){
+    return view('sale/index');
+});
+Route::get('/purchase',function(){
+	return view('purchase/index');
+});
+Route::get('/inventory',function(){
+    return view('inventory/index');
 });
 Route::get('/finance',function(){
-	return view('finance/index');
+    return view('finance/index');
+});
+Route::get('/account',function(){
+    return view('account/index');
+});
+Route::get('/others',function(){
+    return view('others/index');
 });
 
 //Process Deptor

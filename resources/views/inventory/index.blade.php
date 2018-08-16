@@ -14,44 +14,44 @@
     <div class="row text-center">
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">อ</span></i></div>
-          <div>โอนย้ายคลัง</div>
+          <div class="px-4"><span class="round round-primary my-2">อ</span></i></div>
+          <div><br>โอนย้ายคลัง</div>
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">ป</span></div>
-          <div>ปรับปรุงเพิ่ม/ลด</div>            
+          <div class="px-4"><span class="round round-primary my-2">ป</span></div>
+          <div>ปรับปรุง<br>เพิ่ม/ลด</div>            
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="#">
-          <div class="px-3"><span class="round round-primary my-2">บ</span></i></div>
-          <div>เบิกวัตถุดิบไปผลิต</div>            
+          <div class="px-4"><span class="round round-primary my-2">บ</span></i></div>
+          <div>เบิกวัตถุดิบ<br>ไปผลิต</div>            
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="#">            
-          <div class="px-3"><span class="round round-primary my-2">ร</span></i></div>
-          <div>รับคืนวัตถุดิบจากผลิต</div>
+          <div class="px-4"><span class="round round-primary my-2">ร</span></i></div>
+          <div>รับคืนวัตถุดิบ<br>จากผลิต</div>
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="#">
-          <div class="px-3"><span class="round round-primary my-2">ร</span></div>
-          <div>รับสินค้าสำเร็จรูป</div>            
+          <div class="px-4"><span class="round round-primary my-2">ร</span></div>
+          <div>รับสินค้า<br>สำเร็จรูป</div>            
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">ฟ</span></div>
-          <div>แฟ้มหลักสินค้า</div>             
+          <div class="px-4"><span class="round round-primary my-2">ฟ</span></div>
+          <div>แฟ้มหลัก<br>สินค้า</div>             
         </a>
       </div>   
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">ค</span></div>
-          <div>คลังสินค้า</div>             
+          <div class="px-4"><span class="round round-primary my-2">ค</span></div>
+          <div><br>คลังสินค้า</div>             
         </a>
       </div>       
     </div>      

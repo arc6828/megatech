@@ -13,22 +13,22 @@
             <ul id="sidebarnav">
                 
                 <li>
-                    <a href="{{url('/')}}/" class="waves-effect"><i class="fa fa-mail-reply m-r-10" aria-hidden="true"></i>การขาย</a>
+                    <a href="{{url('/')}}/sale" class="waves-effect"><i class="fa fa-mail-reply m-r-10" aria-hidden="true"></i>การขาย</a>
                 </li>
                 <li>
-                    <a href="{{url('/')}}/" class="waves-effect"><i class="fa fa-mail-forward m-r-10" aria-hidden="true"></i>การซื้อ</a>
+                    <a href="{{url('/')}}/purchase" class="waves-effect"><i class="fa fa-mail-forward m-r-10" aria-hidden="true"></i>การซื้อ</a>
                 </li>
                 <li>
-                    <a href="{{url('/')}}/" class="waves-effect"><i class="fa fa-cubes m-r-10" aria-hidden="true"></i>คงคลัง</a>
+                    <a href="{{url('/')}}/inventory" class="waves-effect"><i class="fa fa-cubes m-r-10" aria-hidden="true"></i>คงคลัง</a>
                 </li>
                 <li>
                     <a href="{{url('/')}}/finance" class="waves-effect"><i class="fa fa-credit-card m-r-10" aria-hidden="true"></i>การเงิน (in progress)</a>
                 </li>
                 <li>
-                    <a href="{{url('/')}}/" class="waves-effect"><i class="fa fa-book m-r-10" aria-hidden="true"></i>บัญชี (disable)</a>
+                    <a href="{{url('/')}}/account" class="waves-effect"><i class="fa fa-book m-r-10" aria-hidden="true"></i>บัญชี (disable)</a>
                 </li>
                 <li>
-                    <a href="{{url('/')}}/" class="waves-effect"><i class="fa fa-gears m-r-10" aria-hidden="true"></i>อื่นๆ</a>
+                    <a href="{{url('/')}}/others" class="waves-effect"><i class="fa fa-gears m-r-10" aria-hidden="true"></i>อื่นๆ</a>
                 </li>                
 
                 <hr />

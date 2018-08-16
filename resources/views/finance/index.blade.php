@@ -1,6 +1,6 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','เมนูหลักการเงิน')
+@section('title','การเงิน')
 
 @section('breadcrumb-menu')
 <a href="{{ url('/') }}/activity/create" class="hide btn pull-right hidden-sm-down btn-success"> 
@@ -20,7 +20,7 @@
     <a class="nav-link" id="bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="bank" aria-selected="false">ธนาคาร</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="bill-tab" data-toggle="tab" href="#bill" role="tab" aria-controls="bill" aria-selected="false">ใบวางบิล</a>
+    <a class="nav-link" id="cheque-tab" data-toggle="tab" href="#cheque" role="tab" aria-controls="cheque" aria-selected="false">เช็ค</a>
   </li>
 </ul>
 <div class="tab-content" id="tabContent">
@@ -33,8 +33,8 @@
   <div class="tab-pane fade" id="bank" role="tabpanel" aria-labelledby="bank-tab">
     @include('finance/menu/bank')
   </div>
-  <div class="tab-pane fade" id="bill" role="tabpanel" aria-labelledby="bill-tab">
-    @include('finance/menu/bill')
+  <div class="tab-pane fade" id="cheque" role="tabpanel" aria-labelledby="cheque-tab">
+    @include('finance/menu/cheque')
   </div>
 </div>
 @endsection

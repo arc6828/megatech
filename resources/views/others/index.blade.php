@@ -14,56 +14,56 @@
     <div class="row text-center">
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">บ</span></i></div>
-          <div>ใบเสนอราคา</div>
+          <div class="px-4"><span class="round round-primary my-2">ร</span></i></div>
+          <div><br>เริ่มระบบ</div>
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">บ</span></div>
-          <div>ใบรับจอง</div>            
+          <div class="px-4"><span class="round round-primary my-2">ก</span></div>
+          <div>กำหนดรหัส<br>ผ่านระบบ</div>            
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="#">
-          <div class="px-3"><span class="round round-primary my-2">ร</span></i></div>
-          <div>รับเงินมัดจำ</div>            
+          <div class="px-4"><span class="round round-primary my-2">ข</span></i></div>
+          <div>กราฟ / ข้อมูล<br>ผู้บริหาร</div>            
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="#">            
-          <div class="px-3"><span class="round round-primary my-2">ข</span></i></div>
-          <div>ขาย/ส่งสินค้า</div>
+          <div class="px-4"><span class="round round-primary my-2">ส</span></i></div>
+          <div>สำรอง<br>แฟ้มข้อมูล</div>
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="#">
-          <div class="px-3"><span class="round round-primary my-2">ร</span></div>
-          <div>ระบุเงื่อนไขการส่ง</div>            
+          <div class="px-4"><span class="round round-primary my-2">ด</span></div>
+          <div>ดึงสำรอง<br>แฟ้มข้อมูล</div>            
         </a>
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">ร</span></div>
-          <div>รับคืนสินค้า</div>             
+          <div class="px-4"><span class="round round-primary my-2">ป</span></div>
+          <div>ปิดรายการ<br>สิ้นปี</div>             
         </a>
       </div>   
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">พ</span></div>
-          <div>พนักงานขาย</div>             
+          <div class="px-4"><span class="round round-primary my-2">ส</span></div>
+          <div>สร้าง / <br>ออกแบบฟอร์ม</div>             
         </a>
       </div> 
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">ฟ</span></div>
-          <div>แฟ้มหลักลูกค้า</div>             
+          <div class="px-4"><span class="round round-primary my-2">ค</span></div>
+          <div>คำนวณ<br>ต้นทุน</div>             
         </a>
       </div> 
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-3"><span class="round round-primary my-2">ฟ</span></div>
-          <div>แฟ้มหลักสินค้า</div>             
+          <div class="px-4"><span class="round round-primary my-2">ก</span></div>
+          <div>กระทบ<br>ตัวเลขใหม่</div>             
         </a>
       </div>        
     </div>      
