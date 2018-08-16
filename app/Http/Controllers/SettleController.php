@@ -27,7 +27,7 @@ class SettleController extends Controller
         'table_settle' => $table_settle,
         'q' => $q
         ];
-        return view('settle/index',$data);
+        return view('finance/debtsettle/index',$data);
 
     }
 
@@ -64,7 +64,7 @@ class SettleController extends Controller
             'table_user' => $table_user
 
         ];
-        return view('settle/create',$data);
+        return view('finance/debtsettle/create',$data);
     }
 
     /**
@@ -109,7 +109,7 @@ class SettleController extends Controller
 
         $model_customer->update_dept($debt_balance, $id_customer);
 
-        return redirect('/settle');
+        return redirect('finance/settle');
     }
 
     /**
@@ -157,7 +157,7 @@ class SettleController extends Controller
             'table_user' => $table_user
 
         ];
-        return view('settle/edit',$data);
+        return view('finance/debtsettle/edit',$data);
     }
 
     /**
@@ -203,7 +203,7 @@ class SettleController extends Controller
         $model_settle->update($id_customer, $type_tax, $id_user, $id_department, $sale_area, $tax_liability, $date_settle, $debt_period, $deadline_settle, $id_job, $ref_number, $tax_filing, $id_account, $total_settle, $id_deposit, $discount, $total_deposit, $tax, $tax_value, $cash_receipt, $total, $id);
 
         $model_customer->update_dept($debt_balance, $id_customer);
-        return redirect('/settle');
+        return redirect('finance/settle');
     }
 
     /**
@@ -217,6 +217,6 @@ class SettleController extends Controller
         $model = new SettleModel();
         $model->delete($id);
 
-        return redirect('/settle');
+        return redirect('finance/settle');
     }
 }

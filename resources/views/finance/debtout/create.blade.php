@@ -1,13 +1,11 @@
 @extends('template/template-1')
 @section('content')
-<script type="text/javascript" src="{{url('/')}}/js/debtout/debtout_jquery.js"></script>
-
+<script src="{{url('/')}}/js/debtout/debtout_jquery.js"></script>
 <h2 style="text-align: center;">ปรับปรุงลูกหนี้คงค้าง</h2>
 <div class="container">
-@forelse($table_debtout as $row)
-<form action="{{ url('/') }}/debtout/{{ $row->id }}" method="POST" class="form-horizontal">
-		{{ csrf_field() }}
-		{{ method_field('PUT') }}
+<form action="{{ url('/') }}/finance/debtout" method="POST" class="form-horizontal">
+{{ csrf_field() }}
+{{ method_field('POST') }}
 <br>
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab">ข้อมูลลูกหนี้คงค้าง</a></li>
@@ -19,13 +17,13 @@
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="id_dept">เลขที่เอกสาร: </label>
  			<div class="col-sm-5">
- 				<input type="text" name="id_dept" id="id_dept" class="form-control" value="{{ $row->id_dept }}" disabled="">
+ 				<input type="text" name="id_dept" id="id_dept" class="form-control">
  			</div>
  		  </div>
  		   <div class="form-group">
  			<label class="control-label col-sm-3" for="id_customer">รหัสลูกค้า: </label>
  			<div class="col-sm-9">
- 				<input type="text" name="id_customer" id="id_customer" class="form-control col-sm-5" value="{{ $row->id_customer }}">&nbsp;
+ 				<input type="text" name="id_customer" id="id_customer" class="form-control col-sm-5">&nbsp;
  				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">เลือกลูกหนี้</button>
  			</div>
  		  </div>
@@ -56,13 +54,13 @@
  			<div class="form-group">
  			<label class="control-label col-sm-3" for="date_dept">วันที่เอกสาร: </label>
  			<div class="col-sm-5">
- 				<input type="date" name="date_dept" id="date_dept" class="form-control" value="{{ $row->date_dept }}">
+ 				<input type="date" name="date_dept" id="date_dept" class="form-control">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="deadline">วันครบกำหนด: </label>
  			<div class="col-sm-5">
- 				<input type="date" name="deadline" id="deadline" class="form-control" value="{{ $row->deadline }}">
+ 				<input type="date" name="deadline" id="deadline" class="form-control">
  			</div>
  		  </div>
  		  <div class="form-group">
@@ -85,7 +83,6 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-        
         <table class="table">
         	<thead>
         		<th></th>
@@ -94,7 +91,7 @@
         		<th>ที่อยู่</th>
         		<th>เบอร์โทรศัพท์</th>
         	</thead>
-          @foreach($table_customer as $row_customer)
+            @foreach($table_customer as $row_customer)
         	<tr>
         		<td><input type="radio" name="id_customer" value="{{ $row_customer->id_customer }}"></td>
         		<td>{{ $row_customer->id_customer}}</td>
@@ -128,7 +125,7 @@
 		<br>
  			<label class="control-label col-sm-6" for="tax">อัตราภาษี: </label>
  			<div class="col-sm-5">
- 				<input type="float" name="tax" id="tax" class="form-control" onchange="myFunction(tax)" value="{{ $row->tax }}">
+ 				<input type="float" name="tax" id="tax" class="form-control" onchange="myFunction(tax)">
  			</div>
  		  </div>
 </div>
@@ -136,18 +133,19 @@
 		<div class="form-group">
  			<label class="control-label col-sm-3" for="total_dept">ยอดรวม: </label>
  			<div class="col-sm-5">
- 				<input type="float" name="total_dept" id="totaldept" class="form-control"onchange="myFunction(total_dept)" value="{{ $row->total_dept }}">
+ 				<input type="float" name="total_dept" id="totaldept" class="form-control"onchange="myFunction(total_dept)">
  			</div>
  		  </div>
  		  <div class="form-group">
  			<label class="control-label col-sm-3" for="tax_value">มูลค่าภาษี: </label>
  			<div class="col-sm-5">
- 				<input type="float" name="tax_value" id="taxvalue" class="form-control" value="{{ $row->tax_value }}">
+ 				<input type="float" name="tax_value" id="taxvalue" class="form-control">
  			</div>
  		  </div>
 </div>
+
 <button type="submit" class="btn btn-success btn-right">Save</button>
-<a href="{{url('/')}}/debtout" class="btn btn-danger " style="text-align: right;">Back</a>
+<a href="{{url('/')}}/finance/debtout" class="btn btn-danger " style="text-align: right;">Back</a>
 </div>
 </form>
 </div>
@@ -166,7 +164,4 @@ function myFunction(tax,totaldept) {
     taxvalue.value = (totaldept*tax)/100;
 }
 </script>
-@empty
-<div>error</div>
-@endforelse
 @endsection

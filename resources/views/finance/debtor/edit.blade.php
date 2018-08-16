@@ -1,21 +1,21 @@
 @extends('template/template-1')
 @section('content')
-<script src="{{url('/')}}/js/debtor/debtor.js">
-</script>
+<script type="text/javascript" src="{{url('/')}}/js/debtor/debtor.js"></script> 
+</head>
 <h1>เพิ่มลูกค้า</h1>
-<form action="{{ url('/') }}/debtor" method="POST" class="form-horizontal">
-	{{ csrf_field() }}
-	{{ method_field('POST') }}
-	
-<div class="row">
+@forelse($table_customer as $row)
+	<form action="{{ url('/') }}/finance/debtor/{{ $row->id }}" method="POST" class="form-horizontal">
+		{{ csrf_field() }}
+		{{ method_field('PUT') }}
+		<div class="row">
 	<div class="col-sm-3 col-form-control">
 		<label class="col-sm-3 col-form-lable">รหัสลูกค้า:</label>
-		<input type="text" name="id_customer" placeholder="รหัสลูกค้า" class="form-control" style="width: 60%" >
+		<input type="text" name="id_customer" disabled placeholder="รหัสลูกค้า" class="form-control" style="width: 60%" value="{{ $row->id_customer }}">
 	</div>
 		<label class="col-sm-0 col-form-lable">ประเภทลูกหนี้:</label>
 		<div class="col-sm-4">
 			<select name="type_customer" class="form-control" style="width: 40%; height: 4%">
-				<option selected disabled value=>เลือกประเภทลูกหนี้</option>
+				<option selected disabled>เลือกประเภทลูกหนี้</option>
   				<option value="consumer">consumer</option>
   				<option value="industries">industries</option>
   				<option value="north">ภาคเหนือ</option>
@@ -28,49 +28,49 @@
 	<div class="row" style="border: 0px">
 		<div class="col-sm-8">
 		<strong class="col-sm-1">ชื่อบริษัท : </strong>
-		<input type="text" name="name_company" placeholder="ชื่อบริษัท" class="form-control" style="width: 50%" >
+		<input type="text" name="name_company" placeholder="ชื่อบริษัท" class="form-control" style="width: 50%" value="{{ $row->name_company }}">
 	</div>
 	</div>
 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#home">รายละเอียด</a></li>
     <li><a data-toggle="tab" href="#menu1">ยอดหนี้</a></li>
-    <li><a data-toggle="tab" href="#menu2">ผู้ติดต่อ</a></li>
+    <li><a data-toggle="tab" href="#menu2">การ์ดลูกหนี้</a></li>
+    <li><a data-toggle="tab" href="#menu3">ยอดคงค้าง</a></li>
+    <li><a data-toggle="tab" href="#menu4">ผู้ติดต่อ</a></li>
   </ul>
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <div class="row">
 
-      	<label class="col-sm-1 form-label">รหัสผังบัญชี :</label><input class="form-control" type="number" name="id_account" style="width: 10%" id="account">&nbsp;<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  เลือกผังบัญชี
+      	<label class="col-sm-1 form-label">รหัสผังบัญชี :</label><input class="form-control" type="number" name="id_account" style="width: 10%" id="account" value="{{$row->id_account}}">&nbsp;<button type="button" class="glyphicon glyphicon-list-alt" data-toggle="modal" data-target="#exampleModal">
 </button></div>
 		<div class="row">
 		<label class="col-sm-1 col-form-lable">ชื่อผู่ติดต่อ : </label>
-		<input type="text" name="name_customer" placeholder="ชื่อผู่ติดต่อ" class="form-control" style="width: 50%">
+		<input type="text" name="name_customer" placeholder="ชื่อผู่ติดต่อ" class="form-control" style="width: 50%" value="{{$row->name_customer}}">
 		</div>
 		<div class="row">
 		<label class="col-sm-1 col-form-lable">ที่อยู่ : </label>
-		<input type="text" name="address" placeholder="ที่อยู่" class="form-control" style="width: 50%">
+		<input type="text" name="address" placeholder="ที่อยู่" class="form-control" style="width: 50%" value="{{$row->address}}">
 		</div>
 		<div class="row">
 		<label class="col-sm-1 col-form-lable">สถานที่ส่งของ : </label>
-		<input type="text" name="place_delivery" placeholder="สถานที่ส่งของ" class="form-control" style="width: 50%">
+		<input type="text" name="place_delivery" placeholder="สถานที่ส่งของ" class="form-control" style="width: 50%" value="{{$row->place_delivery}}">
 		</div>
 		<div class="row">
-      	<label class="col-sm-1 form-label">รหัสพนักงาน :</label><input class="form-control" type="text" name="id_user" style="width: 10%" id="id_user">&nbsp;<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#user">
-  เลือกพนักงาน
+      	<label class="col-sm-1 form-label">รหัสพนักงาน :</label><input class="form-control" type="text" name="id_user" style="width: 10%" id="id_user" value="{{$row->id_user}}">&nbsp;<button type="button" class="glyphicon glyphicon-list-alt" data-toggle="modal" data-target="#user">
 </button></div>
 		<div class="row">
 		<label class="col-sm-1 col-form-lable">เบอร์โทรศัพท์ : </label>
-		<input type="text" name="telephone" placeholder="เบอร์โทรศัพท์" class="form-control" style="width: 30%">
+		<input type="text" name="telephone" placeholder="เบอร์โทรศัพท์" class="form-control" style="width: 30%" value="{{$row->telephone}}">
 		<label class="col-sm-1 col-form-lable">เบอร์FAX : </label>
-		<input type="text" name="fax_number" placeholder="เบอร์FAX" class="form-control" style="width: 30%">
+		<input type="text" name="fax_number" placeholder="เบอร์FAX" class="form-control" style="width: 30%" value="{{$row->fax_number}}">
 		</div>
 		<div class="row">
 		<label class="col-sm-1 col-form-lable">เขตการขาย:</label>
 			<select name="sales_area" class="form-control" style="width: 20%; height: 4%">
-				<option selected disabled value=>เขตการขาย</option>
+				<option selected disabled value>เขตการขาย</option>
   				<option value="bankok">เขตกรุงเทพฯ</option>
   				<option value="industries">ภาคกลาง</option>
   				<option value="south">ภาคใต้</option>
@@ -91,7 +91,7 @@
   		</div>
       <div class="row">
     <label class="col-sm-1 col-form-lable">หมายเหตุ : </label>
-    <input type="text" name="note" class="form-control" style="width: 30%">
+    <input type="text" name="note" class="form-control" style="width: 30%" value="{{$row->note}}">
     <label class="col-sm-1 col-form-lable">สถานที่ประกอบการ:</label>
       <select name="location" class="form-control" style="width: 10%; height: 4%">
         <option selected disabled value>สถานที่ประกอบการ</option>
@@ -99,24 +99,24 @@
           <option value="branch">สาขา</option>
         </select>
         <label class="col-sm-1 col-form-lable">สำนักงาน/สาขา : </label>
-        <input type="text" name="branch" class="form-control" style="width: 10%">
+        <input type="text" name="branch" class="form-control" style="width: 10%" value="{{$row->branch}}">
     </div>
     <div class="row">
     <label class="col-sm-1 col-form-lable">วงเงินเครดิต : </label>
-    <input type="number" name="credit" placeholder="วงเงินเครดิต" class="form-control" style="width: 10%">
+    <input type="number" name="credit" placeholder="วงเงินเครดิต" class="form-control" style="width: 10%" value="{{$row->credit}}"> 
     </div>
     <div class="row">
     <label class="col-sm-1 col-form-lable">ระยะเวลาหนี้ : </label>
-    <input type="number" name="debt_period" placeholder="ระยะเวลาหนี้" class="form-control" style="width: 10%">
+    <input type="number" name="debt_period" placeholder="ระยะเวลาหนี้" class="form-control" style="width: 10%" value="{{$row->debt_period}}">
     <label class="col-sm-1 col-form-lable">วัน</label>
     </div>
     <div class="row">
     <label class="col-sm-1 col-form-lable">ระดับของราคาสินค้า : </label>
-    <input type="number" name="degree_product"  class="form-control" style="width: 10%">
+    <input type="number" name="degree_product"  class="form-control" style="width: 10%" value="{{$row->degree_product}}">
     <label class="col-sm-1 col-form-lable">ส่วนลดประจำ : </label>
-    <input type="number" name="deposit_discount"  class="form-control" style="width: 10%">
+    <input type="number" name="deposit_discount"  class="form-control" style="width: 10%" value="{{$row->deposit_discount}}">
     <label class="col-sm-1 col-form-lable">เลขที่ภาษี : </label>
-    <input type="number" name="tax_number"  class="form-control" style="width: 10%">
+    <input type="number" name="tax_number"  class="form-control" style="width: 10%" value="{{$row->tax_number}}">
     </div>
 
     <div class="row">
@@ -149,14 +149,11 @@
           <option value="last_fri">ทุกวัน วันศุกร์สุดท้ายของทุกเดือน</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-danger btn-right">Save</button>
-</form>
+    <br>
+    <button type="submit" class="btn btn-outline-primary">Save</button>
+    <a class="btn btn-outline-danger" href="{{url('/')}}/debtor">Back</a>
+	</form>
 
-
-
-
-
-<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -198,12 +195,12 @@
         </button>
       </div>
       <div class="modal-body">
-      
+       
         <table class="table">
            <th></th>
         	<th>รหัสพนักงาน</th>
         	<th>ชื่อพนักงาน</th>
-            @foreach($table_user as $row_user)
+           @foreach($table_user as $row_user)
           <tr>
             <td><input type="radio" name="id_user" value="{{ $row_user->id_user }}"></td>
             <td>{{ $row_user->id_user }}</td>
@@ -231,7 +228,7 @@
     
   </div>
 </form>
+@empty	
+	<div>This Customer id does not exist</div>
+@endforelse
 @endsection
-
-
-

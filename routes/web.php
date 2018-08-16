@@ -39,11 +39,11 @@ Route::get('/others',function(){
 });
 
 //Process Deptor
-Route::resource('/debtor', 'CustomerController');
+Route::resource('/finance/debtor', 'CustomerController');
 
-Route::resource('/debtout', 'DebtoutController');
+Route::resource('/finance/debtout', 'DebtoutController');
 
-Route::resource('/settle', 'SettleController');
+Route::resource('/finance/settle', 'SettleController');
 
 
 Auth::routes();

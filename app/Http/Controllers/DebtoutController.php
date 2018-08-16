@@ -24,7 +24,7 @@ class DebtoutController extends Controller
             'table_customer' => $table_customer,
             'q' => $q
         ];
-        return view('debtout/index',$data);
+        return view('finance/debtout/index',$data);
 
     }
 
@@ -40,7 +40,7 @@ class DebtoutController extends Controller
         $data = [
             'table_customer' => $table_customer
         ];
-        return view('debtout/create',$data);
+        return view('finance/debtout/create',$data);
     }
 
     /**
@@ -73,7 +73,7 @@ class DebtoutController extends Controller
         $model_debtout->insert($id_dept, $id_customer, $type_tax, $tax_liability, $date_dept, $deadline, $tax_filing, $total_dept, $tax_value, $tax, $total);
         $model_customer->update_dept($debt_balance, $id_customer);
 
-        return redirect('/debtout');
+        return redirect('finance/debtout');
 
     }
 
@@ -104,7 +104,7 @@ class DebtoutController extends Controller
             'table_debtout' => $table_debtout,
             'table_customer' => $table_customer
         ];
-        return view('debtout/edit',$data);
+        return view('finance/debtout/edit',$data);
 
     }
 
@@ -136,7 +136,7 @@ class DebtoutController extends Controller
         $model_debtout->update($id_customer, $type_tax, $tax_liability, $date_dept, $deadline, $tax_filing, $total_dept, $tax_value, $tax, $total, $id);
         $model_customer->update_dept($debt_balance, $id_customer);
 
-        return redirect('/debtout');
+        return redirect('finance/debtout');
     }
 
     /**
@@ -150,6 +150,6 @@ class DebtoutController extends Controller
         $model = new DebtoutModel();
         $model->delete($id);
 
-        return redirect('/debtout');
+        return redirect('finance/debtout');
     }
 }

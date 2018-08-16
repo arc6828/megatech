@@ -29,7 +29,7 @@ class CustomerController extends Controller
         'table_user' => $table_user,
         'q' => $q
         ];
-        return view('debtor/index',$data);
+        return view('finance/debtor/index',$data);
 
     }
 
@@ -48,7 +48,7 @@ class CustomerController extends Controller
             'table_account'=> $table_account,
             'table_user' => $table_user
         ];
-        return view('debtor/create',$data);
+        return view('finance/debtor/create',$data);
     }
 
     /**
@@ -87,7 +87,7 @@ class CustomerController extends Controller
 
         $model = new CustomerModel();
         $model->insert($id_customer, $type_customer, $name_company, $id_account, $name_customer, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number, $debt_balance);
-        return redirect('/debtor');
+        return redirect('finance//debtor');
     }
 
     /**
@@ -103,7 +103,7 @@ class CustomerController extends Controller
         $data = [
             'table_customer' => $table_customer
         ];
-        return view('debtor/show',$data);
+        return view('finance/debtor/show',$data);
 
     }
 
@@ -127,7 +127,7 @@ class CustomerController extends Controller
             'table_user' => $table_user,
             'table_account' => $table_account
         ];
-        return view('debtor/edit',$data);
+        return view('finance/debtor/edit',$data);
     }
 
     /**
@@ -164,7 +164,7 @@ class CustomerController extends Controller
         $model = new CustomerModel();
         $model->update($type_customer, $name_company, $id_account, $name_customer, $address, $place_delivery, $id_user, $telephone, $sales_area, $transpot, $note, $credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition, $location, $branch, $fax_number, $id);
 
-        return redirect('/debtor');
+        return redirect('finance//debtor');
 
     }
 
@@ -179,7 +179,7 @@ class CustomerController extends Controller
         $model = new CustomerModel();
         $model->delete($id);
 
-        return redirect('/debtor');
+        return redirect('finance/debtor');
 
     }
 }
