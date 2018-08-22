@@ -87,7 +87,7 @@ class CustomerController extends Controller
 
         $model = new CustomerModel();
         $model->insert($id_customer, $type_customer, $name_company, $id_account, $name_customer, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number, $debt_balance);
-        return redirect('finance//debtor');
+        return redirect('finance/debtor');
     }
 
     /**

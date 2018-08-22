@@ -81,7 +81,7 @@
 
             <div class="content">
                  <div class="title m-b-md">
-                    <img src="{{ url('/') }}/images/megatech-logo.jpg" width="500">
+                    <img src="{{ url('/') }}/images/megatech-logo.jpg" style="max-width: 500px; width:100%;">
                 </div>
 
                 <div class="links">
