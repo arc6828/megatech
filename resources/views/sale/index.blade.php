@@ -27,7 +27,7 @@
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-primary my-3" href="#">
           <div class="px-4"><span class="round round-primary my-2">ร</span></i></div>
-          <div>รับเงิน<br>มัดจำ</div>            
+          <div>รับเงิน<br>มัดจำ (ทีหลัง)</div>            
         </a>
       </div>
       <div class="col-6 col-md-4 ">
