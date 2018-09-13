@@ -13,7 +13,7 @@
             <ul id="sidebarnav">
                 
                 <li>
-                    <a href="{{url('/')}}/sale" class="waves-effect"><i class="fa fa-mail-reply m-r-10" aria-hidden="true"></i>การขาย</a>
+                    <a href="{{url('/')}}/sales" class="waves-effect"><i class="fa fa-mail-reply m-r-10" aria-hidden="true"></i>การขาย</a>
                 </li>
                 <li>
                     <a href="{{url('/')}}/purchase" class="waves-effect"><i class="fa fa-mail-forward m-r-10" aria-hidden="true"></i>การซื้อ</a>

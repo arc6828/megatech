@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 use App\DebtoutModel;
 use App\CustomerModel;
-use Illuminate\Http\Request;
 
 class DebtoutController extends Controller
 {

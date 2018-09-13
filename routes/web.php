@@ -15,12 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/index',function(){
-	return redirect('/sale');
+	return redirect('/sales');
 });
 
 //Main Menu
-Route::get('/sale',function(){
-    return view('sale/index');
+Route::get('/sales',function(){
+    return view('sales/index');
 });
 Route::get('/purchase',function(){
 	return view('purchase/index');
@@ -37,6 +37,14 @@ Route::get('/account',function(){
 Route::get('/others',function(){
     return view('others/index');
 });
+
+
+//1 Sales
+Route::resource('/sales/quotation', 'Sales\QuotationController');
+
+//not confirm
+Route::resource('/sales/employee', 'SalesEmployeeController');
+
 
 //Process Deptor
 Route::resource('/finance/debtor', 'CustomerController');

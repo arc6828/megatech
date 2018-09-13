@@ -13,7 +13,7 @@
   <div class="card-block">      
     <div class="row text-center">
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/sales/quotation">
           <div class="px-4"><span class="round round-primary my-2">บ</span></i></div>
           <div>ใบเสนอ<br>ราคา</div>
         </a>
@@ -49,7 +49,7 @@
         </a>
       </div>   
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/sales/employee">
           <div class="px-4"><span class="round round-primary my-2">พ</span></div>
           <div>พนักงานขาย</div>             
         </a>
