@@ -12,39 +12,46 @@
 
 <div class="card">
     <div class="card-block">
-    	<div class="row">
-			<div class="col-sm-6">
-				<form class="form-inline" action="{{ url('/') }}/finance/debtor" method="GET">
-					<input type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" class="form-control mb-2 mr-2">
-					<button type="submit" class="btn btn-primary mb-2 mr-2">ค้นหา</button>
-				</form>
-			</div>
-		</div>
+				
+		<form class="" action="{{ url('/') }}/sales/quotation" method="GET">
+			<div class="form-group form-inline pull-right">
+				<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
+				<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>	
+	        </div>	
+    	</form>
 
 		<div class="table-responsive">
 			<table class="table table-hover text-center">
 				<thead>
 					<tr>					
-						<th>เลขที่เอกสาร</th>
-						<th>วันที่</th>
-						<th>ยอดสุทธิ</th>
-						<th>รหัสลูกค้า</th>
-						<th>ชื่อบริษัท</th>
-						<th>action</th>
+						<th class="text-center">เลขที่เอกสาร</th>
+						<th class="text-center">วันที่</th>
+						<th class="text-center">ยอดสุทธิ</th>
+						<th class="text-center">รหัสลูกค้า</th>
+						<th class="text-center">ชื่อบริษัท</th>
+						<th class="text-center">รหัสพนักงาน</th>
+						<th class="text-center">สถานะ</th>
+						<th class="text-center">action</th>
 					</tr>	
 				</thead>
 				<tbody>
 					@foreach($table_quotation as $row)
 					<tr>
-						<td>{{ $row->quotation_id }}</td>
+						<td>
+							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">  
+								{{ $row->quotation_num }}
+							</a>
+						</td>
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->total }}</td>
 						<td>{{ $row->customer_id }}</td>
 						<td>{{ "<ชื่อบริษัท>" }}</td>
+						<td>{{ $row->user_id }}</td>
+						<td>{{ $row->status }}</td>
 						<td>
-							<div class="row">
-								<a href="{{ url('/') }}/sales/quotation/{{ $row->id }}/edit"></a>
-								<form action="{{ url('/') }}/sales/quotation/{{ $row->id }}" method="POST">
+							<a href="#"><span class="fa fa-trash" style="color: red"></span></a>
+							<div class="row hide">
+								<form action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" method="POST">
 									{{ csrf_field() }}
 									{{ method_field('DELETE') }}
 									<button type="submit"></button>
@@ -57,8 +64,6 @@
 			
 			</table>	
 		</div>
-			
-		
 
 	</div>
 </div>

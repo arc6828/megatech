@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\QuotationModel;
+use App\QuotationDetailModel;
 
 class QuotationController extends Controller
 {
@@ -66,7 +67,17 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $model = new QuotationModel();
+        $table_quotation = $model->select_id($id);
+
+        $model = new QuotationDetailModel();
+        $table_quotation_detail = $model->select_quotation_id($id);
+
+        $data = [
+            'table_quotation' => $table_quotation,
+            'table_quotation_detail' => $table_quotation_detail
+        ];
+        return view('sales/quotation/edit',$data);
     }
 
     /**
