@@ -114,6 +114,7 @@
     <script src="{{url('/')}}/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
     <!--Custom JavaScript -->
     <script src="{{url('/')}}/assets/js/custom.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/momentjs/moment.min.js"></script>
 
 
     <!-- ============================================================== -->

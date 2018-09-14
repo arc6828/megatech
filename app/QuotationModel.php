@@ -13,7 +13,7 @@ class QuotationModel //extends Model
 	}
 
 	function select_id($id){
-		$sql = "select * from tb_quotation where quotation_id = {$id}";
+		$sql = "select * from tb_quotation where quotation_id = '{$id}'";
 		return DB::select($sql, []);
 	}
 

@@ -39,13 +39,13 @@
 					<tr>
 						<td>
 							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">  
-								{{ $row->quotation_num }}
+								{{ $row->quotation_id }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->total }}</td>
 						<td>{{ $row->customer_id }}</td>
-						<td>{{ "<ชื่อบริษัท>" }}</td>
+						<td>{{ $row->customer_id }}</td>
 						<td>{{ $row->user_id }}</td>
 						<td>{{ $row->status }}</td>
 						<td>

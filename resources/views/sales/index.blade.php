@@ -49,20 +49,20 @@
         </a>
       </div>   
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/sales/employee">
-          <div class="px-4"><span class="round round-primary my-2">พ</span></div>
-          <div>พนักงานขาย</div>             
+        <a class="btn btn-outline-success my-3" href="{{url('/')}}/sales/employee">
+          <div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
+          <div>แฟ้มหลัก<br>พนักงานขาย</div>             
         </a>
       </div> 
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-4"><span class="round round-primary my-2">ฟ</span></div>
+        <a class="btn btn-outline-success my-3" href="{{url('/')}}/">
+          <div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
           <div>แฟ้มหลัก<br>ลูกค้า</div>             
         </a>
       </div> 
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-          <div class="px-4"><span class="round round-primary my-2">ฟ</span></div>
+        <a class="btn btn-outline-success my-3" href="{{url('/')}}/">
+          <div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
           <div>แฟ้มหลัก<br>สินค้า</div>             
         </a>
       </div>        
