@@ -3,7 +3,7 @@
         <!-- ============================================================== -->
         <!-- Logo -->
         <!-- ============================================================== -->
-        <div class="navbar-header">
+        <div class="navbar-header d-none d-md-block  d-lg-block d-xl-block">
             <a class="navbar-brand" href="{{url('/')}}">
 
                 
