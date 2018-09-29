@@ -21,24 +21,24 @@
       {{ method_field('PUT') }}
     <div class="card">
         <div class="card-block">
-          <div class="row"> 
-            <div class="col-lg-9 align-self-center">              
+          <div class="row">
+            <div class="col-lg-9 align-self-center">
                 <h4 class="card-title">Quotation id : {{ $row->quotation_id }}</h4>
                 <h6 class="card-subtitle">Update infomation in the form</h6>
             </div>
-            <div class="col-lg-3 align-self-center">              
+            <div class="col-lg-3 align-self-center">
             <div class="dropdown pull-right">
-              <button type="button" class="btn btn-secondary btn-circle btn-sm" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="border: none;"><i class="fa fa-ellipsis-v"></i> </button>             
+              <button type="button" class="btn btn-secondary btn-circle btn-sm" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="border: none;"><i class="fa fa-ellipsis-v"></i> </button>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                
+
                 <a class="dropdown-item" href="javascript:document.getElementById('form-delete').submit();">
                   <i class="fa fa-trash-o"></i> Remove
                 </a>
               </div>
-            </div>      
+            </div>
             </div>
           </div>
-          
+
           <div>
             <div class="form-group form-inline">
               <label class="col-lg-2">เลขที่ใบเสนอราคา</label>
@@ -49,7 +49,7 @@
               <div class="col-lg-3">
                 <input type="datetime-local" name="datetime" class="form-control form-control-line"  value="" readonly>
               </div>
-            </div>    
+            </div>
 
             <div class="form-group form-inline">
                 <label class="col-lg-2">รหัสลูกค้า</label>
@@ -83,7 +83,14 @@
             <div class="form-group form-inline">
                 <label class="col-lg-2">ชนิดภาษี</label>
                 <div class="col-lg-3">
-                <input name="tax_type"  class="form-control form-control-line" value="{{ $row->tax_type }}" >
+                    <select name="tax_type" class="form-control" required>
+                        <option value="" >None</option>
+                        @foreach(["ราคาสินค้ารวมภาษี","ราคาสินค้าแยกภาษี","อัตราภาษี 0"] as $row_tax_type)
+                        <option value="{{ $row_tax_type }}" {{ $row_tax_type === $row->tax_type ? "selected":"" }}>
+                            {{  $row_tax_type }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
                 <label class="col-lg-2 offset-lg-1">ระยะเวลาในกาส่งของ (วัน)</label>
                 <div class="col-lg-3">
@@ -98,18 +105,40 @@
                 </div>
                 <label class="col-lg-2 offset-lg-1">สถานะ</label>
                 <div class="col-lg-3">
-                <input name="status"  class="form-control form-control-line" value="{{ $row->status }}" >
+                    <input name="status"  class="form-control form-control-line" value="{{ $row->status }}" >
+                    <select name="zone" class="form-control" required>
+                        <option value="" >None</option>
+                        @foreach(["เขตกรุงเทพฯ","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ"] as $row_zone)
+                        <option value="{{ $row_zone }}" {{ $row_zone === $row->zone ? "selected":"" }}>
+                            {{  $row_zone }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
             <div class="form-group form-inline">
               <label class="col-lg-2">รหัสพนักงานขาย</label>
               <div class="col-lg-3">
-                <input name="user_id"  class="form-control form-control-line" value="{{ $row->user_id }}" >
+                    <select name="user_id" class="form-control" required>
+                        <option value="" >None</option>
+                        @foreach($table_sales_user as $row_sales_user)
+                        <option value="{{ $row_sales_user->id }}" {{ $row_sales_user->id === $row->user_id ? "selected":"" }}>
+                            {{  $row_sales_user->name }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
               <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
-              <div class="col-lg-3">
-                <input name="zone"  class="form-control form-control-line" value="{{ $row->zone }}" >
+                <div class="col-lg-3">
+                    <select name="zone" class="form-control" required>
+                        <option value="" >None</option>
+                        @foreach(["เขตกรุงเทพฯ","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ"] as $row_zone)
+                        <option value="{{ $row_zone }}" {{ $row_zone === $row->zone ? "selected":"" }}>
+                            {{  $row_zone }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
@@ -122,7 +151,7 @@
           <div class="table-responsive">
             <table class="table table-hover text-center">
               <thead>
-                <tr>          
+                <tr>
                   <th class="text-center">รหัสสินค้า</th>
                   <th class="text-center">รายละเอียดสินค้า</th>
                   <th class="text-center">จำนวน</th>
@@ -132,13 +161,13 @@
                   <th class="text-center">ราคาขาย</th>
                   <th class="text-center">ราคาขายรวม</th>
                   <th class="text-center">action</th>
-                </tr> 
+                </tr>
               </thead>
               <tbody>
                 @foreach($table_quotation_detail as $row)
                 <tr>
                   <td>
-                    <a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_detail_id }}/edit">  
+                    <a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_detail_id }}/edit">
                       {{ $row->product_id }}
                     </a>
                   </td>
@@ -158,23 +187,23 @@
                       </form>
                     </div>
                   </td>
-                </tr> 
-                @endforeach 
-              </tbody>          
-            </table>  
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div class="card-block">    
+        <div class="card-block">
                 <div class="form-group form-inline">
                   <label class="col-lg-6">หมายเหตุ</label>
                   <div class="col-lg-6">
                     <input name="remark"  class="form-control form-control-line" value="{{ $row->remark }}" >
                   </div>
-                </div>    
-          </div>          
+                </div>
+          </div>
       </div>
 
       <div class="card">
@@ -186,7 +215,7 @@
                   <div class="col-lg-3">
                     <input type="number" name="total"  class="form-control form-control-line" value="{{ $row->total }}" readonly>
                   </div>
-                </div>                
+                </div>
                 <div class="form-group form-inline">
                   <label class="col-lg-3">อัตราภาษี</label>
                   <div class="col-lg-3">
@@ -214,18 +243,18 @@
                   <button class="btn btn-success" type="submit" >Update</button>
                 </div>
               </div>
-            </div>  
+            </div>
 
           </div>
-      </div>   
-</form>   
+      </div>
+</form>
 @empty
 <div class="text-center">
   This activity id ({{ $row->id_activity }}) does not exist
 </div>
-@endforelse 
+@endforelse
 
-@endsection 
+@endsection
 
 @section('plugins-js')
 <script type="text/javascript">
@@ -236,6 +265,6 @@
     var str_time = moment("{{ $row->datetime }}").format('YYYY-MM-DDThh:mm');
     dateControl.value = str_time;
   });
-  
+
 </script>
-@endsection 
+@endsection

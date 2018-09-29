@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\QuotationModel;
 use App\QuotationDetailModel;
+use App\UserModel;
 
 class QuotationController extends Controller
 {
@@ -16,10 +17,8 @@ class QuotationController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new QuotationModel();
         $q = $request->input('q');
-        //$table_debtout = $model->select_search($q);
-        $table_quotation = $model->select();
+        $table_quotation = QuotationModel::select_by_keyword($q);
         $data = [
             'table_quotation' => $table_quotation,
             'q' => $q
@@ -56,7 +55,7 @@ class QuotationController extends Controller
      */
     public function show($id)
     {
-        //
+        //no show
     }
 
     /**
@@ -67,15 +66,14 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
-        $model = new QuotationModel();
-        $table_quotation = $model->select_id($id);
-
-        $model = new QuotationDetailModel();
-        $table_quotation_detail = $model->select_quotation_id($id);
+        $table_quotation = QuotationModel::select_by_id($id);
+        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
+        $table_sales_user = UserModel::select_by_role('sales');
 
         $data = [
             'table_quotation' => $table_quotation,
-            'table_quotation_detail' => $table_quotation_detail
+            'table_quotation_detail' => $table_quotation_detail,
+            'table_sales_user' => $table_sales_user,
         ];
         return view('sales/quotation/edit',$data);
     }
