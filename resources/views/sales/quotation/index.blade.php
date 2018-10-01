@@ -3,7 +3,7 @@
 @section('title','ใบเสนอราคา')
 
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/sales/quotation/create" class="btn pull-right hidden-sm-down btn-success"> 
+<a href="{{ url('/') }}/sales/quotation/create" class="btn pull-right hidden-sm-down btn-success">
 	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
 </a>
 @endsection
@@ -12,42 +12,42 @@
 
 <div class="card">
     <div class="card-block">
-				
+
 		<form class="" action="{{ url('/') }}/sales/quotation" method="GET">
 			<div class="form-group form-inline pull-right">
 				<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
-				<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>	
-	        </div>	
+				<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
+	        </div>
     	</form>
 
 		<div class="table-responsive">
 			<table class="table table-hover text-center">
 				<thead>
-					<tr>					
+					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
 						<th class="text-center">ยอดสุทธิ</th>
-						<th class="text-center">รหัสลูกค้า</th>
+						<th class="text-center">ชื่อลูกค้า</th>
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">รหัสพนักงาน</th>
 						<th class="text-center">สถานะ</th>
 						<th class="text-center">action</th>
-					</tr>	
+					</tr>
 				</thead>
 				<tbody>
 					@foreach($table_quotation as $row)
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">  
+							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
 								{{ $row->quotation_id }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->total }}</td>
-						<td>{{ $row->customer_id }}</td>
-						<td>{{ $row->customer_id }}</td>
-						<td>{{ $row->user_id }}</td>
-						<td>{{ $row->status }}</td>
+						<td>{{ $row->customer_name }}</td>
+						<td>{{ $row->company_name }}</td>
+						<td>{{ $row->name }}</td>
+						<td>{{ $row->sales_status_name }}</td>
 						<td>
 							<a href="#"><span class="fa fa-trash" style="color: red"></span></a>
 							<div class="row hide">
@@ -58,11 +58,11 @@
 								</form>
 							</div>
 						</td>
-					</tr>	
-					@endforeach	
+					</tr>
+					@endforeach
 				</tbody>
-			
-			</table>	
+
+			</table>
 		</div>
 
 	</div>

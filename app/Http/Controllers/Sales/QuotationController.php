@@ -5,8 +5,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\QuotationModel;
-use App\QuotationDetailModel;
+
+use App\CustomerModel;
+use App\DeliveryTypeModel;
+use App\TaxTypeModel;
+use App\SalesStatusModel;
 use App\UserModel;
+use App\ZoneModel;
+
+use App\QuotationDetailModel;
+
+
 
 class QuotationController extends Controller
 {
@@ -67,13 +76,23 @@ class QuotationController extends Controller
     public function edit($id)
     {
         $table_quotation = QuotationModel::select_by_id($id);
-        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
+        $table_customer = CustomerModel::select_all();
+        $table_delivery_type = DeliveryTypeModel::select_all();
+        $table_tax_type = TaxTypeModel::select_all();
+        $table_sales_status = SalesStatusModel::select_all();
         $table_sales_user = UserModel::select_by_role('sales');
+        $table_zone = ZoneModel::select_all();
+        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
 
         $data = [
             'table_quotation' => $table_quotation,
-            'table_quotation_detail' => $table_quotation_detail,
+            'table_customer' => $table_customer,
+            'table_delivery_type' => $table_delivery_type,
+            'table_tax_type' => $table_tax_type,
+            'table_sales_status' => $table_sales_status,
             'table_sales_user' => $table_sales_user,
+            'table_zone' => $table_zone,
+            'table_quotation_detail' => $table_quotation_detail,
         ];
         return view('sales/quotation/edit',$data);
     }

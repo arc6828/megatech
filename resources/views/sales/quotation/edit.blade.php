@@ -41,20 +41,20 @@
 
           <div>
             <div class="form-group form-inline">
-              <label class="col-lg-2">เลขที่ใบเสนอราคา</label>
-              <div class="col-lg-3">
-                <input type="text" name="quotation_number" class="form-control form-control-line" value="{{ $row->quotation_id}}" readonly>
-              </div>
-              <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
-              <div class="col-lg-3">
-                <input type="datetime-local" name="datetime" class="form-control form-control-line"  value="" readonly>
-              </div>
-            </div>
-
-            <div class="form-group form-inline">
                 <label class="col-lg-2">รหัสลูกค้า</label>
                 <div class="col-lg-3">
-                <input type="text" name="customer_id" class="form-control form-control-line"  value="{{ $row->customer_id }}" >
+                    <select name="customer_id" class="form-control" required>
+                        <option value="" >None</option>
+                        @foreach($table_customer as $row_customer)
+                        <option value="{{ $row_customer->customer_id }}" {{ $row_customer->customer_id === $row->customer_id ? "selected":"" }}>
+                            {{  $row_customer->customer_name }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+                <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
+                <div class="col-lg-3">
+                  <input type="datetime-local" name="datetime" class="form-control form-control-line"  value="" readonly>
                 </div>
             </div>
 
@@ -76,23 +76,30 @@
                 </div>
                 <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
                 <div class="col-lg-3">
-                <input name="transportation"  class="form-control form-control-line" value="{{ $row->transportation }}" >
+                    <select name="delivery_type_id" class="form-control" required>
+                        <option value="" >None</option>
+                        @foreach($table_delivery_type as $row_delivery_type)
+                        <option value="{{ $row_delivery_type->delivery_type_id }}" {{ $row_delivery_type->delivery_type_id === $row->delivery_type_id ? "selected":"" }}>
+                            {{  $row_delivery_type->delivery_type_name }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
             <div class="form-group form-inline">
                 <label class="col-lg-2">ชนิดภาษี</label>
                 <div class="col-lg-3">
-                    <select name="tax_type" class="form-control" required>
+                    <select name="tax_type_id" class="form-control" required>
                         <option value="" >None</option>
-                        @foreach(["ราคาสินค้ารวมภาษี","ราคาสินค้าแยกภาษี","อัตราภาษี 0"] as $row_tax_type)
-                        <option value="{{ $row_tax_type }}" {{ $row_tax_type === $row->tax_type ? "selected":"" }}>
-                            {{  $row_tax_type }}
+                        @foreach($table_tax_type as $row_tax_type)
+                        <option value="{{ $row_tax_type->tax_type_id }}" {{ $row_tax_type->tax_type_id === $row->tax_type_id ? "selected":"" }}>
+                            {{  $row_tax_type->tax_type_name }}
                         </option>
                         @endforeach
                     </select>
                 </div>
-                <label class="col-lg-2 offset-lg-1">ระยะเวลาในกาส่งของ (วัน)</label>
+                <label class="col-lg-2 offset-lg-1">ระยะเวลาในการส่งของ (วัน)</label>
                 <div class="col-lg-3">
                 <input type="number" name="delivery_time"  class="form-control form-control-line" value="{{ $row->delivery_time }}" >
                 </div>
@@ -105,12 +112,11 @@
                 </div>
                 <label class="col-lg-2 offset-lg-1">สถานะ</label>
                 <div class="col-lg-3">
-                    <input name="status"  class="form-control form-control-line" value="{{ $row->status }}" >
-                    <select name="zone" class="form-control" required>
+                    <select name="sales_status_id" class="form-control" required>
                         <option value="" >None</option>
-                        @foreach(["เขตกรุงเทพฯ","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ"] as $row_zone)
-                        <option value="{{ $row_zone }}" {{ $row_zone === $row->zone ? "selected":"" }}>
-                            {{  $row_zone }}
+                        @foreach($table_sales_status as $row_sales_status)
+                        <option value="{{ $row_sales_status->sales_status_id }}" {{ $row_sales_status->sales_status_id === $row->sales_status_id ? "selected":"" }}>
+                            {{  $row_sales_status->sales_status_name }}
                         </option>
                         @endforeach
                     </select>
@@ -131,11 +137,11 @@
                 </div>
               <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
                 <div class="col-lg-3">
-                    <select name="zone" class="form-control" required>
+                    <select name="zone_id" class="form-control" required>
                         <option value="" >None</option>
-                        @foreach(["เขตกรุงเทพฯ","ภาคกลาง","ภาคเหนือ","ภาคใต้","ภาคตะวันออกเฉียงเหนือ"] as $row_zone)
-                        <option value="{{ $row_zone }}" {{ $row_zone === $row->zone ? "selected":"" }}>
-                            {{  $row_zone }}
+                        @foreach($table_zone as $row_zone)
+                        <option value="{{ $row_zone->zone_id }}" {{ $row_zone->zone_id === $row->zone_id ? "selected":"" }}>
+                            {{  $row_zone->zone_name }}
                         </option>
                         @endforeach
                     </select>
