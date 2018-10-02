@@ -39,7 +39,7 @@
 					<tr>
 						<td>
 							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
-								{{ $row->quotation_id }}
+								{{ $row->quotation_code }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>

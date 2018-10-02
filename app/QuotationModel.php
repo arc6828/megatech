@@ -43,7 +43,7 @@ class QuotationModel extends Model
 	}
 
 	public static function insert($input){
-        DB::table('tb_quotation')->insert($input);
+        return DB::table('tb_quotation')->insertGetId($input);
 	}
 
 	public static function update_by_id($input, $id){
