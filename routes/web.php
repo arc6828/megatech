@@ -41,6 +41,7 @@ Route::get('/others',function(){
 
 //1 Sales
 Route::resource('/sales/quotation', 'Sales\QuotationController');
+Route::resource('/sales/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
 
 //not confirm
 Route::resource('/sales/employee', 'SalesEmployeeController');
@@ -85,4 +86,3 @@ Route::get('/pages-profile', function () {
 Route::get('/table-basic', function () {
     return view('monster-lite/table-basic');
 });
-

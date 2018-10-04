@@ -26,8 +26,11 @@ class QuotationController extends Controller
      */
     public function index(Request $request)
     {
+        //QUOTATION
         $q = $request->input('q');
         $table_quotation = QuotationModel::select_by_keyword($q);
+        //QUATATION DETAIL
+
         $data = [
             'table_quotation' => $table_quotation,
             'q' => $q
@@ -68,8 +71,9 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
-        //insertGetId
+        $quotation_code = $this->getNewQuatationCode();
         $input = [
+            'quotation_code' => $quotation_code,
             'customer_id' => $request->input('customer_id'),
             'debt_duration' => $request->input('debt_duration'),
             'billing_duration' => $request->input('billing_duration'),
@@ -89,6 +93,15 @@ class QuotationController extends Controller
         ];
         $id = QuotationModel::insert($input);
         return redirect("sales/quotation/{$id}/edit");
+    }
+
+    public function getNewQuatationCode(){
+        $count = QuotationModel::select_count_by_current_month() + 1;
+        $year = (date("Y") + 543) % 100;
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $quotation_code = "QT{$year}{$month}-{$number}";
+        return $quotation_code;
     }
 
     /**
@@ -128,6 +141,7 @@ class QuotationController extends Controller
             'table_sales_user' => $table_sales_user,
             'table_zone' => $table_zone,
             'table_quotation_detail' => $table_quotation_detail,
+            'quotation_id'=> $id,
         ];
         return view('sales/quotation/edit',$data);
     }

@@ -11,14 +11,23 @@
 @section('content')
 
 <div class="card">
-    <div class="card-block">
+	<div class="card-block">
+		<div class="row">
+			<div class="col-lg-6 align-self-center">
+				<h4 class="card-title">รายการใบเสนอราคา</h4>
+				<h6 class="card-subtitle">Display infomation in the table</h6>
+			</div>
+			<div class="col-lg-6 align-self-center">
+				<form class="" action="{{ url('/') }}/sales/quotation" method="GET">
+					<div class="form-group form-inline pull-right">
+						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
+						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
+					</div>
+				</form>
+			</div>
+		</div>
 
-		<form class="" action="{{ url('/') }}/sales/quotation" method="GET">
-			<div class="form-group form-inline pull-right">
-				<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
-				<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
-	        </div>
-    	</form>
+
 
 		<div class="table-responsive">
 			<table class="table table-hover text-center">
@@ -65,6 +74,14 @@
 			</table>
 		</div>
 
+	</div>
+</div>
+
+<div class="form-group">
+	<div class="col-lg-12">
+		<div class="text-center">
+	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+		</div>
 	</div>
 </div>
 @endsection
