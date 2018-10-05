@@ -20,6 +20,12 @@ class QuotationDetailModel extends Model
             ->get();
 	}
 
+  public static function get_total_before_vat_by_quotation_id($quotation_id){
+         return DB::table('tb_quotation_detail')
+            ->where('quotation_id', '=' , $quotation_id )
+            ->sum('discount_price');
+	}
+
 	public static function select_by_id($id){
         return DB::table('tb_quotation_detail')
             ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')

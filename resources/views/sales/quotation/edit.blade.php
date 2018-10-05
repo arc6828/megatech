@@ -153,6 +153,40 @@
 				<input name="remark"	class="form-control form-control-line" value="{{ $row->remark }}" >
 				</div>
 			</div>
+			</div>
+		</div>
+	</div>
+
+	@include('sales/quotation_detail/table')
+
+	<div class="card">
+		<div class="card-block">
+			<div class="row">
+			<div class="col-lg-12">
+				<div class="form-group form-inline">
+				<label class="col-lg-3 offset-lg-6">ยอดรวม</label>
+				<div class="col-lg-3">
+					<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-line" value="{{ $total_before_vat }}" readonly disabled>
+				</div>
+				</div>
+				<div class="form-group form-inline">
+				<label class="col-lg-3">อัตราภาษี</label>
+				<div class="col-lg-3">
+					<input type="number" name="vat_percent"  id="vat_percent" value="{{ $row->vat_percent }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line" >
+					</div>
+				<label class="col-lg-3">มูลค่าภาษี</label>
+				<div class="col-lg-3">
+					<input type="number" name="vat" id="vat" step="any"		value="{{ $total_before_vat * $row->vat_percent / 100 }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line" readonly disabled >
+				</div>
+				</div>
+				<div class="form-group form-inline">
+				<label class="col-lg-3 offset-lg-6">ยอดสุทธิ</label>
+				<div class="col-lg-3">
+					<input type="number" name="net_price" id="net_price"		value="{{ $total_before_vat * (100+$row->vat_percent) /100 }}" class="form-control form-control-line"  readonly >
+				</div>
+				</div>
+			</div>
+			</div>
 
 			<div class="form-group">
 				<div class="col-lg-12">
@@ -163,43 +197,33 @@
 				</div>
 			</div>
 
-			</div>
 		</div>
 	</div>
 
-	<div class="card">
-		<div class="card-block">
-			<div class="row">
-			<div class="col-lg-12">
-				<div class="form-group form-inline">
-				<label class="col-lg-3 offset-lg-6">ยอดรวม</label>
-				<div class="col-lg-3">
-					<input type="number" name="total"	class="form-control form-control-line" value="" readonly disabled>
-				</div>
-				</div>
-				<div class="form-group form-inline">
-				<label class="col-lg-3">อัตราภาษี</label>
-				<div class="col-lg-3">
-					<input type="number" name="tax_rate"	class="form-control form-control-line" value="{{ $row->tax_rate }}" >
-					</div>
-				<label class="col-lg-3">มูลค่าภาษี</label>
-				<div class="col-lg-3">
-					<input type="number" name="tax"	class="form-control form-control-line" value="" >
-				</div>
-				</div>
-				<div class="form-group form-inline">
-				<label class="col-lg-3 offset-lg-6">ยอดสุทธิ</label>
-				<div class="col-lg-3">
-					<input type="number" name="total_tax"	class="form-control form-control-line" value="" readonly>
-				</div>
-				</div>
-			</div>
-			</div>
-		</div>
-	</div>
 </form>
+<script>
+function onChange(obj){
+	var vat = document.getElementById("vat");
+	var vat_percent = document.getElementById("vat_percent");
+	var total_before_vat = document.getElementById("total_before_vat");
+	var net_price = document.getElementById("net_price");
+	//console.log("print",vat,vat_percent,total_before_vat);
+	switch (obj.id) {
+		case "vat_percent":
+			//EFFECT TO #vat
+			vat.value = total_before_vat.value * (vat_percent.value) / 100;
 
-@include('sales/quotation_detail/table')
+			break;
+		case "vat":
+			//EFFECT TO #vat_percent
+			vat_percent.value = vat.value / total_before_vat.value * 100;
+			break;
+	}
+	//console.log(obj.value, obj.id);
+	//EFFECT TO #total
+	net_price.value = total_before_vat.value*1 + vat.value*1;
+}
+</script>
 
 @empty
 <div class="text-center">
@@ -207,13 +231,6 @@
 </div>
 @endforelse
 
-<div class="form-group">
-	<div class="col-lg-12">
-		<div class="text-center">
-			<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation">back</a>
-		</div>
-	</div>
-</div>
 
 @endsection
 

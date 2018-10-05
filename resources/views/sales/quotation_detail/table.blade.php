@@ -45,13 +45,7 @@
             <td>
               <a href="#"><span class="fa fa-trash" style="color: red"></span></a>
 
-              <div class="row hide">
-                <form action="{{ url('/') }}/sales/quotation/{{ $row_quotation_detail->quotation_id }}" method="POST">
-                  {{ csrf_field() }}
-                  {{ method_field('DELETE') }}
-                  <button type="submit"></button>
-                </form>
-              </div>
+              
             </td>
           </tr>
           @endforeach
