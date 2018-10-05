@@ -90,7 +90,7 @@
 			<div class="form-group form-inline">
 				<label class="col-lg-2">ชนิดภาษี</label>
 				<div class="col-lg-3">
-					<select name="tax_type_id" class="form-control" required>
+					<select name="tax_type_id" id="tax_type_id" class="form-control" onkeyup="onChange(this)" onChange="onChange(this)"  required>
 						<option value="" >None</option>
 						@foreach($table_tax_type as $row_tax_type)
 						<option value="{{ $row_tax_type->tax_type_id }}" {{ $row_tax_type->tax_type_id === $row->tax_type_id ? "selected":"" }}>
@@ -99,7 +99,7 @@
 						@endforeach
 					</select>
 				</div>
-				<label class="col-lg-2 offset-lg-1">ระยะเวลาในการส่งของ (วัน)</label>
+				<label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
 				<div class="col-lg-3">
 				<input type="number" name="delivery_time"	class="form-control form-control-line" value="{{ $row->delivery_time }}" >
 				</div>
@@ -164,26 +164,28 @@
 			<div class="row">
 			<div class="col-lg-12">
 				<div class="form-group form-inline">
-				<label class="col-lg-3 offset-lg-6">ยอดรวม</label>
-				<div class="col-lg-3">
-					<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-line" value="{{ $total_before_vat }}" readonly disabled>
-				</div>
-				</div>
-				<div class="form-group form-inline">
-				<label class="col-lg-3">อัตราภาษี</label>
-				<div class="col-lg-3">
-					<input type="number" name="vat_percent"  id="vat_percent" value="{{ $row->vat_percent }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line" >
+					<input type="hidden" name="total" id="total"	class="form-control form-control-line" value="{{ $row->total }}" readonly disabled>
+
+					<label class="col-lg-3 offset-lg-6">ยอดรวมก่อนภาษี</label>
+					<div class="col-lg-3">
+						<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-line" value="" readonly disabled>
 					</div>
-				<label class="col-lg-3">มูลค่าภาษี</label>
-				<div class="col-lg-3">
-					<input type="number" name="vat" id="vat" step="any"		value="{{ $total_before_vat * $row->vat_percent / 100 }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line" readonly disabled >
-				</div>
 				</div>
 				<div class="form-group form-inline">
-				<label class="col-lg-3 offset-lg-6">ยอดสุทธิ</label>
-				<div class="col-lg-3">
-					<input type="number" name="net_price" id="net_price"		value="{{ $total_before_vat * (100+$row->vat_percent) /100 }}" class="form-control form-control-line"  readonly >
+					<label class="col-lg-3">อัตราภาษี (%)</label>
+					<div class="col-lg-3">
+						<input type="number" name="vat_percent"  id="vat_percent" value="{{ $row->vat_percent }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line" >
+						</div>
+					<label class="col-lg-3">มูลค่าภาษี</label>
+					<div class="col-lg-3">
+						<input type="number" name="vat" id="vat" value="{{ $row->vat }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line" readonly disabled >
+					</div>
 				</div>
+				<div class="form-group form-inline">
+					<label class="col-lg-3 offset-lg-6">ยอดสุทธิ</label>
+					<div class="col-lg-3">
+						<input type="number" name="total_after_vat" id="total_after_vat"		value="" class="form-control form-control-line"  readonly >
+					</div>
 				</div>
 			</div>
 			</div>
@@ -201,33 +203,83 @@
 	</div>
 
 </form>
+<div style="display:none;">
+	<form action="#" method="POST" id="form_delete" >
+		{{ csrf_field() }}
+		{{ method_field('DELETE') }}
+		<button type="submit">Delete</button>
+	</form>
+	<script>
+		function onDelete(id){
+			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+			//GET FORM BY ID
+			var form = document.getElementById("form_delete");
+			//CHANGE ACTION TO SPECIFY ID
+			form.action = "{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/"+id;
+			//SUBMIT
+			var want_to_delete = confirm('Are you sure to delete this quotation detail?');
+			if(want_to_delete){
+				form.submit();
+			}
+		}
+	</script>
+</div>
 <script>
 function onChange(obj){
 	var vat = document.getElementById("vat");
 	var vat_percent = document.getElementById("vat_percent");
+	var total = document.getElementById("total");
 	var total_before_vat = document.getElementById("total_before_vat");
-	var net_price = document.getElementById("net_price");
+	var total_after_vat = document.getElementById("total_after_vat");
+	var tax_type_id = document.getElementById("tax_type_id");
 	//console.log("print",vat,vat_percent,total_before_vat);
+
+	//INPUT DETECTOR
 	switch (obj.id) {
 		case "vat_percent":
 			//EFFECT TO #vat
-			vat.value = total_before_vat.value * (vat_percent.value) / 100;
-
+			vat.value = total.value * (vat_percent.value) / 100;
 			break;
 		case "vat":
 			//EFFECT TO #vat_percent
-			vat_percent.value = vat.value / total_before_vat.value * 100;
+			vat_percent.value = vat.value / total.value * 100;
 			break;
 	}
-	//console.log(obj.value, obj.id);
-	//EFFECT TO #total
-	net_price.value = total_before_vat.value*1 + vat.value*1;
+
+	//DISPLAY ON TOTAL
+	vat_percent.disabled = false;
+	vat_percent.readonly = false;
+	switch (tax_type_id.value) {
+		case "1":
+			//EFFECT TO #vat
+			console.log("CASE 1");
+			total_before_vat.value = total.value -  vat.value*1;
+			total_after_vat.value = total.value ;
+			break;
+		case "2":
+			//EFFECT TO #vat_percent
+			console.log("CASE 2");
+			total_before_vat.value = total.value;
+			total_after_vat.value = total.value*1 + vat.value*1;
+			break;
+		default:
+			vat_percent.disabled = true;
+			vat_percent.readonly = true;
+			vat_percent.value = 0;
+			vat.value = 0;
+			console.log("CASE OTHERS");
+			total_before_vat.value = total.value;
+			total_after_vat.value = total.value;
+			break;
+	}
 }
+window.onload = onChange(document.getElementById("tax_type_id"));
 </script>
 
 @empty
 <div class="text-center">
-	This activity id ({{ $row->id_activity }}) does not exist
+	This id does not exist
 </div>
 @endforelse
 

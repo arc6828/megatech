@@ -16,12 +16,19 @@ use App\ZoneModel;
 class QuotationModel extends Model
 {
     public static function select_all(){
+		$total_query = DB::table('tb_quotation_detail')
+            ->select( DB::raw('quotation_id, sum(discount_price) as total'))
+            ->groupBy('quotation_id');
         return DB::table('tb_quotation')
             ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
             ->join('tb_delivery_type', 'tb_quotation.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
             ->join('tb_tax_type', 'tb_quotation.tax_type_id', '=', 'tb_tax_type.tax_type_id')
             ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
             ->join('users', 'tb_quotation.user_id', '=', 'users.id')
+			->leftJoinSub($total_query, 'total_query', function($join) {
+				$join->on('tb_quotation.quotation_id', '=', 'total_query.quotation_id');
+			})
+			->select( DB::raw('*, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
             ->get();
 	}
     public static function select_count_by_current_month(){
@@ -34,8 +41,15 @@ class QuotationModel extends Model
 	}
 
 	public static function select_by_id($id){
+		$total_query = DB::table('tb_quotation_detail')
+             ->select( DB::raw('quotation_id, sum(discount_price) as total'))
+             ->groupBy('quotation_id');
         return DB::table('tb_quotation')
-            ->where('quotation_id', '=' , $id )
+			->leftJoinSub($total_query, 'total_query', function($join) {
+				$join->on('tb_quotation.quotation_id', '=', 'total_query.quotation_id');
+			})
+            ->where('tb_quotation.quotation_id', '=' , $id )
+			->select( DB::raw('*, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
             ->get();
 	}
 
@@ -45,7 +59,7 @@ class QuotationModel extends Model
       //on `tb_quotation`.`quotation_id` = q.quotation_id
 
         $total_query = DB::table('tb_quotation_detail')
-             ->select('quotation_id', DB::raw('sum(discount_price) as total_before_vat'))
+             ->select( DB::raw('quotation_id, sum(discount_price) as total'))
              ->groupBy('quotation_id');
         return DB::table('tb_quotation')
             ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
@@ -60,6 +74,7 @@ class QuotationModel extends Model
             ->orWhere('company_name', 'like' , "%{$q}%" )
             ->orWhere('customer_name', 'like' , "%{$q}%" )
             ->orWhere('sales_status_name', 'like' , "%{$q}%" )
+			->select( DB::raw('*, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
             ->get();
 	}
 

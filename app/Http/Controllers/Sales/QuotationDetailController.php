@@ -119,8 +119,9 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($quotation_id, $id)
     {
-        //
+        QuotationDetailModel::delete_by_id($id);
+        return redirect("sales/quotation/{$quotation_id}/quotation_detail");
     }
 }

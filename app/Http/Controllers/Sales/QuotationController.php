@@ -86,10 +86,7 @@ class QuotationController extends Controller
             'user_id' => $request->input('user_id'),
             'zone_id' => $request->input('zone_id'),
             'remark' => $request->input('remark'),
-            'total_before_vat' => $request->input('total_before_vat',0),
             'vat_percent' => $request->input('vat_percent',7),
-            'vat' => $request->input('tax',0),
-            'net_price' => $request->input('net_price',0),
         ];
         $id = QuotationModel::insert($input);
         return redirect("sales/quotation/{$id}/edit");
@@ -131,10 +128,6 @@ class QuotationController extends Controller
         $table_sales_user = UserModel::select_by_role('sales');
         $table_zone = ZoneModel::select_all();
         $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
-        $total_before_vat = QuotationDetailModel::get_total_before_vat_by_quotation_id($id);
-        if(!$total_before_vat){
-          $total_before_vat = 0;
-        }
 
         $data = [
             'table_quotation' => $table_quotation,
@@ -145,7 +138,6 @@ class QuotationController extends Controller
             'table_sales_user' => $table_sales_user,
             'table_zone' => $table_zone,
             'table_quotation_detail' => $table_quotation_detail,
-            'total_before_vat' => $total_before_vat,
             'quotation_id'=> $id,
         ];
         return view('sales/quotation/edit',$data);
@@ -174,10 +166,7 @@ class QuotationController extends Controller
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
-          'total_before_vat' => $request->input('total_before_vat',0),
           'vat_percent' => $request->input('vat_percent',7),
-          'vat' => $request->input('vat',0),
-          'net_price' => $request->input('net_price',0),
       ];
       QuotationModel::update_by_id($input,$id);
       return redirect("sales/quotation/{$id}/edit");

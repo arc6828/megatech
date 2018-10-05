@@ -18,4 +18,28 @@
 			</div>
 		</div>
 	</div>
+
+	<div style="display:none;">
+		<form action="#" method="POST" id="form_delete" >
+			{{ csrf_field() }}
+			{{ method_field('DELETE') }}
+			<button type="submit">Delete</button>
+		</form>
+		<script>
+			function onDelete(id){
+				//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+				//GET FORM BY ID
+				var form = document.getElementById("form_delete");
+				//CHANGE ACTION TO SPECIFY ID
+				form.action = "{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/"+id;
+				//SUBMIT
+				var want_to_delete = confirm('Are you sure to delete this quotation detail?');
+				if(want_to_delete){
+					form.submit();
+				}
+			}
+		</script>
+	</div>
+
 @endsection

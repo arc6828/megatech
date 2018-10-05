@@ -35,7 +35,7 @@
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
-						<th class="text-center">ยอดสุทธิ</th>
+						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">ชื่อลูกค้า</th>
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">รหัสพนักงาน</th>
@@ -52,7 +52,7 @@
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->net_price }}</td>
+						<td>{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->customer_name }}</td>
 						<td>{{ $row->company_name }}</td>
 						<td>{{ $row->name }}</td>

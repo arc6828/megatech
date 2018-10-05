@@ -43,9 +43,9 @@
             <td>{{ $row_quotation_detail->discount_price }}</td>
             <td>{{ $row_quotation_detail->discount_price *  $row_quotation_detail->amount }}</td>
             <td>
-              <a href="#"><span class="fa fa-trash" style="color: red"></span></a>
-
-              
+  				<a href="javascript:void(0)" onclick="onDelete( {{ $row_quotation_detail->quotation_detail_id }} )" class="text-danger">
+					<span class="fa fa-trash"></span>
+				</a>
             </td>
           </tr>
           @endforeach
