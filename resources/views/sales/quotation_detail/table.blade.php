@@ -13,7 +13,7 @@
     </div>
 
     <div class="table-responsive">
-      <table class="table table-hover text-center">
+      <table class="table table-hover text-center table-bordered">
         <thead>
           <tr>
             <th class="text-center">รหัสสินค้า</th>
