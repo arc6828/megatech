@@ -4,26 +4,26 @@ namespace App\Http\Controllers\Sales;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Sales\QuotationModel;
-use App\Sales\QuotationDetailModel;
+use App\Sales\InvoiceModel;
+use App\Sales\InvoiceDetailModel;
 use App\ProductModel;
 
-class QuotationDetailController extends Controller
+class InvoiceDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($quotation_id)
+    public function index($invoice_id)
     {
         //QUATATION DETAIL
-        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($quotation_id);
+        $table_invoice_detail = InvoiceDetailModel::select_by_invoice_id($invoice_id);
         $data = [
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id' => $quotation_id,
+            'table_invoice_detail' => $table_invoice_detail,
+            'invoice_id' => $invoice_id,
         ];
-        return view('sales/quotation_detail/index',$data);
+        return view('sales/invoice_detail/index',$data);
     }
 
     /**
@@ -31,18 +31,18 @@ class QuotationDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $quotation_id)
+    public function create(Request $request, $invoice_id)
     {
         $q = $request->input('q');
-        $table_quotation = QuotationModel::select_by_id($quotation_id);
+        $table_invoice = InvoiceModel::select_by_id($invoice_id);
         $table_product = ProductModel::select_by_keyword($q);
         $data = [
             'table_product' => $table_product,
-            'table_quotation' => $table_quotation,
-            'quotation_id' => $quotation_id,
+            'table_invoice' => $table_invoice,
+            'invoice_id' => $invoice_id,
             'q' => $q,
         ];
-        return view('sales/quotation_detail/create',$data);
+        return view('sales/invoice_detail/create',$data);
     }
 
     /**
@@ -51,16 +51,16 @@ class QuotationDetailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$quotation_id)
+    public function store(Request $request,$invoice_id)
     {
         $input = [
             "product_id" => $request->input('product_id'),
             "amount" => $request->input('amount'),
             "discount_price" => $request->input('discount_price',0),
-            "quotation_id" => $quotation_id,
+            "invoice_id" => $invoice_id,
         ];
-        QuotationDetailModel::insert($input);
-        return redirect("sales/quotation/{$quotation_id}/quotation_detail");
+        InvoiceDetailModel::insert($input);
+        return redirect("sales/invoice/{$invoice_id}/invoice_detail");
     }
 
     /**
@@ -69,15 +69,15 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($quotation_id, $id)
+    public function show($invoice_id, $id)
     {
-        $table_quotation_detail = QuotationDetailModel::select_by_id($id);
+        $table_invoice_detail = InvoiceDetailModel::select_by_id($id);
         $data = [
             'table_product' => $table_product,
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id' => $quotation_id,
+            'table_invoice_detail' => $table_invoice_detail,
+            'invoice_id' => $invoice_id,
         ];
-        return view('sales/quotation_detail/show',$data);
+        return view('sales/invoice_detail/show',$data);
     }
 
     /**
@@ -86,14 +86,14 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($quotation_id, $id)
+    public function edit($invoice_id, $id)
     {
-		$table_quotation_detail = QuotationDetailModel::select_by_id($id);
+		$table_invoice_detail = InvoiceDetailModel::select_by_id($id);
         $data = [
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id' => $quotation_id,
+            'table_invoice_detail' => $table_invoice_detail,
+            'invoice_id' => $invoice_id,
         ];
-        return view('sales/quotation_detail/edit',$data);
+        return view('sales/invoice_detail/edit',$data);
     }
 
     /**
@@ -103,14 +103,14 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $quotation_id, $id)
+    public function update(Request $request, $invoice_id, $id)
     {
 		$input = [
             "amount" => $request->input('amount'),
             "discount_price" => $request->input('discount_price',0),
         ];
-        QuotationDetailModel::update_by_id($input,$id);
-        return redirect("sales/quotation/{$quotation_id}/quotation_detail");
+        InvoiceDetailModel::update_by_id($input,$id);
+        return redirect("sales/invoice/{$invoice_id}/invoice_detail");
     }
 
     /**
@@ -119,9 +119,9 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($quotation_id, $id)
+    public function destroy($invoice_id, $id)
     {
-        QuotationDetailModel::delete_by_id($id);
-        return redirect("sales/quotation/{$quotation_id}/quotation_detail");
+        InvoiceDetailModel::delete_by_id($id);
+        return redirect("sales/invoice/{$invoice_id}/invoice_detail");
     }
 }

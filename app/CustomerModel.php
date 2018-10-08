@@ -10,6 +10,12 @@ class CustomerModel extends Model
     public static function select_all(){
         return DB::table('tb_customer')->get();
     }
+
+	public static function select_by_keyword($q){
+        return DB::table('tb_customer')
+            ->where('tb_customer.customer_name', 'like' , "%{$q}%" )
+            ->get();
+	}
     /*
 
     function select(){

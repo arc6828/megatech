@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Sales;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Sales\QuotationModel;
-use App\Sales\QuotationDetailModel;
+use App\Sales\RequisitionModel;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
@@ -14,7 +13,11 @@ use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 
-class QuotationController extends Controller
+use App\Sales\RequisitionDetailModel;
+
+
+
+class RequisitionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,14 +28,14 @@ class QuotationController extends Controller
     {
         //QUOTATION
         $q = $request->input('q');
-        $table_quotation = QuotationModel::select_by_keyword($q);
+        $table_requisition = RequisitionModel::select_by_keyword($q);
         //QUATATION DETAIL
 
         $data = [
-            'table_quotation' => $table_quotation,
+            'table_requisition' => $table_requisition,
             'q' => $q
         ];
-        return view('sales/quotation/index',$data);
+        return view('sales/requisition/index',$data);
     }
 
     /**
@@ -57,7 +60,7 @@ class QuotationController extends Controller
             'table_sales_user' => $table_sales_user,
             'table_zone' => $table_zone,
         ];
-        return view('sales/quotation/create',$data);
+        return view('sales/requisition/create',$data);
     }
 
     /**
@@ -68,9 +71,9 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
-        $quotation_code = $this->getNewQuatationCode();
+        $requisition_code = $this->getNewQuatationCode();
         $input = [
-            'quotation_code' => $quotation_code,
+            'requisition_code' => $requisition_code,
             'customer_id' => $request->input('customer_id'),
             'debt_duration' => $request->input('debt_duration'),
             'billing_duration' => $request->input('billing_duration'),
@@ -85,17 +88,17 @@ class QuotationController extends Controller
             'remark' => $request->input('remark'),
             'vat_percent' => $request->input('vat_percent',7),
         ];
-        $id = QuotationModel::insert($input);
-        return redirect("sales/quotation/{$id}/edit");
+        $id = RequisitionModel::insert($input);
+        return redirect("sales/requisition/{$id}/edit");
     }
 
     public function getNewQuatationCode(){
-        $count = QuotationModel::select_count_by_current_month() + 1;
+        $count = RequisitionModel::select_count_by_current_month() + 1;
         $year = (date("Y") + 543) % 100;
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $quotation_code = "QT{$year}{$month}-{$number}";
-        return $quotation_code;
+        $requisition_code = "QT{$year}{$month}-{$number}";
+        return $requisition_code;
     }
 
     /**
@@ -117,27 +120,27 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
-        $table_quotation = QuotationModel::select_by_id($id);
+        $table_requisition = RequisitionModel::select_by_id($id);
         $table_customer = CustomerModel::select_all();
         $table_delivery_type = DeliveryTypeModel::select_all();
         $table_tax_type = TaxTypeModel::select_all();
         $table_sales_status = SalesStatusModel::select_all();
         $table_sales_user = UserModel::select_by_role('sales');
         $table_zone = ZoneModel::select_all();
-        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
+        $table_requisition_detail = RequisitionDetailModel::select_by_requisition_id($id);
 
         $data = [
-            'table_quotation' => $table_quotation,
+            'table_requisition' => $table_requisition,
             'table_customer' => $table_customer,
             'table_delivery_type' => $table_delivery_type,
             'table_tax_type' => $table_tax_type,
             'table_sales_status' => $table_sales_status,
             'table_sales_user' => $table_sales_user,
             'table_zone' => $table_zone,
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id'=> $id,
+            'table_requisition_detail' => $table_requisition_detail,
+            'requisition_id'=> $id,
         ];
-        return view('sales/quotation/edit',$data);
+        return view('sales/requisition/edit',$data);
     }
 
     /**
@@ -150,7 +153,7 @@ class QuotationController extends Controller
     public function update(Request $request, $id)
     {
       $input = [
-          //'quotation_code' => $quotation_code,
+          //'requisition_code' => $requisition_code,
           'customer_id' => $request->input('customer_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
@@ -165,8 +168,8 @@ class QuotationController extends Controller
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
       ];
-      QuotationModel::update_by_id($input,$id);
-      return redirect("sales/quotation/{$id}/edit");
+      RequisitionModel::update_by_id($input,$id);
+      return redirect("sales/requisition/{$id}/edit");
     }
 
     /**

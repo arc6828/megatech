@@ -16,21 +16,13 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new CustomerModel();
-        $model_account = new AccountModel();
-        $model_user = new UserModel();
         $q = $request->input('q');
-        $table_customer = $model->select_search($q);
-        $table_account = $model_account->select();
-        $table_user = $model_user->select();
+        $table_customer = CustomerModel::select_by_keyword($q);
         $data = [
-        'table_customer' => $table_customer,
-        'table_account' => $table_account,
-        'table_user' => $table_user,
-        'q' => $q
+	        'table_customer' => $table_customer,
+        	'q' => $q
         ];
-        return view('finance/debtor/index',$data);
-
+        return view('customer/index',$data);
     }
 
     /**

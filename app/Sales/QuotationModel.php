@@ -1,6 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Sales;
+
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

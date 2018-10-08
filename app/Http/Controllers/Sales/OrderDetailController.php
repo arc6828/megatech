@@ -4,26 +4,26 @@ namespace App\Http\Controllers\Sales;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Sales\QuotationModel;
-use App\Sales\QuotationDetailModel;
+use App\Sales\OrderModel;
+use App\Sales\OrderDetailModel;
 use App\ProductModel;
 
-class QuotationDetailController extends Controller
+class OrderDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($quotation_id)
+    public function index($order_id)
     {
         //QUATATION DETAIL
-        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($quotation_id);
+        $table_order_detail = OrderDetailModel::select_by_order_id($order_id);
         $data = [
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id' => $quotation_id,
+            'table_order_detail' => $table_order_detail,
+            'order_id' => $order_id,
         ];
-        return view('sales/quotation_detail/index',$data);
+        return view('sales/order_detail/index',$data);
     }
 
     /**
@@ -31,18 +31,18 @@ class QuotationDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $quotation_id)
+    public function create(Request $request, $order_id)
     {
         $q = $request->input('q');
-        $table_quotation = QuotationModel::select_by_id($quotation_id);
+        $table_order = OrderModel::select_by_id($order_id);
         $table_product = ProductModel::select_by_keyword($q);
         $data = [
             'table_product' => $table_product,
-            'table_quotation' => $table_quotation,
-            'quotation_id' => $quotation_id,
+            'table_order' => $table_order,
+            'order_id' => $order_id,
             'q' => $q,
         ];
-        return view('sales/quotation_detail/create',$data);
+        return view('sales/order_detail/create',$data);
     }
 
     /**
@@ -51,16 +51,16 @@ class QuotationDetailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$quotation_id)
+    public function store(Request $request,$order_id)
     {
         $input = [
             "product_id" => $request->input('product_id'),
             "amount" => $request->input('amount'),
             "discount_price" => $request->input('discount_price',0),
-            "quotation_id" => $quotation_id,
+            "order_id" => $order_id,
         ];
-        QuotationDetailModel::insert($input);
-        return redirect("sales/quotation/{$quotation_id}/quotation_detail");
+        OrderDetailModel::insert($input);
+        return redirect("sales/order/{$order_id}/order_detail");
     }
 
     /**
@@ -69,15 +69,15 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($quotation_id, $id)
+    public function show($order_id, $id)
     {
-        $table_quotation_detail = QuotationDetailModel::select_by_id($id);
+        $table_order_detail = OrderDetailModel::select_by_id($id);
         $data = [
             'table_product' => $table_product,
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id' => $quotation_id,
+            'table_order_detail' => $table_order_detail,
+            'order_id' => $order_id,
         ];
-        return view('sales/quotation_detail/show',$data);
+        return view('sales/order_detail/show',$data);
     }
 
     /**
@@ -86,14 +86,14 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($quotation_id, $id)
+    public function edit($order_id, $id)
     {
-		$table_quotation_detail = QuotationDetailModel::select_by_id($id);
+		$table_order_detail = OrderDetailModel::select_by_id($id);
         $data = [
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id' => $quotation_id,
+            'table_order_detail' => $table_order_detail,
+            'order_id' => $order_id,
         ];
-        return view('sales/quotation_detail/edit',$data);
+        return view('sales/order_detail/edit',$data);
     }
 
     /**
@@ -103,14 +103,14 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $quotation_id, $id)
+    public function update(Request $request, $order_id, $id)
     {
 		$input = [
             "amount" => $request->input('amount'),
             "discount_price" => $request->input('discount_price',0),
         ];
-        QuotationDetailModel::update_by_id($input,$id);
-        return redirect("sales/quotation/{$quotation_id}/quotation_detail");
+        OrderDetailModel::update_by_id($input,$id);
+        return redirect("sales/order/{$order_id}/order_detail");
     }
 
     /**
@@ -119,9 +119,9 @@ class QuotationDetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($quotation_id, $id)
+    public function destroy($order_id, $id)
     {
-        QuotationDetailModel::delete_by_id($id);
-        return redirect("sales/quotation/{$quotation_id}/quotation_detail");
+        OrderDetailModel::delete_by_id($id);
+        return redirect("sales/order/{$order_id}/order_detail");
     }
 }

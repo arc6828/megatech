@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\UsersModel;
+use App\UserModel;
 
-class SalesEmployeeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +14,14 @@ class SalesEmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new UsersModel();
+        $model = new UserModel();
         $q = $request->input('q');
-        $table_sales_employee = $model->select_by_role_search("sales",$q);
+        $table_user = UserModel::select_by_role($q);
         $data = [
-            'table_sales_employee' => $table_sales_employee,
+            'table_user' => $table_user,
             'q' => $q
         ];
-        return view('sales-employee/index',$data);
+        return view('user/index',$data);
     }
 
     /**

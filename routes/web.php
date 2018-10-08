@@ -43,13 +43,24 @@ Route::get('/others',function(){
 Route::resource('/sales/quotation', 'Sales\QuotationController');
 Route::resource('/sales/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
 
+Route::resource('/sales/order', 'Sales\OrderController');
+Route::resource('/sales/order/{order_id}/order_detail', 'Sales\OrderDetailController');
+
+Route::resource('/sales/requisition', 'Sales\RequisitionController');
+Route::resource('/sales/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
+
+Route::resource('/sales/invoice', 'Sales\InvoiceController');
+Route::resource('/sales/invoice/{invoice_id}/invoice_detail', 'Sales\QuotationDetailController');
+
+//6 Folders
+Route::resource('/user', 'UserController');
+Route::resource('/customer', 'CustomerController');
+Route::resource('/product', 'ProductController');
+
 //not confirm
-Route::resource('/sales/employee', 'SalesEmployeeController');
 
 
 //Process Deptor
-Route::resource('/finance/debtor', 'CustomerController');
-
 Route::resource('/finance/debtout', 'DebtoutController');
 
 Route::resource('/finance/settle', 'SettleController');

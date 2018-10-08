@@ -26,7 +26,7 @@ class UserModel extends Model
 
     public static function select_by_role($role){
         return DB::table('users')
-            ->where('users.role', '=' , $role )
+            ->where('users.role', 'like' , "%$role%" )
             ->get();
 	}
 
