@@ -60,7 +60,7 @@ class QuotationDetailController extends Controller
             "quotation_id" => $quotation_id,
         ];
         QuotationDetailModel::insert($input);
-        return redirect("sales/quotation/{$quotation_id}");
+        return redirect("sales/quotation/{$quotation_id}/edit#table");
     }
 
     /**
@@ -110,7 +110,7 @@ class QuotationDetailController extends Controller
             "discount_price" => $request->input('discount_price',0),
         ];
         QuotationDetailModel::update_by_id($input,$id);
-        return redirect("sales/quotation/{$quotation_id}");
+        return redirect("sales/quotation/{$quotation_id}/edit#table");
     }
 
     /**
@@ -122,6 +122,6 @@ class QuotationDetailController extends Controller
     public function destroy($quotation_id, $id)
     {
         QuotationDetailModel::delete_by_id($id);
-        return redirect("sales/quotation/{$quotation_id}");
+        return redirect("sales/quotation/{$quotation_id}/edit#table");
     }
 }

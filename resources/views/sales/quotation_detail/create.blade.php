@@ -34,12 +34,12 @@
 				<table class="table table-hover text-center">
 					<thead>
 						<tr>
-							<th class="text-center">รหัสสินค้า</th>
-							<th class="text-center">ชื่อสินค้า</th>
-							<th class="text-center">จำนวนในคลัง</th>
-							<th class="text-center">ราคาขาย</th>
-							<th class="text-center">จำนวน</th>
-							<th class="text-center">action</th>
+							<td class="text-center">รหัสสินค้า</td>
+							<td class="text-center">ชื่อสินค้า</td>
+							<td class="text-center">จำนวนในคลัง</td>
+							<td class="text-center">ราคาขาย</td>
+							<td class="text-center">จำนวน</td>
+							<td class="text-center">action</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -84,7 +84,7 @@
 <div class="form-group">
 	<div class="col-lg-12">
 		<div class="text-center">
-	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail">back</a>
+	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/edit">back</a>
 		</div>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 
-<div class="card">
+<div class="card" id="table">
   <div class="card-block">
 
     <div class="row">
@@ -7,24 +7,24 @@
             <h4 class="card-title">Quotation Detail</h4>
             <h6 class="card-subtitle">Display infomation in the table</h6>
         </div>
-        <div class="col-lg-3 align-self-center">
+        <div class="col-lg-3 align-self-center hide">
 			<a href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail" class="btn btn-warning pull-right">See detail</a>
 		</div>
     </div>
 
     <div class="table-responsive">
       <table class="table table-hover text-center table-bordered">
-        <thead>
+        <thead class="thead-light">
           <tr>
-            <th class="text-center">รหัสสินค้า</th>
-            <th class="text-center">ชื่อสินค้า</th>
-            <th class="text-center">จำนวน</th>
-            <th class="text-center">หน่วย</th>
-            <th class="text-center">ราคาตั้ง</th>
-            <th class="text-center">ส่วนลด %</th>
-            <th class="text-center">ราคาขาย</th>
-            <th class="text-center">ราคาขายรวม</th>
-            <th class="text-center">action</th>
+            <td>รหัสสินค้า</td>
+            <td>ชื่อสินค้า</td>
+            <td>จำนวน</td>
+            <td>หน่วย</td>
+            <td>ราคาตั้ง</td>
+            <td>ส่วนลด %</td>
+            <td>ราคาขาย</td>
+            <td>ราคาขายรวม</td>
+            <td>action</td>
           </tr>
         </thead>
         <tbody>
@@ -52,5 +52,10 @@
         </tbody>
       </table>
     </div>
+	<div class="text-center">
+		<a href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/create" class="btn btn-success">
+			<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
+		</a>
+	</div>
   </div>
 </div>
