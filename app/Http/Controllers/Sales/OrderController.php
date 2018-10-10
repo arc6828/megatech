@@ -71,7 +71,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order_code = $this->getNewQuatationCode();
+        $order_code = $this->getNewCode();
         $input = [
             'order_code' => $order_code,
             'customer_id' => $request->input('customer_id'),
@@ -92,9 +92,10 @@ class OrderController extends Controller
         return redirect("sales/order/{$id}/edit");
     }
 
-    public function getNewQuatationCode(){
+    public function getNewCode(){
         $count = OrderModel::select_count_by_current_month() + 1;
-        $year = (date("Y") + 543) % 100;
+		//$year = (date("Y") + 543) % 100;
+        $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
         $order_code = "QT{$year}{$month}-{$number}";

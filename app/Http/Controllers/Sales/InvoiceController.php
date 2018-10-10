@@ -71,7 +71,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $invoice_code = $this->getNewQuatationCode();
+        $invoice_code = $this->getNewCode();
         $input = [
             'invoice_code' => $invoice_code,
             'customer_id' => $request->input('customer_id'),
@@ -92,9 +92,10 @@ class InvoiceController extends Controller
         return redirect("sales/invoice/{$id}/edit");
     }
 
-    public function getNewQuatationCode(){
+    public function getNewCode(){
         $count = InvoiceModel::select_count_by_current_month() + 1;
-        $year = (date("Y") + 543) % 100;
+		//$year = (date("Y") + 543) % 100;
+        $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
         $invoice_code = "QT{$year}{$month}-{$number}";
