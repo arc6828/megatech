@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    
+
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Favicon icon -->
     <!--link rel="icon" type="image/png" sizes="16x16" href="{{url('/')}}/assets/icon/if_Hand_1021018.png"-->
@@ -26,7 +26,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-    
+
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -43,15 +43,15 @@
     <div id="main-wrapper">
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->        
-        @include('monster-lite/layouts/topbar')  
+        <!-- ============================================================== -->
+        @include('monster-lite/layouts/topbar')
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        @include('monster-lite/layouts/left-sidebar')        
+        @include('monster-lite/layouts/left-sidebar')
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -66,14 +66,14 @@
                 <!-- ============================================================== -->
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-                @include('monster-lite/layouts/breadcrumb')    
+                @include('monster-lite/layouts/breadcrumb')
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <div>@yield('content')</div>                
+                <div>@yield('content')</div>
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -116,13 +116,14 @@
     <!--Custom JavaScript -->
     <script src="{{url('/')}}/assets/js/custom.min.js"></script>
     <script src="{{url('/')}}/assets/plugins/momentjs/moment.min.js"></script>
+	<script src="{{url('/')}}/assets/plugins/input-mask/dist/jquery.masked-input.min.js"></script>
 
 
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
     @yield('plugins-js')
-    
+
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

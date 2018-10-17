@@ -188,9 +188,8 @@
 							<input type="tel" id="citizen_id" name="citizen_id"
 								class="form-control"
 								placeholder="x-xxxx-xxxxx-xx-x"
-								pattern="[0-9]{1}-[0-9]{4}-[0-9]{5}-[0-9]{2}-[0-9]{1}"
-								onkeyup="cleanID(this)" onchange="onChangeCitizenID(this)"
-								maxlength="17"
+								data-masked-input="9-9999-99999-99-9"
+								onchange="onChangeCitizenID(this)"
 								 />
 						</label>
 						<label class="col-lg-3">ยอดสุทธิ</label>
@@ -214,6 +213,9 @@
 	</div>
 
 </form>
+<div>
+<iframe src="https://e.issuu.com/anonymous-embed.html?u=chavalit.kow&d=6.________________________8________" width="944" height="500" frameborder="0" allowfullscreen="true"></iframe>
+</div>
 <div style="display:none;">
 	<form action="#" method="POST" id="form_delete" >
 		{{ csrf_field() }}
@@ -286,40 +288,23 @@ function onChange(obj){
 	}
 }
 
-function checkID(id) {
-    if(id.length != 13) return false;
+function checkID(input) {
+    if(input.length != 13) return false;
     for(i=0, sum=0; i < 12; i++)
-        sum += parseFloat(id.charAt(i))*(13-i);
-    if((11-sum%11)%10!=parseFloat(id.charAt(12)))
+        sum += parseFloat(input.charAt(i))*(13-i);
+    if((11-sum%11)%10!=parseFloat(input.charAt(12)))
         return false;
     return true;
 }
 function onChangeCitizenID(obj) {
-    if(!checkID(obj.value))
+	var input = obj.value.replace(/-/g,"");
+	console.log("INPUT : ",input);
+    if(!checkID(input))
         alert('รหัสประชาชนไม่ถูกต้อง');
     else
         alert('รหัสประชาชนถูกต้อง');
 }
-function cleanID(obj) {
-	if(!isNaN(event.key)){
-		var length = obj.value.length;
-		if(length < 1) return false;
-		switch(length){
-			case 2+0:
-			case 6+1:
-			case 11+2:
-			case 13+3:
-				console.log("CHECK");
-				var head = obj.value.slice(0, -1);
-				var tail = obj.value.slice(length-1);
-				console.log("HT : ", head ,tail);
-				var output = [head, tail ].join('-');
-				obj.value = output;
-				//obj.value = obj.value+'-';
-				break;
-		}
-	}
-}
+
 window.onload = onChange(document.getElementById("tax_type_id"));
 </script>
 
