@@ -3,18 +3,18 @@
 @section('title','รายละเอียดรายการในใบเสนอราคา')
 
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/create" class="pull-right  btn btn-success">
+<a href="{{ url('/') }}/purchase/purchase_order/{{ $purchase_order_id }}/purchase_order_detail/create" class="pull-right  btn btn-success">
 	<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
 </a>
 @endsection
 
 @section('content')
-	@include('sales/quotation_detail/table')
+	@include('purchase/purchase_order_detail/table')
 
 	<div class="form-group">
 		<div class="col-lg-12">
 			<div class="text-center">
-		  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/edit">back</a>
+		  		<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_order/{{ $purchase_order_id }}/edit">back</a>
 			</div>
 		</div>
 	</div>
@@ -32,9 +32,9 @@
 				//GET FORM BY ID
 				var form = document.getElementById("form_delete");
 				//CHANGE ACTION TO SPECIFY ID
-				form.action = "{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/"+id;
+				form.action = "{{ url('/') }}/purchase/purchase_order/{{ $purchase_order_id }}/purchase_order_detail/"+id;
 				//SUBMIT
-				var want_to_delete = confirm('Are you sure to delete this quotation detail?');
+				var want_to_delete = confirm('Are you sure to delete this purchase_order detail?');
 				if(want_to_delete){
 					form.submit();
 				}

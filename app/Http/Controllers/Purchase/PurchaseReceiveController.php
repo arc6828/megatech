@@ -1,21 +1,20 @@
 <?php
-namespace App\Http\Controllers\Sales;
+namespace App\Http\Controllers\Purchase;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Sales\QuotationModel;
-use App\Sales\QuotationDetailModel;
+use App\Purchase\PurchaseReceiveModel;
+use App\Purchase\PurchaseReceiveDetailModel;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\TaxTypeModel;
-use App\SalesStatusModel;
+use App\PurchaseStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 
-
-class QuotationController extends Controller
+class PurchaseReceiveController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,14 +25,14 @@ class QuotationController extends Controller
     {
         //QUOTATION
         $q = $request->input('q');
-        $table_quotation = QuotationModel::select_by_keyword($q);
+        $table_purchase_receive = PurchaseReceiveModel::select_by_keyword($q);
         //QUATATION DETAIL
 
         $data = [
-            'table_quotation' => $table_quotation,
+            'table_purchase_receive' => $table_purchase_receive,
             'q' => $q
         ];
-        return view('sales/quotation/index',$data);
+        return view('purchase/purchase_receive/index',$data);
     }
 
     /**
@@ -46,19 +45,19 @@ class QuotationController extends Controller
         $table_customer = CustomerModel::select_all();
         $table_delivery_type = DeliveryTypeModel::select_all();
         $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
+        $table_purchase_status = PurchaseStatusModel::select_all();
+        $table_purchase_user = UserModel::select_by_role('purchase');
         $table_zone = ZoneModel::select_all();
 
         $data = [
             'table_customer' => $table_customer,
             'table_delivery_type' => $table_delivery_type,
             'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
+            'table_purchase_status' => $table_purchase_status,
+            'table_purchase_user' => $table_purchase_user,
             'table_zone' => $table_zone,
         ];
-        return view('sales/quotation/create',$data);
+        return view('purchase/purchase_receive/create',$data);
     }
 
     /**
@@ -69,9 +68,9 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
-        $quotation_code = $this->getNewCode();
+        $purchase_receive_code = $this->getNewCode();
         $input = [
-            'quotation_code' => $quotation_code,
+            'purchase_receive_code' => $purchase_receive_code,
             'customer_id' => $request->input('customer_id'),
             'debt_duration' => $request->input('debt_duration'),
             'billing_duration' => $request->input('billing_duration'),
@@ -80,24 +79,24 @@ class QuotationController extends Controller
             'tax_type_id' => $request->input('tax_type_id'),
             'delivery_time' => $request->input('delivery_time'),
             'department_id' => $request->input('department_id'),
-            'sales_status_id' => $request->input('sales_status_id'),
+            'purchase_status_id' => $request->input('purchase_status_id'),
             'user_id' => $request->input('user_id'),
             'zone_id' => $request->input('zone_id'),
             'remark' => $request->input('remark'),
             'vat_percent' => $request->input('vat_percent',7),
         ];
-        $id = QuotationModel::insert($input);
-        return redirect("sales/quotation/{$id}/edit");
+        $id = PurchaseReceiveModel::insert($input);
+        return redirect("purchase/purchase_receive/{$id}/edit");
     }
 
     public function getNewCode(){
-        $count = QuotationModel::select_count_by_current_month() + 1;
+        $count = PurchaseReceiveModel::select_count_by_current_month() + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $quotation_code = "QT{$year}{$month}-{$number}";
-        return $quotation_code;
+        $purchase_receive_code = "QT{$year}{$month}-{$number}";
+        return $purchase_receive_code;
     }
 
     /**
@@ -119,27 +118,27 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
-        $table_quotation = QuotationModel::select_by_id($id);
+        $table_purchase_receive = PurchaseReceiveModel::select_by_id($id);
         $table_customer = CustomerModel::select_all();
         $table_delivery_type = DeliveryTypeModel::select_all();
         $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
+        $table_purchase_status = PurchaseStatusModel::select_all();
+        $table_purchase_user = UserModel::select_by_role('purchase');
         $table_zone = ZoneModel::select_all();
-        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
+        $table_purchase_receive_detail = PurchaseReceiveDetailModel::select_by_purchase_receive_id($id);
 
         $data = [
-            'table_quotation' => $table_quotation,
+            'table_purchase_receive' => $table_purchase_receive,
             'table_customer' => $table_customer,
             'table_delivery_type' => $table_delivery_type,
             'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
+            'table_purchase_status' => $table_purchase_status,
+            'table_purchase_user' => $table_purchase_user,
             'table_zone' => $table_zone,
-            'table_quotation_detail' => $table_quotation_detail,
-            'quotation_id'=> $id,
+            'table_purchase_receive_detail' => $table_purchase_receive_detail,
+            'purchase_receive_id'=> $id,
         ];
-        return view('sales/quotation/edit',$data);
+        return view('purchase/purchase_receive/edit',$data);
     }
 
     /**
@@ -152,7 +151,7 @@ class QuotationController extends Controller
     public function update(Request $request, $id)
     {
       $input = [
-          //'quotation_code' => $quotation_code,
+          //'purchase_receive_code' => $purchase_receive_code,
           'customer_id' => $request->input('customer_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
@@ -161,14 +160,14 @@ class QuotationController extends Controller
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time'),
           'department_id' => $request->input('department_id'),
-          'sales_status_id' => $request->input('sales_status_id'),
+          'purchase_status_id' => $request->input('purchase_status_id'),
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
       ];
-      QuotationModel::update_by_id($input,$id);
-      return redirect("sales/quotation/{$id}/edit");
+      PurchaseReceiveModel::update_by_id($input,$id);
+      return redirect("purchase/purchase_receive/{$id}/edit");
     }
 
     /**

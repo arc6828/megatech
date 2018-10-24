@@ -28,7 +28,9 @@ class RequisitionModel extends Model
 			->leftJoinSub($total_query, 'total_query', function($join) {
 				$join->on('tb_requisition.requisition_id', '=', 'total_query.requisition_id');
 			})
-			->select( DB::raw('*, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
+			->select( DB::raw(
+				'tb_requisition.*, tb_customer.*,tb_delivery_type.*, tb_tax_type.*, tb_sales_status.*,users.*,total,
+				(vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
             ->get();
 	}
     public static function select_count_by_current_month(){
@@ -49,7 +51,9 @@ class RequisitionModel extends Model
 				$join->on('tb_requisition.requisition_id', '=', 'total_query.requisition_id');
 			})
             ->where('tb_requisition.requisition_id', '=' , $id )
-			->select( DB::raw('*, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
+			->select( DB::raw(
+				'tb_requisition.*, tb_customer.*,tb_delivery_type.*, tb_tax_type.*, tb_sales_status.*,users.*,total,
+				(vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
             ->get();
 	}
 
@@ -74,7 +78,9 @@ class RequisitionModel extends Model
             ->orWhere('company_name', 'like' , "%{$q}%" )
             ->orWhere('customer_name', 'like' , "%{$q}%" )
             ->orWhere('sales_status_name', 'like' , "%{$q}%" )
-			->select( DB::raw('*, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
+			->select( DB::raw(
+				'tb_requisition.*, tb_customer.*,tb_delivery_type.*, tb_tax_type.*, tb_sales_status.*,users.*,total,
+				(vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
             ->get();
 	}
 

@@ -25,23 +25,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_quotation_detail`
+-- Table structure for table `tb_purchase_requisition_detail`
 --
 
-CREATE TABLE `tb_quotation_detail` (
-  `quotation_detail_id` int(11) NOT NULL COMMENT '_id',
+CREATE TABLE `tb_purchase_requisition_detail` (
+  `purchase_requisition_detail_id` int(11) NOT NULL COMMENT '_id',
   `product_id` int(11) NOT NULL COMMENT 'รหัสสินค้า',
   `amount` int(11) NOT NULL DEFAULT '1' COMMENT 'จำนวน',
   `discount_price` float DEFAULT NULL COMMENT 'ราคาขาย (บาท)',
-  `quotation_id` int(11) NOT NULL COMMENT 'เลขที่ใบเสนอราคา',
-  `quotation_detail_remark` varchar(255) DEFAULT ''
+  `purchase_requisition_id` int(11) NOT NULL COMMENT 'เลขที่ใบเสนอราคา',
+  `purchase_requisition_detail_remark` varchar(255) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tb_quotation_detail`
+-- Dumping data for table `tb_purchase_requisition_detail`
 --
 
-INSERT INTO `tb_quotation_detail` (`quotation_detail_id`, `product_id`, `amount`, `discount_price`, `quotation_id`, `quotation_detail_remark`) VALUES
+INSERT INTO `tb_purchase_requisition_detail` (`purchase_requisition_detail_id`, `product_id`, `amount`, `discount_price`, `purchase_requisition_id`, `purchase_requisition_detail_remark`) VALUES
 (5, 1, 10, 60, 1, NULL),
 (6, 1, 1, 100, 1, NULL),
 (7, 1, 1, 100, 1, NULL),
@@ -54,20 +54,20 @@ INSERT INTO `tb_quotation_detail` (`quotation_detail_id`, `product_id`, `amount`
 --
 
 --
--- Indexes for table `tb_quotation_detail`
+-- Indexes for table `tb_purchase_requisition_detail`
 --
-ALTER TABLE `tb_quotation_detail`
-  ADD PRIMARY KEY (`quotation_detail_id`);
+ALTER TABLE `tb_purchase_requisition_detail`
+  ADD PRIMARY KEY (`purchase_requisition_detail_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tb_quotation_detail`
+-- AUTO_INCREMENT for table `tb_purchase_requisition_detail`
 --
-ALTER TABLE `tb_quotation_detail`
-  MODIFY `quotation_detail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '_id', AUTO_INCREMENT=12;
+ALTER TABLE `tb_purchase_requisition_detail`
+  MODIFY `purchase_requisition_detail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '_id', AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

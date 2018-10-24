@@ -25,12 +25,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_pruchase_receive`
+-- Table structure for table `tb_purchase_receive`
 --
 
-CREATE TABLE `tb_pruchase_receive` (
-  `pruchase_receive_id` int(11) NOT NULL COMMENT 'id',
-  `pruchase_receive_code` varchar(20) DEFAULT NULL COMMENT 'เลขที่เอกสาร',
+CREATE TABLE `tb_purchase_receive` (
+  `purchase_receive_id` int(11) NOT NULL COMMENT 'id',
+  `purchase_receive_code` varchar(20) DEFAULT NULL COMMENT 'เลขที่เอกสาร',
   `datetime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'วันที่เวลา',
   `customer_id` int(11) NOT NULL COMMENT 'รหัสลูกค้า',
   `debt_duration` int(11) NOT NULL COMMENT 'ระยะเวลาหนี้ (วัน)',
@@ -50,10 +50,10 @@ CREATE TABLE `tb_pruchase_receive` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tb_pruchase_receive`
+-- Dumping data for table `tb_purchase_receive`
 --
 
-INSERT INTO `tb_pruchase_receive` (`pruchase_receive_id`, `pruchase_receive_code`, `datetime`, `customer_id`, `debt_duration`, `billing_duration`, `payment_condition`, `delivery_type_id`, `tax_type_id`, `delivery_time`, `department_id`, `sales_status_id`, `user_id`, `zone_id`, `remark`, `vat_percent`, `internal_reference_doc`, `external_reference_doc`) VALUES
+INSERT INTO `tb_purchase_receive` (`purchase_receive_id`, `purchase_receive_code`, `datetime`, `customer_id`, `debt_duration`, `billing_duration`, `payment_condition`, `delivery_type_id`, `tax_type_id`, `delivery_time`, `department_id`, `sales_status_id`, `user_id`, `zone_id`, `remark`, `vat_percent`, `internal_reference_doc`, `external_reference_doc`) VALUES
 (1, 'QT4801-00001', '2018-09-13 00:00:00', 4, 7, 15, NULL, 1, 2, 60, 0, 3, 4, 1, NULL, 7, NULL, NULL),
 (2, 'QT4801-00002', '2018-09-13 00:00:00', 4, 7, 15, '', 1, 2, 0, 0, 3, 4, 1, '', 0, NULL, NULL),
 (3, 'QT1810-00001', '2018-10-02 17:16:49', 4, 1, 1, '1', 1, 2, 1, NULL, 1, 4, 1, NULL, 0, NULL, NULL),
@@ -69,20 +69,20 @@ INSERT INTO `tb_pruchase_receive` (`pruchase_receive_id`, `pruchase_receive_code
 --
 
 --
--- Indexes for table `tb_pruchase_receive`
+-- Indexes for table `tb_purchase_receive`
 --
-ALTER TABLE `tb_pruchase_receive`
-  ADD PRIMARY KEY (`pruchase_receive_id`);
+ALTER TABLE `tb_purchase_receive`
+  ADD PRIMARY KEY (`purchase_receive_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `tb_pruchase_receive`
+-- AUTO_INCREMENT for table `tb_purchase_receive`
 --
-ALTER TABLE `tb_pruchase_receive`
-  MODIFY `pruchase_receive_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=10;
+ALTER TABLE `tb_purchase_receive`
+  MODIFY `purchase_receive_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id', AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

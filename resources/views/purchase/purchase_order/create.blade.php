@@ -8,14 +8,14 @@
 
 @section('content')
 
-<form class="" action="{{ url('/') }}/sales/quotation" method="POST">
+<form class="" action="{{ url('/') }}/purchase/purchase_order" method="POST">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     <div class="card">
         <div class="card-block">
           <div class="row">
             <div class="col-lg-9 align-self-center">
-                <h4 class="card-title">Quotation code : ... </h4>
+                <h4 class="card-title">Purchase Order code : ... </h4>
                 <h6 class="card-subtitle">Fill infomation in the form</h6>
             </div>
             <div class="col-lg-3 align-self-center">
@@ -92,11 +92,11 @@
                 </div>
                 <label class="col-lg-2 offset-lg-1">สถานะ</label>
                 <div class="col-lg-3">
-                    <select name="sales_status_id" class="form-control" required>
+                    <select name="purchase_status_id" class="form-control" required>
                         <option value="" >None</option>
-                        @foreach($table_sales_status as $row_sales_status)
-                        <option value="{{ $row_sales_status->sales_status_id }}" >
-                            {{  $row_sales_status->sales_status_name }}
+                        @foreach($table_purchase_status as $row_purchase_status)
+                        <option value="{{ $row_purchase_status->purchase_status_id }}" >
+                            {{  $row_purchase_status->purchase_status_name }}
                         </option>
                         @endforeach
                     </select>
@@ -108,9 +108,9 @@
               <div class="col-lg-3">
                     <select name="user_id" class="form-control" required>
                         <option value="" >None</option>
-                        @foreach($table_sales_user as $row_sales_user)
-                        <option value="{{ $row_sales_user->id }}" >
-                            {{  $row_sales_user->name }}
+                        @foreach($table_purchase_user as $row_purchase_user)
+                        <option value="{{ $row_purchase_user->id }}" >
+                            {{  $row_purchase_user->name }}
                         </option>
                         @endforeach
                     </select>
@@ -137,7 +137,7 @@
             <div class="form-group">
               <div class="col-lg-12">
                 <div class="text-center">
-                  <a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation">back</a>
+                  <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_order">back</a>
                   <button class="btn btn-success" type="submit" >Create</button>
                 </div>
               </div>

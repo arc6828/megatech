@@ -1,6 +1,6 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','แก้ไขรายละเอียดใบเสนอราคา')
+@section('title','แก้ไขรายละเอียดใบเสนอซื้อ')
 
 @section('breadcrumb-menu')
 
@@ -8,22 +8,22 @@
 
 @section('content')
 
-@forelse($table_quotation as $row)
-<form id="form-delete" style="display: none;" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" method="POST">
+@forelse($table_purchase_requisition as $row)
+<form id="form-delete" style="display: none;" action="{{ url('/') }}/purchase/purchase_requisition/{{ $row->purchase_requisition_id }}" method="POST">
 	{{ csrf_field() }}
 	{{ method_field('DELETE') }}
 	<button class="btn btn-danger" type="submit">
 		<i class="fa fa-trash-o"></i> Remove
 	</button>
 </form>
-<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" method="POST">
+<form class="" action="{{ url('/') }}/purchase/purchase_requisition/{{ $row->purchase_requisition_id }}" method="POST">
 	{{ csrf_field() }}
 	{{ method_field('PUT') }}
 	<div class="card">
 		<div class="card-block">
 			<div class="row">
 			<div class="col-lg-9 align-self-center">
-				<h4 class="card-title">Quotation code : {{ $row->quotation_code }}</h4>
+				<h4 class="card-title">Purchase Requisition code : {{ $row->purchase_requisition_code }}</h4>
 				<h6 class="card-subtitle">Update infomation in the form</h6>
 			</div>
 			<div class="col-lg-3 align-self-center">
@@ -112,11 +112,11 @@
 					</div>
 					<label class="col-lg-2 offset-lg-1">สถานะ</label>
 					<div class="col-lg-3">
-						<select name="sales_status_id" class="form-control" required>
+						<select name="purchase_status_id" class="form-control" required>
 							<option value="" >None</option>
-							@foreach($table_sales_status as $row_sales_status)
-							<option value="{{ $row_sales_status->sales_status_id }}" {{ $row_sales_status->sales_status_id === $row->sales_status_id ? "selected":"" }}>
-								{{	$row_sales_status->sales_status_name }}
+							@foreach($table_purchase_status as $row_purchase_status)
+							<option value="{{ $row_purchase_status->purchase_status_id }}" {{ $row_purchase_status->purchase_status_id === $row->purchase_status_id ? "selected":"" }}>
+								{{	$row_purchase_status->purchase_status_name }}
 							</option>
 							@endforeach
 						</select>
@@ -128,9 +128,9 @@
 					<div class="col-lg-3">
 						<select name="user_id" class="form-control" required>
 							<option value="" >None</option>
-							@foreach($table_sales_user as $row_sales_user)
-							<option value="{{ $row_sales_user->id }}" {{ $row_sales_user->id === $row->user_id ? "selected":"" }}>
-								{{	$row_sales_user->name }}
+							@foreach($table_purchase_user as $row_purchase_user)
+							<option value="{{ $row_purchase_user->id }}" {{ $row_purchase_user->id === $row->user_id ? "selected":"" }}>
+								{{	$row_purchase_user->name }}
 							</option>
 							@endforeach
 						</select>
@@ -151,7 +151,7 @@
 		</div>
 	</div>
 
-	@include('sales/quotation_detail/table')
+	@include('purchase/purchase_requisition_detail/table')
 
 	<div class="card">
 		<div class="card-block">
@@ -185,7 +185,7 @@
 					</div>
 					<div class="form-group form-inline">
 		   				<label class="col-lg-6">
-							
+
 						</label>
 						<label class="col-lg-3">ยอดสุทธิ</label>
 						<div class="col-lg-3">
@@ -198,7 +198,7 @@
 			<div class="form-group">
 				<div class="col-lg-12">
 				<div class="text-center">
-					<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation">back</a>
+					<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_requisition">back</a>
 					<button class="btn btn-success" type="submit" >Update</button>
 				</div>
 				</div>
@@ -221,9 +221,9 @@
 			//GET FORM BY ID
 			var form = document.getElementById("form_delete");
 			//CHANGE ACTION TO SPECIFY ID
-			form.action = "{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/"+id;
+			form.action = "{{ url('/') }}/purchase/purchase_requisition/{{ $purchase_requisition_id }}/purchase_requisition_detail/"+id;
 			//SUBMIT
-			var want_to_delete = confirm('Are you sure to delete this quotation detail?');
+			var want_to_delete = confirm('Are you sure to delete this purchase_requisition detail?');
 			if(want_to_delete){
 				form.submit();
 			}

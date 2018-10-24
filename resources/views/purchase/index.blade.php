@@ -13,7 +13,7 @@
 	<div class="card-block">
 		<div class="row text-center">
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_requisition">
 				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
 				<div><br>ใบเสนอซื้อ</div>
 			</a>
@@ -31,7 +31,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="#">
+			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_order">
 				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
 				<div><br>ใบสั่งซื้อ</div>
 			</a>
@@ -43,7 +43,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_receive">
 				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
 				<div>รับ/ซื้อ<br>สินค้า</div>
 			</a>

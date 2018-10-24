@@ -3,7 +3,7 @@
 @section('title','ใบเสนอราคา')
 
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/sales/quotation/create" class="btn pull-right hidden-sm-down btn-success">
+<a href="{{ url('/') }}/purchase/purchase_order/create" class="btn pull-right hidden-sm-down btn-success">
 	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
 </a>
 @endsection
@@ -18,7 +18,7 @@
 				<h6 class="card-subtitle">Display infomation in the table</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/sales/quotation" method="GET">
+				<form class="" action="{{ url('/') }}/purchase/purchase_order" method="GET">
 					<div class="form-group form-inline pull-right">
 						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
 						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
@@ -44,11 +44,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($table_quotation as $row)
+					@foreach($table_purchase_order as $row)
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
-								{{ $row->quotation_code }}
+							<a href="{{ url('/') }}/purchase/purchase_order/{{ $row->purchase_order_id }}/edit">
+								{{ $row->purchase_order_code }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
@@ -56,11 +56,11 @@
 						<td>{{ $row->customer_name }}</td>
 						<td>{{ $row->company_name }}</td>
 						<td>{{ $row->name }}</td>
-						<td>{{ $row->sales_status_name }}</td>
+						<td>{{ $row->purchase_status_name }}</td>
 						<td>
 							<a href="#"><span class="fa fa-trash" style="color: red"></span></a>
 							<div class="row hide">
-								<form action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" method="POST">
+								<form action="{{ url('/') }}/purchase/purchase_order/{{ $row->purchase_order_id }}" method="POST">
 									{{ csrf_field() }}
 									{{ method_field('DELETE') }}
 									<button type="submit"></button>
@@ -80,7 +80,7 @@
 <div class="form-group">
 	<div class="col-lg-12">
 		<div class="text-center">
-	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
 		</div>
 	</div>
 </div>

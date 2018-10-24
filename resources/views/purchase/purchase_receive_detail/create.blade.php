@@ -12,15 +12,15 @@
 	<div class="card-block">
 		<div class="row">
 			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">Quotation code :
-					@foreach($table_quotation as $row_quotation)
-					{{ $row_quotation->quotation_code }}
+				<h4 class="card-title">Purchase Receive code :
+					@foreach($table_purchase_receive as $row_purchase_receive)
+					{{ $row_purchase_receive->purchase_receive_code }}
 					@endforeach
 				</h4>
 				<h6 class="card-subtitle">Fill infomation in the form</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/create" method="GET">
+				<form class="" action="{{ url('/') }}/purchase/purchase_receive/{{ $purchase_receive_id }}/purchase_receive_detail/create" method="GET">
 					<div class="form-group form-inline pull-right">
 						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
 						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
@@ -44,7 +44,7 @@
 					</thead>
 					<tbody>
 						@foreach($table_product as $row)
-						<form action="{{ url('/') }}/sales/quotation/{{$quotation_id}}/quotation_detail" method="POST">
+						<form action="{{ url('/') }}/purchase/purchase_receive/{{$purchase_receive_id}}/purchase_receive_detail" method="POST">
 						{{ csrf_field() }}
 					    {{ method_field('POST') }}
 						<input type="hidden" name="product_id" value="{{ $row->product_id }}" >
@@ -84,7 +84,7 @@
 <div class="form-group">
 	<div class="col-lg-12">
 		<div class="text-center">
-	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/edit">back</a>
+	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_receive/{{ $purchase_receive_id }}/edit">back</a>
 		</div>
 	</div>
 </div>

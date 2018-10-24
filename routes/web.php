@@ -49,8 +49,15 @@ Route::resource('/sales/order/{order_id}/order_detail', 'Sales\OrderDetailContro
 Route::resource('/sales/requisition', 'Sales\RequisitionController');
 Route::resource('/sales/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
 
-Route::resource('/sales/invoice', 'Sales\InvoiceController');
-Route::resource('/sales/invoice/{invoice_id}/invoice_detail', 'Sales\QuotationDetailController');
+//2 Purchase
+Route::resource('/purchase/purchase_receive', 'Purchase\PurchaseReceiveController');
+Route::resource('/purchase/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
+
+Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
+Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
+
+Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
+Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
 //6 Folders
 Route::resource('/user', 'UserController');

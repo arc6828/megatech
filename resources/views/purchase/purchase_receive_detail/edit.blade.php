@@ -8,15 +8,15 @@
 
 @section('content')
 
-@forelse($table_quotation_detail as $row)
-<form action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/quotation_detail/{{ $row->quotation_detail_id }}" method="POST">
+@forelse($table_purchase_receive_detail as $row)
+<form action="{{ url('/') }}/purchase/purchase_receive/{{ $row->purchase_receive_id }}/purchase_receive_detail/{{ $row->purchase_receive_detail_id }}" method="POST">
 	{{ csrf_field() }}
 	{{ method_field('PUT') }}
 	<div class="card">
 		<div class="card-block">
 			<div class="row">
 				<div class="col-lg-9 align-self-center">
-					<h4 class="card-title">Quotation detail id : {{ $row->quotation_detail_id }} </h4>
+					<h4 class="card-title">Purchase Receive detail id : {{ $row->purchase_receive_detail_id }} </h4>
 					<h6 class="card-subtitle">Update infomation in the form</h6>
 				</div>
 				<div class="col-lg-3 align-self-center">
@@ -69,7 +69,7 @@
 			<div class="form-group">
 				<div class="col-lg-12">
 					<div class="text-center">
-						<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation/{{ $quotation_id}}/quotation_detail">back</a>
+						<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_receive/{{ $purchase_receive_id}}/purchase_receive_detail">back</a>
 						<button class="btn btn-success" type="submit" >Update</button>
 					</div>
 				</div>
