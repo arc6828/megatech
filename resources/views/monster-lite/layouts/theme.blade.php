@@ -27,6 +27,11 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
+	<link href="" rel="stylesheet">
+	<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -117,6 +122,10 @@
     <script src="{{url('/')}}/assets/js/custom.min.js"></script>
     <script src="{{url('/')}}/assets/plugins/momentjs/moment.min.js"></script>
 	<script src="{{url('/')}}/assets/plugins/input-mask/dist/jquery.masked-input.min.js"></script>
+
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
 
 
     <!-- ============================================================== -->

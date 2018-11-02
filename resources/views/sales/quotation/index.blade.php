@@ -30,7 +30,7 @@
 
 
 		<div class="table-responsive table-bordered">
-			<table class="table table-hover text-center">
+			<table class="table table-hover text-center" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
@@ -78,6 +78,13 @@
 
 			</table>
 		</div>
+		<script>
+		window.onload = function() {
+			console.log("555");
+			$('#table').DataTable();
+		};
+
+		</script>
 
 	</div>
 </div>
@@ -111,11 +118,8 @@ function onChangeCitizenID(obj) {
 </script>
 
 
-<div>
-<iframe src="https://e.issuu.com/anonymous-embed.html?u=chavalit.kow&d=6.________________________8________" width="944" height="500" frameborder="0" allowfullscreen="true"></iframe>
-</div>
 <input type="tel" id="citizen_id" name="citizen_id"
-	class="form-control"
+	class="form-control d-none"
 	placeholder="x-xxxx-xxxxx-xx-x"
 	data-masked-input="9-9999-99999-99-9"
 	onchange="onChangeCitizenID(this)"
