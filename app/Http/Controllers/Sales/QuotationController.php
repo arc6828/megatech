@@ -13,7 +13,7 @@ use App\TaxTypeModel;
 use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
-
+use App\ProductModel;
 
 class QuotationController extends Controller
 {
@@ -119,6 +119,7 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
+        //QUOTATION
         $table_quotation = QuotationModel::select_by_id($id);
         $table_customer = CustomerModel::select_all();
         $table_delivery_type = DeliveryTypeModel::select_all();
@@ -126,9 +127,14 @@ class QuotationController extends Controller
         $table_sales_status = SalesStatusModel::select_all();
         $table_sales_user = UserModel::select_by_role('sales');
         $table_zone = ZoneModel::select_all();
+        //QUOTATION DETAIL
         $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
+        //$q = $request->input('q');
+        //$table_quotation = QuotationModel::select_by_id($quotation_id);
+        $table_product = ProductModel::select_by_keyword("");
 
         $data = [
+            //QUOTATION
             'table_quotation' => $table_quotation,
             'table_customer' => $table_customer,
             'table_delivery_type' => $table_delivery_type,
@@ -138,6 +144,12 @@ class QuotationController extends Controller
             'table_zone' => $table_zone,
             'table_quotation_detail' => $table_quotation_detail,
             'quotation_id'=> $id,
+            //QUOTATION Detail
+            'table_product' => $table_product,
+            //'table_quotation' => $table_quotation,
+            //'quotation_id' => $quotation_id,
+            //'q' => $q,
+
         ];
         return view('sales/quotation/edit',$data);
     }

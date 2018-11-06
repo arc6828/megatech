@@ -6,7 +6,7 @@
         <div class="navbar-header d-none d-md-block  d-lg-block d-xl-block">
             <a class="navbar-brand" href="{{url('/')}}">
 
-                
+
                 <!-- Logo icon -->
                 <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -43,8 +43,11 @@
             <!-- User profile and search -->
             <!-- ============================================================== -->
             <ul class="navbar-nav my-lg-0">
+                <li>
+                  @yield('navbar-menu')
+                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{url('/')}}/assets/images/users/1.jpg" alt="user" class="profile-pic m-r-5" />Markarn Doe</a>
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{url('/')}}/assets/images/users/1.jpg" alt="user" class="profile-pic m-r-5" /></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{url('/')}}/pages-profile" >
                             <i class="fa fa-user m-r-10" aria-hidden="true"></i>Profile

@@ -2,17 +2,23 @@
 
 @section('title','ใบเสนอราคา')
 
-@section('breadcrumb-menu')
-<a href="{{ url('/') }}/sales/quotation/create" class="btn pull-right hidden-sm-down btn-success">
+@section('navbar-menu')
+<div style="margin:21px;">
+<a href="{{ url('/') }}/sales/quotation/create" class="btn pull-right hidden-sm-down btn-primary btn-sm">
 	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
 </a>
+<div>
+@endsection
+
+@section('breadcrumb-menu')
+
 @endsection
 
 @section('content')
 
 <div class="card">
 	<div class="card-block">
-		<div class="row">
+		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">รายการใบเสนอราคา</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
@@ -79,10 +85,10 @@
 			</table>
 		</div>
 		<script>
-		window.onload = function() {
-			console.log("555");
-			$('#table').DataTable();
-		};
+		document.addEventListener("DOMContentLoaded", function(event) {
+				console.log("555");
+				$('#table').DataTable();
+		});
 
 		</script>
 
