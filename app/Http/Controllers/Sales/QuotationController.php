@@ -164,21 +164,22 @@ class QuotationController extends Controller
     public function update(Request $request, $id)
     {
       $input = [
-          //'quotation_code' => $quotation_code,
-          'customer_id' => $request->input('customer_id'),
-          'debt_duration' => $request->input('debt_duration'),
-          'billing_duration' => $request->input('billing_duration'),
-          'payment_condition' => $request->input('payment_condition',""),
-          'delivery_type_id' => $request->input('delivery_type_id'),
-          'tax_type_id' => $request->input('tax_type_id'),
-          'delivery_time' => $request->input('delivery_time'),
-          'department_id' => $request->input('department_id'),
-          'sales_status_id' => $request->input('sales_status_id'),
-          'user_id' => $request->input('user_id'),
-          'zone_id' => $request->input('zone_id'),
-          'remark' => $request->input('remark'),
-          'vat_percent' => $request->input('vat_percent',7),
+        //'quotation_code' => $quotation_code,
+        'customer_id' => $request->input('customer_id'),
+        'debt_duration' => $request->input('debt_duration'),
+        'billing_duration' => $request->input('billing_duration'),
+        'payment_condition' => $request->input('payment_condition',""),
+        'delivery_type_id' => $request->input('delivery_type_id'),
+        'tax_type_id' => $request->input('tax_type_id'),
+        'delivery_time' => $request->input('delivery_time'),
+        'department_id' => $request->input('department_id'),
+        'sales_status_id' => $request->input('sales_status_id'),
+        'user_id' => $request->input('user_id'),
+        'zone_id' => $request->input('zone_id'),
+        'remark' => $request->input('remark'),
+        'vat_percent' => $request->input('vat_percent',7),
       ];
+
       QuotationModel::update_by_id($input,$id);
       return redirect("sales/quotation/{$id}/edit");
     }
@@ -193,4 +194,6 @@ class QuotationController extends Controller
     {
         //
     }
+
+
 }

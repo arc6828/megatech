@@ -105,9 +105,9 @@ class QuotationDetailController extends Controller
      */
     public function update(Request $request, $quotation_id, $id)
     {
-		$input = [
-            "amount" => $request->input('amount'),
-            "discount_price" => $request->input('discount_price',0),
+		    $input = [
+            "amount" => $request->input('amount_edit'),
+            "discount_price" => $request->input('discount_price_edit',0),
         ];
         QuotationDetailModel::update_by_id($input,$id);
         return redirect("sales/quotation/{$quotation_id}/edit#table");

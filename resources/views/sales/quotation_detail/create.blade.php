@@ -28,11 +28,6 @@
 						</thead>
 						<tbody>
 							@foreach($table_product as $row)
-							<form action="{{ url('/') }}/sales/quotation/{{$quotation_id}}/quotation_detail" method="POST">
-							{{ csrf_field() }}
-						    {{ method_field('POST') }}
-							<input type="hidden" name="product_id" value="{{ $row->product_id }}" >
-							<input type="hidden" name="discount_price" value="{{ $row->normal_price }}" >
 							<tr>
 								<td>
 									<a href="{{ url('/') }}/product/{{ $row->product_id }}/edit">
@@ -43,15 +38,14 @@
 								<td>{{ $row->amount_in_stock }}</td>
 								<td>{{ $row->promotion_price? $row->promotion_price : $row->normal_price }}</td>
 								<td>
-									<input class="form-control" type="number" name="amount" value="1" placeholder="กรอกจำนวน">
+									<input class="form-control form-control-sm" type="number" name="amount2" id="amount2" value="1" placeholder="กรอกจำนวน">
 								</td>
 								<td>
-									<button class="btn btn-warning" type="submit">
+									<button class="btn btn-warning" onclick="onCreate({{ $row->product_id }},{{ $row->normal_price }},document.getElementById('amount2').value);">
 										<span class="fa fa-shopping-cart"></span>
 									</button>
 								</td>
 							</tr>
-							</form>
 							@endforeach
 						</tbody>
 					</table>
@@ -63,9 +57,30 @@
 		</div>
 	</div>
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", function(event) {
-		console.log("555");
-		$('#table-model').DataTable();
-});
-</script>
+<div id="outer-form-container" style="display:none;">
+	<form action="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail" method="POST" id="form_create" >
+		{{ csrf_field() }}
+		{{ method_field('POST') }}
+
+		<input type="hidden" name="product_id" id="product_id" value="{{ $row->product_id }}" >
+		<input type="hidden" name="discount_price" id="discount_price" value="{{ $row->normal_price }}" >
+		<input type="hidden" name="amount" id="amount" value="1" >
+		<button type="submit">Create</button>
+	</form>
+	<script>
+		function onCreate(product_id, normal_price, amount){
+			//GET FORM BY ID
+			var form =
+			document.getElementById("product_id").value = product_id;
+			document.getElementById("discount_price").value = normal_price;
+			document.getElementById("amount").value = amount;
+			document.getElementById("form_create").submit();
+		}
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function(event) {
+			console.log("555");
+			$('#table-model').DataTable();
+		});
+	</script>
+</div>

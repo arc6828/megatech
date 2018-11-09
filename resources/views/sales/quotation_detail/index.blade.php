@@ -1,15 +1,11 @@
 <div class="card" id="table">
 	<div class="card-block">
-
-		<div class="row">
-				<div class="col-lg-9 align-self-center">
-						<h4 class="card-title">Quotation Detail</h4>
-						<h6 class="card-subtitle">Display infomation in the table</h6>
-				</div>
-				<div class="col-lg-3 align-self-center hide">
-			<a href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail" class="btn btn-warning pull-right">See detail</a>
-		</div>
-		</div>
+		<style>
+		.input{
+			max-width: 50px;
+			width: 100%;
+		}
+		</style>
 
 		<div class="table-responsive">
 			<table class="table table-hover text-center table-bordered" id="table">
@@ -30,17 +26,17 @@
 					@foreach($table_quotation_detail as $row_quotation_detail)
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/{{ $row_quotation_detail->quotation_detail_id }}/edit">
+							<button class="btn btn-link" json='@json($row_quotation_detail)' data-toggle="modal" data-target="#myModal">
 								{{ $row_quotation_detail->product_code }}
-							</a>
+							</button>
 						</td>
 						<td>{{ $row_quotation_detail->product_name }}</td>
-						<td>{{ $row_quotation_detail->amount }}</td>
+						<td><input class="input" value="{{ $row_quotation_detail->amount }}" ></td>
 						<td>{{ $row_quotation_detail->product_unit }}</td>
-						<td>{{ $row_quotation_detail->normal_price }}</td>
-						<td>{{ 100 - $row_quotation_detail->discount_price / $row_quotation_detail->normal_price * 100 }}</td>
-						<td>{{ $row_quotation_detail->discount_price }}</td>
-						<td>{{ $row_quotation_detail->discount_price *  $row_quotation_detail->amount }}</td>
+						<td><input class="input" value="{{ $row_quotation_detail->normal_price }}"></td>
+						<td><input class="input" value="{{ 100 - $row_quotation_detail->discount_price / $row_quotation_detail->normal_price * 100 }}"></td>
+						<td><input class="input" value="{{ $row_quotation_detail->discount_price }}"></td>
+						<td><input class="input" value="{{ $row_quotation_detail->discount_price *  $row_quotation_detail->amount }}"></td>
 						<td>
 					<a href="javascript:void(0)" onclick="onDelete( {{ $row_quotation_detail->quotation_detail_id }} )" class="text-danger">
 					<span class="fa fa-trash"></span>
@@ -51,31 +47,48 @@
 				</tbody>
 			</table>
 		</div>
-	<div class="text-center">
-		<a href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/create" class="btn btn-success d-none">
-			<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
-		</a>
-
-		@include('sales/quotation_detail/create')
-
-	</div>
-	</div>
-</div>
-<div class="form-group">
-	<div class="col-lg-12">
 		<div class="text-center">
-	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/edit">back</a>
+
+			@include('sales/quotation_detail/create')
+
 		</div>
 	</div>
 </div>
 
-<div style="display:none;">
+@include('sales/quotation_detail/edit')
+
+
+<div id="outer-form-container" style="display:none;">
 	<form action="#" method="POST" id="form_delete" >
 		{{ csrf_field() }}
 		{{ method_field('DELETE') }}
 		<button type="submit">Delete</button>
 	</form>
-	<script>	
+	<script>
+		document.addEventListener("DOMContentLoaded", function(event) {
+			$('#myModal').on('shown.bs.modal', function (e) {
+				var row = JSON.parse(e.relatedTarget.getAttribute("json"));
+
+				console.log(row);
+				document.getElementById("form_edit").action = "{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/quotation_detail/"+row.quotation_detail_id;
+
+				document.getElementById("quotation_detail_id").innerHTML = row.quotation_detail_id;
+				document.getElementById("product_code").innerHTML = row.product_code;
+				document.getElementById("product_name").innerHTML = row.product_name;
+				console.log(row.amount*1,document.getElementById("amount"));
+				document.getElementById("amount_edit").value = row.amount;
+				document.getElementById("discount_percent_edit").value = (100 - row.discount_price / row.normal_price * 100) ;
+				document.getElementById("normal_price_edit").value = row.normal_price;
+				document.getElementById("discount_price_edit").value = row.discount_price;
+				document.getElementById("total_edit").value = row.discount_price *  row.amount;
+			});
+
+		});
+		function onEdit(){
+			console.log("edit",$('#myModal'));
+			$('#myModal').on('show');
+		}
+
 		function onDelete(id){
 			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
 
