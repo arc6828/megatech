@@ -42,6 +42,7 @@
 						</option>
 						@endforeach
 					</select>
+					@include('customer/modal')
 				</div>
 				<label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
 				<div class="col-lg-3">

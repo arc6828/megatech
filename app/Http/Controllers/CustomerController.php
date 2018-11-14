@@ -174,4 +174,9 @@ class CustomerController extends Controller
         return redirect('finance/debtor');
 
     }
+
+    public function getCustomers(){
+      $table_customer = CustomerModel::select_all();
+      return response()->json($table_customer);
+    }
 }

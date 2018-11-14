@@ -43,6 +43,8 @@ Route::get('/others',function(){
 Route::resource('/sales/quotation', 'Sales\QuotationController');
 Route::resource('/sales/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
 
+Route::resource('/sales/quotation', 'Sales\QuotationController');
+
 Route::resource('/sales/order', 'Sales\OrderController');
 Route::resource('/sales/order/{order_id}/order_detail', 'Sales\OrderDetailController');
 
@@ -56,12 +58,13 @@ Route::resource('/purchase/purchase_receive/{purchase_receive_id}/purchase_recei
 Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
 Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
 
-Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
-Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
+//Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
+//Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
 //6 Folders
 Route::resource('/user', 'UserController');
 Route::resource('/customer', 'CustomerController');
+Route::get('/api/customer', 'CustomerController@getCustomers');
 Route::resource('/product', 'ProductController');
 
 //not confirm
