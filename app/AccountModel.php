@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 class AccountModel extends Model
 {
     public static function select_all(){
-		return DB::table('account')->get();
-	}
+  		return DB::table('tb_account')->get();
+  	}
 
 	// function select_id($id){
 	// 	$sql = "select * from account where id_account = {$id}";

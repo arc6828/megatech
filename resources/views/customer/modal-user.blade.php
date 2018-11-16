@@ -1,4 +1,8 @@
-<div class="modal-dialog" role="document" id="dialog">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+        <i class="fa fa-plus"></i> รหัสพนักงาน
+ </button>
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document" id="dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">พนักงาน</h5>
@@ -14,6 +18,7 @@
       </div>
     </div>
   </div>
+</div>
 
 
   <div id="outer-form-container" style="display:none;">
@@ -35,7 +40,7 @@
                               element.name,
                               "<button type='button' id='select' class='btn btn-warning btn-sm' onclick='select_user("+element.id+")' >เลือก </button>"
                           ]);
-                          
+
                       });
                       console.log(dataSet);
 
@@ -50,7 +55,7 @@
 
                   }
               });
-          
+
           });
           function select_user(id) {
               console.log(id);

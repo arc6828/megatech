@@ -31,8 +31,8 @@
                                     @foreach ($table_customer_type as $cus)
                                     <option value="{{ $cus->customer_type_id }}">{{ $cus->customer_type_name }}</option>
                                     @endforeach
-                                  
-                                   
+
+
                                 </select>
                         </div>
                 </div>
@@ -46,15 +46,14 @@
         </div>
 
         <h3>รายละเอียด</h3>
-        
+
         <div class="form-group form-inline">
                 <label class="col-lg-2">รหัสผังบัญชี</label>
                         <div class="col-lg-3">
                             <input type="text" name="account_id" id="account_id"  class="form-control form-control-line"  >
                         </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                <i class="fa fa-plus"></i> รหัสผังบัญชี
-                         </button>
+
+                        @include('customer/modal-account')
         </div>
         <div class="form-group form-inline">
                 <label class="col-lg-2">รายชื่อผู้ติดต่อ</label>
@@ -122,16 +121,15 @@
                             <input type="text" name="delivery_zipcode"  class="form-control form-control-line" style="width: 100%" ><br>
                 </div>
         </div>
-        
-       
+
+
         <div class="form-group form-inline">
                 <label class="col-lg-2">รหัสพนักงาน</label>
                         <div class="col-lg-3">
                             <input type="text" name="user_id" id="user_id"  class="form-control form-control-line" style="width: 100%" ><br>
                 </div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
-                        <i class="fa fa-plus"></i> รหัสพนักงาน
-                 </button>
+
+                @include('customer/modal-user')
         </div>
         <div class="form-group form-inline">
                 <label class="col-lg-2">เบอร์โทรศัพท์</label>
@@ -148,14 +146,14 @@
         <div class="form-group form-inline">
                 <label class="col-lg-2">เขตการขายของ</label>
                         <div class="col-lg-3">
-                           
+
                             <select name="zone_id" class="form-control form-control-line">
                                     @foreach ($table_zone as $zone )
                                     <option value="{{ $zone->zone_id }}">{{ $zone->zone_name }}</option>
                                     @endforeach
                                 </select>
-                            
-                        
+
+
                 </div>
         </div>
         <div class="form-group form-inline">
@@ -164,9 +162,9 @@
                         <select name="transpotation_id" class="form-control form-control-line">
                             @foreach ($table_delivery_type as $d)
                             <option value="{{ $d->delivery_type_id }}">{{ $d->delivery_type_name }}</option>
-                            
+
                             @endforeach
-                            
+
 
                         </select>
                 </div>
@@ -225,13 +223,13 @@
                             <select name="location_type_id" class="form-control form-control-line" >
                                 @foreach ($table_location as $location)
                             <option value="{{ $location->location_type_id }}">{{ $location->location_type_name }}</option>
-                                
+
                                 @endforeach
-                                
+
                             </select>
                     </div>
                 </div>
-    
+
     <div class="form-group form-inline">
             <label class="col-lg-2">สำนักงาน/สาขา (แสดงในภาษี) </label>
                     <div class="col-lg-3">
@@ -245,20 +243,14 @@
                 <button class="btn btn-success" type="submit" >Create</button>
               </div>
             </div>
-          </div>
         </div>
+    </div>
 </div>
 </form>
 
 
-{{-- Modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    @include('customer/modal-account')
-</div>
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        @include('customer/modal-user')
-    </div>
+
 @endsection
 
 @section('plugins-js')

@@ -89,4 +89,9 @@ class UserController extends Controller
     {
         //
     }
+
+    public function getUser() {
+        $table_user = UserModel::select_all();
+        return response()->json($table_user);
+    }
 }

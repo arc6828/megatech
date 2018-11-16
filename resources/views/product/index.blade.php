@@ -2,17 +2,21 @@
 
 @section('title','แฟ้มสินค้า')
 
+@section('navbar-menu')
+<div style="margin:21px;">
+	<a href="{{ url('/') }}/product/create" class="btn pull-right hidden-sm-down btn-success btn-sm">
+		<i class="fa fa-plus"></i> เพิ่มสินค้า
+	</a>
+<div>
+@endsection
+
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/product/create" class="btn pull-right hidden-sm-down btn-success">
-	<i class="fa fa-plus"></i> เพิ่มสินค้า
-</a>
+
 @endsection
 
 @section('content')
-
 <div class="card">
 	<div class="card-block">
-
 		<div class="row">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">แฟ้มสินค้า</h4>
@@ -54,13 +58,13 @@
 					<td>0</td>
 					<td>
 					<a href="javascript:void(0)" onclick="onDelete( {{ $row->product_id }}, 'x' )" class="text-danger"><span class="fa fa-trash"></span>
-					
+
 						</a>
 						<div class="row hide">
 							<form action="#" method="POST" id="form_delete">
 								{{ csrf_field() }}
 								{{ method_field('DELETE') }}
-								
+
 								<button type="submit"></button>
 							</form>
 					</div>
@@ -87,10 +91,10 @@
 			console.log(x);
 			//GET FORM BY ID
 			var form = document.getElementById("form_delete");
-	
+
 			//CHANGE ACTION TO SPECIFY ID
 			form.action = "{{ url('/') }}/product/"+id;
-	
+
 			//SUBMIT
 			var want_to_delete = confirm('Are you sure to delete this product?');
 			if(want_to_delete){
@@ -98,5 +102,5 @@
 			}
 		}
 		</script>
-	
+
 @endsection

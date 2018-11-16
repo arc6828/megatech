@@ -32,7 +32,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-      
+
         $table_account = AccountModel::select_all();
         $table_user = UserModel::select_all();
         $table_zone = CustomerModel::select_zone();
@@ -179,7 +179,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+
         $input = [
             'customer_code' => $request->input('customer_code'),
             'customer_type' => $request->input('customer_type'),
@@ -236,12 +236,5 @@ class CustomerController extends Controller
       return response()->json($table_customer);
     }
 
-    public function getAccount(){
-        $table_account = AccountModel::select_all();
-        return response()->json($table_account);
-    }
-    public function getUser() {
-        $table_user = UserModel::select_all();
-        return response()->json($table_user);
-    }
+
 }
