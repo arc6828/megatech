@@ -30,7 +30,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $table_product = ProductModel::select_all();
+        $data = [
+            'table_product' => $table_product
+        ];
+        return view('product/create',$data);
     }
 
     /**
@@ -41,7 +45,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = [
+            'product_code' => $request->input('product_code'),
+            'product_name' => $request->input('product_name'),
+            'brand' => $request->input('product_brand'),
+            'product_detail' => $request->input('product_detail'),
+            'product_unit' => $request->input('product_unit')
+        ];
+
+        ProductModel::insert($input);
+        return redirect('product');
     }
 
     /**
@@ -63,7 +76,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $table_product = ProductModel::select_by_id($id);
+        $data = [
+            'table_product' => $table_product
+        ];
+        return view('product/edit',$data);
     }
 
     /**
@@ -75,7 +92,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = [
+            'product_code' => $request->input('product_code'),
+            'product_name' => $request->input('product_name'),
+            'brand' => $request->input('product_brand'),
+            'product_detail' => $request->input('product_detail'),
+            'product_unit' => $request->input('product_unit')
+        ];
+        ProductModel::update_by_id($input,$id);
+        return redirect('product');
     }
 
     /**
@@ -86,6 +111,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ProductModel::delete_by_id($id);
+        return redirect('product');
     }
 }

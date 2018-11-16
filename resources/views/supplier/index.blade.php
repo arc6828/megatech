@@ -1,10 +1,10 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','แฟ้มลูกค้า')
+@section('title','แฟ้มลูกหนี้')
 
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/customer/create" class="btn pull-right hidden-sm-down btn-success">
-	<i class="fa fa-plus"></i> เพิ่มลูกค้า
+<a href="{{ url('/') }}/supplier/create" class="btn pull-right hidden-sm-down btn-success">
+	<i class="fa fa-plus"></i> เพิ่มลูกหนี้
 </a>
 @endsection
 
@@ -41,15 +41,15 @@
 					</tr>
 				</thead>
 				<tbody>
-				@foreach($table_customer as $row)
+				@foreach($table_supplier as $row)
 				<tr>
-					<td><a href="{{ url('/') }}/customer/{{ $row->customer_id }}/edit">{{ $row->customer_code }}</a></td>
+					<td><a href="{{ url('/') }}/supplier/{{ $row->supplier_id }}/edit">{{ $row->supplier_code }}</a></td>
 					<td>{{ $row->company_name }}</td>
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->telephone }}</td>
 					<td>0</td>
 					<td>
-						<a href="javascript:void(0)" onclick="onDelete( {{ $row->customer_id }} )" class="text-danger">
+						<a href="javascript:void(0)" onclick="onDelete( {{ $row->supplier_id }} )" class="text-danger">
 							<span class="fa fa-trash"></span>
 						</a>
 					</td>
@@ -77,7 +77,6 @@
 
 	</div>
 </div>
-
 <script>
 	function onDelete(id){
 		//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
@@ -86,14 +85,13 @@
 		var form = document.getElementById("form_delete");
 
 		//CHANGE ACTION TO SPECIFY ID
-		form.action = "{{ url('/') }}/customer/"+id;
+		form.action = "{{ url('/') }}/supplier/"+id;
 
 		//SUBMIT
-		var want_to_delete = confirm('Are you sure to delete this product?');
+		var want_to_delete = confirm('Are you sure to delete this supplier?');
 		if(want_to_delete){
 			form.submit();
 		}
 	}
 	</script>
 @endsection
-

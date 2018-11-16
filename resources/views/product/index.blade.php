@@ -53,9 +53,17 @@
 					<td>0</td>
 					<td>0</td>
 					<td>
-						<a href="#" class="text-danger">
-							<span class="fa fa-trash"></span>
+					<a href="javascript:void(0)" onclick="onDelete( {{ $row->product_id }}, 'x' )" class="text-danger"><span class="fa fa-trash"></span>
+					
 						</a>
+						<div class="row hide">
+							<form action="#" method="POST" id="form_delete">
+								{{ csrf_field() }}
+								{{ method_field('DELETE') }}
+								
+								<button type="submit"></button>
+							</form>
+					</div>
 					</td>
 				</tr>
 				@endforeach
@@ -64,4 +72,31 @@
 		</div>
 	</div>
 </div>
+
+<div class="form-group">
+	<div class="col-lg-12">
+		<div class="text-center">
+	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+		</div>
+	</div>
+</div>
+
+<script>
+		function onDelete(id, x){
+			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+			console.log(x);
+			//GET FORM BY ID
+			var form = document.getElementById("form_delete");
+	
+			//CHANGE ACTION TO SPECIFY ID
+			form.action = "{{ url('/') }}/product/"+id;
+	
+			//SUBMIT
+			var want_to_delete = confirm('Are you sure to delete this product?');
+			if(want_to_delete){
+				form.submit();
+			}
+		}
+		</script>
+	
 @endsection

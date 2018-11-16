@@ -13,8 +13,39 @@ class CustomerModel extends Model
 
 	public static function select_by_keyword($q){
         return DB::table('tb_customer')
-            ->where('tb_customer.customer_name', 'like' , "%{$q}%" )
+            ->where('tb_customer.company_name', 'like' , "%{$q}%" )
             ->get();
+	}
+	public static function select_zone() {
+		return DB::table('tb_zone')->get();
+	}
+	public static function select_delivery_type() {
+		return DB::table('tb_delivery_type')->get();
+	}
+	public static function select_location_type() {
+		return DB::table('tb_location_type')->get();
+	}
+	public static function select_customer_type(){
+		return DB::table('tb_customer_type')->get();
+	}
+	public static function insert($input) {
+		return DB::table('tb_customer')->insertGetId($input);
+	}
+	public static function select_by_id($id) {
+		return DB::table('tb_customer')->where('customer_id', '=', $id)->get();
+	}
+
+	public static function update_by_id($input,$id) {
+        DB::table('tb_customer')
+        ->where('customer_id', $id)
+        ->update($input);
+    }
+	
+
+	public static function delete_by_id($id){
+		DB::table('tb_customer')
+            ->where('customer_id', '=', $id)
+            ->delete();
 	}
     /*
 

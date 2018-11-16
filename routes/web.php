@@ -61,10 +61,16 @@ Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_det
 //Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
 //Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
+
+//Supplier
+Route::resource('/supplier', 'SupplierController');
+
 //6 Folders
 Route::resource('/user', 'UserController');
 Route::resource('/customer', 'CustomerController');
 Route::get('/api/customer', 'CustomerController@getCustomers');
+Route::get('/api/account', 'CustomerController@getAccount');
+Route::get('/api/user', 'CustomerController@getUser');
 Route::resource('/product', 'ProductController');
 
 //not confirm

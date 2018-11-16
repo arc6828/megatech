@@ -39,7 +39,7 @@
               console.log(element,index);
               dataSet.push([
                 element.customer_id,
-                element.customer_name,
+                element.contact_name,
                 element.company_name,
                 "<button type='button' class='btn btn-warning btn-sm'>เลือก</button>",
               ]);
