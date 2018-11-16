@@ -69,7 +69,7 @@
 	<div class="form-group">
 		<div class="col-lg-12">
 			<div class="text-center">
-				  <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+				  <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
 			</div>
 		</div>
 	</div>
