@@ -4,7 +4,8 @@
 
 @section('navbar-menu')
 <div style="margin:21px;">
-<a href="{{ url('/') }}/sales/quotation/create" class="btn pull-right hidden-sm-down btn-primary btn-sm">
+<a class="btn btn-outline-primary  btn-sm" href="{{ url('/') }}/sales">back</a>
+<a href="{{ url('/') }}/sales/quotation/create" class="btn btn-primary btn-sm">
 	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
 </a>
 <div>
@@ -69,14 +70,9 @@
 						<td>{{ $row->name }}</td>
 						<td>{{ $row->sales_status_name }}</td>
 						<td>
-							<a href="#"><span class="fa fa-trash" style="color: red"></span></a>
-							<div class="row hide">
-								<form action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" method="POST">
-									{{ csrf_field() }}
-									{{ method_field('DELETE') }}
-									<button type="submit"></button>
-								</form>
-							</div>
+							<a href="javascript:void(0)" onclick="onDelete( {{ $row->quotation_id }} )" class="text-danger">
+								<span class="fa fa-trash"></span>
+							</a>
 						</td>
 					</tr>
 					@endforeach
@@ -95,13 +91,6 @@
 	</div>
 </div>
 
-<div class="form-group">
-	<div class="col-lg-12">
-		<div class="text-center">
-	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
-		</div>
-	</div>
-</div>
 
 <script>
 
@@ -122,6 +111,35 @@ function onChangeCitizenID(obj) {
         alert('รหัสประชาชนถูกต้อง');
 }
 </script>
+
+<div id="outer-form-container" style="display:none;">
+	<form action="#" method="POST" id="form_delete" >
+		{{ csrf_field() }}
+		{{ method_field('DELETE') }}
+		<button type="submit">Delete</button>
+	</form>
+	<script>
+
+		function onEdit(){
+			console.log("edit",$('#myModal'));
+			$('#myModal').on('show');
+		}
+
+		function onDelete(id){
+			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+			//GET FORM BY ID
+			var form = document.getElementById("form_delete");
+			//CHANGE ACTION TO SPECIFY ID
+			form.action = "{{ url('/') }}/sales/quotation/"+id;
+			//SUBMIT
+			var want_to_delete = confirm('Are you sure to delete this quotation ?');
+			if(want_to_delete){
+				form.submit();
+			}
+		}
+	</script>
+</div>
 
 
 <input type="tel" id="citizen_id" name="citizen_id"

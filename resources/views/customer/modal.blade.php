@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#customerModal">
+<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#customerModal">
 	<i class="fa fa-plus"></i> เลือกลูกหนี้
 </button>
 
@@ -26,8 +26,16 @@
 </div>
 <div id="outer-form-container" style="display:none;">
 	<script>
+		//onClick
+		function select_item(id,name) {
+				console.log(id);
+						$('#customer_id').val(id);
+						$('#contact_name').val(name);
+						$('#customerModal').modal('hide');
+		}
 		document.addEventListener("DOMContentLoaded", function(event) {
 			console.log("555");
+			//AJAX
       $.ajax({
           url: "{{ url('/') }}/api/customer",
           type: "GET",
@@ -41,7 +49,7 @@
                 element.customer_id,
                 element.contact_name,
                 element.company_name,
-                "<button type='button' class='btn btn-warning btn-sm'>เลือก</button>",
+                "<button type='button' class='btn btn-warning btn-sm' onClick='select_item("+element.customer_id+",`"+element.contact_name+"`)'>เลือก</button>",
               ]);
             });
             console.log(dataSet);

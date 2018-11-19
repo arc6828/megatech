@@ -48,6 +48,7 @@ class QuotationModel extends Model
              ->select( DB::raw('quotation_id, sum(discount_price) as total'))
              ->groupBy('quotation_id');
         return DB::table('tb_quotation')
+      ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
 			->leftJoinSub($total_query, 'total_query', function($join) {
 				$join->on('tb_quotation.quotation_id', '=', 'total_query.quotation_id');
 			})

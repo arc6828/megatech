@@ -192,7 +192,8 @@ class QuotationController extends Controller
      */
     public function destroy($id)
     {
-        //
+      QuotationModel::delete_by_id($id);
+      return redirect("sales/quotation");
     }
 
 

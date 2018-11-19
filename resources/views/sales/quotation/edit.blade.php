@@ -32,16 +32,11 @@
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 			<div class="form-group form-inline">
-				<label class="col-lg-2">รหัสลูกค้า</label>
+				<label class="col-lg-2">รหัสลูกหนี้</label>
 				<div class="col-lg-3">
-					<select name="customer_id" class="form-control form-control-sm" required>
-						<option value="" >None</option>
-						@foreach($table_customer as $row_customer)
-						<option value="{{ $row_customer->customer_id }}" {{ $row_customer->customer_id === $row->customer_id ? "selected":"" }}>
-							{{	$row_customer->customer_name }}
-						</option>
-						@endforeach
-					</select>
+					<input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm" value="{{	$row->customer_id }}" >
+					<input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm" value="{{	$row->contact_name }}"	readonly style="max-width:100px;">
+
 					@include('customer/modal')
 				</div>
 				<label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
