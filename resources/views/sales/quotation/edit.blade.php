@@ -21,7 +21,6 @@
 		<div class="row">
 		<div class="col-lg-9 align-self-center">
 			<h4 class="card-title">Quotation code : {{ $row->quotation_code }}</h4>
-			<h6 class="card-subtitle">Update infomation in the form</h6>
 		</div>
 		<div class="col-lg-3 align-self-center">
 
@@ -113,7 +112,7 @@
 			<div class="form-group form-inline">
 				<label class="col-lg-2">รหัสพนักงานขาย</label>
 				<div class="col-lg-3">
-					<select name="user_id" class="form-control form-control-sm" required>
+					<select name="user_id" id="user_id" class="form-control form-control-sm" required>
 						<option value="" >None</option>
 						@foreach($table_sales_user as $row_sales_user)
 						<option value="{{ $row_sales_user->id }}" {{ $row_sales_user->id === $row->user_id ? "selected":"" }}>
@@ -240,6 +239,7 @@ function onChange(obj){
 
 window.onload = onChange(document.getElementById("tax_type_id"));
 </script>
+
 
 @empty
 <div class="text-center">

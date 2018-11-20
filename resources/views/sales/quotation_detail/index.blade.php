@@ -31,12 +31,12 @@
 							</button>
 						</td>
 						<td>{{ $row_quotation_detail->product_name }}</td>
-						<td><input class="input" value="{{ $row_quotation_detail->amount }}" ></td>
+						<td><input class="input" name="amount_edit" id="new_amount_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->amount }}" onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})" onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"></td>
 						<td>{{ $row_quotation_detail->product_unit }}</td>
-						<td><input class="input" value="{{ $row_quotation_detail->normal_price }}"></td>
-						<td><input class="input" value="{{ 100 - $row_quotation_detail->discount_price / $row_quotation_detail->normal_price * 100 }}"></td>
-						<td><input class="input" value="{{ $row_quotation_detail->discount_price }}"></td>
-						<td><input class="input" value="{{ $row_quotation_detail->discount_price *  $row_quotation_detail->amount }}"></td>
+						<td>{{ $row_quotation_detail->normal_price }}<input type="hidden" name="normal_price_edit" id="new_normal_price_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->normal_price }}" ></td>
+						<td><input class="input" name="discount_percent_edit" id="new_discount_percent_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ 100 - $row_quotation_detail->discount_price / $row_quotation_detail->normal_price * 100 }}" onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})" onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"></td>
+						<td><input class="input" name="discount_price_edit" id="new_discount_price_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->discount_price }}" onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})" onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"></td>
+						<td><input class="input" name="total_edit" id="new_total_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->discount_price *  $row_quotation_detail->amount }}" readonly disabled></td>
 						<td>
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row_quotation_detail->quotation_detail_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>
@@ -102,5 +102,35 @@
 				form.submit();
 			}
 		}
+	</script>
+	<script>
+	function onChange3(obj,id){
+		var discount_price_edit = document.getElementById("new_discount_price_edit"+id);
+		var discount_percent_edit = document.getElementById("new_discount_percent_edit"+id);
+		var normal_price_edit = document.getElementById("new_normal_price_edit"+id);
+		var total_edit = document.getElementById("new_total_edit"+id);
+		var amount_edit = document.getElementById("new_amount_edit"+id);
+		//console.log("print",event,discount_price_edit,discount_percent_edit,normal_price_edit,total_edit,amount_edit);
+		switch (obj.id) {
+			case "new_discount_percent_edit"+id:
+				//EFFECT TO #discount_price_edit
+				console.log("EFFECT TO #discount_price_edit");
+				discount_price_edit.value = normal_price_edit.value - normal_price_edit.value * (discount_percent_edit.value) / 100;
+
+				break;
+			case "new_discount_price_edit"+id:
+				//EFFECT TO #discount_percent_edit
+				discount_percent_edit.value = 100.0 - discount_price_edit.value / normal_price_edit.value * 100;
+				break;
+		}
+		//EFFECT TO #total_edit
+		total_edit.value = amount_edit.value * discount_price_edit.value;
+		//console.log(obj.value, obj.id);
+
+		if(event.type === "change"){
+			console.log("Change");
+			//ajax to server update + or click submit
+		}
+	}
 	</script>
 </div>
