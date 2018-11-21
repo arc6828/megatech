@@ -49,7 +49,7 @@
 				</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-				<a class="btn btn-outline-success my-3" href="{{url('/')}}/inventory">
+				<a class="btn btn-outline-success my-3" href="{{url('/')}}/inventory_main">
 					<div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
 					<div>แฟ้มหลัก<br>คลังสินค้า</div>
 				</a>

@@ -24,17 +24,14 @@
   <div id="outer-form-container" style="display:none;">
       <script>
           document.addEventListener('DOMContentLoaded', function(event) {
-              console.log('Test');
-
           $.ajax({
                   url: "{{ url('/') }}/api/user",
                   type: "GET",
                   dataType: "json",
                   success: function(res) {
-                      console.log(res);
                       var dataSet = [];
                       res.forEach(function(element,index) {
-                          console.log("element",element.id,"index",index);
+                
                           dataSet.push([
                               element.id,
                               element.name,
@@ -58,7 +55,7 @@
 
           });
           function select_user(id) {
-              console.log(id);
+         
                   $('#user_id').val(id);
                   $('#exampleModal2').modal('hide');
           };

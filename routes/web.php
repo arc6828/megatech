@@ -66,7 +66,6 @@ Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_det
 Route::resource('/supplier', 'SupplierController');
 
 //6 Folders
-Route::resource('/user', 'UserController');
 Route::resource('/customer', 'CustomerController');
 Route::resource('/product', 'ProductController');
 
@@ -74,15 +73,24 @@ Route::resource('/product', 'ProductController');
 Route::get('/api/customer', 'CustomerController@getCustomers');
 Route::get('/api/account', 'AccountController@getAccount');
 Route::get('/api/user', 'UserController@getUser');
+Route::get('/api/bank_detail', 'BankDetailController@index');
 
 //not confirm
 
+//Users
+
+Route::resource('/user','UserController');
 
 //Process Deptor
 Route::resource('/finance/debtout', 'DebtoutController');
 
 Route::resource('/finance/settle', 'SettleController');
 
+//Process bank and bank_detail
+Route::resource('/bank','BankController');
+
+//Inventory_main
+Route::resource('/inventory_main','InventoryController');
 
 Auth::routes();
 

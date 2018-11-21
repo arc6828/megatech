@@ -27,26 +27,21 @@
 <div id="outer-form-container" style="display:none;">
     <script>
         document.addEventListener('DOMContentLoaded', function(event) {
-        console.log('Test');
 
         $.ajax({
                 url: "{{ url('/') }}/api/account",
                 type: "GET",
                 dataType: "json",
                 success: function(res) {
-                    console.log(res);
                     var dataSet = [];
                     res.forEach(function(element,index) {
-                        console.log("element",element,"index",index);
                         dataSet.push([
                             element.account_id,
                             element.account_note,
                             "<button type='button' id='select' class='btn btn-warning btn-sm' onclick='select_values("+element.account_id+",`"+element.account_note+"`)' >เลือก </button>"
                         ]);
 
-                    });
-                    console.log(dataSet);
-
+                      });
                     $('#table-account-modal').DataTable({
                         data: dataSet,
                         columns: [

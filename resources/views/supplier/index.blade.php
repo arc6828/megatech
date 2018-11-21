@@ -2,11 +2,14 @@
 
 @section('title','แฟ้มลูกหนี้')
 
-@section('breadcrumb-menu')
-<a href="{{ url('/') }}/supplier/create" class="btn pull-right hidden-sm-down btn-success">
-	<i class="fa fa-plus"></i> เพิ่มลูกหนี้
-</a>
+@section('navbar-menu')
+<div style="margin:21px;">
+	<a href="{{ url('/') }}/supplier/create" class="btn pull-right hidden-sm-down btn-success btn-sm">
+		<i class="fa fa-plus"></i> เพิ่มเจ้าหนี้
+	</a>
+<div>
 @endsection
+
 
 @section('content')
 
@@ -19,7 +22,7 @@
 				<h6 class="card-subtitle">Display infomation in the table</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/customer" method="GET">
+				<form class="" action="{{ url('/') }}/supplier" method="GET">
 					<div class="form-group form-inline pull-right">
 						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
 						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>

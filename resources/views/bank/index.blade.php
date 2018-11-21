@@ -1,15 +1,14 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','แฟ้มลูกค้า')
+@section('title','แฟ้มธนาคาร')
 
 @section('navbar-menu')
 <div style="margin:21px;">
-	<a href="{{ url('/') }}/customer/create" class="btn pull-right hidden-sm-down btn-success btn-sm">
-		<i class="fa fa-plus"></i> เพิ่มลูกค้า
+	<a href="{{ url('/') }}/bank/create" class="btn pull-right hidden-sm-down btn-success btn-sm">
+		<i class="fa fa-plus"></i> เพิ่มรายการธนาคาร
 	</a>
 <div>
 @endsection
-
 
 @section('content')
 
@@ -22,7 +21,7 @@
 				<h6 class="card-subtitle">Display infomation in the table</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/customer" method="GET">
+				<form class="" action="{{ url('/') }}/bank" method="GET">
 					<div class="form-group form-inline pull-right">
 						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
 						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
@@ -35,24 +34,22 @@
 			<table class="table table-hover text-center">
 				<thead>
 					<tr>
-						<th class="text-center">รหัส</th>
-						<th class="text-center">ชื่อบริษัท</th>
-						<th class="text-center">อีเมล์</th>
-						<th class="text-center">เบอร์โทรศัพท์</th>
-						<th class="text-center">ยอดหนึ้ขณะนี้</th>
+						<th class="text-center">รหัสธนาคาร</th>
+						<th class="text-center">รายละเอียด</th>
+						<th class="text-center">สาขา</th>
+						<th class="text-center">ยอดคงเหลือ</th>
 						<th class="text-center">action</th>
 					</tr>
 				</thead>
 				<tbody>
-				@foreach($table_customer as $row)
+				@foreach($table_bank as $row)
 				<tr>
-					<td><a href="{{ url('/') }}/customer/{{ $row->customer_id }}/edit">{{ $row->customer_code }}</a></td>
-					<td>{{ $row->company_name }}</td>
-					<td>{{ $row->email }}</td>
-					<td>{{ $row->telephone }}</td>
-					<td>0</td>
+					<td><a href="{{ url('/') }}/bank/{{ $row->bank_id }}/edit">{{ $row->bank_code }}</a></td>
+					<td>{{ $row->bank_name }}</td>
+					<td>{{ $row->bank_branch }}</td>
+					<td>{{ $row->bring_forward }}</td>
 					<td>
-						<a href="javascript:void(0)" onclick="onDelete( {{ $row->customer_id }} )" class="text-danger">
+						<a href="javascript:void(0)" onclick="onDelete( {{ $row->bank_id }} )" class="text-danger">
 							<span class="fa fa-trash"></span>
 						</a>
 					</td>
@@ -72,7 +69,7 @@
 	<div class="form-group">
 		<div class="col-lg-12">
 			<div class="text-center">
-				  <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+				  <a class="btn btn-outline-primary" href="{{ url('/') }}/finance">back</a>
 			</div>
 		</div>
 	</div>
@@ -89,10 +86,10 @@
 		var form = document.getElementById("form_delete");
 
 		//CHANGE ACTION TO SPECIFY ID
-		form.action = "{{ url('/') }}/customer/"+id;
+		form.action = "{{ url('/') }}/bank/"+id;
 
 		//SUBMIT
-		var want_to_delete = confirm('Are you sure to delete this product?');
+		var want_to_delete = confirm('Are you sure to delete this bank?');
 		if(want_to_delete){
 			form.submit();
 		}

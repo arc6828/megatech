@@ -35,5 +35,11 @@ class UserModel extends Model
             ->where('users.name', '=' , $role )
             ->where('users.name', 'like' , "%{$q}%" )
             ->get();
-	}
+    }
+    public static function update_by_id($input,$id) {
+         DB::table('users')->where('users.id',$id)->update($input);
+    }
+    public static function delete_by_id($id) {
+        DB::table('users')->where('users.id','=',$id)->delete();
+    }
 }

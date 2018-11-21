@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\UserModel;
+use App\InventoryModel;
 
-class UserController extends Controller
+class InventoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +14,13 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $model = new UserModel();
         $q = $request->input('q');
-        $table_user = UserModel::select_by_role($q);
+        $table_inventory = InventoryModel::select_by_name($q);
         $data = [
-            'table_user' => $table_user,
+            'table_inventory' => $table_inventory,
             'q' => $q
         ];
-        return view('user/index',$data);
+        return view('inventory/inventory_main/index',$data);
     }
 
     /**
@@ -31,7 +30,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('inventory/inventory_main/create');
     }
 
     /**
@@ -42,7 +41,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = ['inventory_name' => $request->input('inventory_name')];
+        InventoryModel::insert($input);
+        return redirect('inventory_main');
     }
 
     /**
@@ -53,7 +54,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-       //
+        //
     }
 
     /**
@@ -64,11 +65,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $table_user = UserModel::select_by_id($id);
-        $data = [
-            'table_user' => $table_user
-        ];
-        return view('user/edit',$data);
+        $table_inventory = InventoryModel::select_by_id($id);
+        $data = ['table_inventory'=>$table_inventory];
+        return view('inventory/inventory_main/edit',$data);
     }
 
     /**
@@ -80,12 +79,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = [
-            'name' => $request->input('name'),
-            'role' => $request->input('role')
-        ];
-        UserModel::update_by_id($input,$id);
-        return redirect('user');
+        $input = ['inventory_name' => $request->input('inventory_name')];
+        InventoryModel::update_by_id($input,$id);
+        return redirect('inventory_main');
     }
 
     /**
@@ -96,12 +92,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        UserModel::delete_by_id($id);
-        return redirect('user');
-    }
-
-    public function getUser() {
-        $table_user = UserModel::select_all();
-        return response()->json($table_user);
+        InventoryModel::delete_by_id($id);
+        return redirect('inventory_main');
     }
 }

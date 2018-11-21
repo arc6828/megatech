@@ -3,25 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\UserModel;
 
-class UserController extends Controller
+class BankDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $model = new UserModel();
-        $q = $request->input('q');
-        $table_user = UserModel::select_by_role($q);
-        $data = [
-            'table_user' => $table_user,
-            'q' => $q
-        ];
-        return view('user/index',$data);
+
     }
 
     /**
@@ -53,7 +45,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-       //
+        //
     }
 
     /**
@@ -64,11 +56,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $table_user = UserModel::select_by_id($id);
-        $data = [
-            'table_user' => $table_user
-        ];
-        return view('user/edit',$data);
+        //
     }
 
     /**
@@ -80,12 +68,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = [
-            'name' => $request->input('name'),
-            'role' => $request->input('role')
-        ];
-        UserModel::update_by_id($input,$id);
-        return redirect('user');
+        //
     }
 
     /**
@@ -96,12 +79,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        UserModel::delete_by_id($id);
-        return redirect('user');
-    }
-
-    public function getUser() {
-        $table_user = UserModel::select_all();
-        return response()->json($table_user);
+        //
     }
 }
