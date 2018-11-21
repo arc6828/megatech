@@ -1,21 +1,11 @@
 <?php
+
 namespace App\Http\Controllers\Sales;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Sales\RequisitionModel;
-
-use App\CustomerModel;
-use App\DeliveryTypeModel;
-use App\TaxTypeModel;
-use App\SalesStatusModel;
-use App\UserModel;
-use App\ZoneModel;
-
-use App\Sales\RequisitionDetailModel;
-
-
+use App\Sales\OrderDetailStatusModel;
 
 class RequisitionController extends Controller
 {
@@ -24,18 +14,14 @@ class RequisitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        //QUOTATION
-        $q = $request->input('q');
-        $table_requisition = RequisitionModel::select_by_keyword($q);
-        //QUATATION DETAIL
 
-        $data = [
-            'table_requisition' => $table_requisition,
-            'q' => $q
-        ];
-        return view('sales/requisition/index',$data);
+      $table_order_detail_status = OrderDetailStatusModel::select_all();
+      $data = [
+          'table_order_detail_status' => $table_order_detail_status,
+      ];
+      return view('sales/requisition/index',$data);
     }
 
     /**
@@ -45,22 +31,7 @@ class RequisitionController extends Controller
      */
     public function create()
     {
-        $table_customer = CustomerModel::select_all();
-        $table_delivery_type = DeliveryTypeModel::select_all();
-        $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
-        $table_zone = ZoneModel::select_all();
-
-        $data = [
-            'table_customer' => $table_customer,
-            'table_delivery_type' => $table_delivery_type,
-            'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
-            'table_zone' => $table_zone,
-        ];
-        return view('sales/requisition/create',$data);
+        //
     }
 
     /**
@@ -71,35 +42,7 @@ class RequisitionController extends Controller
      */
     public function store(Request $request)
     {
-        $requisition_code = $this->getNewCode();
-        $input = [
-            'requisition_code' => $requisition_code,
-            'customer_id' => $request->input('customer_id'),
-            'debt_duration' => $request->input('debt_duration'),
-            'billing_duration' => $request->input('billing_duration'),
-            'payment_condition' => $request->input('payment_condition',""),
-            'delivery_type_id' => $request->input('delivery_type_id'),
-            'tax_type_id' => $request->input('tax_type_id'),
-            'delivery_time' => $request->input('delivery_time'),
-            'department_id' => $request->input('department_id'),
-            'sales_status_id' => $request->input('sales_status_id'),
-            'user_id' => $request->input('user_id'),
-            'zone_id' => $request->input('zone_id'),
-            'remark' => $request->input('remark'),
-            'vat_percent' => $request->input('vat_percent',7),
-        ];
-        $id = RequisitionModel::insert($input);
-        return redirect("sales/requisition/{$id}/edit");
-    }
-
-    public function getNewCode(){
-        $count = RequisitionModel::select_count_by_current_month() + 1;
-		//$year = (date("Y") + 543) % 100;
-        $year = date("y");
-        $month = date("m");
-        $number = sprintf('%05d', $count);
-        $requisition_code = "QT{$year}{$month}-{$number}";
-        return $requisition_code;
+        //
     }
 
     /**
@@ -110,7 +53,7 @@ class RequisitionController extends Controller
      */
     public function show($id)
     {
-        //no show
+        //
     }
 
     /**
@@ -121,27 +64,7 @@ class RequisitionController extends Controller
      */
     public function edit($id)
     {
-        $table_requisition = RequisitionModel::select_by_id($id);
-        $table_customer = CustomerModel::select_all();
-        $table_delivery_type = DeliveryTypeModel::select_all();
-        $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
-        $table_zone = ZoneModel::select_all();
-        $table_requisition_detail = RequisitionDetailModel::select_by_requisition_id($id);
-
-        $data = [
-            'table_requisition' => $table_requisition,
-            'table_customer' => $table_customer,
-            'table_delivery_type' => $table_delivery_type,
-            'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
-            'table_zone' => $table_zone,
-            'table_requisition_detail' => $table_requisition_detail,
-            'requisition_id'=> $id,
-        ];
-        return view('sales/requisition/edit',$data);
+        //
     }
 
     /**
@@ -153,24 +76,7 @@ class RequisitionController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $input = [
-          //'requisition_code' => $requisition_code,
-          'customer_id' => $request->input('customer_id'),
-          'debt_duration' => $request->input('debt_duration'),
-          'billing_duration' => $request->input('billing_duration'),
-          'payment_condition' => $request->input('payment_condition',""),
-          'delivery_type_id' => $request->input('delivery_type_id'),
-          'tax_type_id' => $request->input('tax_type_id'),
-          'delivery_time' => $request->input('delivery_time'),
-          'department_id' => $request->input('department_id'),
-          'sales_status_id' => $request->input('sales_status_id'),
-          'user_id' => $request->input('user_id'),
-          'zone_id' => $request->input('zone_id'),
-          'remark' => $request->input('remark'),
-          'vat_percent' => $request->input('vat_percent',7),
-      ];
-      RequisitionModel::update_by_id($input,$id);
-      return redirect("sales/requisition/{$id}/edit");
+        //
     }
 
     /**

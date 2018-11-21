@@ -94,7 +94,14 @@
 			<div class="form-group form-inline">
 				<label class="col-lg-2">รหัสแผนก</label>
 				<div class="col-lg-3">
-				<input type="number" name="department_id"	class="form-control form-control-sm form-control-line" value="{{ $row->department_id }}" readonly="" >
+					<select name="department_id" class="form-control form-control-sm" required>
+						<option value="" >None</option>
+						@foreach($table_department as $row_department)
+						<option value="{{ $row_department->department_id }}" {{ $row_department->department_id === $row->department_id ? "selected":"" }}>
+							{{	$row_department->department_name }}
+						</option>
+						@endforeach
+					</select>
 				</div>
 				<label class="col-lg-2 offset-lg-1">สถานะ</label>
 				<div class="col-lg-3">

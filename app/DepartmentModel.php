@@ -2,14 +2,14 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class DepartmentModel
+class DepartmentModel extends Model
 {
-     function select(){
-		$sql = "select * from department";
-		return DB::select($sql, []);
-	}
+  public static function select_all(){
+      return DB::table('tb_department')->get();
+  }
 
 	function select_id($id_user){
 		$sql = "select * from department where id_department = {$id_department}";

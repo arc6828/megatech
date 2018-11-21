@@ -2,7 +2,6 @@
 
 namespace App\Sales;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 /*
@@ -48,12 +47,13 @@ class OrderModel extends Model
              ->select( DB::raw('order_id, sum(discount_price) as total'))
              ->groupBy('order_id');
         return DB::table('tb_order')
-      ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
 			->leftJoinSub($total_query, 'total_query', function($join) {
 				$join->on('tb_order.order_id', '=', 'total_query.order_id');
 			})
             ->where('tb_order.order_id', '=' , $id )
-			->select( DB::raw('tb_order.*,tb_customer.customer_id,tb_customer.contact_name, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat, total'))
+			->select( DB::raw(
+				'tb_order.*, tb_customer.*,tb_delivery_type.*, tb_tax_type.*, tb_sales_status.*,users.*,total,
+				(vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
             ->get();
 	}
 
@@ -64,20 +64,24 @@ class OrderModel extends Model
 
         $total_query = DB::table('tb_order_detail')
              ->select( DB::raw('order_id, sum(discount_price) as total'))
-             ->groupBy('tb_order_detail.order_id');
-		 return DB::table('tb_order')
-             ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-             ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
-             ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
-             ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-             ->join('users', 'tb_order.user_id', '=', 'users.id')
- 			->leftJoinSub($total_query, 'total_query', function($join) {
- 				$join->on('tb_order.order_id', '=', 'total_query.order_id');
- 			})
- 			->select( DB::raw(
- 				'tb_order.*, tb_customer.*,tb_delivery_type.*, tb_tax_type.*, tb_sales_status.*,users.*,total,
- 				(vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
-             ->get();
+             ->groupBy('order_id');
+        return DB::table('tb_order')
+            ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+            ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+            ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+            ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'tb_order.user_id', '=', 'users.id')
+            ->leftJoinSub($total_query, 'total_query', function($join) {
+                $join->on('tb_order.order_id', '=', 'total_query.order_id');
+            })
+            ->where('order_code', 'like' , "%{$q}%" )
+            ->orWhere('company_name', 'like' , "%{$q}%" )
+            ->orWhere('customer_name', 'like' , "%{$q}%" )
+            ->orWhere('sales_status_name', 'like' , "%{$q}%" )
+			->select( DB::raw(
+				'tb_order.*, tb_customer.*,tb_delivery_type.*, tb_tax_type.*, tb_sales_status.*,users.*,total,
+				(vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
+            ->get();
 	}
 
 	public static function insert($input){

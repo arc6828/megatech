@@ -60,7 +60,7 @@ class OrderDetailController extends Controller
             "order_id" => $order_id,
         ];
         OrderDetailModel::insert($input);
-        return redirect("sales/order/{$order_id}/edit#table");
+        return redirect("sales/order/{$order_id}/order_detail");
     }
 
     /**
@@ -105,12 +105,12 @@ class OrderDetailController extends Controller
      */
     public function update(Request $request, $order_id, $id)
     {
-		    $input = [
-            "amount" => $request->input('amount_edit'),
-            "discount_price" => $request->input('discount_price_edit',0),
+		$input = [
+            "amount" => $request->input('amount'),
+            "discount_price" => $request->input('discount_price',0),
         ];
         OrderDetailModel::update_by_id($input,$id);
-        return redirect("sales/order/{$order_id}/edit#table");
+        return redirect("sales/order/{$order_id}/order_detail");
     }
 
     /**
@@ -122,11 +122,6 @@ class OrderDetailController extends Controller
     public function destroy($order_id, $id)
     {
         OrderDetailModel::delete_by_id($id);
-        return redirect("sales/order/{$order_id}/edit#table");
-    }
-
-    public function getOrderDetails(){
-      $table_order_detail = OrderDetailModel::select_all();
-      return response()->json($table_order_detail);
+        return redirect("sales/order/{$order_id}/order_detail");
     }
 }

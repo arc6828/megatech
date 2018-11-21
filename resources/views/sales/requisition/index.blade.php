@@ -1,87 +1,135 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','ใบเสนอราคา')
+@section('title','ใบเบิกของ')
+
+@section('navbar-menu')
+<div style="margin:21px;">
+  <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+  <button class="btn btn-success d-none" type="submit" onclick="document.getElementById('form').submit();">Update</button>
+</div>
+@endsection
 
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/sales/requisition/create" class="btn pull-right hidden-sm-down btn-success">
-	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
-</a>
+
 @endsection
 
 @section('content')
 
 <div class="card">
 	<div class="card-block">
-		<div class="row">
-			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">รายการใบเสนอราคา</h4>
-				<h6 class="card-subtitle">Display infomation in the table</h6>
+		<div class="form-group form-inline">
+			<label class="col-lg-2 offset-lg-1">สถานะ</label>
+			<div class="col-lg-3">
+					<select name="order_detail_status_id" class="form-control form-control-sm" required>
+							<option value="" >None</option>
+							@foreach($table_order_detail_status as $row_order_detail_status)
+							<option value="{{ $row_order_detail_status->order_detail_status_id }}" >
+									{{  $row_order_detail_status->order_detail_status_name }}
+							</option>
+							@endforeach
+					</select>
 			</div>
-			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/sales/requisition" method="GET">
-					<div class="form-group form-inline pull-right">
-						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
-						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
-					</div>
-				</form>
+			<label class="col-lg-2 offset-lg-1">วันที่อนุมัติ</label>
+			<div class="col-lg-3">
+				<input type="date" name="approve_date" class="form-control form-control-sm"	value="" >
 			</div>
 		</div>
 
+		<div class="form-group form-inline">
+			<label class="col-lg-1">ตั้งแต่วันที่</label>
+			<div class="col-lg-2">
+					<select name="order_detail_status_id" class="form-control form-control-sm" required  style="max-width:150px;">
+							<option value="" >เดือนนี้</option>
+							<option value="" >เดือนที่แล้ว</option>
+					</select>
+			</div>
+			<label class="col-lg-2">วันที่อนุมัติ</label>
+			<div class="col-lg-2">
+				<input type="date" name="approve_date" class="form-control form-control-sm"	value="" style="max-width:150px;">
+			</div>
+			<label class="col-lg-2">-</label>
+			<div class="col-lg-2">
+				<input type="date" name="approve_date" class="form-control form-control-sm"	value="" style="max-width:150px;" >
+			</div>
+			<div class="col-lg-1">
 
+			</div>
+		</div>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center">
-				<thead>
-					<tr>
-						<th class="text-center">เลขที่เอกสาร</th>
-						<th class="text-center">วันที่</th>
-						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">ชื่อลูกค้า</th>
-						<th class="text-center">ชื่อบริษัท</th>
-						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center">สถานะ</th>
-						<th class="text-center">action</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($table_requisition as $row)
-					<tr>
-						<td>
-							<a href="{{ url('/') }}/sales/requisition/{{ $row->requisition_id }}/edit">
-								{{ $row->requisition_code }}
-							</a>
-						</td>
-						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
-						<td>{{ $row->customer_name }}</td>
-						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->name }}</td>
-						<td>{{ $row->sales_status_name }}</td>
-						<td>
-							<a href="#"><span class="fa fa-trash" style="color: red"></span></a>
-							<div class="row hide">
-								<form action="{{ url('/') }}/sales/requisition/{{ $row->requisition_id }}" method="POST">
-									{{ csrf_field() }}
-									{{ method_field('DELETE') }}
-									<button type="submit"></button>
-								</form>
-							</div>
-						</td>
-					</tr>
-					@endforeach
-				</tbody>
+			<table class="table table-hover text-center" id="table-order-detail" style="width:100%">
 
 			</table>
 		</div>
-
-	</div>
-</div>
-
-<div class="form-group">
-	<div class="col-lg-12">
 		<div class="text-center">
-	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+			<button class="btn btn-primary"	>
+				อนุมัติ
+			</button>
 		</div>
 	</div>
 </div>
+
+<div id="outer-form-container" style="display:none;">
+	<script>
+		//onClick
+		function select_item(id,name) {
+				console.log(id);
+						$('#customer_id').val(id);
+						$('#contact_name').val(name);
+						$('#customerModal').modal('hide');
+		}
+		document.addEventListener("DOMContentLoaded", function(event) {
+			console.log("555");
+			//AJAX
+      $.ajax({
+          url: "{{ url('/') }}/api/order_detail",
+          type: "GET",
+          dataType : "json",
+      }).done(function(result){
+					console.log(result);
+					var dataSet = [];
+					result.forEach(function(element,index) {
+						console.log(element,index);
+						var row = [
+							"<input type='checkbox' name='' class='form-control form-control-sm'>",
+							element.date,
+							element.order_code,
+							element.delivery_time,
+							element.order_detail_status_name,
+							element.product_id,
+							element.product_name,
+							element.amount,
+							"<input name='' class='form-control form-control-sm' value='"+element.amount+"' style='max-width:50px;'>",
+							0,
+							0,
+							0,
+						];
+						dataSet.push(row);
+					});
+					console.log(dataSet);
+
+					$('#table-order-detail').DataTable({
+						data: dataSet,
+						columns: [
+								{ title: "#" },
+								{ title: "วันที่ OE" },
+								{ title: "เลขที่ OE" },
+								{ title: "วันที่ส่งของ" },
+								{ title: "สถานะการขาย" },
+								{ title: "รหัสสินค้า" },
+								{ title: "ชื่อสินค้า" },
+								{ title: "จำนวน" },
+								{ title: "จำนวนที่อนุมัติ" },
+								{ title: "ค้างรับ" },
+								{ title: "ค้างส่ง" },
+								{ title: "จำนวนคงคลัง" },
+						]
+					});
+				});
+		});
+	</script>
+</div>
+
+
+
 @endsection
