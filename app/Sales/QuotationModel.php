@@ -53,7 +53,7 @@ class QuotationModel extends Model
 				$join->on('tb_quotation.quotation_id', '=', 'total_query.quotation_id');
 			})
             ->where('tb_quotation.quotation_id', '=' , $id )
-			->select( DB::raw('*, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'))
+			->select( DB::raw('tb_quotation.*,tb_customer.customer_id,tb_customer.contact_name, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat, total'))
             ->get();
 	}
 

@@ -40,33 +40,34 @@
           url: "{{ url('/') }}/api/customer",
           type: "GET",
           dataType : "json",
-          success: function(result){
-            console.log(result);
-            var dataSet = [];
-            result.forEach(function(element,index) {
-              console.log(element,index);
-              dataSet.push([
-                element.customer_id,
-                element.contact_name,
-                element.company_name,
-                "<button type='button' class='btn btn-warning btn-sm' onClick='select_item("+element.customer_id+",`"+element.contact_name+"`)'>เลือก</button>",
-              ]);
-            });
-            console.log(dataSet);
+      }).done(function(result){
+					console.log(result);
+					var dataSet = [];
+					result.forEach(function(element,index) {
+						console.log(element,index);
+						var row = [
+							element.customer_id,
+							element.contact_name,
+							element.company_name,
+							"<button type='button' " +
+									"class='btn btn-warning btn-sm'" +
+									"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`)' "
+									+">เลือก</button>",
+						];
+						dataSet.push(row);
+					});
+					console.log(dataSet);
 
-      			$('#table-customer-modal').DataTable({
-              data: dataSet,
-              columns: [
-                  { title: "รหัสลูกหนี้" },
-                  { title: "ชื่อลูกหนี้" },
-                  { title: "บริษัท" },
-                  { title: "#" },
-              ]
-            });
-
-          }
-      });
-
+					$('#table-customer-modal').DataTable({
+						data: dataSet,
+						columns: [
+								{ title: "รหัสลูกหนี้" },
+								{ title: "ชื่อลูกหนี้" },
+								{ title: "บริษัท" },
+								{ title: "#" },
+						]
+					});
+				});
 		});
 	</script>
 </div>

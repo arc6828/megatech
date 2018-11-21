@@ -24,6 +24,8 @@
 				</thead>
 				<tbody>
 					@foreach($table_quotation_detail as $row_quotation_detail)
+					@method('PUT')
+    			@csrf
 					<tr>
 						<td>
 							<button class="btn btn-link" json='@json($row_quotation_detail)' data-toggle="modal" data-target="#myModal">
@@ -31,15 +33,57 @@
 							</button>
 						</td>
 						<td>{{ $row_quotation_detail->product_name }}</td>
-						<td><input class="input" name="amount_edit" id="new_amount_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->amount }}" onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})" onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"></td>
-						<td>{{ $row_quotation_detail->product_unit }}</td>
-						<td>{{ $row_quotation_detail->normal_price }}<input type="hidden" name="normal_price_edit" id="new_normal_price_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->normal_price }}" ></td>
-						<td><input class="input" name="discount_percent_edit" id="new_discount_percent_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ 100 - $row_quotation_detail->discount_price / $row_quotation_detail->normal_price * 100 }}" onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})" onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"></td>
-						<td><input class="input" name="discount_price_edit" id="new_discount_price_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->discount_price }}" onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})" onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"></td>
-						<td><input class="input" name="total_edit" id="new_total_edit{{ $row_quotation_detail->quotation_detail_id }}" value="{{ $row_quotation_detail->discount_price *  $row_quotation_detail->amount }}" readonly disabled></td>
 						<td>
-							<a href="javascript:void(0)" onclick="onDelete( {{ $row_quotation_detail->quotation_detail_id }} )" class="text-danger">
+							<input
+								class="input"
+								name="amount_edit"
+								id="new_amount_edit{{ $row_quotation_detail->quotation_detail_id }}"
+								value="{{ $row_quotation_detail->amount }}"
+								onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"
+								onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})" />
+						</td>
+						<td>{{ $row_quotation_detail->product_unit }}</td>
+						<td>
+							{{ $row_quotation_detail->normal_price }}
+							<input type="hidden"
+								name="normal_price_edit"
+								id="new_normal_price_edit{{ $row_quotation_detail->quotation_detail_id }}"
+								value="{{ $row_quotation_detail->normal_price }}" >
+						</td>
+						<td>
+							<input class="input"
+								name="discount_percent_edit"
+								id="new_discount_percent_edit{{ $row_quotation_detail->quotation_detail_id }}"
+								value="{{ 100 - $row_quotation_detail->discount_price / $row_quotation_detail->normal_price * 100 }}"
+								onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"
+								onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})">
+						</td>
+						<td>
+							<input
+								class="input"
+								name="discount_price_edit"
+								id="new_discount_price_edit{{ $row_quotation_detail->quotation_detail_id }}"
+								value="{{ $row_quotation_detail->discount_price }}"
+								onkeyup="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})"
+								onChange="onChange3(this,{{ $row_quotation_detail->quotation_detail_id }})">
+						</td>
+						<td>
+							<input
+								class="input"
+								name="total_edit"
+								id="new_total_edit{{ $row_quotation_detail->quotation_detail_id }}"
+								value="{{ $row_quotation_detail->discount_price *  $row_quotation_detail->amount }}"
+								readonly disabled />
+						</td>
+						<td>
+							<a href="javascript:void(0)" class="text-danger" style="padding-right:10px;" title="delete"
+								onclick="onDelete( {{ $row_quotation_detail->quotation_detail_id }} )" >
 								<span class="fa fa-trash"></span>
+							</a>
+							<a href="javascript:void(0)" class="text-warning d-none" style="padding-right:10px;"
+								id="new_btn_submit{{ $row_quotation_detail->quotation_detail_id }}"
+								onclick="onUpdate( {{ $row_quotation_detail->quotation_id }}, {{ $row_quotation_detail->quotation_detail_id }} )" >
+								<span class="fa fa-save"></span>
 							</a>
 						</td>
 					</tr>
@@ -49,33 +93,48 @@
 		</div>
 		<div class="text-center">
 
-			@include('sales/quotation_detail/create')
+			@include('sales/quotation_detail/create_modal')
 
 		</div>
 	</div>
 </div>
 
-@include('sales/quotation_detail/edit')
+@include('sales/quotation_detail/edit_modal')
 
 
-<div id="outer-form-container" style="display:none;">
+<div id="script-container" style="display:none;">
 	<form action="#" method="POST" id="form_delete" >
 		{{ csrf_field() }}
 		{{ method_field('DELETE') }}
 		<button type="submit">Delete</button>
 	</form>
 	<script>
+	function onDelete(id){
+		//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+		//GET FORM BY ID
+		var form = document.getElementById("form_delete");
+		//CHANGE ACTION TO SPECIFY ID
+		form.action = "{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/"+id;
+		//SUBMIT
+		var want_to_delete = confirm('Are you sure to delete this quotation detail?');
+		if(want_to_delete){
+			form.submit();
+		}
+	}
+	</script>
+	<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 			$('#myModal').on('shown.bs.modal', function (e) {
 				var row = JSON.parse(e.relatedTarget.getAttribute("json"));
 
-				console.log(row);
+				//console.log(row);
 				document.getElementById("form_edit").action = "{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/quotation_detail/"+row.quotation_detail_id;
 
 				document.getElementById("quotation_detail_id").innerHTML = row.quotation_detail_id;
 				document.getElementById("product_code").innerHTML = row.product_code;
 				document.getElementById("product_name").innerHTML = row.product_name;
-				console.log(row.amount*1,document.getElementById("amount"));
+				//console.log(row.amount*1,document.getElementById("amount"));
 				document.getElementById("amount_edit").value = row.amount;
 				document.getElementById("discount_percent_edit").value = (100 - row.discount_price / row.normal_price * 100) ;
 				document.getElementById("normal_price_edit").value = row.normal_price;
@@ -84,24 +143,6 @@
 			});
 
 		});
-		function onEdit(){
-			console.log("edit",$('#myModal'));
-			$('#myModal').on('show');
-		}
-
-		function onDelete(id){
-			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-			//GET FORM BY ID
-			var form = document.getElementById("form_delete");
-			//CHANGE ACTION TO SPECIFY ID
-			form.action = "{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail/"+id;
-			//SUBMIT
-			var want_to_delete = confirm('Are you sure to delete this quotation detail?');
-			if(want_to_delete){
-				form.submit();
-			}
-		}
 	</script>
 	<script>
 	function onChange3(obj,id){
@@ -110,6 +151,7 @@
 		var normal_price_edit = document.getElementById("new_normal_price_edit"+id);
 		var total_edit = document.getElementById("new_total_edit"+id);
 		var amount_edit = document.getElementById("new_amount_edit"+id);
+		var btn_submit = document.getElementById("new_btn_submit"+id);
 		//console.log("print",event,discount_price_edit,discount_percent_edit,normal_price_edit,total_edit,amount_edit);
 		switch (obj.id) {
 			case "new_discount_percent_edit"+id:
@@ -128,9 +170,30 @@
 		//console.log(obj.value, obj.id);
 
 		if(event.type === "change"){
-			console.log("Change");
+			//console.log("Change");
 			//ajax to server update + or click submit
+			btn_submit.click();
 		}
+	}
+	</script>
+	<script>
+	function onUpdate(quotation_id,quotation_detail_id){
+		var data = {
+			"_method" : "PUT",
+			"amount_edit" : document.getElementById('new_amount_edit'+quotation_detail_id).value,
+			"discount_price_edit" :document.getElementById('new_discount_price_edit'+quotation_detail_id).value,
+
+		};
+		//console.log(data);
+
+		$.ajax({
+		  method : "POST",
+		  url : "{{ url('/') }}/sales/quotation/"+quotation_id+"/quotation_detail/"+quotation_detail_id,
+		  data : data
+		})
+		  .done(function( msg ) {
+		    //alert( "Data Saved: " );
+		  });
 	}
 	</script>
 </div>

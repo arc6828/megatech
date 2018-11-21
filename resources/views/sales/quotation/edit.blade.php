@@ -5,7 +5,7 @@
 @section('navbar-menu')
 <div style="margin: 21px;">
 	<a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/quotation">back</a>
-	<button class="btn btn-primary btn-sm" onclick="document.getElementById('form').submit();">Save</button>
+	<button class="btn btn-primary btn-sm" onclick="document.getElementById('form-submit').click();">Save</button>
 </div>
 @endsection
 
@@ -33,10 +33,10 @@
 			<div class="form-group form-inline">
 				<label class="col-lg-2">รหัสลูกหนี้</label>
 				<div class="col-lg-3">
-					<input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm" value="{{	$row->customer_id }}" >
+					<input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm" value="{{	$row->customer_id }}"  required>
 					<input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm" value="{{	$row->contact_name }}"	readonly style="max-width:100px;">
 
-					@include('customer/modal')
+					@include('customer/index_modal')
 				</div>
 				<label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
 				<div class="col-lg-3">
@@ -47,18 +47,18 @@
 			<div class="form-group form-inline">
 				<label class="col-lg-2">ระยะเวลาหนี้</label>
 				<div class="col-lg-3">
-					<input type="number" name="debt_duration"	class="form-control form-control-sm form-control-line"	value="{{ $row->debt_duration }}" >
+					<input type="number" name="debt_duration"	class="form-control form-control-sm form-control-line"	value="{{ $row->debt_duration }}" required>
 				</div>
 				<label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา</label>
 				<div class="col-lg-3">
-					<input type="number" name="billing_duration"	class="form-control form-control-sm form-control-line" value="{{ $row->billing_duration }}" >
+					<input type="number" name="billing_duration"	class="form-control form-control-sm form-control-line" value="{{ $row->billing_duration }}" required>
 				</div>
 			</div>
 
 			<div class="form-group form-inline">
 				<label class="col-lg-2">เงื่อนไขการชำระเงิน</label>
 				<div class="col-lg-3">
-					<input name="payment_condition"	class="form-control form-control-sm form-control-line" value="{{ $row->payment_condition }}" >
+					<input name="payment_condition"	class="form-control form-control-sm form-control-line" value="{{ $row->payment_condition }}" required>
 				</div>
 				<label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
 				<div class="col-lg-3">
@@ -87,14 +87,14 @@
 				</div>
 				<label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
 				<div class="col-lg-3">
-				<input type="number" name="delivery_time"	class="form-control form-control-sm form-control-line" value="{{ $row->delivery_time }}" >
+				<input type="number" name="delivery_time"	class="form-control form-control-sm form-control-line" value="{{ $row->delivery_time }}" required>
 				</div>
 			</div>
 
 			<div class="form-group form-inline">
 				<label class="col-lg-2">รหัสแผนก</label>
 				<div class="col-lg-3">
-				<input type="number" name="department_id"	class="form-control form-control-sm form-control-line" value="{{ $row->department_id }}" readonly="">
+				<input type="number" name="department_id"	class="form-control form-control-sm form-control-line" value="{{ $row->department_id }}" readonly="" >
 				</div>
 				<label class="col-lg-2 offset-lg-1">สถานะ</label>
 				<div class="col-lg-3">
@@ -133,6 +133,13 @@
 					</select>
 				</div>
 			</div>
+			<div>
+				<input type="hidden" name="remark" id="remark"
+					value="{{ $row->remark }}" >
+				<input type="hidden" name="vat_percent"  id="vat_percent"
+					value="{{ $row->vat_percent }}" />
+				<button type="submit" class="d-none" id="form-submit">Save</button>
+			</div>
 		</form>
 	</div>
 </div>
@@ -159,11 +166,20 @@
 				</div>
 				<div class="form-group form-inline">
 					<label class="col-lg-6">
-						<input name="remark" class="form-control form-control-sm form-control-line" value="{{ $row->remark }}" >
+						<input value="{{ $row->remark }}"
+							name="new_remark" id="new_remark"
+							class="form-control form-control-sm form-control-line"
+							onchange="onRemarkChange()">
+
 					</label>
 					<label class="col-lg-3">
 						ภาษีมูลค่าเพิ่ม
-						<input type="number" name="vat_percent"  id="vat_percent" value="{{ $row->vat_percent }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-sm form-control-line"  style="width: 50px; margin: 10px;"> %
+						<input type="number" value="{{ $row->vat_percent }}"
+							name="new_vat_percent"  id="new_vat_percent"
+							onkeyup="onChange(this)"
+							onChange="onChange(this)"
+							class="form-control form-control-sm form-control-line"
+							style="width: 50px; margin: 10px;"> %
 					</label>
 					<div class="col-lg-3">
 						<input type="number" name="vat" id="vat" value="{{ $row->vat }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-sm form-control-line" readonly disabled >
@@ -188,9 +204,15 @@
 
 
 <script>
+function onRemarkChange(){
+		var new_remark = document.getElementById("new_remark");
+		var remark = document.getElementById("remark");
+		remark.value = new_remark.value;
+}
 function onChange(obj){
 	var vat = document.getElementById("vat");
 	var vat_percent = document.getElementById("vat_percent");
+	var new_vat_percent = document.getElementById("new_vat_percent");
 	var total = document.getElementById("total");
 	var total_before_vat = document.getElementById("total_before_vat");
 	var total_after_vat = document.getElementById("total_after_vat");
@@ -199,19 +221,20 @@ function onChange(obj){
 
 	//INPUT DETECTOR
 	switch (obj.id) {
-		case "vat_percent":
+		case "new_vat_percent":
 			//EFFECT TO #vat
-			vat.value = total.value * (vat_percent.value) / 100;
+			vat.value = total.value * (new_vat_percent.value) / 100;
 			break;
 		case "vat":
 			//EFFECT TO #vat_percent
-			vat_percent.value = vat.value / total.value * 100;
+			new_vat_percent.value = vat.value / total.value * 100;
 			break;
 	}
+	vat_percent.value = new_vat_percent.value;
 
 	//DISPLAY ON TOTAL
-	vat_percent.disabled = false;
-	vat_percent.readonly = false;
+	new_vat_percent.disabled = false;
+	new_vat_percent.readonly = false;
 	switch (tax_type_id.value) {
 		case "1":
 			//EFFECT TO #vat
@@ -226,9 +249,9 @@ function onChange(obj){
 			total_after_vat.value = total.value*1 + vat.value*1;
 			break;
 		default:
-			vat_percent.disabled = true;
-			vat_percent.readonly = true;
-			vat_percent.value = 0;
+			new_vat_percent.disabled = true;
+			new_vat_percent.readonly = true;
+			new_vat_percent.value = 0;
 			vat.value = 0;
 			console.log("CASE OTHERS");
 			total_before_vat.value = total.value;

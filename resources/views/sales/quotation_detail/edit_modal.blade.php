@@ -1,3 +1,8 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success d-none" data-toggle="modal" data-target="#myModal">
+	<i class="fa fa-plus"></i> แก้ไขรายการสินค้า
+</button>
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
@@ -9,7 +14,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/quotation_detail/row->quotation_detail_id" method="POST" id="form_edit">
+				<form action="#" method="POST" id="form_edit">
 					{{ csrf_field() }}
 					{{ method_field('PUT') }}
 
