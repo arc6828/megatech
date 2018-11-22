@@ -2,10 +2,12 @@
 
 @section('title','แฟ้มพนักงาน')
 
-@section('breadcrumb-menu')
-<a href="{{ url('/') }}/register" class="btn pull-right hidden-sm-down btn-success">
-	<i class="fa fa-plus"></i> Register
-</a>
+@section('navbar-menu')
+<div style="margin:21px;">
+		<a href="{{ url('/') }}/register" class="btn pull-right hidden-sm-down btn-success btn-sm">
+			<i class="fa fa-plus"></i> Register
+		</a>
+<div>
 @endsection
 
 @section('content')
@@ -42,12 +44,12 @@
 				@foreach($table_user as $row)
 				<tr>
 					<td>
-						<a href="{{ url('/') }}/user/{{ $row->id }}">{{ $row->name }}</a>
+						<a href="{{ url('/') }}/user/{{ $row->id }}/edit">{{ $row->name }}</a>
 					</td>
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->role }}</td>
 					<td>
-						<a href="#" class="text-danger">
+						<a href="javascript:void(0)" onclick="onDelete( {{ $row->id }} )" class="text-danger">
 							<span class="fa fa-trash"></span>
 						</a>
 					</td>
@@ -56,10 +58,36 @@
 				</tbody>
 			</table>
 		</div>
-
+		<div class="row hide">
+				<form action="#" method="POST" id="form_delete">
+					{{ csrf_field() }}
+					{{ method_field('DELETE') }}
+					
+					<button type="submit"></button>
+				</form>
+		</div>
 
 
 
 	</div>
 </div>
+<script>
+		function onDelete(id){
+			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+	
+			//GET FORM BY ID
+			var form = document.getElementById("form_delete");
+	
+			//CHANGE ACTION TO SPECIFY ID
+			form.action = "{{ url('/') }}/user/"+id;
+	
+			//SUBMIT
+			var want_to_delete = confirm('Are you sure to delete this supplier?');
+			if(want_to_delete){
+				form.submit();
+			}
+		}
+		</script>
 @endsection
+
+

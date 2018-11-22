@@ -242,7 +242,14 @@
                                 <input type="text" name="branch_id"  class="form-control form-control-line" style="width: 100%" value="{{ $row->branch_id }}" ><br>
                     </div>
             </div>
-
+            <div class="form-group">
+                        <div class="col-lg-12">
+                          <div class="text-center">
+                            <a class="btn btn-outline-primary" href="{{ url('/') }}/customer">back</a>
+                            <button class="btn btn-success" type="submit" >Update</button>
+                          </div>
+                        </div>
+                      </div>
         </div>
     </div>
 </form>

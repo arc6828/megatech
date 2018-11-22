@@ -2,7 +2,7 @@
   <div class="card-block">      
     <div class="row text-center">
       <div class="col-6 col-md-3">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/bank">
           <div class="px-4"><span class="round round-primary my-2">ค</span></i></div>
           <div><br>แฟ้มธนาคาร</div>
         </a>
