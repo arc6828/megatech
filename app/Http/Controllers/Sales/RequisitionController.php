@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Sales\OrderDetailStatusModel;
+use App\Sales\OrderDetailModel;
 
 class RequisitionController extends Controller
 {
@@ -14,12 +15,19 @@ class RequisitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
       $table_order_detail_status = OrderDetailStatusModel::select_all();
+      $filter = (object)[
+        "order_detail_status_id" => $request->input("order_detail_status_id",3),
+        "m_date" => $request->input("m_date", "".date('Y')."-".date('m')."-"."01"),
+        "date_begin" =>  $request->input("date_begin",""),
+        "date_end" => $request->input("date_end",""),
+      ];
       $data = [
           'table_order_detail_status' => $table_order_detail_status,
+          'filter' => $filter,
       ];
       return view('sales/requisition/index',$data);
     }
@@ -88,5 +96,25 @@ class RequisitionController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getOrderDetails(Request $request){
+
+      $order_detail_status_id = $request->input("order_detail_status_id",3);
+      $m_date = $request->input("m_date","");
+      $date_begin =  $request->input("date_begin","");
+      $date_end = $request->input("date_end","");
+
+      $table_order_detail = [];
+      if($m_date === ""){
+        echo "begin";
+        $table_order_detail = OrderDetailModel::select_search($order_detail_status_id,$date_begin,$date_end);
+
+      }else if($date_begin === ""){
+        echo "mdate";
+        echo $m_date;
+        $table_order_detail = OrderDetailModel::select_search($order_detail_status_id,$m_date);
+      }
+
+      //return response()->json($table_order_detail);
     }
 }

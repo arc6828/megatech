@@ -125,8 +125,5 @@ class OrderDetailController extends Controller
         return redirect("sales/order/{$order_id}/edit#table");
     }
 
-    public function getOrderDetails(){
-      $table_order_detail = OrderDetailModel::select_all();
-      return response()->json($table_order_detail);
-    }
+    
 }

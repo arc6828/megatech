@@ -17,45 +17,82 @@
 
 <div class="card">
 	<div class="card-block">
-		<div class="form-group form-inline">
-			<label class="col-lg-2 offset-lg-1">สถานะ</label>
-			<div class="col-lg-3">
-					<select name="order_detail_status_id" class="form-control form-control-sm" required>
-							<option value="" >None</option>
-							@foreach($table_order_detail_status as $row_order_detail_status)
-							<option value="{{ $row_order_detail_status->order_detail_status_id }}" >
-									{{  $row_order_detail_status->order_detail_status_name }}
-							</option>
-							@endforeach
-					</select>
-			</div>
-			<label class="col-lg-2 offset-lg-1">วันที่อนุมัติ</label>
-			<div class="col-lg-3">
-				<input type="date" name="approve_date" class="form-control form-control-sm"	value="" >
-			</div>
-		</div>
+    <form method="get" action="">
+  		<div class="form-group form-inline">
+  			<label class="col-lg-2 offset-lg-1">สถานะ</label>
+  			<div class="col-lg-3">{{ $filter->order_detail_status_id}}
+  					<select name="order_detail_status_id" id="order_detail_status_id" class="form-control form-control-sm"
+              onchange="onSubmit(this);" required>
+  							<option value="" >None</option>
+  							@foreach($table_order_detail_status as $row_order_detail_status)
+  							<option
+                  value="{{ $row_order_detail_status->order_detail_status_id }}"
+                  {{ $row_order_detail_status->order_detail_status_id == $filter->order_detail_status_id ? "selected" : "" }} >
+  									{{  $row_order_detail_status->order_detail_status_name }}
+  							</option>
+  							@endforeach
+  					</select>
+  			</div>
+  			<label class="col-lg-2">วันที่อนุมัติ</label>
+  			<div class="col-lg-3">
+  				<input type="date" name="approve_date" class="form-control form-control-sm"	value="{{ date('Y-m-d') }}" disabled readonly>
+  			</div>
+  		</div>
 
-		<div class="form-group form-inline">
-			<label class="col-lg-1">ตั้งแต่วันที่</label>
-			<div class="col-lg-2">
-					<select name="order_detail_status_id" class="form-control form-control-sm" required  style="max-width:150px;">
-							<option value="" >เดือนนี้</option>
-							<option value="" >เดือนที่แล้ว</option>
-					</select>
-			</div>
-			<label class="col-lg-2">วันที่อนุมัติ</label>
-			<div class="col-lg-2">
-				<input type="date" name="approve_date" class="form-control form-control-sm"	value="" style="max-width:150px;">
-			</div>
-			<label class="col-lg-2">-</label>
-			<div class="col-lg-2">
-				<input type="date" name="approve_date" class="form-control form-control-sm"	value="" style="max-width:150px;" >
-			</div>
-			<div class="col-lg-1">
+  		<div class="form-group form-inline">
+  			<label class="col-lg-2 offset-lg-1">เลือกเดือน</label>
+  			<div class="col-lg-2">
+  					<select name="m_date" id="m_date" class="form-control form-control-sm"
+              onchange="onSubmit(this);"  style="max-width:150px;">
+                <option value="">None</option>
 
-			</div>
-		</div>
+                @for($i = 1; $i <= 12; $i++)
+                <option
+                  value="{{ date("Y") }}-{{ sprintf("%02d",$i) }}-01"
+                  {{ $filter->m_date ===  sprintf("%d-%02d-01",date("Y"), $i) ? "selected" : "" }}>
+                  {{ date("Y") }}-{{ sprintf("%02d",$i) }}
+                </option>
+                @endfor
+  					</select>
+  			</div>
+        <label class="col-lg-1 ">หรือ</label>
+  			<div class="col-lg-2">
+  				<input type="date" name="date_begin" id="date_begin" class="form-control form-control-sm"
+            onchange="onSubmit(this);" value="{{ $filter->date_begin }}" style="max-width:150px;">
+  			</div>
+  			<label class="col-lg-1">-</label>
+  			<div class="col-lg-2">
+  				<input type="date" name="date_end" id="date_end" class="form-control form-control-sm"
+            onchange="onSubmit(this);" value="{{ $filter->date_end }}" style="max-width:150px;" >
+  			</div>
+  		</div>
+      <div><button type="submit" id="form-submit">submit</button></div>
+    </form>
+    <script>
+      function onSubmit(){
+        var order_detail_status_id = document.getElementById("order_detail_status_id");
+        var m_date = document.getElementById("m_date");
+        var date_begin = document.getElementById("date_begin");
+        var date_end = document.getElementById("date_end");
+        console.log(event,event.target.id);
+        switch (event.target.id) {
+          case "order_detail_status_id":
+            break;
+          case "m_date":
+            date_begin.value="";
+            date_end.value="";
+            break;
+          case "date_begin":
+            m_date.value="";
+            break;
+          case "date_end":
+            m_date.value="";
+            break;
+        }
 
+        document.getElementById("form-submit").click();
+      }
+    </script>
 		<div class="table-responsive">
 			<table class="table table-hover text-center" id="table-order-detail" style="width:100%">
 
@@ -79,10 +116,15 @@
 						$('#customerModal').modal('hide');
 		}
 		document.addEventListener("DOMContentLoaded", function(event) {
-			console.log("555");
+
+      var filter = JSON.parse('@json($filter)');
+      var filter_param = $.param( filter );
+      var url = "{{ url('/') }}/api/order_detail?"+filter_param;
+  		console.log("555",filter,filter_param,url);
+
 			//AJAX
       $.ajax({
-          url: "{{ url('/') }}/api/order_detail",
+          url: url,
           type: "GET",
           dataType : "json",
       }).done(function(result){
@@ -90,16 +132,17 @@
 					var dataSet = [];
 					result.forEach(function(element,index) {
 						console.log(element,index);
+            var id = element.order_detail_id;
 						var row = [
-							"<input type='checkbox' name='' class='form-control form-control-sm'>",
+							"<input type='checkbox' id='order_detail_id"+id+"' class='form-control form-control-sm'>",
 							element.date,
 							element.order_code,
 							element.delivery_time,
 							element.order_detail_status_name,
 							element.product_id,
 							element.product_name,
-							element.amount,
-							"<input name='' class='form-control form-control-sm' value='"+element.amount+"' style='max-width:50px;'>",
+							"<input id='amount"+id+"' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' readonly disabled>",
+							"<input id='approve_amount"+id+"' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;'>",
 							0,
 							0,
 							0,

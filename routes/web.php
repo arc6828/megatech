@@ -73,7 +73,8 @@ Route::resource('/product', 'ProductController');
 Route::get('/api/customer', 'CustomerController@getCustomers');
 Route::get('/api/account', 'AccountController@getAccount');
 Route::get('/api/user', 'UserController@getUser');
-Route::get('/api/order_detail', 'Sales\OrderDetailController@getOrderDetails');
+//Route::get('/api/order_detail', 'Sales\OrderDetailController@getOrderDetails');
+Route::get('/api/order_detail', 'Sales\RequisitionController@getOrderDetails');
 Route::get('/api/bank_detail', 'BankDetailController@index');
 
 //not confirm
