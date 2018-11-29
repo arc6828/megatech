@@ -20,13 +20,13 @@ class OrderDetailModel extends Model
   public static function select_search($order_detail_status_id,$date_begin,$date_end=""){
     $tail = "";
     if($date_end === ""){
-      //$date_end = $date_begin;
+      $date_end = $date_begin;
       $tail = " + INTERVAL 1 MONTH";
     }
-    echo $order_detail_status_id;
-    echo "s".$date_begin;
-    echo "s".$date_end;
-    echo $tail;
+    //echo $order_detail_status_id;
+    //echo "s".$date_begin;
+    //echo "s".$date_end;
+    //echo $tail;
     return DB::table('tb_order_detail')
         ->join('tb_product','tb_order_detail.product_id','=','tb_product.product_id')
         ->join('tb_order','tb_order.order_id','=','tb_order_detail.order_id')
@@ -53,14 +53,28 @@ class OrderDetailModel extends Model
       ->get();
 	}
 
-    public static function insert($input){
+  public static function insert($input){
         return DB::table('tb_order_detail')->insertGetId($input);
 	}
+
+  public static function insert_by_id($id,$new_amount){
+    $sql = "INSERT INTO tb_order_detail
+      SELECT null,product_id,{$new_amount},{$new_amount},discount_price,order_id,order_detail_status_id
+      FROM tb_order_detail
+      WHERE order_detail_id = {$id}";
+    return DB::insert($sql);
+  }
 
 	public static function update_by_id($input, $id){
     DB::table('tb_order_detail')
       ->where('order_detail_id', $id)
       ->update($input);
+	}
+
+  public static function update_order_detail_status_id_by_ids($action, $ids){
+    DB::table('tb_order_detail')
+      ->whereIn('order_detail_id', $ids)
+      ->update(['order_detail_status_id' => $action]);
 	}
 
   public static function update_key_by_id($key, $input, $id){

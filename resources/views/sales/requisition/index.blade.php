@@ -66,7 +66,7 @@
             onchange="onSubmit(this);" value="{{ $filter->date_end }}" style="max-width:150px;" >
   			</div>
   		</div>
-      <div><button type="submit" id="form-submit">submit</button></div>
+      <div><button type="submit" style="display:none;" id="form-submit">submit</button></div>
     </form>
     <script>
       function onSubmit(){
@@ -93,16 +93,36 @@
         document.getElementById("form-submit").click();
       }
     </script>
-		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table-order-detail" style="width:100%">
+  </div>
+</div>
+<div class="card">
+	<div class="card-block">
+    <form action="{{ url('/') }}/sales/requisition/selected" method="post" id="form_table" onsubmit="return validateCheckbox();" >
+      {{ csrf_field() }}
+    	{{ method_field('PUT') }}
 
-			</table>
-		</div>
-		<div class="text-center">
-			<button class="btn btn-primary"	>
-				อนุมัติ
-			</button>
-		</div>
+  		<div class="table-responsive">
+  			<table class="table table-hover text-center" id="table-order-detail" style="width:100%">
+
+  			</table>
+  		</div>
+      <div class="form-group form-inline text-center">
+        <div class="col-lg-4 offset-lg-4">
+          <select name="action" id="action" class="form-control form-control-sm" required>
+              @foreach($table_order_detail_status as $row_order_detail_status)
+              <option
+                value="{{ $row_order_detail_status->order_detail_status_id }}" >
+                  {{  $row_order_detail_status->order_detail_status_name }}
+              </option>
+              @endforeach
+          </select>
+          <button type="summit" id="form_summit_table" class="btn btn-primary">
+    				submit
+    			</button>
+      </div>
+  		</div>
+    </form>
+
 	</div>
 </div>
 
@@ -134,15 +154,15 @@
 						console.log(element,index);
             var id = element.order_detail_id;
 						var row = [
-							"<input type='checkbox' id='order_detail_id"+id+"' class='form-control form-control-sm'>",
+							"<input type='checkbox' name='order_detail_id[]' class='form-control form-control-sm' value='"+id+"' > <input type='hidden' name='raw[]' value='"+JSON.stringify(element)+")'>",
 							element.date,
 							element.order_code,
 							element.delivery_time,
 							element.order_detail_status_name,
 							element.product_id,
 							element.product_name,
-							"<input id='amount"+id+"' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' readonly disabled>",
-							"<input id='approve_amount"+id+"' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;'>",
+							"<input name='amount[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' readonly disabled>",
+							"<input name='approve_amount[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
 							0,
 							0,
 							0,
@@ -170,6 +190,17 @@
 					});
 				});
 		});
+
+    function validateCheckbox(){
+      checked = $("input[type=checkbox]:checked").length;
+
+      if(checked == 0) {
+        alert("You must check at least one checkbox.");
+        return false;
+      }
+      //return true;
+    }
+
 	</script>
 </div>
 

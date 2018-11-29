@@ -48,8 +48,13 @@ Route::resource('/sales/quotation', 'Sales\QuotationController');
 Route::resource('/sales/order', 'Sales\OrderController');
 Route::resource('/sales/order/{order_id}/order_detail', 'Sales\OrderDetailController');
 
+
+Route::put('/sales/requisition/selected', 'Sales\RequisitionController@updateByIds');
 Route::resource('/sales/requisition', 'Sales\RequisitionController');
-Route::resource('/sales/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
+//Route::resource('/sales/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
+
+Route::resource('/sales/invoice', 'Sales\InvoiceController');
+Route::resource('/sales/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
 
 //2 Purchase
 Route::resource('/purchase/purchase_receive', 'Purchase\PurchaseReceiveController');
