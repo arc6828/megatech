@@ -57,11 +57,11 @@ class OrderDetailModel extends Model
         return DB::table('tb_order_detail')->insertGetId($input);
 	}
 
-  public static function insert_by_id($id,$new_amount){
+  public static function insert_by_order_detail_id($new_amount, $order_detail_id){
     $sql = "INSERT INTO tb_order_detail
       SELECT null,product_id,{$new_amount},{$new_amount},discount_price,order_id,order_detail_status_id
       FROM tb_order_detail
-      WHERE order_detail_id = {$id}";
+      WHERE order_detail_id = {$order_detail_id}";
     return DB::insert($sql);
   }
 
@@ -72,6 +72,12 @@ class OrderDetailModel extends Model
 	}
 
   public static function update_order_detail_status_id_by_ids($action, $ids){
+    DB::table('tb_order_detail')
+      ->whereIn('order_detail_id', $ids)
+      ->update(['order_detail_status_id' => $action]);
+	}
+
+  public static function update_amount_by_approve_amount($action, $ids){
     DB::table('tb_order_detail')
       ->whereIn('order_detail_id', $ids)
       ->update(['order_detail_status_id' => $action]);

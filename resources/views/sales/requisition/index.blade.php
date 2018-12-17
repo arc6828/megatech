@@ -154,15 +154,17 @@
 						console.log(element,index);
             var id = element.order_detail_id;
 						var row = [
-							"<input type='checkbox' name='order_detail_id[]' class='form-control form-control-sm' value='"+id+"' > <input type='hidden' name='raw[]' value='"+JSON.stringify(element)+")'>",
+							"<input type='checkbox' name='selected_order_detail_ids[]' class='form-control form-control-sm' value='"+id+"' >"+
+              "<input type='hidden' name='order_detail_ids[]' value='"+id+"' >"+
+              "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
 							element.date,
 							element.order_code,
 							element.delivery_time,
 							element.order_detail_status_name,
 							element.product_id,
 							element.product_name,
-							"<input name='amount[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' readonly disabled>",
-							"<input name='approve_amount[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
+							element.amount,
+							"<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
 							0,
 							0,
 							0,
@@ -195,7 +197,7 @@
       checked = $("input[type=checkbox]:checked").length;
 
       if(checked == 0) {
-        alert("You must check at least one checkbox.");
+        alert("กรุณาเลือกอย่างน้อย 1 รายการ");
         return false;
       }
       //return true;
