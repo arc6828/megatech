@@ -15,40 +15,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center" id="table-model">
-						<thead>
-							<tr>
-								<td class="text-center">รหัสสินค้า</td>
-								<td class="text-center">ชื่อสินค้า</td>
-								<td class="text-center">จำนวนในคลัง</td>
-								<td class="text-center">ราคาขาย</td>
-								<td class="text-center">จำนวน</td>
-								<td class="text-center">action</td>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach($table_product as $row)
-							<tr>
-								<td>
-									<a href="{{ url('/') }}/product/{{ $row->product_id }}/edit">
-										{{ $row->product_code }}
-									</a>
-								</td>
-								<td>{{ $row->product_name }}</td>
-								<td>{{ $row->amount_in_stock }}</td>
-								<td>{{ $row->promotion_price? $row->promotion_price : $row->normal_price }}</td>
-								<td>
-									<input class="form-control form-control-sm" type="number" name="amount2" id="amount2" value="1" placeholder="กรอกจำนวน">
-								</td>
-								<td>
-									<button class="btn btn-warning" onclick="onCreate({{ $row->product_id }},{{ $row->normal_price }},document.getElementById('amount2').value);">
-										<span class="fa fa-shopping-cart"></span>
-									</button>
-								</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
+					<table class="table table-hover text-center" id="table-model"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -57,30 +24,69 @@
 		</div>
 	</div>
 </div>
-<div id="outer-form-container" style="display:none;">
-	<form action="{{ url('/') }}/sales/quotation/{{ $quotation_id }}/quotation_detail" method="POST" id="form_create" >
-		{{ csrf_field() }}
-		{{ method_field('POST') }}
 
-		<input type="hidden" name="product_id" id="product_id" value="{{ $row->product_id }}" >
-		<input type="hidden" name="discount_price" id="discount_price" value="{{ $row->normal_price }}" >
-		<input type="hidden" name="amount" id="amount" value="1" >
-		<button type="submit">Create</button>
-	</form>
-	<script>
-		function onCreate(product_id, normal_price, amount){
-			//GET FORM BY ID
-			var form =
-			document.getElementById("product_id").value = product_id;
-			document.getElementById("discount_price").value = normal_price;
-			document.getElementById("amount").value = amount;
-			document.getElementById("form_create").submit();
-		}
-	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function(event) {
-			console.log("555");
-			$('#table-model').DataTable();
+<script>
+
+	document.addEventListener("DOMContentLoaded", function(event) {
+		var detail = JSON.parse('@json($table_product)');
+		//console.log("DETAIL : ",detail);
+		var dataSet = [];
+		detail.forEach(function(element,index) {
+			console.log(element,index);
+			var id = element.product_id;
+			var price = element.promotion_price? element.promotion_price : element.normal_price;
+			var row = [
+				element.product_code,
+				element.product_name,
+				element.amount_in_stock,
+				price,
+				"<input name='amount_create' id='amount_create"+id+"'  value='1' >",
+				"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' >" +
+					"<span class='fa fa-shopping-cart'></span>" +
+				"</button>",
+			];
+			dataSet.push(row);
 		});
-	</script>
-</div>
+		//console.log(dataSet);
+
+		var table = $('#table-model').DataTable({
+			"data": dataSet,
+			"columns": [
+				{ title: "รหัสสินค้า" },
+				{ title: "ชื่อสินค้า" },
+				{ title: "จำนวนในคลัง" },
+				{ title: "ราคาขาย" },
+				{ title: "จำนวน" },
+				{ title: "action" },
+			],
+		}); // END DATATABLE
+
+		document.querySelectorAll(".btn-create").forEach(function(element,index){
+			element.addEventListener("click", function(event){
+				var product = JSON.parse(this.getAttribute("json"));
+				var amount = document.querySelector("#amount_create"+product.product_id).value;
+				var price = product.promotion_price? product.promotion_price : product.normal_price;
+				console.log("CLICK PRODUCT : ", product, amount);
+
+				var table = $('#table-quotation-detail').DataTable();
+				var row = [
+					"new",
+					product.product_code,
+					product.product_name,
+					"<input class='input' name='amount_edit'  value='"+amount+"' >",
+					product.product_unit,
+					"<input class='input' name='normal_price_edit'  value='"+product.normal_price+"' disabled>",
+					"<input class='input' name='discount_percent_edit'  value='"+(100 - price / product.normal_price * 100)+"'>",
+					"<input class='input' name='discount_price_edit'  value='"+price+"'>",
+					"<input class='input' name='total_edit'  value='"+(price *  amount)+"' disabled>",
+					"<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+						"<span class='fa fa-trash'></span>" +
+					"</a>",
+				];
+				table.row.add(row).draw( false );
+				removeClickEventToDelete();
+				addClickEventToDelete();
+			});
+		}); //END foreach
+	});
+</script>

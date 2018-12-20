@@ -189,9 +189,9 @@
 								{ title: "ค้างส่ง" },
 								{ title: "จำนวนคงคลัง" },
 						]
-					});
-				});
-		});
+					}); //END DATATABLE
+				}); //END DONE AJAX
+		}); //END DOMContentLoaded
 
     function validateCheckbox(){
       checked = $("input[type=checkbox]:checked").length;
