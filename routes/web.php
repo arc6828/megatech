@@ -63,8 +63,9 @@ Route::resource('/purchase/purchase_receive/{purchase_receive_id}/purchase_recei
 Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
 Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
 
-//Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
-//Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
+Route::resource('/purchase/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
+Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
+Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
 
 //Supplier
@@ -80,6 +81,7 @@ Route::get('/api/account', 'AccountController@getAccount');
 Route::get('/api/user', 'UserController@getUser');
 //Route::get('/api/order_detail', 'Sales\OrderDetailController@getOrderDetails');
 Route::get('/api/order_detail', 'Sales\RequisitionController@getOrderDetails');
+Route::get('/api/purchase_requisition_detail', 'Purchase\PurchaseRequisitionController@getPurchaseRequisitionDetails');
 Route::get('/api/bank_detail', 'BankDetailController@index');
 
 //not confirm

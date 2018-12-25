@@ -32,7 +32,7 @@
       				</div>
 
       			</div>
-            
+
 
             <div class="form-group form-inline">
                 <label class="col-lg-2">ระยะเวลาหนี้</label>
