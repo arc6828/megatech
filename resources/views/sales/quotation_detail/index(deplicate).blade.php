@@ -127,6 +127,10 @@
 						.draw();
 				}
 			}
+
+			function refreshDetailTableEvent(){
+
+			}
 		</script>
 
 		<div class="text-center">

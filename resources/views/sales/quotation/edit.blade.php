@@ -51,7 +51,7 @@
 				document.querySelector("#vat_percent").value = "{{ $row->vat_percent }}";
 				document.querySelector("#vat").value = "{{ $row->vat }}";
 
-				onChange(document.querySelector("#vat"));
+				onChange(document.querySelector("#vat_percent"));
 			});
 
 		</script>

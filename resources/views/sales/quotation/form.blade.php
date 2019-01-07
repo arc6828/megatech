@@ -120,7 +120,7 @@
 </div>
 
 
-@include('sales/quotation_detail/index')
+@include('sales/quotation/detail')
 
 <div class="card">
 	<div class="card-block">
@@ -177,7 +177,19 @@
 
 
 <script>
+function refreshTotal(){
+  var total = 0;
+  document.querySelectorAll(".total_edit").forEach(function(element,index){
+    total += parseFloat(element.value);
+  }); //END foreach\
+  //console.log("Total : " + total);
+  document.getElementById("total").value = total;
+}
+
 function onChange(obj){
+  //RECALCULATE TOTAL FIRST
+  refreshTotal();
+  //MAIN
 	var vat = document.getElementById("vat");
 	var vat_percent = document.getElementById("vat_percent");
 	var total = document.getElementById("total");
@@ -229,5 +241,7 @@ function onChange(obj){
     //console.log(element);
     element.value = parseFloat(element.value).toFixed(2)
   });
+
 }
+
 </script>
