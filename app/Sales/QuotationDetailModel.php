@@ -38,14 +38,20 @@ class QuotationDetailModel extends Model
 	}
 
   public static function update_key_by_id($key, $input, $id){
-        DB::table('tb_quotation_detail')
-            ->where('quotation_detail_id', $id)
-            ->update($input);
+    DB::table('tb_quotation_detail')
+        ->where('quotation_detail_id', $id)
+        ->update($input);
 	}
 
 	public static function delete_by_id($id){
 		DB::table('tb_quotation_detail')
             ->where('quotation_detail_id', '=', $id)
             ->delete();
+	}
+
+  public static function delete_by_quotation_id($quotation_id){
+		DB::table('tb_quotation_detail')
+        ->where('quotation_id', '=', $quotation_id)
+        ->delete();
 	}
 }

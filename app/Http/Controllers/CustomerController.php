@@ -231,10 +231,6 @@ class CustomerController extends Controller
 
     }
 
-    public function getCustomers(){
-      $table_customer = CustomerModel::select_all();
-      return response()->json($table_customer);
-    }
 
 
 }

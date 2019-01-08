@@ -11,7 +11,6 @@
       <div class="col-lg-3">
         <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
         <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
-
         @include('customer/index_modal')
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
@@ -133,7 +132,7 @@
 			</div>
 			<div class="col-lg-12">
 				<div class="form-group form-inline">
-					<input type="hidden" name="total" id="total"	class="form-control form-control-sm form-control-line" readonly disabled>
+					<input type="hidden" name="total" id="total"	class="form-control form-control-sm form-control-line"  >
 					<label class="col-lg-6">หมายเหตุ</label>
 					<label class="col-lg-3">ยอดรวมก่อนภาษี</label>
 					<div class="col-lg-3">
@@ -169,9 +168,6 @@
 				</div>
 			</div>
 		</div>
-
-
-
 	</div>
 </div>
 

@@ -125,6 +125,7 @@
 						.row( $(this).parents('tr') )
 						.remove()
 						.draw();
+					onChange(document.getElementById("vat_percent"));
 				}
 			}
 

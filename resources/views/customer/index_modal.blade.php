@@ -24,50 +24,51 @@
 		</div>
 	</div>
 </div>
-<div id="outer-form-container" style="display:none;">
-	<script>
-		//onClick
-		function select_item(id,name) {
-				console.log(id);
-						$('#customer_id').val(id);
-						$('#contact_name').val(name);
-						$('#customerModal').modal('hide');
-		}
-		document.addEventListener("DOMContentLoaded", function(event) {
-			console.log("555");
-			//AJAX
-      $.ajax({
-          url: "{{ url('/') }}/api/customer",
-          type: "GET",
-          dataType : "json",
-      }).done(function(result){
-					console.log(result);
-					var dataSet = [];
-					result.forEach(function(element,index) {
-						console.log(element,index);
-						var row = [
-							element.customer_id,
-							element.contact_name,
-							element.company_name,
-							"<button type='button' " +
-									"class='btn btn-warning btn-sm'" +
-									"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`)' "
-									+">เลือก</button>",
-						];
-						dataSet.push(row);
-					});
-					console.log(dataSet);
 
-					$('#table-customer-modal').DataTable({
-						data: dataSet,
-						columns: [
-								{ title: "รหัสลูกหนี้" },
-								{ title: "ชื่อลูกหนี้" },
-								{ title: "บริษัท" },
-								{ title: "#" },
-						]
-					});
-				});
-		});
-	</script>
-</div>
+<script>
+	//onClick
+	function select_item(id,name) {
+			console.log(id);
+					$('#customer_id').val(id);
+					$('#contact_name').val(name);
+					$('#customerModal').modal('hide');
+	}
+	document.addEventListener("DOMContentLoaded", function(event) {
+		console.log("555");
+		//AJAX
+		$('#customerModal').on('show.bs.modal', function (e) {
+			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
+				$.ajax({
+	          url: "{{ url('/') }}/api/customer",
+	          type: "GET",
+	          dataType : "json",
+	      }).done(function(result){
+						console.log(result);
+						var dataSet = [];
+						result.forEach(function(element,index) {
+							console.log(element,index);
+							var row = [
+								element.contact_name,
+								element.company_name,
+								"<button type='button' " +
+										"class='btn btn-warning btn-sm'" +
+										"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`)' "
+										+">เลือก</button>",
+							];
+							dataSet.push(row);
+						});
+						console.log(dataSet);
+
+						$('#table-customer-modal').DataTable({
+							data: dataSet,
+							columns: [
+									{ title: "ชื่อลูกหนี้" },
+									{ title: "บริษัท" },
+									{ title: "#" },
+							]
+						});
+					}); //END AJAX
+			}
+		}); // END MODAL EVENT
+	});//END ADD EVENT LISTENER
+</script>

@@ -15,7 +15,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center" id="table-model"></table>
+					<table class="table table-hover text-center" id="table-product-model"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -27,54 +27,65 @@
 
 <script>
 	document.addEventListener("DOMContentLoaded", function(event) {
-		var detail = JSON.parse('@json($table_product)');
-		//console.log("DETAIL : ",detail);
-		var dataSet = [];
-		detail.forEach(function(element,index) {
-			console.log(element,index);
-			var id = element.product_id;
-			var price = element.promotion_price? element.promotion_price : element.normal_price;
-			var row = [
-				element.product_code,
-				element.product_name,
-				element.amount_in_stock,
-				price,
-				"<input name='amount_create' id='amount_create"+id+"'  value='1' >",
-				"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' >" +
-					"<span class='fa fa-shopping-cart'></span>" +
-				"</button>",
-			];
-			dataSet.push(row);
-		});
-		//console.log(dataSet);
 
-		var table = $('#table-model').DataTable({
-			"data": dataSet,
-			"columns": [
-				{ title: "รหัสสินค้า" },
-				{ title: "ชื่อสินค้า" },
-				{ title: "จำนวนในคลัง" },
-				{ title: "ราคาขาย" },
-				{ title: "จำนวน" },
-				{ title: "action" },
-			],
-		}); // END DATATABLE
+		//var detail = JSON.parse('@json($table_product)');
+		$('#exampleModal').on('show.bs.modal', function (e) {
+			if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
+				$.ajax({
+	          url: "{{ url('/') }}/api/product",
+	          type: "GET",
+	          dataType : "json",
+	      }).done(function(result){
+						//console.log(result);
+						var dataSet = [];
+						result.forEach(function(element,index) {
+							console.log(element,index);
+							var id = element.product_id;
+							var price = element.promotion_price? element.promotion_price : element.normal_price;
+							var row = [
+								element.product_code,
+								element.product_name,
+								element.amount_in_stock,
+								price,
+								"<input name='amount_create' id='amount_create"+id+"'  value='1' >",
+								"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' >" +
+									"<span class='fa fa-shopping-cart'></span>" +
+								"</button>",
+							];
+							dataSet.push(row);
+						});
+						//console.log(dataSet);
+						var table = $('#table-product-model').DataTable({
+							"data": dataSet,
+							"columns": [
+								{ title: "รหัสสินค้า" },
+								{ title: "ชื่อสินค้า" },
+								{ title: "จำนวนในคลัง" },
+								{ title: "ราคาขาย" },
+								{ title: "จำนวน" },
+								{ title: "action" },
+							],
+						}); // END DATATABLE
 
-		document.querySelectorAll(".btn-create").forEach(function(element,index){
-			element.addEventListener("click", function(event){
-				var product = JSON.parse(this.getAttribute("json"));
-				product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
-				product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
-				//console.log("CLICK PRODUCT : ", product, amount);
+						document.querySelectorAll(".btn-create").forEach(function(element,index){
+							element.addEventListener("click", function(event){
+								var product = JSON.parse(this.getAttribute("json"));
+								product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
+								product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
+								//console.log("CLICK PRODUCT : ", product, amount);
 
-				var table = $('#table-quotation-detail').DataTable();
-        var row = createRow("new", product);
-				table.row.add(row).draw( false );
-        refreshDetailTableEvent();
-        document.querySelector("#btn-close").click();
-        //console.log("CLICK");
+								var table = $('#table-quotation-detail').DataTable();
+				        var row = createRow("new", product);
+								table.row.add(row).draw( false );
+				        refreshDetailTableEvent();
+				        document.querySelector("#btn-close").click();
+				        //console.log("CLICK");
 
-			});
-		}); //END foreach
-	});
+							}); //END ADD EVENT LISTENER : CLICK
+						}); //END foreach
+					}); //END AJAX
+			}
+		}); // END MODAL EVENT
+
+	}); //END ADD EVENT LISTENER
 </script>

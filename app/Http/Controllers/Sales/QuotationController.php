@@ -82,22 +82,25 @@ class QuotationController extends Controller
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
+          'total' => $request->input('total',0),
       ];
       $id = QuotationModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL
       $list = [];
-      print_r($request->input('product_id_edit'));
-      print_r($request->input('amount_edit'));
-      print_r($request->input('discount_price_edit'));
-      echo $id;
-      for($i=0; $i<count($request->input('product_id_edit')); $i++){
-        $list[] = [
-            "product_id" => $request->input('product_id_edit')[$i],
-            "amount" => $request->input('amount_edit')[$i],
-            "discount_price" => $request->input('discount_price_edit')[$i],
-            "quotation_id" => $id,
-        ];
+      //print_r($request->input('product_id_edit'));
+      //print_r($request->input('amount_edit'));
+      //print_r($request->input('discount_price_edit'));
+      //echo $id;
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $list[] = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "quotation_id" => $id,
+          ];
+        }
       }
       QuotationDetailModel::insert($list);
 
@@ -105,7 +108,8 @@ class QuotationController extends Controller
     }
 
     public function getNewCode(){
-        $count = QuotationModel::select_count_by_current_month() + 1;
+        $number = QuotationModel::select_count_by_current_month();
+        $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
@@ -133,41 +137,22 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
-        //QUOTATION
-        $table_quotation = QuotationModel::select_by_id($id);
-        $table_customer = CustomerModel::select_all();
-        $table_delivery_type = DeliveryTypeModel::select_all();
-        $table_department = DepartmentModel::select_all();
-        $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
-        $table_zone = ZoneModel::select_all();
-        //QUOTATION DETAIL
-        $table_quotation_detail = QuotationDetailModel::select_by_quotation_id($id);
-        //$q = $request->input('q');
-        //$table_quotation = QuotationModel::select_by_id($quotation_id);
-        $table_product = ProductModel::select_by_keyword("");
-
-        $data = [
-            //QUOTATION
-            'table_quotation' => $table_quotation,
-            'table_customer' => $table_customer,
-            'table_delivery_type' => $table_delivery_type,
-            'table_department' => $table_department,
-            'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
-            'table_zone' => $table_zone,
-            'quotation_id'=> $id,
-            //QUOTATION Detail
-            'table_quotation_detail' => $table_quotation_detail,
-            'table_product' => $table_product,
-            //'table_quotation' => $table_quotation,
-            //'quotation_id' => $quotation_id,
-            //'q' => $q,
-
-        ];
-        return view('sales/quotation/edit',$data);
+      $data = [
+          //QUOTATION
+          'table_quotation' => QuotationModel::select_by_id($id),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_all(),
+          'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_zone' => ZoneModel::select_all(),
+          'quotation_id'=> $id,
+          //QUOTATION Detail
+          'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
+          'table_product' => ProductModel::select_all(),
+      ];
+      return view('sales/quotation/edit',$data);
     }
 
     /**
@@ -179,6 +164,7 @@ class QuotationController extends Controller
      */
     public function update(Request $request, $id)
     {
+      //1.INSERT QUOTATION
       $input = [
         //'quotation_code' => $quotation_code,
         'customer_id' => $request->input('customer_id'),
@@ -194,9 +180,33 @@ class QuotationController extends Controller
         'zone_id' => $request->input('zone_id'),
         'remark' => $request->input('remark'),
         'vat_percent' => $request->input('vat_percent',7),
+        'total' => $request->input('total',0),
       ];
-
       QuotationModel::update_by_id($input,$id);
+
+      //2.DELETE QUOTATION DETAIL FIRST
+      QuotationDetailModel::delete_by_quotation_id($id);
+
+      //3.INSERT ALL NEW QUOTATION DETAIL
+      $list = [];
+      //print_r($request->input('product_id_edit'));
+      //print_r($request->input('amount_edit'));
+      //print_r($request->input('discount_price_edit'));
+      //echo $id;
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $list[] = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "quotation_id" => $id,
+          ];
+        }
+      }
+
+      QuotationDetailModel::insert($list);
+
+      //4.REDIRECT
       return redirect("sales/quotation/{$id}/edit");
     }
 
