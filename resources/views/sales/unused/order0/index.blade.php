@@ -2,24 +2,17 @@
 
 @section('title','ใบเสนอราคา')
 
-@section('navbar-menu')
-<div style="margin:21px;">
-<a class="btn btn-outline-primary  btn-sm" href="{{ url('/') }}/sales">back</a>
-<a href="{{ url('/') }}/sales/order/create" class="btn btn-primary btn-sm">
+@section('breadcrumb-menu')
+<a href="{{ url('/') }}/sales/order/create" class="btn pull-right hidden-sm-down btn-success">
 	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
 </a>
-<div>
-@endsection
-
-@section('breadcrumb-menu')
-
 @endsection
 
 @section('content')
 
 <div class="card">
 	<div class="card-block">
-		<div class="row d-none">
+		<div class="row">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">รายการใบเสนอราคา</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
@@ -36,11 +29,10 @@
 
 
 
-		<div class="table-responsive table-bordered">
-			<table class="table table-hover text-center" id="table">
+		<div class="table-responsive">
+			<table class="table table-hover text-center">
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
 						<th class="text-center">ยอดรวม</th>
@@ -53,11 +45,7 @@
 				</thead>
 				<tbody>
 					@foreach($table_order as $row)
-
 					<tr>
-						<td>
-							{{ $row->order_id }}
-						</td>
 						<td>
 							<a href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit">
 								{{ $row->order_code }}
@@ -70,9 +58,14 @@
 						<td>{{ $row->name }}</td>
 						<td>{{ $row->sales_status_name }}</td>
 						<td>
-							<a href="javascript:void(0)" onclick="onDelete( {{ $row->order_id }} )" class="text-danger">
-								<span class="fa fa-trash"></span>
-							</a>
+							<a href="#"><span class="fa fa-trash" style="color: red"></span></a>
+							<div class="row hide">
+								<form action="{{ url('/') }}/sales/order/{{ $row->order_id }}" method="POST">
+									{{ csrf_field() }}
+									{{ method_field('DELETE') }}
+									<button type="submit"></button>
+								</form>
+							</div>
 						</td>
 					</tr>
 					@endforeach
@@ -80,45 +73,15 @@
 
 			</table>
 		</div>
-		<script>
-		document.addEventListener("DOMContentLoaded", function(event) {
-				console.log("555");
-				$('#table').DataTable();
-		});
-
-		</script>
 
 	</div>
 </div>
 
-<div id="outer-form-container" style="display:none;">
-	<form action="#" method="POST" id="form_delete" >
-		{{ csrf_field() }}
-		{{ method_field('DELETE') }}
-		<button type="submit">Delete</button>
-	</form>
-	<script>
-
-		function onEdit(){
-			console.log("edit",$('#myModal'));
-			$('#myModal').on('show');
-		}
-
-		function onDelete(id){
-			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-			//GET FORM BY ID
-			var form = document.getElementById("form_delete");
-			//CHANGE ACTION TO SPECIFY ID
-			form.action = "{{ url('/') }}/sales/order/"+id;
-			//SUBMIT
-			var want_to_delete = confirm('Are you sure to delete this order ?');
-			if(want_to_delete){
-				form.submit();
-			}
-		}
-	</script>
+<div class="form-group">
+	<div class="col-lg-12">
+		<div class="text-center">
+	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+		</div>
+	</div>
 </div>
-
-
 @endsection

@@ -1,199 +1,211 @@
-<div class="card" id="table">
+@extends('monster-lite/layouts/theme')
+
+@section('title','ใบเบิกของ')
+
+@section('navbar-menu')
+<div style="margin:21px;">
+  <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+  <button class="btn btn-success d-none" type="submit" onclick="document.getElementById('form').submit();">Update</button>
+</div>
+@endsection
+
+@section('breadcrumb-menu')
+
+@endsection
+
+@section('content')
+
+<div class="card">
 	<div class="card-block">
-		<style>
-		.input{
-			max-width: 50px;
-			width: 100%;
-		}
-		</style>
+    <form method="get" action="">
+  		<div class="form-group form-inline">
+  			<label class="col-lg-2 offset-lg-1">สถานะ</label>
+  			<div class="col-lg-3">{{ $filter->order_detail_status_id}}
+  					<select name="order_detail_status_id" id="order_detail_status_id" class="form-control form-control-sm"
+              onchange="onSubmit(this);" required>
+  							<option value="" >None</option>
+  							@foreach($table_order_detail_status as $row_order_detail_status)
+  							<option
+                  value="{{ $row_order_detail_status->order_detail_status_id }}"
+                  {{ $row_order_detail_status->order_detail_status_id == $filter->order_detail_status_id ? "selected" : "" }} >
+  									{{  $row_order_detail_status->order_detail_status_name }}
+  							</option>
+  							@endforeach
+  					</select>
+  			</div>
+  			<label class="col-lg-2">วันที่อนุมัติ</label>
+  			<div class="col-lg-3">
+  				<input type="date" name="approve_date" class="form-control form-control-sm"	value="{{ date('Y-m-d') }}" disabled readonly>
+  			</div>
+  		</div>
 
-		<div class="table-responsive">
-			<table class="table table-hover text-center table-bordered" id="table">
-				<thead class="thead-light">
-					<tr>
-						<td>รหัสสินค้า</td>
-						<td>ชื่อสินค้า</td>
-						<td>จำนวน</td>
-						<td>หน่วย</td>
-						<td>ราคาตั้ง</td>
-						<td>ส่วนลด %</td>
-						<td>ราคาขาย</td>
-						<td>ราคาขายรวม</td>
-						<td>action</td>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($table_order_detail as $row_order_detail)
-					@method('PUT')
-    			@csrf
-					<tr>
-						<td>
-							<button class="btn btn-link" json='@json($row_order_detail)' data-toggle="modal" data-target="#myModal">
-								{{ $row_order_detail->product_code }}
-							</button>
-						</td>
-						<td>{{ $row_order_detail->product_name }}</td>
-						<td>
-							<input
-								class="input"
-								name="amount_edit"
-								id="new_amount_edit{{ $row_order_detail->order_detail_id }}"
-								value="{{ $row_order_detail->amount }}"
-								onkeyup="onChange3(this,{{ $row_order_detail->order_detail_id }})"
-								onChange="onChange3(this,{{ $row_order_detail->order_detail_id }})" />
-						</td>
-						<td>{{ $row_order_detail->product_unit }}</td>
-						<td>
-							{{ $row_order_detail->normal_price }}
-							<input type="hidden"
-								name="normal_price_edit"
-								id="new_normal_price_edit{{ $row_order_detail->order_detail_id }}"
-								value="{{ $row_order_detail->normal_price }}" >
-						</td>
-						<td>
-							<input class="input"
-								name="discount_percent_edit"
-								id="new_discount_percent_edit{{ $row_order_detail->order_detail_id }}"
-								value="{{ 100 - $row_order_detail->discount_price / $row_order_detail->normal_price * 100 }}"
-								onkeyup="onChange3(this,{{ $row_order_detail->order_detail_id }})"
-								onChange="onChange3(this,{{ $row_order_detail->order_detail_id }})">
-						</td>
-						<td>
-							<input
-								class="input"
-								name="discount_price_edit"
-								id="new_discount_price_edit{{ $row_order_detail->order_detail_id }}"
-								value="{{ $row_order_detail->discount_price }}"
-								onkeyup="onChange3(this,{{ $row_order_detail->order_detail_id }})"
-								onChange="onChange3(this,{{ $row_order_detail->order_detail_id }})">
-						</td>
-						<td>
-							<input
-								class="input"
-								name="total_edit"
-								id="new_total_edit{{ $row_order_detail->order_detail_id }}"
-								value="{{ $row_order_detail->discount_price *  $row_order_detail->amount }}"
-								readonly disabled />
-						</td>
-						<td>
-							<a href="javascript:void(0)" class="text-danger" style="padding-right:10px;" title="delete"
-								onclick="onDelete( {{ $row_order_detail->order_detail_id }} )" >
-								<span class="fa fa-trash"></span>
-							</a>
-							<a href="javascript:void(0)" class="text-warning d-none" style="padding-right:10px;"
-								id="new_btn_submit{{ $row_order_detail->order_detail_id }}"
-								onclick="onUpdate( {{ $row_order_detail->order_id }}, {{ $row_order_detail->order_detail_id }} )" >
-								<span class="fa fa-save"></span>
-							</a>
-						</td>
-					</tr>
-					@endforeach
-				</tbody>
-			</table>
-		</div>
-		<div class="text-center">
+  		<div class="form-group form-inline">
+  			<label class="col-lg-2 offset-lg-1">เลือกเดือน</label>
+  			<div class="col-lg-2">
+  					<select name="m_date" id="m_date" class="form-control form-control-sm"
+              onchange="onSubmit(this);"  style="max-width:150px;">
+                <option value="">None</option>
 
-			@include('sales/order_detail/create_modal')
+                @for($i = 1; $i <= 12; $i++)
+                <option
+                  value="{{ date("Y") }}-{{ sprintf("%02d",$i) }}-01"
+                  {{ $filter->m_date ===  sprintf("%d-%02d-01",date("Y"), $i) ? "selected" : "" }}>
+                  {{ date("Y") }}-{{ sprintf("%02d",$i) }}
+                </option>
+                @endfor
+  					</select>
+  			</div>
+        <label class="col-lg-1 ">หรือ</label>
+  			<div class="col-lg-2">
+  				<input type="date" name="date_begin" id="date_begin" class="form-control form-control-sm"
+            onchange="onSubmit(this);" value="{{ $filter->date_begin }}" style="max-width:150px;">
+  			</div>
+  			<label class="col-lg-1">-</label>
+  			<div class="col-lg-2">
+  				<input type="date" name="date_end" id="date_end" class="form-control form-control-sm"
+            onchange="onSubmit(this);" value="{{ $filter->date_end }}" style="max-width:150px;" >
+  			</div>
+  		</div>
+      <div><button type="submit" style="display:none;" id="form-submit">submit</button></div>
+    </form>
+    <script>
+      function onSubmit(){
+        var order_detail_status_id = document.getElementById("order_detail_status_id");
+        var m_date = document.getElementById("m_date");
+        var date_begin = document.getElementById("date_begin");
+        var date_end = document.getElementById("date_end");
+        console.log(event,event.target.id);
+        switch (event.target.id) {
+          case "order_detail_status_id":
+            break;
+          case "m_date":
+            date_begin.value="";
+            date_end.value="";
+            break;
+          case "date_begin":
+            m_date.value="";
+            break;
+          case "date_end":
+            m_date.value="";
+            break;
+        }
 
-		</div>
+        document.getElementById("form-submit").click();
+      }
+    </script>
+  </div>
+</div>
+<div class="card">
+	<div class="card-block">
+    <form action="{{ url('/') }}/sales/order_detail/approve" method="post" id="form_table" onsubmit="return validateCheckbox();" >
+      {{ csrf_field() }}
+    	{{ method_field('PUT') }}
+
+  		<div class="table-responsive">
+  			<table class="table table-hover text-center" id="table-order-detail" style="width:100%">
+
+  			</table>
+  		</div>
+      <div class="form-group form-inline text-center">
+        <div class="col-lg-4 offset-lg-4">
+          <select name="action" id="action" class="form-control form-control-sm" required>
+              @foreach($table_order_detail_status as $row_order_detail_status)
+              <option
+                value="{{ $row_order_detail_status->order_detail_status_id }}" >
+                  {{  $row_order_detail_status->order_detail_status_name }}
+              </option>
+              @endforeach
+          </select>
+          <button type="summit" id="form_summit_table" class="btn btn-primary">
+    				submit
+    			</button>
+      </div>
+  		</div>
+    </form>
+
 	</div>
 </div>
 
-@include('sales/order_detail/edit_modal')
-
-
-<div id="script-container" style="display:none;">
-	<form action="#" method="POST" id="form_delete" >
-		{{ csrf_field() }}
-		{{ method_field('DELETE') }}
-		<button type="submit">Delete</button>
-	</form>
+<div id="outer-form-container" style="display:none;">
 	<script>
-	function onDelete(id){
-		//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-		//GET FORM BY ID
-		var form = document.getElementById("form_delete");
-		//CHANGE ACTION TO SPECIFY ID
-		form.action = "{{ url('/') }}/sales/order/{{ $order_id }}/order_detail/"+id;
-		//SUBMIT
-		var want_to_delete = confirm('Are you sure to delete this order detail?');
-		if(want_to_delete){
-			form.submit();
+		//onClick
+		function select_item(id,name) {
+				console.log(id);
+						$('#customer_id').val(id);
+						$('#contact_name').val(name);
+						$('#customerModal').modal('hide');
 		}
-	}
-	</script>
-	<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
-			$('#myModal').on('shown.bs.modal', function (e) {
-				var row = JSON.parse(e.relatedTarget.getAttribute("json"));
 
-				//console.log(row);
-				document.getElementById("form_edit").action = "{{ url('/') }}/sales/order/{{ $row->order_id }}/order_detail/"+row.order_detail_id;
+      var filter = JSON.parse('@json($filter)');
+      var filter_param = $.param( filter );
+      var url = "{{ url('/') }}/api/order_detail?"+filter_param;
+  		console.log("555",filter,filter_param,url);
 
-				document.getElementById("order_detail_id").innerHTML = row.order_detail_id;
-				document.getElementById("product_code").innerHTML = row.product_code;
-				document.getElementById("product_name").innerHTML = row.product_name;
-				//console.log(row.amount*1,document.getElementById("amount"));
-				document.getElementById("amount_edit").value = row.amount;
-				document.getElementById("discount_percent_edit").value = (100 - row.discount_price / row.normal_price * 100) ;
-				document.getElementById("normal_price_edit").value = row.normal_price;
-				document.getElementById("discount_price_edit").value = row.discount_price;
-				document.getElementById("total_edit").value = row.discount_price *  row.amount;
-			});
+			//AJAX
+      $.ajax({
+          url: url,
+          type: "GET",
+          dataType : "json",
+      }).done(function(result){
+					console.log(result);
+					var dataSet = [];
+					result.forEach(function(element,index) {
+						console.log(element,index);
+            var id = element.order_detail_id;
+						var row = [
+							"<input type='checkbox' name='selected_order_detail_ids[]' class='form-control form-control-sm' value='"+id+"' >"+
+              "<input type='hidden' name='order_detail_ids[]' value='"+id+"' >"+
+              "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
+							element.date,
+							element.order_code,
+							element.delivery_time,
+							element.order_detail_status_name,
+							element.product_id,
+							element.product_name,
+							element.amount,
+							"<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
+							0,
+							0,
+							0,
+						];
+						dataSet.push(row);
+					});
+					console.log(dataSet);
 
-		});
-	</script>
-	<script>
-	function onChange3(obj,id){
-		var discount_price_edit = document.getElementById("new_discount_price_edit"+id);
-		var discount_percent_edit = document.getElementById("new_discount_percent_edit"+id);
-		var normal_price_edit = document.getElementById("new_normal_price_edit"+id);
-		var total_edit = document.getElementById("new_total_edit"+id);
-		var amount_edit = document.getElementById("new_amount_edit"+id);
-		var btn_submit = document.getElementById("new_btn_submit"+id);
-		//console.log("print",event,discount_price_edit,discount_percent_edit,normal_price_edit,total_edit,amount_edit);
-		switch (obj.id) {
-			case "new_discount_percent_edit"+id:
-				//EFFECT TO #discount_price_edit
-				console.log("EFFECT TO #discount_price_edit");
-				discount_price_edit.value = normal_price_edit.value - normal_price_edit.value * (discount_percent_edit.value) / 100;
+					$('#table-order-detail').DataTable({
+						data: dataSet,
+						columns: [
+								{ title: "#" },
+								{ title: "วันที่ OE" },
+								{ title: "เลขที่ OE" },
+								{ title: "วันที่ส่งของ" },
+								{ title: "สถานะการขาย" },
+								{ title: "รหัสสินค้า" },
+								{ title: "ชื่อสินค้า" },
+								{ title: "จำนวน" },
+								{ title: "จำนวนที่อนุมัติ" },
+								{ title: "ค้างรับ" },
+								{ title: "ค้างส่ง" },
+								{ title: "จำนวนคงคลัง" },
+						]
+					}); //END DATATABLE
+				}); //END DONE AJAX
+		}); //END DOMContentLoaded
 
-				break;
-			case "new_discount_price_edit"+id:
-				//EFFECT TO #discount_percent_edit
-				discount_percent_edit.value = 100.0 - discount_price_edit.value / normal_price_edit.value * 100;
-				break;
-		}
-		//EFFECT TO #total_edit
-		total_edit.value = amount_edit.value * discount_price_edit.value;
-		//console.log(obj.value, obj.id);
+    function validateCheckbox(){
+      checked = $("input[type=checkbox]:checked").length;
 
-		if(event.type === "change"){
-			//console.log("Change");
-			//ajax to server update + or click submit
-			btn_submit.click();
-		}
-	}
-	</script>
-	<script>
-	function onUpdate(order_id,order_detail_id){
-		var data = {
-			"_method" : "PUT",
-			"amount_edit" : document.getElementById('new_amount_edit'+order_detail_id).value,
-			"discount_price_edit" :document.getElementById('new_discount_price_edit'+order_detail_id).value,
+      if(checked == 0) {
+        alert("กรุณาเลือกอย่างน้อย 1 รายการ");
+        return false;
+      }
+      //return true;
+    }
 
-		};
-		//console.log(data);
-
-		$.ajax({
-		  method : "POST",
-		  url : "{{ url('/') }}/sales/order/"+order_id+"/order_detail/"+order_detail_id,
-		  data : data
-		})
-		  .done(function( msg ) {
-		    //alert( "Data Saved: " );
-		  });
-	}
 	</script>
 </div>
+
+
+
+@endsection

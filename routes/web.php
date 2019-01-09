@@ -41,15 +41,13 @@ Route::get('/others',function(){
 
 //1 Sales
 Route::resource('/sales/quotation', 'Sales\QuotationController');
-Route::resource('/sales/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
-
-Route::resource('/sales/quotation', 'Sales\QuotationController');
+//Route::resource('/sales/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
+//Route::resource('/sales/quotation', 'Sales\QuotationController');
 
 Route::resource('/sales/order', 'Sales\OrderController');
-Route::resource('/sales/order/{order_id}/order_detail', 'Sales\OrderDetailController');
+Route::get('/sales/order_detail/', 'Sales\OrderDetailController@index');
+Route::put('/sales/order_detail/approve', 'Sales\OrderDetailController@approve');
 
-
-Route::put('/sales/requisition/selected', 'Sales\RequisitionController@updateByIds');
 Route::resource('/sales/requisition', 'Sales\RequisitionController');
 //Route::resource('/sales/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
 

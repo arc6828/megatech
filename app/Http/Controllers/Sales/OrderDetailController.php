@@ -4,126 +4,50 @@ namespace App\Http\Controllers\Sales;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Sales\OrderModel;
+
 use App\Sales\OrderDetailModel;
-use App\ProductModel;
+use App\Sales\OrderDetailStatusModel;
 
 class OrderDetailController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($order_id)
-    {
-        //QUATATION DETAIL
-        $table_order_detail = OrderDetailModel::select_by_order_id($order_id);
-        $data = [
-            'table_order_detail' => $table_order_detail,
-            'order_id' => $order_id,
-        ];
-        return view('sales/order_detail/index',$data);
-    }
+  public function index(Request $request)
+  {
+    $filter = (object)[
+      "order_detail_status_id" => $request->input("order_detail_status_id",3),
+      "m_date" => $request->input("m_date", "".date('Y')."-".date('m')."-"."01"),
+      "date_begin" =>  $request->input("date_begin",""),
+      "date_end" => $request->input("date_end",""),
+    ];
+    $data = [
+      'table_order_detail_status' => OrderDetailStatusModel::select_all(),
+      'filter' => $filter,
+    ];
+    return view('sales/order_detail/index',$data);
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request, $order_id)
-    {
-        $q = $request->input('q');
-        $table_order = OrderModel::select_by_id($order_id);
-        $table_product = ProductModel::select_by_keyword($q);
-        $data = [
-            'table_product' => $table_product,
-            'table_order' => $table_order,
-            'order_id' => $order_id,
-            'q' => $q,
-        ];
-        return view('sales/order_detail/create',$data);
-    }
+  public function approve(Request $request)
+  {
+    $order_detail_ids = $request->input('order_detail_ids');
+    $selected_order_detail_ids = $request->input('selected_order_detail_ids');
+    $amounts = $request->input('amounts');
+    $approve_amounts = $request->input('approve_amounts');
+    $action = $request->input('action',"1");
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request,$order_id)
-    {
-        $input = [
-            "product_id" => $request->input('product_id'),
-            "amount" => $request->input('amount'),
-            "discount_price" => $request->input('discount_price',0),
-            "order_id" => $order_id,
-        ];
-        OrderDetailModel::insert($input);
-        return redirect("sales/order/{$order_id}/edit#table");
+    //IF PARTIAL APPROVE
+    for($i=0; $i<count($order_detail_ids); $i++){
+      //CHECK IF IS CHECKED LIST
+      if(in_array($order_detail_ids[$i],$selected_order_detail_ids)){
+        //CHECK IF APPROVE < amount
+        if($approve_amounts[$i] < $amounts[$i]){
+          //insert new order detail
+          $new_amount = $amounts[$i] - $approve_amounts[$i];
+          OrderDetailModel::duplicate_by_id($new_amount, $order_detail_ids[$i]);
+          //update by approve amount
+          OrderDetailModel::update_by_id(["amount"=>$approve_amounts[$i]] , $order_detail_ids[$i]);
+        }
+      }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($order_id, $id)
-    {
-        $table_order_detail = OrderDetailModel::select_by_id($id);
-        $data = [
-            'table_product' => $table_product,
-            'table_order_detail' => $table_order_detail,
-            'order_id' => $order_id,
-        ];
-        return view('sales/order_detail/show',$data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($order_id, $id)
-    {
-		$table_order_detail = OrderDetailModel::select_by_id($id);
-        $data = [
-            'table_order_detail' => $table_order_detail,
-            'order_id' => $order_id,
-        ];
-        return view('sales/order_detail/edit',$data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $order_id, $id)
-    {
-		    $input = [
-            "amount" => $request->input('amount_edit'),
-            "discount_price" => $request->input('discount_price_edit',0),
-        ];
-        OrderDetailModel::update_by_id($input,$id);
-        return redirect("sales/order/{$order_id}/edit#table");
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($order_id, $id)
-    {
-        OrderDetailModel::delete_by_id($id);
-        return redirect("sales/order/{$order_id}/edit#table");
-    }
-
-    
+    OrderDetailModel::update_order_detail_status_id_by_ids($action, $selected_order_detail_ids);
+    return redirect()->back();
+  }
 }

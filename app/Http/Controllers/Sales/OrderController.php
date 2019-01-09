@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Sales\OrderModel;
 use App\Sales\OrderDetailModel;
+use App\Sales\OrderDetailStatusModel;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
@@ -25,16 +26,13 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+      //$table_order = OrderModel::select_by_keyword($q);
+      $data = [
         //QUOTATION
-        $q = $request->input('q');
-        $table_order = OrderModel::select_by_keyword($q);
-        //QUATATION DETAIL
-
-        $data = [
-            'table_order' => $table_order,
-            'q' => $q
-        ];
-        return view('sales/order/index',$data);
+        'table_order' => OrderModel::select_all(),
+        'q' => $request->input('q')
+      ];
+      return view('sales/order/index',$data);
     }
 
     /**
@@ -44,24 +42,21 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $table_customer = CustomerModel::select_all();
-        $table_delivery_type = DeliveryTypeModel::select_all();
-        $table_department = DepartmentModel::select_all();
-        $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
-        $table_zone = ZoneModel::select_all();
-
-        $data = [
-            'table_customer' => $table_customer,
-            'table_delivery_type' => $table_delivery_type,
-            'table_department' => $table_department,
-            'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
-            'table_zone' => $table_zone,
-        ];
-        return view('sales/order/create',$data);
+      $data = [
+          //QUOTATION
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_all(),
+          'table_sales_user' => UserModel::select_by_role('sales'),
+          //'table_sales_user' => UserModel::select_all(),
+          'table_zone' => ZoneModel::select_all(),
+          //QUOTATION DETAIL
+          'table_order_detail' => [],
+          'table_product' => ProductModel::select_all(),
+      ];
+      return view('sales/order/create',$data);
     }
 
     /**
@@ -72,29 +67,50 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order_code = $this->getNewCode();
-        $input = [
-            'order_code' => $order_code,
-            'customer_id' => $request->input('customer_id'),
-            'debt_duration' => $request->input('debt_duration'),
-            'billing_duration' => $request->input('billing_duration'),
-            'payment_condition' => $request->input('payment_condition',""),
-            'delivery_type_id' => $request->input('delivery_type_id'),
-            'tax_type_id' => $request->input('tax_type_id'),
-            'delivery_time' => $request->input('delivery_time'),
-            'department_id' => $request->input('department_id'),
-            'sales_status_id' => $request->input('sales_status_id'),
-            'user_id' => $request->input('user_id'),
-            'zone_id' => $request->input('zone_id'),
-            'remark' => $request->input('remark'),
-            'vat_percent' => $request->input('vat_percent',7),
-        ];
-        $id = OrderModel::insert($input);
-        return redirect("sales/order/{$id}/edit");
+      //INSERT QUOTATION
+      $input = [
+          'order_code' => $this->getNewCode(),
+          'customer_id' => $request->input('customer_id'),
+          'debt_duration' => $request->input('debt_duration'),
+          'billing_duration' => $request->input('billing_duration'),
+          'payment_condition' => $request->input('payment_condition',""),
+          'delivery_type_id' => $request->input('delivery_type_id'),
+          'tax_type_id' => $request->input('tax_type_id'),
+          'delivery_time' => $request->input('delivery_time'),
+          'department_id' => $request->input('department_id'),
+          'sales_status_id' => $request->input('sales_status_id'),
+          'user_id' => $request->input('user_id'),
+          'zone_id' => $request->input('zone_id'),
+          'remark' => $request->input('remark'),
+          'vat_percent' => $request->input('vat_percent',7),
+          'total' => $request->input('total',0),
+      ];
+      $id = OrderModel::insert($input);
+
+      //INSERT ALL NEW QUOTATION DETAIL
+      $list = [];
+      //print_r($request->input('product_id_edit'));
+      //print_r($request->input('amount_edit'));
+      //print_r($request->input('discount_price_edit'));
+      //echo $id;
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $list[] = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "order_id" => $id,
+          ];
+        }
+      }
+      OrderDetailModel::insert($list);
+
+      return redirect("sales/order/{$id}/edit");
     }
 
     public function getNewCode(){
-        $count = OrderModel::select_count_by_current_month() + 1;
+        $number = OrderModel::select_count_by_current_month();
+        $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
@@ -122,41 +138,22 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //QUOTATION
-        $table_order = OrderModel::select_by_id($id);
-        $table_customer = CustomerModel::select_all();
-        $table_delivery_type = DeliveryTypeModel::select_all();
-        $table_department = DepartmentModel::select_all();
-        $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
-        $table_zone = ZoneModel::select_all();
-        //QUOTATION DETAIL
-        $table_order_detail = OrderDetailModel::select_by_order_id($id);
-        //$q = $request->input('q');
-        //$table_order = OrderModel::select_by_id($order_id);
-        $table_product = ProductModel::select_by_keyword("");
-
-        $data = [
-            //QUOTATION
-            'table_order' => $table_order,
-            'table_customer' => $table_customer,
-            'table_delivery_type' => $table_delivery_type,
-            'table_department' => $table_department,
-            'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
-            'table_zone' => $table_zone,
-            'table_order_detail' => $table_order_detail,
-            'order_id'=> $id,
-            //QUOTATION Detail
-            'table_product' => $table_product,
-            //'table_order' => $table_order,
-            //'order_id' => $order_id,
-            //'q' => $q,
-
-        ];
-        return view('sales/order/edit',$data);
+      $data = [
+          //QUOTATION
+          'table_order' => OrderModel::select_by_id($id),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_all(),
+          'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_zone' => ZoneModel::select_all(),
+          'order_id'=> $id,
+          //QUOTATION Detail
+          'table_order_detail' => OrderDetailModel::select_by_order_id($id),
+          'table_product' => ProductModel::select_all(),
+      ];
+      return view('sales/order/edit',$data);
     }
 
     /**
@@ -168,6 +165,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+      //1.INSERT QUOTATION
       $input = [
         //'order_code' => $order_code,
         'customer_id' => $request->input('customer_id'),
@@ -183,9 +181,33 @@ class OrderController extends Controller
         'zone_id' => $request->input('zone_id'),
         'remark' => $request->input('remark'),
         'vat_percent' => $request->input('vat_percent',7),
+        'total' => $request->input('total',0),
       ];
-
       OrderModel::update_by_id($input,$id);
+
+      //2.DELETE QUOTATION DETAIL FIRST
+      OrderDetailModel::delete_by_order_id($id);
+
+      //3.INSERT ALL NEW QUOTATION DETAIL
+      $list = [];
+      //print_r($request->input('product_id_edit'));
+      //print_r($request->input('amount_edit'));
+      //print_r($request->input('discount_price_edit'));
+      //echo $id;
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $list[] = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "order_id" => $id,
+          ];
+        }
+      }
+
+      OrderDetailModel::insert($list);
+
+      //4.REDIRECT
       return redirect("sales/order/{$id}/edit");
     }
 
@@ -200,6 +222,4 @@ class OrderController extends Controller
       OrderModel::delete_by_id($id);
       return redirect("sales/order");
     }
-
-
 }

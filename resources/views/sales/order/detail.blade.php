@@ -8,22 +8,22 @@
 		</style>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table-quotation-detail" style="width:100%"></table>
+			<table class="table table-hover text-center" id="table-order-detail" style="width:100%"></table>
 		</div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
-			 	var detail = JSON.parse('@json($table_quotation_detail)');
+			 	var detail = JSON.parse('@json($table_order_detail)');
 				//console.log("DETAIL : ",detail);
 				var dataSet = [];
 				detail.forEach(function(element,index) {
 					//console.log(element,index);
-					var id = element.quotation_detail_id;
+					var id = element.order_detail_id;
 					var row = createRow(id, element);
 					dataSet.push(row);
 				});
 				//console.log(dataSet);
 
-				$('#table-quotation-detail').DataTable({
+				$('#table-order-detail').DataTable({
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
@@ -119,9 +119,9 @@
 			function myFunction(event){
 				//console.log("CHANGE : ", this,this.getAttribute("data_id"));
 				//onChange3(this,this.getAttribute("data_id"));
-				var want_to_delete = confirm('Are you sure to delete this quotation detail?');
+				var want_to_delete = confirm('Are you sure to delete this order detail?');
 				if(want_to_delete){
-					var table = $('#table-quotation-detail').DataTable();
+					var table = $('#table-order-detail').DataTable();
 					table
 						.row( $(this).parents('tr') )
 						.remove()
@@ -139,7 +139,7 @@
 
 		<div class="text-center">
 
-			@include('sales/quotation/create_detail_modal')
+			@include('sales/order/create_detail_modal')
 
 		</div>
 	</div>

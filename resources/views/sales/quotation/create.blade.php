@@ -45,7 +45,6 @@
     document.querySelector("#total").value = "";
     document.querySelector("#remark").value = "";
     document.querySelector("#vat_percent").value = "7";
-    document.querySelector("#vat").value = "";
 
     //onChange(document.querySelector("#vat"));
   });

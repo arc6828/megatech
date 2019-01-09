@@ -7,24 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 class QuotationDetailModel extends Model
 {
-    public static function select_all(){
+  public static function select_all(){
 		return DB::table('tb_quotation_detail')
-            ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
-            ->get();
+      ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+      ->get();
 	}
 
 	public static function select_by_quotation_id($quotation_id){
-        return DB::table('tb_quotation_detail')
-            ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
-            ->where('quotation_id', '=' , $quotation_id )
-            ->get();
+    return DB::table('tb_quotation_detail')
+        ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+        ->where('quotation_id', '=' , $quotation_id )
+        ->get();
 	}
 
 	public static function select_by_id($id){
-        return DB::table('tb_quotation_detail')
-            ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
-            ->where('quotation_detail_id', '=' , $id )
-            ->get();
+    return DB::table('tb_quotation_detail')
+        ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+        ->where('quotation_detail_id', '=' , $id )
+        ->get();
 	}
 
   public static function insert($input){
@@ -32,9 +32,9 @@ class QuotationDetailModel extends Model
 	}
 
 	public static function update_by_id($input, $id){
-        DB::table('tb_quotation_detail')
-            ->where('quotation_detail_id', $id)
-            ->update($input);
+    DB::table('tb_quotation_detail')
+        ->where('quotation_detail_id', $id)
+        ->update($input);
 	}
 
   public static function update_key_by_id($key, $input, $id){

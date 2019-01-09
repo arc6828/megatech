@@ -2,17 +2,9 @@
 
 namespace App\Sales;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-/*
-use App\CustomerModel;
-use App\DeliveryTypeModel;
-use App\TaxTypeModel;
-use App\SalesStatusModel;
-use App\UserModel;
-use App\ZoneModel;
-*/
+
 
 class QuotationModel extends Model
 {
@@ -36,7 +28,7 @@ class QuotationModel extends Model
     return DB::table('tb_quotation')
       ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
       ->where('tb_quotation.quotation_id', '=' , $id )
-			->select( DB::raw('tb_quotation.*, tb_customer.contact_name, (vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat, total'))
+			->select( DB::raw('tb_quotation.*, tb_customer.contact_name'))
       ->get();
 	}
 
@@ -48,13 +40,13 @@ class QuotationModel extends Model
       ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
       ->join('users', 'tb_quotation.user_id', '=', 'users.id')
  			->select( DB::raw(
- 				'tb_quotation.*, tb_customer.contact_name,(vat_percent/100*total) as vat, ((100+vat_percent)/100*total) as total_after_vat'
+ 				'tb_quotation.*, tb_customer.contact_name'
         ))
       ->get();
 	}
 
 	public static function insert($input){
-        return DB::table('tb_quotation')->insertGetId($input);
+    return DB::table('tb_quotation')->insertGetId($input);
 	}
 
 	public static function update_by_id($input, $id){
@@ -69,10 +61,4 @@ class QuotationModel extends Model
         ->delete();
 	}
 
-	public static function select_customer($q) {
-		$sql = "select tb_quotation.id, tb_quotation.id_dept, tb_quotation.date_dept, tb_quotation.total, tb_quotation.id_customer, customer.name_company
-			from tb_quotation inner join customer on tb_quotation.id_customer = customer.id_customer
-			where tb_quotation.id_dept like '%{$q}%'";
-		return DB::select($sql, []);
-	}
 }
