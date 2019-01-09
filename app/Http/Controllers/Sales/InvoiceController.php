@@ -5,17 +5,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Sales\InvoiceModel;
+use App\Sales\InvoiceDetailModel;
+use App\Sales\InvoiceDetailStatusModel;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
+use App\DepartmentModel;
 use App\TaxTypeModel;
 use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
-
-use App\Sales\InvoiceDetailModel;
-
-
+use App\ProductModel;
 
 class InvoiceController extends Controller
 {
@@ -26,16 +26,13 @@ class InvoiceController extends Controller
      */
     public function index(Request $request)
     {
+      //$table_invoice = InvoiceModel::select_by_keyword($q);
+      $data = [
         //QUOTATION
-        $q = $request->input('q');
-        $table_invoice = InvoiceModel::select_by_keyword($q);
-        //QUATATION DETAIL
-
-        $data = [
-            'table_invoice' => $table_invoice,
-            'q' => $q
-        ];
-        return view('sales/invoice/index',$data);
+        'table_invoice' => InvoiceModel::select_all(),
+        'q' => $request->input('q')
+      ];
+      return view('sales/invoice/index',$data);
     }
 
     /**
@@ -45,22 +42,21 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $table_customer = CustomerModel::select_all();
-        $table_delivery_type = DeliveryTypeModel::select_all();
-        $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
-        $table_zone = ZoneModel::select_all();
-
-        $data = [
-            'table_customer' => $table_customer,
-            'table_delivery_type' => $table_delivery_type,
-            'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
-            'table_zone' => $table_zone,
-        ];
-        return view('sales/invoice/create',$data);
+      $data = [
+          //QUOTATION
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_all(),
+          'table_sales_user' => UserModel::select_by_role('sales'),
+          //'table_sales_user' => UserModel::select_all(),
+          'table_zone' => ZoneModel::select_all(),
+          //QUOTATION DETAIL
+          'table_invoice_detail' => [],
+          'table_product' => ProductModel::select_all(),
+      ];
+      return view('sales/invoice/create',$data);
     }
 
     /**
@@ -71,30 +67,52 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $invoice_code = $this->getNewCode();
-        $input = [
-            'invoice_code' => $invoice_code,
-            'customer_id' => $request->input('customer_id'),
-            'debt_duration' => $request->input('debt_duration'),
-            'billing_duration' => $request->input('billing_duration'),
-            'payment_condition' => $request->input('payment_condition',""),
-            'delivery_type_id' => $request->input('delivery_type_id'),
-            'tax_type_id' => $request->input('tax_type_id'),
-            'delivery_time' => $request->input('delivery_time'),
-            'department_id' => $request->input('department_id'),
-            'sales_status_id' => $request->input('sales_status_id'),
-            'user_id' => $request->input('user_id'),
-            'zone_id' => $request->input('zone_id'),
-            'remark' => $request->input('remark'),
-            'vat_percent' => $request->input('vat_percent',7),
-        ];
-        $id = InvoiceModel::insert($input);
-        return redirect("sales/invoice/{$id}/edit");
+      //INSERT QUOTATION
+      $input = [
+          'invoice_code' => $this->getNewCode(),
+          'external_reference_id' => $request->input('external_reference_id'),
+          'customer_id' => $request->input('customer_id'),
+          'debt_duration' => $request->input('debt_duration'),
+          'billing_duration' => $request->input('billing_duration'),
+          'payment_condition' => $request->input('payment_condition',""),
+          'delivery_type_id' => $request->input('delivery_type_id'),
+          'tax_type_id' => $request->input('tax_type_id'),
+          'delivery_time' => $request->input('delivery_time'),
+          'department_id' => $request->input('department_id'),
+          'sales_status_id' => $request->input('sales_status_id'),
+          'user_id' => $request->input('user_id'),
+          'zone_id' => $request->input('zone_id'),
+          'remark' => $request->input('remark'),
+          'vat_percent' => $request->input('vat_percent',7),
+          'total' => $request->input('total',0),
+      ];
+      $id = InvoiceModel::insert($input);
+
+      //INSERT ALL NEW QUOTATION DETAIL
+      $list = [];
+      //print_r($request->input('product_id_edit'));
+      //print_r($request->input('amount_edit'));
+      //print_r($request->input('discount_price_edit'));
+      //echo $id;
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $list[] = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "invoice_id" => $id,
+          ];
+        }
+      }
+      InvoiceDetailModel::insert($list);
+
+      return redirect("sales/invoice/{$id}/edit");
     }
 
     public function getNewCode(){
-        $count = InvoiceModel::select_count_by_current_month() + 1;
-		//$year = (date("Y") + 543) % 100;
+        $number = InvoiceModel::select_count_by_current_month();
+        $count =  $number + 1;
+        //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
@@ -121,27 +139,22 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
-        $table_invoice = InvoiceModel::select_by_id($id);
-        $table_customer = CustomerModel::select_all();
-        $table_delivery_type = DeliveryTypeModel::select_all();
-        $table_tax_type = TaxTypeModel::select_all();
-        $table_sales_status = SalesStatusModel::select_all();
-        $table_sales_user = UserModel::select_by_role('sales');
-        $table_zone = ZoneModel::select_all();
-        $table_invoice_detail = InvoiceDetailModel::select_by_invoice_id($id);
-
-        $data = [
-            'table_invoice' => $table_invoice,
-            'table_customer' => $table_customer,
-            'table_delivery_type' => $table_delivery_type,
-            'table_tax_type' => $table_tax_type,
-            'table_sales_status' => $table_sales_status,
-            'table_sales_user' => $table_sales_user,
-            'table_zone' => $table_zone,
-            'table_invoice_detail' => $table_invoice_detail,
-            'invoice_id'=> $id,
-        ];
-        return view('sales/invoice/edit',$data);
+      $data = [
+          //QUOTATION
+          'table_invoice' => InvoiceModel::select_by_id($id),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_all(),
+          'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_zone' => ZoneModel::select_all(),
+          'invoice_id'=> $id,
+          //QUOTATION Detail
+          'table_invoice_detail' => InvoiceDetailModel::select_by_invoice_id($id),
+          'table_product' => ProductModel::select_all(),
+      ];
+      return view('sales/invoice/edit',$data);
     }
 
     /**
@@ -153,23 +166,50 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
+      //1.INSERT QUOTATION
       $input = [
-          //'invoice_code' => $invoice_code,
-          'customer_id' => $request->input('customer_id'),
-          'debt_duration' => $request->input('debt_duration'),
-          'billing_duration' => $request->input('billing_duration'),
-          'payment_condition' => $request->input('payment_condition',""),
-          'delivery_type_id' => $request->input('delivery_type_id'),
-          'tax_type_id' => $request->input('tax_type_id'),
-          'delivery_time' => $request->input('delivery_time'),
-          'department_id' => $request->input('department_id'),
-          'sales_status_id' => $request->input('sales_status_id'),
-          'user_id' => $request->input('user_id'),
-          'zone_id' => $request->input('zone_id'),
-          'remark' => $request->input('remark'),
-          'vat_percent' => $request->input('vat_percent',7),
+        //'invoice_code' => $invoice_code,
+        'external_reference_id' => $request->input('external_reference_id'),
+        'customer_id' => $request->input('customer_id'),
+        'debt_duration' => $request->input('debt_duration'),
+        'billing_duration' => $request->input('billing_duration'),
+        'payment_condition' => $request->input('payment_condition',""),
+        'delivery_type_id' => $request->input('delivery_type_id'),
+        'tax_type_id' => $request->input('tax_type_id'),
+        'delivery_time' => $request->input('delivery_time'),
+        'department_id' => $request->input('department_id'),
+        'sales_status_id' => $request->input('sales_status_id'),
+        'user_id' => $request->input('user_id'),
+        'zone_id' => $request->input('zone_id'),
+        'remark' => $request->input('remark'),
+        'vat_percent' => $request->input('vat_percent',7),
+        'total' => $request->input('total',0),
       ];
       InvoiceModel::update_by_id($input,$id);
+
+      //2.DELETE QUOTATION DETAIL FIRST
+      InvoiceDetailModel::delete_by_invoice_id($id);
+
+      //3.INSERT ALL NEW QUOTATION DETAIL
+      $list = [];
+      //print_r($request->input('product_id_edit'));
+      //print_r($request->input('amount_edit'));
+      //print_r($request->input('discount_price_edit'));
+      //echo $id;
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $list[] = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "invoice_id" => $id,
+          ];
+        }
+      }
+
+      InvoiceDetailModel::insert($list);
+
+      //4.REDIRECT
       return redirect("sales/invoice/{$id}/edit");
     }
 
@@ -181,6 +221,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+      InvoiceModel::delete_by_id($id);
+      return redirect("sales/invoice");
     }
 }

@@ -40,6 +40,13 @@ class OrderDetailModel extends Model
       ->where('order_id', '=' , $order_id )
       ->get();
 	}
+  public static function select_by_order_id_by_status_id($order_id, $order_detail_status_id){
+    return DB::table('tb_order_detail')
+      ->join('tb_product','tb_order_detail.product_id','=','tb_product.product_id')
+      ->where('order_id', '=' , $order_id )
+      ->where('order_detail_status_id', '=' , $order_detail_status_id )
+      ->get();
+	}
 	public static function select_by_id($id){
     return DB::table('tb_order_detail')
       ->join('tb_product','tb_order_detail.product_id','=','tb_product.product_id')

@@ -1,25 +1,25 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-	<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
+<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#quotationModal">
+	<i class="fa fa-plus"></i> อ้างอิงจากใบเสนอราคา
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="quotationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการสินค้า</h5>
+				<h5 class="modal-title" id="exampleModalLabel">อ้างอิงจากใบเสนอราคา</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center" id="table-product-model"></table>
+					<table class="table table-hover text-center" id="table-product-quotation-model"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-close">Close</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-close-quotation">Close</button>
 			</div>
 		</div>
 	</div>
@@ -29,8 +29,8 @@
 	document.addEventListener("DOMContentLoaded", function(event) {
 
 		//var detail = JSON.parse('@json($table_product)');
-		$('#exampleModal').on('show.bs.modal', function (e) {
-			if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
+		$('#quotationModal').on('show.bs.modal', function (e) {
+			if(  ! $.fn.DataTable.isDataTable('#table-product-quotation-model') ){
 				$.ajax({
 	          url: "{{ url('/') }}/api/product",
 	          type: "GET",
@@ -55,7 +55,7 @@
 							dataSet.push(row);
 						});
 						//console.log(dataSet);
-						var table = $('#table-product-model').DataTable({
+						var table = $('#table-product-quotation-model').DataTable({
 							"data": dataSet,
 							"columns": [
 								{ title: "รหัสสินค้า" },
@@ -66,8 +66,6 @@
 								{ title: "action" },
 							],
 						}); // END DATATABLE
-
-
 					}); //END AJAX
 			}
 		}); // END MODAL EVENT
@@ -78,13 +76,13 @@
 		var product = JSON.parse(obj.getAttribute("json"));
 		product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
 		product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
-		console.log("CLICK PRODUCT : ", product);
+		//console.log("CLICK PRODUCT : ", product, amount);
 
-		var table = $('#table-quotation-detail').DataTable();
+		var table = $('#table-order-detail').DataTable();
 		var row = createRow("new", product);
 		table.row.add(row).draw( false );
 		refreshDetailTableEvent();
-		document.querySelector("#btn-close").click();
+		document.querySelector("#btn-close-quotation").click();
 		//console.log("CLICK");
 	}
 </script>

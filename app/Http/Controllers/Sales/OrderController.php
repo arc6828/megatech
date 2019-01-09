@@ -70,6 +70,7 @@ class OrderController extends Controller
       //INSERT QUOTATION
       $input = [
           'order_code' => $this->getNewCode(),
+          'external_reference_id' => $request->input('external_reference_id'),
           'customer_id' => $request->input('customer_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
@@ -168,6 +169,7 @@ class OrderController extends Controller
       //1.INSERT QUOTATION
       $input = [
         //'order_code' => $order_code,
+        'external_reference_id' => $request->input('external_reference_id'),
         'customer_id' => $request->input('customer_id'),
         'debt_duration' => $request->input('debt_duration'),
         'billing_duration' => $request->input('billing_duration'),

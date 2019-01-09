@@ -48,7 +48,7 @@
 								element.amount_in_stock,
 								price,
 								"<input name='amount_create' id='amount_create"+id+"'  value='1' >",
-								"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' >" +
+								"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' onclick='addProduct(this);'>" +
 									"<span class='fa fa-shopping-cart'></span>" +
 								"</button>",
 							];
@@ -67,25 +67,24 @@
 							],
 						}); // END DATATABLE
 
-						document.querySelectorAll(".btn-create").forEach(function(element,index){
-							element.addEventListener("click", function(event){
-								var product = JSON.parse(this.getAttribute("json"));
-								product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
-								product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
-								//console.log("CLICK PRODUCT : ", product, amount);
 
-								var table = $('#table-order-detail').DataTable();
-				        var row = createRow("new", product);
-								table.row.add(row).draw( false );
-				        refreshDetailTableEvent();
-				        document.querySelector("#btn-close").click();
-				        //console.log("CLICK");
-
-							}); //END ADD EVENT LISTENER : CLICK
-						}); //END foreach
 					}); //END AJAX
 			}
 		}); // END MODAL EVENT
 
 	}); //END ADD EVENT LISTENER
+
+	function addProduct(obj){
+		var product = JSON.parse(obj.getAttribute("json"));
+		product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
+		product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
+		//console.log("CLICK PRODUCT : ", product, amount);
+
+		var table = $('#table-order-detail').DataTable();
+		var row = createRow("new", product);
+		table.row.add(row).draw( false );
+		refreshDetailTableEvent();
+		document.querySelector("#btn-close").click();
+		//console.log("CLICK");
+	}
 </script>

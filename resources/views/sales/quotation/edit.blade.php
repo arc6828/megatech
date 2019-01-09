@@ -14,9 +14,24 @@
 @endsection
 
 @section('content')
+	<script>
+	function validateForm(){
+		var i=0;
+		document.querySelectorAll(".discount_percent_edit").forEach(function(element,index){
+			if(element.value < 40){
+				alert("TOO LESS");
+				i++;
+			}
+		});
+		if(i>0){
+			return false;
+		}
+
+	}
+	</script>
 
 	@forelse($table_quotation as $row)
-		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST">
+		<form onsubmit="return validateForm()" class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 

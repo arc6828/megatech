@@ -1,6 +1,6 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','แก้ไขรายละเอียดใบเสนอราคา')
+@section('title','แก้ไขรายละเอียดใบจอง')
 
 @section('navbar-menu')
 <div style="margin: 21px;">
@@ -32,6 +32,7 @@
 			document.addEventListener("DOMContentLoaded", function(event) {
 				//INITIALIZE
 				document.querySelector("#order_code").value = "{{ $row->order_code }}";
+				document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
 				document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
 			  var str_time = moment("{{ $row->datetime }}").format('YYYY-MM-DDTHH:mm');  //console.log(str_time);

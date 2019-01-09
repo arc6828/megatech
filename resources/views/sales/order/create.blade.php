@@ -1,6 +1,6 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','สร้างใบเสนอราคา')
+@section('title','สร้างใบจอง')
 
 @section('navbar-menu')
   <div style="margin: 21px;">

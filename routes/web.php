@@ -48,11 +48,11 @@ Route::resource('/sales/order', 'Sales\OrderController');
 Route::get('/sales/order_detail/', 'Sales\OrderDetailController@index');
 Route::put('/sales/order_detail/approve', 'Sales\OrderDetailController@approve');
 
-Route::resource('/sales/requisition', 'Sales\RequisitionController');
+//Route::resource('/sales/requisition', 'Sales\RequisitionController');
 //Route::resource('/sales/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
 
 Route::resource('/sales/invoice', 'Sales\InvoiceController');
-Route::resource('/sales/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
+//Route::resource('/sales/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
 
 //2 Purchase
 Route::resource('/purchase/purchase_receive', 'Purchase\PurchaseReceiveController');

@@ -1,12 +1,12 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','ใบเสนอราคา')
+@section('title','ใบจอง')
 
 @section('navbar-menu')
 <div style="margin:21px;">
 <a class="btn btn-outline-primary  btn-sm" href="{{ url('/') }}/sales">back</a>
 <a href="{{ url('/') }}/sales/order/create" class="btn btn-primary btn-sm">
-	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
+	<i class="fa fa-plus"></i> เพิ่มใบจอง
 </a>
 <div>
 @endsection
@@ -21,7 +21,7 @@
 	<div class="card-block">
 		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">รายการใบเสนอราคา</h4>
+				<h4 class="card-title">รายการใบจอง</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
@@ -64,7 +64,7 @@
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
+						<td>{{ $row->total }}</td>
 						<td>{{ $row->customer_name }}</td>
 						<td>{{ $row->company_name }}</td>
 						<td>{{ $row->name }}</td>

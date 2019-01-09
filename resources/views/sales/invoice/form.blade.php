@@ -3,11 +3,18 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="order_code"	id="order_code" class="form-control form-control-sm"	disabled>
+        <input name="invoice_code"	id="invoice_code" class="form-control form-control-sm"	disabled>
       </div>
       <label class="col-lg-2 offset-lg-1">รหัสเอกสารลูกหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
+      </div>
+    </div>
+    <div class="form-group form-inline">
+      <label class="col-lg-2">เลขที่ใบจอง</label>
+      <div class="col-lg-3">
+        <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm"  readonly style="max-width:100px;">
+        @include('sales/invoice/create_from_order_modal')
       </div>
     </div>
     <div class="form-group form-inline">
@@ -123,7 +130,7 @@
 </div>
 
 
-@include('sales/order/detail')
+@include('sales/invoice/detail')
 
 <div class="card">
 	<div class="card-block">
