@@ -25,7 +25,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/sales/requisition">
+			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/sales/order_detail">
 				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></i></div>
 				<div><br>ใบเบิกของ</div>
 			</a>
