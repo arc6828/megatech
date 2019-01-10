@@ -15,7 +15,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
-        <input type="datetime-local" name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
+        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>
     </div>
 

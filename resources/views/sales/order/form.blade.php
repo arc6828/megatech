@@ -5,7 +5,7 @@
       <div class="col-lg-3">
         <input name="order_code"	id="order_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">รหัสเอกสารลูกหนี้</label>
+      <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
       </div>
@@ -19,7 +19,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
-        <input type="datetime-local" name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
+        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>
     </div>
 

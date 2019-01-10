@@ -85,6 +85,11 @@
 		}).done(function(result){
 			fillOrder(result);
 			fillOrderDetail(result);
+			//ALL ABOUT EVENT
+			refreshDetailTableEvent();
+			//AVOID TO EDIT
+			$('#table-invoice-detail input').prop('readonly', true);
+
 		}); //END AJAX
 
 		document.querySelector("#btn-close-order").click();

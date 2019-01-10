@@ -58,7 +58,7 @@
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
           element.product_unit,
           "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
-          "<input class='input discount_percent_edit' name='discount_percent_edit[]'  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
+					"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
           "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
           "<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +

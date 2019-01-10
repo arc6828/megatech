@@ -48,7 +48,7 @@ class InvoiceController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_sales_status' => SalesStatusModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_by_category('order'),
           'table_sales_user' => UserModel::select_by_role('sales'),
           //'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
@@ -116,7 +116,7 @@ class InvoiceController extends Controller
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $invoice_code = "QT{$year}{$month}-{$number}";
+        $invoice_code = "IV{$year}{$month}-{$number}";
         return $invoice_code;
     }
 
@@ -146,7 +146,7 @@ class InvoiceController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_sales_status' => SalesStatusModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_by_category('order'),
           'table_sales_user' => UserModel::select_by_role('sales'),
           'table_zone' => ZoneModel::select_all(),
           'invoice_id'=> $id,

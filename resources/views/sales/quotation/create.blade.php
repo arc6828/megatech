@@ -30,7 +30,7 @@
     document.querySelector("#quotation_code").value = "";
     document.querySelector("#customer_id").value = "";
     document.querySelector("#contact_name").value = "";
-    var str_time = moment().format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
+    var str_time = moment().format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
     var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
     document.querySelector("#debt_duration").value = "60";
     document.querySelector("#billing_duration").value = "30";

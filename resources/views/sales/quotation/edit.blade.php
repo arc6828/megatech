@@ -14,24 +14,10 @@
 @endsection
 
 @section('content')
-	<script>
-	function validateForm(){
-		var i=0;
-		document.querySelectorAll(".discount_percent_edit").forEach(function(element,index){
-			if(element.value < 40){
-				alert("TOO LESS");
-				i++;
-			}
-		});
-		if(i>0){
-			return false;
-		}
 
-	}
-	</script>
 
 	@forelse($table_quotation as $row)
-		<form onsubmit="return validateForm()" class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST">
+		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 
@@ -49,7 +35,7 @@
 				document.querySelector("#quotation_code").value = "{{ $row->quotation_code }}";
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
 				document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
-			  var str_time = moment("{{ $row->datetime }}").format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
+			  var str_time = moment("{{ $row->datetime }}").format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
 				var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";
 				document.querySelector("#billing_duration").value = "{{ $row->billing_duration }}";
