@@ -20,7 +20,7 @@
         </a>
       </div>
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-primary my-4 m" href="#">
+      <a class="btn btn-outline-primary my-4 m" href="{{ url('/') }}/finance/billing">
           <div class="px-4"><span class="round round-primary my-2">บ</span></i></div>
           <div><br>ใบวางบิล</div>
         </a>

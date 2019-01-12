@@ -96,7 +96,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Billing 
 
+Route::resource('/finance/billing', 'BillingNoteController');
 
 //THEME
 Route::get('/dashboard', function () {

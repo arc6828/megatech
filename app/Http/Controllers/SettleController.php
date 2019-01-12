@@ -20,14 +20,17 @@ class SettleController extends Controller
      */
     public function index(Request $request)
     {
+        // $q = $request->input('q');
+        // $model = new SettleModel();
+        // $table_settle = $model->select_customer($q);
+        // $data = [
+        // 'table_settle' => $table_settle,
+        // 'q' => $q
+        // ];
         $q = $request->input('q');
-        $model = new SettleModel();
-        $table_settle = $model->select_customer($q);
-        $data = [
-        'table_settle' => $table_settle,
-        'q' => $q
-        ];
-        return view('finance/debtsettle/index',$data);
+        $table_settle = SettleModel::select_customer($q);
+        
+        return view('finance/debtsettle/index');
 
     }
 

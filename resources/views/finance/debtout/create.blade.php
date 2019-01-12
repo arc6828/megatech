@@ -1,167 +1,176 @@
-@extends('template/template-1')
+@extends('monster-lite/layouts/theme')
+
+@section('title','ปรับปรุงลูกหนี้คงค้าง')
+
+@section('breadcrumb-menu')
+
+@endsection
+
 @section('content')
 <script src="{{url('/')}}/js/debtout/debtout_jquery.js"></script>
-<h2 style="text-align: center;">ปรับปรุงลูกหนี้คงค้าง</h2>
-<div class="container">
-<form action="{{ url('/') }}/finance/debtout" method="POST" class="form-horizontal">
+<form action="#" method="POST" id="form-debtout">
 {{ csrf_field() }}
 {{ method_field('POST') }}
-<br>
-<ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab">ข้อมูลลูกหนี้คงค้าง</a></li>
-  </ul>
-<br><br>	
-<div class="tab-content">
-  <div id="home" class="tab-pane fade in active">
- 		<div class="col-xs-6">
- 		  <div class="form-group">
- 			<label class="control-label col-sm-3" for="id_dept">เลขที่เอกสาร: </label>
- 			<div class="col-sm-5">
- 				<input type="text" name="id_dept" id="id_dept" class="form-control">
- 			</div>
- 		  </div>
- 		   <div class="form-group">
- 			<label class="control-label col-sm-3" for="id_customer">รหัสลูกค้า: </label>
- 			<div class="col-sm-9">
- 				<input type="text" name="id_customer" id="id_customer" class="form-control col-sm-5">&nbsp;
- 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">เลือกลูกหนี้</button>
- 			</div>
- 		  </div>
- 		   <div class="form-group">
- 			<label for="type_tax" class="control-label col-sm-3">ชนิดภาษี: </label>
- 			<div class="col-sm-5">
- 				<select class="form-control" id="type_tax" style="height: 3em" name="type_tax">
-        			<option value disabled="" selected>เลือกชนิดภาษี</option>
-        			<option value="include">1. ราคาสินค้ารวมภาษี</option>
-        			<option value="separate">2. ราคาสินค้าแยกภาษี</option>
-        			<option value="tax0">3. ภาษีอัตรารวม 0</option>
-      			</select>
- 			</div>
- 		  </div>
- 		  <div class="form-group">
- 			<label for="tax_liability" class="control-label col-sm-3">ภาระภาษี: </label>
- 			<div class="col-sm-5">
- 				<select class="form-control" id="tax_liability" style="height: 3em" name="tax_liability">
-        			<option value disabled="" selected>เลือกภาระภาษี</option>
-        			<option value="right">เกณฑ์สิทธิ์</option>
-        			<option value="cash">เกณฑ์เงินสด</option>
-      			</select>
- 			</div>
- 		  </div>
-
- 		</div>
- 		<div class="col-xs-6">
- 			<div class="form-group">
- 			<label class="control-label col-sm-3" for="date_dept">วันที่เอกสาร: </label>
- 			<div class="col-sm-5">
- 				<input type="date" name="date_dept" id="date_dept" class="form-control">
- 			</div>
- 		  </div>
- 		  <div class="form-group">
- 			<label class="control-label col-sm-3" for="deadline">วันครบกำหนด: </label>
- 			<div class="col-sm-5">
- 				<input type="date" name="deadline" id="deadline" class="form-control">
- 			</div>
- 		  </div>
- 		  <div class="form-group">
- 			<label class="control-label col-sm-3" for="tax_filing">ยื่นภาษีในงวด: </label>
- 			<div class="col-sm-5">
- 				<textarea id="date" name="tax_filing" class="form-control"></textarea>
- 			</div>
- 		  </div>
- 		</div>
-  </div>
-  <!-- Modal -->
-  <div class="container">
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-        <h4 class="modal-title">Modal Header</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-        <table class="table">
-        	<thead>
-        		<th></th>
-        		<th>รหัสลูกค้า</th>
-        		<th>ชื่อบริษัท</th>
-        		<th>ที่อยู่</th>
-        		<th>เบอร์โทรศัพท์</th>
-        	</thead>
-            @foreach($table_customer as $row_customer)
-        	<tr>
-        		<td><input type="radio" name="id_customer" value="{{ $row_customer->id_customer }}"></td>
-        		<td>{{ $row_customer->id_customer}}</td>
-        		<td>{{ $row_customer->name_company}}</td>
-        		<td>{{ $row_customer->address}}</td>
-        		<td>{{ $row_customer->telephone}}</td>
-        	</tr>
-        @endforeach
-        </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="save">Save changes</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
-<hr>
-<br>
-<br>
-<div class="col-xs-6">
-	<div class="form-group">
-		<label class="control-label col-sm-6" for="tax_value"></label>
- 			<div class="col-sm-5">
- 				<input type="float" class="form-control" hidden="">
- 			</div>
+<div class="card">
+	<div class="card-block">
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">เลขที่เอกสาร</label>
+							<div class="col-lg-3">
+									<input type="text" name="debt_code"  class="form-control form-control-line"  >
+							</div>
+			 	</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">วันที่เอกสาร</label>
+							<div class="col-lg-3">
+									<input type="date" name="date_debt"  class="form-control form-control-line"  >
+							</div>
+			 	</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">รหัสลูกค้า</label>
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+							@include('finance/billing_note/modal-customer')
+			 	</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">ชนิดภาษี</label>
+							<div class="col-lg-3">
+									<select name="tax_type_id" class="form-control form-control-line" >
+										@foreach ($table_type_tax as $row_type_tax)
+										<option value="{{ $row_type_tax->tax_type_id }}">{{ $row_type_tax->tax_type_name }}</option>
+										@endforeach
+									
+									</select>
+							</div>
+			 	</div>
+			</div>
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+							<label class="col-lg-3">วันครบกำหนด</label>
+							<div class="col-lg-3">
+									<input type="date" name="deadline"  class="form-control form-control-line"  >
+							</div>
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+							<label class="col-lg-3">ภาระภาษี: </label>
+							<div class="col-lg-3">
+								<select class="form-control form-control-line" id="tax_liability" name="tax_liability">
+										 <option value="right">เกณฑ์สิทธิ์</option>
+										 <option value="cash">เกณฑ์เงินสด</option>
+									 </select>
+							</div>
+					</div>
+			</div>
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+							<label class="col-lg-3">ยื่นภาษีในงวด: </label>
+							<div class="col-lg-3">
+									<input id="date" name="tax_filing" class="form-control form-control-line">
+							</div>
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+						<div class="col-lg-2"></div>
+						<div class="col-lg-5">
+							<div class="form-check">
+							<input type="checkbox" class="form-check-input">
+							<label class="form-check-label">ภาษีมูลค่าค่าเพิ่มยื่นเพิ่ม</label>
+						</div>
+						</div>
+						</div>
+			</div>
+		</div>
+		<hr class="my-4" style="border-top: 1px soild">
+		<div class="row">
+				<div class="col-lg-6">
+				</div>
+				<div class="col-lg-6">
+					<div class="form-group form-inline">
+					<label class="col-lg-3">ยอดรวม</label>
+					<div class="col-lg-3">
+						<input type="float" name="total_dept" id="totaldept" class="form-control form-control-line"onchange="myFunction(total_dept)">
+					</div>	
+					</div>
+				</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+						<label class="col-lg-3">อัตราภาษี</label>
+						<div class="col-lg-3">
+								<input type="float" name="tax" id="tax" class="form-control form-control-line" onchange="myFunction(tax)">
+						</div>
+					</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">มูลค่าภาษี</label>
+					<div class="col-lg-3">
+							<input type="float" name="tax_value" id="taxvalue" class="form-control">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6"></div>
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">ยอดสุทธิ</label>
+					<div class="col-lg-3">
+							<input type="float" name="net_amount" id="total" class="form-control" disabled>
+					</div>
+				</div>
+			</div>
+		</div>			
 	</div>
-	<div class="form-group">
-		<br>
- 			<label class="control-label col-sm-6" for="tax">อัตราภาษี: </label>
- 			<div class="col-sm-5">
- 				<input type="float" name="tax" id="tax" class="form-control" onchange="myFunction(tax)">
- 			</div>
- 		  </div>
 </div>
-<div class="col-xs-6">
-		<div class="form-group">
- 			<label class="control-label col-sm-3" for="total_dept">ยอดรวม: </label>
- 			<div class="col-sm-5">
- 				<input type="float" name="total_dept" id="totaldept" class="form-control"onchange="myFunction(total_dept)">
- 			</div>
- 		  </div>
- 		  <div class="form-group">
- 			<label class="control-label col-sm-3" for="tax_value">มูลค่าภาษี: </label>
- 			<div class="col-sm-5">
- 				<input type="float" name="tax_value" id="taxvalue" class="form-control">
- 			</div>
- 		  </div>
+@section('navbar-menu')
+<div style="margin:21px;">
+<a href="javascript:void(0)" onclick="submitForm()" class="btn btn-success">Save</a>
+<a href="{{ url('/') }}/finance/debtout" class="btn btn-danger">Back</a>
 </div>
-
-<button type="submit" class="btn btn-success btn-right">Save</button>
-<a href="{{url('/')}}/finance/debtout" class="btn btn-danger " style="text-align: right;">Back</a>
-</div>
+@endsection
 </form>
-</div>
+
 <script type="text/javascript">
 var d = new Date();
 var month = d.getUTCMonth() + 1;
 var year = d.getUTCFullYear();
-newdate = month + "/" + year;
-document.getElementById("date").innerHTML = newdate;
+newdate = month + "/" + (year+543);
+document.getElementById("date").value = newdate;
 
 
 function myFunction(tax,totaldept) {
     var totaldept= document.getElementById("totaldept").value;
     var tax = document.getElementById("tax").value;
     var taxvalue = document.getElementById("taxvalue");
-    taxvalue.value = (totaldept*tax)/100;
+		taxvalue.value = (totaldept*tax)/100;
+		var total = document.getElementById('total');
+		total.value = parseInt( totaldept) + parseInt( taxvalue.value ) ;
+}
+function submitForm(){
+	var form = document.getElementById('form-debtout');
+	form.action = "{{ url('/') }}/finance/debtout";
+	form.submit();
 }
 </script>
 @endsection
