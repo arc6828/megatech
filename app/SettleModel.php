@@ -14,6 +14,9 @@ class SettleModel extends Model
 		->where('settle_code','like', "%{ $q }%")
 		->get();
 	}
+	public static function select_all_tax(){
+		return DB::table('tb_tax_type')->get();
+	}
 //    function select(){
 // 		$sql = "select * from settle";
 // 		return DB::select($sql, []);

@@ -2,6 +2,13 @@
 
 @section('title','เพิ่มใบวางบิล')
 
+@section('navbar-menu')
+<div style="margin:21px;">
+        <a href="javascript:void(0)" onclick="summitform()" class="btn btn-success">Save</a>
+        <a href="{{ url('/') }}/finance/billing" class="btn btn-danger">Back</a>
+</div>
+@endsection
+
 @section('breadcrumb-menu')
 
 @endsection
@@ -151,12 +158,7 @@
     
 </div>
 
-@section('navbar-menu')
-<div style="margin:21px;">
-<a href="javascript:void(0)" onclick="summitform()" class="btn btn-success">Save</a>
-<a href="{{ url('/') }}/finance/billing" class="btn btn-danger">Back</a>
-</div>
-@endsection
+
 </form>
 
 <script>

@@ -1,4 +1,280 @@
-@extends('template/template-1')
+{{-- {{-- หน้านี้ต้องเพิ่มค่าที่จะ EDIT ด้วย --}}
+@extends('monster-lite/layouts/theme')
+
+@section('title','การตั้งหนี้ลูกหนี้')
+
+@section('breadcrumb-menu')
+
+@endsection
+
+@section('content')
+<script src="{{ url('/')}}/js/settle/settle_jquery.js"></script>
+<form action="#" method="POST" id="form-debtout">
+  {{ csrf_field() }}
+  {{ method_field('PUT') }}
+<div class="card">
+  <div class="card-block">
+    <div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">เลขที่เอกสาร</label>
+							<div class="col-lg-3">
+									<input type="text" name="debt_code"  class="form-control form-control-line"  >
+							</div>
+			 	</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">วันที่เอกสาร</label>
+							<div class="col-lg-3">
+									<input type="date" name="date_debt"  class="form-control form-control-line"  >
+							</div>
+			 	</div>
+			</div>
+    </div>
+    <div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">รหัสลูกค้า</label>
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+							@include('finance/billing_note/modal-customer')
+			 	</div>
+			</div>
+    </div>
+    <div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">ชนิดภาษี</label>
+							<div class="col-lg-3">
+									<select name="tax_type_id" class="form-control form-control-line" >
+										@foreach ($table_type_tax as $row_type_tax)
+										<option value="{{ $row_type_tax->tax_type_id }}">{{ $row_type_tax->tax_type_name }}</option>
+										@endforeach
+									
+									</select>
+							</div>
+			 	</div>
+			</div>
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+							<label class="col-lg-3">ระยะเวลาหนี้</label>
+							<div class="col-lg-3">
+									<input type="date" name="deadline"  class="form-control form-control-line"  >
+							</div>
+					</div>
+			</div>
+    </div>
+    <div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">รหัสพนักงาน</label>
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+							@include('customer/modal-user')
+			 	</div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group form-inline">
+            <label class="col-lg-3">วันครบกำหนด</label>
+            <div class="col-lg-3">
+                <input type="date" name="deadline"  class="form-control form-control-line"  >
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">รหัสแผนก</label>
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+							{{-- Modal Department --}}
+			 	</div>
+      </div>
+      <div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">รหัสJob</label>
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+							{{--  Modal Job  --}}
+			 	</div>
+			</div>
+    </div>
+    <div class="row">
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+							<label class="col-lg-3">ภาระภาษี: </label>
+							<div class="col-lg-3">
+								<select class="form-control form-control-line" id="tax_liability" name="tax_liability">
+										 <option value="right">เกณฑ์สิทธิ์</option>
+										 <option value="cash">เกณฑ์เงินสด</option>
+									 </select>
+							</div>
+					</div>
+			</div>
+			<div class="col-lg-6">
+					<div class="form-group form-inline">
+							<label class="col-lg-3">ยื่นภาษีในงวด: </label>
+							<div class="col-lg-3">
+									<input id="date" name="tax_filing" class="form-control form-control-line">
+							</div>
+          </div>
+          <div class="form-group form-inline">
+						<div class="col-lg-2"></div>
+						<div class="col-lg-5">
+							<div class="form-check">
+							<input type="checkbox" class="form-check-input">
+							<label class="form-check-label">ภาษีมูลค่าค่าเพิ่มยื่นเพิ่ม</label>
+						</div>
+						</div>
+						</div>
+			</div>
+    </div>
+    <div class="row" style="background-color:cornflowerblue;width: 100%;height: 30%;margin-bottom: 3%">
+      <div class="col-lg-6 text-center" >
+          คำอธิบาย
+      </div>
+      <div class="col-lg-6 text-center" >
+        ยอดรวม
+      </div>
+    </div>
+    <div class="row">
+			<div class="col-lg-6">
+				<div class="form-group form-inline">
+					<label class="col-lg-3">รหัสผังบัญชี</label>
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+							@include('customer/modal-account')
+			 	</div>
+      </div>
+      <div class="col-lg-6">
+				<div class="form-group form-inline">
+				
+							<div class="col-lg-6" style="margin-left: 27%">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+						
+			 	</div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="col-lg-6">
+        <input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line" style="width:200%"  >
+    </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-6">
+      <div class="form-group form-inline">
+        <label class="col-lg-3">รหัสผังบัญชี</label>
+            <div class="col-lg-5">
+                <input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+            </div>
+       </div>
+     </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
+				<div class="form-group form-inline">
+					<label class="col-lg-4">เลขที่เอกสารเงินมัดจำ</label>
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+					{{-- Modal มัดจำ--}}
+			 	</div>
+      </div>
+      <div class="col-lg-5">
+				<div class="form-group form-inline">
+							<div class="col-lg-5">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+              <label class="col-lg-5">ยอดหลังหักค่ามัดจำ</label>
+			 	</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3">
+      </div>
+      <div class="col-lg-3">
+				<div class="form-group form-inline">
+            <label class="col-lg-4">อัตรภาษี</label>
+							<div class="col-lg-4">
+									<input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+							</div>
+              
+			 	</div>
+      </div>
+      <div class="col-lg-3">
+          <div class="form-group form-inline">
+              <label class="col-lg-6">มูลค่าภาษี</label>
+                <div class="col-lg-4">
+                    <input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+                </div>
+                
+           </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group form-inline">
+                <label class="col-lg-6">ยอดรับเงินสด</label>
+                  <div class="col-lg-4">
+                      <input type="text" name="customer_id" id="customer_id"  class="form-control form-control-line"  >
+                  </div>
+                  
+             </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-3">
+          </div>
+          <div class="col-lg-3">
+          </div>
+          <div class="col-lg-3">
+              <div class="form-group form-inline">
+                  <label class="col-lg-6">ยอดสุทธิ</label>
+                    <div class="col-lg-4">
+                        <input disabled type="text" name="customer_id" id="customer_id"  class="form-control form-control-line text-right" value="0.00" > 
+                        {{-- คำนวณยอดรวม --}}
+                    </div>
+                    
+               </div>
+            </div>
+        </div>
+  </div>
+</div>
+@section('navbar-menu')
+<div style="margin:21px;">
+        <a href="javascript:void(0)" onclick="summitform()" class="btn btn-success">Save</a>
+        <a href="{{ url('/') }}/finance/billing" class="btn btn-danger">Back</a>
+</div>
+@endsection
+</form>
+@endsection
+
+
+
+
+
+
+
+
+{{-- @extends('template/template-1')
 @section('content')
 <script src="{{url('/')}}/js/settle/settle_jquery.js"></script>
 <div class="container" style="text-align: center;">
@@ -380,4 +656,4 @@
 <script src="{{url('/')}}/js/settle/settle.js"></script>
 @empty
 @endforelse
-@endsection
+@endsection --}}

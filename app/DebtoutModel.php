@@ -16,10 +16,11 @@ class DebtoutModel extends Model
 		->get();
 	}
 	public static function select_search($q) {
-		return DB::table('tb_debtout')
-		->join('tb_customer','tb_debtout.customer_id','=','tb_customer.customer_id')
-		->where('debt_code','like', "%{ $q }%")
-		->get();
+		$sql = "select tb_debtout.*, tb_customer.* from tb_debtout 
+				inner join tb_customer on 
+				tb_debtout.customer_id = tb_customer.customer_id 
+				where tb_debtout.debt_code like '%{ $q }%'";
+		return DB::select($sql,[]);
 	}
 	public static function insert($input){
 		return DB::table('tb_debtout')->insertGetId($input);

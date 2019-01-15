@@ -6,8 +6,6 @@
 
 @endsection
 
-
-
 @section('content')
 <form action="{{ url('/') }}/customer" method="POST">
     {{ csrf_field() }}

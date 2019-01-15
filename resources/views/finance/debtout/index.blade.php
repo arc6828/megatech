@@ -52,7 +52,7 @@
 					<td>{{ $row->company_name }}</td>
 					<td>{{ $row->net_amount }}</td>
 					<td>
-						<a href="javascript:void(0)" onclick="onDelete(  )" class="text-danger">
+						<a href="javascript:void(0)" onclick="onDelete( {{ $row->debt_id }} )" class="text-danger">
 							<span class="fa fa-trash"></span>
 						</a>
 					</td>
