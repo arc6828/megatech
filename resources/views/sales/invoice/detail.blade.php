@@ -90,7 +90,7 @@
         var normal_price_edit = row.querySelector(".normal_price_edit");
         var total_edit = row.querySelector(".total_edit");
         var amount_edit = row.querySelector(".amount_edit");
-        console.log("DOM : ",discount_percent_edit);
+        //console.log("DOM : ",discount_percent_edit);
         //var btn_submit = row.querySelector("input[name='new_btn_submit']");
         //console.log("print",event,discount_price_edit,discount_percent_edit,normal_price_edit,total_edit,amount_edit);
         switch (obj.name) {

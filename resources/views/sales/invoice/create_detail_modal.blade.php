@@ -39,7 +39,7 @@
 						//console.log(result);
 						var dataSet = [];
 						result.forEach(function(element,index) {
-							console.log(element,index);
+							//console.log(element,index);
 							var id = element.product_id;
 							var price = element.promotion_price? element.promotion_price : element.normal_price;
 							var row = [
