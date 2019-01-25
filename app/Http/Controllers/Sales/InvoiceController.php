@@ -96,12 +96,16 @@ class InvoiceController extends Controller
       //echo $id;
       if (is_array ($request->input('product_id_edit'))){
         for($i=0; $i<count($request->input('product_id_edit')); $i++){
-          $list[] = [
+          $a = [
               "product_id" => $request->input('product_id_edit')[$i],
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "invoice_id" => $id,
           ];
+          if( is_numeric($request->input('id_edit')[$i]) ){
+            $a["invoice_detail_id"] = $request->input('id_edit')[$i];
+          }
+          $list[] = $a;
         }
       }
       InvoiceDetailModel::insert($list);

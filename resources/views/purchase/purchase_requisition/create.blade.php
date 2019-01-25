@@ -2,6 +2,13 @@
 
 @section('title','สร้างใบเสนอซื้อ')
 
+@section('navbar-menu')
+  <div style="margin: 21px;">
+    <a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/purchase/purchase_requisition">back</a>
+    <button class="btn btn-primary btn-sm" onclick="document.getElementById('form-submit').click();">Save</button>
+  </div>
+@endsection
+
 @section('breadcrumb-menu')
 
 @endsection
@@ -11,145 +18,37 @@
 <form class="" action="{{ url('/') }}/purchase/purchase_requisition" method="POST">
     {{ csrf_field() }}
     {{ method_field('POST') }}
-    <div class="card">
-        <div class="card-block">
-          <div class="row">
-            <div class="col-lg-9 align-self-center">
-                <h4 class="card-title">Purchase Requisition code : ... </h4>
-                <h6 class="card-subtitle">Fill infomation in the form</h6>
-            </div>
-            <div class="col-lg-3 align-self-center">
-
-            </div>
-          </div>
-
-          <div>
-            <div class="form-group form-inline">
-                <label class="col-lg-2">รหัสลูกค้า</label>
-                <div class="col-lg-3">
-                    <select name="customer_id" class="form-control" required>
-                        <option value="" >None</option>
-                        @foreach($table_customer as $row_customer)
-                        <option value="{{ $row_customer->customer_id }}" >
-                            {{  $row_customer->customer_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group form-inline">
-                <label class="col-lg-2">ระยะเวลาหนี้</label>
-                <div class="col-lg-3">
-                  <input type="number" name="debt_duration"  class="form-control form-control-line"  >
-                </div>
-                <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา</label>
-                <div class="col-lg-3">
-                  <input type="number" name="billing_duration"  class="form-control form-control-line"  >
-                </div>
-            </div>
-
-            <div class="form-group form-inline">
-                <label class="col-lg-2">เงื่อนไขการชำระเงิน</label>
-                <div class="col-lg-3">
-                  <input name="payment_condition"  class="form-control form-control-line"  >
-                </div>
-                <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
-                <div class="col-lg-3">
-                    <select name="delivery_type_id" class="form-control" required>
-                        <option value="" >None</option>
-                        @foreach($table_delivery_type as $row_delivery_type)
-                        <option value="{{ $row_delivery_type->delivery_type_id }}" >
-                            {{  $row_delivery_type->delivery_type_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group form-inline">
-                <label class="col-lg-2">ชนิดภาษี</label>
-                <div class="col-lg-3">
-                    <select name="tax_type_id" class="form-control" required>
-                        <option value="" >None</option>
-                        @foreach($table_tax_type as $row_tax_type)
-                        <option value="{{ $row_tax_type->tax_type_id }}" >
-                            {{  $row_tax_type->tax_type_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-                <label class="col-lg-2 offset-lg-1">ระยะเวลาในการส่งของ (วัน)</label>
-                <div class="col-lg-3">
-                <input type="number" name="delivery_time"  class="form-control form-control-line"  >
-                </div>
-            </div>
-
-            <div class="form-group form-inline">
-                <label class="col-lg-2">รหัสแผนก</label>
-                <div class="col-lg-3">
-                <input type="number" name="department_id"  class="form-control form-control-line"  readonly="">
-                </div>
-                <label class="col-lg-2 offset-lg-1">สถานะ</label>
-                <div class="col-lg-3">
-                    <select name="purchase_status_id" class="form-control" required>
-                        <option value="" >None</option>
-                        @foreach($table_purchase_status as $row_purchase_status)
-                        <option value="{{ $row_purchase_status->purchase_status_id }}" >
-                            {{  $row_purchase_status->purchase_status_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group form-inline">
-              <label class="col-lg-2">รหัสพนักงานขาย</label>
-              <div class="col-lg-3">
-                    <select name="user_id" class="form-control" required>
-                        <option value="" >None</option>
-                        @foreach($table_purchase_user as $row_purchase_user)
-                        <option value="{{ $row_purchase_user->id }}" >
-                            {{  $row_purchase_user->name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-              <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
-                <div class="col-lg-3">
-                    <select name="zone_id" class="form-control" required>
-                        <option value="" >None</option>
-                        @foreach($table_zone as $row_zone)
-                        <option value="{{ $row_zone->zone_id }}" >
-                            {{  $row_zone->zone_name }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="form-group form-inline">
-              <label class="col-lg-2">หมายเหตุ</label>
-              <div class="col-lg-3">
-                <input name="remark"  class="form-control form-control-line"  >
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-lg-12">
-                <div class="text-center">
-                  <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_requisition">back</a>
-                  <button class="btn btn-success" type="submit" >Create</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    @include('purchase/purchase_requisition/form')
+    <div>
+      <button type="submit" class="d-none" id="form-submit">Save</button>
+    </div>
 </form>
 
+<script >
+  document.addEventListener("DOMContentLoaded", function(event) {
+    //INITIALIZE
+    document.querySelector("#purchase_requisition_code").value = "";
+    document.querySelector("#customer_id").value = "";
+    document.querySelector("#contact_name").value = "";
+    var str_time = moment().format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
+    var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
+    document.querySelector("#debt_duration").value = "60";
+    document.querySelector("#billing_duration").value = "30";
+    document.querySelector("#payment_condition").value = "ภายใน 30 วัน";
+    document.querySelector("#delivery_type_id").value = "2";
+    document.querySelector("#tax_type_id").value = "2";
+    document.querySelector("#delivery_time").value = "30";
+    document.querySelector("#department_id").value = "1";
+    document.querySelector("#purchase_status_id").value = "8";
+    document.querySelector("#user_id").value = "{{ Auth::id() }}";
+    document.querySelector("#zone_id").value = "1";
+    document.querySelector("#total").value = "";
+    document.querySelector("#remark").value = "";
+    document.querySelector("#vat_percent").value = "7";
 
-@endsection
+    //onChange(document.querySelector("#vat"));
+  });
 
-@section('plugins-js')
+</script>
 
 @endsection

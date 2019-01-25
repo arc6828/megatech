@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Purchase;
+namespace App\Purchase\unused;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class PurchaseRequisitionDetailModel extends Model
+class PurchaseOrderDetailModel extends Model
 {
     public static function select_all(){
 		return DB::table('tb_purchase_requisition_detail')

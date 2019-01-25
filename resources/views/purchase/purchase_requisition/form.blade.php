@@ -3,18 +3,11 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="invoice_code"	id="invoice_code" class="form-control form-control-sm"	disabled>
+        <input name="purchase_requisition_code"	id="purchase_requisition_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">รหัสเอกสารลูกหนี้</label>
+      <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
-      </div>
-    </div>
-    <div class="form-group form-inline">
-      <label class="col-lg-2">เลขที่ใบขาย</label>
-      <div class="col-lg-3">
-        <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm"  readonly style="max-width:120px;">
-        @include('sales/invoice/create_from_order_modal')
       </div>
     </div>
     <div class="form-group form-inline">
@@ -91,11 +84,11 @@
       </div>
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required>
+        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
-          @foreach($table_sales_status as $row_sales_status)
-          <option value="{{ $row_sales_status->sales_status_id }}" >
-            {{	$row_sales_status->sales_status_name }}
+          @foreach($table_purchase_status as $row_purchase_status)
+          <option value="{{ $row_purchase_status->purchase_status_id }}" >
+            {{	$row_purchase_status->purchase_status_name }}
           </option>
           @endforeach
         </select>
@@ -107,9 +100,9 @@
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
-          @foreach($table_sales_user as $row_sales_user)
-          <option value="{{ $row_sales_user->id }}" >
-            {{	$row_sales_user->name }}
+          @foreach($table_purchase_user as $row_purchase_user)
+          <option value="{{ $row_purchase_user->id }}" >
+            {{	$row_purchase_user->name }}
           </option>
           @endforeach
         </select>
@@ -130,7 +123,7 @@
 </div>
 
 
-@include('sales/invoice/detail')
+@include('purchase/purchase_requisition/detail')
 
 <div class="card">
 	<div class="card-block">

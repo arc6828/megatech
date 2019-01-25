@@ -84,7 +84,7 @@
 		product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
 		//console.log("CLICK PRODUCT : ", product, amount);
 
-		var table = $('#table-order-detail').DataTable();
+		var table = $('#table-purchase_requisition-detail').DataTable();
 		var row = createRow("new", product);
 		table.row.add(row).draw( false );
 		refreshDetailTableEvent();

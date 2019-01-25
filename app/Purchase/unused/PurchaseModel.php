@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Purchase;
+namespace App\Purchase\unused;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +14,7 @@ use App\UserModel;
 use App\ZoneModel;
 */
 
-class PurchaseReceiveModel extends Model
+class PurchaseModel extends Model
 {
     public static function select_all(){
 		$total_query = DB::table('tb_purchase_receive_detail')

@@ -47,6 +47,9 @@
 				//ALL ABOUT EVENT
 				refreshDetailTableEvent();
 
+				//Load Product
+				showProduct();
+
 
 				//AVOID TO EDIT
 				$('#table-invoice-detail input').prop('readonly', true);
@@ -56,7 +59,7 @@
       //EVENT HANDLER
       function createRow(id,element){
         return [
-          id,
+          id+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
           element.product_name,
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",

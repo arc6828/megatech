@@ -8,6 +8,9 @@ use App\Sales\OrderModel;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderDetailStatusModel;
 
+use App\Purchase\PurchaseRequisitionModel;
+use App\Purchase\PurchaseRequisitionDetailModel;
+
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
@@ -106,6 +109,8 @@ class OrderController extends Controller
       }
       OrderDetailModel::insert($list);
 
+      $this->store2($request);
+
       return redirect("sales/order/{$id}/edit");
     }
 
@@ -118,6 +123,62 @@ class OrderController extends Controller
         $number = sprintf('%05d', $count);
         $order_code = "OE{$year}{$month}-{$number}";
         return $order_code;
+    }
+
+    public function store2(Request $request)
+    {
+      //INSERT QUOTATION
+      $input = [
+          'purchase_requisition_code' => $this->getNewCode2(),
+          'external_reference_id' => $request->input('external_reference_id'),
+          'customer_id' => $request->input('customer_id'),
+          'debt_duration' => $request->input('debt_duration'),
+          'billing_duration' => $request->input('billing_duration'),
+          'payment_condition' => $request->input('payment_condition',""),
+          'delivery_type_id' => $request->input('delivery_type_id'),
+          'tax_type_id' => $request->input('tax_type_id'),
+          'delivery_time' => $request->input('delivery_time'),
+          'department_id' => $request->input('department_id'),
+          'purchase_status_id' => $request->input('purchase_status_id',1),
+          'user_id' => $request->input('user_id'),
+          'zone_id' => $request->input('zone_id'),
+          'remark' => $request->input('remark'),
+          'vat_percent' => $request->input('vat_percent',7),
+          'total' => $request->input('total',0),
+      ];
+      $id = PurchaseRequisitionModel::insert($input);
+
+      //INSERT ALL NEW QUOTATION DETAIL
+      $list = [];
+      //print_r($request->input('product_id_edit'));
+      //print_r($request->input('amount_edit'));
+      //print_r($request->input('discount_price_edit'));
+      //echo $id;
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $list[] = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "purchase_requisition_id" => $id,
+          ];
+        }
+      }
+      //print_r($list);
+      PurchaseRequisitionDetailModel::insert($list);
+
+      //return redirect("purchase/purchase_requisition/{$id}/edit");
+    }
+
+    public function getNewCode2(){
+        $number = PurchaseRequisitionModel::select_count_by_current_month();
+        $count =  $number + 1;
+        //$year = (date("Y") + 543) % 100;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $purchase_requisition_code = "PR{$year}{$month}-{$number}";
+        return $purchase_requisition_code;
     }
 
     /**
@@ -198,12 +259,16 @@ class OrderController extends Controller
       //echo $id;
       if (is_array ($request->input('product_id_edit'))){
         for($i=0; $i<count($request->input('product_id_edit')); $i++){
-          $list[] = [
+          $a = [
               "product_id" => $request->input('product_id_edit')[$i],
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "order_id" => $id,
           ];
+          if( is_numeric($request->input('id_edit')[$i]) ){
+            $a["order_detail_id"] = $request->input('id_edit')[$i];
+          }
+          $list[] = $a;
         }
       }
 

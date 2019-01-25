@@ -30,49 +30,56 @@
 
 		//var detail = JSON.parse('@json($table_product)');
 		$('#exampleModal').on('show.bs.modal', function (e) {
-			if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
-				$.ajax({
-	          url: "{{ url('/') }}/api/product",
-	          type: "GET",
-	          dataType : "json",
-	      }).done(function(result){
-						//console.log(result);
-						var dataSet = [];
-						result.forEach(function(element,index) {
-							console.log(element,index);
-							var id = element.product_id;
-							var price = element.promotion_price? element.promotion_price : element.normal_price;
-							var row = [
-								element.product_code,
-								element.product_name,
-								element.amount_in_stock,
-								price,
-								"<input name='amount_create' id='amount_create"+id+"'  value='1' >",
-								"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' onclick='addProduct(this);'>" +
-									"<span class='fa fa-shopping-cart'></span>" +
-								"</button>",
-							];
-							dataSet.push(row);
-						});
-						//console.log(dataSet);
-						var table = $('#table-product-model').DataTable({
-							"data": dataSet,
-							"columns": [
-								{ title: "รหัสสินค้า" },
-								{ title: "ชื่อสินค้า" },
-								{ title: "จำนวนในคลัง" },
-								{ title: "ราคาขาย" },
-								{ title: "จำนวน" },
-								{ title: "action" },
-							],
-						}); // END DATATABLE
-
-
-					}); //END AJAX
-			}
+			showProduct();
 		}); // END MODAL EVENT
 
 	}); //END ADD EVENT LISTENER
+
+	function showProduct(){
+		if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
+			$.ajax({
+					url: "{{ url('/') }}/api/product",
+					type: "GET",
+					dataType : "json",
+			}).done(function(result){
+					//console.log(result);
+
+					var dataSet = [];
+					result.forEach(function(element,index) {
+						//console.log(element,index);
+						var id = element.product_id;
+						var price = element.promotion_price? element.promotion_price : element.normal_price;
+						var row = [
+							element.product_code,
+							element.product_name,
+							element.amount_in_stock,
+							price,
+							"<input name='amount_create' id='amount_create"+id+"'  value='1' >",
+							"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' onclick='addProduct(this);'>" +
+								"<span class='fa fa-shopping-cart'></span>" +
+							"</button>",
+						];
+						dataSet.push(row);
+					});
+					//console.log(dataSet);
+
+					var table = $('#table-product-model').DataTable({
+						"data": dataSet,
+						"columns": [
+							{ title: "รหัสสินค้า" },
+							{ title: "ชื่อสินค้า" },
+							{ title: "จำนวนในคลัง" },
+							{ title: "ราคาขาย" },
+							{ title: "จำนวน" },
+							{ title: "action" },
+						],
+					}); // END DATATABLE
+
+
+
+				}); //END AJAX
+		}
+	}
 
 	function addProduct(obj){
 		var product = JSON.parse(obj.getAttribute("json"));
@@ -81,7 +88,7 @@
 		console.log("CLICK PRODUCT : ", product);
 
 		var table = $('#table-quotation-detail').DataTable();
-		var row = createRow("new", product);
+		var row = createRow("+", product);
 		table.row.add(row).draw( false );
 		refreshDetailTableEvent();
 		document.querySelector("#btn-close").click();

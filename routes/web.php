@@ -55,15 +55,17 @@ Route::resource('/sales/invoice', 'Sales\InvoiceController');
 //Route::resource('/sales/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
 
 //2 Purchase
-Route::resource('/purchase/purchase_receive', 'Purchase\PurchaseReceiveController');
-Route::resource('/purchase/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
-
-Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
-Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
-
-Route::resource('/purchase/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
+//Route::resource('/purchase/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
 Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
-Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
+//Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
+
+
+//Route::resource('/purchase/purchase_receive', 'Purchase\PurchaseReceiveController');
+//Route::resource('/purchase/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
+
+//Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
+//Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
+
 
 
 //Supplier
@@ -96,7 +98,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Billing 
+//Billing
 
 Route::resource('/finance/billing', 'BillingNoteController');
 

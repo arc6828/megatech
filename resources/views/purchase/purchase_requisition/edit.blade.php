@@ -2,306 +2,64 @@
 
 @section('title','แก้ไขรายละเอียดใบเสนอซื้อ')
 
+@section('navbar-menu')
+<div style="margin: 21px;">
+	<a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/purchase/purchase_requisition">back</a>
+	<button class="btn btn-primary btn-sm" onclick="document.getElementById('form-submit').click();">Save</button>
+</div>
+@endsection
+
 @section('breadcrumb-menu')
 
 @endsection
 
 @section('content')
 
-@forelse($table_purchase_requisition as $row)
-<form id="form-delete" style="display: none;" action="{{ url('/') }}/purchase/purchase_requisition/{{ $row->purchase_requisition_id }}" method="POST">
-	{{ csrf_field() }}
-	{{ method_field('DELETE') }}
-	<button class="btn btn-danger" type="submit">
-		<i class="fa fa-trash-o"></i> Remove
-	</button>
-</form>
-<form class="" action="{{ url('/') }}/purchase/purchase_requisition/{{ $row->purchase_requisition_id }}" method="POST">
-	{{ csrf_field() }}
-	{{ method_field('PUT') }}
-	<div class="card">
-		<div class="card-block">
-			<div class="row">
-			<div class="col-lg-9 align-self-center">
-				<h4 class="card-title">Purchase Requisition code : {{ $row->purchase_requisition_code }}</h4>
-				<h6 class="card-subtitle">Update infomation in the form</h6>
-			</div>
-			<div class="col-lg-3 align-self-center">
-				<div class="dropdown pull-right">
-					<button type="button" class="btn btn-secondary btn-circle btn-sm" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false" style="border: none;"><i class="fa fa-ellipsis-v"></i> </button>
-					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+	@forelse($table_purchase_requisition as $row)
+		<form class="" action="{{ url('/') }}/purchase/purchase_requisition/{{ $row->purchase_requisition_id }}" id="form" method="POST">
+			{{ csrf_field() }}
+			{{ method_field('PUT') }}
 
-					<a class="dropdown-item" href="javascript:document.getElementById('form-delete').submit();">
-						<i class="fa fa-trash-o"></i> Remove
-					</a>
-					</div>
-				</div>
-			</div>
-			</div>
+			@include('purchase/purchase_requisition/form')
 
 			<div>
-				<div class="form-group form-inline">
-					<label class="col-lg-2">รหัสลูกค้า</label>
-					<div class="col-lg-3">
-						<select name="customer_id" class="form-control" required>
-							<option value="" >None</option>
-							@foreach($table_customer as $row_customer)
-							<option value="{{ $row_customer->customer_id }}" {{ $row_customer->customer_id === $row->customer_id ? "selected":"" }}>
-								{{	$row_customer->customer_name }}
-							</option>
-							@endforeach
-						</select>
-					</div>
-					<label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
-					<div class="col-lg-3">
-						<input type="datetime-local" name="datetime" class="form-control form-control-line"	value="" readonly>
-					</div>
-				</div>
-
-				<div class="form-group form-inline">
-					<label class="col-lg-2">ระยะเวลาหนี้</label>
-					<div class="col-lg-3">
-						<input type="number" name="debt_duration"	class="form-control form-control-line"	value="{{ $row->debt_duration }}" >
-					</div>
-					<label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา</label>
-					<div class="col-lg-3">
-						<input type="number" name="billing_duration"	class="form-control form-control-line" value="{{ $row->billing_duration }}" >
-					</div>
-				</div>
-
-				<div class="form-group form-inline">
-					<label class="col-lg-2">เงื่อนไขการชำระเงิน</label>
-					<div class="col-lg-3">
-						<input name="payment_condition"	class="form-control form-control-line" value="{{ $row->payment_condition }}" >
-					</div>
-					<label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
-					<div class="col-lg-3">
-						<select name="delivery_type_id" class="form-control" required>
-							<option value="" >None</option>
-							@foreach($table_delivery_type as $row_delivery_type)
-							<option value="{{ $row_delivery_type->delivery_type_id }}" {{ $row_delivery_type->delivery_type_id === $row->delivery_type_id ? "selected":"" }}>
-								{{	$row_delivery_type->delivery_type_name }}
-							</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-
-				<div class="form-group form-inline">
-					<label class="col-lg-2">ชนิดภาษี</label>
-					<div class="col-lg-3">
-						<select name="tax_type_id" id="tax_type_id" class="form-control" onkeyup="onChange(this)" onChange="onChange(this)"  required>
-							<option value="" >None</option>
-							@foreach($table_tax_type as $row_tax_type)
-							<option value="{{ $row_tax_type->tax_type_id }}" {{ $row_tax_type->tax_type_id === $row->tax_type_id ? "selected":"" }}>
-								{{	$row_tax_type->tax_type_name }}
-							</option>
-							@endforeach
-						</select>
-					</div>
-					<label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
-					<div class="col-lg-3">
-					<input type="number" name="delivery_time"	class="form-control form-control-line" value="{{ $row->delivery_time }}" >
-					</div>
-				</div>
-
-				<div class="form-group form-inline">
-					<label class="col-lg-2">รหัสแผนก</label>
-					<div class="col-lg-3">
-					<input type="number" name="department_id"	class="form-control form-control-line" value="{{ $row->department_id }}" readonly="">
-					</div>
-					<label class="col-lg-2 offset-lg-1">สถานะ</label>
-					<div class="col-lg-3">
-						<select name="purchase_status_id" class="form-control" required>
-							<option value="" >None</option>
-							@foreach($table_purchase_status as $row_purchase_status)
-							<option value="{{ $row_purchase_status->purchase_status_id }}" {{ $row_purchase_status->purchase_status_id === $row->purchase_status_id ? "selected":"" }}>
-								{{	$row_purchase_status->purchase_status_name }}
-							</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
-
-				<div class="form-group form-inline">
-					<label class="col-lg-2">รหัสพนักงานขาย</label>
-					<div class="col-lg-3">
-						<select name="user_id" class="form-control" required>
-							<option value="" >None</option>
-							@foreach($table_purchase_user as $row_purchase_user)
-							<option value="{{ $row_purchase_user->id }}" {{ $row_purchase_user->id === $row->user_id ? "selected":"" }}>
-								{{	$row_purchase_user->name }}
-							</option>
-							@endforeach
-						</select>
-					</div>
-					<label class="col-lg-2 offset-lg-1">เขตการขาย</label>
-					<div class="col-lg-3">
-						<select name="zone_id" class="form-control" required>
-							<option value="" >None</option>
-							@foreach($table_zone as $row_zone)
-							<option value="{{ $row_zone->zone_id }}" {{ $row_zone->zone_id === $row->zone_id ? "selected":"" }}>
-								{{	$row_zone->zone_name }}
-							</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
+				<button type="submit" class="d-none" id="form-submit">Save</button>
 			</div>
-		</div>
+
+		</form>
+
+		<script >
+			document.addEventListener("DOMContentLoaded", function(event) {
+				//INITIALIZE
+				document.querySelector("#purchase_requisition_code").value = "{{ $row->purchase_requisition_code }}";
+				document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
+				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
+				document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
+			  var str_time = moment("{{ $row->datetime }}").format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
+				var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
+				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";
+				document.querySelector("#billing_duration").value = "{{ $row->billing_duration }}";
+				document.querySelector("#payment_condition").value = "{{ $row->payment_condition }}";
+				document.querySelector("#delivery_type_id").value = "{{ $row->delivery_type_id }}";
+				document.querySelector("#tax_type_id").value = "{{ $row->tax_type_id }}";
+				document.querySelector("#delivery_time").value = "{{ $row->delivery_time }}";
+				document.querySelector("#department_id").value = "{{ $row->department_id }}";
+				document.querySelector("#purchase_status_id").value = "{{ $row->purchase_status_id }}";
+				document.querySelector("#user_id").value = "{{ $row->user_id }}";
+				document.querySelector("#zone_id").value = "{{ $row->zone_id }}";
+				document.querySelector("#total").value = "{{ $row->total }}";
+				document.querySelector("#remark").value = "{{ $row->remark }}";
+				document.querySelector("#vat_percent").value = "{{ $row->vat_percent }}";
+
+				onChange(document.querySelector("#vat_percent"));
+			});
+
+		</script>
+
+	@empty
+	<div class="text-center">
+		This id does not exist
 	</div>
+	@endforelse
 
-	@include('purchase/purchase_requisition_detail/table')
-
-	<div class="card">
-		<div class="card-block">
-			<div class="row">
-				<div class="col-lg-3">
-					<div class="form-group">
-						<div class="col-lg-12">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-12">
-					<div class="form-group form-inline">
-						<input type="hidden" name="total" id="total"	class="form-control form-control-line" value="{{ $row->total }}" readonly disabled>
-						<label class="col-lg-6">หมายเหตุ</label>
-						<label class="col-lg-3">ยอดรวมก่อนภาษี</label>
-						<div class="col-lg-3">
-							<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-line" value="" readonly disabled>
-						</div>
-					</div>
-					<div class="form-group form-inline">
-						<label class="col-lg-6">
-							<input name="remark" class="form-control form-control-line" value="{{ $row->remark }}" >
-						</label>
-						<label class="col-lg-3">
-							ภาษีมูลค่าเพิ่ม
-							<input type="number" name="vat_percent"  id="vat_percent" value="{{ $row->vat_percent }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line"  style="width: 50px; margin: 10px;"> %
-						</label>
-						<div class="col-lg-3">
-							<input type="number" name="vat" id="vat" value="{{ $row->vat }}" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-line" readonly disabled >
-						</div>
-					</div>
-					<div class="form-group form-inline">
-		   				<label class="col-lg-6">
-
-						</label>
-						<label class="col-lg-3">ยอดสุทธิ</label>
-						<div class="col-lg-3">
-							<input type="number" name="total_after_vat" id="total_after_vat"		value="" class="form-control form-control-line"  readonly >
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<div class="col-lg-12">
-				<div class="text-center">
-					<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_requisition">back</a>
-					<button class="btn btn-success" type="submit" >Update</button>
-				</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-</form>
-<div style="display:none;">
-	<form action="#" method="POST" id="form_delete" >
-		{{ csrf_field() }}
-		{{ method_field('DELETE') }}
-		<button type="submit">Delete</button>
-	</form>
-	<script>
-		function onDelete(id){
-			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-			//GET FORM BY ID
-			var form = document.getElementById("form_delete");
-			//CHANGE ACTION TO SPECIFY ID
-			form.action = "{{ url('/') }}/purchase/purchase_requisition/{{ $purchase_requisition_id }}/purchase_requisition_detail/"+id;
-			//SUBMIT
-			var want_to_delete = confirm('Are you sure to delete this purchase_requisition detail?');
-			if(want_to_delete){
-				form.submit();
-			}
-		}
-	</script>
-</div>
-<script>
-function onChange(obj){
-	var vat = document.getElementById("vat");
-	var vat_percent = document.getElementById("vat_percent");
-	var total = document.getElementById("total");
-	var total_before_vat = document.getElementById("total_before_vat");
-	var total_after_vat = document.getElementById("total_after_vat");
-	var tax_type_id = document.getElementById("tax_type_id");
-	//console.log("print",vat,vat_percent,total_before_vat);
-
-	//INPUT DETECTOR
-	switch (obj.id) {
-		case "vat_percent":
-			//EFFECT TO #vat
-			vat.value = total.value * (vat_percent.value) / 100;
-			break;
-		case "vat":
-			//EFFECT TO #vat_percent
-			vat_percent.value = vat.value / total.value * 100;
-			break;
-	}
-
-	//DISPLAY ON TOTAL
-	vat_percent.disabled = false;
-	vat_percent.readonly = false;
-	switch (tax_type_id.value) {
-		case "1":
-			//EFFECT TO #vat
-			console.log("CASE 1");
-			total_before_vat.value = total.value -  vat.value*1;
-			total_after_vat.value = total.value ;
-			break;
-		case "2":
-			//EFFECT TO #vat_percent
-			console.log("CASE 2");
-			total_before_vat.value = total.value;
-			total_after_vat.value = total.value*1 + vat.value*1;
-			break;
-		default:
-			vat_percent.disabled = true;
-			vat_percent.readonly = true;
-			vat_percent.value = 0;
-			vat.value = 0;
-			console.log("CASE OTHERS");
-			total_before_vat.value = total.value;
-			total_after_vat.value = total.value;
-			break;
-	}
-}
-
-window.onload = onChange(document.getElementById("tax_type_id"));
-</script>
-
-@empty
-<div class="text-center">
-	This id does not exist
-</div>
-@endforelse
-
-
-@endsection
-
-@section('plugins-js')
-<script type="text/javascript">
-	$(function(){
-
-	var dateControl = document.querySelector('input[type="datetime-local"]');
-	//dateControl.value = '2017-06-01T08:30';
-	var str_time = moment("{{ $row->datetime }}").format('YYYY-MM-DDTHH:mm');
-	//console.log(str_time);
-	dateControl.value = str_time;
-	});
-
-</script>
 @endsection
