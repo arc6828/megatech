@@ -102,6 +102,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/finance/billing', 'BillingNoteController');
 
+//Reduce_debt
+
+Route::resource('/finance/reduce', 'ReduceDebtController');
+
 //THEME
 Route::get('/dashboard', function () {
     return view('monster-lite/index');
