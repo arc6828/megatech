@@ -57,13 +57,17 @@ Route::resource('/sales/invoice', 'Sales\InvoiceController');
 //2 Purchase
 //Route::resource('/purchase/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
 Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
+Route::get('/purchase/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController@index');
+Route::put('/purchase/purchase_requisition_detail/approve', 'Purchase\PurchaseRequisitionDetailController@approve');
+Route::get('/purchase/purchase_requisition_detail/edit_supplier', 'Purchase\PurchaseRequisitionDetailController@edit_supplier');
+Route::put('/purchase/purchase_requisition_detail/update_supplier', 'Purchase\PurchaseRequisitionDetailController@update_supplier');
 //Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
 
 //Route::resource('/purchase/purchase_receive', 'Purchase\PurchaseReceiveController');
 //Route::resource('/purchase/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
 
-//Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
+Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
 //Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
 
 

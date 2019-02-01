@@ -1,6 +1,6 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','อนุมัติใบเสนอซื้อ')
+@section('title','กำหนดเจ้าหนี้ใบเสนอซื้อ')
 
 @section('navbar-menu')
 <div style="margin:21px;">
@@ -97,7 +97,7 @@
 </div>
 <div class="card">
 	<div class="card-block">
-    <form action="{{ url('/') }}/purchase/purchase_requisition_detail/approve" method="post" id="form_table" onsubmit="return validateCheckbox();" >
+    <form action="{{ url('/') }}/purchase/purchase_requisition_detail/update_supplier" method="post" id="form_table" onsubmit="return validateCheckbox();" >
       {{ csrf_field() }}
     	{{ method_field('PUT') }}
 
@@ -109,6 +109,14 @@
       <div class="form-group form-inline text-center">
         <div class="col-lg-4 offset-lg-4">
           <select name="action" id="action" class="form-control form-control-sm" required>
+              @foreach($table_supplier as $row_supplier)
+              <option
+                value="{{ $row_supplier->supplier_id }}" >
+                  {{  $row_supplier->company_name }}
+              </option>
+              @endforeach
+          </select>
+          <select name="action2" id="action2" class="form-control form-control-sm d-none" >
               @foreach($table_purchase_requisition_detail_status as $row_purchase_requisition_detail_status)
               <option
                 value="{{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id }}" >
@@ -177,8 +185,8 @@
 						data: dataSet,
 						columns: [
 								{ title: "#" },
-								{ title: "วันที่ PR" },
-								{ title: "เลขที่ PR" },
+								{ title: "วันที่ OE" },
+								{ title: "เลขที่ OE" },
 								{ title: "วันที่ส่งของ" },
 								{ title: "สถานะการขาย" },
 								{ title: "รหัสสินค้า" },
