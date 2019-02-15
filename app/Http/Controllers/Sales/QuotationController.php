@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Sales;
 
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,9 +28,13 @@ class QuotationController extends Controller
     public function index(Request $request)
     {
       //$table_quotation = QuotationModel::select_by_keyword($q);
+      $table_quotation = (Auth::user()->role === "admin" )?
+          QuotationModel::select_all() :
+          QuotationModel::select_all_by_user_id(Auth::id());
+
       $data = [
         //QUOTATION
-        'table_quotation' => QuotationModel::select_all(),
+        'table_quotation' => $table_quotation,
         'q' => $request->input('q')
       ];
       return view('sales/quotation/index',$data);
@@ -48,8 +54,8 @@ class QuotationController extends Controller
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
           'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
-          'table_sales_user' => UserModel::select_by_role('sales'),
-          //'table_sales_user' => UserModel::select_all(),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           //QUOTATION DETAIL
           'table_quotation_detail' => [],
@@ -145,7 +151,8 @@ class QuotationController extends Controller
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
           'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
-          'table_sales_user' => UserModel::select_by_role('sales'),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           'quotation_id'=> $id,
           //QUOTATION Detail

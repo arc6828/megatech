@@ -47,14 +47,26 @@
                   @yield('navbar-menu')
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{url('/')}}/assets/images/users/1.jpg" alt="user" class="profile-pic m-r-5" /></a>
+                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img src="{{url('/')}}/assets/images/users/1.jpg" alt="user" class="profile-pic m-r-5" />
+                      {{ Auth::user()->name }}
+                      @if ( Auth::user()->role === "admin" )
+                        (A)
+                      @endif
+                    </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{url('/')}}/pages-profile" >
                             <i class="fa fa-user m-r-10" aria-hidden="true"></i>Profile
                         </a>
-                        <a class="dropdown-item" href="{{url('/')}}/logout"  >
-                            <i class="fa fa-power-off m-r-10" aria-hidden="true"></i>Logout
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            <i class="fa fa-power-off m-r-10" aria-hidden="true"></i>{{ __('Logout') }}
                         </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>

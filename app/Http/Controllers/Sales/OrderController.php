@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers\Sales;
 
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -30,9 +32,12 @@ class OrderController extends Controller
     public function index(Request $request)
     {
       //$table_order = OrderModel::select_by_keyword($q);
+      $table_order = (Auth::user()->role === "admin" )?
+          OrderModel::select_all() :
+          OrderModel::select_all_by_user_id(Auth::id());
       $data = [
         //QUOTATION
-        'table_order' => OrderModel::select_all(),
+        'table_order' => $table_order,
         'q' => $request->input('q')
       ];
       return view('sales/order/index',$data);
@@ -52,8 +57,8 @@ class OrderController extends Controller
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
           'table_sales_status' => SalesStatusModel::select_by_category('order'),
-          'table_sales_user' => UserModel::select_by_role('sales'),
-          //'table_sales_user' => UserModel::select_all(),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           //QUOTATION DETAIL
           'table_order_detail' => [],
@@ -208,7 +213,8 @@ class OrderController extends Controller
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
           'table_sales_status' => SalesStatusModel::select_by_category('order'),
-          'table_sales_user' => UserModel::select_by_role('sales'),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           'order_id'=> $id,
           //QUOTATION Detail

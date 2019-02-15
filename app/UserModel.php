@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class UserModel extends Model
 {
-    public static function select_all(){
-        return DB::table('users')
-            ->get();
+  protected $table = "users";
+
+  public static function select_all(){
+      return DB::table('users')
+          ->get();
 	}
 
 	public static function select_by_id($id){
@@ -26,6 +28,7 @@ class UserModel extends Model
 
     public static function select_by_role($role){
         return DB::table('users')
+            ->join('tb_department', 'users.role', '=', 'tb_department.department_role')
             ->where('users.role', 'like' , "%$role%" )
             ->get();
 	}

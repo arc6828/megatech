@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class ProductModel extends Model
 {
+    protected $table = "tb_product";
+    
     public static function select_all(){
         return DB::table('tb_product')
             ->get();
-	}
+	  }
 
     public static function select_by_keyword($q){
         return DB::table('tb_product')

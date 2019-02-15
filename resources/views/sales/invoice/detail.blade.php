@@ -145,8 +145,7 @@
 		</script>
 
 		<div class="text-center">
-			@include('sales/invoice/create_detail_from_quotation_modal')
-			@include('sales/invoice/create_detail_modal')
+			
 
 		</div>
 	</div>

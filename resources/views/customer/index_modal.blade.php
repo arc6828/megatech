@@ -32,6 +32,7 @@
 					$('#customer_id').val(id);
 					$('#contact_name').val(name);
 					$('#customerModal').modal('hide');
+					onChangeCustomer();
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		console.log("555");

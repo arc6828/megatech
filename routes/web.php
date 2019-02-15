@@ -18,57 +18,73 @@ Route::get('/index',function(){
 	return redirect('/sales');
 });
 
-//Main Menu
-Route::get('/sales',function(){
-    return view('sales/index');
+//LOGIN REQUIRED
+Route::middleware(['auth'])->group(function () {
+  //Main Menu
+  Route::get('/sales',function(){
+      return view('sales/index');
+  });
+  Route::get('/purchase',function(){
+    return view('purchase/index');
+  });
+  Route::get('/inventory',function(){
+      return view('inventory/index');
+  });
+  Route::get('/finance',function(){
+      return view('finance/index');
+  });
+  Route::get('/account',function(){
+      return view('account/index');
+  });
+  Route::get('/others',function(){
+      return view('others/index');
+  });
+
+  //1. SALES DEPARTMENT
+  Route::middleware(['role:sales,admin'])->group(function () {
+    Route::prefix('sales')->group(function () {
+
+      //1 Sales
+      Route::resource('/quotation', 'Sales\QuotationController');
+      //Route::resource('/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
+      //Route::resource('/quotation', 'Sales\QuotationController');
+      Route::resource('/order', 'Sales\OrderController');
+      Route::get('/order_detail', 'Sales\OrderDetailController@index');
+      Route::put('/order_detail/approve', 'Sales\OrderDetailController@approve');
+      //Route::resource('/requisition', 'Sales\RequisitionController');
+      //Route::resource('/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
+      Route::resource('/invoice', 'Sales\InvoiceController');
+      //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
+    });
+  });
+
+  //2. PURCHASE DEPARTMENT
+  Route::middleware(['role:purchase,admin'])->group(function () {
+    Route::prefix('purchase')->group(function () {
+      //Route::resource('/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
+      Route::resource('/purchase_requisition', 'Purchase\PurchaseRequisitionController');
+      Route::get('/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController@index');
+      Route::put('/purchase_requisition_detail/approve', 'Purchase\PurchaseRequisitionDetailController@approve');
+      Route::get('/purchase_requisition_detail/edit_supplier', 'Purchase\PurchaseRequisitionDetailController@edit_supplier');
+      Route::put('/purchase_requisition_detail/update_supplier', 'Purchase\PurchaseRequisitionDetailController@update_supplier');
+      //Route::resource('/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
+
+
+      //Route::resource('/purchase_receive', 'Purchase\PurchaseReceiveController');
+      //Route::resource('/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
+
+      Route::resource('/purchase_order', 'Purchase\PurchaseOrderController');
+      //Route::resource('/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
+
+    });
+
+  });
+  Route::get('/user','UserController@index');
+  Route::middleware(['role:admin'])->group(function () {
+    Route::resource('/user','UserController')->except(['index']);
+  });
+
 });
-Route::get('/purchase',function(){
-	return view('purchase/index');
-});
-Route::get('/inventory',function(){
-    return view('inventory/index');
-});
-Route::get('/finance',function(){
-    return view('finance/index');
-});
-Route::get('/account',function(){
-    return view('account/index');
-});
-Route::get('/others',function(){
-    return view('others/index');
-});
-
-
-//1 Sales
-Route::resource('/sales/quotation', 'Sales\QuotationController');
-//Route::resource('/sales/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
-//Route::resource('/sales/quotation', 'Sales\QuotationController');
-
-Route::resource('/sales/order', 'Sales\OrderController');
-Route::get('/sales/order_detail/', 'Sales\OrderDetailController@index');
-Route::put('/sales/order_detail/approve', 'Sales\OrderDetailController@approve');
-
-//Route::resource('/sales/requisition', 'Sales\RequisitionController');
-//Route::resource('/sales/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
-
-Route::resource('/sales/invoice', 'Sales\InvoiceController');
-//Route::resource('/sales/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
-
-//2 Purchase
-//Route::resource('/purchase/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
-Route::resource('/purchase/purchase_requisition', 'Purchase\PurchaseRequisitionController');
-Route::get('/purchase/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController@index');
-Route::put('/purchase/purchase_requisition_detail/approve', 'Purchase\PurchaseRequisitionDetailController@approve');
-Route::get('/purchase/purchase_requisition_detail/edit_supplier', 'Purchase\PurchaseRequisitionDetailController@edit_supplier');
-Route::put('/purchase/purchase_requisition_detail/update_supplier', 'Purchase\PurchaseRequisitionDetailController@update_supplier');
-//Route::resource('/purchase/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
-
-
-//Route::resource('/purchase/purchase_receive', 'Purchase\PurchaseReceiveController');
-//Route::resource('/purchase/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
-
-Route::resource('/purchase/purchase_order', 'Purchase\PurchaseOrderController');
-//Route::resource('/purchase/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
 
 
 
@@ -85,7 +101,6 @@ Route::resource('/product', 'ProductController');
 
 //Users
 
-Route::resource('/user','UserController');
 
 //Process Deptor
 Route::resource('/finance/debtout', 'DebtoutController');

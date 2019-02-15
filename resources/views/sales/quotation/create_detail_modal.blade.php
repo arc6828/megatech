@@ -37,6 +37,7 @@
 
 	function showProduct(){
 		if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
+			setPreLoader(true);
 			$.ajax({
 					url: "{{ url('/') }}/api/product",
 					type: "GET",
@@ -74,7 +75,7 @@
 							{ title: "action" },
 						],
 					}); // END DATATABLE
-
+					setPreLoader(false);
 
 
 				}); //END AJAX

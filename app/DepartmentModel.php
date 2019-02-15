@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class DepartmentModel extends Model
 {
+  protected $table = "tb_department";
+  
   public static function select_all(){
       return DB::table('tb_department')->get();
   }

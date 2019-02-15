@@ -39,7 +39,7 @@
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <div class="preloader">
+    <div class="preloader" style="background : rgba(0,0,0,0.0);">
         <svg class="circular" viewBox="25 25 50 50">
             <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
@@ -122,10 +122,10 @@
     <!--Custom JavaScript -->
     <script src="{{url('/')}}/assets/js/custom.min.js"></script>
     <script src="{{url('/')}}/assets/plugins/momentjs/moment.min.js"></script>
-	<script src="{{url('/')}}/assets/plugins/input-mask/dist/jquery.masked-input.min.js"></script>
+    <script src="{{url('/')}}/assets/plugins/input-mask/dist/jquery.masked-input.min.js"></script>
 
-	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
 
 
@@ -138,12 +138,34 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="{{url('/')}}//assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <style>
+      .myloader{
+        display : initial !important;
+      }
+    </style>
     <script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    function setPreLoader(isOn){
+      if(isOn){
+        $(".preloader").addClass("myloader");
+        console.log("ON");
+      }else{
+        var delayInMilliseconds = 0000;
+        setTimeout(function() {
+          //your code to be executed after 1 second
+          $(".preloader").removeClass("myloader");
+        }, delayInMilliseconds);
+
+        console.log("OFF");
+
+
+      }
+    }
     </script>
 </body>
 

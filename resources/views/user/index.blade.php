@@ -47,7 +47,7 @@
 						<a href="{{ url('/') }}/user/{{ $row->id }}/edit">{{ $row->name }}</a>
 					</td>
 					<td>{{ $row->email }}</td>
-					<td>{{ $row->role }}</td>
+					<td>{{ $row->department_name }}</td>
 					<td>
 						<a href="javascript:void(0)" onclick="onDelete( {{ $row->id }} )" class="text-danger">
 							<span class="fa fa-trash"></span>
@@ -62,7 +62,7 @@
 				<form action="#" method="POST" id="form_delete">
 					{{ csrf_field() }}
 					{{ method_field('DELETE') }}
-					
+
 					<button type="submit"></button>
 				</form>
 		</div>
@@ -74,13 +74,13 @@
 <script>
 		function onDelete(id){
 			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-	
+
 			//GET FORM BY ID
 			var form = document.getElementById("form_delete");
-	
+
 			//CHANGE ACTION TO SPECIFY ID
 			form.action = "{{ url('/') }}/user/"+id;
-	
+
 			//SUBMIT
 			var want_to_delete = confirm('Are you sure to delete this supplier?');
 			if(want_to_delete){
@@ -89,5 +89,3 @@
 		}
 		</script>
 @endsection
-
-
