@@ -3,7 +3,7 @@
 @section('title','แฟ้มลูกหนี้')
 
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/finance/debtor/create" class="btn pull-right hidden-sm-down btn-success"> 
+<a href="{{ url('/') }}/finance/debtor/create" class="btn pull-right hidden-sm-down btn-success">
 	<i class="fa fa-plus"></i> เพิ่มลูกค้า
 </a>
 @endsection
@@ -12,19 +12,19 @@
 
 <div class="card">
     <div class="card-block">
-
+123456
 		@foreach($table_customer as $row)
 			<div class="table-responsive">
 				<table class="table table-hover text-center">
 					<thead>
-						<tr>					
+						<tr>
 							<th>รหัสลูกค้า</th>
 							<th>ชื่อบริษัท</th>
 							<th>ยอดหนี้ขณะหนี้</th>
 							<th>ที่อยู่</th>
 							<th>เบอร์โทรศัพท์</th>
 							<th>action</th>
-						</tr>	
+						</tr>
 					</thead>
 					<tbody>
 						<tr>
@@ -43,12 +43,12 @@
 								</form>
 								</div>
 							</td>
-						</tr>		
+						</tr>
 					</tbody>
-				
-				</table>	
+
+				</table>
 			</div>
-			
+
 		@endforeach
 
 			<div class="row">
