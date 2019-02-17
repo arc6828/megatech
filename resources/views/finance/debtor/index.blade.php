@@ -12,7 +12,7 @@
 
 <div class="card">
     <div class="card-block">
-123456132123
+123456
 		@foreach($table_customer as $row)
 			<div class="table-responsive">
 				<table class="table table-hover text-center">
