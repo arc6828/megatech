@@ -106,6 +106,12 @@ Route::resource('/finance/billing', 'BillingNoteController');
 
 Route::resource('/finance/reduce', 'ReduceDebtController');
 
+//Creditor
+Route::resource('/finance/creditor/debtout', 'creditorDebtoutController');
+
+Route::resource('/finance/creditor/debtsettle','creditorDebtSettleController');
+
+Route::resource('/finance/creditor/reduce','reduceCreditorController');
 //THEME
 Route::get('/dashboard', function () {
     return view('monster-lite/index');

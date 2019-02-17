@@ -2,19 +2,19 @@
   <div class="card-block">      
     <div class="row text-center">
       <div class="col-6 col-md-3">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/finance/creditor/debtout">
           <div class="px-4"><span class="round round-primary my-2">ค</span></i></div>
           <div>ตั้งยอดหนี้<br>คงค้าง</div>
         </a>
       </div>
       <div class="col-6 col-md-3">
-        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+        <a class="btn btn-outline-primary my-3" href="{{url('/')}}/finance/creditor/debtsettle">
           <div class="px-4"><span class="round round-primary my-2">น</span></div>
           <div>ตั้งหนี้<br>เจ้าหนี้</div>            
         </a>
       </div>
       <div class="col-6 col-md-3">
-        <a class="btn btn-outline-primary my-3" href="#">
+        <a class="btn btn-outline-primary my-3" href="{{ url('/') }}/finance/creditor/reduce">
           <div class="px-4"><span class="round round-primary my-2">ล</span></i></div>
           <div>ลดหนี้<br>เจ้าหนี้</div>            
         </a>
