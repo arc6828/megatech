@@ -5,9 +5,9 @@
       <div class="col-lg-3">
         <input name="order_code"	id="order_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
+      <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
-        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
+        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>
     </div>
     <div class="form-group form-inline">
@@ -17,32 +17,32 @@
         <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
         @include('customer/index_modal')
       </div>
-      <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
+      <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
       <div class="col-lg-3">
-        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
-      </div>
+        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
+      </div>      
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">ระยะเวลาหนี้</label>
+      <label class="col-lg-2">ระยะเวลาหนี้ (วัน)</label>
       <div class="col-lg-3">
         <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
       </div>
-      <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา</label>
+      <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา (วัน)</label>
       <div class="col-lg-3">
         <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required>
       </div>
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">เงื่อนไขการชำระเงิน</label>
+      <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
       <div class="col-lg-3">
         <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required>
       </div>
       <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
       <div class="col-lg-3">
         <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
+
           @foreach($table_delivery_type as $row_delivery_type)
           <option value="{{ $row_delivery_type->delivery_type_id }}" >
             {{	$row_delivery_type->delivery_type_name }}
@@ -56,7 +56,7 @@
       <label class="col-lg-2">ชนิดภาษี</label>
       <div class="col-lg-3">
         <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required>
-          <option value="" >None</option>
+
           @foreach($table_tax_type as $row_tax_type)
           <option value="{{ $row_tax_type->tax_type_id }}" >
             {{	$row_tax_type->tax_type_name }}
@@ -74,7 +74,7 @@
       <label class="col-lg-2">รหัสแผนก</label>
       <div class="col-lg-3">
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
+
           @foreach($table_department as $row_department)
           <option value="{{ $row_department->department_id }}" >
             {{	$row_department->department_name }}
@@ -85,7 +85,7 @@
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
         <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
+
           @foreach($table_sales_status as $row_sales_status)
           <option value="{{ $row_sales_status->sales_status_id }}" >
             {{	$row_sales_status->sales_status_name }}
@@ -99,7 +99,7 @@
       <label class="col-lg-2">รหัสพนักงานขาย</label>
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
+
           @foreach($table_sales_user as $row_sales_user)
           <option value="{{ $row_sales_user->id }}" >
             {{	$row_sales_user->name }}
@@ -110,7 +110,7 @@
       <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
       <div class="col-lg-3">
         <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
+
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >
             {{	$row_zone->zone_name }}
@@ -145,7 +145,7 @@
 				</div>
 				<div class="form-group form-inline">
 					<label class="col-lg-6">
-						<input name="remark" id="remark" class="form-control form-control-sm form-control-line" >
+            <textarea name="remark" id="remark" class="form-control form-control-line"></textarea>
 
 					</label>
 					<label class="col-lg-3">

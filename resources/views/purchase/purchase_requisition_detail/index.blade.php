@@ -1,6 +1,6 @@
 @extends('monster-lite/layouts/theme')
 
-@section('title','ใบเบิกของ')
+@section('title','อนุมัติใบเสนอซื้อ')
 
 @section('navbar-menu')
 <div style="margin:21px;">
@@ -177,8 +177,8 @@
 						data: dataSet,
 						columns: [
 								{ title: "#" },
-								{ title: "วันที่ OE" },
-								{ title: "เลขที่ OE" },
+								{ title: "วันที่ PR" },
+								{ title: "เลขที่ PR" },
 								{ title: "วันที่ส่งของ" },
 								{ title: "สถานะการขาย" },
 								{ title: "รหัสสินค้า" },

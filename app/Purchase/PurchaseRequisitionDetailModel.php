@@ -89,7 +89,7 @@ class PurchaseRequisitionDetailModel extends Model
 
   public static function duplicate_by_id($new_amount, $id){
     $sql = "INSERT INTO tb_purchase_requisition_detail
-      SELECT null,product_id,{$new_amount},{$new_amount},discount_price,purchase_requisition_id,purchase_requisition_detail_status_id
+      SELECT null,product_id,{$new_amount},{$new_amount},discount_price,purchase_requisition_id,purchase_requisition_detail_status_id,null
       FROM tb_purchase_requisition_detail
       WHERE purchase_requisition_detail_id = {$id}";
     return DB::insert($sql);
@@ -99,5 +99,14 @@ class PurchaseRequisitionDetailModel extends Model
     DB::table('tb_purchase_requisition_detail')
       ->whereIn('purchase_requisition_detail_id', $ids)
       ->update(['purchase_requisition_detail_status_id' => $action]);
+	}
+
+  public static function update_purchase_requisition_detail_status_id_by_ids2($action, $ids, $purchase_requisition_detail_status_id){
+    DB::table('tb_purchase_requisition_detail')
+      ->whereIn('purchase_requisition_detail_id', $ids)
+      ->update([
+        'supplier_id' => $action,
+        'purchase_requisition_detail_status_id' => $purchase_requisition_detail_status_id,
+      ]);
 	}
 }

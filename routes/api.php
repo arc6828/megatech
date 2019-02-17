@@ -22,9 +22,10 @@ Route::apiResource('/customer', 'API\CustomerController');
 Route::apiResource('/product', 'API\ProductController');
 Route::apiResource('/order', 'API\OrderController');
 Route::apiResource('/order_detail', 'API\OrderDetailController');
+Route::apiResource('/purchase_requisition_detail', 'API\PurchaseRequisitionDetailController');
 
 Route::get('/account', 'AccountController@getAccount');
 Route::get('/user', 'UserController@getUser');
 //Route::get('/api/order_detail', 'Sales\OrderDetailController@getOrderDetails');
-Route::get('/purchase_requisition_detail', 'Purchase\PurchaseRequisitionController@getPurchaseRequisitionDetails');
+//Route::get('/purchase_requisition_detail', 'Purchase\PurchaseRequisitionController@getPurchaseRequisitionDetails');
 Route::get('/bank_detail', 'BankDetailController@index');

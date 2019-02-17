@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\UserModel;
+use App\DepartmentModel;
 
 class UserController extends Controller
 {
@@ -64,9 +65,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $table_user = UserModel::select_by_id($id);
         $data = [
-            'table_user' => $table_user
+            'table_user' => UserModel::where("id","=",$id)->get(),
+            'table_department' => DepartmentModel::all(),
         ];
         return view('user/edit',$data);
     }

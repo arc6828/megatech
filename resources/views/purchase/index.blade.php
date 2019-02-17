@@ -19,13 +19,13 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
+			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_requisition_detail">
 				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
 				<div>อนุมัติ<br>ใบเสนอซื้อ</div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="#">
+			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_requisition_detail/edit_supplier">
 				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
 				<div>กำหนดเจ้าหนี้<br>ใบเสนอซื้อ</div>
 			</a>

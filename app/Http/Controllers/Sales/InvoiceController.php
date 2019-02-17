@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Sales;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -27,9 +28,13 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
       //$table_invoice = InvoiceModel::select_by_keyword($q);
+      $table_invoice = (Auth::user()->role === "admin" )?
+          InvoiceModel::select_all() :
+          InvoiceModel::select_all_by_user_id(Auth::id());
+
       $data = [
         //QUOTATION
-        'table_invoice' => InvoiceModel::select_all(),
+        'table_invoice' => $table_invoice,
         'q' => $request->input('q')
       ];
       return view('sales/invoice/index',$data);
@@ -49,8 +54,8 @@ class InvoiceController extends Controller
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
           'table_sales_status' => SalesStatusModel::select_by_category('order'),
-          'table_sales_user' => UserModel::select_by_role('sales'),
-          //'table_sales_user' => UserModel::select_all(),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           //QUOTATION DETAIL
           'table_invoice_detail' => [],
@@ -151,7 +156,8 @@ class InvoiceController extends Controller
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
           'table_sales_status' => SalesStatusModel::select_by_category('order'),
-          'table_sales_user' => UserModel::select_by_role('sales'),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           'invoice_id'=> $id,
           //QUOTATION Detail

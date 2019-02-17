@@ -7,20 +7,34 @@ use Illuminate\Support\Facades\DB;
 
 class OrderModel extends Model
 {
-    public static function select_all(){
-      return DB::table('tb_order')
-          ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-          ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
-          ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
-          ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-          ->join('users', 'tb_order.user_id', '=', 'users.id')
-          ->get();
+  protected $table = 'tb_quotation';
+
+  public static function select_all_by_user_id($user_id){
+    return DB::table('tb_order')
+        ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+        ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+        ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+        ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+        ->join('users', 'tb_order.user_id', '=', 'users.id')
+        ->where('tb_order.user_id', '=', $user_id)
+        ->get();
 	}
-    public static function select_count_by_current_month(){
-        //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
-        return DB::table('tb_order')
-            ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
-            ->count();
+
+  public static function select_all(){
+    return DB::table('tb_order')
+        ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+        ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+        ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+        ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+        ->join('users', 'tb_order.user_id', '=', 'users.id')
+        ->get();
+	}
+
+  public static function select_count_by_current_month(){
+    //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
+    return DB::table('tb_order')
+        ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+        ->count();
 	}
 
 	public static function select_by_id($id){

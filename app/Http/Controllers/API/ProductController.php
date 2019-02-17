@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-      $table_product = ProductModel::select_all();
+      $table_product = ProductModel::where("normal_price",">",0)->get();
       return response()->json($table_product);
     }
 

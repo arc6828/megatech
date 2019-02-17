@@ -23,8 +23,9 @@
 
 			@include('sales/quotation/form')
 
-			<div>
-				<button type="submit" class="d-none" id="form-submit">Save</button>
+			<div class="text-center">
+				<a href="{{ url('/') }}/sales/quotation" class="btn btn-outline-primary" style="width:150px;">back</a>
+				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
 			</div>
 
 		</form>
