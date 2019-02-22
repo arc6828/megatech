@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $model = new UserModel();
-        $q = $request->input('q');
+        $q = $request->input('q',"");
         $table_user = UserModel::select_by_role($q);
         $data = [
             'table_user' => $table_user,
