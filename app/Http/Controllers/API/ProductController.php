@@ -13,9 +13,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $table_product = ProductModel::where("normal_price",">",0)->get();
+      //$q = $request->input("search","");
+      $q = "";
+      $table_product = ProductModel::select_by_keyword($q);
       return response()->json($table_product);
     }
 

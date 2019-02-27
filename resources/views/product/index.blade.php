@@ -33,46 +33,20 @@
 		</div>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center">
-				<thead>
-					<tr>
-						<th class="text-center">รหัสสินค้า</th>
-						<th class="text-center">ชื่อสินค้า</th>
-						<th class="text-center">ราคาตั้ง</th>
-						<th class="text-center">#ใน Stock</th>
-						<th class="text-center">#ค้างส่ง</th>
-						<th class="text-center">#ค้างรับ</th>
-						<th class="text-center">action</th>
-					</tr>
-				</thead>
-				<tbody>
-				@foreach($table_product as $row)
-				<tr>
-					<td>
-						<a href="{{ url('/') }}/product/{{ $row->product_id }}/edit">{{ $row->product_code }}</a>
-					</td>
-					<td>{{ $row->product_name }}</td>
-					<td>{{ $row->normal_price }}</td>
-					<td>0</td>
-					<td>0</td>
-					<td>0</td>
-					<td>
-					<a href="javascript:void(0)" onclick="onDelete( {{ $row->product_id }}, 'x' )" class="text-danger"><span class="fa fa-trash"></span>
+			<table class="table table-hover text-center" id="table-product">
 
-						</a>
-						<div class="row hide">
-							<form action="#" method="POST" id="form_delete">
-								{{ csrf_field() }}
-								{{ method_field('DELETE') }}
-
-								<button type="submit"></button>
-							</form>
-					</div>
-					</td>
-				</tr>
-				@endforeach
-				</tbody>
 			</table>
+			<action class="d-none">
+				<a href="javascript:void(0)" onclick="onDelete( row->product_id , 'x' )" class="text-danger"><span class="fa fa-trash"></span></a>
+				<div class="d-none">
+						<form action="#" method="POST" id="form_delete">
+							{{ csrf_field() }}
+							{{ method_field('DELETE') }}
+
+							<button type="submit"></button>
+						</form>
+				</div>
+			</action>
 		</div>
 	</div>
 </div>
@@ -84,8 +58,14 @@
 		</div>
 	</div>
 </div>
+@endsection
 
+
+@section('script')
 <script>
+		$(document).ready(function(){
+			showProduct();
+		});
 		function onDelete(id, x){
 			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
 			console.log(x);
@@ -100,6 +80,107 @@
 			if(want_to_delete){
 				form.submit();
 			}
+		}
+
+
+		function showProduct(){
+			if(  $.fn.DataTable.isDataTable('#table-product') ){
+				$('#table-product').DataTable().destroy();
+			}
+			var table = $('#table-product').DataTable({
+				"processing": true,
+				"serverSide": true,
+				"ajax": {
+					"url" : "{{ url('/') }}/api/product",
+					"data": function ( d ) {
+                d.myKey = "q";
+                d.custom = $('#table-product input').val();
+                // etc
+            },
+					"dataSrc" : function(result){
+						console.log(result);
+
+						var dataSet = [];
+						result.forEach(function(element,index) {
+							//console.log(element,index);
+							var id = element.product_id;
+							var price = element.promotion_price? element.promotion_price : element.normal_price;
+							var row = [
+								element.product_code,
+								element.product_name,
+								price,
+								element.amount_in_stock,
+								0,
+								0,
+								"",
+							];
+							dataSet.push(row);
+
+
+						}); //END FOREACH
+						//console.log(dataSet);
+						return dataSet;
+					}
+				},
+
+				//"data": dataSet,
+				"columns": [
+					{ title: "รหัสสินค้า" },
+					{ title: "ชื่อสินค้า" },
+					{ title: "ราคาขาย" },
+					{ title: "#ในคลัง" },
+					{ title: "#ค้างส่ง" },
+					{ title: "#ค้างรับ" },
+					{ title: "action" },
+				],
+			}); // END DATATABLE
+
+			/*
+			$.ajax({
+					url: "{{ url('/') }}/api/product",
+					type: "GET",
+					dataType : "json",
+			}).done(function(result){
+					console.log(result);
+
+					var dataSet = [];
+					result.forEach(function(element,index) {
+						//console.log(element,index);
+						var id = element.product_id;
+						var price = element.promotion_price? element.promotion_price : element.normal_price;
+						var row = [
+							element.product_code,
+							element.product_name,
+							price,
+							element.amount_in_stock,
+							0,
+							0,
+							"",
+						];
+						dataSet.push(row);
+
+
+					}); //END FOREACH
+					//console.log(dataSet);
+					var table = $('#table-product').DataTable({
+						"data": dataSet,
+						"columns": [
+							{ title: "รหัสสินค้า" },
+							{ title: "ชื่อสินค้า" },
+							{ title: "ราคาขาย" },
+							{ title: "#ในคลัง" },
+							{ title: "#ค้างส่ง" },
+							{ title: "#ค้างรับ" },
+							{ title: "action" },
+						],
+					}); // END DATATABLE
+
+
+
+
+				}); //END AJAX
+				*/
+
 		}
 		</script>
 

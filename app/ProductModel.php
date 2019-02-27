@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class ProductModel extends Model
 {
     protected $table = "tb_product";
-    
+
     public static function select_all(){
         return DB::table('tb_product')
             ->get();
@@ -18,8 +18,9 @@ class ProductModel extends Model
         return DB::table('tb_product')
             ->where('product_name', 'like' , "%{$q}%" )
             ->orWhere('product_code', 'like' , "%{$q}%" )
+            ->limit(100)
             ->get();
-	}
+     }
     public static function select_by_id($id) {
         return DB::table('tb_product')
             ->where('product_id', '=', $id)

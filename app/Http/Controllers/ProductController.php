@@ -14,10 +14,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-		$q = $request->input('q');
-        $table_product = ProductModel::select_by_keyword($q);
+		    $q = $request->input('q');
         $data = [
-	        'table_product' => $table_product,
         	'q' => $q
         ];
         return view('product/index',$data);
