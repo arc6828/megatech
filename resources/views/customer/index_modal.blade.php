@@ -27,10 +27,11 @@
 
 <script>
 	//onClick
-	function select_item(id,name) {
+	function select_item(id,name,code) {
 			console.log(id);
 					$('#customer_id').val(id);
 					$('#contact_name').val(name);
+					$('#customer_code').val(code);
 					$('#customerModal').modal('hide');
 					onChangeCustomer();
 	}
@@ -53,7 +54,7 @@
 								element.company_name,
 								"<button type='button' " +
 										"class='btn btn-warning btn-sm'" +
-										"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`)' "
+										"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`,`"+element.customer_code+"`)' "
 										+">เลือก</button>",
 							];
 							dataSet.push(row);

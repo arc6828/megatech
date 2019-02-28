@@ -7,9 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class QuotationDetailModel extends Model
 {
+  protected $table = "tb_quotation_detail";
+
   public static function select_all(){
 		return DB::table('tb_quotation_detail')
       ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+      ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
       ->get();
 	}
 
@@ -17,6 +20,23 @@ class QuotationDetailModel extends Model
     return DB::table('tb_quotation_detail')
         ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
         ->where('quotation_id', '=' , $quotation_id )
+        ->get();
+	}
+
+  public static function select_by_customer_id($customer_id){
+    return DB::table('tb_quotation_detail')
+        ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+        ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
+        ->where('customer_id', '=' , $customer_id )
+        ->get();
+	}
+
+  public static function select_by_user_id($customer_id,$user_id){
+    return DB::table('tb_quotation_detail')
+        ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+        ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
+        ->where('user_id', '=' , $user_id )
+        ->where('customer_id', '=' , $customer_id )
         ->get();
 	}
 

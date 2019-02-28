@@ -11,6 +11,12 @@ class CustomerModel extends Model
         return DB::table('tb_customer')->get();
     }
 
+    public static function select_by_user_id($user_id){
+        return DB::table('tb_customer')
+          ->where('user_id',$user_id)
+          ->get();
+    }
+
 	public static function select_by_keyword($q){
         return DB::table('tb_customer')
             ->where('tb_customer.company_name', 'like' , "%{$q}%" )
@@ -40,7 +46,7 @@ class CustomerModel extends Model
         ->where('customer_id', $id)
         ->update($input);
     }
-	
+
 
 	public static function delete_by_id($id){
 		DB::table('tb_customer')

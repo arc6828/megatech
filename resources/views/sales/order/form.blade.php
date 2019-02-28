@@ -13,14 +13,16 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสลูกหนี้</label>
       <div class="col-lg-3">
-        <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
-        <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
-        @include('customer/index_modal')
+        <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required readonly style="max-width:100px;">
+        <input type="text" name="customer_code" id="customer_code" class="form-control form-control-sm"  required readonly style="max-width:100px;">
+        <input type="hidden" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
+        @include('sales/order/customer_modal')
       </div>
       <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
-      </div>      
+        
+      </div>
     </div>
 
     <div class="form-group form-inline">
@@ -242,6 +244,10 @@ function onChange(obj){
     element.value = parseFloat(element.value).toFixed(2)
   });
 
+}
+
+function onChangeCustomer(){
+  $("#btn-ref-quotation").click();
 }
 
 </script>

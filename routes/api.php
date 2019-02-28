@@ -17,6 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/quotation_detail/user/{user_id}', 'API\QuotationDetailController@index_by_user');
+
+Route::get('/quotation_detail/customer/{customer_id}', 'API\QuotationDetailController@index_by_customer');
+Route::get('/quotation_detail/customer/{customer_id}/user/{user_id}', 'API\QuotationDetailController@index_by_user');
+Route::apiResource('/quotation_detail', 'API\QuotationDetailController');
+
 //API
 Route::apiResource('/customer', 'API\CustomerController');
 Route::apiResource('/product', 'API\ProductController');

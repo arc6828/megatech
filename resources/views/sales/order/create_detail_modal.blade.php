@@ -62,7 +62,8 @@
 					});
 					//console.log(dataSet);
 					var table = $('#table-product-model').DataTable({
-						"data": dataSet,
+						"data": dataSet,						
+						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },

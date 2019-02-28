@@ -13,9 +13,12 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $table_customer = CustomerModel::select_all();
+
+      $user_id = $request->input("user_id","1");
+      $table_customer = CustomerModel::select_by_user_id($user_id);
+      //$table_customer = CustomerModel::select_all();
       return response()->json($table_customer);
     }
 

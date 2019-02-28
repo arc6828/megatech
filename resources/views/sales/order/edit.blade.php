@@ -36,6 +36,7 @@
 				document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
 				document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
+				document.querySelector("#customer_code").value = "{{ $row->customer_code }}";
 			  var str_time = moment("{{ $row->datetime }}").format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
 				var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";

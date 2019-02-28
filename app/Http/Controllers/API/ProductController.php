@@ -15,8 +15,8 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-      //$q = $request->input("search","");
-      $q = "";
+      $q = $request->input("q","");
+      //$q = "";
       $table_product = ProductModel::select_by_keyword($q);
       return response()->json($table_product);
     }

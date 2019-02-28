@@ -37,7 +37,7 @@
 
 	function showProduct(){
 		if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
-			setPreLoader(true);
+			//setPreLoader(true);
 			$.ajax({
 					url: "{{ url('/') }}/api/product",
 					type: "GET",
@@ -66,6 +66,7 @@
 
 					var table = $('#table-product-model').DataTable({
 						"data": dataSet,
+						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
@@ -75,7 +76,7 @@
 							{ title: "action" },
 						],
 					}); // END DATATABLE
-					setPreLoader(false);
+					//setPreLoader(false);
 
 
 				}); //END AJAX
