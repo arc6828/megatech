@@ -20,8 +20,8 @@
       </div>
       <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
       <div class="col-lg-3">
-        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
-        
+        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line" onchange="validate_po()" data=""	required>
+
       </div>
     </div>
 
@@ -248,6 +248,35 @@ function onChange(obj){
 
 function onChangeCustomer(){
   $("#btn-ref-quotation").click();
+}
+
+function validate_po(){
+  var customer_id = $("#customer_id").val();
+  var external_reference_id = $("#external_reference_id").val();
+  console.log("URL : " , "{{ url('/') }}/api/order/validate_po?customer_id="+customer_id+"&external_reference_id="+external_reference_id);
+  $.ajax({
+      url: "{{ url('/') }}/api/order/validate_po?customer_id="+customer_id+"&external_reference_id="+external_reference_id,
+      type: "GET",
+      dataType : "json",
+  }).done(function(result){
+      console.log(result);
+      if(result.length > 0){
+        console.log("repeat",result.length);
+
+        $("#external_reference_id").addClass("bg-danger");
+        if(result.length == 1){
+          $("#external_reference_id").addClass("bg-dander");
+          if($("#external_reference_id").val() === $("#external_reference_id").attr("data")){
+            $("#external_reference_id").removeClass("bg-danger");
+          }
+        }
+      }else{
+        console.log("identical",result.length);
+
+        $("#external_reference_id").removeClass("bg-danger");
+      }
+    }); //END AJAX
+
 }
 
 </script>

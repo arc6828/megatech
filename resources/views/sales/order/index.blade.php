@@ -65,7 +65,7 @@
 						</td>
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->total }}</td>
-						<td>{{ $row->customer_name }}</td>
+						<td>{{ $row->contact_name }}</td>
 						<td>{{ $row->company_name }}</td>
 						<td>{{ $row->name }}</td>
 						<td>{{ $row->sales_status_name }}</td>

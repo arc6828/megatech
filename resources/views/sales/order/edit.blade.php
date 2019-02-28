@@ -34,6 +34,7 @@
 				//INITIALIZE
 				document.querySelector("#order_code").value = "{{ $row->order_code }}";
 				document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
+				document.querySelector("#external_reference_id").setAttribute("data","{{ $row->external_reference_id }}") ;
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
 				document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
 				document.querySelector("#customer_code").value = "{{ $row->customer_code }}";

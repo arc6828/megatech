@@ -58,6 +58,14 @@ class OrderModel extends Model
       ->get();
 	}
 
+  public static function select_by_po($customer_id,$external_reference_id){
+    return DB::table('tb_order')
+      ->where('customer_id', $customer_id )
+      ->where('external_reference_id', $external_reference_id )
+			//->select( DB::raw('tb_order.*, tb_customer.contact_name, tb_customer.customer_code'))
+      ->get();
+	}
+
 	public static function insert($input){
     return DB::table('tb_order')->insertGetId($input);
 	}
