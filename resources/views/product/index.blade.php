@@ -88,8 +88,8 @@
 							element.product_name,
 							price,
 							element.amount_in_stock,
-							0,
-							0,
+							element.pending_out,
+							element.pending_in,
 							"<a href='javascript:void(0)' onclick='onDelete("+id+")' class='text-danger'><span class='fa fa-trash'></span></a>",
 						];
 						dataSet.push(row);
