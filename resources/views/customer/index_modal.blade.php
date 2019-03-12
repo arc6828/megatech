@@ -50,8 +50,9 @@
 						result.forEach(function(element,index) {
 							console.log(element,index);
 							var row = [
-								element.contact_name,
+								element.customer_code,
 								element.company_name,
+								element.contact_name,
 								"<button type='button' " +
 										"class='btn btn-warning btn-sm'" +
 										"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`,`"+element.customer_code+"`)' "
@@ -63,9 +64,11 @@
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,
+  						deferRender : true,
 							columns: [
-									{ title: "ชื่อลูกหนี้" },
+									{ title: "รหัส" },
 									{ title: "บริษัท" },
+									{ title: "ผู้ติดต่อ" },
 									{ title: "#" },
 							]
 						});

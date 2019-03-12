@@ -1,6 +1,6 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
-        <i class="fa fa-plus"></i> รหัสพนักงาน
- </button>
+<button type="button" class="btn btn-primary d-none" data-toggle="modal" data-target="#exampleModal2">
+      <i class="fa fa-plus"></i> รหัสพนักงาน
+</button>
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document" id="dialog">
     <div class="modal-content">
@@ -31,7 +31,7 @@
                   success: function(res) {
                       var dataSet = [];
                       res.forEach(function(element,index) {
-                
+
                           dataSet.push([
                               element.id,
                               element.name,
@@ -55,7 +55,7 @@
 
           });
           function select_user(id) {
-         
+
                   $('#user_id').val(id);
                   $('#exampleModal2').modal('hide');
           };

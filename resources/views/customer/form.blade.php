@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-block">
+  <div class="card-body">
     <div class="row">
       <div class="form-group col-lg-2">
         <label>รหัสลูกค้า</label>
@@ -20,34 +20,37 @@
     </div>
   </div>
 </div>
-<div class="card">
-  <div class="card-block">
-    <h3>รายละเอียดข้อมูลลูกค้า / บริษัท</h3>
-
-
+<div class="card mt-5">
+  <div class="card-body">
+    <h2>รายละเอียดข้อมูลลูกค้า / บริษัท</h2>
     <div class="row">
-
       <div class="form-group col-lg-4">
         <label >รหัสผังบัญชี</label>
+        <div class="input-group">
+          <input name="account_id" id="account_id"  class="form-control form-control-sm  " value="{{ $row->account_id }}">
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary btn-sm" type="button"  data-toggle="modal" data-target="#exampleModal">
+              <i class="fa fa-plus"></i> รหัสพนักงาน
+            </button>
+          </div>
+        </div>
+        @include('customer/modal-account')
         <div>
-          <input name="account_id" id="account_id"  class="form-control form-control-sm  " value="{{ $row->account_id }}"  style="width:50%">
-          @include('customer/modal-account')
+
         </div>
       </div>
+
       <div class="form-group col-lg-4">
         <label >รหัสพนักงานที่ดูแล</label>
-        <div>
-          <input name="user_id" id="user_id"  class="form-control form-control-sm  " style="width: 50%" value="{{ $row->user_id }}" >
-          @include('customer/modal-user')
-        </div>
-      </div>
-      <div class="form-group col-lg-4">
         <div class="input-group">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon1">Button</button>
+          <input name="user_id" id="user_id"  class="form-control form-control-sm  " value="{{ $row->user_id }}" >
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
+              <i class="fa fa-plus"></i> รหัสพนักงาน
+            </button>
           </div>
-          <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
         </div>
+        @include('customer/modal-user')
       </div>
     </div>
 
@@ -64,30 +67,29 @@
         <label >เบอร์ FAX</label>
         <input name="fax"  class="form-control form-control-sm  "  value="{{ $row->fax }}" >
       </div>
-
     </div>
 
 
     <div class="row">
       <div class="form-group col-lg-4">
         <label >ที่อยู่</label>
-        <input type="text" name="address"  class="form-control form-control-sm  " value="{{ $row->address }}" >
+        <input type="text" name="address"  class="form-control form-control-sm" value="{{ $row->address }}" >
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <input name="province"  class="form-control form-control-sm  " value="{{ $row->province }}" >
+        <input name="province"  id="province" class="form-control form-control-sm" value="{{ $row->province }}" onfocus="$('#btn-district').click();" readonly>
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
-        <input name="district"  class="form-control form-control-sm  " value="{{ $row->district }}" >
+        <input name="district"  id="district" class="form-control form-control-sm  " value="{{ $row->district }}" onfocus="$('#btn-district').click();" readonly >
       </div>
       <div class="form-group col-lg-2">
-        <label class="col-lg-2">ตำบล</label>
-        <input name="sub_district"  class="form-control form-control-sm  " value="{{ $row->sub_district }}" >
+        <label>ตำบล</label>
+        <input name="sub_district"  id="sub_district" class="form-control form-control-sm  " value="{{ $row->sub_district }}" onfocus="$('#btn-district').click();" readonly >
       </div>
       <div class="form-group col-lg-2">
         <label  >รหัสไปรษณีย์</label>
-        <input name="zipcode"  class="form-control form-control-sm  " value="{{ $row->zipcode }}" >
+        <input name="zipcode"  id="zipcode"   class="form-control form-control-sm  " value="{{ $row->zipcode }}"  onfocus="$('#btn-district').click();" readonly>
       </div>
     </div>
 
@@ -99,14 +101,14 @@
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <input name="province"  class="form-control form-control-sm  " value="{{ $row->province }}" >
+        <input name="province" id=""  class="form-control form-control-sm  " value="{{ $row->province }}" >
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
         <input name="district"  class="form-control form-control-sm  " value="{{ $row->district }}" >
       </div>
       <div class="form-group col-lg-2">
-        <label class="col-lg-2">ตำบล</label>
+        <label>ตำบล</label>
         <input name="sub_district"  class="form-control form-control-sm  " value="{{ $row->sub_district }}" >
       </div>
       <div class="form-group col-lg-2">
@@ -114,6 +116,8 @@
         <input name="zipcode"  class="form-control form-control-sm  " value="{{ $row->zipcode }}" >
       </div>
     </div>
+    @include('customer/district_modal')
+
 
     <div class="row">
       <div class="form-group col-lg-3">

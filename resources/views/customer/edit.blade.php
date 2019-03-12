@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แก้ไขข้อมูลลูกค้า')
 
@@ -21,10 +21,10 @@
   {{ method_field('PUT') }}
   @include('customer/form')
 
-  <div class="form-group">
+  <div class="form-group mt-5">
     <div class="col-lg-12">
       <div class="text-center">
-        <a class="btn btn-outline-primary" href="{{ url('/') }}/customer">back</a>
+        <a class="btn btn-outline-primary " href="{{ url('/') }}/customer">back</a>
         <button class="btn btn-success" type="submit" >Update</button>
       </div>
     </div>
@@ -36,6 +36,11 @@
 
 @endsection
 
-@section('plugins-js')
-
+@section('script')
+<script>
+$(document).ready(function(){
+  //console.log("HELLO");
+  //initDistrict();
+});
+</script>
 @endsection

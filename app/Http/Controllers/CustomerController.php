@@ -6,6 +6,7 @@ use App\CustomerModel;
 use App\AccountModel;
 use App\UserModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -17,7 +18,16 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $q = $request->input('q');
-        $table_customer = CustomerModel::select_by_keyword($q);
+        $table_customer = [];
+        switch(Auth::user()->role){
+          case "admin" :
+            $table_customer = CustomerModel::select_all();
+            break;
+          case "sales" :
+            $table_customer = CustomerModel::select_by_user_id(Auth::user()->id);
+            break;
+        }
+
         $data = [
 	        'table_customer' => $table_customer,
         	'q' => $q
