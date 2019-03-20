@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','ใบเบิกของ')
 
@@ -16,7 +16,7 @@
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
     <form method="get" action="">
   		<div class="form-group form-inline">
   			<label class="col-lg-2 offset-lg-1">สถานะ</label>
@@ -96,13 +96,13 @@
   </div>
 </div>
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
     <form action="{{ url('/') }}/sales/order_detail/approve" method="post" id="form_table" onsubmit="return validateCheckbox();" >
       {{ csrf_field() }}
     	{{ method_field('PUT') }}
 
   		<div class="table-responsive">
-  			<table class="table table-hover text-center" id="table-order-detail" style="width:100%">
+  			<table class="table table-hover table-sm text-center  table-bordered" id="table-order-detail" style="width:100%">
 
   			</table>
   		</div>
@@ -154,12 +154,13 @@
 						console.log(element,index);
             var id = element.order_detail_id;
 						var row = [
-							"<input type='checkbox' name='selected_order_detail_ids[]' class='form-control form-control-sm' value='"+id+"' >"+
+							"<input type='checkbox' name='selected_order_detail_ids[]' class='' value='"+id+"' >"+
               "<input type='hidden' name='order_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
-							element.date,
+
 							element.order_code,
-							element.delivery_time,
+              element.date,
+							//element.delivery_time,
 							element.order_detail_status_name,
 							element.product_id,
 							element.product_name,
@@ -177,9 +178,9 @@
 						data: dataSet,
 						columns: [
 								{ title: "#" },
-								{ title: "วันที่ OE" },
 								{ title: "เลขที่ OE" },
-								{ title: "วันที่ส่งของ" },
+								{ title: "วันที่ OE" },
+								//{ title: "วันที่ส่งของ" },
 								{ title: "สถานะการขาย" },
 								{ title: "รหัสสินค้า" },
 								{ title: "ชื่อสินค้า" },
@@ -190,7 +191,7 @@
 								{ title: "จำนวนคงคลัง" },
 						]
 					}); //END DATATABLE
-				}); //END DONE AJAX
+				}).order( [ 1, 'desc' ] ).draw(); //END DONE AJAX
 		}); //END DOMContentLoaded
 
     function validateCheckbox(){

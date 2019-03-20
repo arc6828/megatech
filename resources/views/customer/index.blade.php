@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แฟ้มลูกค้า')
 
@@ -14,9 +14,9 @@
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 
-		<div class="row">
+		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">แฟ้มลูกค้า</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
@@ -32,7 +32,7 @@
 		</div>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center">
+			<table class="table table-hover text-center" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">รหัส</th>
@@ -65,7 +65,7 @@
 			<form action="#" method="POST" id="form_delete">
 				{{ csrf_field() }}
 				{{ method_field('DELETE') }}
-				
+
 				<button type="submit"></button>
 			</form>
 	</div>
@@ -82,6 +82,11 @@
 </div>
 
 <script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+      //console.log("555");
+      $('#table').DataTable().order( [ 0, 'asc' ] ).draw();
+  });
+
 	function onDelete(id){
 		//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
 
@@ -99,4 +104,3 @@
 	}
 	</script>
 @endsection
-

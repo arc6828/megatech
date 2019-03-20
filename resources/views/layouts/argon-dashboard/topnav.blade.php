@@ -5,11 +5,14 @@
     <!-- Form -->
     <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
       <div class="form-group mb-0">
-        <div class="input-group input-group-alternative">
+
+        
+        <div class="input-group input-group-alternative d-none">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-search"></i></span>
           </div>
           <input class="form-control form-control-sm" placeholder="Search" type="text">
+
         </div>
       </div>
     </form>
@@ -52,10 +55,16 @@
             <span>Support</span>
           </a>
           <div class="dropdown-divider"></div>
-          <a href="#!" class="dropdown-item">
-            <i class="ni ni-user-run"></i>
-            <span>Logout</span>
+
+          <a class="dropdown-item" href="{{ route('logout') }}"
+             onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+              <i class="fa fa-power-off m-r-10" aria-hidden="true"></i>{{ __('Logout') }}
           </a>
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
         </div>
       </li>
     </ul>

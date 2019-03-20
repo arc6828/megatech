@@ -1,5 +1,5 @@
 <div class="card" id="table">
-	<div class="card-block">
+	<div class="card-body">
 		<style>
 		.input{
 			max-width: 50px;

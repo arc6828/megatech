@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','ใบเสนอราคา')
 
@@ -18,7 +18,7 @@
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">รายการใบเสนอราคา</h4>
@@ -35,41 +35,35 @@
 		</div>
 
 
-
-		<div class="table-responsive table-bordered">
-			<table class="table table-hover text-center" id="table">
+    <div class="table-responsive">
+			<table class="table table-sm table-hover text-center table-bordered" id="table">
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
-						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">ชื่อผู้ติดต่อ</th>
+						<th class="text-center">รหัสลูกค้า</th>
 						<th class="text-center">ชื่อบริษัท</th>
+						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
 						<th class="text-center">สถานะ</th>
-						<th class="text-center">action</th>
+						<th class="text-center d-none">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($table_quotation as $row)
-
 					<tr>
-						<td>
-							{{ $row->quotation_id }}
-						</td>
 						<td>
 							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
 								{{ $row->quotation_code }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
-						<td>{{ $row->contact_name }}</td>
+						<td>{{ $row->customer_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->name }}</td>
+						<td>{{ $row->total?$row->total:0 }}</td>
+						<td>{{ $row->short_name }}</td>
 						<td>{{ $row->sales_status_name }}</td>
-						<td>
+						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->quotation_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>
 							</a>
@@ -80,10 +74,12 @@
 
 			</table>
 		</div>
+
+
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
-				$('#table').DataTable();
+				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
 		});
 
 		</script>

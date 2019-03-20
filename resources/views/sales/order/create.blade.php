@@ -1,15 +1,15 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','สร้างใบจอง')
 
 @section('navbar-menu')
-  <div style="margin: 21px;">
-    <a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/order">back</a>
-    <button class="btn btn-primary btn-sm" onclick="document.getElementById('form-submit').click();">Save</button>
-  </div>
+
+
 @endsection
 
 @section('breadcrumb-menu')
+<a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/order">back</a>
+<button class="btn btn-primary btn-sm" onclick="document.getElementById('form-submit').click();">Save</button>
 
 @endsection
 
@@ -20,7 +20,10 @@
     {{ method_field('POST') }}
     @include('sales/order/form')
     <div>
-      <button type="submit" class="d-none" id="form-submit">Save</button>
+
+      <a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/order">back</a>
+      <button class="btn btn-primary btn-sm d-none" onclick="document.getElementById('form-submit').click();">Save</button>
+      <button class="btn btn-primary btn-sm" type="submit" class="" id="form-submit">Save</button>
     </div>
 </form>
 
