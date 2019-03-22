@@ -153,10 +153,7 @@
           <input type="number" name="debt_duration"  class="form-control form-control-sm  "   value="{{ $row->debt_duration }}" >
       </div>
 
-      <div class="form-group col-lg-3">
-        <label >เลขภาษี </label>
-        <input name="tax_number"  class="form-control form-control-sm  "  value="{{ $row->tax_number }}" >
-      </div>
+
       <div class="form-group col-lg-3">
         <label >เงื่อนไขวางบิล </label>
         <input name="billing_condition"  class="form-control form-control-sm  " value="{{ $row->billing_condition }}" >
@@ -167,7 +164,10 @@
       </div>
     </div>
     <div class="row">
-
+      <div class="form-group col-lg-3">
+        <label >เลขภาษี </label>
+        <input name="tax_number"  class="form-control form-control-sm  "  value="{{ $row->tax_number }}" >
+      </div>
       <div class="form-group col-lg-3">
         <label >ชนิดสถานที่ประกอบการ </label>
         <select name="location_type_id" class="form-control form-control-sm  "  >
