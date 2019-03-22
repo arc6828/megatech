@@ -2,15 +2,6 @@
 
 @section('title','แฟ้มลูกค้า')
 
-@section('navbar-menu')
-<div style="margin:21px;">
-	<a href="{{ url('/') }}/customer/create" class="btn pull-right hidden-sm-down btn-success btn-sm">
-		<i class="fa fa-plus"></i> เพิ่มลูกค้า
-	</a>
-<div>
-@endsection
-
-
 @section('content')
 
 <div class="card">
@@ -62,22 +53,13 @@
 			</table>
 		</div>
 		<div class="row hide">
-			<form action="#" method="POST" id="form_delete">
+			<form action="#" method="POST" id="form_delete" class="d-none">
 				{{ csrf_field() }}
 				{{ method_field('DELETE') }}
 
 				<button type="submit"></button>
 			</form>
-	</div>
-	<div class="form-group">
-		<div class="col-lg-12">
-			<div class="text-center">
-				  <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
-			</div>
-		</div>
-	</div>
-
-
+	   </div>
 	</div>
 </div>
 
@@ -103,4 +85,16 @@
 		}
 	}
 	</script>
+
+
+<div class="form-group mt-5">
+  <div class="col-lg-12">
+    <div class="text-center">
+        <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+        <a href="{{ url('/') }}/customer/create" class="btn btn-primary">
+          <i class="fa fa-plus"></i> เพิ่มลูกค้า
+        </a>
+    </div>
+  </div>
+</div>
 @endsection

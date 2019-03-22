@@ -2,38 +2,10 @@
 
 @section('title','ใบเสนอราคา')
 
-@section('navbar-menu')
-<div style="margin:21px;">
-<a class="btn btn-outline-primary  btn-sm" href="{{ url('/') }}/sales">back</a>
-<a href="{{ url('/') }}/sales/quotation/create" class="btn btn-primary btn-sm">
-	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
-</a>
-<div>
-@endsection
-
-@section('breadcrumb-menu')
-
-@endsection
-
 @section('content')
 
 <div class="card">
 	<div class="card-body">
-		<div class="row d-none">
-			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">รายการใบเสนอราคา</h4>
-				<h6 class="card-subtitle">Display infomation in the table</h6>
-			</div>
-			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/sales/quotation" method="GET">
-					<div class="form-group form-inline pull-right">
-						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
-						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
-					</div>
-				</form>
-			</div>
-		</div>
-
 
     <div class="table-responsive">
 			<table class="table table-sm table-hover text-center table-bordered" id="table">
@@ -83,6 +55,13 @@
 		});
 
 		</script>
+
+    <div class="text-center">
+      <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+      <a href="{{ url('/') }}/sales/quotation/create" class="btn btn-primary">
+      	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
+      </a>
+    </div>
 
 	</div>
 </div>

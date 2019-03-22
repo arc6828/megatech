@@ -1,4 +1,4 @@
-<div class="card" id="table">
+<div class="card mt-3" id="table" >
 	<div class="card-body">
 		<style>
 		.input{

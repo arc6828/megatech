@@ -1,7 +1,8 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm" id="btn-district" data-toggle="modal" data-target="#districtModal" data-id="1">
+<button type="button" class="btn btn-success btn-sm d-none" id="btn-district" data-toggle="modal" data-target="#districtModal" data-id="1">
 	<i class="fa fa-plus"></i> เลือก district
 </button>
+<input type="hidden" id="type_address"  value="true">
 
 <!-- Modal -->
 <div class="modal fade" id="districtModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -14,22 +15,22 @@
 				</button>
 			</div>
 			<div class="modal-body">
-        <div>
+        <div class="form-group">
           <select class="form-control form-control-sm" id="input_province" onchange="showAmphoes()">
             <option value="">กรุณาเลือกจังหวัด</option>
           </select>
         </div>
-        <div>
+        <div class="form-group">
           <select class="form-control form-control-sm"  id="input_amphoe" onchange="showDistricts()">
             <option value="">กรุณาเลือกอำเภอ</option>
           </select>
         </div>
-        <div>
+        <div class="form-group">
           <select class="form-control form-control-sm"  id="input_district" onchange="showZipcode()">
             <option value="">กรุณาเลือกตำบล</option>
           </select>
         </div>
-        <div>
+        <div class="form-group">
           <input class="form-control form-control-sm"  id="input_zipcode" placeholder="รหัสไปรษณีย์" />
         </div>
 			</div>
@@ -48,11 +49,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     console.log("CLICK");
     $('#districtModal').modal('hide')
     $("#districtModal").on("hidden.bs.modal",function(e){
-      if(true) {
+      var type_address =  $("#type_address").val();
+      if(type_address === "true") {
         $("#province").val($("#input_province option:selected").text());
         $("#district").val($("#input_amphoe option:selected").text());
         $("#sub_district").val($("#input_district option:selected").text());
         $("#zipcode").val($("#input_zipcode").val());
+      }else{
+        $("#delivery_province").val($("#input_province option:selected").text());
+        $("#delivery_district").val($("#input_amphoe option:selected").text());
+        $("#delivery_sub_district").val($("#input_district option:selected").text());
+        $("#delivery_zipcode").val($("#input_zipcode").val());
       }
     })
   });

@@ -3,18 +3,18 @@
     <div class="row">
       <div class="form-group col-lg-2">
         <label>รหัสลูกค้า</label>
-        <input name="customer_code"  class="form-control form-control-sm " value="{{ $row->customer_code }}"  readonly>
+        <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value=""  readonly>
       </div>
       <div class="form-group col-lg-8">
         <label>ชื่อบริษัท</label>
-        <input type="text" name="company_name"  class="form-control form-control-sm  " style="width:100%" value="{{ $row->company_name }}"  >
+        <input type="text" name="company_name"   id="company_name"   class="form-control form-control-sm  "  >
       </div>
       <div class="form-group col-lg-2">
         <label >ประเภทลูกค้า</label>
-        <select name="customer_type" class="form-control form-control-sm  ">
-            @foreach ($table_customer_type as $cus)
-            <option value="{{ $cus->customer_type_id }}">{{ $cus->customer_type_name }}</option>
-            @endforeach
+        <select name="customer_type" id="customer_type"  class="form-control form-control-sm  ">
+          @foreach ($table_customer_type as $cus)
+          <option value="{{ $cus->customer_type_id }}">{{ $cus->customer_type_name }}</option>
+          @endforeach
         </select>
       </div>
     </div>
@@ -27,7 +27,7 @@
       <div class="form-group col-lg-4">
         <label >รหัสผังบัญชี</label>
         <div class="input-group">
-          <input name="account_id" id="account_id"  class="form-control form-control-sm  " value="{{ $row->account_id }}">
+          <input name="account_id" id="account_id"  class="form-control form-control-sm  ">
           <div class="input-group-append">
             <button class="btn btn-outline-primary btn-sm" type="button"  data-toggle="modal" data-target="#exampleModal">
               <i class="fa fa-plus"></i> รหัสพนักงาน
@@ -43,7 +43,7 @@
       <div class="form-group col-lg-4">
         <label >รหัสพนักงานที่ดูแล</label>
         <div class="input-group">
-          <input name="user_id" id="user_id"  class="form-control form-control-sm  " value="{{ $row->user_id }}" >
+          <input name="user_id" id="user_id"  class="form-control form-control-sm  "  >
           <div class="input-group-append">
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
               <i class="fa fa-plus"></i> รหัสพนักงาน
@@ -77,19 +77,19 @@
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <input name="province"  id="province" class="form-control form-control-sm" value="{{ $row->province }}" onfocus="$('#btn-district').click();" readonly>
+        <input name="province"  id="province" class="form-control form-control-sm" value="{{ $row->province }}" onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly>
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
-        <input name="district"  id="district" class="form-control form-control-sm  " value="{{ $row->district }}" onfocus="$('#btn-district').click();" readonly >
+        <input name="district"  id="district" class="form-control form-control-sm  " value="{{ $row->district }}" onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly >
       </div>
       <div class="form-group col-lg-2">
         <label>ตำบล</label>
-        <input name="sub_district"  id="sub_district" class="form-control form-control-sm  " value="{{ $row->sub_district }}" onfocus="$('#btn-district').click();" readonly >
+        <input name="sub_district"  id="sub_district" class="form-control form-control-sm  " value="{{ $row->sub_district }}" onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly >
       </div>
       <div class="form-group col-lg-2">
         <label  >รหัสไปรษณีย์</label>
-        <input name="zipcode"  id="zipcode"   class="form-control form-control-sm  " value="{{ $row->zipcode }}"  onfocus="$('#btn-district').click();" readonly>
+        <input name="zipcode"  id="zipcode"   class="form-control form-control-sm  " value="{{ $row->zipcode }}"  onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly>
       </div>
     </div>
 
@@ -97,23 +97,23 @@
     <div class="row">
       <div class="form-group col-lg-4">
         <label >สถานที่ส่งของ</label>
-        <input type="text" name="address"  class="form-control form-control-sm  " value="{{ $row->address }}" >
+        <input type="text" name="delivery_address"  class="form-control form-control-sm  " value="{{ $row->address }}" >
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <input name="province" id=""  class="form-control form-control-sm  " value="{{ $row->province }}" >
+        <input name="province" id="delivery_province"  class="form-control form-control-sm  " value="{{ $row->province }}" onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
-        <input name="district"  class="form-control form-control-sm  " value="{{ $row->district }}" >
+        <input name="delivery_district" id="delivery_district"  class="form-control form-control-sm  " value="{{ $row->district }}" onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
       </div>
       <div class="form-group col-lg-2">
         <label>ตำบล</label>
-        <input name="sub_district"  class="form-control form-control-sm  " value="{{ $row->sub_district }}" >
+        <input name="delivery_sub_district" id="delivery_sub_district"  class="form-control form-control-sm  " value="{{ $row->sub_district }}" onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
       </div>
       <div class="form-group col-lg-2">
         <label  >รหัสไปรษณีย์</label>
-        <input name="zipcode"  class="form-control form-control-sm  " value="{{ $row->zipcode }}" >
+        <input name="delivery_zipcode" id="delivery_zipcode"  class="form-control form-control-sm  " value="{{ $row->zipcode }}" onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
       </div>
     </div>
     @include('customer/district_modal')
@@ -152,20 +152,11 @@
         <label >ระยะเวลาหนี้</label>
           <input type="number" name="debt_duration"  class="form-control form-control-sm  "   value="{{ $row->debt_duration }}" >
       </div>
-      <div class="form-group col-lg-3">
-        <label >ระดับของราคาสินค้า</label>
-        <input type="number" name="degree_product"  class="form-control form-control-sm  "   value="{{ $row->degree_product }}" >
-      </div>
-      <div class="form-group col-lg-3">
-        <label >ส่วนลด </label>
-        <input type="number" name="loyalty_discount"  class="form-control form-control-sm  "value="{{ $row->loyalty_discount }}" >
-      </div>
+
       <div class="form-group col-lg-3">
         <label >เลขภาษี </label>
         <input name="tax_number"  class="form-control form-control-sm  "  value="{{ $row->tax_number }}" >
       </div>
-    </div>
-    <div class="row">
       <div class="form-group col-lg-3">
         <label >เงื่อนไขวางบิล </label>
         <input name="billing_condition"  class="form-control form-control-sm  " value="{{ $row->billing_condition }}" >
@@ -174,6 +165,9 @@
         <label  >เงื่อนไขรับเช็ค </label>
         <input name="cheqe_condition"  class="form-control form-control-sm  "  value="{{ $row->cheqe_condition }}" >
       </div>
+    </div>
+    <div class="row">
+
       <div class="form-group col-lg-3">
         <label >ชนิดสถานที่ประกอบการ </label>
         <select name="location_type_id" class="form-control form-control-sm  "  >
@@ -187,5 +181,16 @@
         <input name="branch_id"  class="form-control form-control-sm  "  value="{{ $row->branch_id }}" >
       </div>
     </div>
+  </div>
+</div>
+
+<div>
+  <div class="form-group col-lg-3 d-none">
+    <label >ระดับของราคาสินค้า</label>
+    <input type="number" name="degree_product"  class="form-control form-control-sm  "   value="{{ $row->degree_product }}" >
+  </div>
+  <div class="form-group col-lg-3 d-none">
+    <label >ส่วนลด </label>
+    <input type="number" name="loyalty_discount"  class="form-control form-control-sm  "value="{{ $row->loyalty_discount }}" >
   </div>
 </div>

@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-block">
+  <div class="card-body">
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -12,12 +12,24 @@
     </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสลูกหนี้</label>
-      <div class="col-lg-3">
+      <div class="col-lg-6">
         <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
-        <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
-        @include('customer/index_modal')
+        <div class="input-group input-group-sm ">
+          <div class="input-group-prepend">
+            <span class="input-group-text" name="customer_code" id="customer_code" >......</span>
+          </div>
+          <input class="form-control" name="company_name" id="company_name" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+              <i class="fa fa-plus"></i> เลือกลูกหนี้
+            </button>
+          </div>
+        </div>
       </div>
+      @include('sales/quotation/customer_modal')
     </div>
+
+
 
     <div class="form-group form-inline">
       <label class="col-lg-2">ระยะเวลาหนี้ (วัน)</label>
@@ -106,7 +118,7 @@
       <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
       <div class="col-lg-3">
         <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
-          
+
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >
             {{	$row_zone->zone_name }}
@@ -121,7 +133,7 @@
 
 @include('sales/quotation/detail')
 
-<div class="card">
+<div class="card mt-3">
 	<div class="card-block">
 		<div class="row">
 			<div class="col-lg-3">
