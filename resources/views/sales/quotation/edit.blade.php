@@ -35,8 +35,10 @@
 				//INITIALIZE
 				document.querySelector("#quotation_code").value = "{{ $row->quotation_code }}";
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
-				document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
-			  var str_time = moment("{{ $row->datetime }}").format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
+				//document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
+        document.querySelector("#customer_code").innerHTML  = "{{ $row->customer_code }}";
+        document.querySelector("#company_name").value = "{{ $row->company_name }}";
+				 var str_time = moment("{{ $row->datetime }}").format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
 				var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";
 				document.querySelector("#billing_duration").value = "{{ $row->billing_duration }}";

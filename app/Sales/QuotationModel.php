@@ -41,7 +41,7 @@ class QuotationModel extends Model
     return DB::table('tb_quotation')
       ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
       ->where('tb_quotation.quotation_id', '=' , $id )
-			->select( DB::raw('tb_quotation.*, tb_customer.contact_name'))
+			//->select( DB::raw('tb_quotation.*, tb_customer.contact_name'))
       ->get();
 	}
 

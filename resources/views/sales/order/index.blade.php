@@ -29,13 +29,7 @@
 			</div>
 		</div>
 
-    <div style="margin:21px;">
-    <a class="btn btn-outline-primary  btn-sm" href="{{ url('/') }}/sales">back</a>
-    <a href="{{ url('/') }}/sales/order/create" class="btn btn-primary btn-sm">
-    	<i class="fa fa-plus"></i> เพิ่มใบจอง
-    </a>
 
-    </div>
 
 
 		<div class="table-responsive">
@@ -64,7 +58,7 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->total }}</td>
+						<td class="number">{{ $row->total }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td>{{ $row->sales_status_name }}</td>
 						<td class="d-none">
@@ -78,10 +72,23 @@
 
 			</table>
 		</div>
+
+    <div class="text-center">
+      <a class="btn btn-outline-primary " href="{{ url('/') }}/sales">back</a>
+      <a href="{{ url('/') }}/sales/order/create" class="btn btn-primary">
+      	<i class="fa fa-plus"></i> เพิ่มใบจอง
+      </a>
+
+    </div>
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
+        $('.number').each(function(index){
+          var number = Number($(this).text()).toLocaleString("en");
+          $(this).text(number);
+        });
 				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+
 		});
 
 		</script>

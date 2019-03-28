@@ -32,7 +32,7 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
+						<td class="number">{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td>{{ $row->sales_status_name }}</td>
 						<td class="d-none">
@@ -51,6 +51,10 @@
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
+        $('.number').each(function(index){
+          var number = Number($(this).text()).toLocaleString("en");
+          $(this).text(number);
+        });
 				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
 		});
 
@@ -94,6 +98,7 @@
 		}
 	</script>
 </div>
+
 
 
 @endsection

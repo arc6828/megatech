@@ -7,6 +7,7 @@ use App\AccountModel;
 use App\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
@@ -55,7 +56,8 @@ class CustomerController extends Controller
             'table_zone' => $table_zone,
             'table_delivery_type' => $table_delivery_type,
             'table_location' => $table_location,
-            'table_customer_type' => $table_customer_type
+            'table_customer_type' => $table_customer_type,
+            'table_upload' => $this->getUploadTemplate(),
         ];
         return view('customer/create',$data);
     }
@@ -105,11 +107,13 @@ class CustomerController extends Controller
             'account_id' => $request->input('account_id'),
             'contact_name' => $request->input('contact_name'),
             'address' => $request->input('address'),
+            'address2' => "",
             'sub_district' => $request->input('sub_district'),
             'district' => $request->input('district'),
             'province' => $request->input('province'),
             'zipcode' => $request->input('zipcode'),
             'delivery_address' => $request->input('delivery_address'),
+            'delivery_address2' => "",
             'delivery_sub_district' => $request->input('delivery_sub_district'),
             'delivery_district' => $request->input('delivery_district'),
             'delivery_province' => $request->input('delivery_province'),
@@ -152,6 +156,27 @@ class CustomerController extends Controller
 
     }
 
+    public function getUploadTemplate($upload = null)
+    {
+      if($upload != null)
+      {
+        return $upload;
+      }
+      return [
+        (object)["key" => "map" , "name" => "แผนที่", "value"=>""],
+        (object)["key" => "cc" , "name" => "ใบรับรองบริษัท", "value"=>""],
+        (object)["key" => "cv_20" , "name" => "ใบภพ.20", "value"=>""],
+        (object)["key" => "cheque" , "name" => "ระเบียบวางบิล-รับเช็ค", "value"=>""],
+      ];
+    }
+
+    public function getContactTemplate()
+    {
+      return [
+        "" => "",
+      ];
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -175,7 +200,9 @@ class CustomerController extends Controller
             'table_zone' => $table_zone,
             'table_customer_type' => $table_customer_type,
             'table_location' => $table_location,
-            'table_delivery_type' => $table_delivery_type
+            'table_delivery_type' => $table_delivery_type,
+
+            'table_upload' => $this->getUploadTemplate(),
         ];
         return view('customer/edit',$data);
     }
@@ -189,42 +216,69 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
+      //Save upload image to 'avatar' folder which in 'storage/app/public' folder
+      $upload = CustomerModel::select_upload_by_id($id);
+      $upload_json = $this->getUploadTemplate($upload);
+      if ($request->hasFile('upload_map')) {
+        //$path = $request->file('upload_map')->store('avatar','public');
+      }
 
-        $input = [
-            'customer_code' => $request->input('customer_code'),
-            'customer_type' => $request->input('customer_type'),
-            'company_name' => $request->input('company_name'),
-            'account_id' => $request->input('account_id'),
-            'contact_name' => $request->input('contact_name'),
-            'address' => $request->input('address'),
-            'sub_district' => $request->input('sub_district'),
-            'district' => $request->input('district'),
-            'province' => $request->input('province'),
-            'zipcode' => $request->input('zipcode'),
-            'delivery_address' => $request->input('delivery_address'),
-            'delivery_sub_district' => $request->input('delivery_sub_district'),
-            'delivery_district' => $request->input('delivery_district'),
-            'delivery_province' => $request->input('delivery_province'),
-            'delivery_zipcode' => $request->input('delivery_zipcode'),
-            'user_id' => $request->input('user_id'),
-            'telephone' => $request->input('telephone'),
-            'fax' => $request->input('fax'),
-            'zone_id' => $request->input('zone_id'),
-            'transpotation_id' => $request->input('transpotation_id'),
-            'remark' => $request->input('remark'),
-            'max_credit' => $request->input('max_credit'),
-            'debt_duration' => $request->input('debt_duration'),
-            'degree_product' => $request->input('degree_product'),
-            'loyalty_discount' => $request->input('loyalty_discount'),
-            'tax_number' => $request->input('tax_number'),
-            'billing_condition' => $request->input('billing_condition'),
-            'cheqe_condition' => $request->input('cheqe_condition'),
-            'location_type_id' => $request->input('location_type_id'),
-            'branch_id' => $request->input('branch_id')
-        ];
+      $i = 0;
+      foreach($upload_json as $row)
+      {
+        //$path = $request->file('image')->store('avatar','public');
+        $filename = "upload_".$row->key;
+        echo $filename;
+        if ($request->hasFile($filename)) {
+          $folder = "{$id}/{$row->key}";
+          $value = $request->file($filename)->store($folder,'public');
+          $upload_json[$i]->value = $value;
+          echo $row->key."<br>";
+        }
+        $i++;
+      }
+      //$path = $request->file('image')->store('avatar','public');
+      //echo $path;
+      //Save $path to database or anything else
+      //...
+      $input = [
+          'customer_code' => $request->input('customer_code'),
+          'customer_type' => $request->input('customer_type'),
+          'company_name' => $request->input('company_name'),
+          'account_id' => $request->input('account_id'),
+          'contact_name' => $request->input('contact_name'),
+          'address' => $request->input('address'),
+          'address2' => "",
+          'sub_district' => $request->input('sub_district'),
+          'district' => $request->input('district'),
+          'province' => $request->input('province'),
+          'zipcode' => $request->input('zipcode'),
+          'delivery_address' => $request->input('delivery_address'),
+          'delivery_address2' => "",
+          'delivery_sub_district' => $request->input('delivery_sub_district'),
+          'delivery_district' => $request->input('delivery_district'),
+          'delivery_province' => $request->input('delivery_province'),
+          'delivery_zipcode' => $request->input('delivery_zipcode'),
+          'user_id' => $request->input('user_id'),
+          'telephone' => $request->input('telephone'),
+          'fax' => $request->input('fax'),
+          'zone_id' => $request->input('zone_id'),
+          'transpotation_id' => $request->input('transpotation_id'),
+          'remark' => $request->input('remark'),
+          'max_credit' => $request->input('max_credit'),
+          'debt_duration' => $request->input('debt_duration'),
+          'degree_product' => $request->input('degree_product'),
+          'loyalty_discount' => $request->input('loyalty_discount'),
+          'tax_number' => $request->input('tax_number'),
+          'billing_condition' => $request->input('billing_condition'),
+          'cheqe_condition' => $request->input('cheqe_condition'),
+          'location_type_id' => $request->input('location_type_id'),
+          'branch_id' => $request->input('branch_id'),
+          'upload' => json_encode($upload_json),
+      ];
 
-        CustomerModel::update_by_id($input,$id);
-        return redirect('customer');
+      CustomerModel::update_by_id($input,$id);
+      return redirect('customer');
 
     }
 

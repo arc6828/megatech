@@ -21,7 +21,7 @@ class CustomerModel extends Model
         return DB::table('tb_customer')
             ->where('tb_customer.company_name', 'like' , "%{$q}%" )
             ->get();
-	} 
+	}
 
 
 	public static function select_zone() {
@@ -41,6 +41,11 @@ class CustomerModel extends Model
 	}
 	public static function select_by_id($id) {
 		return DB::table('tb_customer')->where('customer_id', '=', $id)->get();
+	}
+
+  public static function select_upload_by_id($id) {
+		$upload = DB::table('tb_customer')->where('customer_id', '=', $id)->first()->upload;
+    return $upload==null?null:json_decode($upload);
 	}
 
 	public static function update_by_id($input,$id) {
