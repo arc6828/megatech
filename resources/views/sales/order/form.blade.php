@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-block">
+  <div class="card-body">
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -12,13 +12,22 @@
     </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสลูกหนี้</label>
-      <div class="col-lg-3">
-        <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required readonly style="max-width:100px;">
-        <input type="text" name="customer_code" id="customer_code" class="form-control form-control-sm"  required readonly style="max-width:100px;">
-        <input type="hidden" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
-        @include('sales/order/customer_modal')
+      <div class="col-lg-4">
+        <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
+        <div class="input-group input-group-sm ">
+          <div class="input-group-prepend">
+            <span class="input-group-text" name="customer_code" id="customer_code" >......</span>
+          </div>
+          <input class="form-control" name="company_name" id="company_name" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+              <i class="fa fa-plus"></i> เลือกลูกหนี้
+            </button>
+          </div>
+        </div>
       </div>
-      <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
+      @include('sales/order/customer_modal')
+      <label class="col-lg-2">P/O ลูกหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line" onchange="validate_po()" data=""	required>
 
@@ -127,8 +136,8 @@
 
 @include('sales/order/detail')
 
-<div class="card">
-	<div class="card-block">
+<div class="card mt-4">
+	<div class="card-body">
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="form-group">

@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#customerModal">
+<button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#customerModal">
 	<i class="fa fa-plus"></i> เลือกลูกหนี้
 </button>
 
@@ -36,7 +36,7 @@
 					onChangeCustomer();
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
-		console.log("555");
+		console.log("Cumtomer 555");
 		//AJAX
 		$('#customerModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){

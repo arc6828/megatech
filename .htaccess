@@ -23,14 +23,14 @@
     RewriteRule ^ %1 [L,R=301]
 
     # Handle Front Controller...
-    RewriteCond %{REQUEST_URI} !(\.css|\.js|\.png|\.jpg|\.jpeg|\.gif|robots\.txt|\.eot|\.svg|\.ttf|\.woff|\.woff2|\.doc|\.docx|\.xls|\.xlsx|\.pdf)$ [NC]
+    #RewriteCond %{REQUEST_URI} !(\.css|\.js|\.png|\.jpg|\.jpeg|\.gif|robots\.txt|\.eot|\.svg|\.ttf|\.woff|\.woff2|\.doc|\.docx|\.xls|\.xlsx|\.pdf)$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_URI} !^/public/
-    RewriteRule ^(.*)$ public/$1 [L]
+    #RewriteCond %{REQUEST_FILENAME} !-d
+    #RewriteCond %{REQUEST_FILENAME} !-f
+    #RewriteCond %{REQUEST_URI} !^/public/
+    #RewriteRule ^(.*)$ public/$1 [L]
 
 </IfModule>

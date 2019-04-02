@@ -19,11 +19,10 @@
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/order/form')
-    <div>
+    <div class="text-center mt-4">
 
-      <a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/order">back</a>
-      <button class="btn btn-primary btn-sm d-none" onclick="document.getElementById('form-submit').click();">Save</button>
-      <button class="btn btn-primary btn-sm" type="submit" class="" id="form-submit">Save</button>
+      <a class="btn btn-outline-primary " href="{{ url('/') }}/sales/order">back</a>
+      <button class="btn btn-primary " type="submit" class="" id="form-submit">Save</button>
     </div>
 </form>
 
@@ -32,7 +31,10 @@
     //INITIALIZE
     document.querySelector("#order_code").value = "";
     document.querySelector("#customer_id").value = "";
-    document.querySelector("#contact_name").value = "";
+
+
+    document.querySelector("#customer_code").value = "";
+    document.querySelector("#company_name").value = "";
     var str_time = moment().format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
     var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
     document.querySelector("#debt_duration").value = "60";

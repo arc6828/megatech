@@ -41,7 +41,7 @@ class OrderModel extends Model
     return DB::table('tb_order')
       ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
       ->where('tb_order.order_id', '=' , $id )
-			->select( DB::raw('tb_order.*, tb_customer.contact_name, tb_customer.customer_code'))
+			//->select( DB::raw('tb_order.*, tb_customer.contact_name, tb_customer.customer_code'))
       ->get();
 	}
 

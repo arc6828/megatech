@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-block">
+  <div class="card-body">
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -133,8 +133,8 @@
 
 @include('sales/invoice/detail')
 
-<div class="card">
-	<div class="card-block">
+<div class="card mt-4">
+	<div class="card-body">
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="form-group">

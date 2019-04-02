@@ -1,5 +1,5 @@
-<div class="card" id="table">
-	<div class="card-block">
+<div class="card mt-4" id="table">
+	<div class="card-body">
 		<style>
 		.input{
 			max-width: 50px;
@@ -145,7 +145,7 @@
 		</script>
 
 		<div class="text-center">
-			
+
 
 		</div>
 	</div>
