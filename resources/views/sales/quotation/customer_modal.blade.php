@@ -33,6 +33,8 @@
 					$('#company_name').val(name);
 					$('#customer_code').val(code);
 					$('#customer_code').text(code);
+
+
 					$('#customerModal').modal('hide');
 					onChangeCustomer();
 	}

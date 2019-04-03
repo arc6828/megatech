@@ -2,17 +2,6 @@
 
 @section('title','แก้ไขรายละเอียดใบเสนอราคา')
 
-@section('navbar-menu')
-<div style="margin: 21px;">
-	<a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/quotation">back</a>
-	<button class="btn btn-primary btn-sm" onclick="document.getElementById('form-submit').click();">Save</button>
-</div>
-@endsection
-
-@section('breadcrumb-menu')
-
-@endsection
-
 @section('content')
 
 
@@ -23,7 +12,7 @@
 
 			@include('sales/quotation/form')
 
-			<div class="text-center">
+			<div class="text-center mt-4">
 				<a href="{{ url('/') }}/sales/quotation" class="btn btn-outline-primary" style="width:150px;">back</a>
 				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
 			</div>
