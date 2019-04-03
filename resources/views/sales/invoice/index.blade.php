@@ -22,7 +22,6 @@
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center">action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -38,11 +37,6 @@
 						<td>{{ $row->company_name }}</td>
 						<td>{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td>
-							<a href="javascript:void(0)" onclick="onDelete( {{ $row->invoice_id }} )" class="text-danger">
-								<span class="fa fa-trash"></span>
-							</a>
-						</td>
 					</tr>
 					@endforeach
 				</tbody>

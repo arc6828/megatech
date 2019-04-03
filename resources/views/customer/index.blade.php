@@ -31,7 +31,7 @@
 						<th class="text-center">อีเมล์</th>
 						<th class="text-center">เบอร์โทรศัพท์</th>
 						<th class="text-center">ยอดหนึ้ขณะนี้</th>
-						<th class="text-center">action</th>
+						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,7 +42,7 @@
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->telephone }}</td>
 					<td>0</td>
-					<td>
+					<td class=" d-none">
 						<a href="javascript:void(0)" onclick="onDelete( {{ $row->customer_id }} )" class="text-danger">
 							<span class="fa fa-trash"></span>
 						</a>

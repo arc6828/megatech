@@ -167,7 +167,7 @@
     <div class="row">
       <div class="form-group col-lg-3">
         <label >เลขภาษี </label>
-        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  "    >
+        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  tax-format"    >
       </div>
       <div class="form-group col-lg-3">
         <label >ชนิดสถานที่ประกอบการ </label>
@@ -253,7 +253,7 @@ function getUploadTemplate()
 
         @foreach(["Hank","Norman","Susan B.","Wystan Hugh"] as $row_contact)
         <tr>
-          
+
           <td>
             {{ $row_contact }}
           </td>
