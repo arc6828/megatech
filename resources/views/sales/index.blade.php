@@ -3,24 +3,7 @@
 @section('title','การขาย')
 
 @section('content')
-<style>
-  .btn-menu{
-    width: 120px;
-    height: 120px;
-  }
-  .btn-menu .ni{
-    font-size: 28px;
-  }
-  .vertical-center {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
 
-  }
-</style>
 <div class="card">
 	<div class="card-block">
 		<div class="row text-center">

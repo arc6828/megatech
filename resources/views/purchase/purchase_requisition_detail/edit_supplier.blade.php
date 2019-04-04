@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','กำหนดเจ้าหนี้ใบเสนอซื้อ')
 

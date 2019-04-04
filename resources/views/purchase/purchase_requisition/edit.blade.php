@@ -1,17 +1,6 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แก้ไขรายละเอียดใบเสนอซื้อ')
-
-@section('navbar-menu')
-<div style="margin: 21px;">
-	<a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/purchase/purchase_requisition">back</a>
-	<button class="btn btn-primary btn-sm" onclick="document.getElementById('form-submit').click();">Save</button>
-</div>
-@endsection
-
-@section('breadcrumb-menu')
-
-@endsection
 
 @section('content')
 
@@ -22,8 +11,9 @@
 
 			@include('purchase/purchase_requisition/form')
 
-			<div>
-				<button type="submit" class="d-none" id="form-submit">Save</button>
+			<div class="text-center">
+        <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/purchase_requisition">back</a>
+        <button type="submit" class="btn btn-primary" >Save</button>
 			</div>
 
 		</form>

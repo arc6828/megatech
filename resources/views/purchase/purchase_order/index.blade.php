@@ -1,31 +1,18 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
-@section('title','ใบขาย')
-
-@section('navbar-menu')
-<div style="margin:21px;">
-<a class="btn btn-outline-primary  btn-sm" href="{{ url('/') }}/sales">back</a>
-<a href="{{ url('/') }}/sales/invoice/create" class="btn btn-primary btn-sm">
-	<i class="fa fa-plus"></i> เพิ่มใบขาย
-</a>
-<div>
-@endsection
-
-@section('breadcrumb-menu')
-
-@endsection
+@section('title','ใบสั่งซื้อ')
 
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">รายการใบขาย</h4>
+				<h4 class="card-title">รายการใบสั่งซื้อ</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/sales/invoice" method="GET">
+				<form class="" action="{{ url('/') }}/purchase/purchase_order" method="GET">
 					<div class="form-group form-inline pull-right">
 						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
 						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
@@ -36,41 +23,41 @@
 
 
 
-		<div class="table-responsive table-binvoiceed">
+		<div class="table-responsive table-bpurchase_ordered">
 			<table class="table table-hover text-center" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
-						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">ชื่อลูกค้า</th>
+						<th class="text-center">รหัสเจ้าหนี้</th>
 						<th class="text-center">ชื่อบริษัท</th>
+						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
 						<th class="text-center">สถานะ</th>
 						<th class="text-center">action</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($table_invoice as $row)
+					@foreach($table_purchase_order as $row)
 
 					<tr>
 						<td>
-							{{ $row->invoice_id }}
+							{{ $row->purchase_order_id }}
 						</td>
 						<td>
-							<a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
-								{{ $row->invoice_code }}
+							<a href="{{ url('/') }}/purchase/purchase_order/{{ $row->purchase_order_id }}/edit">
+								{{ $row->purchase_order_code }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
-						<td>{{ $row->customer_name }}</td>
+						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->name }}</td>
-						<td>{{ $row->sales_status_name }}</td>
+						<td>{{ $row->total?$row->total:0 }}</td>
+						<td>{{ $row->short_name }}</td>
+						<td>{{ $row->purchase_status_name }}</td>
 						<td>
-							<a href="javascript:void(0)" onclick="onDelete( {{ $row->invoice_id }} )" class="text-danger">
+							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_order_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>
 							</a>
 						</td>
@@ -87,6 +74,13 @@
 		});
 
 		</script>
+
+    <div class="text-center">
+    <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase">back</a>
+    <a href="{{ url('/') }}/purchase/purchase_order/create" class="btn btn-primary">
+    	<i class="fa fa-plus"></i> เพิ่มใบสั่งซื้อ
+    </a>
+    <div>
 
 	</div>
 </div>
@@ -110,9 +104,9 @@
 			//GET FORM BY ID
 			var form = document.getElementById("form_delete");
 			//CHANGE ACTION TO SPECIFY ID
-			form.action = "{{ url('/') }}/sales/invoice/"+id;
+			form.action = "{{ url('/') }}/purchase/purchase_order/"+id;
 			//SUBMIT
-			var want_to_delete = confirm('Are you sure to delete this invoice ?');
+			var want_to_delete = confirm('Are you sure to delete this purchase_order ?');
 			if(want_to_delete){
 				form.submit();
 			}

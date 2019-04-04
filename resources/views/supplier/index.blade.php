@@ -1,38 +1,17 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
-@section('title','แฟ้มลูกหนี้')
-
-@section('navbar-menu')
-<div style="margin:21px;">
-	<a href="{{ url('/') }}/supplier/create" class="btn pull-right hidden-sm-down btn-success btn-sm">
-		<i class="fa fa-plus"></i> เพิ่มเจ้าหนี้
-	</a>
-<div>
-@endsection
+@section('title','แฟ้มเจ้าหนี้้')
 
 
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 
-		<div class="row">
-			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">แฟ้มลูกค้า</h4>
-				<h6 class="card-subtitle">Display infomation in the table</h6>
-			</div>
-			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/supplier" method="GET">
-					<div class="form-group form-inline pull-right">
-						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
-						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
-					</div>
-				</form>
-			</div>
-		</div>
+
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center">
+			<table class="table table-hover text-center" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">รหัส</th>
@@ -65,14 +44,17 @@
 			<form action="#" method="POST" id="form_delete">
 				{{ csrf_field() }}
 				{{ method_field('DELETE') }}
-				
+
 				<button type="submit"></button>
 			</form>
 	</div>
 	<div class="form-group">
 		<div class="col-lg-12">
 			<div class="text-center">
-				  <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
+        <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
+      	<a href="{{ url('/') }}/supplier/create" class="btn btn-primary">
+      		<i class="fa fa-plus"></i> เพิ่มเจ้าหนี้
+      	</a>
 			</div>
 		</div>
 	</div>
@@ -80,6 +62,13 @@
 
 	</div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+      console.log("555");
+      $('#table').DataTable();
+  });
+
+</script>
 <script>
 	function onDelete(id){
 		//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//

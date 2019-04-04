@@ -8,7 +8,7 @@ use App\Purchase\PurchaseOrderModel;
 use App\Purchase\PurchaseOrderDetailModel;
 use App\Purchase\PurchaseOrderDetailStatusModel;
 
-use App\CustomerModel;
+use App\supplierModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\TaxTypeModel;
@@ -32,7 +32,7 @@ class PurchaseOrderController extends Controller
         'table_purchase_order' => PurchaseOrderModel::select_all(),
         'q' => $request->input('q')
       ];
-      return view('purchase_order/purchase_order/index',$data);
+      return view('purchase/purchase_order/index',$data);
     }
 
     /**
@@ -44,7 +44,7 @@ class PurchaseOrderController extends Controller
     {
       $data = [
           //QUOTATION
-          'table_customer' => CustomerModel::select_all(),
+          'table_supplier' => supplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
@@ -56,7 +56,7 @@ class PurchaseOrderController extends Controller
           'table_purchase_order_detail' => [],
           'table_product' => ProductModel::select_all(),
       ];
-      return view('purchase_order/purchase_order/create',$data);
+      return view('purchase/purchase_order/create',$data);
     }
 
     /**
@@ -71,7 +71,7 @@ class PurchaseOrderController extends Controller
       $input = [
           'purchase_order_code' => $this->getNewCode(),
           'external_reference_id' => $request->input('external_reference_id'),
-          'customer_id' => $request->input('customer_id'),
+          'supplier_id' => $request->input('supplier_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
           'payment_condition' => $request->input('payment_condition',""),
@@ -110,7 +110,7 @@ class PurchaseOrderController extends Controller
       }
       PurchaseOrderDetailModel::insert($list);
 
-      return redirect("purchase_order/purchase_order/{$id}/edit");
+      return redirect("purchase/purchase_order/{$id}/edit");
     }
 
     public function getNewCode(){
@@ -146,7 +146,7 @@ class PurchaseOrderController extends Controller
       $data = [
           //QUOTATION
           'table_purchase_order' => PurchaseOrderModel::select_by_id($id),
-          'table_customer' => CustomerModel::select_all(),
+          'table_supplier' => supplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
@@ -158,7 +158,7 @@ class PurchaseOrderController extends Controller
           'table_purchase_order_detail' => PurchaseOrderDetailModel::select_by_purchase_order_id($id),
           'table_product' => ProductModel::select_all(),
       ];
-      return view('purchase_order/purchase_order/edit',$data);
+      return view('purchase/purchase_order/edit',$data);
     }
 
     /**
@@ -174,7 +174,7 @@ class PurchaseOrderController extends Controller
       $input = [
         //'purchase_order_code' => $purchase_order_code,
         'external_reference_id' => $request->input('external_reference_id'),
-        'customer_id' => $request->input('customer_id'),
+        'supplier_id' => $request->input('supplier_id'),
         'debt_duration' => $request->input('debt_duration'),
         'billing_duration' => $request->input('billing_duration'),
         'payment_condition' => $request->input('payment_condition',""),
@@ -214,7 +214,7 @@ class PurchaseOrderController extends Controller
       PurchaseOrderDetailModel::insert($list);
 
       //4.REDIRECT
-      return redirect("purchase_order/purchase_order/{$id}/edit");
+      return redirect("purchase/purchase_order/{$id}/edit");
     }
 
     /**
@@ -226,6 +226,6 @@ class PurchaseOrderController extends Controller
     public function destroy($id)
     {
       PurchaseOrderModel::delete_by_id($id);
-      return redirect("purchase_order/purchase_order");
+      return redirect("purchase/purchase_order");
     }
 }

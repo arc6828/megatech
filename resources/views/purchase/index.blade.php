@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','การซื้อ')
 
@@ -10,60 +10,78 @@
 
 @section('content')
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 		<div class="row text-center">
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_requisition">
-				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
-				<div><br>ใบเสนอซื้อ</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_requisition">
+        <div class="vertical-center">
+  				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div>ใบเสนอซื้อ</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_requisition_detail">
-				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
-				<div>อนุมัติ<br>ใบเสนอซื้อ</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_requisition_detail">
+        <div class="vertical-center">
+  				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div>อนุมัติ<br>ใบเสนอซื้อ</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_requisition_detail/edit_supplier">
-				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
-				<div>กำหนดเจ้าหนี้<br>ใบเสนอซื้อ</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_requisition_detail/edit_supplier">
+        <div class="vertical-center">
+  				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div>กำหนดเจ้าหนี้<br>ใบเสนอซื้อ</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_order">
-				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
-				<div><br>ใบสั่งซื้อ</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_order">
+        <div class="vertical-center">
+  				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div>ใบสั่งซื้อ</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="#">
-				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
-				<div>จ่ายเงิน<br>มัดจำ</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="#">
+        <div class="vertical-center">
+  				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div>จ่ายเงิน<br>มัดจำ</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/purchase/purchase_receive">
-				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
-				<div>รับ/ซื้อ<br>สินค้า</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_receive">
+        <div class="vertical-center">
+  				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div>รับ/ซื้อ<br>สินค้า</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-				<div class="px-4"><span class="round round-primary my-2"><i class="fa fa-file-text-o"></i></span></div>
-				<div>ส่งคืน<br>สินค้า</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="#">
+        <div class="vertical-center">
+  				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div>ส่งคืน<br>สินค้า</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-success my-3" href="{{url('/')}}/supplier">
-				<div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
-				<div>แฟ้มหลัก<br>เจ้าหนี้</div>
+			<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/supplier">
+        <div class="vertical-center">
+  				<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
+  				<div>แฟ้มหลัก<br>เจ้าหนี้</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-				<a class="btn btn-outline-success my-3" href="{{url('/')}}/product">
-					<div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
-					<div>แฟ้มหลัก<br>สินค้า</div>
+				<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/product">
+          <div class="vertical-center">
+  					<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
+  					<div>แฟ้มหลัก<br>สินค้า</div>
+          </div>
 				</a>
 			</div>
 		</div>

@@ -1,24 +1,13 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','ใบเสนอซื้อ')
 
-@section('navbar-menu')
-<div style="margin:21px;">
-<a class="btn btn-outline-primary  btn-sm" href="{{ url('/') }}/purchase">back</a>
-<a href="{{ url('/') }}/purchase/purchase_requisition/create" class="btn btn-primary btn-sm">
-	<i class="fa fa-plus"></i> เพิ่มใบเสนอซื้อ
-</a>
-<div>
-@endsection
 
-@section('breadcrumb-menu')
-
-@endsection
 
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">รายการใบเสนอซื้อ</h4>
@@ -87,6 +76,13 @@
 		});
 
 		</script>
+
+    <div class="text-center">
+      <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
+      <a href="{{ url('/') }}/purchase/purchase_requisition/create" class="btn btn-primary">
+      	<i class="fa fa-plus"></i> เพิ่มใบเสนอซื้อ
+      </a>
+    <div>
 
 	</div>
 </div>
