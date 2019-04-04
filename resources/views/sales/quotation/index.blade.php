@@ -8,7 +8,7 @@
 	<div class="card-body">
 
     <div class="table-responsive">
-			<table class="table table-sm table-hover text-center table-bordered" id="table">
+			<table class="table table-sm table-hover text-center table-bordered table-striped" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
@@ -52,7 +52,7 @@
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
         $('.number').each(function(index){
-          var number = Number($(this).text()).toLocaleString("en");
+          var number = Number($(this).text()).toLocaleString("en",{minimumFractionDigits: 2});
           $(this).text(number);
         });
 				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();

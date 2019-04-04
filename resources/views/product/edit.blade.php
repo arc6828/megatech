@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แก้ไขสินค้า')
 
@@ -13,38 +13,38 @@
     {{ csrf_field() }}
 	{{ method_field('PUT') }}
     <div class="card">
-        <div class="card-block">
-           
+        <div class="card-body">
+
                 <div class="form-group form-inline">
                     <label class="col-lg-2">รหัสสินค้า</label>
                         <div class="col-lg-3">
                              <input type="text" name="product_code" class="form-control form-control-line" value="{{ $row_product->product_code }}" >
-                        </div> 
-                </div>  
+                        </div>
+                </div>
                 <div class="form-group form-inline">
                         <label class="col-lg-2">รายละเอียดสินค้า</label>
                             <div class="col-lg-3">
                                  <input type="text" name="product_name" class="form-control form-control-line" value="{{ $row_product->product_name }}" >
-                            </div> 
-                </div>  
+                            </div>
+                </div>
                 <div class="form-group form-inline">
                         <label class="col-lg-2">ยี่ห้อ</label>
                             <div class="col-lg-3">
                                  <input type="text" name="product_brand" class="form-control form-control-line" value="{{ $row_product->brand }}" >
-                            </div> 
-                </div> 
+                            </div>
+                </div>
                 <div class="form-group form-inline">
                         <label class="col-lg-2">รายละเอียดสินค้า</label>
                             <div class="col-lg-3">
                                  <textarea type="text" name="product_detail" class="form-control form-control-line" value="{{ $row_product->product_detail }}" ></textarea>
-                            </div> 
-                </div>   
+                            </div>
+                </div>
                 <div class="form-group form-inline">
                         <label class="col-lg-2">หน่วยนับหลัก</label>
                             <div class="col-lg-3">
                                  <input type="text" name="product_unit" class="form-control form-control-line" value="{{ $row_product->product_unit }}" >
-                            </div> 
-                </div> 
+                            </div>
+                </div>
                 <div class="form-group">
                         <div class="col-lg-12">
                           <div class="text-center">
@@ -52,9 +52,9 @@
                             <button class="btn btn-success" type="submit" >Update</button>
                           </div>
                         </div>
-                      </div>   
+                      </div>
             </div>
-        
+
     </div>
 </form>
 @empty

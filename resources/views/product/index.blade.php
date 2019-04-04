@@ -1,26 +1,16 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แฟ้มสินค้า')
 
-@section('navbar-menu')
-<div style="margin:21px;">
-	<a href="{{ url('/') }}/product/create" class="btn pull-right hidden-sm-down btn-success btn-sm">
-		<i class="fa fa-plus"></i> เพิ่มสินค้า
-	</a>
-<div>
-@endsection
 
-@section('breadcrumb-menu')
-
-@endsection
 
 @section('content')
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table-product">
+			<table class="table table-hover text-center table-sm" id="table-product">
 
 			</table>
 			<form action="#" method="POST" id="form_delete" class="d-none">
@@ -38,6 +28,9 @@
 	<div class="col-lg-12">
 		<div class="text-center">
 	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+        	<a href="{{ url('/') }}/product/create" class="btn  btn-primary">
+        		<i class="fa fa-plus"></i> เพิ่มสินค้า
+        	</a>
 		</div>
 	</div>
 </div>

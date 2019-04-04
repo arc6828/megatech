@@ -84,7 +84,7 @@
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
         $('.number').each(function(index){
-          var number = Number($(this).text()).toLocaleString("en");
+          var number = Number($(this).text()).toLocaleString("en",{minimumFractionDigits: 2});
           $(this).text(number);
         });
 				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
