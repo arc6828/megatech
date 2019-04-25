@@ -48,8 +48,8 @@ class PurchaseOrderController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_purchase_order_status' => PurchaseStatusModel::select_by_category('order'),
-          'table_purchase_order_user' => UserModel::select_by_role('purchase_order'),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('order'),
+          'table_purchase_user' => UserModel::select_by_role('purchase_order'),
           //'table_purchase_order_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           //QUOTATION DETAIL
@@ -150,8 +150,8 @@ class PurchaseOrderController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_purchase_order_status' => PurchaseStatusModel::select_by_category('order'),
-          'table_purchase_order_user' => UserModel::select_by_role('purchase_order'),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('order'),
+          'table_purchase_user' => UserModel::select_by_role('purchase_order'),
           'table_zone' => ZoneModel::select_all(),
           'purchase_order_id'=> $id,
           //QUOTATION Detail

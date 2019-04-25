@@ -36,7 +36,18 @@ class PurchaseRequisitionDetailController extends Controller
         $table_purchase_requisition_detail = PurchaseRequisitionDetailModel::select_search($purchase_requisition_detail_status_id,$date_begin,$date_end);
       }
       return response()->json($table_purchase_requisition_detail);
-    }    
+    }
+
+    public function index_by_customer(Request $request,$customer_id)
+    {
+      //$customer_id = $request->input("customer_id");
+      $table_purchase_requisition_detail = PurchaseRequisitionDetailModel::join('tb_purchase_requisition','tb_purchase_requisition_detail.purchase_requisition_id','=','tb_purchase_requisition.purchase_requisition_id')
+        ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
+
+        ->where("customer_id",$customer_id)->get();
+
+      return response()->json($table_purchase_requisition_detail);
+    }
 
     /**
      * Store a newly created resource in storage.

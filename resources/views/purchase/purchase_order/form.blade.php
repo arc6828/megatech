@@ -1,20 +1,20 @@
 <div class="card">
-  <div class="card-block">
+  <div class="card-body">
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="invoice_code"	id="invoice_code" class="form-control form-control-sm"	disabled>
+        <input name="purchase_order_code"	id="purchase_order_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">รหัสเอกสารลูกหนี้</label>
+      <label class="col-lg-2 offset-lg-1">รหัสเอกสารเจ้าหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
       </div>
     </div>
-    <div class="form-group form-inline">
+    <div class="form-group form-inline d-none">
       <label class="col-lg-2">เลขที่ใบขาย</label>
       <div class="col-lg-3">
         <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm"  readonly style="max-width:120px;">
-        @include('sales/invoice/create_from_order_modal')
+        @include('purchase/purchase_order/create_from_order_modal')
       </div>
     </div>
     <div class="form-group form-inline">
@@ -91,11 +91,11 @@
       </div>
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required>
+        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
-          @foreach($table_sales_status as $row_sales_status)
-          <option value="{{ $row_sales_status->sales_status_id }}" >
-            {{	$row_sales_status->sales_status_name }}
+          @foreach($table_purchase_status as $row_purchase_status)
+          <option value="{{ $row_purchase_status->purchase_status_id }}" >
+            {{	$row_purchase_status->purchase_status_name }}
           </option>
           @endforeach
         </select>
@@ -107,9 +107,9 @@
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
-          @foreach($table_sales_user as $row_sales_user)
-          <option value="{{ $row_sales_user->id }}" >
-            {{	$row_sales_user->name }}
+          @foreach($table_purchase_user as $row_purchase_user)
+          <option value="{{ $row_purchase_user->id }}" >
+            {{	$row_purchase_user->name }}
           </option>
           @endforeach
         </select>
@@ -130,10 +130,10 @@
 </div>
 
 
-@include('sales/invoice/detail')
+@include('purchase/purchase_order/detail')
 
-<div class="card">
-	<div class="card-block">
+<div class="card mt-4">
+	<div class="card-body">
 		<div class="row">
 			<div class="col-lg-3">
 				<div class="form-group">
@@ -184,6 +184,8 @@
 
 
 <script>
+
+
 function refreshTotal(){
   var total = 0;
   document.querySelectorAll(".total_edit").forEach(function(element,index){
@@ -249,6 +251,76 @@ function onChange(obj){
     element.value = parseFloat(element.value).toFixed(2)
   });
 
+}
+
+function onChangeCustomer(){
+  console.log("");
+  var customer_id = $("#customer_id").val();
+  console.log(customer_id);
+  fillPurchase_order(customer_id);
+}
+
+function fillPurchase_order(customer_id){
+  //console.log(order_id);
+  $.ajax({
+      url: "{{ url('/') }}/api/purchase_requisition_detail/customer/"+customer_id,
+      type: "GET",
+      dataType : "json",
+  }).done(function(result){
+    fillOrder(result);
+    fillOrderDetail(result);
+    //ALL ABOUT EVENT
+    refreshDetailTableEvent();
+    //AVOID TO EDIT
+    $('#table-purchase_order-detail input').prop('readonly', true);
+
+  }); //END AJAX
+
+  document.querySelector("#btn-close-order").click();
+
+}
+function fillOrder(result){
+  var element = result[0];
+
+  //document.querySelector("#invoice_code").value = element.invoice_code ;
+  document.querySelector("#internal_reference_id").value = element.order_code ;
+  document.querySelector("#external_reference_id").value = element.external_reference_id;
+  document.querySelector("#customer_id").value = element.customer_id;
+  //document.querySelector("#contact_name").value = element.contact_name;
+  var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
+  var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
+  document.querySelector("#debt_duration").value = element.debt_duration;
+  document.querySelector("#billing_duration").value = element.billing_duration ;
+  document.querySelector("#payment_condition").value = element.payment_condition ;
+  document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
+  document.querySelector("#tax_type_id").value = element.tax_type_id ;
+  document.querySelector("#delivery_time").value = element.delivery_time;
+  document.querySelector("#department_id").value = element.department_id ;
+  document.querySelector("#purchase_status_id").value = element.sales_status_id ;
+  document.querySelector("#user_id").value = element.user_id ;
+  document.querySelector("#zone_id").value = element.zone_id ;
+  document.querySelector("#total").value = element.total ;
+  document.querySelector("#remark").value = element.remark ;
+  document.querySelector("#vat_percent").value = element.vat_percent;
+
+  onChange(document.querySelector("#vat_percent"));
+
+}
+function fillOrderDetail(result){
+  //console.log(result);
+  var dataSet = [];
+  result.forEach(function(element,index) {
+    var id = element.purchase_requisition_detail_id;
+    console.log("ELEMENT id : ",id,element);
+    var row = createRow(id, element);
+    dataSet.push(row);
+  });
+  //console.log(dataSet);
+  var table = $('#table-purchase_order-detail').DataTable();
+  table
+      .clear()
+      .rows.add(dataSet)
+      .draw();
 }
 
 </script>

@@ -1,5 +1,5 @@
-<div class="card" id="table">
-	<div class="card-block">
+<div class="card mt-4" id="table">
+	<div class="card-body">
 		<style>
 		.input{
 			max-width: 50px;
@@ -8,22 +8,22 @@
 		</style>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table-invoice-detail" style="width:100%"></table>
+			<table class="table table-hover text-center" id="table-purchase_order-detail" style="width:100%"></table>
 		</div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
-			 	var detail = JSON.parse('@json($table_invoice_detail)');
+			 	var detail = JSON.parse('@json($table_purchase_order_detail)');
 				//console.log("DETAIL : ",detail);
 				var dataSet = [];
 				detail.forEach(function(element,index) {
 					//console.log(element,index);
-					var id = element.invoice_detail_id;
+					var id = element.purchase_order_detail_id;
 					var row = createRow(id, element);
 					dataSet.push(row);
 				});
 				//console.log(dataSet);
 
-				$('#table-invoice-detail').DataTable({
+				$('#table-purchase_order-detail').DataTable({
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
@@ -52,7 +52,7 @@
 
 
 				//AVOID TO EDIT
-				$('#table-invoice-detail input').prop('readonly', true);
+				$('#table-purchase_order-detail input').prop('readonly', true);
 
 			});//END DOMContentLoaded
 
@@ -126,9 +126,9 @@
 			function myFunction(event){
 				//console.log("CHANGE : ", this,this.getAttribute("data_id"));
 				//onChange3(this,this.getAttribute("data_id"));
-				var want_to_delete = confirm('Are you sure to delete this invoice detail?');
+				var want_to_delete = confirm('Are you sure to delete this purchase_order detail?');
 				if(want_to_delete){
-					var table = $('#table-invoice-detail').DataTable();
+					var table = $('#table-purchase_order-detail').DataTable();
 					table
 						.row( $(this).parents('tr') )
 						.remove()
@@ -144,10 +144,6 @@
       }
 		</script>
 
-		<div class="text-center">
-			@include('sales/invoice/create_detail_from_quotation_modal')
-			@include('sales/invoice/create_detail_modal')
 
-		</div>
 	</div>
 </div>

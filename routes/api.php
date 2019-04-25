@@ -39,6 +39,7 @@ Route::apiResource('/customer', 'API\CustomerController');
 Route::apiResource('/product', 'API\ProductController');
 Route::apiResource('/order', 'API\OrderController');
 Route::apiResource('/order_detail', 'API\OrderDetailController');
+Route::get('/purchase_requisition_detail/customer/{customer_id}', 'API\PurchaseRequisitionDetailController@index_by_customer');
 Route::apiResource('/purchase_requisition_detail', 'API\PurchaseRequisitionDetailController');
 
 Route::get('/account', 'AccountController@getAccount');

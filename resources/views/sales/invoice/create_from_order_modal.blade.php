@@ -15,7 +15,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center" id="table-order-model"></table>
+					<table class="table table-hover text-center table-sm" id="table-order-model"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -32,7 +32,7 @@
 		$('#orderModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-order-model') ){
 				$.ajax({
-	          url: "{{ url('/') }}/api/order",
+	          url: "{{ url('/') }}/api/order?user_id={{Auth::id()}}",
 	          type: "GET",
 	          dataType : "json",
 	      }).done(function(result){
@@ -50,7 +50,7 @@
 								element.company_name,
 								element.name,
 								element.sales_status_name,
-								"<button type='button' class='btn btn-warning btn-create' onclick='fillInvoice("+id+");'>" +
+								"<button type='button' class='btn btn-warning btn-create btn-sm' onclick='fillInvoice("+id+");'>" +
 									"<span class='fa fa-shopping-cart'></span>" +
 								"</button>",
 							];

@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แก้ไขรายละเอียดใบขาย')
 
@@ -15,12 +15,12 @@
 
 @section('content')
 
-	@forelse($table_invoice as $row)
-		<form class="" action="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}" id="form" method="POST">
+	@forelse($table_purchase_order as $row)
+		<form class="" action="{{ url('/') }}/purchase/purchase_order/{{ $row->purchase_order_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 
-			@include('sales/invoice/form')
+			@include('purchase/purchase_order/form')
 
 			<div>
 				<button type="submit" class="d-none" id="form-submit">Save</button>
@@ -31,10 +31,10 @@
 		<script >
 			document.addEventListener("DOMContentLoaded", function(event) {
 				//INITIALIZE
-				document.querySelector("#invoice_code").value = "{{ $row->invoice_code }}";
-				document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
-				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
-				document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
+				document.querySelector("#purchase_order_code").value = "{{ $row->purchase_order_code }}";
+				document.querySelector("#external_reference_doc").value = "{{ $row->external_reference_doc }}";
+				document.querySelector("#supplier_id").value = "{{ $row->supplier_id }}";
+				//document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
 			  var str_time = moment("{{ $row->datetime }}").format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
 				var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";
@@ -44,7 +44,7 @@
 				document.querySelector("#tax_type_id").value = "{{ $row->tax_type_id }}";
 				document.querySelector("#delivery_time").value = "{{ $row->delivery_time }}";
 				document.querySelector("#department_id").value = "{{ $row->department_id }}";
-				document.querySelector("#sales_status_id").value = "{{ $row->sales_status_id }}";
+				document.querySelector("#purchase_status_id").value = "{{ $row->purchase_status_id }}";
 				document.querySelector("#user_id").value = "{{ $row->user_id }}";
 				document.querySelector("#zone_id").value = "{{ $row->zone_id }}";
 				document.querySelector("#total").value = "{{ $row->total }}";

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class PurchaseRequisitionDetailModel extends Model
 {
+  protected $table = "tb_purchase_requisition_detail";
   public static function select_all(){
 		return DB::table('tb_purchase_requisition_detail')
       ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
