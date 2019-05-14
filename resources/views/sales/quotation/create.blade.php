@@ -29,7 +29,7 @@
     document.querySelector("#delivery_type_id").value = "2";
     document.querySelector("#tax_type_id").value = "2";
     document.querySelector("#delivery_time").value = "30";
-    document.querySelector("#department_id").value = "1";
+    document.querySelector("#department_id").value = "{{ Auth::user()->role}}";
     document.querySelector("#sales_status_id").value = "1";
     document.querySelector("#user_id").value = "{{ Auth::id() }}";
     document.querySelector("#zone_id").value = "1";

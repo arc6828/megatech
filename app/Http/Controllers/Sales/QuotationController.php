@@ -88,7 +88,7 @@ class QuotationController extends Controller
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
-          'total' => $request->input('total',0),
+          'total' => $request->input('total_after_vat',0),
       ];
       $id = QuotationModel::insert($input);
 
@@ -187,7 +187,7 @@ class QuotationController extends Controller
         'zone_id' => $request->input('zone_id'),
         'remark' => $request->input('remark'),
         'vat_percent' => $request->input('vat_percent',7),
-        'total' => $request->input('total',0),
+        'total' => $request->input('total_after_vat',0),
       ];
       QuotationModel::update_by_id($input,$id);
 

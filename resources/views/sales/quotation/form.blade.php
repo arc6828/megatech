@@ -85,7 +85,7 @@
         <select name="department_id" id="department_id" class="form-control form-control-sm" required readonly>
 
           @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_id }}" >
+          <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}
           </option>
           @endforeach
@@ -177,7 +177,7 @@
 					</label>
 					<label class="col-lg-3">ยอดสุทธิ</label>
 					<div class="col-lg-3">
-						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly disabled>
+						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly >
 					</div>
 				</div>
 

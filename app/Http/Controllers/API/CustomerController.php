@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\CustomerModel;
+use App\UserModel;
+use App\User;
 
 class CustomerController extends Controller
 {
@@ -15,10 +17,14 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-
       $user_id = $request->input("user_id","1");
-      $table_customer = CustomerModel::select_by_user_id($user_id);
-      //$table_customer = CustomerModel::select_all();
+      $table_customer = [];
+      if(UserModel::check_role($user_id,"admin"))
+      {
+        $table_customer = CustomerModel::select_all();
+      }else{
+        $table_customer = CustomerModel::select_by_user_id($user_id);
+      }
       return response()->json($table_customer);
     }
 

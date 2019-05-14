@@ -15,7 +15,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center" id="table-customer-modal" style="width:100%"></table>
+					<table class="table table-hover text-center table-sm" id="table-customer-modal" style="width:100%"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -44,7 +44,7 @@
 		$('#customerModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
 				$.ajax({
-	          url: "{{ url('/') }}/api/customer",
+	          url: "{{ url('/') }}/api/customer?user_id={{ Auth::id() }}",
 	          type: "GET",
 	          dataType : "json",
 	      }).done(function(result){

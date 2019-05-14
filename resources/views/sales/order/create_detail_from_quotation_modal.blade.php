@@ -82,7 +82,7 @@
 			"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit2[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
 			"<input class='input discount_price_edit' name='discount_price_edit2[]'  value='"+element.discount_price+"'>",
 			"<input class='input total_edit' name='total_edit2[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
-			"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' onclick='addProduct2(this);'>" +
+			"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create btn-sm' onclick='addProduct2(this);'>" +
 				"<span class='fa fa-shopping-cart'></span>" +
 			"</button>",
 		];

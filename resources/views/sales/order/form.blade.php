@@ -29,7 +29,7 @@
       @include('sales/order/customer_modal')
       <label class="col-lg-2">P/O ลูกหนี้</label>
       <div class="col-lg-3">
-        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line" onchange="validate_po()" data=""	required>
+        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line" onchange="validate_po()" data="" placeholder="ใส่ '-' ถ้าไม่มี po"	required>
 
       </div>
     </div>
@@ -87,7 +87,7 @@
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
 
           @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_id }}" >
+          <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}
           </option>
           @endforeach
@@ -178,7 +178,7 @@
 					</label>
 					<label class="col-lg-3">ยอดสุทธิ</label>
 					<div class="col-lg-3">
-						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly disabled>
+						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly >
 					</div>
 				</div>
 			</div>

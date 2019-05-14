@@ -9,6 +9,13 @@ class UserModel extends Model
 {
   protected $table = "users";
 
+  public static function check_role($user_id,$role){
+    return DB::table('users')
+      ->where("id",$user_id)
+      ->where("role",$role)
+      ->exists();
+  }
+
   public static function select_all(){
       return DB::table('users')
           ->get();

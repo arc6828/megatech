@@ -161,7 +161,7 @@
 							element.order_code,
               element.date,
 							//element.delivery_time,
-							element.order_detail_status_name,
+							element.company_name,
 							element.product_id,
 							element.product_name,
 							element.amount,
@@ -181,7 +181,7 @@
 								{ title: "เลขที่ OE" },
 								{ title: "วันที่ OE" },
 								//{ title: "วันที่ส่งของ" },
-								{ title: "สถานะการขาย" },
+								{ title: "ลูกค้า" },
 								{ title: "รหัสสินค้า" },
 								{ title: "ชื่อสินค้า" },
 								{ title: "จำนวน" },
@@ -190,8 +190,8 @@
 								{ title: "ค้างส่ง" },
 								{ title: "จำนวนคงคลัง" },
 						]
-					}); //END DATATABLE
-				}).order( [ 1, 'desc' ] ).draw(); //END DONE AJAX
+					}).order( [ 2, 'desc' ] ).draw(); //END DONE AJAX //END DATATABLE
+				});
 		}); //END DOMContentLoaded
 
     function validateCheckbox(){
