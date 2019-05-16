@@ -1,5 +1,8 @@
 <div class="card">
   <div class="card-body">
+    <a class="float-right btn-print d-none">
+      <i class="fas fa-print"></i>
+    </a>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -10,6 +13,7 @@
         <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>
     </div>
+
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสลูกหนี้</label>
       <div class="col-lg-5">

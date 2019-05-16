@@ -139,12 +139,12 @@
 
       var filter = JSON.parse('@json($filter)');
       var filter_param = $.param( filter );
-      var url = "{{ url('/') }}/api/order_detail?"+filter_param;
   		console.log("555",filter,filter_param,url);
+      var url = "{{ url('/') }}/api/order_detail?"+filter_param;
 
 			//AJAX
       $.ajax({
-          url: url,
+          url: "{{ url('/') }}/api/order_detail?"+filter_param,
           type: "GET",
           dataType : "json",
       }).done(function(result){
@@ -190,8 +190,8 @@
 								{ title: "ค้างส่ง" },
 								{ title: "จำนวนคงคลัง" },
 						]
-					}).order( [ 2, 'desc' ] ).draw(); //END DONE AJAX //END DATATABLE
-				});
+					}).order( [ 2, 'desc' ] ).draw(); //END DATATABLE
+				});//END DONE AJAX
 		}); //END DOMContentLoaded
 
     function validateCheckbox(){

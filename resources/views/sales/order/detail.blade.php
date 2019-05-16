@@ -27,7 +27,7 @@
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
-							{ title: "#" },
+							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
@@ -56,8 +56,8 @@
       //EVENT HANDLER
       function createRow(id,element){
         return [
-          id+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
+          //id,
+          element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_name,
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
           element.product_unit,

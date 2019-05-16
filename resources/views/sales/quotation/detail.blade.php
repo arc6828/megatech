@@ -27,14 +27,14 @@
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
-							{ title: "#" },
+							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
 							{ title: "ราคาตั้ง" },
 							{ title: "ส่วนลด %" },
 							{ title: "ราคาขาย" },
-							{ title: "ต่ำกว่าทุน" },
+							{ title: "ส่วนลด > 40%" },
 							{ title: "ราคาขายรวม" },
 							{ title: "action" },
 					],
@@ -55,10 +55,10 @@
       //EVENT HANDLER
       function createRow(id,element){
         return [
-          id+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
+
+          element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_name + " (" + element.product_unit +")",
-          "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
 					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",

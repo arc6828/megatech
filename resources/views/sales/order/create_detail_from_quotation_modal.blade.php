@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#quotationModal" id="btn-ref-quotation">
+<button type="button" class="btn btn-warning  d-none" data-toggle="modal" data-target="#quotationModal" id="btn-ref-quotation">
 	<i class="fa fa-plus"></i> อ้างอิงจากใบเสนอราคา
 </button>
 
@@ -14,9 +14,14 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="table-responsive">
-					<table class="table table-hover text-center" id="table-product-quotation-model"></table>
-				</div>
+
+				<table width="100%" class="table table-hover text-center" id="table-product-quotation-model"></table>
+
+        <div class="text-center">
+          <button class="btn btn-warning" onclick="addAllProduct();" type="button">
+            <span class='fa fa-shopping-cart'> เพิ่มรายการสินค้า</span>
+          </button>
+        </div>
 			</div>
 			<div class="modal-footer d-none">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-close-quotation">Close</button>
@@ -57,12 +62,12 @@
 									{ title: "รหัสสินค้า" },
 									{ title: "ชื่อสินค้า" },
 									{ title: "จำนวน" },
-									{ title: "หน่วย" },
+									//{ title: "หน่วย" },
 									{ title: "ราคาตั้ง" },
 									{ title: "ส่วนลด %" },
 									{ title: "ราคาขาย" },
 									{ title: "ราคาขายรวม" },
-									{ title: "action" },
+									//{ title: "action" },
 							],
 						}); // END DATATABLE
 					}); //END AJAX
@@ -73,16 +78,15 @@
 
 	function createRow2(id,element){
 		return [
-			id+"<input type='hidden' class='id_edit' name='id_edit2[]'  value='"+id+"' >",
+			"<input class='check' type='checkbox' value='"+id+"'>"+"<input type='hidden' class='id_edit' name='id_edit2[]'  value='"+id+"' >",
 			element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit2[]'  value='"+element.product_id+"' >",
-			element.product_name,
+			element.product_name + " (" +element.product_unit + ")",
 			"<input class='input amount_edit' name='amount_edit2[]' id='amount_edit2'  value='"+element.amount+"' >",
-			element.product_unit,
 			"<input class='input normal_price_edit' name='normal_price_edit2[]'  value='"+element.normal_price+"' disabled>",
 			"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit2[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
 			"<input class='input discount_price_edit' name='discount_price_edit2[]'  value='"+element.discount_price+"'>",
-			"<input class='input total_edit' name='total_edit2[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
-			"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create btn-sm' onclick='addProduct2(this);'>" +
+			"<input class='input total_edit' name='total_edit2[]'  value='"+(element.discount_price *  element.amount)+"' disabled>"+
+			"<button type='button' id='btn-add-"+id+"' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create btn-sm class d-none' onclick='addProduct2(this);'>" +
 				"<span class='fa fa-shopping-cart'></span>" +
 			"</button>",
 		];
@@ -120,7 +124,18 @@
 		table.row.add(row).draw( false );
 		refreshDetailTableEvent();
 
-		document.querySelector("#btn-close-quotation").click();
+		//document.querySelector("#btn-close-quotation").click();
 		//console.log("CLICK");
 	}
+
+  function addAllProduct(){
+    $("input.check:checked").each(function(){
+      var id = $(this).val();
+      $("#btn-add-"+id).click();
+    });
+
+
+    document.querySelector("#btn-close-quotation").click();
+
+  }
 </script>

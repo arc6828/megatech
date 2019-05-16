@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-success d-none" data-toggle="modal" data-target="#exampleModal">
 	<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
 </button>
 
@@ -62,7 +62,7 @@
 					});
 					//console.log(dataSet);
 					var table = $('#table-product-model').DataTable({
-						"data": dataSet,						
+						"data": dataSet,
 						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },

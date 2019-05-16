@@ -37,7 +37,9 @@ Route::get('/province/{province_code}/amphoe/{amphoe_code}/district/{district_co
 //API
 Route::apiResource('/customer', 'API\CustomerController');
 Route::apiResource('/product', 'API\ProductController');
-Route::apiResource('/order', 'API\OrderController');
+//Route::apiResource('/order', 'API\OrderController');
+
+Route::get('/order_detail/index2', 'API\OrderDetailController@index2');
 Route::apiResource('/order_detail', 'API\OrderDetailController');
 Route::get('/purchase_requisition_detail/customer/{customer_id}', 'API\PurchaseRequisitionDetailController@index_by_customer');
 Route::apiResource('/purchase_requisition_detail', 'API\PurchaseRequisitionDetailController');

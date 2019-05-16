@@ -21,6 +21,8 @@
 
 		<script >
 			document.addEventListener("DOMContentLoaded", function(event) {
+        $(".btn-print").attr("href","{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}");
+        $(".btn-print").removeClass("d-none");
 				//INITIALIZE
 				document.querySelector("#quotation_code").value = "{{ $row->quotation_code }}";
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";

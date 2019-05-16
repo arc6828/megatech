@@ -15,7 +15,7 @@
       <div class="col-lg-3">
         <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
         <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
-        @include('customer/index_modal')
+        @include('sales/invoice/customer_modal')
       </div>
       <label class="col-lg-2 offset-lg-1">เลขที่ใบจอง</label>
       <div class="col-lg-3">
@@ -84,7 +84,7 @@
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
 
           @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_id }}" >
+          <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}
           </option>
           @endforeach
@@ -185,8 +185,9 @@
 
 
 <script>
-function onChangeCustomer(){
+function onChangeCustomer(id){
   $("#btn-ref-order").click();
+  $("#btn-ref-order").attr("data-id",id);
 }
 function refreshTotal(){
   var total = 0;

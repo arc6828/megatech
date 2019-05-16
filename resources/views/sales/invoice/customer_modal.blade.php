@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#customerModal">
+<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#customerModal">
 	<i class="fa fa-plus"></i> เลือกลูกหนี้
 </button>
 
@@ -28,42 +28,40 @@
 <script>
 	//onClick
 	function select_item(id,name,code) {
-			console.log("ID COMPANY : ",id,name,code);
+			console.log(id);
 					$('#customer_id').val(id);
-					$('#company_name').val(name);
-					//$('#customer_code').val(code);
-					$('#customer_code').text(code);
-
-
+					$('#contact_name').val(name);
+					$('#customer_code').val(code);
 					$('#customerModal').modal('hide');
-					onChangeCustomer();
+					onChangeCustomer(id);
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
-		//console.log("555");
+		console.log("555");
 		//AJAX
 		$('#customerModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
+        var user_id = "{{ Auth::id() }}";
 				$.ajax({
-	          url: "{{ url('/') }}/api/customer?user_id={{ Auth::id() }}",
+	          url: "{{ url('/') }}/api/customer?user_id="+user_id,
 	          type: "GET",
 	          dataType : "json",
 	      }).done(function(result){
-						//console.log(result);
+						console.log(result);
 						var dataSet = [];
 						result.forEach(function(element,index) {
-							//console.log(element,index);
+							console.log(element,index);
 							var row = [
 								element.customer_code,
 								element.company_name,
 								element.contact_name,
 								"<button type='button' " +
 										"class='btn btn-warning btn-sm'" +
-										"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
+										"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`,`"+element.customer_code+"`)' "
 										+">เลือก</button>",
 							];
 							dataSet.push(row);
 						});
-						//console.log(dataSet);
+						console.log(dataSet);
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,

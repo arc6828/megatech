@@ -22,10 +22,10 @@
 
 			@include('sales/invoice/form')
 
-			<div class="text-center">
+			<div class="mt-4 text-center">
 				<a href="{{ url('/') }}/sales/invoice" class="btn btn-outline-primary" style="width:150px;">back</a>
 				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
-				<button type="button" onclick="setPreLoader(true);">CSSS</button>
+				<button class="d-none" type="button" onclick="setPreLoader(true);">CSSS</button>
 			</div>
 
 		</form>

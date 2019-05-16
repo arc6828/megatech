@@ -28,15 +28,19 @@
 <script>
 	//onClick
 	function select_item(id,name,code) {
-			console.log(id);
+			//console.log(id);
 					$('#customer_id').val(id);
-					$('#contact_name').val(name);
-					$('#customer_code').val(code);
+					$('#company_name').val(name);
+					$('#customer_code').text(code);
 					$('#customerModal').modal('hide');
+
+          //set search
+
+          $('#table-customer-modal').DataTable().search(code).draw();
 					onChangeCustomer();
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
-		console.log("Cumtomer 555");
+		//console.log("Cumtomer 555");
 		//AJAX
 		$('#customerModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
@@ -46,33 +50,35 @@
 	          type: "GET",
 	          dataType : "json",
 	      }).done(function(result){
-						console.log(result);
+						//console.log(result);
 						var dataSet = [];
 						result.forEach(function(element,index) {
-							console.log(element,index);
+							//console.log(element,index);
 							var row = [
 								element.customer_code,
 								element.company_name,
-								element.contact_name,
+								//element.contact_name,
 								"<button type='button' " +
 										"class='btn btn-warning btn-sm'" +
-										"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`,`"+element.customer_code+"`)' "
+										"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
 										+">เลือก</button>",
 							];
 							dataSet.push(row);
 						});
-						console.log(dataSet);
+						//console.log(dataSet);
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,
 							columns: [
 									{ title: "รหัส" },
 									{ title: "บริษัท" },
-									{ title: "ผู้ติดต่อ" },
+									//{ title: "ผู้ติดต่อ" },
 									{ title: "#" },
 							]
 						});
+            $('#table-customer-modal').DataTable().search($("#customer_code").text()).draw();
 					}); //END AJAX
+
 			}
 		}); // END MODAL EVENT
 	});//END ADD EVENT LISTENER
