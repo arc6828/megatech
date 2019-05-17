@@ -44,6 +44,8 @@ Route::apiResource('/order_detail', 'API\OrderDetailController');
 Route::get('/purchase_requisition_detail/customer/{customer_id}', 'API\PurchaseRequisitionDetailController@index_by_customer');
 Route::apiResource('/purchase_requisition_detail', 'API\PurchaseRequisitionDetailController');
 
+Route::prefix('purchase')->group(function () {});
+  
 Route::get('/account', 'AccountController@getAccount');
 Route::get('/user', 'UserController@getUser');
 //Route::get('/api/order_detail', 'Sales\OrderDetailController@getOrderDetails');

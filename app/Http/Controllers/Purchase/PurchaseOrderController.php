@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Purchase;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Purchase\PurchaseOrderModel;
-use App\Purchase\PurchaseOrderDetailModel;
-use App\Purchase\PurchaseOrderDetailStatusModel;
+use App\Purchase\OrderModel;
+use App\Purchase\OrderDetailModel;
+use App\Purchase\OrderDetailStatusModel;
 
 use App\supplierModel;
 use App\DeliveryTypeModel;
@@ -17,7 +17,7 @@ use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
 
-class PurchaseOrderController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,10 +26,10 @@ class PurchaseOrderController extends Controller
      */
     public function index(Request $request)
     {
-      //$table_purchase_order = PurchaseOrderModel::select_by_keyword($q);
+      //$table_purchase_order = OrderModel::select_by_keyword($q);
       $data = [
         //QUOTATION
-        'table_purchase_order' => PurchaseOrderModel::select_all(),
+        'table_purchase_order' => OrderModel::select_all(),
         'q' => $request->input('q')
       ];
       return view('purchase/purchase_order/index',$data);
@@ -86,7 +86,7 @@ class PurchaseOrderController extends Controller
           'vat_percent' => $request->input('vat_percent',7),
           'total' => $request->input('total',0),
       ];
-      $id = PurchaseOrderModel::insert($input);
+      $id = OrderModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL
       $list = [];
@@ -108,13 +108,13 @@ class PurchaseOrderController extends Controller
           $list[] = $a;
         }
       }
-      PurchaseOrderDetailModel::insert($list);
+      OrderDetailModel::insert($list);
 
       return redirect("purchase/purchase_order/{$id}/edit");
     }
 
     public function getNewCode(){
-        $number = PurchaseOrderModel::select_count_by_current_month();
+        $number = OrderModel::select_count_by_current_month();
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
@@ -145,7 +145,7 @@ class PurchaseOrderController extends Controller
     {
       $data = [
           //QUOTATION
-          'table_purchase_order' => PurchaseOrderModel::select_by_id($id),
+          'table_purchase_order' => OrderModel::select_by_id($id),
           'table_supplier' => supplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
@@ -155,7 +155,7 @@ class PurchaseOrderController extends Controller
           'table_zone' => ZoneModel::select_all(),
           'purchase_order_id'=> $id,
           //QUOTATION Detail
-          'table_purchase_order_detail' => PurchaseOrderDetailModel::select_by_purchase_order_id($id),
+          'table_purchase_order_detail' => OrderDetailModel::select_by_purchase_order_id($id),
           'table_product' => ProductModel::select_all(),
       ];
       return view('purchase/purchase_order/edit',$data);
@@ -189,10 +189,10 @@ class PurchaseOrderController extends Controller
         'vat_percent' => $request->input('vat_percent',7),
         'total' => $request->input('total',0),
       ];
-      PurchaseOrderModel::update_by_id($input,$id);
+      OrderModel::update_by_id($input,$id);
 
       //2.DELETE QUOTATION DETAIL FIRST
-      PurchaseOrderDetailModel::delete_by_purchase_order_id($id);
+      OrderDetailModel::delete_by_purchase_order_id($id);
 
       //3.INSERT ALL NEW QUOTATION DETAIL
       $list = [];
@@ -211,7 +211,7 @@ class PurchaseOrderController extends Controller
         }
       }
 
-      PurchaseOrderDetailModel::insert($list);
+      OrderDetailModel::insert($list);
 
       //4.REDIRECT
       return redirect("purchase/purchase_order/{$id}/edit");
@@ -225,7 +225,7 @@ class PurchaseOrderController extends Controller
      */
     public function destroy($id)
     {
-      PurchaseOrderModel::delete_by_id($id);
+      OrderModel::delete_by_id($id);
       return redirect("purchase/purchase_order");
     }
 }

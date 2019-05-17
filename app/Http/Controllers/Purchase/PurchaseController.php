@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Purchase;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Purchase\PurchaseReceiveModel;
-use App\Purchase\PurchaseReceiveDetailModel;
+use App\Purchase\PurchaseModel;
+use App\Purchase\PurchaseDetailModel;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
@@ -14,7 +14,7 @@ use App\PurchaseStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 
-class PurchaseReceiveController extends Controller
+class PurchaseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class PurchaseReceiveController extends Controller
     {
         //QUOTATION
         $q = $request->input('q');
-        $table_purchase_receive = PurchaseReceiveModel::select_by_keyword($q);
+        $table_purchase_receive = PurchaseModel::select_by_keyword($q);
         //QUATATION DETAIL
 
         $data = [
@@ -85,12 +85,12 @@ class PurchaseReceiveController extends Controller
             'remark' => $request->input('remark'),
             'vat_percent' => $request->input('vat_percent',7),
         ];
-        $id = PurchaseReceiveModel::insert($input);
+        $id = PurchaseModel::insert($input);
         return redirect("purchase/purchase_receive/{$id}/edit");
     }
 
     public function getNewCode(){
-        $count = PurchaseReceiveModel::select_count_by_current_month() + 1;
+        $count = PurchaseModel::select_count_by_current_month() + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
@@ -118,14 +118,14 @@ class PurchaseReceiveController extends Controller
      */
     public function edit($id)
     {
-        $table_purchase_receive = PurchaseReceiveModel::select_by_id($id);
+        $table_purchase_receive = PurchaseModel::select_by_id($id);
         $table_customer = CustomerModel::select_all();
         $table_delivery_type = DeliveryTypeModel::select_all();
         $table_tax_type = TaxTypeModel::select_all();
         $table_purchase_status = PurchaseStatusModel::select_all();
         $table_purchase_user = UserModel::select_by_role('purchase');
         $table_zone = ZoneModel::select_all();
-        $table_purchase_receive_detail = PurchaseReceiveDetailModel::select_by_purchase_receive_id($id);
+        $table_purchase_receive_detail = PurchaseDetailModel::select_by_purchase_receive_id($id);
 
         $data = [
             'table_purchase_receive' => $table_purchase_receive,
@@ -166,7 +166,7 @@ class PurchaseReceiveController extends Controller
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
       ];
-      PurchaseReceiveModel::update_by_id($input,$id);
+      PurchaseModel::update_by_id($input,$id);
       return redirect("purchase/purchase_receive/{$id}/edit");
     }
 

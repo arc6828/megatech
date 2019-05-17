@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Purchase;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Purchase\PurchaseReceiveModel;
-use App\Purchase\PurchaseReceiveDetailModel;
+use App\Purchase\PurchaseModel;
+use App\Purchase\PurchaseDetailModel;
 use App\ProductModel;
 
-class PurchaseReceiveDetailController extends Controller
+class PurchaseDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class PurchaseReceiveDetailController extends Controller
     public function index($purchase_receive_id)
     {
         //QUATATION DETAIL
-        $table_purchase_receive_detail = PurchaseReceiveDetailModel::select_by_purchase_receive_id($purchase_receive_id);
+        $table_purchase_receive_detail = PurchaseDetailModel::select_by_purchase_receive_id($purchase_receive_id);
         $data = [
             'table_purchase_receive_detail' => $table_purchase_receive_detail,
             'purchase_receive_id' => $purchase_receive_id,
@@ -34,7 +34,7 @@ class PurchaseReceiveDetailController extends Controller
     public function create(Request $request, $purchase_receive_id)
     {
         $q = $request->input('q');
-        $table_purchase_receive = PurchaseReceiveModel::select_by_id($purchase_receive_id);
+        $table_purchase_receive = PurchaseModel::select_by_id($purchase_receive_id);
         $table_product = ProductModel::select_by_keyword($q);
         $data = [
             'table_product' => $table_product,
@@ -59,7 +59,7 @@ class PurchaseReceiveDetailController extends Controller
             "discount_price" => $request->input('discount_price',0),
             "purchase_receive_id" => $purchase_receive_id,
         ];
-        PurchaseReceiveDetailModel::insert($input);
+        PurchaseDetailModel::insert($input);
         return redirect("purchase/purchase_receive/{$purchase_receive_id}/edit#table");
     }
 
@@ -71,7 +71,7 @@ class PurchaseReceiveDetailController extends Controller
      */
     public function show($purchase_receive_id, $id)
     {
-        $table_purchase_receive_detail = PurchaseReceiveDetailModel::select_by_id($id);
+        $table_purchase_receive_detail = PurchaseDetailModel::select_by_id($id);
         $data = [
             'table_product' => $table_product,
             'table_purchase_receive_detail' => $table_purchase_receive_detail,
@@ -88,7 +88,7 @@ class PurchaseReceiveDetailController extends Controller
      */
     public function edit($purchase_receive_id, $id)
     {
-		$table_purchase_receive_detail = PurchaseReceiveDetailModel::select_by_id($id);
+		$table_purchase_receive_detail = PurchaseDetailModel::select_by_id($id);
         $data = [
             'table_purchase_receive_detail' => $table_purchase_receive_detail,
             'purchase_receive_id' => $purchase_receive_id,
@@ -109,7 +109,7 @@ class PurchaseReceiveDetailController extends Controller
             "amount" => $request->input('amount'),
             "discount_price" => $request->input('discount_price',0),
         ];
-        PurchaseReceiveDetailModel::update_by_id($input,$id);
+        PurchaseDetailModel::update_by_id($input,$id);
         return redirect("purchase/purchase_receive/{$purchase_receive_id}/edit#table");
     }
 
@@ -121,7 +121,7 @@ class PurchaseReceiveDetailController extends Controller
      */
     public function destroy($purchase_receive_id, $id)
     {
-        PurchaseReceiveDetailModel::delete_by_id($id);
+        PurchaseDetailModel::delete_by_id($id);
         return redirect("purchase/purchase_receive/{$purchase_receive_id}/edit#table");
     }
 }

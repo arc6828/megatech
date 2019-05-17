@@ -53,7 +53,7 @@
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
-				$('#table').DataTable();
+				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
 		});
 
 		</script>

@@ -13,7 +13,7 @@
 	<div class="card-body">
 		<div class="row text-center">
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_requisition">
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/requisition">
         <div class="vertical-center">
   				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   				<div>ใบเสนอซื้อ</div>
@@ -21,7 +21,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_requisition_detail">
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/requisition_detail">
         <div class="vertical-center">
   				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   				<div>อนุมัติ<br>ใบเสนอซื้อ</div>
@@ -29,7 +29,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_requisition_detail/edit_supplier">
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/requisition_detail/edit_supplier">
         <div class="vertical-center">
   				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   				<div>กำหนดเจ้าหนี้<br>ใบเสนอซื้อ</div>
@@ -37,7 +37,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_order">
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/order">
         <div class="vertical-center">
   				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   				<div>ใบสั่งซื้อ</div>
@@ -53,7 +53,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/purchase_order">
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/receive">
         <div class="vertical-center">
   				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   				<div>รับ/ซื้อ<br>สินค้า</div>
@@ -61,7 +61,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="#">
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/sendback">
         <div class="vertical-center">
   				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   				<div>ส่งคืน<br>สินค้า</div>

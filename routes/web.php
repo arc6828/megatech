@@ -62,18 +62,18 @@ Route::middleware(['auth'])->group(function () {
   Route::middleware(['role:purchase,admin'])->group(function () {
     Route::prefix('purchase')->group(function () {
       //Route::resource('/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
-      Route::resource('/purchase_requisition', 'Purchase\PurchaseRequisitionController');
-      Route::get('/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController@index');
-      Route::put('/purchase_requisition_detail/approve', 'Purchase\PurchaseRequisitionDetailController@approve');
-      Route::get('/purchase_requisition_detail/edit_supplier', 'Purchase\PurchaseRequisitionDetailController@edit_supplier');
-      Route::put('/purchase_requisition_detail/update_supplier', 'Purchase\PurchaseRequisitionDetailController@update_supplier');
+      Route::resource('/requisition', 'Purchase\RequisitionController');
+      Route::get('/requisition_detail', 'Purchase\RequisitionDetailController@index');
+      Route::put('/requisition_detail/approve', 'Purchase\RequisitionDetailController@approve');
+      Route::get('/requisition_detail/edit_supplier', 'Purchase\RequisitionDetailController@edit_supplier');
+      Route::put('/requisition_detail/update_supplier', 'Purchase\RequisitionDetailController@update_supplier');
       //Route::resource('/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
 
       //Route::resource('/purchase_receive', 'Purchase\PurchaseReceiveController');
       //Route::resource('/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
 
-      Route::resource('/purchase_order', 'Purchase\PurchaseOrderController');
+      Route::resource('/order', 'Purchase\OrderController');
       //Route::resource('/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
 
     });
