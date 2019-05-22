@@ -24,7 +24,7 @@ class RequisitionDetailController extends Controller
       'table_purchase_requisition_detail_status' => RequisitionDetailStatusModel::select_all(),
       'filter' => $filter,
     ];
-    return view('purchase/purchase_requisition_detail/index',$data);
+    return view('purchase/requisition_detail/index',$data);
   }
 
   public function approve(Request $request)
@@ -66,7 +66,7 @@ class RequisitionDetailController extends Controller
       'table_supplier' => SupplierModel::select_all(),
       'filter' => $filter,
     ];
-    return view('purchase/purchase_requisition_detail/edit_supplier',$data);
+    return view('purchase/requisition_detail/edit_supplier',$data);
   }
 
   public function update_supplier(Request $request)

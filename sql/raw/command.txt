@@ -1,0 +1,9 @@
+LOAD DATA LOCAL INFILE 'MEGA-new-price-list-23-3-2016-Copy.csv' INTO TABLE raw_product FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+
+
+INSERT INTO `tb_product`( `product_code`, `product_name`, `brand`, `normal_price`, `BARCODE`) SELECT MegaCode,Description,Grade,PriceList,ItemCode FROM raw_product
+
+LOAD DATA LOCAL INFILE 'supplier.csv' INTO TABLE supp FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+
+INSERT INTO `tb_supplier`( `supplier_code`, `company_name`, `address`, `address2`, `telephone`, `fax`, `tax_number`) SELECT code,company,address1,address2,TEL,FAX,tax
+ FROM raw_product

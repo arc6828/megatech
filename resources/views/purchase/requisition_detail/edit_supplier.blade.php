@@ -16,11 +16,11 @@
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
     <form method="get" action="">
   		<div class="form-group form-inline">
   			<label class="col-lg-2 offset-lg-1">สถานะ</label>
-  			<div class="col-lg-3">{{ $filter->purchase_requisition_detail_status_id}}
+  			<div class="col-lg-3">
   					<select name="purchase_requisition_detail_status_id" id="purchase_requisition_detail_status_id" class="form-control form-control-sm"
               onchange="onSubmit(this);" required>
   							<option value="" >None</option>
@@ -95,19 +95,19 @@
     </script>
   </div>
 </div>
-<div class="card">
-	<div class="card-block">
-    <form action="{{ url('/') }}/purchase/purchase_requisition_detail/update_supplier" method="post" id="form_table" onsubmit="return validateCheckbox();" >
+<div class="mt-4 card">
+	<div class="card-body">
+    <form action="{{ url('/') }}/purchase/requisition_detail/update_supplier" method="post" id="form_table" onsubmit="return validateCheckbox();" >
       {{ csrf_field() }}
     	{{ method_field('PUT') }}
 
   		<div class="table-responsive">
-  			<table class="table table-hover text-center" id="table-purchase_requisition-detail" style="width:100%">
+  			<table class="table table-hover text-center table-sm" id="table-purchase_requisition-detail" style="width:100%">
 
   			</table>
   		</div>
       <div class="form-group form-inline text-center">
-        <div class="col-lg-4 offset-lg-4">
+        <div class="col-lg-6 offset-lg-2">
           <select name="action" id="action" class="form-control form-control-sm" required>
               @foreach($table_supplier as $row_supplier)
               <option
@@ -124,7 +124,7 @@
               </option>
               @endforeach
           </select>
-          <button type="summit" id="form_summit_table" class="btn btn-primary">
+          <button type="summit" id="form_summit_table" class="btn btn-primary btn-sm">
     				submit
     			</button>
       </div>
@@ -147,7 +147,7 @@
 
       var filter = JSON.parse('@json($filter)');
       var filter_param = $.param( filter );
-      var url = "{{ url('/') }}/api/purchase_requisition_detail?"+filter_param;
+      var url = "{{ url('/') }}/api/purchase/requisition_detail?"+filter_param;
   		console.log("555",filter,filter_param,url);
 
 			//AJAX
@@ -162,13 +162,13 @@
 						console.log(element,index);
             var id = element.purchase_requisition_detail_id;
 						var row = [
-							"<input type='checkbox' name='selected_purchase_requisition_detail_ids[]' class='form-control form-control-sm' value='"+id+"' >"+
+							"<input type='checkbox' name='selected_purchase_requisition_detail_ids[]'  value='"+id+"' >"+
               "<input type='hidden' name='purchase_requisition_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
 							element.date,
 							element.purchase_requisition_code,
-							element.delivery_time,
-							element.purchase_requisition_detail_status_name,
+							//element.delivery_time,
+							//element.purchase_requisition_detail_status_name,
 							element.product_id,
 							element.product_name,
 							element.amount,
@@ -187,8 +187,8 @@
 								{ title: "#" },
 								{ title: "วันที่ OE" },
 								{ title: "เลขที่ OE" },
-								{ title: "วันที่ส่งของ" },
-								{ title: "สถานะการขาย" },
+								//{ title: "วันที่ส่งของ" },
+								//{ title: "สถานะการขาย" },
 								{ title: "รหัสสินค้า" },
 								{ title: "ชื่อสินค้า" },
 								{ title: "จำนวน" },

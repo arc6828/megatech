@@ -1,3 +1,5 @@
+<!-- Deplicated -->
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#quotationModal">
 	<i class="fa fa-plus"></i> อ้างอิงจากใบเสนอราคา
@@ -15,7 +17,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center" id="table-product-quotation-model"></table>
+					<table class="table table-hover text-center table-sm" id="table-product-quotation-model"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -47,8 +49,8 @@
 								element.product_name,
 								element.amount_in_stock,
 								price,
-								"<input name='amount_create' id='amount_create"+id+"'  value='1' >",
-								"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create' onclick='addProduct(this);'>" +
+								"<input class='input' name='amount_create' id='amount_create"+id+"'  value='1' >",
+								"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-sm btn-warning btn-create' onclick='addProduct(this);'>" +
 									"<span class='fa fa-shopping-cart'></span>" +
 								"</button>",
 							];

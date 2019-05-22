@@ -41,11 +41,12 @@ Route::apiResource('/product', 'API\ProductController');
 
 Route::get('/order_detail/index2', 'API\OrderDetailController@index2');
 Route::apiResource('/order_detail', 'API\OrderDetailController');
-Route::get('/purchase_requisition_detail/customer/{customer_id}', 'API\PurchaseRequisitionDetailController@index_by_customer');
-Route::apiResource('/purchase_requisition_detail', 'API\PurchaseRequisitionDetailController');
 
-Route::prefix('purchase')->group(function () {});
-  
+Route::prefix('purchase')->group(function () {
+  Route::get('/purchase_requisition_detail/customer/{customer_id}', 'API\PurchaseRequisitionDetailController@index_by_customer');
+  Route::apiResource('/requisition_detail', 'API\Purchase\RequisitionDetailController');
+});
+
 Route::get('/account', 'AccountController@getAccount');
 Route::get('/user', 'UserController@getUser');
 //Route::get('/api/order_detail', 'Sales\OrderDetailController@getOrderDetails');
