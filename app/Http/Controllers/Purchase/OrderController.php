@@ -48,9 +48,10 @@ class OrderController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('order'),
-          'table_purchase_user' => UserModel::select_by_role('purchase_order'),
-          'table_purchase_order_user' => UserModel::select_all(),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+          //'table_purchase_user' => UserModel::select_by_role('purchase_order'),
+          'table_purchase_user' => UserModel::all(),
+          //'table_purchase_order_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           //QUOTATION DETAIL
           'table_purchase_order_detail' => [],
@@ -109,6 +110,8 @@ class OrderController extends Controller
         }
       }
       OrderDetailModel::insert($list);
+
+      //UPDATE PR Detail
 
       return redirect("purchase/order/{$id}/edit");
     }
@@ -212,6 +215,8 @@ class OrderController extends Controller
       }
 
       OrderDetailModel::insert($list);
+
+      //UPDATE PR Detail
 
       //4.REDIRECT
       return redirect("purchase/order/{$id}/edit");

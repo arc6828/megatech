@@ -13,7 +13,7 @@
 	<div class="card-body">
 
 		<div class="table-responsive table-binvoiceed">
-			<table class="table table-hover text-center" id="table">
+			<table width="100%" class="table table-hover text-center table-sm" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>

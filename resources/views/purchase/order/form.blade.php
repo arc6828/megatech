@@ -292,29 +292,32 @@ function fillPurchase_order(supplier_id){
 }
 function fillOrder(result){
   var element = result[0];
+  if(element){
+    //document.querySelector("#invoice_code").value = element.invoice_code ;
+    //document.querySelector("#internal_reference_id").value = element.purchase_order_code ;
+    //document.querySelector("#external_reference_id").value = element.external_reference_id;
+    //document.querySelector("#supplier_id").value = element.supplier_id;
+    //document.querySelector("#contact_name").value = element.contact_name;
+    //var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
+    //var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
+    document.querySelector("#debt_duration").value = element.debt_duration;
+    document.querySelector("#billing_duration").value = element.billing_duration ;
+    document.querySelector("#payment_condition").value = element.payment_condition ;
+    document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
+    document.querySelector("#tax_type_id").value = element.tax_type_id ;
+    document.querySelector("#delivery_time").value = element.delivery_time;
+    document.querySelector("#department_id").value = element.department_id ;
+    document.querySelector("#purchase_status_id").value = element.sales_status_id ;
+    document.querySelector("#user_id").value = element.user_id ;
+    document.querySelector("#zone_id").value = element.zone_id ;
+    document.querySelector("#total").value = element.total ;
+    document.querySelector("#remark").value = element.remark ;
+    document.querySelector("#vat_percent").value = element.vat_percent;
 
-  //document.querySelector("#invoice_code").value = element.invoice_code ;
-  //document.querySelector("#internal_reference_id").value = element.purchase_order_code ;
-  //document.querySelector("#external_reference_id").value = element.external_reference_id;
-  document.querySelector("#supplier_id").value = element.supplier_id;
-  //document.querySelector("#contact_name").value = element.contact_name;
-  var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
-  var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
-  document.querySelector("#debt_duration").value = element.debt_duration;
-  document.querySelector("#billing_duration").value = element.billing_duration ;
-  document.querySelector("#payment_condition").value = element.payment_condition ;
-  document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
-  document.querySelector("#tax_type_id").value = element.tax_type_id ;
-  document.querySelector("#delivery_time").value = element.delivery_time;
-  document.querySelector("#department_id").value = element.department_id ;
-  document.querySelector("#purchase_status_id").value = element.sales_status_id ;
-  document.querySelector("#user_id").value = element.user_id ;
-  document.querySelector("#zone_id").value = element.zone_id ;
-  document.querySelector("#total").value = element.total ;
-  document.querySelector("#remark").value = element.remark ;
-  document.querySelector("#vat_percent").value = element.vat_percent;
+    onChange(document.querySelector("#vat_percent"));
+  }
 
-  onChange(document.querySelector("#vat_percent"));
+
 
 }
 function fillOrderDetail(result){
@@ -323,8 +326,11 @@ function fillOrderDetail(result){
   result.forEach(function(element,index) {
     var id = element.purchase_requisition_detail_id;
     console.log("ELEMENT id : ",id,element);
-    var row = createRow(id, element);
-    dataSet.push(row);
+    //1 : means approved
+    if(element.purchase_requisition_detail_status_id == 1){
+      var row = createRow(id, element);
+      dataSet.push(row);
+    }
   });
   //console.log(dataSet);
   var table = $('#table-purchase_order-detail').DataTable();

@@ -70,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
       //Route::resource('/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
 
-      //Route::resource('/purchase_receive', 'Purchase\PurchaseReceiveController');
+      Route::resource('/receive', 'Purchase\ReceiveController');
       //Route::resource('/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
 
       Route::resource('/order', 'Purchase\OrderController');

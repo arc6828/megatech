@@ -38,6 +38,13 @@ class RequisitionDetailController extends Controller
       return response()->json($table_purchase_requisition_detail);
     }
 
+    public function index2(Request $request)
+    {
+      $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id",3);
+      $table_purchase_requisition_detail = RequisitionDetailModel::select_search2($purchase_requisition_detail_status_id);
+      return response()->json($table_purchase_requisition_detail);
+    }
+
     public function index_by_supplier(Request $request,$supplier_id)
     {
       //$supplier_id = $request->input("supplier_id");

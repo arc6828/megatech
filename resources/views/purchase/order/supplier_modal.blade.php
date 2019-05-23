@@ -13,9 +13,13 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div class="mt--4 modal-body">
 				<div class="table-responsive">
 					<table class="table table-hover text-center table-sm" id="table-supplier-modal" style="width:100%"></table>
+				</div>
+        <hr>
+        <div class="table-responsive">
+					<table class="table table-hover text-center table-sm" id="table-order-detail" style="width:100%"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -62,7 +66,7 @@
 						});
 						//console.log(dataSet);
 
-						$('#table-supplier-modal').DataTable({
+						var table = $('#table-supplier-modal').DataTable({
 							data: dataSet,
   						deferRender : true,
 							columns: [
@@ -70,10 +74,75 @@
 									{ title: "บริษัท" },
 									//{ title: "ผู้ติดต่อ" },
 									{ title: "#" },
-							]
+							],
+              "pageLength" : 3,
 						});
+
+            $('#table-supplier-modal').on( 'click', 'tr', function () {
+                var d = table.row( this ).data();
+                //console.log("ROW : ",d);
+
+                var key = d[0];
+                var table_detail = $('#table-order-detail').DataTable();
+                table_detail.search(key).draw();
+            } );
 					}); //END AJAX
 			}
+
+
+      //detail
+      //AJAX
+      if(  ! $.fn.DataTable.isDataTable('#table-order-detail') ){
+        $.ajax({
+            url: "{{ url('/') }}/api/purchase/requisition_detail/index2",
+            type: "GET",
+            dataType : "json",
+        }).done(function(result){
+            //console.log(result);
+            var dataSet = [];
+            result.forEach(function(element,index) {
+              //console.log(element,index);
+              var id = element.requisition_detail_id;
+              var row = [
+                element.purchase_requisition_code,
+                element.datetime,
+                //element.delivery_time,
+                element.supplier_code,
+                element.company_name,
+                element.product_code,
+                element.product_name,
+                element.amount,
+                "<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
+                //0,
+                //0,
+                //0,
+              ];
+              dataSet.push(row);
+            });
+            //console.log(dataSet);
+
+            var table_detail = $('#table-order-detail').DataTable({
+              data: dataSet,
+              columns: [
+                  { title: "เลขที่ PR" },
+                  { title: "วันที่ PR" },
+                  //{ title: "วันที่ส่งของ" },
+                  { title: "รหัสเจ้าหนี้" },
+                  { title: "เจ้าหนี้" },
+                  { title: "รหัสสินค้า" },
+                  { title: "ชื่อสินค้า" },
+                  { title: "จำนวน" },
+                  { title: "จำนวนที่อนุมัติ" },
+                  //{ title: "ค้างรับ" },
+                  //{ title: "ค้างส่ง" },
+                  //{ title: "จำนวนคงคลัง" },
+              ],
+              "pageLength" : 3,
+            }); //END DATATABLE
+            $('#table-order-detail input').attr("readonly",true);
+            table_detail.search("*").draw();
+          });//END DONE AJAX
+        }
 		}); // END MODAL EVENT
 	});//END ADD EVENT LISTENER
 </script>
