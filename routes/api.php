@@ -36,6 +36,7 @@ Route::get('/province/{province_code}/amphoe/{amphoe_code}/district/{district_co
 
 //API
 Route::apiResource('/customer', 'API\CustomerController');
+Route::apiResource('/supplier', 'API\SupplierController');
 Route::apiResource('/product', 'API\ProductController');
 //Route::apiResource('/order', 'API\OrderController');
 
@@ -43,7 +44,7 @@ Route::get('/order_detail/index2', 'API\OrderDetailController@index2');
 Route::apiResource('/order_detail', 'API\OrderDetailController');
 
 Route::prefix('purchase')->group(function () {
-  Route::get('/purchase_requisition_detail/customer/{customer_id}', 'API\PurchaseRequisitionDetailController@index_by_customer');
+  Route::get('/requisition_detail/supplier/{supplier_id}', 'API\Purchase\RequisitionDetailController@index_by_supplier');
   Route::apiResource('/requisition_detail', 'API\Purchase\RequisitionDetailController');
 });
 

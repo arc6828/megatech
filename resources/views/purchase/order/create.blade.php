@@ -1,17 +1,17 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','สร้างใบขาย')
+@section('title','สร้างใบสั่งซื้อ')
 
 
 @section('content')
 
-<form class="" action="{{ url('/') }}/purchase/purchase_order" method="POST">
+<form class="" action="{{ url('/') }}/purchase/order" method="POST">
     {{ csrf_field() }}
     {{ method_field('POST') }}
-    @include('purchase/purchase_order/form')
+    @include('purchase/order/form')
     <div class="text-center mt-4">
 
-        <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase/purchase_order">back</a>
+        <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase/order">back</a>
         <button type="submit" class="btn btn-primary  " id="form-submit">Save</button>
 
 
@@ -22,7 +22,7 @@
   document.addEventListener("DOMContentLoaded", function(event) {
     //INITIALIZE
     document.querySelector("#invoice_code").value = "";
-    document.querySelector("#customer_id").value = "";
+    document.querySelector("#supplier_id").value = "";
     document.querySelector("#contact_name").value = "";
     var str_time = moment().format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
     var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';

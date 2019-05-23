@@ -12,7 +12,7 @@
 				<h6 class="card-subtitle">Display infomation in the table</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/purchase/purchase_order" method="GET">
+				<form class="" action="{{ url('/') }}/purchase/order" method="GET">
 					<div class="form-group form-inline pull-right">
 						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
 						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
@@ -23,30 +23,30 @@
 
 
 
-		<div class="table-responsive table-bpurchase_ordered">
-			<table class="table table-hover text-center" id="table">
+		<div class="table-responsive">
+			<table width="100%" class="table table-hover text-center table-sm  table-bordered table-striped" id="table">
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center d-none">#</th>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
 						<th class="text-center">รหัสเจ้าหนี้</th>
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center">สถานะ</th>
-						<th class="text-center">action</th>
+						<th class="text-center d-none">สถานะ</th>
+						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($table_purchase_order as $row)
 
 					<tr>
-						<td>
+						<td class="d-none">
 							{{ $row->purchase_order_id }}
 						</td>
 						<td>
-							<a href="{{ url('/') }}/purchase/purchase_order/{{ $row->purchase_order_id }}/edit">
+							<a href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}/edit">
 								{{ $row->purchase_order_code }}
 							</a>
 						</td>
@@ -55,8 +55,8 @@
 						<td>{{ $row->company_name }}</td>
 						<td>{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td>{{ $row->purchase_status_name }}</td>
-						<td>
+						<td class="d-none">{{ $row->purchase_status_name }}</td>
+						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_order_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>
 							</a>
@@ -70,20 +70,22 @@
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
-				$('#table').DataTable();
+				$('#table').DataTable().order( [ 1, 'desc' ] ).draw();
 		});
 
 		</script>
 
-    <div class="text-center">
-    <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase">back</a>
-    <a href="{{ url('/') }}/purchase/purchase_order/create" class="btn btn-primary">
-    	<i class="fa fa-plus"></i> เพิ่มใบสั่งซื้อ
-    </a>
-    <div>
+
 
 	</div>
 </div>
+
+<div class="mt-4 text-center">
+  <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase">back</a>
+  <a href="{{ url('/') }}/purchase/order/create" class="btn btn-primary">
+    <i class="fa fa-plus"></i> เพิ่มใบสั่งซื้อ
+  </a>
+<div>
 
 <div id="outer-form-container" style="display:none;">
 	<form action="#" method="POST" id="form_delete" >
@@ -104,7 +106,7 @@
 			//GET FORM BY ID
 			var form = document.getElementById("form_delete");
 			//CHANGE ACTION TO SPECIFY ID
-			form.action = "{{ url('/') }}/purchase/purchase_order/"+id;
+			form.action = "{{ url('/') }}/purchase/order/"+id;
 			//SUBMIT
 			var want_to_delete = confirm('Are you sure to delete this purchase_order ?');
 			if(want_to_delete){

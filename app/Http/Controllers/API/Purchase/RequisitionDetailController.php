@@ -38,13 +38,13 @@ class RequisitionDetailController extends Controller
       return response()->json($table_purchase_requisition_detail);
     }
 
-    public function index_by_customer(Request $request,$customer_id)
+    public function index_by_supplier(Request $request,$supplier_id)
     {
-      //$customer_id = $request->input("customer_id");
+      //$supplier_id = $request->input("supplier_id");
       $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_purchase_requisition','tb_purchase_requisition_detail.purchase_requisition_id','=','tb_purchase_requisition.purchase_requisition_id')
         ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
 
-        ->where("customer_id",$customer_id)->get();
+        ->where("supplier_id",$supplier_id)->get();
 
       return response()->json($table_purchase_requisition_detail);
     }

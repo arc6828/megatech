@@ -7,24 +7,35 @@
       </div>
       <label class="col-lg-2 offset-lg-1">รหัสเอกสารเจ้าหนี้</label>
       <div class="col-lg-3">
-        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
+        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line"	required>
       </div>
     </div>
     <div class="form-group form-inline d-none">
       <label class="col-lg-2">เลขที่ใบขาย</label>
       <div class="col-lg-3">
         <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm"  readonly style="max-width:120px;">
-        @include('purchase/purchase_order/create_from_order_modal')
+        @include('purchase/order/create_from_order_modal')
       </div>
     </div>
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสลูกหนี้</label>
-      <div class="col-lg-3">
-        <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
-        <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
-        @include('customer/index_modal')
+      <label class="col-lg-2">รหัสเจ้าหนี้</label>
+      <div class="col-lg-4">
+        <input type="hidden" name="supplier_id" id="supplier_id" class="form-control form-control-sm"  required>
+        <div class="input-group input-group-sm ">
+          <div class="input-group-prepend">
+            <span class="input-group-text" name="supplier_code" id="supplier_code" ></span>
+          </div>
+          <input class="form-control" name="company_name" id="company_name" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#supplierModal">
+              <i class="fa fa-plus"></i> เลือกเจ้าหนี้
+            </button>
+          </div>
+        </div>
       </div>
-      <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
+
+      @include('purchase/order/supplier_modal')
+      <label class="col-lg-2 ">วันที่เวลา</label>
       <div class="col-lg-3">
         <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>
@@ -103,7 +114,7 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสพนักงานขาย</label>
+      <label class="col-lg-2">รหัสพนักงานจัดซื้อ</label>
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
@@ -130,7 +141,7 @@
 </div>
 
 
-@include('purchase/purchase_order/detail')
+@include('purchase/order/detail')
 
 <div class="card mt-4">
 	<div class="card-body">
@@ -255,15 +266,15 @@ function onChange(obj){
 
 function onChangeCustomer(){
   console.log("");
-  var customer_id = $("#customer_id").val();
-  console.log(customer_id);
-  fillPurchase_order(customer_id);
+  var supplier_id = $("#supplier_id").val();
+  console.log(supplier_id);
+  fillPurchase_order(supplier_id);
 }
 
-function fillPurchase_order(customer_id){
+function fillPurchase_order(supplier_id){
   //console.log(order_id);
   $.ajax({
-      url: "{{ url('/') }}/api/purchase_requisition_detail/customer/"+customer_id,
+      url: "{{ url('/') }}/api/purchase/requisition_detail/supplier/"+supplier_id,
       type: "GET",
       dataType : "json",
   }).done(function(result){
@@ -283,9 +294,9 @@ function fillOrder(result){
   var element = result[0];
 
   //document.querySelector("#invoice_code").value = element.invoice_code ;
-  document.querySelector("#internal_reference_id").value = element.order_code ;
-  document.querySelector("#external_reference_id").value = element.external_reference_id;
-  document.querySelector("#customer_id").value = element.customer_id;
+  //document.querySelector("#internal_reference_id").value = element.purchase_order_code ;
+  //document.querySelector("#external_reference_id").value = element.external_reference_id;
+  document.querySelector("#supplier_id").value = element.supplier_id;
   //document.querySelector("#contact_name").value = element.contact_name;
   var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
   var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
@@ -322,5 +333,7 @@ function fillOrderDetail(result){
       .rows.add(dataSet)
       .draw();
 }
+
+function showProduct(){}
 
 </script>

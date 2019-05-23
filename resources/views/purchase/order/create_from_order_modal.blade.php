@@ -46,7 +46,7 @@
 								element.order_code,
 								element.datetime,
 								element.total,
-								element.customer_name,
+								element.supplier_name,
 								element.company_name,
 								element.name,
 								element.sales_status_name,
@@ -101,7 +101,7 @@
 		//document.querySelector("#invoice_code").value = element.invoice_code ;
 		document.querySelector("#internal_reference_id").value = element.order_code ;
 		document.querySelector("#external_reference_id").value = element.external_reference_id;
-		document.querySelector("#customer_id").value = element.customer_id;
+		document.querySelector("#supplier_id").value = element.supplier_id;
 		document.querySelector("#contact_name").value = element.contact_name;
 		var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
 		var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
