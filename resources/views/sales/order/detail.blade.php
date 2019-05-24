@@ -31,10 +31,10 @@
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
-							{ title: "หน่วย" },
 							{ title: "ราคาตั้ง" },
 							{ title: "ส่วนลด %" },
 							{ title: "ราคาขาย" },
+							{ title: "ส่วนลด > 40%" },
 							{ title: "ราคาขายรวม" },
 							{ title: "action" },
 					],
@@ -58,12 +58,12 @@
         return [
           //id,
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_name,
+          element.product_name + " ("+ element.product_unit  + ")",
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
-          element.product_unit,
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
 					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
           "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
+          "<input type='checkbox' name='danger_price_edit[]'>",
           "<input class='input roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +

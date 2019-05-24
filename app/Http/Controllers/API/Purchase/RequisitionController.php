@@ -33,9 +33,9 @@ class RequisitionController extends Controller
     public function validate_po(Request $request)
     {
       //$order_detail_status_id = $request->input("order_detail_status_id",3);
-      $customer_id = $request->input("customer_id");
+      $supplier_id = $request->input("supplier_id");
       $external_reference_id = $request->input("external_reference_id");
-      $table_order = RequisitionModel::select_by_po($customer_id,$external_reference_id);
+      $table_order = RequisitionModel::select_by_po($supplier_id,$external_reference_id);
       return response()->json($table_order);
     }
 

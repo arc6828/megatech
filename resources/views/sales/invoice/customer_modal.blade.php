@@ -33,10 +33,11 @@
 					$('#contact_name').val(name);
 					$('#customer_code').val(code);
 					$('#customerModal').modal('hide');
+          $("#btn-ref-order").attr("customer_code", code);
 					onChangeCustomer(id);
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
-		console.log("555");
+		//console.log("555");
 		//AJAX
 		$('#customerModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
@@ -46,10 +47,10 @@
 	          type: "GET",
 	          dataType : "json",
 	      }).done(function(result){
-						console.log(result);
+						//console.log(result);
 						var dataSet = [];
 						result.forEach(function(element,index) {
-							console.log(element,index);
+							//console.log(element,index);
 							var row = [
 								element.customer_code,
 								element.company_name,
@@ -61,7 +62,7 @@
 							];
 							dataSet.push(row);
 						});
-						console.log(dataSet);
+						//console.log(dataSet);
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,

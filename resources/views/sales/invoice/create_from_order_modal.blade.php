@@ -6,7 +6,7 @@
 
 }
 </style>
-<button type="button" class="btn btn-warning btn-sm d-none" id="btn-ref-order" data-toggle="modal" data-target="#orderModal" data-id="">
+<button type="button" class="btn btn-warning btn-sm d-none" id="btn-ref-order" data-toggle="modal" data-target="#orderModal" customer_code="">
 	<i class="fa fa-plus"></i> อ้างอิงจากใบจอง
 </button>
 
@@ -45,6 +45,8 @@
 		$('#orderModal').on('show.bs.modal', function (e) {
 
       var customer_id = $("#btn-ref-order").attr("data-id");
+      var customer_code = $("#btn-ref-order").attr("customer_code");
+      console.log("customer_id  : ", customer_id);
 
       $.ajax({
           url: "{{ url('/') }}/api/order?user_id={{Auth::id()}}",
@@ -54,7 +56,7 @@
           //console.log(result);
           var dataSet = [];
           result.forEach(function(element,index) {
-            console.log(element,index);
+            //console.log(element,index);
             var id = element.order_id;
             //var price = element.promotion_price? element.promotion_price : element.normal_price;
             var row = [
@@ -85,12 +87,12 @@
               { title: "action" },
             ],
             "pageLength" : 3,
-          });// END DATATABLE
+          }).search(customer_code).draw();// END DATATABLE
 
 
           $('#table-order-model').on( 'click', 'tr', function () {
               var d = table.row( this ).data();
-              console.log("ROW : ",d);
+              //console.log("ROW : ",d);
 
               var key = d[0];
               var table_detail = $('#table-order-detail').DataTable();
@@ -111,10 +113,10 @@
             type: "GET",
             dataType : "json",
         }).done(function(result){
-  					console.log(result);
+  					//console.log(result);
   					var dataSet = [];
   					result.forEach(function(element,index) {
-  						console.log(element,index);
+  						//console.log(element,index);
               var id = element.order_detail_id;
   						var row = [
   							element.order_code,
@@ -131,9 +133,9 @@
   						];
   						dataSet.push(row);
   					});
-  					console.log(dataSet);
+  					//console.log(dataSet);
 
-  					$('#table-order-detail').DataTable({
+  					var table_detail = $('#table-order-detail').DataTable({
   						data: dataSet,
   						columns: [
   								{ title: "เลขที่ OE" },
@@ -151,13 +153,15 @@
               "pageLength" : 3,
   					}); //END DATATABLE
             $('#table-order-detail input').attr("readonly",true);
+
+            table_detail.search("*").draw();
   				});//END DONE AJAX
 		}); // END MODAL EVENT
 
 	}); //END ADD EVENT LISTENER
 
 	function fillInvoice(order_id){
-		console.log(order_id, "{{ url('/') }}/api/order/"+order_id);
+		//console.log(order_id, "{{ url('/') }}/api/order/"+order_id);
 		$.ajax({
 				url: "{{ url('/') }}/api/order/"+order_id,
 				type: "GET",
@@ -203,11 +207,11 @@
 
 	}
 	function fillOrderDetail(result){
-		console.log("detail : ",result);
+		//console.log("detail : ",result);
 		var dataSet = [];
 		result.table_order_detail.forEach(function(element,index) {
 			var id = element.order_detail_id;
-			console.log("ELEMENT id : ",id,element);
+			//console.log("ELEMENT id : ",id,element);
 			var row = createRow(id, element);
 			dataSet.push(row);
 		});

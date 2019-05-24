@@ -34,6 +34,17 @@
 					//$('#customer_code').val(code);
 					$('#customer_code').text(code);
 
+          var obj = JSON.parse($("#text-"+id).val());
+          console.log("Customer", obj);
+
+          document.querySelector("#debt_duration").value = obj.debt_duration;
+          document.querySelector("#billing_duration").value = obj.billing_duration;
+          document.querySelector("#payment_condition").value = obj.payment_condition;
+          document.querySelector("#delivery_type_id").value = obj.delivery_type_id;
+          document.querySelector("#tax_type_id").value = obj.tax_type_id;
+          document.querySelector("#delivery_time").value = obj.delivery_time;
+          document.querySelector("#zone_id").value = obj.zone_id;
+
 
 					$('#customerModal').modal('hide');
 					onChangeCustomer();
@@ -56,10 +67,11 @@
 								element.customer_code,
 								element.company_name,
 								element.contact_name,
-								"<button type='button' " +
-										"class='btn btn-warning btn-sm'" +
-										"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
-										+">เลือก</button>",
+								"<button type='button' "
+										+"class='btn btn-warning btn-sm'"
+										+"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
+										+">เลือก</button>"
+                    +"<textarea class='d-none' id='text-"+element.customer_id+"'>"+JSON.stringify(element)+"</textarea>",
 							];
 							dataSet.push(row);
 						});

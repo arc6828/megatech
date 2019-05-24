@@ -27,7 +27,7 @@ class OrderModel extends Model
     return DB::table('tb_purchase_order')
       ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
       ->where('tb_purchase_order.purchase_order_id', '=' , $id )
-			->select( DB::raw('tb_purchase_order.*, tb_supplier.contact_name'))
+			->select( DB::raw('tb_purchase_order.*, tb_supplier.company_name, tb_supplier.supplier_code'))
       ->get();
 	}
 

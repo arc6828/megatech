@@ -10,8 +10,8 @@ use App\Sales\OrderModel;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderDetailStatusModel;
 
-use App\Purchase\PurchaseRequisitionModel;
-use App\Purchase\PurchaseRequisitionDetailModel;
+use App\Purchase\RequisitionModel;
+use App\Purchase\RequisitionDetailModel;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
@@ -151,7 +151,7 @@ class OrderController extends Controller
           'vat_percent' => $request->input('vat_percent',7),
           'total' => $request->input('total',0),
       ];
-      $id = PurchaseRequisitionModel::insert($input);
+      $id = RequisitionModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL
       $list = [];
@@ -170,13 +170,13 @@ class OrderController extends Controller
         }
       }
       //print_r($list);
-      PurchaseRequisitionDetailModel::insert($list);
+      RequisitionDetailModel::insert($list);
 
       //return redirect("purchase/purchase_requisition/{$id}/edit");
     }
 
     public function getNewCode2(){
-        $number = PurchaseRequisitionModel::select_count_by_current_month();
+        $number = RequisitionModel::select_count_by_current_month();
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");

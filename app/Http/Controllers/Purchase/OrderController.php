@@ -32,7 +32,7 @@ class OrderController extends Controller
         'table_purchase_order' => OrderModel::select_all(),
         'q' => $request->input('q')
       ];
-      return view('purchase/purchase_order/index',$data);
+      return view('purchase/order/index',$data);
     }
 
     /**
@@ -48,15 +48,16 @@ class OrderController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('order'),
-          'table_purchase_user' => UserModel::select_by_role('purchase_order'),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+          //'table_purchase_user' => UserModel::select_by_role('purchase_order'),
+          'table_purchase_user' => UserModel::all(),
           //'table_purchase_order_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           //QUOTATION DETAIL
           'table_purchase_order_detail' => [],
           'table_product' => ProductModel::select_all(),
       ];
-      return view('purchase/purchase_order/create',$data);
+      return view('purchase/order/create',$data);
     }
 
     /**
@@ -70,7 +71,7 @@ class OrderController extends Controller
       //INSERT QUOTATION
       $input = [
           'purchase_order_code' => $this->getNewCode(),
-          'external_reference_id' => $request->input('external_reference_id'),
+          'external_reference_doc' => $request->input('external_reference_doc'),
           'supplier_id' => $request->input('supplier_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
@@ -79,7 +80,7 @@ class OrderController extends Controller
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time'),
           'department_id' => $request->input('department_id'),
-          'purchase_order_status_id' => $request->input('purchase_order_status_id'),
+          'purchase_status_id' => $request->input('purchase_status_id'),
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
@@ -110,7 +111,9 @@ class OrderController extends Controller
       }
       OrderDetailModel::insert($list);
 
-      return redirect("purchase/purchase_order/{$id}/edit");
+      //UPDATE PR Detail
+
+      return redirect("purchase/order/{$id}/edit");
     }
 
     public function getNewCode(){
@@ -150,15 +153,15 @@ class OrderController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('order'),
-          'table_purchase_user' => UserModel::select_by_role('purchase_order'),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+          'table_purchase_user' => UserModel::all(),
           'table_zone' => ZoneModel::select_all(),
           'purchase_order_id'=> $id,
           //QUOTATION Detail
           'table_purchase_order_detail' => OrderDetailModel::select_by_purchase_order_id($id),
           'table_product' => ProductModel::select_all(),
       ];
-      return view('purchase/purchase_order/edit',$data);
+      return view('purchase/order/edit',$data);
     }
 
     /**
@@ -173,7 +176,7 @@ class OrderController extends Controller
       //1.INSERT QUOTATION
       $input = [
         //'purchase_order_code' => $purchase_order_code,
-        'external_reference_id' => $request->input('external_reference_id'),
+        'external_reference_doc' => $request->input('external_reference_doc'),
         'supplier_id' => $request->input('supplier_id'),
         'debt_duration' => $request->input('debt_duration'),
         'billing_duration' => $request->input('billing_duration'),
@@ -182,7 +185,7 @@ class OrderController extends Controller
         'tax_type_id' => $request->input('tax_type_id'),
         'delivery_time' => $request->input('delivery_time'),
         'department_id' => $request->input('department_id'),
-        'purchase_order_status_id' => $request->input('purchase_order_status_id'),
+        'purchase_status_id' => $request->input('purchase_status_id'),
         'user_id' => $request->input('user_id'),
         'zone_id' => $request->input('zone_id'),
         'remark' => $request->input('remark'),
@@ -213,8 +216,10 @@ class OrderController extends Controller
 
       OrderDetailModel::insert($list);
 
+      //UPDATE PR Detail
+
       //4.REDIRECT
-      return redirect("purchase/purchase_order/{$id}/edit");
+      return redirect("purchase/order/{$id}/edit");
     }
 
     /**
@@ -226,6 +231,6 @@ class OrderController extends Controller
     public function destroy($id)
     {
       OrderModel::delete_by_id($id);
-      return redirect("purchase/purchase_order");
+      return redirect("purchase/order");
     }
 }

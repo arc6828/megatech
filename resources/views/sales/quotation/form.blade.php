@@ -16,7 +16,7 @@
 
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสลูกหนี้</label>
-      <div class="col-lg-5">
+      <div class="col-lg-4">
         <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
         <div class="input-group input-group-sm ">
           <div class="input-group-prepend">
@@ -31,7 +31,10 @@
         </div>
       </div>
       @include('sales/quotation/customer_modal')
-
+      <label class="col-lg-2">ผู้ติดต่อ</label>
+      <div class="col-lg-3">
+        <input name="contact_name" id="contact_name" class="form-control form-control-sm"	>
+      </div>
     </div>
 
 
