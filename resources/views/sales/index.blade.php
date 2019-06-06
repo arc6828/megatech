@@ -56,7 +56,7 @@
 				</a>
 			</div>
 			<div class="col-6 col-md-3 ">
-				<a class="btn btn-outline-primary btn-menu  my-3" href="{{url('/')}}/">
+				<a class="btn btn-outline-primary btn-menu  my-3" href="{{url('/')}}/sales/delivery_temporary">
           <div class="vertical-center">
   					<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   					<div>ส่งของชั่วคราว</div>

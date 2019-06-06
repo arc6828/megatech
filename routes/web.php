@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
       //Route::resource('/requisition', 'Sales\RequisitionController');
       //Route::resource('/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
       Route::resource('/invoice', 'Sales\InvoiceController');
+      Route::resource('/delivery_temporary', 'Sales\DeliveryTemporaryController');
       //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
     });
   });

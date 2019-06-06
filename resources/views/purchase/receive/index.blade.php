@@ -1,24 +1,18 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
-@section('title','ใบเสนอราคา')
-
-@section('breadcrumb-menu')
-<a href="{{ url('/') }}/purchase/purchase_receive/create" class="btn pull-right hidden-sm-down btn-success">
-	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
-</a>
-@endsection
+@section('title','ใบรับ/ซื้อสินค้า')
 
 @section('content')
 
 <div class="card">
-	<div class="card-block">
-		<div class="row">
+	<div class="card-body">
+		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">รายการใบเสนอราคา</h4>
+				<h4 class="card-title">รายการใบรับ/ซื้อสินค้า</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
 			</div>
 			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/purchase/purchase_receive" method="GET">
+				<form class="" action="{{ url('/') }}/purchase/receive" method="GET">
 					<div class="form-group form-inline pull-right">
 						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
 						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
@@ -29,43 +23,43 @@
 
 
 
-		<div class="table-responsive table-bordered">
-			<table class="table table-hover text-center">
+		<div class="table-responsive">
+			<table width="100%" class="table table-hover text-center table-sm  table-breceiveed table-striped" id="table">
 				<thead>
 					<tr>
+						<th class="text-center d-none">#</th>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
-						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">ชื่อลูกค้า</th>
+						<th class="text-center">รหัสเจ้าหนี้</th>
 						<th class="text-center">ชื่อบริษัท</th>
+						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center">สถานะ</th>
-						<th class="text-center">action</th>
+						<th class="text-center d-none">สถานะ</th>
+						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($table_purchase_receive as $row)
+
 					<tr>
+						<td class="d-none">
+							{{ $row->purchase_receive_id }}
+						</td>
 						<td>
-							<a href="{{ url('/') }}/purchase/purchase_receive/{{ $row->purchase_receive_id }}/edit">
+							<a href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/edit">
 								{{ $row->purchase_receive_code }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
-						<td>{{ $row->customer_name }}</td>
+						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->name }}</td>
-						<td>{{ $row->purchase_status_name }}</td>
-						<td>
-							<a href="#"><span class="fa fa-trash" style="color: red"></span></a>
-							<div class="row hide">
-								<form action="{{ url('/') }}/purchase/purchase_receive/{{ $row->purchase_receive_id }}" method="POST">
-									{{ csrf_field() }}
-									{{ method_field('DELETE') }}
-									<button type="submit"></button>
-								</form>
-							</div>
+						<td>{{ $row->total?$row->total:0 }}</td>
+						<td>{{ $row->short_name }}</td>
+						<td class="d-none">{{ $row->purchase_status_name }}</td>
+						<td class="d-none">
+							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_receive_id }} )" class="text-danger">
+								<span class="fa fa-trash"></span>
+							</a>
 						</td>
 					</tr>
 					@endforeach
@@ -73,15 +67,54 @@
 
 			</table>
 		</div>
+		<script>
+		document.addEventListener("DOMContentLoaded", function(event) {
+				console.log("555");
+				$('#table').DataTable().receive( [ 1, 'desc' ] ).draw();
+		});
+
+		</script>
+
+
 
 	</div>
 </div>
 
-<div class="form-group">
-	<div class="col-lg-12">
-		<div class="text-center">
-	  		<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
-		</div>
-	</div>
+<div class="mt-4 text-center">
+  <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase">back</a>
+  <a href="{{ url('/') }}/purchase/receive/create" class="btn btn-primary">
+    <i class="fa fa-plus"></i> เพิ่มใบรับ/ซื้อสินค้า
+  </a>
+<div>
+
+<div id="outer-form-container" style="display:none;">
+	<form action="#" method="POST" id="form_delete" >
+		{{ csrf_field() }}
+		{{ method_field('DELETE') }}
+		<button type="submit">Delete</button>
+	</form>
+	<script>
+
+		function onEdit(){
+			console.log("edit",$('#myModal'));
+			$('#myModal').on('show');
+		}
+
+		function onDelete(id){
+			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+			//GET FORM BY ID
+			var form = document.getElementById("form_delete");
+			//CHANGE ACTION TO SPECIFY ID
+			form.action = "{{ url('/') }}/purchase/receive/"+id;
+			//SUBMIT
+			var want_to_delete = confirm('Are you sure to delete this purchase_receive ?');
+			if(want_to_delete){
+				form.submit();
+			}
+		}
+	</script>
 </div>
+
+
 @endsection
