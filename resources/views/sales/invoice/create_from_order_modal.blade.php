@@ -109,7 +109,7 @@
         //detail
         //AJAX
         $.ajax({
-            url: "{{ url('/') }}/api/order_detail/index2",
+            url: "{{ url('/') }}/api/order_detail/index2?order_detail_status_id=1",
             type: "GET",
             dataType : "json",
         }).done(function(result){

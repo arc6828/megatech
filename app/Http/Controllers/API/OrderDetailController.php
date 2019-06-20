@@ -26,7 +26,11 @@ class OrderDetailController extends Controller
       if($m_date !== "" && $m_date != null){
         //echo "mdate";
         //echo $m_date;
-        $table_order_detail = OrderDetailModel::select_search($order_detail_status_id,$m_date);
+        if($m_date === "all"){
+          $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
+        }else{
+          $table_order_detail = OrderDetailModel::select_search($order_detail_status_id,$m_date);
+        }
       }else if($date_begin !== "" && $date_begin != null){
         //echo "begin";
         $table_order_detail = OrderDetailModel::select_search($order_detail_status_id,$date_begin,$date_end);

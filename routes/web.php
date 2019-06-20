@@ -39,6 +39,16 @@ Route::middleware(['auth'])->group(function () {
   Route::get('/others',function(){
       return view('others/index');
   });
+  Route::get('/genbarcode',function(){
+    $oe= "OE1906-00004";
+      //echo DNS1D::getBarcodeHTML($oe, "C128");
+      //echo '<img src="data:image/png,' . DNS1D::getBarcodePNG($oe, "C128") . '" alt="barcode"   />';
+      echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($oe, "C128") . '" alt="barcode"   />';
+      echo $oe;
+  });
+
+
+
 
   //1. SALES DEPARTMENT
   Route::middleware(['role:sales,admin'])->group(function () {
