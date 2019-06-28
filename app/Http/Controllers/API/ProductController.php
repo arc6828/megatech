@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\ProductModel;
@@ -15,9 +17,19 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+      //$q = $request->input("q","");
+      //$q = "";
+      //$table_product = ProductModel::select_by_keyword($q);
+      $table_product = ProductModel::select(DB::raw("product_id,product_code,product_name,brand,promotion_price,max_discount_percent,amount_in_stock,product_unit,pending_in,pending_out,normal_price,BARCODE,quantity"))->get();
+
+      return response()->json($table_product);
+    }
+
+    public function index_short(Request $request)
+    {
       $q = $request->input("q","");
       //$q = "";
-      $table_product = ProductModel::select_by_keyword($q);
+      $table_product = ProductModel::select("product_id,product_code,product_name,brand,promotion_price,max_discount_percent,amount_in_stock,product_unit,pending_in,pending_out,normal_price,BARCODE,quantity")->get();
       return response()->json($table_product);
     }
 
