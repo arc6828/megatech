@@ -174,3 +174,5 @@ Route::get('/pages-profile', function () {
 Route::get('/table-basic', function () {
     return view('monster-lite/table-basic');
 });
+
+Route::resource('product2', 'Product2Controller');

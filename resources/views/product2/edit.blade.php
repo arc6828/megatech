@@ -1,16 +1,15 @@
-@extends('layouts/argon-dashboard/theme')
-
-@section('title','แก้ไขสินค้า')
-
+@extends('layouts.app')
 
 @section('content')
+    <div class="container">
         <div class="row">
+            @include('admin.sidebar')
 
             <div class="col-md-9">
                 <div class="card">
-                    <div class="card-header">Edit Product</div>
+                    <div class="card-header">Edit Product2 #{{ $product2->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/product') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/product2') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -22,11 +21,11 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ url('/product/' . $table_product[0]->product_id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('/product2/' . $product2->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             {{ csrf_field() }}
 
-                            @include ('product.form', ['formMode' => 'edit'])
+                            @include ('product2.form', ['formMode' => 'edit'])
 
                         </form>
 
@@ -34,5 +33,5 @@
                 </div>
             </div>
         </div>
-
+    </div>
 @endsection
