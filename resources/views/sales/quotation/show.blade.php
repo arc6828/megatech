@@ -28,11 +28,11 @@
     </div>
   </div>
   <div style="text-align:center; margin-top:10px;">
-    <div class="inline" style="width:30%;  "></div>
-    <div class="inline" style="width:30%;   ">
+    <div class="inline" style="width:33%;  "></div>
+    <div class="inline" style="width:33%;   ">
       <div class="company_name" style="border:1px solid; padding: 10px 0px;">ใบเสนอราคา</div>
     </div>
-    <div class="inline" style="width:30%;   ">
+    <div class="inline" style="width:33%;   ">
       <div class="">
       <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
         <tr>
