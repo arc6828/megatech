@@ -29,7 +29,9 @@ class ProductController extends Controller
     {
       $q = $request->input("q","");
       //$q = "";
-      $table_product = ProductModel::select("product_id,product_code,product_name,brand,promotion_price,max_discount_percent,amount_in_stock,product_unit,pending_in,pending_out,normal_price,BARCODE,quantity")->get();
+      //$table_product = ProductModel::select("product_id,product_code,product_name,brand,promotion_price,max_discount_percent,amount_in_stock,product_unit,pending_in,pending_out,normal_price,BARCODE,quantity")->get();
+      $table_product = ProductModel::select("product_id,product_code,product_name,brand,amount_in_stock,pending_in,pending_out,normal_price,BARCODE,quantity")->get();
+
       return response()->json($table_product);
     }
 
