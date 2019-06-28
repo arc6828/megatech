@@ -79,6 +79,7 @@
 						var row = [
 							"<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
 							element.product_name,
+              element.barcode,
 							price,
 							element.amount_in_stock,
 							element.pending_out,
@@ -96,6 +97,7 @@
 						"columns": [
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
+							{ title: "barcode" },
 							{ title: "ราคาขาย" },
 							{ title: "#ในคลัง" },
 							{ title: "#ค้างส่ง" },
