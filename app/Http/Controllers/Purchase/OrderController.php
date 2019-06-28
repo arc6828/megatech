@@ -102,9 +102,10 @@ class OrderController extends Controller
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "purchase_order_id" => $id,
+              "purchase_order_detail_status_id" => 5, //5 : ออก PO แล้ว
           ];
           if( is_numeric($request->input('id_edit')[$i]) ){
-            $a["purchase_order_detail_id"] = $request->input('id_edit')[$i];
+            //$a["purchase_order_detail_id"] = $request->input('id_edit')[$i];
           }
           $list[] = $a;
         }
@@ -210,6 +211,7 @@ class OrderController extends Controller
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "purchase_order_id" => $id,
+              "purchase_order_detail_status_id" => 5, //5 : ออก PO แล้ว
           ];
         }
       }

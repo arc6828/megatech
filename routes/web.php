@@ -87,6 +87,9 @@ Route::middleware(['auth'])->group(function () {
       Route::resource('/order', 'Purchase\OrderController');
       //Route::resource('/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
 
+      Route::get('/order_detail', 'Purchase\OrderDetailController@index');
+      Route::put('/order_detail/approve', 'Purchase\OrderDetailController@approve');
+
     });
 
   });

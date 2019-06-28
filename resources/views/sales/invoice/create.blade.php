@@ -3,6 +3,16 @@
 @section('title','สร้างใบขาย')
 
 @section('content')
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-12">
+          <input class="form-control" id="isbn" placeholder="barcode ..." onkeypress="onKeyPressEnter(event);">
+          <button class="d-none" id="btn-isbn"></button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <form class="" action="{{ url('/') }}/sales/invoice" method="POST">
     {{ csrf_field() }}
@@ -20,7 +30,7 @@
     //INITIALIZE
     document.querySelector("#invoice_code").value = "";
     document.querySelector("#customer_id").value = "";
-    document.querySelector("#contact_name").value = "";
+    //document.querySelector("#contact_name").value = "";
     var str_time = moment().format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
     var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
     document.querySelector("#debt_duration").value = "60";
@@ -39,6 +49,28 @@
 
     //onChange(document.querySelector("#vat"));
   });
+
+  //onKeyISBN
+  function onKeyISBN(){
+    //GET INFORMATION
+    var order_id = $("#isbn").val();
+    fillInvoice(order_id);
+    //SELECT MODAL
+    //$("#btn-customer").click();
+    //SELECT CUSTOMER BY CLICK
+
+    //$("#").click();
+    //SELECT OE BY CLICK
+
+  //  $("#").click();
+  }
+  function onKeyPressEnter(e){
+    var code = (e.keyCode ? e.keyCode : e.which);
+    if(code == 13) { //Enter keycode
+      //alert('enter press');
+      onKeyISBN();
+    }
+  }
 
 </script>
 

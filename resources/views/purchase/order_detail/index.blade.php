@@ -1,10 +1,10 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','ใบเบิกของ')
+@section('title','Picking')
 
 @section('navbar-menu')
 <div style="margin:21px;">
-  <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+  <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
   <button class="btn btn-success d-none" type="submit" onclick="document.getElementById('form').submit();">Update</button>
 </div>
 @endsection
@@ -26,9 +26,9 @@
   							<option value="" >None</option>
   							@foreach($table_order_detail_status as $row_order_detail_status)
   							<option
-                  value="{{ $row_order_detail_status->order_detail_status_id }}"
-                  {{ $row_order_detail_status->order_detail_status_id == $filter->order_detail_status_id ? "selected" : "" }} >
-  									{{  $row_order_detail_status->order_detail_status_name }}
+                  value="{{ $row_order_detail_status->purchase_requisition_detail_status_id }}"
+                  {{ $row_order_detail_status->purchase_requisition_detail_status_id == $filter->purchase_requisition_detail_status_id ? "selected" : "" }} >
+  									{{  $row_order_detail_status->purchase_requisition_detail_status_name }}
   							</option>
   							@endforeach
   					</select>
@@ -121,7 +121,7 @@
           <button class="d-none" id="btn-isbn"></button>
       </div>
     </div>
-    <form action="{{ url('/') }}/sales/order_detail/approve" method="post" id="form_table" onsubmit="return validateCheckbox();" >
+    <form action="{{ url('/') }}/purchase/order_detail/approve" method="post" id="form_table" onsubmit="return validateCheckbox();" >
       {{ csrf_field() }}
     	{{ method_field('PUT') }}
 
@@ -135,8 +135,8 @@
           <select name="action" id="action" class="form-control form-control-sm" required>
               @foreach($table_order_detail_status as $row_order_detail_status)
               <option
-                value="{{ $row_order_detail_status->order_detail_status_id }}" >
-                  {{  $row_order_detail_status->order_detail_status_name }}
+                value="{{ $row_order_detail_status->purchase_requisition_detail_status_id }}" >
+                  {{  $row_order_detail_status->purchase_requisition_detail_status_name }}
               </option>
               @endforeach
           </select>
@@ -214,11 +214,11 @@
       var filter = JSON.parse('@json($filter)');
       var filter_param = $.param( filter );
   		console.log("555",filter,filter_param,url);
-      var url = "{{ url('/') }}/api/order_detail?"+filter_param;
+      var url = "{{ url('/') }}/api/purchase/order_detail?"+filter_param;
 
 			//AJAX
       $.ajax({
-          url: "{{ url('/') }}/api/order_detail?"+filter_param,
+          url: "{{ url('/') }}/api/purchase/order_detail?"+filter_param,
           type: "GET",
           dataType : "json",
       }).done(function(result){

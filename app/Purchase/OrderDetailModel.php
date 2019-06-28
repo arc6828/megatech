@@ -78,6 +78,21 @@ class OrderDetailModel extends Model
         ->get();
 	}
 
+  //No Filter Date, but status_id
+  public static function select_search2($order_detail_status_id){
+
+      return DB::table('tb_purchase_order_detail')
+          ->join('tb_product','tb_purchase_order_detail.product_id','=','tb_product.product_id')
+          ->join('tb_purchase_order','tb_purchase_order.order_id','=','tb_purchase_order_detail.order_id')
+          ->join('tb_customer', 'tb_purchase_order.customer_id', '=', 'tb_customer.customer_id')
+          //->join('tb_purchase_order_detail_status', 'tb_purchase_order_detail.order_detail_status_id', '=', 'tb_purchase_order_detail_status.order_detail_status_id')
+          ->where("tb_purchase_order_detail.order_detail_status_id","=",$order_detail_status_id)
+          //->whereBetween("datetime",">=",[$date_begin,$date_end])
+          //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+          ->select( DB::raw('*,DATE(datetime) as date'))
+          ->get();
+    }
+
   public static function duplicate_by_id($new_amount, $id){
     $sql = "INSERT INTO tb_purchase_order_detail
       SELECT null,product_id,{$new_amount},{$new_amount},discount_price,purchase_order_id,purchase_order_detail_status_id

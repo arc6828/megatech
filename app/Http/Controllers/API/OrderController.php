@@ -58,6 +58,13 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+      $table_order = OrderModel::select_by_id($id);
+        //echo $id . "hello";
+      if(count($table_order) > 0){
+        $id = $table_order[0]->order_id;
+      }
+
+
       $data = [
         "table_order" => OrderModel::select_by_id($id),
         "table_order_detail" => OrderDetailModel::select_by_order_id_by_status_id($id, 1), // 1 MEANS APPROVED

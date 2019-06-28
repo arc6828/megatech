@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Purchase;
+namespace App\Http\Controllers\Purchase\unused;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

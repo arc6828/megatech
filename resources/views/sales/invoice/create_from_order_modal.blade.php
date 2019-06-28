@@ -167,7 +167,9 @@
 				type: "GET",
 				dataType : "json",
 		}).done(function(result){
+      console.log("RESULT : " , result)
 			fillOrder(result);
+      //result = result.table_order[0].order_id;
 			fillOrderDetail(result);
 			//ALL ABOUT EVENT
 			refreshDetailTableEvent();
@@ -186,7 +188,11 @@
 		document.querySelector("#internal_reference_id").value = element.order_code ;
 		document.querySelector("#external_reference_id").value = element.external_reference_id;
 		document.querySelector("#customer_id").value = element.customer_id;
-		document.querySelector("#contact_name").value = element.contact_name;
+		document.querySelector("#customer_code").innerHTML = element.customer_code;
+		document.querySelector("#company_name").value = element.company_name;
+
+
+		//document.querySelector("#contact_name").value = element.contact_name;
 		var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
 		var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 		document.querySelector("#debt_duration").value = element.debt_duration;

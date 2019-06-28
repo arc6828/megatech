@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card ">
   <div class="card-body">
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
@@ -14,7 +14,17 @@
       <label class="col-lg-2">รหัสลูกหนี้</label>
       <div class="col-lg-3">
         <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
-        <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
+        <div class="input-group input-group-sm ">
+          <div class="input-group-prepend">
+            <span class="input-group-text" name="customer_code" id="customer_code" ></span>
+          </div>
+          <input class="form-control" name="company_name" id="company_name" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-success" id="btn-customer" type="button" data-toggle="modal" data-target="#customerModal">
+              <i class="fa fa-plus"></i> เลือกลูกหนี้
+            </button>
+          </div>
+        </div>
         @include('sales/invoice/customer_modal')
       </div>
       <label class="col-lg-2 offset-lg-1">เลขที่ใบจอง</label>
@@ -185,6 +195,7 @@
 
 
 <script>
+
 function onChangeCustomer(id){
   $("#btn-ref-order").click();
   $("#btn-ref-order").attr("data-id",id);
@@ -254,6 +265,9 @@ function onChange(obj){
     element.value = parseFloat(element.value).toFixed(2)
   });
 
+
+
 }
+function showProduct(){}
 
 </script>

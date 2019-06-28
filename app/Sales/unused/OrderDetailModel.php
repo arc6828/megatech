@@ -1,5 +1,5 @@
 <?php
-namespace App\Sales;
+namespace App\Sales\unused;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 class OrderDetailModel extends Model
