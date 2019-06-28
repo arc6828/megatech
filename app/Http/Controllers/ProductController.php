@@ -90,6 +90,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /*
         $input = [
             'product_code' => $request->input('product_code'),
             'product_name' => $request->input('product_name'),
@@ -98,7 +99,21 @@ class ProductController extends Controller
             'product_unit' => $request->input('product_unit')
         ];
         ProductModel::update_by_id($input,$id);
+        */
+
+        $requestData = $request->all();
+        unset($requestData["_method"]);
+        unset($requestData["_token"]); 
+        //$requestData['product_id'] =  $requestData["id"];
+        //$requestData['id'] = null;
+
+        //product2 = ProductModel::findOrFail($id);
+        ProductModel::update_by_id($requestData,$id);
+        //$product2->update($requestData);
+
         return redirect('product');
+
+
     }
 
     /**

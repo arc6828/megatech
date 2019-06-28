@@ -35,7 +35,7 @@
 
     //END
     document.querySelector("#department_id").value = "{{ Auth::user()->role}}";
-    document.querySelector("#sales_status_id").value = "1";
+    //document.querySelector("#sales_status_id").value = "1";
     document.querySelector("#user_id").value = "{{ Auth::id() }}";
 
     document.querySelector("#total").value = "";
