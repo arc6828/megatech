@@ -3,30 +3,37 @@
 @section('title','ใบเสนอราคา')
 
 @section('content')
-<style>
-  .inline{
-    display: inline-block;
-  }
-</style>
+  <style>
+    .inline{
+      display: inline-block;
+    }
+    .company_name{
+      font-size: xx-large;
+      line-height: 1;
+      font-weight: 700;
+    }
+  </style>
   <div>
-    <div class="inline" style="width:30%;">
-      <img src="{{ url('/') }}/images/megatech-logo-small.jpg" width="100%">
+    <div class="inline" style="width:30%; text-align:center; ">
+      <div>
+        <img src="{{ url('/') }}/images/megatech-logo-small.jpg" style="width:100%">
+      </div>
+      <div>  <strong>เลขประจำตัวผู้เสียภาษี</strong> 0125555017382</div>
     </div>
-    <div class="inline" style="width:70%;">
-      <div>บริษัท เมก้า เทค คัตติ้งทูล จำกัด</div>
-      <div>MEGA TECH CUTTING TOOL</div>
+    <div class="inline" style="width:50%;">
+      <div class="company_name">บริษัท เมก้า เทค คัตติ้งทูล จำกัด</div>
+      <div class="company_name">MEGA TECH CUTTING TOOL</div>
       <div>17/4  Soi Ramindra 89 Ramindra Khannayao  Bangkok 10230</div>
       <div>Tel: 02-943-1591  Fax: 02-943-1592  E-mail: center@megatechcuttingtool.com</div>
     </div>
   </div>
-  <div style="text-align:center;">
-    <div class="inline" style="width:33%;">
-      <strong>เลขประจำตัวผู้เสียภาษี</strong> 0125555017382
+  <div style="text-align:center; margin-top:10px;">
+    <div class="inline" style="width:30%;  "></div>
+    <div class="inline" style="width:30%;   ">
+      <div class="company_name" style="border:1px solid; padding: 10px 0px;">ใบเสนอราคา</div>
     </div>
-    <div class="inline" style="width:33%;">
-      <h2>ใบเสนอราคา</h2>
-    </div>
-    <div class="inline" style="width:33%;">
+    <div class="inline" style="width:30%;   ">
+      <div class="">
       <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
         <tr>
           <th>เลขที่</th>
@@ -37,6 +44,7 @@
           <td>21/06/2019</td>
         </tr>
       </table>
+      </div>
     </div>
   </div>
   <div style="margin-top:10px;">
