@@ -17,6 +17,7 @@ use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use PDF;
 
 class QuotationController extends Controller
 {
@@ -132,7 +133,13 @@ class QuotationController extends Controller
      */
     public function show($id)
     {
-        //no show
+      $data = [];
+      //return view('sales/quotation/show',$data);
+
+
+      $pdf = PDF::loadView('sales/quotation/show',$data);
+      return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
+      return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }
 
     /**

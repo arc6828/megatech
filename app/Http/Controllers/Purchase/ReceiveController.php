@@ -8,7 +8,7 @@ use App\Purchase\ReceiveModel;
 use App\Purchase\ReceiveDetailModel;
 use App\Purchase\ReceiveDetailStatusModel;
 
-use App\supplierModel;
+use App\SupplierModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\TaxTypeModel;
@@ -44,7 +44,7 @@ class ReceiveController extends Controller
     {
       $data = [
           //QUOTATION
-          'table_supplier' => supplierModel::select_all(),
+          'table_supplier' => SupplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
@@ -149,7 +149,7 @@ class ReceiveController extends Controller
       $data = [
           //QUOTATION
           'table_purchase_receive' => ReceiveModel::select_by_id($id),
-          'table_supplier' => supplierModel::select_all(),
+          'table_supplier' => SupplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),

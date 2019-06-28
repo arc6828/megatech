@@ -1,1 +1,1 @@
-php artisan crud:generate Post --fields_from_file="resources/crud-generator/json/post.json"
+php artisan crud:generate Product2 --fields_from_file="product.json"
