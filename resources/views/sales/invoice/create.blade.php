@@ -48,6 +48,7 @@
     document.querySelector("#vat_percent").value = "7";
 
     //onChange(document.querySelector("#vat"));
+    $('#isbn').focus();
   });
 
   //onKeyISBN

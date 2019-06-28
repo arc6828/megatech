@@ -8,7 +8,7 @@ use App\Purchase\OrderModel;
 use App\Purchase\OrderDetailModel;
 use App\Purchase\OrderDetailStatusModel;
 
-use App\supplierModel;
+use App\SupplierModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\TaxTypeModel;
@@ -44,7 +44,7 @@ class OrderController extends Controller
     {
       $data = [
           //QUOTATION
-          'table_supplier' => supplierModel::select_all(),
+          'table_supplier' => SupplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
@@ -150,7 +150,7 @@ class OrderController extends Controller
       $data = [
           //QUOTATION
           'table_purchase_order' => OrderModel::select_by_id($id),
-          'table_supplier' => supplierModel::select_all(),
+          'table_supplier' => SupplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
