@@ -79,7 +79,7 @@
 						var row = [
 							"<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
 							element.product_name,
-              element.barcode,
+              element.BARCODE,
 							price,
 							element.amount_in_stock,
 							element.pending_out,
