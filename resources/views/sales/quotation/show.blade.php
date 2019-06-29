@@ -3,45 +3,64 @@
 @section('title','ใบเสนอราคา')
 
 @section('content')
+
   <style>
+    td , th {
+      padding-left : 10px;
+      padding-right : 10px;
+    }
+    table.no-padding-cell  td, table.no-padding-cell th{
+      padding-bottom : 0px;
+      padding-top : 10px;
+    }
     .inline{
       display: inline-block;
     }
     .company_name{
       font-size: xx-large;
-      line-height: 1;
+      line-height: 0.7;
       font-weight: 700;
     }
   </style>
+  @forelse($table_quotation as $row)
   <div>
-    <div class="inline" style="width:30%; text-align:center; ">
-      <div>
+    <div class="inline" style="width:30%; text-align:center;" >
+      <div style="padding-right: 10px; padding-left: 10px;">
         <img src="{{ url('/') }}/images/megatech-logo-small.jpg" style="width:100%">
       </div>
       <div>  <strong>เลขประจำตัวผู้เสียภาษี</strong> 0125555017382</div>
     </div>
-    <div class="inline" style="width:50%;">
+    <div class="inline" style="width:69%;">
       <div class="company_name">บริษัท เมก้า เทค คัตติ้งทูล จำกัด</div>
       <div class="company_name">MEGA TECH CUTTING TOOL</div>
       <div>17/4  Soi Ramindra 89 Ramindra Khannayao  Bangkok 10230</div>
       <div>Tel: 02-943-1591  Fax: 02-943-1592  E-mail: center@megatechcuttingtool.com</div>
+      <div>www.megatechcuttingtool.com</div>
     </div>
   </div>
-  <div style="text-align:center; margin-top:10px;">
-    <div class="inline" style="width:33%;  "></div>
-    <div class="inline" style="width:33%;   ">
-      <div class="company_name" style="border:1px solid; padding: 10px 0px;">ใบเสนอราคา</div>
+  <div style="text-align:center;">
+    <div class="inline" style="width:30%;  "></div>
+    <div class="inline" style="width:39%;   ">
+      <div style="padding-left : 40px; padding-right:40px;">
+        <table style="width:100%; text-align:center;">
+          <tr>
+            <td style="padding: 0px 10px;">
+              <div class="company_name" style="border:1px solid; padding: 10px 0px; ">ใบเสนอราคา</div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <div class="inline" style="width:33%;   ">
+    <div class="inline" style="width:30%;  ">
       <div class="">
-      <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
+      <table class="no-padding-cell" border="1" style="border-collapse: collapse; width:100%; text-align:center;">
         <tr>
           <th>เลขที่</th>
-          <td>QT6206-00143</td>
+          <td>{{ $row->quotation_code }}</td>
         </tr>
         <tr>
           <th>วันที่</th>
-          <td>21/06/2019</td>
+          <td>{{ $row->datetime }}</td>
         </tr>
       </table>
       </div>
@@ -50,10 +69,12 @@
   <div style="margin-top:10px;">
     <table border="1" style="border-collapse: collapse; width:100%;">
       <tr><td>
-        <strong>ผู้ติดต่อ :</strong> คุณไพศาล <br>
-        <strong>ลูกค้า :</strong> บรษัท ซีเอ็นพี จำกัด  <br>
-        <strong>ที่อยู่ :</strong> 44ด5หดก564ด564ด564ฟ56ดก4หฟ564ด56หฟ4ด  <br>
-        <strong>โทร :</strong> 02-152-7250 <strong>แฟ๊กซ์ :</strong> 02-152-7250  <strong>รหัสลูกค้า :</strong> C0001  <br>
+        <strong>ผู้ติดต่อ :</strong> {{ $row->contact_name }} <br>
+        <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
+        <strong>ที่อยู่ :</strong> {{ $row->company_name }}  <br>
+        <strong>โทร :</strong> 02-152-7250
+        <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> 02-152-7250
+        <strong style="margin-left:150px;">รหัสลูกค้า :</strong> C0001  <br>
       </td></tr>
     </table>
   </div>
@@ -66,10 +87,10 @@
         <th>พนักงานขาย</th>
       </tr>
       <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
+        <td>30 วัน</td>
+        <td>{{ $row->delivery_time }}</td>
+        <td>{{ $row->debt_duration }}</td>
+        <td>{{ $row->user_id }}</td>
       </tr>
     </table>
   </div>
@@ -83,6 +104,7 @@
         <th>หน่วยละ</th>
         <th>จำนวนเงิน</th>
       </tr>
+      @foreach([1,2,3,4,5,6,7,8,9,10] as $i)
       <tr>
         <td>...</td>
         <td>...</td>
@@ -91,8 +113,9 @@
         <td>...</td>
         <td>...</td>
       </tr>
+      @endforeach
       <tr>
-        <td colspan="3"><strong>หมายเหตุ</strong><br /> ....</td>
+        <td colspan="3" style="text-align:left;"><strong>หมายเหตุ</strong><br /> {{ $row->remark !="" ? $row->remark : "-" }}</td>
         <td rowspan="2" colspan="3">...</td>
       </tr>
       <tr>
@@ -102,20 +125,24 @@
   </div>
 
   <div style="text-align:center; margin-top:100px;">
+    <div class="inline" style="width:5%;"></div>
     <div class="inline" style="width:33%;">
-      __________________________<br>
+      _______________________________________<br>
       ผู้เสนอราคา<br>
       วันที่ 21/06/2019
     </div>
+    <div class="inline" style="width:23%;"></div>
     <div class="inline" style="width:33%;">
-
-    </div>
-    <div class="inline" style="width:33%;">
-      __________________________<br>
+      _______________________________________<br>
       ผู้อนุมัติ<br>
       วันที่ 21/06/2019
     </div>
+    <div class="inline" style="width:5%;"></div>
   </div>
+
+
+  @empty
+  @endforelse
 
 
 
