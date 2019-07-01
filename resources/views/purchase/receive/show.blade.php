@@ -1,6 +1,6 @@
 @extends('layouts/print')
 
-@section('title','ใบเสนอราคา')
+@section('title','ใบรับสินค้า')
 
 @section('content')
 
@@ -25,7 +25,7 @@
       line-height: 0.8;
     }
   </style>
-  @forelse($table_quotation as $row)
+  @forelse($table_purchase_receive as $row)
   <div>
     <div class="inline" style="width:30%; text-align:center;" >
       <div style="padding-right: 10px; padding-left: 10px;">
@@ -50,7 +50,7 @@
         <table style="width:100%; text-align:center;">
           <tr>
             <td style="padding: 0px 10px;">
-              <div class="company_name" style="border:1px solid; padding: 10px 0px; ">ใบเสนอราคา</div>
+              <div class="company_name" style="border:1px solid; padding: 10px 0px; ">ใบรับสินค้า</div>
             </td>
           </tr>
         </table>
@@ -61,7 +61,7 @@
       <table class="no-padding-cell" border="1" style="border-collapse: collapse; width:100%; text-align:center;">
         <tr>
           <th>เลขที่</th>
-          <td>{{ $row->quotation_code }}</td>
+          <td>{{ $row->purchase_receive_code }}</td>
         </tr>
         <tr>
           <th>วันที่</th>
@@ -109,7 +109,7 @@
         <th>หน่วยละ</th>
         <th>จำนวนเงิน</th>
       </tr>
-      @foreach($table_quotation_detail as $row_detail)
+      @foreach($table_purchase_receive_detail as $row_detail)
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $row_detail->product_code }}</td>
@@ -119,7 +119,7 @@
         <td>{{ $row_detail->quantity * $row_detail->discount_price }}</td>
       </tr>
       @endforeach
-      @for($i=0; $i<(10-count($table_quotation_detail)); $i++)
+      @for($i=0; $i<(10-count($table_purchase_receive_detail)); $i++)
       <tr>
         <td><br></td>
         <td><br></td>
@@ -163,10 +163,10 @@
 
   <div class="" style="text-align : center; margin-top:30px;">
     <div class="">
-      <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->quotation_code, "C128") }}" alt="barcode"   />
+      <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_receive_code, "C128") }}" alt="barcode"   />
     </div>
     <div class="">
-      {{ $row->quotation_code }}
+      {{ $row->purchase_receive_code }}
     </div>
   </div>
 
