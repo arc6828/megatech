@@ -6,6 +6,15 @@
 
 
 	@forelse($table_quotation as $row)
+    <div class="text-center mb-4">
+      <div class="">
+        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->quotation_code, "C128") }}" alt="barcode"   />
+      </div>
+      <div class="">
+        {{ $row->quotation_code }}
+      </div>
+    </div>
+
 		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}

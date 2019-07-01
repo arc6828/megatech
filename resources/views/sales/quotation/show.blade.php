@@ -21,6 +21,9 @@
       line-height: 0.7;
       font-weight: 700;
     }
+    .sub_company_name{
+      line-height: 0.8;
+    }
   </style>
   @forelse($table_quotation as $row)
   <div>
@@ -33,13 +36,15 @@
     <div class="inline" style="width:69%;">
       <div class="company_name">บริษัท เมก้า เทค คัตติ้งทูล จำกัด</div>
       <div class="company_name">MEGA TECH CUTTING TOOL</div>
-      <div>17/4  Soi Ramindra 89 Ramindra Khannayao  Bangkok 10230</div>
-      <div>Tel: 02-943-1591  Fax: 02-943-1592  E-mail: center@megatechcuttingtool.com</div>
-      <div>www.megatechcuttingtool.com</div>
+      <div class="sub_company_name">17/4  Soi Ramindra 89 Ramindra Khannayao  Bangkok 10230</div>
+      <div class="sub_company_name">Tel: 02-943-1591  Fax: 02-943-1592  E-mail: center@megatechcuttingtool.com</div>
+      <div class="sub_company_name">www.megatechcuttingtool.com</div>
     </div>
   </div>
   <div style="text-align:center;">
-    <div class="inline" style="width:30%;  "></div>
+    <div class="inline" style="width:30%;  ">
+
+    </div>
     <div class="inline" style="width:39%;   ">
       <div style="padding-left : 40px; padding-right:40px;">
         <table style="width:100%; text-align:center;">
@@ -104,27 +109,43 @@
         <th>หน่วยละ</th>
         <th>จำนวนเงิน</th>
       </tr>
-      @foreach([1,2,3,4,5,6,7,8,9,10] as $i)
+      @foreach($table_quotation_detail as $row_detail)
       <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $row_detail->product_code }}</td>
+        <td>{{ $row_detail->product_name }}</td>
+        <td>{{ $row_detail->quantity }}</td>
+        <td>{{ $row_detail->discount_price }}</td>
+        <td>{{ $row_detail->quantity * $row_detail->discount_price }}</td>
       </tr>
       @endforeach
+      @for($i=0; $i<(10-count($table_quotation_detail)); $i++)
+      <tr>
+        <td><br></td>
+        <td><br></td>
+        <td><br></td>
+        <td><br></td>
+        <td><br></td>
+        <td><br></td>
+      </tr>
+      @endfor
       <tr>
         <td colspan="3" style="text-align:left;"><strong>หมายเหตุ</strong><br /> {{ $row->remark !="" ? $row->remark : "-" }}</td>
-        <td rowspan="2" colspan="3">...</td>
+        <td rowspan="2" colspan="3">
+          รวมเป็นเงิน {{ $row->total }}<br>
+          ภาษีมูลค่าเพิ่ม 7% {{ $row->total * $row->vat_percent / 100 }}<br>
+          รวมทั้งสิ้น {{ $row->total + $row->total * $row->vat_percent / 100 }}<br>
+        </td>
       </tr>
       <tr>
-        <td colspan="3">...</td>
+        <td colspan="3">
+          (...)
+        </td>
       </tr>
     </table>
   </div>
 
-  <div style="text-align:center; margin-top:100px;">
+  <div style="text-align:center; margin-top:70px;">
     <div class="inline" style="width:5%;"></div>
     <div class="inline" style="width:33%;">
       _______________________________________<br>
@@ -138,6 +159,15 @@
       วันที่ 21/06/2019
     </div>
     <div class="inline" style="width:5%;"></div>
+  </div>
+
+  <div class="" style="text-align : center; margin-top:30px;">
+    <div class="">
+      <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->quotation_code, "C128") }}" alt="barcode"   />
+    </div>
+    <div class="">
+      {{ $row->quotation_code }}
+    </div>
   </div>
 
 

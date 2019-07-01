@@ -32,15 +32,17 @@
     }
     body{
      font-family: "THSarabunNew";
+     font-size: 16px;
     }
     @page {
       size: A4;
-      padding: 20px;
+      padding: 15px;
     }
     @media print {
       html, body {
         width: 210mm;
         height: 297mm;
+        /*font-size : 16px;*/
       }
     }
     </style>
