@@ -8,6 +8,9 @@
 
 	@forelse($table_purchase_order as $row)
     <div class="text-center mb-4">
+    	<a class="float-right btn-print" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}" target="_blank">
+		      <i class="fas fa-print"></i>
+		    </a>
       <div class="">
         <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_order_code, "C128") }}" alt="barcode"   />
       </div>

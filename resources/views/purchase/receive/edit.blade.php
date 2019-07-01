@@ -7,6 +7,18 @@
 @section('content')
 
 	@forelse($table_purchase_receive as $row)
+		<div class="text-center mb-4">
+	    	<a class="float-right btn-print" href="{{ url('/') }}/sales/purchase_receive/{{ $row->purchase_receive_id }}" target="_blank">
+			      <i class="fas fa-print"></i>
+			    </a>
+	      <div class="">
+	        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_receive_code, "C128") }}" alt="barcode"   />
+	      </div>
+	      <div class="">
+	        {{ $row->purchase_receive_code }}
+	      </div>
+
+	    </div>
 		<form class="" action="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}

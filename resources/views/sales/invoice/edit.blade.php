@@ -16,6 +16,19 @@
 @section('content')
 
 	@forelse($table_invoice as $row)
+		<div class="text-center mb-4">
+
+			<a class="float-right btn-print" href="{{ url('/') }}/sales/order/{{ $row->invoice_id }}" target="_blank">
+				<i class="fas fa-print"></i>
+			</a>
+			<div class="">
+				<img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, "C128") }}" alt="barcode"   />
+			</div>
+			<div class="">
+				{{ $row->invoice_code }}
+			</div>
+
+		</div>
 		<form class="" action="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
