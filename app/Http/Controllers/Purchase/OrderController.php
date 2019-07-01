@@ -156,7 +156,7 @@ class OrderController extends Controller
       //return view('purchase/order/edit',$data);
 
 
-      $pdf = PDF::loadView('sales/quotation/show',$data);
+      $pdf = PDF::loadView('purchase/order/show',$data);
       return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
       //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }

@@ -154,7 +154,7 @@ class ReceiveController extends Controller
       ];
       //return view('purchase/receive/edit',$data);
 
-      $pdf = PDF::loadView('sales/receive/show',$data);
+      $pdf = PDF::loadView('purchase/receive/show',$data);
       return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
       //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }
