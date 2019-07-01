@@ -74,7 +74,7 @@
   <div style="margin-top:10px;">
     <table border="1" style="border-collapse: collapse; width:100%;">
       <tr><td>
-        <strong>ผู้ติดต่อ :</strong> {{ $row->contact_name }} <br>
+        
         <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
         <strong>ที่อยู่ :</strong> {{ $row->company_name }}  <br>
         <strong>โทร :</strong> 02-152-7250
