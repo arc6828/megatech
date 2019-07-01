@@ -8,7 +8,7 @@
 
 	@forelse($table_purchase_receive as $row)
 		<div class="text-center mb-4">
-	    	<a class="float-right btn-print" href="{{ url('/') }}/sales/purchase_receive/{{ $row->purchase_receive_id }}" target="_blank">
+	    	<a class="float-right btn-print" href="{{ url('/') }}/purchase/purchase_receive/{{ $row->purchase_receive_id }}" target="_blank">
 			      <i class="fas fa-print"></i>
 			    </a>
 	      <div class="">
