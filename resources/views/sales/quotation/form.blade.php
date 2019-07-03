@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <a class="float-right btn-print d-none">
+    <a class="float-right btn-prints d-none">
       <i class="fas fa-print"></i>
     </a>
     <div class="form-group form-inline">

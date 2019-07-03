@@ -16,6 +16,7 @@ use App\PurchaseStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use PDF;
 
 class ReceiveController extends Controller
 {
@@ -136,6 +137,26 @@ class ReceiveController extends Controller
     public function show($id)
     {
         //no show
+      $data = [
+          //QUOTATION
+          'table_purchase_receive' => ReceiveModel::select_by_id($id),
+          'table_supplier' => SupplierModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+          'table_purchase_user' => UserModel::all(),
+          'table_zone' => ZoneModel::select_all(),
+          'purchase_receive_id'=> $id,
+          //QUOTATION Detail
+          'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
+          'table_product' => ProductModel::select_all(),
+      ];
+      //return view('purchase/receive/edit',$data);
+
+      $pdf = PDF::loadView('purchase/receive/show',$data);
+      return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
+      //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }
 
     /**

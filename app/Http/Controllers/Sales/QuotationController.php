@@ -154,7 +154,7 @@ class QuotationController extends Controller
 
       $pdf = PDF::loadView('sales/quotation/show',$data);
       return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
-      return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
+      //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }
 
     /**

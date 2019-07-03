@@ -6,6 +6,18 @@
 
 
 	@forelse($table_delivery_temporary as $row)
+		<div class="text-center mb-4">
+	      <div class="">
+	      	<a class="float-right btn-print" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}" target="_blank">
+		      <i class="fas fa-print"></i>
+		    </a>
+	        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->delivery_temporary_code, 'C128') }}" alt="barcode"   />
+	      </div>
+	      <div class="">
+	        {{ $row->delivery_temporary_code }}
+	      </div>
+	    </div>
+
 		<form class="" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
