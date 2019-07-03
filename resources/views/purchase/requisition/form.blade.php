@@ -14,7 +14,8 @@
       <label class="col-lg-2">รหัสลูกหนี้</label>
       <div class="col-lg-3">
         <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
-        <input type="text" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
+        <input type="hidden" name="contact_name" id="contact_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
+        <input type="text" name="contact_name" id="company_name" class="form-control form-control-sm"  readonly style="max-width:100px;">
         @include('customer/index_modal')
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
