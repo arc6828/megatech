@@ -27,7 +27,7 @@ class RequisitionModel extends Model
     return DB::table('tb_purchase_requisition')
       ->join('tb_customer', 'tb_purchase_requisition.customer_id', '=', 'tb_customer.customer_id')
       ->where('tb_purchase_requisition.purchase_requisition_id', '=' , $id )
-			->select( DB::raw('tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name'))
+			->select( DB::raw('tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name, tb_customer.customer_code'))
       ->get();
 	}
 
@@ -39,7 +39,7 @@ class RequisitionModel extends Model
       ->join('tb_purchase_status', 'tb_purchase_requisition.purchase_status_id', '=', 'tb_purchase_status.purchase_status_id')
       ->join('users', 'tb_purchase_requisition.user_id', '=', 'users.id')
  			->select( DB::raw(
- 				'tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name'
+ 				'tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name, tb_customer.customer_code'
         ))
       ->get();
 	}
