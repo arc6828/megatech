@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสเจ้าหนี้</label>
+      <label class="col-lg-2">รหัสลูกหนี้</label>
       <div class="col-lg-4">
         <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
         <div class="input-group input-group-sm ">
@@ -21,12 +21,12 @@
           <input class="form-control" name="company_name" id="company_name" readonly>
           <div class="input-group-append">
             <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
-              <i class="fa fa-plus"></i> เลือกเจ้าหนี้
+              <i class="fa fa-plus"></i> เลือกลูกหนี้
             </button>
           </div>
         </div>
         @include('customer/index_modal')
-      </div>      
+      </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
         <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
