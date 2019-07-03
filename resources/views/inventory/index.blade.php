@@ -24,19 +24,19 @@
 				<div>ปรับปรุง<br>เพิ่ม/ลด</div>
 			</a>
 			</div>
-			<div class="col-6 col-md-4 ">
+			<div class="col-6 col-md-4 d-none">
 			<a class="btn btn-outline-primary my-3" href="#">
 				<div class="px-4"><span class="round round-primary my-2">บ</span></i></div>
 				<div>เบิกวัตถุดิบ<br>ไปผลิต</div>
 			</a>
 			</div>
-			<div class="col-6 col-md-4 ">
+			<div class="col-6 col-md-4  d-none">
 			<a class="btn btn-outline-primary my-3" href="#">
 				<div class="px-4"><span class="round round-primary my-2">ร</span></i></div>
 				<div>รับคืนวัตถุดิบ<br>จากผลิต</div>
 			</a>
 			</div>
-			<div class="col-6 col-md-4 ">
+			<div class="col-6 col-md-4  d-none">
 			<a class="btn btn-outline-primary my-3" href="#">
 				<div class="px-4"><span class="round round-primary my-2">ร</span></div>
 				<div>รับสินค้า<br>สำเร็จรูป</div>
