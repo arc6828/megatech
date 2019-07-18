@@ -25,13 +25,13 @@
     var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 
     //CUSTOMER DATA
-    document.querySelector("#debt_duration").value = "60";
-    document.querySelector("#billing_duration").value = "30";
-    document.querySelector("#payment_condition").value = "ภายใน 30 วัน";
-    document.querySelector("#delivery_type_id").value = "2";
-    document.querySelector("#tax_type_id").value = "2";
-    document.querySelector("#delivery_time").value = "30";
-    document.querySelector("#zone_id").value = "1";
+    document.querySelector("#debt_duration").value = "";
+    document.querySelector("#billing_duration").value = "";
+    document.querySelector("#payment_condition").value = "";
+    document.querySelector("#delivery_type_id").value = "";
+    document.querySelector("#tax_type_id").value = "";
+    document.querySelector("#delivery_time").value = "";
+    document.querySelector("#zone_id").value = "";
 
     //END
     document.querySelector("#department_id").value = "{{ Auth::user()->role}}";

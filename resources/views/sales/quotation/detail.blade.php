@@ -5,10 +5,13 @@
 			max-width: 50px;
 			width: 100%;
 		}
+    table{
+      width: 100% !important;
+    }
 		</style>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table-quotation-detail" style="width:100%"></table>
+			<table class="table table-hover text-center" id="table-quotation-detail" ></table>
 		</div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function(event) {

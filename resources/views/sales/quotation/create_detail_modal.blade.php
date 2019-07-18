@@ -14,6 +14,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
+        <input hidden id="search_key" value="">
 				<div class="table-responsive">
 					<table class="table table-hover text-center table-sm" id="table-product-model"></table>
 				</div>
@@ -43,29 +44,10 @@
 					type: "GET",
 					dataType : "json",
 			}).done(function(result){
-					//console.log(result);
-
-					var dataSet = [];
-					result.forEach(function(element,index) {
-						//console.log(element,index);
-						var id = element.product_id;
-						var price = element.promotion_price? element.promotion_price : element.normal_price;
-						var row = [
-							element.product_code,
-							element.product_name,
-							element.amount_in_stock,
-							price,
-							"<input name='amount_create' id='amount_create"+id+"'  value='1' style='width:50px;' >",
-							"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);'>" +
-								"<span class='fa fa-shopping-cart'></span>" +
-							"</button>",
-						];
-						dataSet.push(row);
-					});
 					//console.log(dataSet);
 
 					var table = $('#table-product-model').DataTable({
-						"data": dataSet,
+						"data": prepareDataSet(result),
 						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
@@ -76,12 +58,56 @@
 							{ title: "action" },
 						],
 					}); // END DATATABLE
+          table.on( 'search.dt', function () {
+            var search_key = table.search();
+            if(search_key != $('#search_key').val()){
+              console.log("Hello",table.search() );
+              $.ajax({
+        					url: "{{ url('/') }}/api/product?q="+search_key ,
+        					type: "GET",
+        					dataType : "json",
+        			}).done(function(result1){
+        					//console.log(dataSet);
+                  $('#search_key').val(search_key);
+                  var new_data = prepareDataSet(result1);
+                  table.clear().draw();
+                  table.rows.add(new_data); // Add new data
+                  table.columns.adjust().draw(); // Redraw the DataTable
+              });
+            }
+
+
+
+
+          } );
 					//setPreLoader(false);
 
 
 				}); //END AJAX
 		}
 	}
+
+  function prepareDataSet(result){
+    var dataSet = [];
+    result.forEach(function(element,index) {
+      //console.log(element,index);
+      var id = element.product_id;
+      var price = element.promotion_price? element.promotion_price : element.normal_price;
+      var row = [
+        element.product_code,
+        element.product_name,
+        element.amount_in_stock,
+        price,
+        "<input name='amount_create' id='amount_create"+id+"'  value='1' style='width:50px;' >",
+        "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);'>" +
+          "<span class='fa fa-plus'></span>" +
+        "</button>",
+      ];
+      dataSet.push(row);
+    });
+    console.log(dataSet);
+    return dataSet;
+  }
 
 	function addProduct(obj){
 		var product = JSON.parse(obj.getAttribute("json"));

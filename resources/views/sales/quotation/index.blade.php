@@ -76,28 +76,34 @@
 		{{ method_field('DELETE') }}
 		<button type="submit">Delete</button>
 	</form>
-	<script>
-
-		function onEdit(){
-			console.log("edit",$('#myModal'));
-			$('#myModal').on('show');
-		}
-
-		function onDelete(id){
-			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-			//GET FORM BY ID
-			var form = document.getElementById("form_delete");
-			//CHANGE ACTION TO SPECIFY ID
-			form.action = "{{ url('/') }}/sales/quotation/"+id;
-			//SUBMIT
-			var want_to_delete = confirm('Are you sure to delete this quotation ?');
-			if(want_to_delete){
-				form.submit();
-			}
-		}
-	</script>
 </div>
+
+@endsection
+
+@section('script')
+@parent
+
+<script>
+
+	function onEdit(){
+		console.log("edit",$('#myModal'));
+		$('#myModal').on('show');
+	}
+
+	function onDelete(id){
+		//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+		//GET FORM BY ID
+		var form = document.getElementById("form_delete");
+		//CHANGE ACTION TO SPECIFY ID
+		form.action = "{{ url('/') }}/sales/quotation/"+id;
+		//SUBMIT
+		var want_to_delete = confirm('Are you sure to delete this quotation ?');
+		if(want_to_delete){
+			form.submit();
+		}
+	}
+</script>
 
 
 

@@ -42,22 +42,22 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">ระยะเวลาหนี้ (วัน)</label>
       <div class="col-lg-3">
-        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required readonly>
+        <input name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required >
       </div>
       <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา (วัน)</label>
       <div class="col-lg-3">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required readonly>
+        <input  name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required >
       </div>
     </div>
 
     <div class="form-group form-inline">
       <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
       <div class="col-lg-3">
-        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required readonly>
+        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required >
       </div>
       <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
       <div class="col-lg-3">
-        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required readonly>
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required >
 
           @foreach($table_delivery_type as $row_delivery_type)
           <option value="{{ $row_delivery_type->delivery_type_id }}" >
@@ -71,7 +71,7 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">ชนิดภาษี</label>
       <div class="col-lg-3">
-        <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required readonly>
+        <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required >
 
           @foreach($table_tax_type as $row_tax_type)
           <option value="{{ $row_tax_type->tax_type_id }}" >
@@ -82,14 +82,14 @@
       </div>
       <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
       <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required readonly>
+      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required >
       </div>
     </div>
 
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสแผนก</label>
       <div class="col-lg-3">
-        <select name="department_id" id="department_id" class="form-control form-control-sm" required readonly>
+        <select name="department_id" id="department_id" class="form-control form-control-sm" required >
 
           @foreach($table_department as $row_department)
           <option value="{{ $row_department->department_role }}" >
@@ -100,7 +100,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
       <div class="col-lg-3">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" required readonly>
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
 
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >
@@ -192,8 +192,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 
 <script>

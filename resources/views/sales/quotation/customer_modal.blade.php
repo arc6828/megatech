@@ -35,7 +35,7 @@
 					$('#customer_code').text(code);
 
           var obj = JSON.parse($("#text-"+id).val());
-          console.log("Customer", obj);
+          console.log("Customer", obj, obj.billing_duration);
 
           document.querySelector("#debt_duration").value = obj.debt_duration;
           document.querySelector("#billing_duration").value = obj.billing_duration;
@@ -43,6 +43,7 @@
           document.querySelector("#delivery_type_id").value = obj.delivery_type_id;
           document.querySelector("#tax_type_id").value = obj.tax_type_id;
           document.querySelector("#delivery_time").value = obj.delivery_time;
+          document.querySelector("#contact_name").value = obj.contact_name;
           document.querySelector("#zone_id").value = obj.zone_id;
 
 
