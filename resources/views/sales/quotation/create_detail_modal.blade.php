@@ -75,10 +75,6 @@
                   table.columns.adjust().draw(); // Redraw the DataTable
               });
             }
-
-
-
-
           } );
 					//setPreLoader(false);
 

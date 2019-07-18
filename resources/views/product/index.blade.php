@@ -9,6 +9,7 @@
 	<div class="card-body">
 
 
+    <input hidden id="search_key" value="">
 		<div class="table-responsive">
 			<table class="table table-hover text-center table-sm" id="table-product">
 
@@ -71,25 +72,7 @@
 			}).done(function(result){
 					//console.log(result);
 
-					var dataSet = [];
-					result.forEach(function(element,index) {
-						//console.log(element,index);
-						var id = element.product_id;
-						var price = element.promotion_price? element.promotion_price : element.normal_price;
-						var row = [
-							"<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
-							element.product_name,
-              element.BARCODE,
-							price,
-							element.amount_in_stock,
-							element.pending_out,
-							element.pending_in,
-							"<a href='javascript:void(0)' onclick='onDelete("+id+")' class='text-danger'><span class='fa fa-trash'></span></a>",
-						];
-						dataSet.push(row);
-
-
-					}); //END FOREACH
+					var dataSet = prepareDataSet(result);
 					//console.log(dataSet);
 					var table = $('#table-product').DataTable({
 						"data": dataSet,
@@ -107,11 +90,47 @@
 						],
 					}); // END DATATABLE
 
-
+          table.on( 'search.dt', function () {
+            var search_key = table.search();
+            if(search_key != $('#search_key').val()){
+              console.log("Hello",table.search() );
+              $.ajax({
+        					url: "{{ url('/') }}/api/product?q="+search_key ,
+        					type: "GET",
+        					dataType : "json",
+        			}).done(function(result1){
+        					//console.log(dataSet);
+                  $('#search_key').val(search_key);
+                  var new_data = prepareDataSet(result1);
+                  table.clear().draw();
+                  table.rows.add(new_data); // Add new data
+                  table.columns.adjust().draw(); // Redraw the DataTable
+              });
+            }
+          } ); //END SEARCH
 				}); //END AJAX
-
-
 		}
+    function prepareDataSet(result){
+      var dataSet = [];
+      result.forEach(function(element,index) {
+        //console.log(element,index);
+        var id = element.product_id;
+        var price = element.promotion_price? element.promotion_price : element.normal_price;
+        var row = [
+          "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
+          element.product_name,
+          element.BARCODE,
+          price,
+          element.amount_in_stock,
+          element.pending_out,
+          element.pending_in,
+          "<a href='javascript:void(0)' onclick='onDelete("+id+")' class='text-danger'><span class='fa fa-trash'></span></a>",
+        ];
+        dataSet.push(row);
+      }); //END FOREACH
+      console.log(dataSet);
+      return dataSet;
+    }
 		</script>
 
 @endsection

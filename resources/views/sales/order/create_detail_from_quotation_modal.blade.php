@@ -76,6 +76,8 @@
 
 	}); //END ADD EVENT LISTENER
 
+  
+
 	function createRow2(id,element){
 		return [
 			"<input class='check' type='checkbox' value='"+id+"'>"+"<input type='hidden' class='id_edit' name='id_edit2[]'  value='"+id+"' >",
