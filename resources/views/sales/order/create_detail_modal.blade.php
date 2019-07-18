@@ -76,7 +76,7 @@
                   table.columns.adjust().draw(); // Redraw the DataTable
               });
             }
-          } );
+          } ); // END SEARCH
 
 
 				}); //END AJAX

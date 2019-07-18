@@ -142,7 +142,7 @@
 		</script>
 
 		<div class="text-center">
-			@include('purchase/requisition/create_detail_from_quotation_modal')
+			
 			@include('purchase/requisition/create_detail_modal')
 
 		</div>

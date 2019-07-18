@@ -91,8 +91,8 @@ class RequisitionDetailController extends Controller
         }
       }
     }
-    //UPDATE BY SELECTED ITEM : 5 means DEFINED SUPPLIER
-    RequisitionDetailModel::update_purchase_requisition_detail_status_id_by_ids2($action, $selected_purchase_requisition_detail_ids, 5);
+    //UPDATE BY SELECTED ITEM : 4 means DEFINED SUPPLIER
+    RequisitionDetailModel::update_purchase_requisition_detail_status_id_by_ids2($action, $selected_purchase_requisition_detail_ids, 4);
     return redirect()->back();
   }
 }

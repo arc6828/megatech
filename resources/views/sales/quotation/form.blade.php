@@ -257,7 +257,7 @@ function onChange(obj){
   //roundnum
   document.querySelectorAll(".roundnum").forEach(function(element) {
     //console.log(element);
-    element.value = parseFloat(element.value).toFixed(2)
+    //element.value = parseFloat(element.value).toFixed(2)
   });
 
 
