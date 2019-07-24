@@ -17,6 +17,7 @@ use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use App\Functions;
 use PDF;
 
 class QuotationController extends Controller
@@ -77,6 +78,7 @@ class QuotationController extends Controller
       $input = [
           'quotation_code' => $this->getNewCode(),
           'customer_id' => $request->input('customer_id'),
+          'contact_name' => $request->input('contact_name'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
           'payment_condition' => $request->input('payment_condition',""),
@@ -148,11 +150,16 @@ class QuotationController extends Controller
           //QUOTATION Detail
           'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
           'table_product' => ProductModel::select_all(),
+          'total_text' => count(QuotationModel::select_by_id($id))>0 ?  Functions::baht_text(QuotationModel::select_by_id($id)[0]->total) : "-",
       ];
       //return view('sales/quotation/show',$data);
 
 
       $pdf = PDF::loadView('sales/quotation/show',$data);
+      //$pdf->setOption('enable-javascript', true);
+      //$pdf->setOption('javascript-delay', 13500);
+      //$pdf->setOption('enable-smart-shrinking', true);
+      //$pdf->setOption('no-stop-slow-scripts', true);
       return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
       //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }
@@ -197,6 +204,7 @@ class QuotationController extends Controller
       $input = [
         //'quotation_code' => $quotation_code,
         'customer_id' => $request->input('customer_id'),
+        'contact_name' => $request->input('contact_name'),
         'debt_duration' => $request->input('debt_duration'),
         'billing_duration' => $request->input('billing_duration'),
         'payment_condition' => $request->input('payment_condition',""),
@@ -213,34 +221,34 @@ class QuotationController extends Controller
       ];
       QuotationModel::update_by_id($input,$id);
 
-      //2.DELETE QUOTATION DETAIL FIRST
-      QuotationDetailModel::delete_by_quotation_id($id);
-
-      //3.INSERT ALL NEW QUOTATION DETAIL
-      $list = [];
-      //print_r($request->input('product_id_edit'));
-      //print_r($request->input('amount_edit'));
-      //print_r($request->input('discount_price_edit'));
-      //echo $id;
+      //2.INSERT UPDATE DELETE QUOTATION DETAIL
       if (is_array ($request->input('product_id_edit'))){
         for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $id_edit = $request->input('id_edit')[$i];
           $a = [
               "product_id" => $request->input('product_id_edit')[$i],
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "quotation_id" => $id,
           ];
-          if( is_numeric($request->input('id_edit')[$i]) ){
-            $a["quotation_detail_id"] = $request->input('id_edit')[$i];
+          switch($id_edit){
+            case "+" :
+              QuotationDetailModel::insert($a);
+              echo "+";
+              break;
+            default :
+              if($id_edit < 0){
+                QuotationDetailModel::delete_by_id(abs($id_edit));
+                echo "-";
+              }else{
+                QuotationDetailModel::update_by_id($a,$id);
+                echo "0";
+              }
           }
-          $list[] = $a;
         }
       }
 
-      QuotationDetailModel::insert($list);
-      //print_r($list);
-
-      //4.REDIRECT
+      //3.REDIRECT
       return redirect("sales/quotation/{$id}/edit");
     }
 

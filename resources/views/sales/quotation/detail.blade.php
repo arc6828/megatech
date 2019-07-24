@@ -26,7 +26,7 @@
 				});
 				//console.log(dataSet);
 
-				$('#table-quotation-detail').DataTable({
+				var table = $('#table-quotation-detail').DataTable({
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
@@ -47,6 +47,8 @@
 			    },
 				}); //END DataTable
 
+
+
 				//ALL ABOUT EVENT
 				refreshDetailTableEvent();
 
@@ -57,16 +59,20 @@
 
       //EVENT HANDLER
       function createRow(id,element){
+        var discount_percent_edit = 100 - element.discount_price / element.normal_price * 100;
+        var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
         return [
 
-          element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
+          element.product_code +
+            "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
+            "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_name + " (" + element.product_unit +")",
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
-					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
+					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(discount_percent_edit)+"'>",
           "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
-          "<input type='checkbox' name='danger_price_edit[]'>",
+          "<input type='checkbox' class='danger_price_edit' name='danger_price_edit[]' onclick='onChangeDangerPrice(this);' "+checked+" >",
           "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
               "<span class='fa fa-trash'></span>" +
@@ -128,10 +134,23 @@
 				//onChange3(this,this.getAttribute("data_id"));
 				var want_to_delete = confirm('Are you sure to delete this quotation detail?');
 				if(want_to_delete){
+          var id_edit = $(this).parents('tr').find(".id_edit");
+          id_edit.val("-"+id_edit.val());
 					var table = $('#table-quotation-detail').DataTable();
+          /*var filteredData = table
+            .column( 2 )
+            .data()
+            .filter( function ( value, index ) {
+                var amount_edit = $("<div>"+value+"</div>").find(".amount_edit").val();
+                console.log("FILTER : ", $("<div>"+value+"</div>") ,amount_edit);
+                //return true;
+                return amount_edit != "0"  ? true : false;
+            } );*/
+          $(this).parents('tr').hide();
 					table
-						.row( $(this).parents('tr') )
-						.remove()
+						//.row( $(this).parents('tr') )
+            //.hide()
+						//.remove()
 						.draw();
 					onChange(document.getElementById("vat_percent"));
 				}
@@ -142,6 +161,24 @@
         calculateNumber();
         onChange(document.getElementById("vat_percent"));
       }
+
+      function onChangeDangerPrice(obj){
+        var element = $(obj);
+        var discount_percent_edit = element.parents("tr").find(".discount_percent_edit");
+        var max = parseInt(discount_percent_edit.attr("max"));
+        //console.log("TOGGLE DANGER PRICE",element);
+        if(element.prop("checked") == false){
+          //CHANGE MAX INPUT TO NORMAL
+          //console.log("Fine");
+          max = max%100;
+        }else{
+          //CHANGE MAX INPUT TO OVERFLOW
+          //console.log("Danger");
+          max = max+100;
+        }
+        discount_percent_edit.attr("max",max)
+      }
+
 		</script>
 
 		<div class="text-center">

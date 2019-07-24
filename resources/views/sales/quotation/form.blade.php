@@ -254,6 +254,10 @@ function onChange(obj){
 			total_after_vat.value = total.value;
 			break;
 	}
+
+  total_before_vat.value = parseFloat(total_before_vat.value).toFixed(2);
+  total_after_vat.value = parseFloat(total_after_vat.value).toFixed(2);
+  vat.value = parseFloat(vat.value).toFixed(2);
   //roundnum
   document.querySelectorAll(".roundnum").forEach(function(element) {
     //console.log(element);
@@ -267,5 +271,7 @@ function onChange(obj){
 function onChangeCustomer(){
 
 }
+
+
 
 </script>

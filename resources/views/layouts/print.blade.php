@@ -51,5 +51,9 @@
   <body>
     @yield('content')
 
+    <script src="{{url('/')}}/ThaiBath-master/thaibath.js" type="text/javascript" charset="utf-8"></script>
+  
+    @yield('script')
+
   </body>
 </html>

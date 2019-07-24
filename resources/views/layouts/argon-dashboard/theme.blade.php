@@ -15,7 +15,7 @@
   <link href="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
   <link href="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
   <!-- Argon CSS -->
-  
+
   <link type="text/css" href="{{ url('/') }}/argon-dashboard-v1.0.0/assets/css/argon.css?v=1.0.0" rel="stylesheet">
 
 
@@ -151,6 +151,7 @@
 
       <!-- Footer -->
       @include('layouts/argon-dashboard/footer')
+      @include('layouts/functions')
     </div>
   </div>
   <!-- Argon Scripts -->
@@ -171,7 +172,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/th.js"></script>
-
+  <script src="{{url('/')}}/ThaiBath-master/thaibath.js" type="text/javascript" charset="utf-8"></script>
 
 
   @yield('script')
