@@ -117,7 +117,7 @@
         var id = element.product_id;
         var price = element.promotion_price? element.promotion_price : element.normal_price;
         var row = [
-          "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.item_code+"</a>",
+          "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
           element.product_name,
           element.BARCODE,
           price,
