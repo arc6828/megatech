@@ -146,12 +146,11 @@
       </div>
     </div>
     <!-- Page content -->
-    <div class="container-fluid mt-5">
+    <div class="container-fluid pt-5">
       @yield('content')
 
       <!-- Footer -->
       @include('layouts/argon-dashboard/footer')
-      @include('layouts/functions')
     </div>
   </div>
   <!-- Argon Scripts -->

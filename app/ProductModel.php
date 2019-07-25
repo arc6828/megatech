@@ -17,7 +17,7 @@ class ProductModel extends Model
     public static function select_by_keyword($q){
         return DB::table('tb_product')
             ->where('product_name', 'like' , "%{$q}%" )
-            ->orWhere('product_code', 'like' , "%{$q}%" )
+            ->orWhere('item_code', 'like' , "%{$q}%" )
             ->limit(100)
             ->get();
      }
