@@ -11,7 +11,7 @@ class ProductModel extends Model
 
     public static function select_all(){
         return DB::table('tb_product')
-            ->limit(100)
+            ->limit(50)
             ->get();
 	  }
 
@@ -20,13 +20,13 @@ class ProductModel extends Model
             ->where('product_name', 'like' , "%{$q}%" )
             ->orWhere('item_code', 'like' , "%{$q}%" )
             ->orWhere('product_code', 'like' , "%{$q}%" )
-            ->limit(100)
+            ->limit(50)
             ->get();
      }
     public static function select_by_id($id) {
         return DB::table('tb_product')
-            ->where('product_id', '=', $id)            
-            ->limit(100)
+            ->where('product_id', '=', $id)
+            ->limit(50)
             ->get();
     }
     public static function insert($input){
