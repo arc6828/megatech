@@ -11,6 +11,7 @@ class ProductModel extends Model
 
     public static function select_all(){
         return DB::table('tb_product')
+            ->limit(100)
             ->get();
 	  }
 
@@ -24,7 +25,8 @@ class ProductModel extends Model
      }
     public static function select_by_id($id) {
         return DB::table('tb_product')
-            ->where('product_id', '=', $id)
+            ->where('product_id', '=', $id)            
+            ->limit(100)
             ->get();
     }
     public static function insert($input){
