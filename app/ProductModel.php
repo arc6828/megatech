@@ -18,6 +18,7 @@ class ProductModel extends Model
         return DB::table('tb_product')
             ->where('product_name', 'like' , "%{$q}%" )
             ->orWhere('item_code', 'like' , "%{$q}%" )
+            ->orWhere('product_code', 'like' , "%{$q}%" )
             ->limit(100)
             ->get();
      }

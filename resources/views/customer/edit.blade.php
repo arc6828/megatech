@@ -50,11 +50,11 @@
       $("#delivery_sub_district").val("{{ $row->delivery_sub_district }}");
       $("#delivery_zipcode").val("{{ $row->delivery_zipcode }}");
       $("#zone_id").val("{{ $row->zone_id }}");
-      $("#transpotation_id").val("{{ $row->transpotation_id }}");
+      $("#delivery_type_id").val("{{ $row->delivery_type_id }}");
       $("#remark").val("{{ $row->remark }}");
       $("#max_credit").val("{{ $row->max_credit }}");
       $("#debt_duration").val("{{ $row->debt_duration }}");
-      $("#billing_condition").val("{{ $row->billing_condition }}");
+      $("#billing_duration").val("{{ $row->billing_duration }}");
       $("#cheqe_condition").val("{{ $row->cheqe_condition }}");
       $("#tax_number").val("{{ $row->tax_number }}");
       $("#location_type_id").val("{{ $row->location_type_id }}");

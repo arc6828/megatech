@@ -112,7 +112,7 @@
       <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $row_detail->product_code }}</td>
-        <td>{{ $row_detail->product_name }}</td>
+        <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
         <td>{{ $row_detail->quantity }}</td>
         <td>{{ $row_detail->discount_price }}</td>
         <td>{{ $row_detail->quantity * $row_detail->discount_price }}</td>

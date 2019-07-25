@@ -245,7 +245,7 @@ class QuotationController extends Controller
                 QuotationDetailModel::delete_by_id(abs($id_edit));
                 echo "-";
               }else{
-                QuotationDetailModel::update_by_id($a,$id);
+                QuotationDetailModel::update_by_id($a,$id_edit);
                 echo "0";
               }
           }

@@ -1,28 +1,47 @@
-<div class="form-group {{ $errors->has('product_code') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('product_code') ? 'has-error' : ''}}">
     <label for="product_code" class="control-label">{{ 'รหัส MegaCode' }}</label>
     <input class="form-control form-control-sm" name="product_code" type="text" id="product_code" value="{{ isset($table_product[0]->product_code) ? $table_product[0]->product_code : ''}}" >
     {!! $errors->first('product_code', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('product_name') ? 'has-error' : ''}}">
-    <label for="product_name" class="control-label">{{ 'Description' }}</label>
-    <input class="form-control form-control-sm" name="product_name" type="text" id="product_name" value="{{ isset($table_product[0]->product_name) ? $table_product[0]->product_name : ''}}" >
-    {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
+<div class="form-group ">
+  <div class="form-row ">
+      <div class="col-lg-6 {{ $errors->has('BARCODE') ? 'has-error' : ''}}">
+        <label for="BARCODE" class="control-label">{{ 'Barcode' }}</label>
+        <input class="form-control form-control-sm" name="BARCODE" type="text" id="BARCODE" value="{{ isset($table_product[0]->BARCODE) ? $table_product[0]->BARCODE : ''}}" >
+        {!! $errors->first('BARCODE', '<p class="help-block">:message</p>') !!}
+      </div>
+      <div class="col-lg-2 {{ $errors->has('brand') ? 'has-error' : ''}}">
+        <label for="brand" class="control-label">{{ 'Brand' }}</label>
+        <input class="form-control form-control-sm" name="brand" type="text" id="brand" value="{{ isset($table_product[0]->brand) ? $table_product[0]->brand : ''}}" >
+        {!! $errors->first('brand', '<p class="help-block">:message</p>') !!}
+      </div>
+      <div class="col-lg-4 {{ $errors->has('item_code') ? 'has-error' : ''}}">
+        <label for="item_code" class="control-label">{{ 'Item Code' }}</label>
+        <input class="form-control form-control-sm" name="item_code" type="text" id="item_code" value="{{ isset($table_product[0]->item_code) ? $table_product[0]->item_code : ''}}" >
+        {!! $errors->first('item_code', '<p class="help-block">:message</p>') !!}
+      </div>
+  </div>
+</div>
+<div class="form-group ">
+  <div class="form-row">
+    <div class="col-lg-6 {{ $errors->has('product_name') ? 'has-error' : ''}}">
+        <label for="product_name" class="control-label">{{ 'Description' }}</label>
+        <input class="form-control form-control-sm" name="product_name" type="text" id="product_name" value="{{ isset($table_product[0]->product_name) ? $table_product[0]->product_name : ''}}" >
+        {!! $errors->first('product_name', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-lg-6 {{ $errors->has('grade') ? 'has-error' : ''}}">
+        <label for="grade" class="control-label">{{ 'Grade' }}</label>
+        <input class="form-control form-control-sm" name="grade" type="text" id="grade" value="{{ isset($table_product[0]->grade) ? $table_product[0]->grade : ''}}" >
+        {!! $errors->first('grade', '<p class="help-block">:message</p>') !!}
+    </div>
+  </div>
 </div>
 <div class="form-group d-none {{ $errors->has('product_detail') ? 'has-error' : ''}}">
     <label for="product_detail" class="control-label">{{ 'Product Detail' }}</label>
     <input class="form-control form-control-sm" name="product_detail" type="text" id="product_detail" value="{{ isset($table_product[0]->product_detail) ? $table_product[0]->product_detail : ''}}" >
     {!! $errors->first('product_detail', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('brand') ? 'has-error' : ''}}">
-    <label for="brand" class="control-label">{{ 'Brand' }}</label>
-    <input class="form-control form-control-sm" name="brand" type="text" id="brand" value="{{ isset($table_product[0]->brand) ? $table_product[0]->brand : ''}}" >
-    {!! $errors->first('brand', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('grade') ? 'has-error' : ''}}">
-    <label for="grade" class="control-label">{{ 'Grade' }}</label>
-    <input class="form-control form-control-sm" name="grade" type="text" id="grade" value="{{ isset($table_product[0]->grade) ? $table_product[0]->grade : ''}}" >
-    {!! $errors->first('grade', '<p class="help-block">:message</p>') !!}
-</div>
+
 <div class="form-group d-none  {{ $errors->has('promotion_price') ? 'has-error' : ''}}">
     <label for="promotion_price" class="control-label">{{ 'Promotion Price' }}</label>
     <input class="form-control form-control-sm" name="promotion_price" type="number" id="promotion_price" value="{{ isset($table_product[0]->promotion_price) ? $table_product[0]->promotion_price : ''}}" >
@@ -49,12 +68,12 @@
     {!! $errors->first('product_unit', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('pending_in') ? 'has-error' : ''}}">
-    <label for="pending_in" class="control-label">{{ 'Pending In' }}</label>
+    <label for="pending_in" class="control-label">{{ 'ค้างรับ' }}</label>
     <input class="form-control form-control-sm" name="pending_in" type="number" id="pending_in" value="{{ isset($table_product[0]->pending_in) ? $table_product[0]->pending_in : ''}}" >
     {!! $errors->first('pending_in', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('pending_out') ? 'has-error' : ''}}">
-    <label for="pending_out" class="control-label">{{ 'Pending Out' }}</label>
+    <label for="pending_out" class="control-label">{{ 'ค้างส่ง' }}</label>
     <input class="form-control form-control-sm" name="pending_out" type="number" id="pending_out" value="{{ isset($table_product[0]->pending_out) ? $table_product[0]->pending_out : ''}}" >
     {!! $errors->first('pending_out', '<p class="help-block">:message</p>') !!}
 </div>
@@ -63,16 +82,7 @@
     <input class="form-control form-control-sm" name="normal_price" type="number" id="normal_price" value="{{ isset($table_product[0]->normal_price) ? $table_product[0]->normal_price : ''}}" >
     {!! $errors->first('normal_price', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('BARCODE') ? 'has-error' : ''}}">
-    <label for="BARCODE" class="control-label">{{ 'Barcode' }}</label>
-    <input class="form-control form-control-sm" name="BARCODE" type="text" id="BARCODE" value="{{ isset($table_product[0]->BARCODE) ? $table_product[0]->BARCODE : ''}}" >
-    {!! $errors->first('BARCODE', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('item_code') ? 'has-error' : ''}}">
-    <label for="item_code" class="control-label">{{ 'Item Code' }}</label>
-    <input class="form-control form-control-sm" name="item_code" type="text" id="item_code" value="{{ isset($table_product[0]->item_code) ? $table_product[0]->item_code : ''}}" >
-    {!! $errors->first('item_code', '<p class="help-block">:message</p>') !!}
-</div>
+
 <div class="form-group d-none {{ $errors->has('purchase_price') ? 'has-error' : ''}}">
     <label for="purchase_price" class="control-label">{{ 'Purchase Price' }}</label>
     <input class="form-control form-control-sm" name="purchase_price" type="number" id="purchase_price" value="{{ isset($table_product[0]->purchase_price) ? $table_product[0]->purchase_price : ''}}" >

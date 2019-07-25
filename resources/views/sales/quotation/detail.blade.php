@@ -33,7 +33,7 @@
 							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
-							{ title: "จำนวน" },
+							{ title: "จำนวน (pcs)" },
 							{ title: "ราคาตั้ง" },
 							{ title: "ส่วนลด %" },
 							{ title: "ราคาขาย" },
@@ -66,12 +66,12 @@
           element.product_code +
             "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_name + " (" + element.product_unit +")",
+          element.product_name + " / "+ element.grade,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
-          "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
-					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(discount_percent_edit)+"'>",
-          "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
+          "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
+					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
+          "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"'>",
           "<input type='checkbox' class='danger_price_edit' name='danger_price_edit[]' onclick='onChangeDangerPrice(this);' "+checked+" >",
           "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
@@ -107,16 +107,21 @@
             //EFFECT TO #discount_price_edit
             //console.log("EFFECT TO #discount_price_edit");
             discount_price_edit.value = normal_price_edit.value - normal_price_edit.value * (discount_percent_edit.value) / 100;
-
+            discount_price_edit.value = parseFloat(discount_price_edit.value).toFixed(2);
             break;
           case "discount_price_edit[]":
             //EFFECT TO #discount_percent_edit
             //console.log("EFFECT TO #discount_percent_edit");
             discount_percent_edit.value = 100.0 - discount_price_edit.value / normal_price_edit.value * 100;
+            discount_percent_edit.value = parseFloat(discount_percent_edit.value).toFixed(2);
             break;
         }
         //EFFECT TO #total_edit
         total_edit.value = amount_edit.value * discount_price_edit.value;
+
+        total_edit.value = parseFloat(total_edit.value).toFixed(2);
+        //discount_percent_edit.value = parseFloat(discount_percent_edit.value).toFixed(2);
+        //discount_price_edit.value = parseFloat(discount_price_edit.value).toFixed(2);
         //console.log(obj.value, obj.id);
 
 

@@ -91,7 +91,8 @@ class InvoiceController extends Controller
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
-          'total' => $request->input('total',0),
+          //'total' => $request->input('total_before_vat',0),
+          'total' => $request->input('total_after_vat',0),
       ];
       $id = InvoiceModel::insert($input);
 
@@ -217,7 +218,8 @@ class InvoiceController extends Controller
         'zone_id' => $request->input('zone_id'),
         'remark' => $request->input('remark'),
         'vat_percent' => $request->input('vat_percent',7),
-        'total' => $request->input('total',0),
+        //'total' => $request->input('total_before_vat',0),
+        'total' => $request->input('total_after_vat',0),
       ];
       InvoiceModel::update_by_id($input,$id);
 

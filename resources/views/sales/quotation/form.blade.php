@@ -162,7 +162,7 @@
 				</div>
 				<div class="form-group form-inline">
 					<label class="col-lg-6">
-            <textarea name="remark" id="remark" class="form-control form-control-line"></textarea>
+            <textarea name="remark" id="remark" class="form-control" style="width:100%"></textarea>
 
 					</label>
 					<label class="col-lg-3">

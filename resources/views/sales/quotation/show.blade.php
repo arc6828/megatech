@@ -42,7 +42,7 @@
 
     }
     .main {
-        margin-top: 360px;
+        margin-top: 390px;
     }
   </style>
   @forelse($table_quotation as $row)
@@ -100,7 +100,13 @@
             <tr><td>
               <strong>ผู้ติดต่อ :</strong> {{ $row->contact_name }} <br>
               <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
-              <strong>ที่อยู่ :</strong> {{ $row->address }} {{ $row->address2 }} {{ $row->sub_district}} {{ $row->district}} {{ $row->province }} {{ $row->zipcode}}  <br>
+              <strong>ที่อยู่ :</strong> {{ $row->address }} <br>
+              <div class="inline" style="width:25px;"></div>
+              {{ $row->address2 }}
+              {{ $row->sub_district? "ต.".$row->sub_district : ""}}
+              {{ $row->district? "อ.".$row->district : ""}}
+              {{ $row->province? "จ.".$row->province  : ""}}
+              {{  $row->zipcode  }}  <br>
               <strong>โทร :</strong> {{ $row->telephone }}
               <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> {{ $row->fax}}
               <strong style="margin-left:150px;">รหัสลูกค้า :</strong> {{ $row->customer_code }}  <br>
@@ -125,7 +131,7 @@
         </div>
     </div>
     @php
-      $item_per_page = 10;
+      $item_per_page = 8;
       $num_page = ceil(count($table_quotation_detail)/$item_per_page);
     @endphp
     @for ($page=0; $page<$num_page; $page++)
@@ -149,8 +155,8 @@
             @if( $loop->index >= $start_iteration && $loop->index < $end_iteration )
             <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $row_detail->product_code }}</td>
-              <td>{{ $row_detail->product_name }}</td>
+              <td>{{ $row_detail->product_code }} </td>
+              <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
               <td>{{ number_format($row_detail->quantity) }}</td>
               <td>{{ number_format($row_detail->discount_price,2) }}</td>
               <td>{{ number_format($row_detail->quantity * $row_detail->discount_price,2) }}</td>

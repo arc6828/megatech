@@ -20,6 +20,7 @@
 						<th class="text-center">วันที่</th>
 						<th class="text-center">รหัสลูกค้า</th>
 						<th class="text-center">ชื่อบริษัท</th>
+						<th class="text-center">ยอดหนี้คงค้าง</th>
 						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
 					</tr>
@@ -35,6 +36,7 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>{{ $row->company_name }}</td>
+						<td>{{ "-" }}</td>
 						<td>{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->short_name }}</td>
 					</tr>

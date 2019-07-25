@@ -94,14 +94,14 @@
         element.product_name,
         element.amount_in_stock,
         price,
-        "<input name='amount_create' id='amount_create"+id+"'  value='1' style='width:50px;' >",
+        "<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",
         "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);'>" +
           "<span class='fa fa-plus'></span>" +
         "</button>",
       ];
       dataSet.push(row);
     });
-    console.log(dataSet);
+    //console.log(dataSet);
     return dataSet;
   }
 
@@ -109,7 +109,7 @@
 		var product = JSON.parse(obj.getAttribute("json"));
 		product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
 		product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
-		console.log("CLICK PRODUCT : ", product);
+		//console.log("CLICK PRODUCT : ", product);
 
 		var table = $('#table-quotation-detail').DataTable();
 		var row = createRow("+", product);
