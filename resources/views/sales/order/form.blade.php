@@ -156,7 +156,7 @@
 				</div>
 				<div class="form-group form-inline">
 					<label class="col-lg-6">
-            <textarea name="remark" id="remark" class="form-control form-control-line"></textarea>
+            <textarea name="remark" id="remark" class="form-control" style="width:100%"></textarea>
 
 					</label>
 					<label class="col-lg-3">
@@ -248,6 +248,10 @@ function onChange(obj){
 			break;
 	}
   //roundnum
+  total.value = parseFloat(total.value).toFixed(2);
+  total_before_vat.value = parseFloat(total_before_vat.value).toFixed(2);
+  total_after_vat.value = parseFloat(total_after_vat.value).toFixed(2);
+  vat.value = parseFloat(vat.value).toFixed(2);
   document.querySelectorAll(".roundnum").forEach(function(element) {
     //console.log(element);
     //element.value = parseFloat(element.value).toFixed(2)

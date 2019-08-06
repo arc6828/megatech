@@ -230,7 +230,7 @@ class SupplierController extends Controller
         $filename = "upload_".$row->key;
         echo $filename;
         if ($request->hasFile($filename)) {
-          $folder = "{$id}/{$row->key}";
+          $folder = "supplier/{$request->input('supplier_code')}/{$row->key}";
           $value = $request->file($filename)->store($folder,'public');
           $upload_json[$i]->value = $value;
           echo $row->key."<br>";

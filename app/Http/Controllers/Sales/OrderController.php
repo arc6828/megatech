@@ -22,6 +22,7 @@ use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use App\Functions;
 
 use PDF;
 
@@ -95,6 +96,8 @@ class OrderController extends Controller
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
+          'vat' => $request->input('vat',0),
+          'total_before_vat' => $request->input('total_before_vat',0),
           'total' => $request->input('total_after_vat',0),
       ];
       $id = OrderModel::insert($input);
@@ -202,21 +205,12 @@ class OrderController extends Controller
       $data = [
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
-          'table_customer' => CustomerModel::select_all(),
-          'table_delivery_type' => DeliveryTypeModel::select_all(),
-          'table_department' => DepartmentModel::select_all(),
-          'table_tax_type' => TaxTypeModel::select_all(),
-          'table_sales_status' => SalesStatusModel::select_by_category('order'),
-          //'table_sales_user' => UserModel::select_by_role('sales'),
-          'table_sales_user' => UserModel::select_all(),
-          'table_zone' => ZoneModel::select_all(),
-          'order_id'=> $id,
           //QUOTATION Detail
           'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
-          'table_product' => ProductModel::select_all(),
+          'total_text' => count(OrderModel::select_by_id($id))>0 ?  Functions::baht_text(OrderModel::select_by_id($id)[0]->total) : "-",
       ];
       //return view('sales/order/edit',$data);
-      
+
       $pdf = PDF::loadView('sales/order/show',$data);
       return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
       //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
@@ -279,6 +273,35 @@ class OrderController extends Controller
       ];
       OrderModel::update_by_id($input,$id);
 
+      //2.INSERT UPDATE DELETE ORDER DETAIL
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $id_edit = $request->input('id_edit')[$i];
+          $a = [
+              "product_id" => $request->input('product_id_edit')[$i],
+              "amount" => $request->input('amount_edit')[$i],
+              "discount_price" => $request->input('discount_price_edit')[$i],
+              "order_id" => $id,
+          ];
+          switch($id_edit){
+            case "+" :
+              OrderDetail2Model::insert($a);
+              echo "+<br>";
+              break;
+            default :
+              if($id_edit < 0){
+                OrderDetail2Model::delete_by_id(abs($id_edit));
+                echo "-<br>";
+              }else{
+                OrderDetail2Model::update_by_id($a,$id_edit);
+                echo "{$id_edit}<br>";
+                //print_r($a);
+              }
+          }
+        }
+      }
+
+      /*
       //2.DELETE QUOTATION DETAIL FIRST
       OrderDetail2Model::delete_by_order_id($id);
       OrderDetailModel::delete_by_order_id($id);
@@ -306,7 +329,7 @@ class OrderController extends Controller
 
       OrderDetail2Model::insert($list);
       OrderDetailModel::insert($list);
-
+*/
       //4.REDIRECT
       return redirect("sales/order/{$id}/edit");
     }

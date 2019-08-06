@@ -35,7 +35,7 @@
                           dataSet.push([
                               element.id,
                               element.name,
-                              "<button type='button' id='select' class='btn btn-warning btn-sm' onclick='select_user("+element.id+")' >เลือก </button>"
+                              "<button type='button' id='select' class='btn btn-warning btn-sm' onclick='select_user("+element.id+",`"+element.name+"`)' >เลือก </button>"
                           ]);
 
                       });
@@ -54,10 +54,11 @@
               });
 
           });
-          function select_user(id) {
+          function select_user(id,name) {
 
-                  $('#user_id').val(id);
-                  $('#exampleModal2').modal('hide');
+            $('#user_id').val(id);
+            $('#name').val(name);
+            $('#exampleModal2').modal('hide');
           };
       </script>
   </div>

@@ -3,27 +3,43 @@
 @section('title','แก้ไขข้อมูลลูกค้า')
 
 @section('content')
-
 @forelse ($table_customer as $row)
-<form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data">
-  {{ csrf_field() }}
-  {{ method_field('PUT') }}
 
-  @include('customer/form')
-
-  <div class="form-group mt-5">
-    <div class="col-lg-12">
-      <div class="text-center">
-        <a class="btn btn-outline-primary " href="{{ url('/') }}/customer">back</a>
-        <button class="btn btn-primary" type="submit" >Update</button>
-      </div>
-    </div>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Profile</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contact</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Comment</a>
   </div>
-</form>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data" class="mt-4">
+      {{ csrf_field() }}
+      {{ method_field('PUT') }}
+
+      @include('customer/form')
+
+      <div class="form-group mt-5">
+        <div class="col-lg-12">
+          <div class="text-center">
+            <a class="btn btn-outline-primary " href="{{ url('/') }}/customer">back</a>
+            <button class="btn btn-primary" type="submit" >Update</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    @include('customer/form-contact')
+  </div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+    @include('customer/form-comment')
+  </div>
+</div>
 @empty
 
 @endforelse
-
 
 @endsection
 
@@ -35,7 +51,7 @@
       $("#company_name").val("{{ $row->company_name }}");
       $("#account_id").val("{{ $row->account_id }}");
       $("#user_id").val("{{ $row->user_id }}");
-
+      $("#name").val("{{ $row->name }}");
       $("#contact_name").val("{{ $row->contact_name }}");
       $("#telephone").val("{{ $row->telephone }}");
       $("#fax").val("{{ $row->fax }}");
@@ -79,33 +95,5 @@
     @endforelse
   });
 </script>
-<div class="card  mt-4">
-  <div class="card-body">
-
-    <h2>ผู้ติดต่อ</h2>
-
-    <table class="table table-sm table-bordered text-center" id="table">
-      <thead>
-        <tr>
-          <th class="text-center">Date</th>
-          <th class="text-center">Comment</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        @foreach(["2019-01-23","2019-02-23"] as $row_contact)
-        <tr>
-          <td>
-            {{ $row_contact }}
-          </td>
-          <td>
-            ...
-          </td>
-        </tr>
-        @endforeach
-    </tbody>
-  </table>
-  </div>
-</div>
 
 @endsection

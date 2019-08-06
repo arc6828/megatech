@@ -42,15 +42,16 @@
       </div>
 
       <div class="form-group col-lg-4">
-        <label >รหัสพนักงานที่ดูแล</label>
+        <label >ชื่อพนักงานที่ดูแล</label>
         <div class="input-group">
-          <input name="user_id" id="user_id"  class="form-control form-control-sm  "  >
+          <input name="short_name" id="name"  class="form-control form-control-sm  "  >
           <div class="input-group-append">
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
               <i class="fa fa-plus"></i> รหัสพนักงาน
             </button>
           </div>
         </div>
+        <input type="hidden" name="user_id" id="user_id" >
         @include('customer/modal-user')
       </div>
     </div>
@@ -131,7 +132,7 @@
       </div>
       <div class="form-group col-lg-3">
         <label >ขนส่งโดย</label>
-        <select name="transpotation_id" id="transpotation_id" class="form-control form-control-sm  ">
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm  ">
           @foreach ($table_delivery_type as $d)
             <option value="{{ $d->delivery_type_id }}">{{ $d->delivery_type_name }}</option>
           @endforeach
@@ -157,7 +158,7 @@
 
       <div class="form-group col-lg-3">
         <label >เงื่อนไขวางบิล </label>
-        <input name="billing_condition" id="billing_condition" class="form-control form-control-sm  " >
+        <input name="billing_duration" id="billing_duration" class="form-control form-control-sm  " >
       </div>
       <div class="form-group col-lg-3">
         <label  >เงื่อนไขรับเช็ค </label>
@@ -206,7 +207,7 @@
               {{ $row_upload->name }}
             </td>
             <td>
-              <a href="#" id="file_name_{{ $row_upload->key }}">...</a>
+              <a href="#" id="file_name_{{ $row_upload->key }}" target="_blank">...</a>
             </td>
             <td>
               <div class="input-group  input-group-sm">
@@ -235,43 +236,6 @@ function getUploadTemplate()
 }
 </script>
 
-<div class="card  mt-4">
-  <div class="card-body">
-
-    <h2>ผู้ติดต่อ</h2>
-
-    <table class="table table-sm table-bordered text-center" id="table">
-      <thead>
-        <tr>
-          <th class="text-center">Name</th>
-          <th class="text-center">Department</th>
-          <th class="text-center">Email</th>
-          <th class="text-center">Phone</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        @foreach(["Hank","Norman","Susan B.","Wystan Hugh"] as $row_contact)
-        <tr>
-
-          <td>
-            {{ $row_contact }}
-          </td>
-          <td>
-            ...
-          </td>
-          <td>
-            ...
-          </td>
-          <td>
-            ...
-          </td>
-        </tr>
-        @endforeach
-    </tbody>
-  </table>
-  </div>
-</div>
 
 <div>
   <div class="form-group col-lg-3 d-none">

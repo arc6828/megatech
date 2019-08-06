@@ -2,7 +2,7 @@
 	<div class="card-body">
 		<style>
 		.input{
-			max-width: 50px;
+			max-width: 60px;
 			width: 100%;
 		}
 		</style>
@@ -55,19 +55,24 @@
 
       //EVENT HANDLER
       function createRow(id,element){
+        var discount_percent_edit = 100 - element.discount_price / element.normal_price * 100;
+        var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
         return [
-          //id,
-          element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_name + " ("+ element.product_unit  + ")",
-          "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
-          "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
-					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
-          "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
-          "<input type='checkbox' name='danger_price_edit[]'>",
-          "<input class='input roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
+
+          element.product_code +
+            "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
+            "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
+          element.product_name + " / "+ element.grade,
+          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+
+          "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
+					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
+          "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"'>",
+          "<input type='checkbox' class='danger_price_edit' name='danger_price_edit[]' onclick='onChangeDangerPrice(this);' "+checked+" >",
+          "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
-            "<span class='fa fa-trash'></span>" +
-          "</a>",
+              "<span class='fa fa-trash'></span>" +
+          "</a> ",
         ];
       }
 
@@ -98,16 +103,20 @@
             //EFFECT TO #discount_price_edit
             //console.log("EFFECT TO #discount_price_edit");
             discount_price_edit.value = normal_price_edit.value - normal_price_edit.value * (discount_percent_edit.value) / 100;
-
+            discount_price_edit.value = parseFloat(discount_price_edit.value).toFixed(2);
             break;
           case "discount_price_edit[]":
             //EFFECT TO #discount_percent_edit
             //console.log("EFFECT TO #discount_percent_edit");
             discount_percent_edit.value = 100.0 - discount_price_edit.value / normal_price_edit.value * 100;
+            discount_percent_edit.value = parseFloat(discount_percent_edit.value).toFixed(2);
+
             break;
         }
         //EFFECT TO #total_edit
         total_edit.value = amount_edit.value * discount_price_edit.value;
+        total_edit.value = parseFloat(total_edit.value).toFixed(2);
+
         //console.log(obj.value, obj.id);
 
 
@@ -125,10 +134,13 @@
 				//onChange3(this,this.getAttribute("data_id"));
 				var want_to_delete = confirm('Are you sure to delete this order detail?');
 				if(want_to_delete){
-					var table = $('#table-order-detail').DataTable();
+					var id_edit = $(this).parents('tr').find(".id_edit");
+          id_edit.val("-"+id_edit.val());
+          $(this).parents('tr').hide();
+          var table = $('#table-order-detail').DataTable();
 					table
-						.row( $(this).parents('tr') )
-						.remove()
+						//.row( $(this).parents('tr') )
+						//.remove()
 						.draw();
 					onChange(document.getElementById("vat_percent"));
 				}
@@ -138,6 +150,23 @@
 				toDelete();
         calculateNumber();
         onChange(document.getElementById("vat_percent"));
+      }
+
+      function onChangeDangerPrice(obj){
+        var element = $(obj);
+        var discount_percent_edit = element.parents("tr").find(".discount_percent_edit");
+        var max = parseInt(discount_percent_edit.attr("max"));
+        //console.log("TOGGLE DANGER PRICE",element);
+        if(element.prop("checked") == false){
+          //CHANGE MAX INPUT TO NORMAL
+          //console.log("Fine");
+          max = max%100;
+        }else{
+          //CHANGE MAX INPUT TO OVERFLOW
+          //console.log("Danger");
+          max = max+100;
+        }
+        discount_percent_edit.attr("max",max)
       }
 		</script>
 

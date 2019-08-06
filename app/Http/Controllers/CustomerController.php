@@ -230,7 +230,7 @@ class CustomerController extends Controller
         $filename = "upload_".$row->key;
         echo $filename;
         if ($request->hasFile($filename)) {
-          $folder = "{$id}/{$row->key}";
+          $folder = "customer/{$request->input('customer_code')}/{$row->key}";
           $value = $request->file($filename)->store($folder,'public');
           $upload_json[$i]->value = $value;
           echo $row->key."<br>";
@@ -278,7 +278,7 @@ class CustomerController extends Controller
       ];
 
       CustomerModel::update_by_id($input,$id);
-      return redirect('customer');
+      return redirect("customer/{$id}/edit");
 
     }
 

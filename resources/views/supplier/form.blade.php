@@ -42,15 +42,16 @@
       </div>
 
       <div class="form-group col-lg-4">
-        <label >รหัสพนักงานที่ดูแล</label>
+        <label >ชื่อพนักงานที่ดูแล</label>
         <div class="input-group">
-          <input name="user_id" id="user_id"  class="form-control form-control-sm  "  >
+          <input name="name" id="name"  class="form-control form-control-sm  "  >
           <div class="input-group-append">
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
               <i class="fa fa-plus"></i> รหัสพนักงาน
             </button>
           </div>
         </div>
+        <input type="hidden" name="user_id" id="user_id" >
         @include('supplier/modal-user')
       </div>
     </div>
@@ -206,7 +207,7 @@
               {{ $row_upload->name }}
             </td>
             <td>
-              <a href="#" id="file_name_{{ $row_upload->key }}">...</a>
+              <a href="#" id="file_name_{{ $row_upload->key }}" target="_blank">...</a>
             </td>
             <td>
               <div class="input-group  input-group-sm">

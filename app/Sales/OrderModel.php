@@ -40,9 +40,10 @@ class OrderModel extends Model
 	public static function select_by_id($id){
     return DB::table('tb_order')
       ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+      ->join('users', 'users.id', '=', 'tb_order.user_id')
       ->where('tb_order.order_id', '=' , $id )
-      ->orWhere('tb_order.order_code', '=' , $id )      
-			->select( DB::raw('tb_order.*, tb_customer.company_name, tb_customer.customer_code'))
+      ->orWhere('tb_order.order_code', '=' , $id )
+			->select( DB::raw('users.*,tb_customer.*, tb_order.*'))
       ->get();
 	}
 

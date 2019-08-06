@@ -5,21 +5,41 @@
 @section('content')
 
 @forelse ($table_supplier as $row)
-<form action="{{url('/')}}/supplier/{{$row->supplier_id}}" method="POST" id="form" enctype="multipart/form-data">
-  {{ csrf_field() }}
-  {{ method_field('PUT') }}
 
-  @include('supplier/form')
-
-  <div class="form-group mt-5">
-    <div class="col-lg-12">
-      <div class="text-center">
-        <a class="btn btn-outline-primary " href="{{ url('/') }}/supplier">back</a>
-        <button class="btn btn-primary" type="submit" >Update</button>
-      </div>
-    </div>
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Profile</a>
+    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contact</a>
+    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Comment</a>
   </div>
-</form>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+    <form action="{{url('/')}}/supplier/{{$row->supplier_id}}" method="POST" id="form" enctype="multipart/form-data">
+      {{ csrf_field() }}
+      {{ method_field('PUT') }}
+
+      @include('supplier/form')
+
+      <div class="form-group mt-5">
+        <div class="col-lg-12">
+          <div class="text-center">
+            <a class="btn btn-outline-primary " href="{{ url('/') }}/supplier">back</a>
+            <button class="btn btn-primary" type="submit" >Update</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+    @include('supplier/form-contact')
+  </div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+    @include('supplier/form-comment')
+  </div>
+</div>
+
 @empty
 
 @endforelse
@@ -35,7 +55,7 @@
       $("#company_name").val("{{ $row->company_name }}");
       $("#account_id").val("{{ $row->account_id }}");
       $("#user_id").val("{{ $row->user_id }}");
-
+      $("#name").val("{{ $row->name }}");
       $("#contact_name").val("{{ $row->contact_name }}");
       $("#telephone").val("{{ $row->telephone }}");
       $("#fax").val("{{ $row->fax }}");

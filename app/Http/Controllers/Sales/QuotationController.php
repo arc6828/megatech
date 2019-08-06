@@ -140,18 +140,8 @@ class QuotationController extends Controller
       $data = [
           //QUOTATION
           'table_quotation' => QuotationModel::select_by_id($id),
-          'table_customer' => CustomerModel::select_all(),
-          'table_delivery_type' => DeliveryTypeModel::select_all(),
-          'table_department' => DepartmentModel::select_all(),
-          'table_tax_type' => TaxTypeModel::select_all(),
-          'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
-          //'table_sales_user' => UserModel::select_by_role('sales'),
-          'table_sales_user' => UserModel::select_all(),
-          'table_zone' => ZoneModel::select_all(),
-          'quotation_id'=> $id,
           //QUOTATION Detail
           'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
-          'table_product' => ProductModel::select_all(),
           'total_text' => count(QuotationModel::select_by_id($id))>0 ?  Functions::baht_text(QuotationModel::select_by_id($id)[0]->total) : "-",
       ];
       //return view('sales/quotation/show',$data);

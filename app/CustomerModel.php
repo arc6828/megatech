@@ -40,7 +40,9 @@ class CustomerModel extends Model
 		return DB::table('tb_customer')->insertGetId($input);
 	}
 	public static function select_by_id($id) {
-		return DB::table('tb_customer')->where('customer_id', '=', $id)->get();
+		return DB::table('tb_customer')
+      ->join('users', 'tb_customer.user_id', '=', 'users.id')    
+      ->where('customer_id', '=', $id)->get();
 	}
 
   public static function select_upload_by_id($id) {

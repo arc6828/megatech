@@ -112,7 +112,7 @@
 		//console.log("CLICK PRODUCT : ", product, amount);
 
 		var table = $('#table-order-detail').DataTable();
-		var row = createRow("new", product);
+		var row = createRow("+", product);
 		table.row.add(row).draw( false );
 		refreshDetailTableEvent();
 		document.querySelector("#btn-close").click();

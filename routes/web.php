@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 //storage
-Route::get('/storage/{customer_id}/{type}/{filename}', 'StorageController@index');
+Route::get('/storage/{blob}/{id}/{type}/{filename}', 'StorageController@index');
 
 
 

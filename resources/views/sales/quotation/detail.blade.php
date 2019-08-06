@@ -2,7 +2,7 @@
 	<div class="card-body">
 		<style>
 		.input{
-			max-width: 50px;
+			max-width: 60px;
 			width: 100%;
 		}
     table{
@@ -70,7 +70,7 @@
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
-					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
+					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
           "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"'>",
           "<input type='checkbox' class='danger_price_edit' name='danger_price_edit[]' onclick='onChangeDangerPrice(this);' "+checked+" >",
           "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
@@ -141,18 +141,9 @@
 				if(want_to_delete){
           var id_edit = $(this).parents('tr').find(".id_edit");
           id_edit.val("-"+id_edit.val());
-					var table = $('#table-quotation-detail').DataTable();
-          /*var filteredData = table
-            .column( 2 )
-            .data()
-            .filter( function ( value, index ) {
-                var amount_edit = $("<div>"+value+"</div>").find(".amount_edit").val();
-                console.log("FILTER : ", $("<div>"+value+"</div>") ,amount_edit);
-                //return true;
-                return amount_edit != "0"  ? true : false;
-            } );*/
           $(this).parents('tr').hide();
-					table
+          var table = $('#table-quotation-detail').DataTable();
+          table
 						//.row( $(this).parents('tr') )
             //.hide()
 						//.remove()

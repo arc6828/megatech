@@ -35,7 +35,7 @@
 					$('#customer_code').text(code);
 
           var obj = JSON.parse($("#text-"+id).val());
-          console.log("Customer", obj, obj.billing_duration);
+          //console.log("Customer", obj, obj.billing_duration);
 
           document.querySelector("#debt_duration").value = obj.debt_duration;
           document.querySelector("#billing_duration").value = obj.billing_duration;

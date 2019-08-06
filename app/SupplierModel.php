@@ -40,7 +40,9 @@ class SupplierModel extends Model
 		return DB::table('tb_supplier')->insertGetId($input);
 	}
 	public static function select_by_id($id) {
-		return DB::table('tb_supplier')->where('supplier_id', '=', $id)->get();
+		return DB::table('tb_supplier')
+      ->join('users', 'tb_supplier.user_id', '=', 'users.id')    
+      ->where('supplier_id', '=', $id)->get();
 	}
 
   public static function select_upload_by_id($id) {
