@@ -196,7 +196,7 @@
 								{ title: "ค้างส่ง" },
 								{ title: "จำนวนคงคลัง" },
 						]
-					}).order( [ 1, 'desc' ] ).draw(); //END DATATABLE
+					}).order( [ 2, 'desc' ] ).draw(); //END DATATABLE
 				}); //END DONE AJAX
 		}); //END DOMContentLoaded
 

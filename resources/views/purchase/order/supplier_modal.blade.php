@@ -32,7 +32,7 @@
 <script>
 	//onClick
 	function select_item(id,name,code) {
-			console.log(id);
+			//console.log("supplier_id : ",$('#supplier_id').val());
       $('#supplier_id').val(id);
       $('#company_name').val(name);
       $('#supplier_code').text(code);
@@ -41,9 +41,8 @@
           type: "GET",
           dataType : "json",
       }).done(function(result){
-          console.log(result);
           var supplier = result[0];
-          $('#supplier_id').val(supplier.id);
+          $('#supplier_id').val(supplier.supplier_id);
     			$('#company_name').val(supplier.company_name);
     			$('#supplier_code').text(supplier.supplier_code);
 
@@ -56,12 +55,15 @@
     			$('#delivery_time').val(supplier.delivery_time);
 
 
+              console.log(result,supplier.supplier_id);
+              //console.log("supplier_id : ",$('#supplier_id').val());
+              $('#supplierModal').modal('hide');
+        			onChangeCustomer();
         }); //END AJAX
 
 
 
-			$('#supplierModal').modal('hide');
-			onChangeCustomer();
+
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		//console.log("555");

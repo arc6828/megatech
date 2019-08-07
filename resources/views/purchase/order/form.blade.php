@@ -11,9 +11,9 @@
       <div class="col-lg-3">
         <input name="purchase_order_code"	id="purchase_order_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">รหัสเอกสารเจ้าหนี้</label>
-      <div class="col-lg-3">
-        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line"	required>
+      <label class="col-lg-2 offset-lg-1 d-none">รหัสเอกสารเจ้าหนี้</label>
+      <div class="col-lg-3 d-none">
+        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line" value="-"	required>
       </div>
     </div>
     <div class="form-group form-inline d-none">

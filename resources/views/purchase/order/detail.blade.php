@@ -31,7 +31,7 @@
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
-							{ title: "ราคาตั้ง" },
+							{ title: "ราคาซื้อ" },
 							{ title: "ส่วนลด %" },
 							{ title: "ราคาขาย" },
 							{ title: "ราคาขายรวม" },
@@ -60,6 +60,8 @@
         var discount_percent_edit = 100 - element.discount_price / element.normal_price * 100;
         //var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
         var checked = true;
+        var discount_price = element.discount_price;
+        discount_price = 0;
         return [
           id+
           "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +
@@ -70,7 +72,7 @@
 
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
           "<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
-          "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"'>",
+          "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(discount_price).toFixed(2)+"'>",
           "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
