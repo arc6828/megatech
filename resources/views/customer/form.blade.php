@@ -138,15 +138,20 @@
           @endforeach
         </select>
       </div>
+
       <div class="form-group col-lg-3">
-        <label >หมายเหตุ</label>
-        <input name="remark" id="remark" class="form-control form-control-sm  "  >
+        <label >วิธีการชำระเงิน</label>
+        <select class="form-control form-control-sm ">
+          <option option="credit">ซื้อเชื่อ</option>
+          <option option="cash">ซื้อสด</option>
+        </select>
       </div>
       <div class="form-group col-lg-3">
         <label >วงเงินเคดิต</label>
         <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  "   >
       </div>
     </div>
+
 
 
     <div class="row">
@@ -163,6 +168,10 @@
       <div class="form-group col-lg-3">
         <label  >เงื่อนไขรับเช็ค </label>
         <input name="cheqe_condition"  id="cheqe_condition"  class="form-control form-control-sm  "  >
+      </div>
+      <div class="form-group col-lg-3">
+        <label >หมายเหตุ</label>
+        <input name="remark" id="remark" class="form-control form-control-sm  "  >
       </div>
     </div>
     <div class="row">

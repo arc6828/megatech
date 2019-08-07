@@ -33,8 +33,8 @@
 							{ title: "จำนวน" },
 							{ title: "ราคาซื้อ" },
 							{ title: "ส่วนลด %" },
-							{ title: "ราคาขาย" },
-							{ title: "ราคาขายรวม" },
+							{ title: "ราคาซื้อ" },
+							{ title: "ราคาซื้อรวม" },
 							{ title: "action" },
 					],
 					"fnCreatedRow" : function( nRow, aData, iDataIndex ) {
@@ -73,7 +73,7 @@
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
           "<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
           "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(discount_price).toFixed(2)+"'>",
-          "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
+          "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",

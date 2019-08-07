@@ -53,6 +53,17 @@
     </div>
 
     <div class="form-group form-inline">
+      <label class="col-lg-2">วิธีการชำระเงิน</label>
+      <div class="col-lg-3">
+        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
+      </div>
+      <label class="col-lg-2 offset-lg-1">วงเงินเครดิต</label>
+      <div class="col-lg-3">
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required>
+      </div>
+    </div>
+
+    <div class="form-group form-inline">
       <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
       <div class="col-lg-3">
         <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required>
