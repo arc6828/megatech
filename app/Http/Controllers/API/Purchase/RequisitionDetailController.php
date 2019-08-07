@@ -20,7 +20,7 @@ class RequisitionDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    { //FOR SOMEONE
       $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id",3);
       $m_date = $request->input("m_date","");
       $date_begin =  $request->input("date_begin","");
@@ -40,19 +40,18 @@ class RequisitionDetailController extends Controller
 
     public function index2(Request $request)
     {
-      $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id",3);
+      //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
+      $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id",4);
       $table_purchase_requisition_detail = RequisitionDetailModel::select_search2($purchase_requisition_detail_status_id);
       return response()->json($table_purchase_requisition_detail);
     }
 
     public function index_by_supplier(Request $request,$supplier_id)
     {
-      //$supplier_id = $request->input("supplier_id");
-      $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_purchase_requisition','tb_purchase_requisition_detail.purchase_requisition_id','=','tb_purchase_requisition.purchase_requisition_id')
-        ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
-
-        ->where("supplier_id",$supplier_id)->get();
-
+      //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
+      //FOR RECEIVE STEP - 5 => RECEIVE FROM SUPPLIER
+      $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id",4);
+      $table_purchase_requisition_detail = RequisitionDetailModel::select_search_by_supplier_id($purchase_requisition_detail_status_id, $supplier_id);
       return response()->json($table_purchase_requisition_detail);
     }
 

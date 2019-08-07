@@ -33,11 +33,35 @@
 	//onClick
 	function select_item(id,name,code) {
 			console.log(id);
-					$('#supplier_id').val(id);
-					$('#company_name').val(name);
-					$('#supplier_code').text(code);
-					$('#supplierModal').modal('hide');
-					onChangeCustomer();
+      $('#supplier_id').val(id);
+      $('#company_name').val(name);
+      $('#supplier_code').text(code);
+      $.ajax({
+          url: "{{ url('/') }}/api/supplier/"+id,
+          type: "GET",
+          dataType : "json",
+      }).done(function(result){
+          console.log(result);
+          var supplier = result[0];
+          $('#supplier_id').val(supplier.id);
+    			$('#company_name').val(supplier.company_name);
+    			$('#supplier_code').text(supplier.supplier_code);
+
+
+    			$('#debt_duration').val(supplier.debt_duration);
+    			$('#billing_duration').val(supplier.billing_duration);
+    			$('#payment_condition').val(supplier.payment_condition);
+    			$('#delivery_type_id').val(supplier.delivery_type_id);
+    			$('#tax_type_id').val(supplier.tax_type_id);
+    			$('#delivery_time').val(supplier.delivery_time);
+
+
+        }); //END AJAX
+
+
+
+			$('#supplierModal').modal('hide');
+			onChangeCustomer();
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		//console.log("555");
@@ -110,9 +134,9 @@
                 element.supplier_code,
                 element.company_name,
                 element.product_code,
-                element.product_name,
+                element.product_name + " / " + element.grade,
                 element.amount,
-                "<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
+                "<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:100px;' readonly required>",
                 //0,
                 //0,
                 //0,

@@ -1,5 +1,11 @@
 <div class="card">
   <div class="card-body">
+    <div class="mb-4">
+      <a href="{{ url('/purchase/order') }}" title="Back" class="btn btn-warning btn-sm" >
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -94,27 +100,13 @@
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
           @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_id }}" >
+          <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}
           </option>
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">สถานะ</label>
-      <div class="col-lg-3">
-        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
-          @foreach($table_purchase_status as $row_purchase_status)
-          <option value="{{ $row_purchase_status->purchase_status_id }}" >
-            {{	$row_purchase_status->purchase_status_name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสพนักงานจัดซื้อ</label>
+      <label class="col-lg-2 offset-lg-1">รหัสพนักงานจัดซื้อ</label>
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
@@ -125,9 +117,25 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
+
+    </div>
+
+    <div class="form-group form-inline d-none">
+
+      <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
+        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" >
+          <option value="" >None</option>
+          @foreach($table_purchase_status as $row_purchase_status)
+          <option value="{{ $row_purchase_status->purchase_status_id }}" >
+            {{	$row_purchase_status->purchase_status_name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
+      <div class="col-lg-3 d-none">
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm">
           <option value="" >None</option>
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >
@@ -306,10 +314,10 @@ function fillOrder(result){
     document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
     document.querySelector("#tax_type_id").value = element.tax_type_id ;
     document.querySelector("#delivery_time").value = element.delivery_time;
-    document.querySelector("#department_id").value = element.department_id ;
-    document.querySelector("#purchase_status_id").value = element.sales_status_id ;
-    document.querySelector("#user_id").value = element.user_id ;
-    document.querySelector("#zone_id").value = element.zone_id ;
+    //document.querySelector("#department_id").value = element.department_id ;
+    //document.querySelector("#purchase_status_id").value = element.sales_status_id ;
+    //document.querySelector("#user_id").value = element.user_id ;
+    //document.querySelector("#zone_id").value = element.zone_id ;
     document.querySelector("#total").value = element.total ;
     document.querySelector("#remark").value = element.remark ;
     document.querySelector("#vat_percent").value = element.vat_percent;
@@ -326,9 +334,9 @@ function fillOrderDetail(result){
   result.forEach(function(element,index) {
     var id = element.purchase_requisition_detail_id;
     console.log("ELEMENT id : ",id,element);
-    //1 : means approved
-    if(element.purchase_requisition_detail_status_id == 1){
-      var row = createRow(id, element);
+    //4 : means DEFINED SUPPLIER
+    if(element.purchase_requisition_detail_status_id == 4){
+      var row = createRow("+", element,element.purchase_requisition_detail_id);
       dataSet.push(row);
     }
   });

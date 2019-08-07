@@ -8,7 +8,7 @@
 		</style>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table-purchase_order-detail" style="width:100%"></table>
+			<table class="table table-hover text-center table-sm" id="table-purchase_order-detail" style="width:100%"></table>
 		</div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
@@ -31,7 +31,6 @@
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
-							{ title: "หน่วย" },
 							{ title: "ราคาตั้ง" },
 							{ title: "ส่วนลด %" },
 							{ title: "ราคาขาย" },
@@ -52,22 +51,27 @@
 
 
 				//AVOID TO EDIT
-				$('#table-purchase_order-detail input').prop('readonly', true);
+				//$('#table-purchase_order-detail input').prop('readonly', true);
 
 			});//END DOMContentLoaded
 
       //EVENT HANDLER
-      function createRow(id,element){
+      function createRow(id,element, requisition_detail_id){
+        var discount_percent_edit = 100 - element.discount_price / element.normal_price * 100;
+        //var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
+        var checked = true;
         return [
-          id+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
+          id+
+          "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +
+          "<input type='hidden' class='requisition_detail_id_edit' name='requisition_detail_id_edit[]'  value='"+requisition_detail_id+"' >",
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
-          element.product_name,
-          "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
-          element.product_unit,
-          "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
-					"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
-          "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
-          "<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
+          element.product_name + " / " + element.grade,
+          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+
+          "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
+          "<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
+          "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"'>",
+          "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",
@@ -128,10 +132,13 @@
 				//onChange3(this,this.getAttribute("data_id"));
 				var want_to_delete = confirm('Are you sure to delete this purchase_order detail?');
 				if(want_to_delete){
+          var id_edit = $(this).parents('tr').find(".id_edit");
+          id_edit.val("-"+id_edit.val());
+          $(this).parents('tr').hide();
 					var table = $('#table-purchase_order-detail').DataTable();
 					table
-						.row( $(this).parents('tr') )
-						.remove()
+						//.row( $(this).parents('tr') )
+						//.remove()
 						.draw();
 					onChange(document.getElementById("vat_percent"));
 				}

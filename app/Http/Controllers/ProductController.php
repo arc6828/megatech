@@ -103,7 +103,7 @@ class ProductController extends Controller
 
         $requestData = $request->all();
         unset($requestData["_method"]);
-        unset($requestData["_token"]); 
+        unset($requestData["_token"]);
         //$requestData['product_id'] =  $requestData["id"];
         //$requestData['id'] = null;
 
@@ -111,7 +111,7 @@ class ProductController extends Controller
         ProductModel::update_by_id($requestData,$id);
         //$product2->update($requestData);
 
-        return redirect('product');
+        return redirect("product/{$id}/edit");
 
 
     }

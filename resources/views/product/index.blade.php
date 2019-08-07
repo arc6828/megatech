@@ -118,7 +118,7 @@
         var price = element.promotion_price? element.promotion_price : element.normal_price;
         var row = [
           "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
-          element.product_name,
+          element.product_name+" / "+element.grade,
           element.BARCODE,
           price,
           element.amount_in_stock,

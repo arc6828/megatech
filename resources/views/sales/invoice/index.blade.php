@@ -37,7 +37,7 @@
 						<td>{{ $row->customer_code }}</td>
 						<td>{{ $row->company_name }}</td>
 						<td>{{ "-" }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
+						<td>{{ number_format($row->total?$row->total:0,2) }}</td>
 						<td>{{ $row->short_name }}</td>
 					</tr>
 					@endforeach

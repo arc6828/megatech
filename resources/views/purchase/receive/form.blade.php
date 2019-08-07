@@ -94,7 +94,7 @@
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
           @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_id }}" >
+          <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}
           </option>
           @endforeach
@@ -272,9 +272,10 @@ function onChangeCustomer(){
 }
 
 function fillPurchase_receive(supplier_id){
-  //console.log(receive_id);
+  console.log(supplier_id,"{{ url('/') }}/api/purchase/requisition_detail/supplier/"+supplier_id+"?purchase_requisition_detail_status_id=5");
+
   $.ajax({
-      url: "{{ url('/') }}/api/purchase/requisition_detail/supplier/"+supplier_id,
+      url: "{{ url('/') }}/api/purchase/requisition_detail/supplier/"+supplier_id+"?purchase_requisition_detail_status_id=5",
       type: "GET",
       dataType : "json",
   }).done(function(result){
@@ -327,7 +328,7 @@ function fillReceiveDetail(result){
     var id = element.purchase_requisition_detail_id;
     console.log("ELEMENT id : ",id,element);
     //1 : means approved
-    if(element.purchase_requisition_detail_status_id == 1){
+    if(element.purchase_requisition_detail_status_id == 5){
       var row = createRow(id, element);
       dataSet.push(row);
     }

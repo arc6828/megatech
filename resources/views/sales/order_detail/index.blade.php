@@ -39,7 +39,7 @@
   			</div>
   		</div>
 
-  		<div class="form-group form-inline">
+  		<div class="form-group form-inline d-none">
   			<label class="col-lg-2 ">เลือกเดือน</label>
   			<div class="col-lg-2">
   					<select name="m_date" id="m_date" class="form-control form-control-sm"
@@ -182,11 +182,15 @@
           $(this).closest("tr").find("input[type=checkbox]").prop('checked', true);
           console.log();
           return false;
+        }else{
+          flag = -1;
         }
       });
       //IF NO ITEM IN LIST
       if(flag == 0){
         alert("No item in list");
+      }else if(flag < 0){
+        alert("Number of item is less than the package!!!");
       }
 
       //var table_detail = $('#table-order-detail').DataTable();
@@ -247,8 +251,9 @@
 							//element.product_name + " " + element.quantity + " หน่วย/กล่อง",
               element.product_name + " / " + element.grade,
 							element.amount,
-							"<input name='approve_amounts[]' value='0' class='approve_amount form-control form-control-sm "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:40px;'  required>",
-							0,
+							"<input type='number' name='approve_amounts[]' value='0' class='approve_amount form-control form-control-sm "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:100px;'  required>",
+              element.quantity,
+              0,
 							0,
 							0,
 							element.picking_code,
@@ -270,6 +275,7 @@
 								{ title: "ชื่อสินค้า" },
 								{ title: "จำนวนที่จอง" },
 								{ title: "จำนวนที่อนุมัติ" },
+								{ title: "จำนวนต่อแพ็ค" },
 								{ title: "ค้างรับ" },
 								{ title: "ค้างส่ง" },
 								{ title: "จำนวนคงคลัง" },

@@ -1,3 +1,14 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-12">
+          <input class="form-control" id="isbn" placeholder="Enter Barcode ..." onkeypress="onKeyPressEnter(event);">
+          <button class="d-none" id="btn-isbn"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card mt-4" id="table">
 	<div class="card-body">
 		<style>
@@ -8,7 +19,7 @@
 		</style>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table-purchase_receive-detail" style="width:100%"></table>
+			<table class="table table-hover text-center table-sm" id="table-purchase_receive-detail" style="width:100%"></table>
 		</div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
@@ -142,6 +153,30 @@
         calculateNumber();
         onChange(document.getElementById("vat_percent"));
       }
+
+
+      //onKeyISBN
+      function onKeyISBN(){
+        //GET INFORMATION
+        var order_id = $("#po_code").val();
+        fillInvoice(order_id);
+        //SELECT MODAL
+        //$("#btn-customer").click();
+        //SELECT CUSTOMER BY CLICK
+
+        //$("#").click();
+        //SELECT OE BY CLICK
+
+      //  $("#").click();
+      }
+      function onKeyPressEnter(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+        if(code == 13) { //Enter keycode
+          //alert('enter press');
+          onKeyISBN();
+        }
+      }
+
 		</script>
 
 

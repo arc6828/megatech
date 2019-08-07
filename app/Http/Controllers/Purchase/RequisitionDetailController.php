@@ -75,7 +75,7 @@ class RequisitionDetailController extends Controller
     $selected_purchase_requisition_detail_ids = $request->input('selected_purchase_requisition_detail_ids');
     $amounts = $request->input('amounts');
     $approve_amounts = $request->input('approve_amounts');
-    $action = $request->input('action',"1");
+    $action = $request->input('action',"1"); //SELECT COMPANY
 
     //IF PARTIAL APPROVE
     for($i=0; $i<count($purchase_requisition_detail_ids); $i++){
@@ -92,7 +92,8 @@ class RequisitionDetailController extends Controller
       }
     }
     //UPDATE BY SELECTED ITEM : 4 means DEFINED SUPPLIER
-    RequisitionDetailModel::update_purchase_requisition_detail_status_id_by_ids2($action, $selected_purchase_requisition_detail_ids, 4);
+    $purchase_requisition_detail_status = 4;
+    RequisitionDetailModel::update_purchase_requisition_detail_status_id_by_ids2($action, $selected_purchase_requisition_detail_ids, $purchase_requisition_detail_status);
     return redirect()->back();
   }
 }

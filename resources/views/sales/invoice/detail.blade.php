@@ -2,7 +2,7 @@
 	<div class="card-body">
 		<style>
 		.input{
-			max-width: 50px;
+			max-width: 100px;
 			width: 100%;
 		}
 		</style>
@@ -64,10 +64,10 @@
           element.product_name,
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
           element.product_unit,
-          "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
-					"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
-          "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
-          "<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
+          "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
+					"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+parseFloat(100 - element.discount_price / element.normal_price * 100).toFixed(2)+"'>",
+          "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"'>",
+          "<input class='input total_edit' name='total_edit[]'  value='"+parseFloat(element.discount_price *  element.amount).toFixed(2)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",

@@ -155,6 +155,7 @@ class OrderController extends Controller
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
+          'vat' => $request->input('vat'),
           'vat_percent' => $request->input('vat_percent',7),
           'total' => $request->input('total',0),
       ];
@@ -268,6 +269,8 @@ class OrderController extends Controller
         'user_id' => $request->input('user_id'),
         'zone_id' => $request->input('zone_id'),
         'remark' => $request->input('remark'),
+        'vat' => $request->input('vat'),
+        'total_before_vat' => $request->input('total_before_vat',0),
         'vat_percent' => $request->input('vat_percent',7),
         'total' => $request->input('total_after_vat',0),
       ];

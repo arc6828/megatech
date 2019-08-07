@@ -6,6 +6,13 @@
 
 <div class="card">
 	<div class="card-body">
+    <div class="mb-4">
+      <a href="{{ url('/purchase') }}" title="Back" class="pb-4">
+        <button class="btn btn-warning btn-sm">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </button>
+      </a>
+    </div>
 		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">รายการใบเสนอซื้อ</h4>
@@ -45,7 +52,7 @@
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->total }}</td>
+						<td>{{ number_format($row->total,2) }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td>{{ $row->purchase_status_name }}</td>
 						<td>

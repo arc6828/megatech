@@ -26,7 +26,7 @@
 			@include('purchase/order/form')
 
 			<div class="text-center mt-4">
-      	<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/order">back</a>
+      	<a class="btn btn-outline-primary d-none" href="{{ url('/') }}/purchase/order">back</a>
         <button type="submit" class="btn btn-primary" id="form-submit">Save</button>
       </div>
 

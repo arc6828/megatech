@@ -46,8 +46,9 @@ class SupplierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {      
+      $table_supplier = SupplierModel::select_by_id($id);
+      return response()->json($table_supplier);
     }
 
     /**

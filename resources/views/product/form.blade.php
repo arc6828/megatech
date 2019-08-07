@@ -52,35 +52,55 @@
     <input class="form-control form-control-sm" name="floor_price" type="number" id="floor_price" value="{{ isset($table_product[0]->floor_price) ? $table_product[0]->floor_price : ''}}" >
     {!! $errors->first('floor_price', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('max_discount_percent') ? 'has-error' : ''}}">
-    <label for="max_discount_percent" class="control-label">{{ 'ส่วนลดไม่เกิน  (%)' }}</label>
-    <input class="form-control form-control-sm" name="max_discount_percent" type="number" id="max_discount_percent" value="{{ isset($table_product[0]->max_discount_percent) ? $table_product[0]->max_discount_percent : ''}}" >
-    {!! $errors->first('max_discount_percent', '<p class="help-block">:message</p>') !!}
+
+<div class="form-group ">
+  <div class="form-row ">
+    <div class="col-lg-6 {{ $errors->has('normal_price') ? 'has-error' : ''}}">
+        <label for="normal_price" class="control-label">{{ 'ราคาขาย' }}</label>
+        <input class="form-control form-control-sm" name="normal_price" type="number" id="normal_price" value="{{ isset($table_product[0]->normal_price) ? $table_product[0]->normal_price : ''}}" >
+        {!! $errors->first('normal_price', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-lg-6 {{ $errors->has('max_discount_percent') ? 'has-error' : ''}}">
+        <label for="max_discount_percent" class="control-label">{{ 'ส่วนลดไม่เกิน  (%)' }}</label>
+        <input class="form-control form-control-sm" name="max_discount_percent" type="number" id="max_discount_percent" value="{{ isset($table_product[0]->max_discount_percent) ? $table_product[0]->max_discount_percent : ''}}" >
+        {!! $errors->first('max_discount_percent', '<p class="help-block">:message</p>') !!}
+    </div>
+  </div>
 </div>
-<div class="form-group {{ $errors->has('amount_in_stock') ? 'has-error' : ''}}">
-    <label for="amount_in_stock" class="control-label">{{ 'จำนวนสินค้าในคลัง' }}</label>
-    <input class="form-control form-control-sm" name="amount_in_stock" type="number" id="amount_in_stock" value="{{ isset($table_product[0]->amount_in_stock) ? $table_product[0]->amount_in_stock : ''}}" >
-    {!! $errors->first('amount_in_stock', '<p class="help-block">:message</p>') !!}
+
+<div class="form-group ">
+  <div class="form-row ">
+    <div class="col-lg-4 {{ $errors->has('amount_in_stock') ? 'has-error' : ''}}">
+        <label for="amount_in_stock" class="control-label">{{ 'จำนวนสินค้าในคลัง' }}</label>
+        <input class="form-control form-control-sm" name="amount_in_stock" type="number" id="amount_in_stock" value="{{ isset($table_product[0]->amount_in_stock) ? $table_product[0]->amount_in_stock : ''}}" readonly>
+        {!! $errors->first('amount_in_stock', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-lg-4 {{ $errors->has('product_unit') ? 'has-error' : ''}}">
+        <label for="product_unit" class="control-label">{{ 'หน่วยของสินค้า' }}</label>
+        <input class="form-control form-control-sm" name="product_unit" type="text" id="product_unit" value="{{ isset($table_product[0]->product_unit) ? $table_product[0]->product_unit : ''}}" >
+        {!! $errors->first('product_unit', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-lg-4 {{ $errors->has('quantity') ? 'has-error' : ''}}">
+        <label for="quantity" class="control-label">{{ 'จำนวนต่อแพ็คเกจ' }}</label>
+        <input class="form-control form-control-sm" name="quantity" type="number" id="quantity" value="{{ isset($table_product[0]->quantity) ? $table_product[0]->quantity : ''}}" >
+        {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
+    </div>
+  </div>
 </div>
-<div class="form-group {{ $errors->has('product_unit') ? 'has-error' : ''}}">
-    <label for="product_unit" class="control-label">{{ 'หน่วยของสินค้า' }}</label>
-    <input class="form-control form-control-sm" name="product_unit" type="text" id="product_unit" value="{{ isset($table_product[0]->product_unit) ? $table_product[0]->product_unit : ''}}" >
-    {!! $errors->first('product_unit', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('pending_in') ? 'has-error' : ''}}">
-    <label for="pending_in" class="control-label">{{ 'ค้างรับ' }}</label>
-    <input class="form-control form-control-sm" name="pending_in" type="number" id="pending_in" value="{{ isset($table_product[0]->pending_in) ? $table_product[0]->pending_in : ''}}" >
-    {!! $errors->first('pending_in', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('pending_out') ? 'has-error' : ''}}">
-    <label for="pending_out" class="control-label">{{ 'ค้างส่ง' }}</label>
-    <input class="form-control form-control-sm" name="pending_out" type="number" id="pending_out" value="{{ isset($table_product[0]->pending_out) ? $table_product[0]->pending_out : ''}}" >
-    {!! $errors->first('pending_out', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('normal_price') ? 'has-error' : ''}}">
-    <label for="normal_price" class="control-label">{{ 'ราคาขาย' }}</label>
-    <input class="form-control form-control-sm" name="normal_price" type="number" id="normal_price" value="{{ isset($table_product[0]->normal_price) ? $table_product[0]->normal_price : ''}}" >
-    {!! $errors->first('normal_price', '<p class="help-block">:message</p>') !!}
+
+<div class="form-group ">
+  <div class="form-row ">
+    <div class="col-lg-6 {{ $errors->has('pending_in') ? 'has-error' : ''}}">
+        <label for="pending_in" class="control-label">{{ 'ค้างรับ' }}</label>
+        <input class="form-control form-control-sm" name="pending_in" type="number" id="pending_in" value="{{ isset($table_product[0]->pending_in) ? $table_product[0]->pending_in : ''}}" readonly>
+        {!! $errors->first('pending_in', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-lg-6 {{ $errors->has('pending_out') ? 'has-error' : ''}}">
+        <label for="pending_out" class="control-label">{{ 'ค้างส่ง' }}</label>
+        <input class="form-control form-control-sm" name="pending_out" type="number" id="pending_out" value="{{ isset($table_product[0]->pending_out) ? $table_product[0]->pending_out : ''}}"  readonly>
+        {!! $errors->first('pending_out', '<p class="help-block">:message</p>') !!}
+    </div>
+  </div>
 </div>
 
 <div class="form-group d-none {{ $errors->has('purchase_price') ? 'has-error' : ''}}">
@@ -98,11 +118,7 @@
     <input class="form-control form-control-sm" name="ISBN" type="text" id="ISBN" value="{{ isset($table_product[0]->ISBN) ? $table_product[0]->ISBN : ''}}" >
     {!! $errors->first('ISBN', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('quantity') ? 'has-error' : ''}}">
-    <label for="quantity" class="control-label">{{ 'จำนวนต่อแพ็คเกจ' }}</label>
-    <input class="form-control form-control-sm" name="quantity" type="number" id="quantity" value="{{ isset($table_product[0]->quantity) ? $table_product[0]->quantity : ''}}" >
-    {!! $errors->first('quantity', '<p class="help-block">:message</p>') !!}
-</div>
+
 
 
 <div class="form-group">

@@ -176,6 +176,14 @@
 
 
   @yield('script')
+
+  <script>
+    function displayNumber(number){
+      return Number(""+number).toLocaleString("en",{minimumFractionDigits: 2});
+    }
+
+		
+  </script>
 </body>
 
 </html>

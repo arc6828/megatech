@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Purchase\OrderModel;
 use App\Purchase\OrderDetailModel;
 use App\Purchase\OrderDetailStatusModel;
+use App\Purchase\RequisitionDetailModel;
 
 use App\SupplierModel;
 use App\DeliveryTypeModel;
@@ -81,7 +82,7 @@ class OrderController extends Controller
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time'),
           'department_id' => $request->input('department_id'),
-          'purchase_status_id' => $request->input('purchase_status_id'),
+          'purchase_status_id' => $request->input('purchase_status_id',3), //3 MEANS นัดวันรับสินค้า ออก PO
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
@@ -104,6 +105,7 @@ class OrderController extends Controller
               "discount_price" => $request->input('discount_price_edit')[$i],
               "purchase_order_id" => $id,
               "purchase_order_detail_status_id" => 5, //5 : ออก PO แล้ว
+              "requisition_detail_id" =>  $request->input('requisition_detail_id_edit')[$i],
           ];
           if( is_numeric($request->input('id_edit')[$i]) ){
             //$a["purchase_order_detail_id"] = $request->input('id_edit')[$i];
@@ -114,6 +116,26 @@ class OrderController extends Controller
       OrderDetailModel::insert($list);
 
       //UPDATE PR Detail
+
+      //2.INSERT UPDATE DELETE ORDER DETAIL
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          //$id_edit = $request->input('id_edit')[$i];
+          $id_edit = $request->input('requisition_detail_id_edit')[$i];
+          $a = [
+            //"product_id" => $request->input('product_id_edit')[$i],
+            //"amount" => $request->input('amount_edit')[$i],
+            //"discount_price" => $request->input('discount_price_edit')[$i],
+            //"purchase_order_id" => $id,
+            "purchase_requisition_detail_status_id" => 5, //5 : ออก PO แล้ว
+            //"requisition_detail_id" =>  $request->input('requisition_detail_id')[$i],
+          ];
+          RequisitionDetailModel::update_by_id($a,$id_edit);
+          echo "update {$id_edit}";
+        }
+      }
+
+
 
       return redirect("purchase/order/{$id}/edit");
     }
@@ -217,6 +239,8 @@ class OrderController extends Controller
       ];
       OrderModel::update_by_id($input,$id);
 
+
+      /*
       //2.DELETE QUOTATION DETAIL FIRST
       OrderDetailModel::delete_by_purchase_order_id($id);
 
@@ -239,7 +263,36 @@ class OrderController extends Controller
       }
 
       OrderDetailModel::insert($list);
-
+      */
+      //2.INSERT UPDATE DELETE ORDER DETAIL
+      if (is_array ($request->input('product_id_edit'))){
+        for($i=0; $i<count($request->input('product_id_edit')); $i++){
+          $id_edit = $request->input('id_edit')[$i];
+          $a = [
+            "product_id" => $request->input('product_id_edit')[$i],
+            "amount" => $request->input('amount_edit')[$i],
+            "discount_price" => $request->input('discount_price_edit')[$i],
+            "purchase_order_id" => $id,
+            "purchase_order_detail_status_id" => 5, //5 : ออก PO แล้ว
+            "requisition_detail_id" =>  $request->input('requisition_detail_id')[$i],
+          ];
+          switch($id_edit){
+            case "+" :
+              OrderDetailModel::insert($a);
+              echo "+<br>";
+              break;
+            default :
+              if($id_edit < 0){
+                OrderDetailModel::delete_by_id(abs($id_edit));
+                echo "-<br>";
+              }else{
+                OrderDetailModel::update_by_id($a,$id_edit);
+                echo "{$id_edit}<br>";
+                //print_r($a);
+              }
+          }
+        }
+      }
       //UPDATE PR Detail
 
       //4.REDIRECT

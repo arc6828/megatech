@@ -27,7 +27,7 @@
         </div>
         @include('customer/index_modal')
       </div>
-      <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
+      <label class="col-lg-2 ">วันที่เวลา</label>
       <div class="col-lg-3">
         <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>

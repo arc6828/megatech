@@ -17,6 +17,13 @@
 
 <div class="card">
 	<div class="card-body">
+    <div class="mb-4">
+      <a href="{{ url('/purchase') }}" title="Back" class="pb-4">
+        <button class="btn btn-warning btn-sm">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </button>
+      </a>
+    </div>
     <form method="get" action="">
   		<div class="form-group form-inline">
   			<label class="col-lg-2 offset-lg-1">สถานะ</label>
@@ -161,10 +168,10 @@
 							element.purchase_requisition_code,
 							//element.delivery_time,
 							//element.purchase_requisition_detail_status_name,
-							element.product_id,
-							element.product_name,
+							element.product_code,
+							element.product_name + " / " + element.grade ,
 							element.amount,
-							"<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
+							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:100px;' required>",
 							0,
 							0,
 							0,
@@ -189,7 +196,7 @@
 								{ title: "ค้างส่ง" },
 								{ title: "จำนวนคงคลัง" },
 						]
-					}); //END DATATABLE
+					}).order( [ 1, 'desc' ] ).draw(); //END DATATABLE
 				}); //END DONE AJAX
 		}); //END DOMContentLoaded
 

@@ -6,6 +6,11 @@
 
 <div class="card">
 	<div class="card-body">
+    <div class="mb-4">
+      <a href="{{ url('/purchase') }}" title="Back" class="btn btn-warning btn-sm" >
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
 		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">รายการใบสั่งซื้อ</h4>
@@ -53,7 +58,7 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
+						<td>{{ number_format($row->total?$row->total:0, 2) }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td class="d-none">{{ $row->purchase_status_name }}</td>
 						<td class="d-none">
@@ -81,7 +86,7 @@
 </div>
 
 <div class="mt-4 text-center">
-  <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase">back</a>
+  <a class="btn btn-outline-primary d-none " href="{{ url('/') }}/purchase">back</a>
   <a href="{{ url('/') }}/purchase/order/create" class="btn btn-primary">
     <i class="fa fa-plus"></i> เพิ่มใบสั่งซื้อ
   </a>

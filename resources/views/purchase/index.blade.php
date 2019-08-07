@@ -44,7 +44,7 @@
         </div>
 			</a>
 			</div>
-			<div class="col-6 col-md-3">
+			<div class="col-6 col-md-3 d-none">
 			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/purchase/order_detail">
         <div class="vertical-center">
   				<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-cart"></i></span></div>

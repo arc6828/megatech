@@ -47,6 +47,7 @@ class OrderDetailController extends Controller
       return response()->json($table_order_detail);
     }
 
+
     /**
      * Store a newly created resource in storage.
      *

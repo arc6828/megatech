@@ -102,9 +102,25 @@ class RequisitionDetailModel extends Model
         ->get();
 	}
 
+  public static function select_search_by_supplier_id($purchase_requisition_detail_status_id, $supplier_id){
+
+    return DB::table('tb_purchase_requisition_detail')
+        ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
+        ->join('tb_purchase_requisition','tb_purchase_requisition.purchase_requisition_id','=','tb_purchase_requisition_detail.purchase_requisition_id')
+        ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+        ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
+        ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
+        ->where("tb_supplier.supplier_id",$supplier_id)
+        //->whereBetween("datetime",">=",[$date_begin,$date_end])
+        //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+        //->select( DB::raw('*,DATE(datetime) as date'))
+        ->get();
+	}
+
+
   public static function duplicate_by_id($new_amount, $id){
-    $sql = "INSERT INTO tb_purchase_requisition_detail
-      SELECT null,product_id,{$new_amount},{$new_amount},discount_price,purchase_requisition_id,purchase_requisition_detail_status_id,null
+    $sql = "INSERT INTO tb_purchase_requisition_detail (product_id,amount,discount_price,purchase_requisition_id,purchase_requisition_detail_status_id)
+      SELECT product_id,{$new_amount},discount_price,purchase_requisition_id,purchase_requisition_detail_status_id
       FROM tb_purchase_requisition_detail
       WHERE purchase_requisition_detail_id = {$id}";
     return DB::insert($sql);
