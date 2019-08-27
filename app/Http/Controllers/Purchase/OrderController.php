@@ -102,6 +102,7 @@ class OrderController extends Controller
           $a = [
               "product_id" => $request->input('product_id_edit')[$i],
               "amount" => $request->input('amount_edit')[$i],
+              "amount_pending_in" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "purchase_order_id" => $id,
               "purchase_order_detail_status_id" => 5, //5 : ออก PO แล้ว
