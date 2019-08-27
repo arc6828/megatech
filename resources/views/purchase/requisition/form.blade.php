@@ -197,7 +197,7 @@ function onChangeCustomer(){
 
 function refreshTotal(){
   var total = 0;
-  document.querySelectorAll(".total_edit").forEach(function(element,index){
+  document.querySelectorAll("#table-purchase_requisition-detail .total_edit").forEach(function(element,index){
     total += parseFloat(element.value);
   }); //END foreach\
   //console.log("Total : " + total);

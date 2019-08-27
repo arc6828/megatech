@@ -74,7 +74,7 @@
   <div style="margin-top:10px;">
     <table border="1" style="border-collapse: collapse; width:100%;">
       <tr><td>
-        
+
         <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
         <strong>ที่อยู่ :</strong> {{ $row->company_name }}  <br>
         <strong>โทร :</strong> 02-152-7250
@@ -114,9 +114,9 @@
         <td>{{ $loop->iteration }}</td>
         <td>{{ $row_detail->product_code }}</td>
         <td>{{ $row_detail->product_name }}</td>
-        <td>{{ $row_detail->quantity }}</td>
+        <td>{{ $row_detail->amount }}</td>
         <td>{{ $row_detail->discount_price }}</td>
-        <td>{{ $row_detail->quantity * $row_detail->discount_price }}</td>
+        <td>{{ $row_detail->amount * $row_detail->discount_price }}</td>
       </tr>
       @endforeach
       @for($i=0; $i<(10-count($table_purchase_receive_detail)); $i++)

@@ -1,5 +1,10 @@
 <div class="card ">
   <div class="card-body">
+    <div class="mb-4">
+      <a href="{{ url('/sales/invoice') }}" title="Back" class="btn btn-warning btn-sm" >
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -213,7 +218,7 @@ function onChangeCustomer(id){
 }
 function refreshTotal(){
   var total = 0;
-  document.querySelectorAll(".total_edit").forEach(function(element,index){
+  document.querySelectorAll("#table-invoice-detail .total_edit").forEach(function(element,index){
     total += parseFloat(element.value);
   }); //END foreach\
   //console.log("Total : " + total);

@@ -14,23 +14,11 @@
 
 <div class="card">
 	<div class="card-body">
-		<div class="row d-none">
-			<div class="col-lg-6 align-self-center">
-				<h4 class="card-title">รายการใบจอง</h4>
-				<h6 class="card-subtitle">Display infomation in the table</h6>
-			</div>
-			<div class="col-lg-6 align-self-center">
-				<form class="" action="{{ url('/') }}/sales/order" method="GET">
-					<div class="form-group form-inline pull-right">
-						<input class="form-control mb-2 mr-2" type="text" name="q" placeholder="type your keyword..." value="{{ $q }}" >
-						<button class="btn btn-primary mb-2 mr-2" type="submit" >ค้นหา</button>
-					</div>
-				</form>
-			</div>
-		</div>
-
-
-
+    <div class="mb-4">
+      <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
 
 		<div class="table-responsive">
 			<table class="table table-sm table-hover text-center  table-bordered" id="table">
@@ -60,7 +48,21 @@
 						<td>{{ $row->company_name }}</td>
 						<td class="number">{{ $row->total }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td>{{ $row->sales_status_name }}</td>
+						<td>
+              @if( $row->sales_status_id == 7)
+              <a class="btn btn-sm btn-warning"
+                href="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
+                {{ $row->sales_status_name }}
+              </a>
+              @elseif($row->sales_status_id == 8)
+              <a class="btn btn-sm btn-success"
+                href="{{ url('/') }}/sales/invoice/create?order_code={{ $row->order_code }}">
+                เปิด Invoice ใหม่
+              </a>
+              @else
+              {{ $row->sales_status_name }}
+              @endif
+            </td>
 						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->order_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

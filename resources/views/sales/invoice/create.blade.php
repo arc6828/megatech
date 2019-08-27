@@ -7,8 +7,13 @@
   <div class="card-body">
     <div class="row">
       <div class="col-lg-12">
-          <input class="form-control" id="isbn" placeholder="barcode ..." onkeypress="onKeyPressEnter(event);">
-          <button class="d-none" id="btn-isbn"></button>
+        <form action="{{ url('/') }}/sales/invoice/create" method="GET">
+          <input class="form-control"
+            name="order_code"id="order_code" placeholder="Enter Order barcode ..." onkeypress="onKeyPressEnter(event);"
+            value="{{ request('order_code') }}"
+            />
+          <button class="d-none" id="btn-isbn">Submit</button>
+        </form>
       </div>
     </div>
   </div>
@@ -48,13 +53,17 @@
     document.querySelector("#vat_percent").value = "7";
 
     //onChange(document.querySelector("#vat"));
-    $('#isbn').focus();
+    $('#order_code').focus();
+    var order_code = $('#order_code').val();
+    if( order_code.length > 0 ){
+      onKeyISBN();
+    }
   });
 
   //onKeyISBN
   function onKeyISBN(){
     //GET INFORMATION
-    var order_id = $("#isbn").val();
+    var order_id = $("#order_code").val();
     fillInvoice(order_id);
     //SELECT MODAL
     //$("#btn-customer").click();

@@ -1,8 +1,11 @@
 <div class="card">
   <div class="card-body">
-    <a class="float-right btn-prints d-none">
-      <i class="fas fa-print"></i>
-    </a>
+    <div class="mb-4">
+      <a href="{{ url('/sales/quotation') }}" title="Back" class="btn btn-warning btn-sm" >
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
+
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">

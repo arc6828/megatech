@@ -113,9 +113,9 @@
         <td>{{ $loop->iteration }}</td>
         <td>{{ $row_detail->product_code }}</td>
         <td>{{ $row_detail->product_name }}</td>
-        <td>{{ $row_detail->quantity }}</td>
+        <td>{{ $row_detail->amount }}</td>
         <td>{{ $row_detail->discount_price }}</td>
-        <td>{{ $row_detail->quantity * $row_detail->discount_price }}</td>
+        <td>{{ $row_detail->amount * $row_detail->discount_price }}</td>
       </tr>
       @endforeach
       @for($i=0; $i<(10-count($table_invoice_detail)); $i++)
