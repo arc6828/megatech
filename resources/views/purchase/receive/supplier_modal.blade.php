@@ -140,7 +140,7 @@
               ],
               "pageLength" : 3,
             }); //END DATATABLE
-            $('#table-receive-detail input').attr("readonly",true);
+            //$('#table-receive-detail input').attr("readonly",true);
             table_detail.search("*").draw();
           });//END DONE AJAX
         }
