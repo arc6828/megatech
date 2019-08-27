@@ -176,3 +176,5 @@ Route::get('/table-basic', function () {
 });
 
 Route::resource('product2', 'Product2Controller');
+
+Route::resource('stock', 'StockController');

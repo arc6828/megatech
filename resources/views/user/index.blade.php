@@ -1,21 +1,17 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แฟ้มพนักงาน')
 
 @section('navbar-menu')
-<div style="margin:21px;">
-		<a href="{{ url('/') }}/register" class="btn pull-right hidden-sm-down btn-success btn-sm">
-			<i class="fa fa-plus"></i> Register
-		</a>
-<div>
+
 @endsection
 
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 
-		<div class="row">
+		<div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">แฟ้มพนักงาน</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
@@ -31,7 +27,7 @@
 		</div>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center">
+			<table class="table table-hover text-center" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">ชื่อ</th>
@@ -58,7 +54,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="row hide">
+		<div class="row d-none">
 				<form action="#" method="POST" id="form_delete">
 					{{ csrf_field() }}
 					{{ method_field('DELETE') }}
@@ -71,6 +67,19 @@
 
 	</div>
 </div>
+<div class="mt-4 text-center">
+		<a href="{{ url('/') }}/register" class="btn btn-primary">
+			<i class="fa fa-plus"></i> Register
+		</a>
+<div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+      //console.log("555");
+      $('#table').DataTable();
+  });
+
+</script>
 <script>
 		function onDelete(id){
 			//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//

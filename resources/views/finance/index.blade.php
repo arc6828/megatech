@@ -1,9 +1,9 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','การเงิน')
 
 @section('breadcrumb-menu')
-<a href="{{ url('/') }}/activity/create" class="hide btn pull-right hidden-sm-down btn-success"> 
+<a href="{{ url('/') }}/activity/create" class="hide btn pull-right hidden-sm-down btn-success">
   <i class="fa fa-plus"></i> New Activity
 </a>
 @endsection

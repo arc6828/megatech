@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','คงคลัง')
 
@@ -10,48 +10,68 @@
 
 @section('content')
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 		<div class="row text-center">
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-				<div class="px-4"><span class="round round-primary my-2">อ</span></i></div>
-				<div><br>โอนย้ายคลัง</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/">
+        <div class="vertical-center">
+          <div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
+          <div><br>โอนย้ายคลัง</div>
+        </div>
+
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary my-3" href="{{url('/')}}/">
-				<div class="px-4"><span class="round round-primary my-2">ป</span></div>
-				<div>ปรับปรุง<br>เพิ่ม/ลด</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/">
+        <div class="vertical-center">
+          <div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
+          <div>ปรับปรุง<br>เพิ่ม/ลด</div>
+        </div>
+
 			</a>
 			</div>
 			<div class="col-6 col-md-4 d-none">
-			<a class="btn btn-outline-primary my-3" href="#">
-				<div class="px-4"><span class="round round-primary my-2">บ</span></i></div>
-				<div>เบิกวัตถุดิบ<br>ไปผลิต</div>
+			<a class="btn btn-outline-primary btn-menu my-3" href="#">
+        <div class="vertical-center">
+          <div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
+
+  				<div>เบิกวัตถุดิบ<br>ไปผลิต</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4  d-none">
-			<a class="btn btn-outline-primary my-3" href="#">
-				<div class="px-4"><span class="round round-primary my-2">ร</span></i></div>
-				<div>รับคืนวัตถุดิบ<br>จากผลิต</div>
+			<a class="btn btn-outline-primary btn-menu  my-3" href="#">
+        <div class="vertical-center">
+          <div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
+          <div>รับคืนวัตถุดิบ<br>จากผลิต</div>
+        </div>
+
 			</a>
 			</div>
 			<div class="col-6 col-md-4  d-none">
-			<a class="btn btn-outline-primary my-3" href="#">
-				<div class="px-4"><span class="round round-primary my-2">ร</span></div>
-				<div>รับสินค้า<br>สำเร็จรูป</div>
+			<a class="btn btn-outline-primary btn-menu  my-3" href="#">
+        <div class="vertical-center">
+          <div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
+
+  				<div>รับสินค้า<br>สำเร็จรูป</div>
+        </div>
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-				<a class="btn btn-outline-success my-3" href="{{url('/')}}/product">
-					<div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
-					<div>แฟ้มหลัก<br>สินค้า</div>
+        <a class="btn btn-outline-success btn-menu  my-3" href="{{ url('/') }}/product">
+          <div class="vertical-center">
+  					<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
+  					<div>แฟ้มหลัก<br>สินค้า</div>
+    			</div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-				<a class="btn btn-outline-success my-3" href="{{url('/')}}/inventory_main">
-					<div class="px-4"><i class="round round-success my-2 fa fa-folder-open-o"></i></div>
-					<div>แฟ้มหลัก<br>คลังสินค้า</div>
+				<a class="btn btn-outline-success btn-menu  my-3" href="{{url('/')}}/inventory_main">
+          <div class="vertical-center">
+  					<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
+  					<div>แฟ้มหลัก<br>คลังสินค้า</div>
+    			</div>
+
 				</a>
 			</div>
 		</div>

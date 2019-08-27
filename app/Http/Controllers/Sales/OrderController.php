@@ -80,7 +80,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
       //INSERT QUOTATION
-      $code = $this->getNewCode()
+      $code = $this->getNewCode();
       $input = [
           'order_code' => $code,
           'external_reference_id' => $request->input('external_reference_id'),

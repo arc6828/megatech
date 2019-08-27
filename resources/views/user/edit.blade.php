@@ -1,4 +1,4 @@
-@extends('monster-lite/layouts/theme')
+@extends('layouts/argon-dashboard/theme')
 
 @section('title','แก้ไขข้อมูลพนักงาน')
 
@@ -16,7 +16,12 @@
 
 
     <div class="card">
-      <div class="card-block">
+      <div class="card-body">
+        <div class="mb-4">
+          <a href="{{ url('/')}}/user" title="Back" class="btn btn-warning btn-sm">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+          </a>
+        </div>
         <div class="form-group form-inline">
           <label class="col-lg-2">ชื่อ</label>
           <div class="col-lg-3">
