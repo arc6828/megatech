@@ -190,7 +190,8 @@
 <script>
 function refreshTotal(){
   var total = 0;
-  document.querySelectorAll(".total_edit").forEach(function(element,index){
+  document.querySelectorAll(".total_edit_row").forEach(function(element,index){
+    //console.log("Total");
     total += parseFloat(element.value);
   }); //END foreach\
   //console.log("Total : " + total);
