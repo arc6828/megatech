@@ -47,6 +47,30 @@ class OrderDetailController extends Controller
       return response()->json($table_order_detail);
     }
 
+    public function order_code(Request $request, $order_code)
+    {
+      $order_detail_status_id = $request->input("purchase_order_detail_status_id");
+      $condition = [
+        ["tb_purchase_order_detail.purchase_order_detail_status_id", $order_detail_status_id],
+        ["tb_purchase_order.purchase_order_code", $order_code],
+      ];
+      $table_order_detail = OrderDetailModel::getByCondition($condition);
+
+      return response()->json($table_order_detail);
+    }
+
+    public function supplier(Request $request, $supplier_id)
+    {
+      $order_detail_status_id = $request->input("purchase_order_detail_status_id");
+      $condition = [
+        ["tb_purchase_order_detail.purchase_order_detail_status_id", $order_detail_status_id],
+        ["tb_purchase_order.supplier_id", $supplier_id],
+      ];
+      $table_order_detail = OrderDetailModel::getByCondition($condition);
+
+      return response()->json($table_order_detail);
+    }
+
 
     /**
      * Store a newly created resource in storage.

@@ -1,5 +1,10 @@
 <div class="card">
   <div class="card-body">
+    <div class="mb-4">
+      <a href="{{ url('/') }}/purchase/receive" title="Back" class="btn btn-warning btn-sm">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -10,11 +15,11 @@
         <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line"	required>
       </div>
     </div>
-    <div class="form-group form-inline d-none">
+    <div class="form-group form-inline">
       <label class="col-lg-2">เลขที่ใบขาย</label>
       <div class="col-lg-3">
-        <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm"  readonly style="max-width:120px;">
-        @include('purchase/receive/create_from_receive_modal')
+        <input name="internal_reference_doc" id="internal_reference_doc" class="form-control form-control-sm"  readonly>
+
       </div>
     </div>
     <div class="form-group form-inline">
@@ -103,7 +108,6 @@
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
         <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
           @foreach($table_purchase_status as $row_purchase_status)
           <option value="{{ $row_purchase_status->purchase_status_id }}" >
             {{	$row_purchase_status->purchase_status_name }}
@@ -125,9 +129,9 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
-      <div class="col-lg-3">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
+      <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
+      <div class="col-lg-3 d-none">
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm" >
           <option value="" >None</option>
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >
@@ -262,7 +266,48 @@ function onChange(obj){
     //element.value = parseFloat(element.value).toFixed(2)
   });
 
+
 }
+
+function onKeyPressEnter(e){
+  var code = (e.keyCode ? e.keyCode : e.which);
+  if(code == 13) { //Enter keycode
+    alert('enter press');
+    onChangePO();
+  }
+}
+
+function onChangePO(){
+  console.log("");
+  var purchase_order_code = $("#purchase_order_code").val();
+  console.log(purchase_order_code);
+  fillPurchase_receivePO(purchase_order_code);
+}
+
+function fillPurchase_receivePO(purchase_order_code){
+  console.log(supplier_id,"{{ url('/') }}/api/purchase/order_detail/order_code/"+purchase_order_code+"?purchase_order_detail_status_id=5");
+
+  $.ajax({
+      url: "{{ url('/') }}/api/purchase/order_detail/order_code/"+purchase_order_code+"?purchase_order_detail_status_id=5",
+      type: "GET",
+      dataType : "json",
+  }).done(function(result){
+    fillReceive(result);
+    fillReceiveDetail(result);
+    //ALL ABOUT EVENT
+    refreshDetailTableEvent();
+    //AVOID TO EDIT
+    //$('#table-purchase_receive-detail input').prop('readonly', true);
+
+
+    $("#isbn").focus();
+
+  }); //END AJAX
+
+  //document.querySelector("#btn-close-receive").click();
+
+}
+
 
 function onChangeCustomer(){
   console.log("");
@@ -272,10 +317,10 @@ function onChangeCustomer(){
 }
 
 function fillPurchase_receive(supplier_id){
-  console.log(supplier_id,"{{ url('/') }}/api/purchase/requisition_detail/supplier/"+supplier_id+"?purchase_requisition_detail_status_id=5");
+  console.log(supplier_id,"{{ url('/') }}/api/purchase/order_detail/supplier/"+supplier_id+"?purchase_order_detail_status_id=5");
 
   $.ajax({
-      url: "{{ url('/') }}/api/purchase/requisition_detail/supplier/"+supplier_id+"?purchase_requisition_detail_status_id=5",
+      url: "{{ url('/') }}/api/purchase/order_detail/supplier/"+supplier_id+"?purchase_order_detail_status_id=5",
       type: "GET",
       dataType : "json",
   }).done(function(result){
@@ -295,10 +340,11 @@ function fillReceive(result){
   var element = result[0];
   if(element){
     //document.querySelector("#invoice_code").value = element.invoice_code ;
-    //document.querySelector("#internal_reference_id").value = element.purchase_receive_code ;
-    //document.querySelector("#external_reference_id").value = element.external_reference_id;
-    //document.querySelector("#supplier_id").value = element.supplier_id;
-    //document.querySelector("#contact_name").value = element.contact_name;
+    document.querySelector("#internal_reference_doc").value = "{{ request('purchase_order_code') }}" ;
+    //document.querySelector("#external_reference_doc").value = element.external_reference_doc;
+    document.querySelector("#supplier_id").value = element.supplier_id;
+    document.querySelector("#supplier_code").innerHTML  = element.supplier_code;
+    document.querySelector("#company_name").value = element.company_name;
     //var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
     //var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
     document.querySelector("#debt_duration").value = element.debt_duration;
@@ -308,7 +354,7 @@ function fillReceive(result){
     document.querySelector("#tax_type_id").value = element.tax_type_id ;
     document.querySelector("#delivery_time").value = element.delivery_time;
     document.querySelector("#department_id").value = element.department_id ;
-    document.querySelector("#purchase_status_id").value = element.sales_status_id ;
+    //document.querySelector("#purchase_status_id").value = element.sales_status_id ;
     document.querySelector("#user_id").value = element.user_id ;
     document.querySelector("#zone_id").value = element.zone_id ;
     document.querySelector("#total").value = element.total ;
@@ -325,10 +371,10 @@ function fillReceiveDetail(result){
   //console.log(result);
   var dataSet = [];
   result.forEach(function(element,index) {
-    var id = element.purchase_requisition_detail_id;
+    var id = element.purchase_order_detail_id;
     console.log("ELEMENT id : ",id,element);
     //1 : means approved
-    if(element.purchase_requisition_detail_status_id == 5){
+    if(element.purchase_order_detail_status_id == 5){
       var row = createRow(id, element);
       dataSet.push(row);
     }

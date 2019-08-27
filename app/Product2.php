@@ -11,14 +11,14 @@ class Product2 extends Model
      *
      * @var string
      */
-    protected $table = 'product2s';
+    protected $table = 'tb_product';
 
     /**
     * The database primary key value.
     *
     * @var string
     */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'product_id';
 
     /**
      * Attributes that should be mass-assignable.
@@ -27,5 +27,5 @@ class Product2 extends Model
      */
     protected $fillable = ['product_code', 'product_name', 'product_detail', 'brand', 'promotion_price', 'floor_price', 'max_discount_percent', 'amount_in_stock', 'product_unit', 'pending_in', 'pending_out', 'normal_price', 'BARCODE', 'purchase_price', 'purchase_ref', 'ISBN', 'quantity'];
 
-    
+
 }

@@ -8,16 +8,22 @@
   <div class="card-body">
     <div class="row">
       <div class="col-lg-12">
-          <input class="form-control" id="po_code" placeholder="Enter PO Code ..." onkeypress="onKeyPressEnter(event);">
-          <button class="d-none" id="btn-isbn"></button>
+        <form action="" method="GET">
+          <input class="form-control"
+            name="purchase_order_code" id="purchase_order_code"
+            placeholder="Enter PO Code ..."
+            value="{{ request('purchase_order_code') }}"
+            />
+          <button class="d-none" id="btn-isbn">Submit</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
-<form class="" action="{{ url('/') }}/purchase/receive" method="POST">
+<form class="" action="{{ url('/') }}/purchase/receive" id="form" method="POST">
     {{ csrf_field() }}
     {{ method_field('POST') }}
-    @include('purchase/receive/form')
+    @include('purchase/receive/form', ["mode"=>"create"])
     <div class="text-center mt-4">
 
         <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase/receive">back</a>
@@ -50,8 +56,15 @@
     document.querySelector("#vat_percent").value = "7";
 
     //onChange(document.querySelector("#vat"));
-    $('#po_code').focus();
+    $('#purchase_order_code').focus();
+    var purchase_order_code = "{{ request('purchase_order_code') }}";
+    if(purchase_order_code.length > 0){
+      console.log("onchange");
+      onChangePO();
+    }
   });
+
+
 
 </script>
 

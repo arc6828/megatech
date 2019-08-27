@@ -1,8 +1,8 @@
-<div class="card mb-4">
+<div class="card mt-4">
   <div class="card-body">
     <div class="row">
       <div class="col-lg-12">
-          <input class="form-control" id="isbn" placeholder="Enter Barcode ..." onkeypress="onKeyPressEnter(event);">
+          <input class="form-control" id="isbn" placeholder="Enter Barcode ..." onkeypress="onKeyPressEnterBarcode(event);">
           <button class="d-none" id="btn-isbn"></button>
       </div>
     </div>
@@ -41,13 +41,17 @@
 							{ title: "#" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
-							{ title: "จำนวน" },
-							{ title: "หน่วย" },
+							{ title: "จำนวนที่รับ" },
+              @if($mode == "create")
+							{ title: "จำนวนที่ค้างรับ" },
+							{ title: "จำนวนที่รับ" },
+              @endif
+							//{ title: "หน่วย" },
 							{ title: "ราคาตั้ง" },
-							{ title: "ส่วนลด %" },
-							{ title: "ราคาขาย" },
-							{ title: "ราคาขายรวม" },
-							{ title: "action" },
+							//{ title: "ส่วนลด %" },
+							{ title: "ราคาซื้อ" },
+							{ title: "ราคาซื้อรวม" },
+							//{ title: "action" },
 					],
 					"fnCreatedRow" : function( nRow, aData, iDataIndex ) {
 						//console.log("aData : ", aData, iDataIndex);
@@ -63,25 +67,32 @@
 
 
 				//AVOID TO EDIT
-				$('#table-purchase_receive-detail input').prop('readonly', true);
+				//$('#table-purchase_receive-detail input').prop('readonly', true);
 
 			});//END DOMContentLoaded
 
       //EVENT HANDLER
       function createRow(id,element){
+        var order_id = "{{ request('purchase_order_code') }}";
+        var amount_class = order_id + "-" + element.BARCODE;
+
         return [
           id+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
           element.product_name,
-          "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
-          element.product_unit,
+          "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' readonly>",
+          @if($mode == "create")
+          "<input class='input amount_pending_edit' name='amount_pending_edit[]'  value='"+element.amount_pending_in+"' readonly>",
+          "<input class='input amount_receive_edit "+amount_class+"' name='amount_receive_edit[]'  value='0' type='number' data-limit='"+element.amount_pending_in+"' data-quantity='"+element.quantity+"'>",
+          @endif
+          //element.product_unit,
           "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
-					"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
-          "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
+					//"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"' readonly>",
+          "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"' readonly>",
           "<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
-          "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+          /*"<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
-          "</a>",
+          "</a>",*/
         ];
       }
 
@@ -157,25 +168,59 @@
 
       //onKeyISBN
       function onKeyISBN(){
-        //GET INFORMATION
-        var order_id = $("#po_code").val();
-        fillInvoice(order_id);
-        //SELECT MODAL
-        //$("#btn-customer").click();
-        //SELECT CUSTOMER BY CLICK
+        var order_id = "{{ request('purchase_order_code') }}";
+        var isbn = $("#isbn").val();
+        var amount_class = order_id + "-" + isbn;
 
-        //$("#").click();
-        //SELECT OE BY CLICK
 
-      //  $("#").click();
+        //FLAG TO CHECK COMMIT
+        var flag = 0;
+        $("."+amount_class).each(function(){
+          var num = parseInt($(this).val());
+          var limit = parseInt($(this).attr('data-limit'));
+          var quantity = parseInt($(this).attr('data-quantity'));
+          var num = num + quantity;
+          console.log("NUM" , num , limit);
+
+          //COMMIT
+          if(num <= limit){
+            //SET NEW NUMBER
+            $(this).val(num);
+            flag = 1;
+            console.log("World");
+            //CLEAR ISBN
+            $("#isbn").val("");
+            //SET CHECKBOX
+            $(this).closest("tr").find("input[type=checkbox]").prop('checked', true);
+            console.log();
+            return false;
+          }else{
+            flag = -1;
+          }
+        });
+        //IF NO ITEM IN LIST
+        if(flag == 0){
+          alert("No item in list");
+        }else if(flag < 0){
+          alert("Number of item is less than the package!!!");
+        }
+
+        //var table_detail = $('#table-order-detail').DataTable();
+        //var data = table_detail.search(key).data();
+        //console.log("DATA : " , $("."+amount_class));
+
+        //PLUS AMOUNT
       }
-      function onKeyPressEnter(e){
+      function onKeyPressEnterBarcode(e){
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) { //Enter keycode
-          //alert('enter press');
+          event.preventDefault();
+          //alert('enter press isbn');
           onKeyISBN();
         }
       }
+
+
 
 		</script>
 

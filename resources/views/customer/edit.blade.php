@@ -93,6 +93,8 @@
     @empty
 
     @endforelse
+
+  
   });
 </script>
 

@@ -82,7 +82,7 @@ class OrderController extends Controller
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time'),
           'department_id' => $request->input('department_id'),
-          'purchase_status_id' => $request->input('purchase_status_id',3), //3 MEANS นัดวันรับสินค้า ออก PO
+          'purchase_status_id' => 3, //3 MEANS นัดวันรับสินค้า ออก PO
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),

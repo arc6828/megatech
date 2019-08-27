@@ -80,8 +80,9 @@ class OrderController extends Controller
     public function store(Request $request)
     {
       //INSERT QUOTATION
+      $code = $this->getNewCode()
       $input = [
-          'order_code' => $this->getNewCode(),
+          'order_code' => $code,
           'external_reference_id' => $request->input('external_reference_id'),
           'customer_id' => $request->input('customer_id'),
           'debt_duration' => $request->input('debt_duration'),
@@ -121,7 +122,7 @@ class OrderController extends Controller
       OrderDetail2Model::insert($list);
       OrderDetailModel::insert($list);
 
-      $this->store2($request);
+      $this->store2($request,$code);
 
       return redirect("sales/order/{$id}/edit");
     }
@@ -137,12 +138,13 @@ class OrderController extends Controller
         return $order_code;
     }
 
-    public function store2(Request $request)
+    public function store2(Request $request,$code)
     {
       //INSERT QUOTATION
       $input = [
           'purchase_requisition_code' => $this->getNewCode2(),
           'external_reference_id' => $request->input('external_reference_id'),
+          'internal_reference_id' => $code,
           'customer_id' => $request->input('customer_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
