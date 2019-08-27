@@ -291,7 +291,7 @@ function fillPurchase_order(supplier_id){
     //ALL ABOUT EVENT
     refreshDetailTableEvent();
     //AVOID TO EDIT
-    $('#table-purchase_order-detail input').prop('readonly', true);
+    //$('#table-purchase_order-detail input').prop('readonly', true);
 
   }); //END AJAX
 
