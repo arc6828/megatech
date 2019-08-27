@@ -1,0 +1,16 @@
+{
+    "fields": [
+        {
+            "name": "product_id",
+            "type": "integer"
+        },
+        {
+            "name": "amount",
+            "type": "integer"
+        },
+        {
+            "name": "action",
+            "type": "string"
+        }
+    ]
+}
