@@ -27,7 +27,7 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table" width="100%">
                                 <thead>
                                     <tr>
                                         <th>#</th><th>Product Code</th><th>Product Name</th><th>Product Detail</th><th>Actions</th>

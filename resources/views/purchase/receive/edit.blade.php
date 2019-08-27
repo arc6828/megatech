@@ -23,7 +23,7 @@
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 
-			@include('purchase/receive/form')
+			@include('purchase/receive/form', ["mode"=>"edit"])
 
 			<div class="text-center mt-4">
       	<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/receive">back</a>
@@ -37,6 +37,7 @@
 				//INITIALIZE
 				document.querySelector("#purchase_receive_code").value = "{{ $row->purchase_receive_code }}";
 				document.querySelector("#external_reference_doc").value = "{{ $row->external_reference_doc }}";
+				document.querySelector("#internal_reference_doc").value = "{{ $row->internal_reference_doc }}";
 				document.querySelector("#supplier_id").value = "{{ $row->supplier_id }}";
 				document.querySelector("#company_name").value = "{{ $row->company_name }}";
 				document.querySelector("#supplier_code").innerHTML = "{{ $row->supplier_code }}";
@@ -57,6 +58,8 @@
 				document.querySelector("#vat_percent").value = "{{ $row->vat_percent }}";
 
 				onChange(document.querySelector("#vat_percent"));
+
+
 			});
 
 		</script>

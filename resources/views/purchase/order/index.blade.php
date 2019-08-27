@@ -38,8 +38,8 @@
 						<th class="text-center">รหัสเจ้าหนี้</th>
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center d-none">สถานะ</th>
+						<th class="text-center">ผู้รับผิดชอบ</th>
+						<th class="text-center">สถานะ</th>
 						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
@@ -60,7 +60,17 @@
 						<td>{{ $row->company_name }}</td>
 						<td>{{ number_format($row->total?$row->total:0, 2) }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td class="d-none">{{ $row->purchase_status_name }}</td>
+						<td>
+              @if( $row->purchase_status_id == 3 )
+              <a
+                class="btn btn-sm btn-warning"
+                href="{{ url('/') }}/purchase/receive/create?purchase_order_code={{ $row->purchase_order_code }}">
+                {{ $row->purchase_status_name }}
+              </a>
+              @else
+                {{ $row->purchase_status_name }}
+              @endif
+            </td>
 						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_order_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class OrderModel extends Model
 {
+    protected $table = "tb_purchase_order";
+
+    
+
     public static function select_all(){
       return DB::table('tb_purchase_order')
           ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')

@@ -93,8 +93,9 @@
       //detail
       //AJAX
       if(  ! $.fn.DataTable.isDataTable('#table-receive-detail') ){
+        var supplier_id = "";
         $.ajax({
-            url: "{{ url('/') }}/api/purchase/requisition_detail/index2",
+            url: "{{ url('/') }}/api/purchase/order_detail/index2?order_detail_status_id=5",
             type: "GET",
             dataType : "json",
         }).done(function(result){
@@ -102,9 +103,9 @@
             var dataSet = [];
             result.forEach(function(element,index) {
               //console.log(element,index);
-              var id = element.requisition_detail_id;
+              var id = element.order_detail_id;
               var row = [
-                element.purchase_requisition_code,
+                element.purchase_order_code,
                 element.datetime,
                 //element.delivery_time,
                 element.supplier_code,

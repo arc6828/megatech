@@ -8,6 +8,9 @@ use App\Purchase\ReceiveModel;
 use App\Purchase\ReceiveDetailModel;
 use App\Purchase\ReceiveDetailStatusModel;
 
+use App\Purchase\OrderModel;
+use App\Purchase\OrderDetailModel;
+
 use App\SupplierModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
@@ -49,7 +52,7 @@ class ReceiveController extends Controller
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
           //'table_purchase_user' => UserModel::select_by_role('purchase_receive'),
           'table_purchase_user' => UserModel::all(),
           //'table_purchase_receive_user' => UserModel::select_all(),
@@ -73,6 +76,7 @@ class ReceiveController extends Controller
       $input = [
           'purchase_receive_code' => $this->getNewCode(),
           'external_reference_doc' => $request->input('external_reference_doc'),
+          'internal_reference_doc' => $request->input('internal_reference_doc'),
           'supplier_id' => $request->input('supplier_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
@@ -100,19 +104,49 @@ class ReceiveController extends Controller
         for($i=0; $i<count($request->input('product_id_edit')); $i++){
           $a = [
               "product_id" => $request->input('product_id_edit')[$i],
-              "amount" => $request->input('amount_edit')[$i],
+              "amount" => $request->input('amount_receive_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "purchase_receive_id" => $id,
           ];
           if( is_numeric($request->input('id_edit')[$i]) ){
-            $a["purchase_receive_detail_id"] = $request->input('id_edit')[$i];
+            //$a["purchase_receive_detail_id"] = $request->input('id_edit')[$i];
           }
-          $list[] = $a;
+          $amount_receive = $request->input('amount_receive_edit')[$i];
+          if($amount_receive > 0){
+            $list[] = $a;
+
+            //UPDATE PO Detail  : amount_pending_in, status if amount_pending_in
+            $order_detail_id = $request->input('id_edit')[$i];
+            $amount_receive = $request->input('amount_receive_edit')[$i];
+            $amount_pending_in = $request->input('amount_pending_edit')[$i];
+            if($amount_pending_in == $amount_receive){
+              //STATUS 6 MEANS RECEIVED
+              OrderDetailModel::update_by_id(["purchase_order_detail_status_id"=>6], $order_detail_id);
+            }
+            //THIS MEANS COMPLETE
+            OrderDetailModel::decreaseAmountPendingIn($amount_receive, $order_detail_id);
+          }
         }
       }
       ReceiveDetailModel::insert($list);
 
-      //UPDATE PR Detail
+      //CHECK if ALL RECEIVED, UPDATE STATUS PO : 4 => ปิดการซื้อเรียบร้อย
+      $purchase_order_code = $request->input('internal_reference_doc');
+      echo $purchase_order_code;
+
+      $purchase_order = OrderModel::where('purchase_order_code', $purchase_order_code)->first();
+      $purchase_order_id = $purchase_order->purchase_order_id;
+      $count = OrderDetailModel::countNotReceive($purchase_order_id);
+      if($count == 0){
+          //NO ONE LEFT : 4 => ปิดการซื้อเรียบร้อย
+          OrderModel:: update_by_id(
+            ["purchase_status_id"=>"4"],
+            $purchase_order_id
+          );
+      }
+
+
+
 
       return redirect("purchase/receive/{$id}/edit");
     }

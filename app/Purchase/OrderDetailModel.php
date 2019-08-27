@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class OrderDetailModel extends Model
 {
+  protected $table = "tb_purchase_order_detail";
+
+
+
   public static function select_all(){
 		return DB::table('tb_purchase_order_detail')
       ->join('tb_product','tb_purchase_order_detail.product_id','=','tb_product.product_id')
@@ -43,6 +47,11 @@ class OrderDetailModel extends Model
         ->update($input);
 	}
 
+  public static function decreaseAmountPendingIn($amount, $id){
+    DB::table('tb_purchase_order_detail')->where('purchase_order_detail_id', $id)
+      ->decrement('amount_pending_in', $amount );
+  }
+
 	public static function delete_by_id($id){
 		DB::table('tb_purchase_order_detail')
             ->where('purchase_order_detail_id', '=', $id)
@@ -54,6 +63,14 @@ class OrderDetailModel extends Model
         ->where('purchase_order_id', '=', $purchase_order_id)
         ->delete();
 	}
+
+  public static function countNotReceive($purchase_order_id){
+    //5: MEANS ออก PO แล้ว, แต่ยังไม่ได้ได้รับ
+    return DB::table('tb_purchase_order_detail')
+        ->where('purchase_order_detail_status_id',  5)
+        ->where('purchase_order_id',  $purchase_order_id)
+        ->count();
+  }
 
   //EXTENSION ABOUT ORDER
   public static function select_search($purchase_order_detail_status_id,$date_begin,$date_end=""){
@@ -81,17 +98,33 @@ class OrderDetailModel extends Model
   //No Filter Date, but status_id
   public static function select_search2($order_detail_status_id){
 
-      return DB::table('tb_purchase_order_detail')
-          ->join('tb_product','tb_purchase_order_detail.product_id','=','tb_product.product_id')
-          ->join('tb_purchase_order','tb_purchase_order.order_id','=','tb_purchase_order_detail.order_id')
-          ->join('tb_customer', 'tb_purchase_order.customer_id', '=', 'tb_customer.customer_id')
-          //->join('tb_purchase_order_detail_status', 'tb_purchase_order_detail.order_detail_status_id', '=', 'tb_purchase_order_detail_status.order_detail_status_id')
-          ->where("tb_purchase_order_detail.order_detail_status_id","=",$order_detail_status_id)
-          //->whereBetween("datetime",">=",[$date_begin,$date_end])
-          //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
-          ->select( DB::raw('*,DATE(datetime) as date'))
-          ->get();
-    }
+    return DB::table('tb_purchase_order_detail')
+        ->join('tb_product','tb_purchase_order_detail.product_id','=','tb_product.product_id')
+        ->join('tb_purchase_order','tb_purchase_order.purchase_order_id','=','tb_purchase_order_detail.purchase_order_id')
+        ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+        //->join('tb_purchase_order_detail_status', 'tb_purchase_order_detail.order_detail_status_id', '=', 'tb_purchase_order_detail_status.order_detail_status_id')
+        ->where("tb_purchase_order_detail.purchase_order_detail_status_id","=",$order_detail_status_id)
+        //->whereBetween("datetime",">=",[$date_begin,$date_end])
+        //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+        ->select( DB::raw('*,DATE(datetime) as date'))
+        ->get();
+  }
+
+  //No Filter Date, but status_id
+  public static function getByCondition($condition){
+
+    return DB::table('tb_purchase_order_detail')
+        ->join('tb_product','tb_purchase_order_detail.product_id','=','tb_product.product_id')
+        ->join('tb_purchase_order','tb_purchase_order.purchase_order_id','=','tb_purchase_order_detail.purchase_order_id')
+        ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+        //->join('tb_purchase_order_detail_status', 'tb_purchase_order_detail.order_detail_status_id', '=', 'tb_purchase_order_detail_status.order_detail_status_id')
+        //->where("tb_purchase_order_detail.order_detail_status_id","=",$order_detail_status_id)
+        ->where($condition)
+        //->whereBetween("datetime",">=",[$date_begin,$date_end])
+        //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+        ->select( DB::raw('*,DATE(datetime) as date'))
+        ->get();
+  }
 
   public static function duplicate_by_id($new_amount, $id){
     $sql = "INSERT INTO tb_purchase_order_detail

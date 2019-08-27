@@ -47,7 +47,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+      $table_customer = CustomerModel::select_by_id($id);
+      return response()->json($table_customer);
     }
 
     /**

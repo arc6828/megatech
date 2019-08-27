@@ -23,6 +23,7 @@
 				//INITIALIZE
 				document.querySelector("#purchase_requisition_code").value = "{{ $row->purchase_requisition_code }}";
 				document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
+				document.querySelector("#internal_reference_id").value = "{{ $row->internal_reference_id }}";
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
 
 				document.querySelector("#company_name").value = "{{ $row->company_name }}";

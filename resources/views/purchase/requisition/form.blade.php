@@ -5,9 +5,12 @@
       <div class="col-lg-3">
         <input name="purchase_requisition_code"	id="purchase_requisition_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">P/O ลูกหนี้</label>
+      <label class="col-lg-2 offset-lg-1">เอกสารอ้างอิง</label>
       <div class="col-lg-3">
-        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	required>
+        <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm form-control-line"	required>
+      </div>
+      <div class="col-lg-3 d-none">
+        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line">
       </div>
     </div>
     <div class="form-group form-inline">
@@ -25,7 +28,7 @@
             </button>
           </div>
         </div>
-        @include('customer/index_modal')
+        @include('purchase/requisition/customer_modal')
       </div>
       <label class="col-lg-2 ">วันที่เวลา</label>
       <div class="col-lg-3">
@@ -86,7 +89,7 @@
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
           @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_id }}" >
+          <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}
           </option>
           @endforeach
@@ -187,6 +190,11 @@
 
 
 <script>
+
+function onChangeCustomer(){
+
+}
+
 function refreshTotal(){
   var total = 0;
   document.querySelectorAll(".total_edit").forEach(function(element,index){

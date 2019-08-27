@@ -65,9 +65,9 @@ class Product2Controller extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $requestData = $request->all();
-        
+
         Product2::create($requestData);
 
         return redirect('product2')->with('flash_message', 'Product2 added!');
@@ -111,9 +111,9 @@ class Product2Controller extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $product2 = Product2::findOrFail($id);
         $product2->update($requestData);
 

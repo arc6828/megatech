@@ -20,8 +20,12 @@
 				</form>
 			</div>
 		</div>
-
-
+    
+    <div class="mb-4">
+      <a href="{{ url('/') }}/purchase" title="Back" class="btn btn-warning btn-sm">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      </a>
+    </div>
 
 		<div class="table-responsive">
 			<table width="100%" class="table table-hover text-center table-sm  table-breceiveed table-striped" id="table">
@@ -81,7 +85,6 @@
 </div>
 
 <div class="mt-4 text-center">
-  <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase">back</a>
   <a href="{{ url('/') }}/purchase/receive/create" class="btn btn-primary">
     <i class="fa fa-plus"></i> เพิ่มใบรับ/ซื้อสินค้า
   </a>
