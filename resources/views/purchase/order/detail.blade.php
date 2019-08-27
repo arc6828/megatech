@@ -31,8 +31,8 @@
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
-							{ title: "ราคาซื้อ" },
-							{ title: "ส่วนลด %" },
+							//{ title: "ราคาตั้ง" },
+							//{ title: "ส่วนลด %" },
 							{ title: "ราคาซื้อ" },
 							{ title: "ราคาซื้อรวม" },
 							{ title: "action" },
@@ -68,10 +68,10 @@
           "<input type='hidden' class='requisition_detail_id_edit' name='requisition_detail_id_edit[]'  value='"+requisition_detail_id+"' >",
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
           element.product_name + " / " + element.grade,
-          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >"
 
-          "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
-          "<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
+          +"<input class='d-none input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>"
+          +"<input type='number' step='any' class='d-none input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
           "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(discount_price).toFixed(2)+"'>",
           "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(discount_price *  element.amount)+"' disabled>",
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
