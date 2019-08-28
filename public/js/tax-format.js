@@ -9,10 +9,9 @@ function checkID(input) {
 function onChangeCitizenID(obj) {
 	var input = obj.value.replace(/-/g,"");
 	console.log("INPUT : ",input);
-    if(!checkID(input))
-        alert('รหัส 13 หลักไม่ถูกต้อง');
-    else
-        alert('รหัส 13 หลักถูกต้อง');
+    if(!checkID(input)){
+      alert('รหัส 13 หลักไม่ถูกต้อง');
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {

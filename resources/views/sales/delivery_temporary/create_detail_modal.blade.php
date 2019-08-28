@@ -52,10 +52,11 @@
 						var price = element.promotion_price? element.promotion_price : element.normal_price;
 						var row = [
 							element.product_code,
-							element.product_name,
+							element.BARCODE,
+							element.product_name + " / " + element.grade ,
 							element.amount_in_stock,
 							price,
-							"<input name='amount_create' id='amount_create"+id+"'  value='1' style='width:50px;' >",
+							"<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",
 							"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);'>" +
 								"<span class='fa fa-shopping-cart'></span>" +
 							"</button>",
@@ -69,6 +70,7 @@
 						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
+							{ title: "Barcode" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวนในคลัง" },
 							{ title: "ราคาขาย" },

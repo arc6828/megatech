@@ -51,6 +51,7 @@
 						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
+							{ title: "Barcode" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวนในคลัง" },
 							{ title: "ราคาขาย" },
@@ -91,7 +92,8 @@
       var price = element.promotion_price? element.promotion_price : element.normal_price;
       var row = [
         element.product_code,
-        element.product_name,
+        element.BARCODE,
+        element.product_name + " / "+ element.grade,
         element.amount_in_stock,
         price,
         "<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",

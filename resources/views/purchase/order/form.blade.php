@@ -125,7 +125,6 @@
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
         <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" >
-          <option value="" >None</option>
           @foreach($table_purchase_status as $row_purchase_status)
           <option value="{{ $row_purchase_status->purchase_status_id }}" >
             {{	$row_purchase_status->purchase_status_name }}
