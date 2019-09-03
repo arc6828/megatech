@@ -5,7 +5,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-lg" role="document" style="max-width:1200px;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการสินค้า</h5>
@@ -89,7 +89,7 @@
     result.forEach(function(element,index) {
       //console.log(element,index);
       var id = element.product_id;
-      var price = element.promotion_price? element.promotion_price : element.normal_price;
+      var price = parseFloat(element.promotion_price? element.promotion_price : element.normal_price).toFixed(2);
       var row = [
         element.product_code,
         element.BARCODE,

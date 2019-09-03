@@ -5,7 +5,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-lg" role="document" style="max-width:1200px;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการสินค้า</h5>
@@ -95,7 +95,7 @@
         element.BARCODE,
         element.product_name + " / "+ element.grade,
         element.amount_in_stock,
-        price,
+        parseFloat(price).toFixed(2),
         "<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",
         "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);'>" +
           "<span class='fa fa-plus'></span>" +

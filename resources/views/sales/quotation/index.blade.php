@@ -36,9 +36,18 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td class="number">{{ $row->total?$row->total:0 }}</td>
+						<td class="text-right">{{ number_format($row->total?$row->total:0,2) }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td>{{ $row->sales_status_name }}</td>
+						<td>
+              @if( $row->sales_status_id >= 1 &&  $row->sales_status_id <= 3 )
+              <a  href="{{ url('/') }}/sales/order/create?quotation_code={{ $row->quotation_code }}"
+                  title="{{ $row->sales_status_name }}"
+                  class="btn btn-warning btn-sm"
+                >
+                รอเปิด Order
+              </a>
+              @endif
+            </td>
 						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->quotation_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

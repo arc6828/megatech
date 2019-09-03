@@ -18,7 +18,11 @@
 				<table width="100%" class="table table-hover text-center table-sm" id="table-product-quotation-model"></table>
 
         <div class="text-center">
-          <button class="btn btn-warning" onclick="addAllProduct();" type="button">
+          <button type="button"
+                  class="btn btn-warning"  id="btn-add-products"
+                  onclick="addAllProduct();"
+                  data-dismiss="modal" 
+                  >
             <span class='fa fa-shopping-cart'> เพิ่มรายการสินค้า</span>
           </button>
         </div>
@@ -59,6 +63,7 @@
 							"deferRender" : true,
 							"columns": [
 									{ title: "#" },
+									{ title: "QT" },
 									{ title: "รหัสสินค้า" },
 									{ title: "ชื่อสินค้า" },
 									{ title: "จำนวน" },
@@ -70,6 +75,10 @@
 									//{ title: "action" },
 							],
 						}); // END DATATABLE
+            var quotation_code = "{{ request('quotation_code') }}";
+            $('#table-product-quotation-model').DataTable().search(quotation_code).draw();
+            //IF QUOTATION CODE EXIST
+            onSelectAllItem();
 					}); //END AJAX
 			}
 		}); // END MODAL EVENT
@@ -81,12 +90,13 @@
 	function createRow2(id,element){
 		return [
 			"<input class='check' type='checkbox' value='"+id+"'>"+"<input type='hidden' class='id_edit' name='id_edit2[]'  value='"+id+"' >",
+      element.quotation_code,
 			element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit2[]'  value='"+element.product_id+"' >",
 			element.product_name + " (" +element.product_unit + ")",
 			"<input class='input amount_edit' name='amount_edit2[]' id='amount_edit2'  value='"+element.amount+"' disabled>",
 			"<input class='input normal_price_edit' name='normal_price_edit2[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
 			"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit2[]' max='"+element.max_discount_percent+"'  value='"+(100 - element.discount_price / element.normal_price * 100)+"' disabled>",
-			"<input class='input discount_price_edit' name='discount_price_edit2[]'  value='"+element.discount_price+"' disabled>",
+			"<input class='input discount_price_edit' name='discount_price_edit2[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"' disabled>",
 			"<input class='input total_edit' name='total_edit2[]'  value='"+(element.discount_price *  element.amount)+"' disabled>"+
 			"<button type='button' id='btn-add-"+id+"' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create btn-sm class d-none' onclick='addProduct2(this);'>" +
 				"<span class='fa fa-shopping-cart'></span>" +

@@ -46,7 +46,7 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td class="number">{{ $row->total }}</td>
+						<td class="text-right">{{ number_format($row->total,2) }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td>
               @if( $row->sales_status_id == 7)

@@ -10,6 +10,7 @@ use App\Sales\OrderModel;
 use App\Sales\OrderDetail2Model;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderDetailStatusModel;
+use App\Sales\QuotationModel;
 
 use App\Purchase\RequisitionModel;
 use App\Purchase\RequisitionDetailModel;
@@ -52,8 +53,15 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+      $quotation_code = $request->input('quotation_code');
+      if(!empty($quotation_code)){
+        $tb_quotation = QuotationModel::select_by_id($quotation_code);
+        $customer_code = (count($tb_quotation)>0) ? $tb_quotation[0]->customer_code : "";
+      }else{
+        $customer_code = "";
+      }
       $data = [
           //QUOTATION
           'table_customer' => CustomerModel::select_all(),
@@ -64,6 +72,7 @@ class OrderController extends Controller
           //'table_sales_user' => UserModel::select_by_role('sales'),
           'table_sales_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
+          'customer_code' => $customer_code,
           //QUOTATION DETAIL
           'table_order_detail' => [],
           'table_product' => ProductModel::select_all(),

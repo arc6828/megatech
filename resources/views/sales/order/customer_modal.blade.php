@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#customerModal">
+<button type="button" class="btn btn-success btn-sm d-none" id="btn-customer" data-toggle="modal" data-target="#customerModal">
 	<i class="fa fa-plus"></i> เลือกลูกหนี้
 </button>
 
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 			<div class="modal-footer d-none">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-close-customer">Close</button>
 			</div>
 		</div>
 	</div>
@@ -71,7 +71,9 @@
 								//element.contact_name,
 								"<button type='button' " +
 										"class='btn btn-warning btn-sm'" +
-										"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
+										"id='btn-"+element.customer_code+"'" +
+										"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' " +
+                    "data-dismiss='modal'"
 										+">เลือก</button>"
                     +"<textarea class='d-none' id='text-"+element.customer_id+"'>"+JSON.stringify(element)+"</textarea>",
 							];
@@ -89,6 +91,10 @@
 							]
 						});
             $('#table-customer-modal').DataTable().search($("#customer_code").text()).draw();
+
+            /*if()*/
+            //CALL IF QUOTATION CODE EXIST
+            onCustomerClick();
 					}); //END AJAX
 
 			}

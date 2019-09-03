@@ -5,6 +5,19 @@
 
 @section('content')
 
+<div class="card mb-4">
+  <div class="card-body">
+    <form action="" method="GET">
+      <input class="form-control"
+        name="purchase_order_code" id="quotation_code"
+        placeholder="Enter quotation Code ..."
+        value="{{ request('quotation_code') }}"
+        />
+      <button class="d-none" id="btn-isbn">Submit</button>
+    </form>
+  </div>
+</div>
+
 <form class="" action="{{ url('/') }}/sales/order" method="POST">
     {{ csrf_field() }}
     {{ method_field('POST') }}
@@ -45,8 +58,48 @@
     document.querySelector("#vat_percent").value = "7";
 
     //onChange(document.querySelector("#vat"));
+    $("#quotation_code").focus();
+
+    existQuotationCode();
+
+
   });
 
+  function existQuotationCode(){
+    //CLICK TO POPUP THE MODAL
+    //console.log("SPAN : ", $("#customer_code"));
+    if("{{ request('quotation_code') }}".length > 0){
+      $("#customer_code").text("{{ $customer_code }}");
+      $("#btn-customer").click();
+    }
+  }
+
+  function onCustomerClick(){
+    if("{{ request('quotation_code') }}".length > 0){
+      //CLICK TO SELECT THE CUSTOMER + SEARCH BY QUOTATION CODE
+      $("#btn-{{ $customer_code }}").click();
+
+    }
+  }
+
+  function onSelectAllItem(){
+    if("{{ request('quotation_code') }}".length > 0){
+      //CHECKED ALL
+      $("#table-product-quotation-model input[type=checkbox]").prop("checked",true);
+      //SUBMIT
+      console.log("#btn-add-products : ",$("#btn-add-products"));
+      //$("#btn-add-products").click();
+      //addAllProduct();
+
+      //$("#quotation_code").focus();
+      //$('#customerModal').modal('hide');
+      //$('#quotationModal').modal('hide');
+      document.querySelector("#table-product-quotation-model").click();
+      document.querySelector("#btn-close-customer").click();
+      //console.log("HEY ");
+      //$.modal.close();
+    }
+  }
 </script>
 
 @endsection
