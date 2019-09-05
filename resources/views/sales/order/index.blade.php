@@ -52,7 +52,7 @@
               @if( $row->sales_status_id == 7)
               <a class="btn btn-sm btn-warning"
                 href="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
-                {{ $row->sales_status_name }}
+                รอการเบิกสินค้า
               </a>
               @elseif($row->sales_status_id == 8)
               <a class="btn btn-sm btn-success"
