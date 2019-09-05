@@ -29,6 +29,7 @@
 					"columns": [
 							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
+							{ title: "QT" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
 							{ title: "ราคาตั้ง" },
@@ -62,6 +63,9 @@
           element.product_code +
             "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
+          element.quotation_code +
+            "<input type='hidden' class='quotation_code_edit' name='quotation_code_edit[]'  value='"+element.quotation_code+"' >",
+
           element.product_name + " / "+ element.grade,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 

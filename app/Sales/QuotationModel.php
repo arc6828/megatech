@@ -67,6 +67,7 @@ class QuotationModel extends Model
 	public static function update_by_id($input, $id){
     DB::table('tb_quotation')
         ->where('quotation_id', $id)
+        ->orWhere('quotation_code', $id)
         ->update($input);
 	}
 

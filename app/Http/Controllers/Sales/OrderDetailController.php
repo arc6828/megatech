@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Sales\OrderDetailModel;
+use App\Sales\OrderModel;
 use App\Sales\OrderDetailStatusModel;
 use App\Sales\PickingModel;
 
@@ -76,7 +77,26 @@ class OrderDetailController extends Controller
           OrderDetailModel::update_by_id($input_detail , $order_detail_ids[$i]);
         }
       }
+      //IF ALL DETAIL APPROVE change Order sale_status_id = 8 which means all approved
+      //CHECK if ALL RECEIVED, UPDATE STATUS PO : 4 => ปิดการซื้อเรียบร้อย
+      //$purchase_order_code = $request->input('internal_reference_doc');
+      //echo $purchase_order_code;
+
+      //CHANGE STATUS ORDER
+      $order = OrderDetailModel::where('order_detail_id', $order_detail_ids[$i])->first();
+      $order_id = $order->order_id;
+      $count = OrderDetailModel::countWaitApprove($order_id);
+      if($count == 0){
+          //NO ONE LEFT : 8 => อนุมัติครบ
+          OrderModel:: update_by_id(
+            ["sales_status_id"=>"8"],
+            $order_id
+          );
+      }
     }
+
+
+
 
     //OrderDetailModel::update_order_detail_status_id_by_ids($action, $selected_order_detail_ids);
     return redirect()->back();

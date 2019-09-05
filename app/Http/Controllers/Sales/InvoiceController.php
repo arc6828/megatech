@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Sales\InvoiceModel;
 use App\Sales\InvoiceDetailModel;
+use App\Sales\OrderDetailModel;
+use App\Sales\OrderModel;
 use App\Sales\InvoiceDetailStatusModel;
 
 use App\CustomerModel;
@@ -111,9 +113,32 @@ class InvoiceController extends Controller
               "invoice_id" => $id,
           ];
           if( is_numeric($request->input('id_edit')[$i]) ){
-            $a["invoice_detail_id"] = $request->input('id_edit')[$i];
+            //$a["invoice_detail_id"] = $request->input('id_edit')[$i];
           }
           $list[] = $a;
+
+          /*
+          //CHANGE STATUS ORDER => 4
+          $input_detail2 = [
+            "order_detail_status_id" => 4,
+          ];
+          OrderDetailModel::update_by_id($input_detail2 , $request->input('id_edit')[$i]);
+
+          //CHANGE STATUS ORDER
+
+          $order_code = $request->input('internal_reference_id');
+          $order = OrderModel::where('order_code', $order_code)->first();
+          $order_id = $order->order_id;
+          $count = OrderDetailModel::countWaitIV($order_id);
+          //if($count == 0){
+          if($count == 0){
+              //NO ONE LEFT : 9 => ออก Invoice ครบ
+              OrderModel:: update_by_id(
+                ["sales_status_id"=>"9"],
+                $order_id
+              );
+          }*/
+
         }
       }
       InvoiceDetailModel::insert($list);

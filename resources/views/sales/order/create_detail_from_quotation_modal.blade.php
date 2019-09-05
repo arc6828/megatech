@@ -21,7 +21,7 @@
           <button type="button"
                   class="btn btn-warning"  id="btn-add-products"
                   onclick="addAllProduct();"
-                  data-dismiss="modal" 
+                  data-dismiss="modal"
                   >
             <span class='fa fa-shopping-cart'> เพิ่มรายการสินค้า</span>
           </button>
@@ -90,7 +90,9 @@
 	function createRow2(id,element){
 		return [
 			"<input class='check' type='checkbox' value='"+id+"'>"+"<input type='hidden' class='id_edit' name='id_edit2[]'  value='"+id+"' >",
-      element.quotation_code,
+
+      element.quotation_code ,
+
 			element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit2[]'  value='"+element.product_id+"' >",
 			element.product_name + " (" +element.product_unit + ")",
 			"<input class='input amount_edit' name='amount_edit2[]' id='amount_edit2'  value='"+element.amount+"' disabled>",

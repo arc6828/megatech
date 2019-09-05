@@ -126,12 +126,21 @@ class OrderController extends Controller
               "discount_price" => $request->input('discount_price_edit')[$i],
               "order_id" => $id,
           ];
+
+          //UPDATE QUOTATION sales_status_id = 5 which mean complete
+          
+          QuotationModel::update_by_id(["sales_status_id"=>5] , $request->input('quotation_code_edit')[$i]);
+          //UPDATE QUOTATION DETAIL sales_status_id = 5 which mean complete
+          //QuotationModel::update_by_id(["sales_status_id"=>5] , $request->input('discount_price_edit')[$i]);
         }
       }
       OrderDetail2Model::insert($list);
+
       OrderDetailModel::insert($list);
 
       $this->store2($request,$code);
+
+
 
       return redirect("sales/order/{$id}/edit");
     }

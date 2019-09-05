@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class OrderDetailModel extends Model
 {
+  protected $table = "tb_order_detail";
+
   public static function select_all(){
 		return DB::table('tb_order_detail')
       ->join('tb_product','tb_order_detail.product_id','=','tb_product.product_id')
@@ -116,4 +118,20 @@ public static function select_search2($order_detail_status_id){
       ->whereIn('order_detail_id', $ids)
       ->update(['order_detail_status_id' => $action]);
 	}
+
+  public static function countWaitApprove($order_id){
+    //3: MEANS รออนุมัติ
+    return DB::table('tb_order_detail')
+        ->where('order_detail_status_id',  3)
+        ->where('order_id',  $order_id)
+        ->count();
+  }
+
+  public static function countWaitIV($order_id){
+    //1: MEANS อนุมัติ
+    return DB::table('tb_order_detail')
+        ->where('order_detail_status_id',  1)
+        ->where('order_id',  $order_id)
+        ->count();
+  }
 }

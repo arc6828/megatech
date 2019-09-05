@@ -46,6 +46,8 @@
                 >
                 รอเปิด Order
               </a>
+              @else
+                {{ $row->sales_status_name }}
               @endif
             </td>
 						<td class="d-none">
