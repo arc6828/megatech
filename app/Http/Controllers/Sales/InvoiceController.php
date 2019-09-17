@@ -80,6 +80,7 @@ class InvoiceController extends Controller
       $input = [
           'invoice_code' => $this->getNewCode(),
           'external_reference_id' => $request->input('external_reference_id'),
+          'internal_reference_id' => $request->input('internal_reference_id'),
           'customer_id' => $request->input('customer_id'),
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
@@ -117,27 +118,28 @@ class InvoiceController extends Controller
           }
           $list[] = $a;
 
-          /*
-          //CHANGE STATUS ORDER => 4
+
+          //CHANGE STATUS ORDER DETAIL => 4
           $input_detail2 = [
             "order_detail_status_id" => 4,
           ];
           OrderDetailModel::update_by_id($input_detail2 , $request->input('id_edit')[$i]);
 
+
           //CHANGE STATUS ORDER
 
           $order_code = $request->input('internal_reference_id');
-          $order = OrderModel::where('order_code', $order_code)->first();
-          $order_id = $order->order_id;
-          $count = OrderDetailModel::countWaitIV($order_id);
+          //$order = OrderModel::where('order_code', $order_code)->first();
+          //$order_id = $order->order_id;
+          $count = OrderDetailModel::countWaitIV($order_code);
           //if($count == 0){
           if($count == 0){
               //NO ONE LEFT : 9 => ออก Invoice ครบ
               OrderModel:: update_by_id(
                 ["sales_status_id"=>"9"],
-                $order_id
+                $order_code
               );
-          }*/
+          }
 
         }
       }
@@ -230,6 +232,7 @@ class InvoiceController extends Controller
       $input = [
         //'invoice_code' => $invoice_code,
         'external_reference_id' => $request->input('external_reference_id'),
+        'internal_reference_id' => $request->input('internal_reference_id'),
         'customer_id' => $request->input('customer_id'),
         'debt_duration' => $request->input('debt_duration'),
         'billing_duration' => $request->input('billing_duration'),

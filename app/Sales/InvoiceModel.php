@@ -38,7 +38,7 @@ class InvoiceModel extends Model
     return DB::table('tb_invoice')
       ->join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
       ->where('tb_invoice.invoice_id', '=' , $id )
-			->select( DB::raw('tb_invoice.*, tb_customer.contact_name, tb_customer.company_name'))
+			->select( DB::raw('tb_customer.*,tb_invoice.*'))
       ->get();
 	}
 

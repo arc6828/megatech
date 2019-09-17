@@ -75,12 +75,14 @@ class OrderModel extends Model
 	public static function update_by_id($input, $id){
     DB::table('tb_order')
         ->where('order_id', $id)
+        ->orWhere('order_code', $id)
         ->update($input);
 	}
 
 	public static function delete_by_id($id){
     DB::table('tb_order')
         ->where('order_id', '=', $id)
+        ->orWhere('order_code', $id)
         ->delete();
 	}
 
