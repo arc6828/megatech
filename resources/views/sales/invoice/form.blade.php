@@ -60,11 +60,11 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">วิธีการชำระเงิน</label>
       <div class="col-lg-3">
-        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
+        <input name="payment_method"	id="payment_method"	class="form-control form-control-sm form-control-line" readonly 	required>
       </div>
       <label class="col-lg-2 offset-lg-1">วงเงินเครดิต</label>
       <div class="col-lg-3">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required>
+        <input type="number" name="max_credit"	id="max_credit"	 class="form-control form-control-sm form-control-line" readonly  required>
       </div>
     </div>
 
