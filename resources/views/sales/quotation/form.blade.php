@@ -132,7 +132,8 @@
         <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required >
 
           @foreach($table_sales_status as $row_sales_status)
-          <option value="{{ $row_sales_status->sales_status_id }}" >
+          <option value="{{ $row_sales_status->sales_status_id }}"
+                {{ $row_sales_status->sales_status_id == "5" ? "disabled" : "" }} >
             {{	$row_sales_status->sales_status_name }}
           </option>
           @endforeach

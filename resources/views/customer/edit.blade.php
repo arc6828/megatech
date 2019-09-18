@@ -68,6 +68,7 @@
       $("#zone_id").val("{{ $row->zone_id }}");
       $("#delivery_type_id").val("{{ $row->delivery_type_id }}");
       $("#remark").val("{{ $row->remark }}");
+      document.querySelector("#payment_method").value = "{{ isset($row->payment_method) ? $row->payment_method : 'credit' }}";
       $("#max_credit").val("{{ $row->max_credit }}");
       $("#debt_duration").val("{{ $row->debt_duration }}");
       $("#billing_duration").val("{{ $row->billing_duration }}");
@@ -94,7 +95,7 @@
 
     @endforelse
 
-  
+
   });
 </script>
 

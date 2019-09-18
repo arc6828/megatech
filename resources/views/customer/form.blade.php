@@ -141,9 +141,9 @@
 
       <div class="form-group col-lg-3">
         <label >วิธีการชำระเงิน</label>
-        <select class="form-control form-control-sm ">
-          <option option="credit">ซื้อเชื่อ</option>
-          <option option="cash">ซื้อสด</option>
+        <select class="form-control form-control-sm"  name="payment_method"  id="payment_method" >
+          <option value="credit">ซื้อเชื่อ</option>
+          <option value="cash">ซื้อสด</option>
         </select>
       </div>
       <div class="form-group col-lg-3">

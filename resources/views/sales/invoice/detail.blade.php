@@ -27,8 +27,8 @@
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
-							{ title: "#" },
-							{ title: "OE Detail" },
+							//{ title: "#" },
+							//{ title: "OE Detail" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
@@ -61,9 +61,9 @@
       function createRow(id,element){
         console.log(element);
         return [
-          id+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          "",
-          element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
+          element.product_code
+              + "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"
+              + "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_name,
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
           element.product_unit,
