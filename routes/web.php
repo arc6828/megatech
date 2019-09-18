@@ -178,3 +178,70 @@ Route::get('/table-basic', function () {
 Route::resource('product2', 'Product2Controller');
 
 Route::resource('stock', 'StockController');
+
+//REPORT SALES : 1/x
+Route::get("report/sales/1/3","Report\SalesController@screen_1_3");
+Route::get("report/sales/1/5","Report\SalesController@screen_1_5");
+Route::get("report/sales/1/12","Report\SalesController@screen_1_12");
+Route::get("report/sales/1/15","Report\SalesController@screen_1_15");
+Route::get("report/sales/1/16","Report\SalesController@screen_1_16");
+Route::get("report/sales/1/18","Report\SalesController@screen_1_18");
+Route::get("report/sales/1/19","Report\SalesController@screen_1_19");
+Route::get("report/sales/1/21","Report\SalesController@screen_1_21");
+
+//REPORT SALES : 2/x
+Route::get("report/sales/2/3","Report\SalesController@screen_2_3");
+
+//REPORT SALES : 3/x
+Route::get("report/sales/3/11","Report\SalesController@screen_3_11");
+Route::get("report/sales/3/17","Report\SalesController@screen_3_17");
+Route::get("report/sales/3/21","Report\SalesController@screen_3_21");
+Route::get("report/sales/3/26","Report\SalesController@screen_3_26");
+
+//REPORT SALES : 4/x
+Route::get("report/sales/4/1","Report\SalesController@screen_4_1");
+
+//REPORT SALES : 5/x
+Route::get("report/sales/5/x","Report\SalesController@screen_5_x");
+
+//REPORT SALES : 6/x
+Route::get("report/sales/6/4","Report\SalesController@screen_6_4");
+Route::get("report/sales/6/5","Report\SalesController@screen_6_5");
+Route::get("report/sales/6/6","Report\SalesController@screen_6_6");
+
+//REPORT PURCHASE : 1/x
+Route::get("report/purchase/1/4","Report\PurchaseController@screen_1_4");
+Route::get("report/purchase/1/6","Report\PurchaseController@screen_1_6");
+Route::get("report/purchase/1/8","Report\PurchaseController@screen_1_8");
+Route::get("report/purchase/1/9","Report\PurchaseController@screen_1_9");
+
+//REPORT PURCHASE : 2/x
+Route::get("report/purchase/2/2","Report\PurchaseController@screen_2_2");
+Route::get("report/purchase/2/3","Report\PurchaseController@screen_2_3");
+
+//REPORT PURCHASE : 3/x
+Route::get("report/purchase/3/2","Report\PurchaseController@screen_3_2");
+Route::get("report/purchase/3/3","Report\PurchaseController@screen_3_3");
+Route::get("report/purchase/3/5","Report\PurchaseController@screen_3_5");
+
+//REPORT PURCHASE : 4/x
+Route::get("report/purchase/4/1","Report\PurchaseController@screen_4_1");
+
+//REPORT PURCHASE : 5/x
+Route::get("report/purchase/5/3","Report\PurchaseController@screen_5_3");
+
+//REPORT INVENTORY : 1/x
+Route::get("report/inventory/1/1","Report\InventoryController@screen_1_1");
+
+//REPORT INVENTORY : 2/x
+Route::get("report/inventory/2/1","Report\InventoryController@screen_2_1");
+Route::get("report/inventory/2/6","Report\InventoryController@screen_2_6");
+Route::get("report/inventory/2/9","Report\InventoryController@screen_2_9");
+
+//REPORT INVENTORY : 3/x
+Route::get("report/inventory/3/2","Report\InventoryController@screen_3_2");
+Route::get("report/inventory/3/6","Report\InventoryController@screen_3_6");
+Route::get("report/inventory/3/13","Report\InventoryController@screen_3_13");
+
+//REPORT INVENTORY : 4/x
+Route::get("report/inventory/4/4","Report\InventoryController@screen_4_4");
