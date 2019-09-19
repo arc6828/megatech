@@ -17,19 +17,19 @@
     <td style="border-bottom: solid 1px #000;"><b>ยอดเงิน</td>
   </tr>
   <tr height="50">
-    <td><b>IT3113128</td>
-    <td><b>TERNS 325-25-10-L160  HOLDER</td>
+    <td>IT3113128</td>
+    <td>TERNS 325-25-10-L160  HOLDER</td>
+    <td>1.00</td>
+    <td>PCS</td>
+    <td>4,610.00</td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>4,610.00</td>
     <td></td>
     <td></td>
   </tr>
   <tr height="50">
     <td></td>
-    <td>ยอดรวมตามเลขที่เอกสาร RC6205-00133</td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>

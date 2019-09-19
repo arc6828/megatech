@@ -47,7 +47,7 @@
     
   </tr>
   <tr height="50">
-    <td>วันที่ส่งสินค้า</td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>

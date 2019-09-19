@@ -19,6 +19,12 @@ class PurchaseController extends Controller
     {
       return view('report/purchase/screen_3_2');
   }
-
-
+  public function screen_3_3()
+  {
+    return view('report/purchase/screen_3_3');
+}
+public function screen_3_5()
+  {
+    return view('report/purchase/screen_3_5');
+}
 }
