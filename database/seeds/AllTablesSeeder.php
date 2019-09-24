@@ -12,8 +12,8 @@ class AllTablesSeeder extends Seeder
     public function run()
     {
       //Eloquent::unguard();
-      //$path = 'database/data/2019-09-18-megatech_official.sql';
-      $path = 'database/data/debtout.sql';
+      $path = 'database/data/2019-09-18-megatech_official.sql';
+      //$path = 'database/data/debtout.sql';
       //DB::unprepared(file_get_contents($path));
       //$this->command->info('All tables seeded!');
 
