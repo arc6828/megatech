@@ -31,8 +31,8 @@ class AllTablesSeeder extends Seeder
 
       // running command line import in php code
       //mysql -u username -p password database_name < file.sql
-      exec("mysql -u {$user} -p {$pass} {$db} < {$path}");
-      echo "Hello";
+      exec("mysql -u {$user} -p {$db} < {$path}");
+      //echo "Hello";
       // postal_codes.sql is inside root folder
       //https://stackoverflow.com/questions/25906199/laravel-seeding-large-sql-file/25907181
     }
