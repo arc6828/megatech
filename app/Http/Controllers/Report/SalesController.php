@@ -59,4 +59,12 @@ class SalesController extends Controller
         return view('report.sales.screen_3_11');
     }
 
+    public function screen_4_1(){
+        return view('report.sales.screen_4_1');
+    }
+
+    public function screen_5_x(){
+        return view('report.sales.screen_5_x');
+    }
+
 }
