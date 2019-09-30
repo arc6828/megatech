@@ -8,7 +8,7 @@
 <form class="" action="{{ url('/') }}/purchase/order" method="POST">
     {{ csrf_field() }}
     {{ method_field('POST') }}
-    @include('purchase/order/form')
+    @include('purchase/order/form' , ["method"=>"create"])
     <div class="text-center mt-4">
         <a class="btn btn-outline-primary d-none" href="{{ url('/') }}/purchase/order">back</a>
         <button type="submit" class="btn btn-primary  " id="form-submit">Save</button>

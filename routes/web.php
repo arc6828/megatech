@@ -179,6 +179,8 @@ Route::resource('product2', 'Product2Controller');
 
 Route::resource('stock', 'StockController');
 
+Route::get("report","Report\MainController@index");
+
 //REPORT SALES : 1/x
 Route::get("report/sales/1/3","Report\SalesController@screen_1_3");
 Route::get("report/sales/1/5","Report\SalesController@screen_1_5");
