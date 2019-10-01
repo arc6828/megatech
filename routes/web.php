@@ -179,8 +179,6 @@ Route::resource('product2', 'Product2Controller');
 
 Route::resource('stock', 'StockController');
 
-Route::get("report","Report\MainController@index");
-
 //REPORT SALES : 1/x
 Route::get("report/sales/1/3","Report\SalesController@screen_1_3");
 Route::get("report/sales/1/5","Report\SalesController@screen_1_5");
@@ -249,6 +247,6 @@ Route::get("report/inventory/3/13","Report\InventoryController@screen_3_13");
 Route::get("report/inventory/4/4","Report\InventoryController@screen_4_4");
 
 //REPORT INDEX
-Route::get('report/index',function(){
-  return view('index');
+Route::get('report/',function(){
+  return view('report/index');
 });
