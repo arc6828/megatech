@@ -23,7 +23,7 @@
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 
-			@include('purchase/order/form')
+			@include('purchase/order/form' , ["method"=>"edit"] )
 
 			<div class="text-center mt-4">
       	<a class="btn btn-outline-primary d-none" href="{{ url('/') }}/purchase/order">back</a>

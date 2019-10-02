@@ -60,8 +60,8 @@
         var discount_percent_edit = 100 - element.discount_price / element.normal_price * 100;
         //var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
         var checked = true;
-        var discount_price = element.discount_price;
-        discount_price = 0;
+        var discount_price = ("{$method}"=="edit")?element.discount_price:0;
+        //discount_price = 0;
         return [
           id+
           "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +

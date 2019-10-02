@@ -245,3 +245,8 @@ Route::get("report/inventory/3/13","Report\InventoryController@screen_3_13");
 
 //REPORT INVENTORY : 4/x
 Route::get("report/inventory/4/4","Report\InventoryController@screen_4_4");
+
+//REPORT INDEX
+Route::get('report/',function(){
+  return view('report/index');
+});

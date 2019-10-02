@@ -148,7 +148,7 @@
 </div>
 
 
-@include('purchase/order/detail')
+@include('purchase/order/detail', ["method"=>$method] )
 
 <div class="card mt-4">
 	<div class="card-body">
