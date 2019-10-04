@@ -128,7 +128,7 @@ class OrderController extends Controller
           ];
 
           //UPDATE QUOTATION sales_status_id = 5 which mean complete
-          
+
           QuotationModel::update_by_id(["sales_status_id"=>5] , $request->input('quotation_code_edit')[$i]);
           //UPDATE QUOTATION DETAIL sales_status_id = 5 which mean complete
           //QuotationModel::update_by_id(["sales_status_id"=>5] , $request->input('discount_price_edit')[$i]);
@@ -137,6 +137,7 @@ class OrderController extends Controller
       OrderDetail2Model::insert($list);
 
       OrderDetailModel::insert($list);
+
 
       $this->store2($request,$code);
 
@@ -189,12 +190,19 @@ class OrderController extends Controller
       //echo $id;
       if (is_array ($request->input('product_id_edit'))){
         for($i=0; $i<count($request->input('product_id_edit')); $i++){
-          $list[] = [
-              "product_id" => $request->input('product_id_edit')[$i],
-              "amount" => $request->input('amount_edit')[$i],
-              "discount_price" => $request->input('discount_price_edit')[$i],
-              "purchase_requisition_id" => $id,
-          ];
+          //HAVE X
+          $hasX = true;
+          //$checkOthers = true;
+          //$amount = $pending_sendig - 
+          if( $hasX ){
+            $list[] = [
+                "product_id" => $request->input('product_id_edit')[$i],
+                "amount" => $request->input('amount_edit')[$i],
+                "discount_price" => $request->input('discount_price_edit')[$i],
+                "purchase_requisition_id" => $id,
+            ];
+          }
+
         }
       }
       //print_r($list);

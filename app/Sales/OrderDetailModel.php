@@ -129,9 +129,10 @@ public static function select_search2($order_detail_status_id){
 
   public static function countWaitIV($order_id){
     //1: MEANS อนุมัติ
+    //3: MEANS รออนุมัติ
     return DB::table('tb_order_detail')
         ->join('tb_order','tb_order.order_id','=','tb_order_detail.order_id')
-        ->where('order_detail_status_id',  1)
+        ->whereIn('order_detail_status_id',  [1,3])
         ->where(function($query) use ($order_id){
             $query->where('tb_order.order_id',  $order_id)
                   ->orWhere('order_code',  $order_id);
