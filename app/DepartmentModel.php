@@ -7,11 +7,13 @@ use Illuminate\Support\Facades\DB;
 
 class DepartmentModel extends Model
 {
-  protected $table = "tb_department";
+  	protected $table = "tb_department";
+	protected $primaryKey = 'department_id';
+	protected $fillable = [];
   
-  public static function select_all(){
-      return DB::table('tb_department')->get();
-  }
+	public static function select_all(){
+		return DB::table('tb_department')->get();
+	}
 
 	function select_id($id_user){
 		$sql = "select * from department where id_department = {$id_department}";

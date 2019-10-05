@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 class DeliveryTemporaryModel extends Model
 {
   protected $table = 'tb_delivery_temporary';
+  protected $primaryKey = 'delivery_temporary_id';
+  protected $fillable = [];
 
   public static function select_all_by_user_id($user_id){
     return DB::table('tb_delivery_temporary')

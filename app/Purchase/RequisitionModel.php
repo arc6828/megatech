@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class RequisitionModel extends Model
 {
+    protected $table = "tb_purchase_requisition";
+    protected $primaryKey = 'purchase_requisition_id';
+    protected $fillable = [];
+
     public static function select_all(){
       return DB::table('tb_purchase_requisition')
           ->join('tb_customer', 'tb_purchase_requisition.customer_id', '=', 'tb_customer.customer_id')

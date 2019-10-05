@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\DB;
 
 class JobModel
 {
-     function select(){
+	
+	
+    function select(){
 		$sql = "select * from job";
 		return DB::select($sql, []);
 	}

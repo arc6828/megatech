@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class InventoryModel extends Model
 {
+    protected $table = 'tb_inventory';
+    protected $primaryKey = 'inventory_id';
+    protected $fillable = [];
+
     public static function select_all() {
         return DB::table('tb_inventory')->get();
     }

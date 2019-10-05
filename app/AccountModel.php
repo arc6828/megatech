@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class AccountModel extends Model
 {
+	protected $table = 'tb_account';
+    protected $primaryKey = 'account_id';
+    protected $fillable = [];
+
     public static function select_all(){
   		return DB::table('tb_account')->get();
   	}

@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class InvoiceDetailModel extends Model
 {
+  protected $table = 'tb_invoice_detail';
+  protected $primaryKey = 'invoice_detail_id';
+  protected $fillable = [];
+
   public static function select_all(){
 		return DB::table('tb_invoice_detail')
       ->join('tb_product','tb_invoice_detail.product_id','=','tb_product.product_id')

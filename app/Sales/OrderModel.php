@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class OrderModel extends Model
 {
-  protected $table = 'tb_quotation';
+  protected $table = 'tb_order';
+  protected $primaryKey = 'order_id';
+  protected $fillable = [];
 
   public static function select_all_by_user_id($user_id){
     return DB::table('tb_order')

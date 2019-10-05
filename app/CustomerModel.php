@@ -7,15 +7,19 @@ use Illuminate\Support\Facades\DB;
 
 class CustomerModel extends Model
 {
-  public static function select_all(){
-      return DB::table('tb_customer')->get();
-  }
+	protected $table = 'tb_customer';
+    protected $primaryKey = 'customer_id';
+	protected $fillable = [];
+	
+	public static function select_all(){
+		return DB::table('tb_customer')->get();
+	}
 
-  public static function select_by_user_id($user_id){
-      return DB::table('tb_customer')
-        ->where('user_id',$user_id)
-        ->get();
-  }
+	public static function select_by_user_id($user_id){
+		return DB::table('tb_customer')
+			->where('user_id',$user_id)
+			->get();
+	}
 
 	public static function select_by_keyword($q){
         return DB::table('tb_customer')

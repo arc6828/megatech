@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 class DeliveryTemporaryDetailModel extends Model
 {
   protected $table = "tb_delivery_temporary_detail";
+  protected $primaryKey = 'delivery_temporary_detail_id';
+  protected $fillable = [];
 
   public static function select_all(){
 		return DB::table('tb_delivery_temporary_detail')

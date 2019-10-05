@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class OrderDetailModel extends Model
 {
-  protected $table = "tb_purchase_order_detail";
+    protected $table = "tb_purchase_order_detail";
+    protected $primaryKey = 'purchase_order_detail_id';
+    protected $fillable = [];
 
 
 

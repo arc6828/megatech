@@ -7,15 +7,19 @@ use Illuminate\Support\Facades\DB;
 
 class SupplierModel extends Model
 {
-  public static function select_all(){
-      return DB::table('tb_supplier')->get();
-  }
+	protected $table = "tb_supplier";
+    protected $primaryKey = 'supplier_id';
+	protected $fillable = [];
+	
+	public static function select_all(){
+		return DB::table('tb_supplier')->get();
+	}
 
-  public static function select_by_user_id($user_id){
-      return DB::table('tb_supplier')
-        ->where('user_id',$user_id)
-        ->get();
-  }
+	public static function select_by_user_id($user_id){
+		return DB::table('tb_supplier')
+			->where('user_id',$user_id)
+			->get();
+	}
 
 	public static function select_by_keyword($q){
         return DB::table('tb_supplier')

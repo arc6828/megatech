@@ -193,8 +193,18 @@ class OrderController extends Controller
           //HAVE X
           $hasX = true;
           //$checkOthers = true;
-          //$amount = $pending_sendig - 
-          if( $hasX ){
+          //จำนวนที่ต้องสั่ง = ค้างส่ง - (สต๊อก + ค้างรับ)
+                          //100   -  (500 + 0) = -400 เงื่อนไข OE ก่อน PR
+                          //100   -  (50 + 0) = 50 เงื่อนไข OE ก่อน PR
+                          //100   -  (100 + 0) = 0  เงื่อนไข OE ก่อน PR
+                          //-------------------------------------------------
+                          //0   -  (0 + 0) = 0 เงื่อนไข PR ก่อน OE
+                          //0   -  (0 + 100) = -100 เงื่อนไข PR ก่อน OE
+                          //100   -  (0 + 100) = 0 เงื่อนไข PR ก่อน OE
+                          //0   -  (100 + 0) = -100 เงื่อนไข PR ก่อน OE
+                          //100   -  (100 + 0) = 0 เงื่อนไข PR ก่อน OE
+          //$amount = $pending_sendig -
+          if( $hasX || true ){
             $list[] = [
                 "product_id" => $request->input('product_id_edit')[$i],
                 "amount" => $request->input('amount_edit')[$i],

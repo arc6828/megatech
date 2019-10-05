@@ -7,13 +7,17 @@ use Illuminate\Support\Facades\DB;
 
 class PurchaseStatusModel extends Model
 {
-  public static function select_all(){
-    return DB::table('tb_purchase_status')->get();
-	}
+    protected $table = "tb_purchase_status";
+    protected $primaryKey = 'purchase_status_id';
+    protected $fillable = [];
 
-  public static function select_by_category($category){
-    return DB::table('tb_purchase_status')
-      ->where('category',$category)
-      ->get();
-	}
+    public static function select_all(){
+      return DB::table('tb_purchase_status')->get();
+    }
+
+    public static function select_by_category($category){
+      return DB::table('tb_purchase_status')
+        ->where('category',$category)
+        ->get();
+    }
 }

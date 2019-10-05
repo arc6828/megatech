@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 class PickingModel extends Model
 {
   protected $table = 'tb_purchase_picking';
+  protected $primaryKey = 'purchase_picking_id';
+  protected $fillable = [];
 
   public static function insert($input){
     return DB::table('tb_purchase_picking')->insertGetId($input);

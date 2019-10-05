@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 class QuotationDetailModel extends Model
 {
   protected $table = "tb_quotation_detail";
+  protected $primaryKey = 'quotation_detail_id';
+  protected $fillable = [];
 
   public static function select_all(){
 		return DB::table('tb_quotation_detail')

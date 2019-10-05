@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class OrderDetail2Model extends Model
 {
+  protected $table = 'tb_order_detail2';
+  protected $primaryKey = 'order_detail2_id';
+  protected $fillable = [];
+
   public static function select_all(){
 		return DB::table('tb_order_detail2')
       ->join('tb_product','tb_order_detail2.product_id','=','tb_product.product_id')

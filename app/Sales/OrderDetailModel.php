@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 class OrderDetailModel extends Model
 {
   protected $table = "tb_order_detail";
+  protected $primaryKey = 'order_detail_id';
+  protected $fillable = [];
 
   public static function select_all(){
 		return DB::table('tb_order_detail')
