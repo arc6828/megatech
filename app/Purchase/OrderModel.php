@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 class OrderModel extends Model
 {
     protected $table = "tb_purchase_order";
+    protected $primaryKey = 'purchase_order';
+    protected $fillable = [];
 
     
 

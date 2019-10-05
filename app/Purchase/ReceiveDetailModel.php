@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class ReceiveDetailModel extends Model
 {
+  protected $table = 'tb_purchase_receive_detail';
+  protected $primaryKey = 'purchase_receive_detail_id';
+  protected $fillable = [];
+
   public static function select_all(){
 		return DB::table('tb_purchase_receive_detail')
       ->join('tb_product','tb_purchase_receive_detail.product_id','=','tb_product.product_id')

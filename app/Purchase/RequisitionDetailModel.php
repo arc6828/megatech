@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 
 class RequisitionDetailModel extends Model
 {
-  protected $table = "tb_purchase_requisition_detail";
+
+    protected $table = "tb_purchase_requisition_detail";
+    protected $primaryKey = 'purchase_requisition_detail_id';
+    protected $fillable = [];
   public static function select_all(){
 		return DB::table('tb_purchase_requisition_detail')
       ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
