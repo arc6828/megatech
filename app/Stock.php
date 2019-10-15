@@ -11,7 +11,7 @@ class Stock extends Model
      *
      * @var string
      */
-    protected $table = 'stocks';
+    protected $table = 'z_stocks';
 
     /**
     * The database primary key value.
