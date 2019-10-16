@@ -6,7 +6,7 @@
 <div class="form-group {{ $errors->has('amount') ? 'has-error' : ''}}">
     <label for="amount" class="control-label">{{ 'Amount' }}</label>
     <input class="form-control" name="amount" type="number" id="amount" value="{{ isset($stock->amount) ? $stock->amount : ''}}" >
-    {!! $errors->first('amount', '<p class="help-block">:message</p>') !!}
+    {!! $errors->first('amount', '<p class="help-block text-danger">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('action') ? 'has-error' : ''}}">
     <label for="action" class="control-label">{{ 'Action' }}</label>

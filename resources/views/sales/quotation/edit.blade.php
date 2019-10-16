@@ -1,16 +1,21 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','แก้ไขรายละเอียดใบเสนอราคา')
+@section('title','รายละเอียดใบเสนอราคา')
 
 @section('content')
-
+  
 
 	@forelse($table_quotation as $row)
 	    <div class="text-center mb-4">
 	      <div class="">
-	      	<a class="float-right btn-print" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" target="_blank">
-		      <i class="fas fa-print"></i>
-		    </a>
+	      	<span class="float-right ">
+            <a class="px-2" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
+              <i class="fas fa-print"></i>
+            </a>
+            <a class="px-2" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
+              <i class="fas fa-edit"></i>
+            </a>
+          </span>
 	        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->quotation_code, 'C128') }}" alt="barcode"   />
 	      </div>
 	      <div class="">
@@ -18,7 +23,7 @@
 	      </div>
 	    </div>
 
-		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST" onsubmit="validateForm();">
+		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST" onsubmit="validateForm(event);">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 
@@ -58,7 +63,22 @@
         document.querySelector("#vat_percent").value = "{{ $row->vat_percent }}";
 
         onChange(document.querySelector("#vat_percent"));
+
+        @if(isset($mode) && $mode == "show")
+          document.querySelectorAll("input,button,textarea,select").forEach(function(element){
+            element.disabled = true;            
+          });     
+        @endif
+        document.querySelectorAll("input,button,textarea,select").forEach(function(element){
+          element.addEventListener("keydown", function(event) {
+            if(event.keyCode == 13) {
+              event.preventDefault();
+              return false;
+            }  
+          });                  
+        });  
       });
+      
 
     </script>
 

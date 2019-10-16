@@ -51,6 +51,11 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            //'title' => 'required|unique:posts|max:255',
+            'amount' => 'required',
+        ]);
+    
         
         $requestData = $request->all();
         

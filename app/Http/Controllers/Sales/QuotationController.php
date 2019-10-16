@@ -115,7 +115,7 @@ class QuotationController extends Controller
       }
       QuotationDetailModel::insert($list);
 
-      return redirect("sales/quotation/{$id}/edit");
+      return redirect("sales/quotation/{$id}");
     }
 
     public function getNewCode(){
@@ -136,6 +136,28 @@ class QuotationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+    {
+      $data = [
+          //QUOTATION
+          'table_quotation' => QuotationModel::select_by_id($id),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
+          'table_zone' => ZoneModel::select_all(),
+          'quotation_id'=> $id,
+          //QUOTATION Detail
+          'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
+          'table_product' => ProductModel::select_all(),
+          'mode' => 'show'
+      ];
+      return view('sales/quotation/edit',$data);
+    }
+
+    public function pdf($id)
     {
       $data = [
           //QUOTATION
@@ -243,7 +265,7 @@ class QuotationController extends Controller
       }
 
       //3.REDIRECT
-      return redirect("sales/quotation/{$id}/edit");
+      return redirect("sales/quotation/{$id}");
     }
 
     /**
