@@ -1,21 +1,49 @@
-<h1>บริษัท เมก้า เทค คัตติ้งทูล จำกัด</h1>
-<h3>วิเคราะห์ขายตามยอดขาย ลูกค้า</h3>
-<h3>พิมพ์ ณ วันที่ : 08/08/2019</h3>
-<h2>ตั้งแต่วันที่ 01/08/2019 - 21/08/2019 , ตั้งแต่รหัสลูกค้า A0001 ถึง Z0002</h2>
+<style>
+		@font-face{
+		 font-family:  'THSarabunNew';
+		 font-style: normal;
+		 font-weight: normal;
+		 src: url("{{ asset('fonts/THSarabunNew.ttf') }}") format('truetype');
+		}
+		@font-face{
+		 font-family:  'THSarabunNew';
+		 font-style: normal;
+		 font-weight: bold;
+		 src: url("{{ asset('fonts/THSarabunNew Bold.ttf') }}") format('truetype');
+		}
+		@font-face{
+		 font-family:  'THSarabunNew';
+		 font-style: italic;
+		 font-weight: normal;
+		 src: url("{{ asset('fonts/THSarabunNew Italic.ttf') }}") format('truetype');
+		}
+		@font-face{
+		 font-family:  'THSarabunNew';
+		 font-style: italic;
+		 font-weight: bold;
+		 src: url("{{ asset('fonts/THSarabunNew BoldItalic.ttf') }}") format('truetype');
+		}
+		body{
+		 font-family: "THSarabunNew";
+		}
+		
+</style>
+<center>
+<header><h1>บริษัท เมก้า เทค คัตติ้งทูล จำกัด</h1></header>
+<h3>วิเคราะห์ขายตามยอดขาย ลูกค้า<br>
+พิมพ์ ณ วันที่ : 08/08/2019</h3></center>
+<h3>ตั้งแต่วันที่ 01/08/2019 - 21/08/2019 , ตั้งแต่รหัสลูกค้า A0001 ถึง Z0002</h3>
 <table border=1>
-<tr>
+	<tr>
 		<th>รหัสลูกค้า</th>
 		<th>รายละเอียดลูกค้า</th>
 		<th>ยอดขาย/ลดหนี้</th>
 	</tr>
+	@foreach ($customer as $item)
 	<tr>
-		<td> N0004 </td>
-		<td> บริษัท นิตโต้ โคกิ อินดัสทรีย์ (ประเทศไทย) จำกัด </td>
-        <td> 170,835.00 </td>
-	</tr>
-    <tr>
-		<td> N0005 </td>
-		<td> บริษัท ไทยสิน เมทัล อินดัสตรี จำกัด </td>
-        <td> 71,300.00 </td>
-	</tr>
+		<td> {{ $item->customer_code }} </td>
+		<td>{{ $item->company_name }}</td>
+        <td></td>
+	</tr>@endforeach
+    
 </table>

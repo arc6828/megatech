@@ -9,7 +9,25 @@ class OrderDetailModel extends Model
 {
   protected $table = "tb_order_detail";
   protected $primaryKey = 'order_detail_id';
-  protected $fillable = [];
+  protected $fillable = [
+    'product_id',
+    'amount',
+    'approved_amount	',
+    'discount_price',
+    'order_id',
+    'order_detail_status_id',
+    'invoice_code',
+    'danger_price',
+    'picking_code',
+    'sale_status_id',
+    'quotation_code'
+  ];
+  public function Quotation(){
+    return $this->belongsTo('App\Sales\QuotationModel','quotation_id');
+  }
+  public function Product(){
+    return $this->belongsTo('App\ProductModel','product_id');
+  }
 
   public static function select_all(){
 		return DB::table('tb_order_detail')

@@ -7,19 +7,28 @@ use Illuminate\Support\Facades\DB;
 
 class UserModel extends Model
 {
-  protected $table = "users";
+    protected $table = "users";
+    protected $primaryKey = 'id';
+	protected $fillable = [];
 
-  public static function check_role($user_id,$role){
-    return DB::table('users')
-      ->where("id",$user_id)
-      ->where("role",$role)
-      ->exists();
-  }
 
-  public static function select_all(){
-      return DB::table('users')
-          ->get();
-	}
+    public function customer()
+    {
+        return $this->hasMany('App/CustomerModel','user_id');
+    }
+    
+
+    public static function check_role($user_id,$role){
+        return DB::table('users')
+        ->where("id",$user_id)
+        ->where("role",$role)
+        ->exists();
+    }
+
+    public static function select_all(){
+        return DB::table('users')
+            ->get();
+    }
 
 	public static function select_by_id($id){
         return DB::table('users')

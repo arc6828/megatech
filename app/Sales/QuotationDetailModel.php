@@ -9,7 +9,22 @@ class QuotationDetailModel extends Model
 {
   protected $table = "tb_quotation_detail";
   protected $primaryKey = 'quotation_detail_id';
-  protected $fillable = [];
+  protected $fillable = [
+    'product_id',
+    'amount',
+    'discount_price',
+    'quotation_id',
+    'quotation_detail_remark	',
+    'danger_price',
+    'sale_status_id'
+  ];
+  
+  public function Quotation(){
+    return $this->belongsTo('App\Sales\QuotationModel','quotation_id');
+  }
+  public function Product(){
+    return $this->belongsTo('App\ProductModel','product_id');
+  }
 
   public static function select_all(){
 		return DB::table('tb_quotation_detail')

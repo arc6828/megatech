@@ -1,22 +1,29 @@
 <?php
 
 namespace App\Http\Controllers\Report;
-
+use App\User;
+use App\CustomerModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\UserModel;
+use PDF;
 class SalesController extends Controller
 {
-    public function screen_1_3(){
-        return view('report.sales.screen_1_3');
+    public function screen_1_3(){          
+        $customer = CustomerModel::all();
+        //$pdf = PDF::loadView('report.sales.screen_1_3',compact('customer'));
+        //return $pdf->stream('report.sales.screen_1_3.pdf');
+        return view('report.sales.screen_1_3',compact('customer'));
     }
 
     public function screen_1_5(){
-        return view('report.sales.screen_1_5');
+        $users = User::all();
+        return view('report.sales.screen_1_5',compact('users'));
     }
 
     public function screen_1_12(){
-        return view('report.sales.screen_1_12');
+        $customer = CustomerModel::all();
+        return view('report.sales.screen_1_12',compact('customer'));
     }
 
     public function screen_1_15(){

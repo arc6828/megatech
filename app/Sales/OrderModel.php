@@ -9,8 +9,40 @@ class OrderModel extends Model
 {
   protected $table = 'tb_order';
   protected $primaryKey = 'order_id';
-  protected $fillable = [];
+  protected $fillable = [
+                          'order_code',
+                          'datetime',
+                          'customer_id',
+                          'debt_duration',
+                          'billing_duration',
+                          'payment_condition',
+                          'delivery_type_id',
+                          'tax_type_id',
+                          'delivery_time',
+                          '	department_id',
+                          'sales_status_id',
+                          'user_id',
+                          'zone_id',
+                          'remark',
+                          'vat_percent',
+                          'vat',
+                          '	total_before_vat',
+                          'internal_reference_id',
+                          'external_reference_id',
+                          '	total'
+                          
 
+  ];
+
+  public function QuotationDetail(){
+    return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
+  }
+  public function User(){
+    return $this->belongsTo('App\User','user_id');
+  }
+  public function Customer(){
+    return $this->belongsTo('App\CustomerModel','customer_id');
+  }
   public static function select_all_by_user_id($user_id){
     return DB::table('tb_order')
         ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')

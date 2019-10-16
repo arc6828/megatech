@@ -9,8 +9,35 @@ class InvoiceModel extends Model
 {
   protected $table = 'tb_invoice';
   protected $primaryKey = 'invoice_id';
-  protected $fillable = [];
-
+  protected $fillable = [
+                          'invoice_code',
+                          'datetime',
+                          'customer_id',
+                          'debt_duration',
+                          'billing_duration',
+                          'payment_condition',
+                          'delivery_type_id',
+                          'tax_type_id',
+                          'delivery_time',
+                          'department_id',
+                          'sales_status_id',
+                          'user_id',
+                          'zone_id',
+                          'remark',
+                          'vat_percent',
+                          'external_reference_id',
+                          'internal_reference_id',
+                          'total',
+                        ];
+  public function QuotationDetail(){
+    return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
+  }
+  public function User(){
+    return $this->belongsTo('App\User','user_id');
+  }
+  public function Customer(){
+    return $this->belongsTo('App\CustomerModel','customer_id');
+  }
   public static function select_all_by_user_id($user_id){
     return DB::table('tb_invoice')
         ->join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')

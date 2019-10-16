@@ -1,5 +1,5 @@
 php artisan migrate
-
 php artisan db:seed --class="AllTablesSeeder"
+
 password : <your mysql password>
 password [for xampp] : <no password, just press enter>
