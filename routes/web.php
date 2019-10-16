@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('sales')->group(function () {
 
       //1 Sales
+      Route::get('/quotation/{id}/pdf', 'Sales\QuotationController@pdf');
       Route::resource('/quotation', 'Sales\QuotationController');
       //Route::resource('/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
       //Route::resource('/quotation', 'Sales\QuotationController');

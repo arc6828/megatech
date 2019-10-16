@@ -29,7 +29,7 @@
 					@foreach($table_quotation as $row)
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
+							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}">
 								{{ $row->quotation_code }}
 							</a>
 						</td>
