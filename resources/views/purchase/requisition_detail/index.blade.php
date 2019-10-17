@@ -160,6 +160,7 @@
 					result.forEach(function(element,index) {
 						console.log(element,index);
             var id = element.purchase_requisition_detail_id;
+			var willing_amount = parseInt(element.pending_out) - (parseInt(element.amount_in_stock) + parseInt(element.pending_in));
 						var row = [
 							"<input type='checkbox' name='selected_purchase_requisition_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='purchase_requisition_detail_ids[]' value='"+id+"' >"+
@@ -171,9 +172,9 @@
 							element.product_code,
 							element.product_name + " / " + element.grade ,
 							element.amount,
-							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:50px;' required>",
+							"<input type='number' name='approve_amounts[]' value='"+willing_amount+"' class='form-control form-control-sm' style='max-width:50px;' required>",
 							//จำนวนที่ต้องสั่ง = ค้างส่ง - (สต๊อก + ค้างรับ)
-							parseInt(element.pending_out) - (parseInt(element.amount_in_stock) + parseInt(element.pending_in)),
+							willing_amount,
 							element.pending_in,
 							element.pending_out,
 							element.amount_in_stock,

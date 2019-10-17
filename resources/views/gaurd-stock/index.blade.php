@@ -30,6 +30,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Date</th>
                                         <th>Product Id</th>
                                         <th>Code</th><th>Amount</th><th>Stock</th><th>ค้างรับ</th><th>ค้างส่ง</th><th>Remark</th><th>Actions</th>
                                     </tr>
@@ -38,6 +39,8 @@
                                 @foreach($gaurdstock as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        
                                         <td><a href="{{ url('/') }}/product/{{ $item->product_id }}/edit">{{ $item->product->product_code }}</a></td>
                                         <td>
                                             @switch($item->type)
@@ -45,13 +48,11 @@
                                                     <a href="{{ url('/') }}/sales/order/{{ $item->sales_order->order_id }}/edit">{{ $item->sales_order->order_code }}</a>
                                                     @break
                                                 @case("sales_invoice")
-                                                    <a href="{{ url('/') }}/product/{{ $item->product_id }}/edit">{{ $item->product->product_code }}</a>
-                                                    @break
+                                                    <a href="{{ url('/') }}/sales/order/{{ $item->sales_order->order_id }}/edit">{{ $item->sales_order->order_code }}</a>                                                    
+                                                     @break
                                                 @case("purchase_order")
-                                                    <a href="{{ url('/') }}/product/{{ $item->product_id }}/edit">{{ $item->product->product_code }}</a>
-                                                    @break
+                                                     @break
                                                 @case("purchase_recieve")
-                                                    <a href="{{ url('/') }}/product/{{ $item->product_id }}/edit">{{ $item->product->product_code }}</a>
                                                     @break
                                             @endswitch
                                         </td>

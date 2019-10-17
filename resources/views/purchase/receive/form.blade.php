@@ -329,7 +329,7 @@ function fillPurchase_receive(supplier_id){
     //ALL ABOUT EVENT
     refreshDetailTableEvent();
     //AVOID TO EDIT
-    $('#table-purchase_receive-detail input').prop('readonly', true);
+    //$('#table-purchase_receive-detail input').prop('readonly', true);
 
   }); //END AJAX
 

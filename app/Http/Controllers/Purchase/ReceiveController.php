@@ -19,6 +19,7 @@ use App\PurchaseStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use App\GaurdStock;
 use PDF;
 
 class ReceiveController extends Controller
@@ -143,6 +144,27 @@ class ReceiveController extends Controller
             ["purchase_status_id"=>"4"],
             $purchase_order_id
           );
+      }
+
+      //GAURD STOCK      
+      foreach($list as $item){
+        $product = ProductModel::findOrFail($item['product_id']);
+        $gaurd_stock = GaurdStock::create([
+          "code" => $item['purchase_receive_id'],
+          "type" => "purchase_receive",
+          "amount" => $item['amount'],
+          "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+          "pending_in" => ($product->pending_in - $item['amount'] ),
+          "pending_out" => ($product->pending_out),
+          "product_id" => $product->product_id,
+        ]);
+        
+        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+        $product->pending_in = $gaurd_stock['pending_in'];
+        $product->pending_out = $gaurd_stock['pending_out'];
+        $product->save();
+
       }
 
 
