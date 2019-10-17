@@ -9,8 +9,19 @@ class InvoiceDetailModel extends Model
 {
   protected $table = 'tb_invoice_detail';
   protected $primaryKey = 'invoice_detail_id';
-  protected $fillable = [];
-
+  protected $fillable = [
+    'product_id',
+    'amount',
+    'discount_price',
+    'invoice_id',
+  ];
+ 
+  public function Invoice(){
+    return $this->belongsTo('App\Seles\InvoiceModel','invoice_id');
+  }
+  public function Product(){
+    return $this->belongsTo('App\ProductModel','product_id');
+  }
   public static function select_all(){
 		return DB::table('tb_invoice_detail')
       ->join('tb_product','tb_invoice_detail.product_id','=','tb_product.product_id')

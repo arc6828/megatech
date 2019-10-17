@@ -9,8 +9,60 @@ class CustomerModel extends Model
 {
 	protected $table = 'tb_customer';
     protected $primaryKey = 'customer_id';
-	protected $fillable = [];
-	
+	protected $fillable = ['customer_code',
+							'customer_type',
+							'company_name',
+							'account_id',
+							'contact_name',
+							'customer_code',
+							'customer_name',
+							'address',
+							'address2',
+							'sub_district',
+							'district',
+							'province',
+							'zipcode',
+							'delivery_address',
+							'delivery_address2',
+							'delivery_sub_district',
+							'delivery_district',
+							'delivery_province',
+							'delivery_zipcode',
+							'user_id',
+							'telephone',
+							'fax',
+							'email',
+							'zone_id',
+							'delivery_type_id',
+							'remark',
+							'max_credit',
+							'debt_duration',
+							'degree_product',
+							'loyalty_discount',
+							'tax_number',
+							'billing_duration',
+							'cheqe_condition',
+							'delivery_time',
+							'payment_condition',
+							'tax_type_id',
+							'location_type_id',
+							'branch_id',
+							'debt_balance',
+							'upload',
+							'contact',
+							'payment_method',
+							
+							];
+							
+	public function Quotation(){
+		return $this->hasMany('App\Sales\QuotationModel','customer_id');
+	}
+	public function Order(){
+		return $this->hasMany('App\Sales\OrderModel','customer_id');
+	}
+	public function Invoice(){
+		return $this->hasMany('App\Sales\InvoiceModel','customer_id');
+	}
 	public static function select_all(){
 		return DB::table('tb_customer')->get();
 	}

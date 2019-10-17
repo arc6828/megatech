@@ -20,38 +20,23 @@
 		<th>เดือน 12</th>
 		<th>รวม</th>
 	</tr>
-	<tr>
-		<td> CM </td>
-		<td> CHAYANAN </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 37,770.00 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 37,770.00 </td>
-	</tr>
-    <tr>
-		<td> KC </td>
-		<td> KANTACHAI </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 448,405.00 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 448,405.00 </td>
-	</tr>
+	@foreach ($users as $user)
+		<tr>
+			<td> {{$user->short_name }} </td>
+			<td> {{$user->name }} </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td> 37,770.00 </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td> 37,770.00 </td>
+		</tr>
+	@endforeach
 </table>

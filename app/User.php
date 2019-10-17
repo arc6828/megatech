@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -26,4 +27,21 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function customer(){
+        return $this->hasMany('App\CustomerModel','user_id');
+    }
+    public function Quotation(){
+        return $this->hasMany('App\Sales\QuotationModel','user_id');
+    }
+    public function Order(){
+        return $this->hasMany('App\Sales\OrderModel','user_id');
+    }
+    public function Invoice(){
+        return $this->hasMany('App\Sales\InvoiceModel','user_id');
+    }
+   
+   
+
+    
+    
 }

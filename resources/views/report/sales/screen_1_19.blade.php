@@ -20,38 +20,63 @@
 		<th>เดือน 12</th>
 		<th>รวม</th>
 	</tr>
-	<tr>
-		<td> A0031 </td>
-		<td> บริษัท แอมเพิลเอ็นจิเนียริ่ง </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 2,900 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 2,900.00 </td>
-	</tr>
-    <tr>
-		<td> C0031 </td>
-		<td> บริษัท เซนทรัล เมทัล เวิร์ค </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 13,620.00 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 13,620.00 </td>
-	</tr>
+	@foreach ($users as $users)
+		<tr>
+			<td><strong>รหัสพนักงานขาย</strong></td>
+			<td><strong>{{$users->short_name}}</strong></td>
+			<td><strong>{{$users->name}}</strong></td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td></td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			
+		</tr>
+		@foreach ($users->customer as $customers)
+			<tr>
+				<td> {{$customers->customer_code}} </td>
+				<td> {{$customers->company_name}}</td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td> 2,900 </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td> 2,900.00 </td>
+			</tr>
+		@endforeach
+		<tr>
+				<td><strong>ยอดรวม</strong></td>
+				<td></td>
+				<td><strong>{{$users->short_name}}</strong></td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td></td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				<td>  </td>
+				
+			</tr>
+	@endforeach
+	
+    
 </table>
