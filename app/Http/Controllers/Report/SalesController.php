@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Report;
 use App\User;
+use App\Sales\InvoiceDetailModel;
 use App\CustomerModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,23 +28,28 @@ class SalesController extends Controller
     }
 
     public function screen_1_15(){
-        return view('report.sales.screen_1_15');
+        $users = User::all();
+        return view('report.sales.screen_1_15',compact('users'));
     }
 
     public function screen_1_16(){
-        return view('report.sales.screen_1_16');
+        $customer = CustomerModel::all();
+        return view('report.sales.screen_1_16',compact('customer'));
     }
 
     public function screen_1_18(){
-        return view('report.sales.screen_1_18');
+        $InvoiceDetail = InvoiceDetailModel::all();
+        return view('report.sales.screen_1_18',compact('InvoiceDetail'));
     }
 
     public function screen_1_19(){
-        return view('report.sales.screen_1_19');
+        $users = User::all();
+        return view('report.sales.screen_1_19',compact('users'));
     }
 
     public function screen_1_21(){
-        return view('report.sales.screen_1_21');
+        $customer = CustomerModel::all();
+        return view('report.sales.screen_1_21',compact('customer'));
     }
 
      public function screen_6_4(){

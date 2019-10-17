@@ -20,38 +20,23 @@
 		<th>เดือน 12</th>
 		<th>รวม</th>
 	</tr>
-	<tr>
-		<td> A0004 </td>
-		<td> บริษัท อะตอม แมนนูแฟค </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 11,140.00 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 11,140.00 </td>
-	</tr>
-    <tr>
-		<td> A0019 </td>
-		<td> บริษัท ฟิวเวียม จำกัด </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 12,400.00 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 12,400.00 </td>
-	</tr>
+	@foreach ($customer as $customers)
+		<tr>
+			<td> {{$customers->customer_code}} </td>
+			<td> {{$customers->company_name}}</td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td> 11,140.00 </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td>  </td>
+			<td> 11,140.00 </td>
+		</tr>
+	@endforeach
 </table>

@@ -20,9 +20,12 @@
 		<th>เดือน 12</th>
 		<th>รวม</th>
 	</tr>
+	@foreach ($InvoiceDetail as $InvoiceDetails)
+		
+	
 	<tr>
-		<td> TT5522849X </td>
-		<td> DCMT 11T304 PC </td>
+		<td> {{$InvoiceDetails->Product->product_code}} </td>
+		<td> {{$InvoiceDetails->Product->product_detail}} </td>	
         <td> 20.00 </td>
 		<td> 20.00 </td>
 		<td> 80.00 </td>
@@ -37,21 +40,5 @@
 		<td>  </td>
         <td> 360.00 </td>
 	</tr>
-    <tr>
-		<td> TT5522850X </td>
-		<td> DCMT 11T308 PC </td>
-        <td> 440.00 </td>
-		<td> 310.00 </td>
-		<td> 300.00 </td>
-        <td> 630.00 </td>
-		<td> 200.00 </td>
-		<td>  </td>
-        <td> 610.00 </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 2,490.00 </td>
-	</tr>
+    @endforeach
 </table>

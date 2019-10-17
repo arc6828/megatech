@@ -32,6 +32,10 @@ class InvoiceModel extends Model
   public function QuotationDetail(){
     return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
   }
+  public function InvoiceDetail(){
+    return $this->hasMany('App\Sales\InvoiceDetailModel','invoice_id');
+  }
+  
   public function User(){
     return $this->belongsTo('App\User','user_id');
   }

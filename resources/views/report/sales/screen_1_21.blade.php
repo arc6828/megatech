@@ -5,7 +5,7 @@
 <table border=1>
 	<tr>
 		<th>รหัสสินค้า</th>
-		<th>รายละเอียดสินค้า</th>
+		<th colspan="2">รายละเอียดสินค้า</th>
 		<th>เดือน 1</th>
 		<th>เดือน 2</th>
 		<th>เดือน 3</th>
@@ -20,38 +20,35 @@
 		<th>เดือน 12</th>
 		<th>รวม</th>
 	</tr>
-	<tr>
-		<td> KKTJY13321 </td>
-		<td> GMM2020R-TMR-6D PR1115 </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 20.00 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 20.00 </td>
-	</tr>
-    <tr>
-		<td> TT5801656X </td>
-		<td> DCMT 11T302 FA CT3000 </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 20.00 </td>
-		<td>  </td>
-        <td>  </td>
-		<td>  </td>
-		<td>  </td>
-        <td> 20.00 </td>
-	</tr>
+
+	@foreach ($customer as $customers)
+		@foreach ($customers->Invoice as $invoices)
+			<tr>
+				<td><strong>รหัสลูกค้า</strong></td> 
+				<td><strong>{{ $customers->customer_code }}</strong></td>
+				<td col	span="2"><strong>{{ $customers->company_name }}</strong></td>
+			</tr>
+			@foreach ($invoices->InvoiceDetail as $InvoiceDetail)
+				<tr>
+					<td>{{ $InvoiceDetail->Product->product_code }}</td>
+					<td>{{ $InvoiceDetail->Product->product_detail }}</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>		
+			@endforeach
+		@endforeach
+	@endforeach
+    
 </table>
