@@ -38,6 +38,7 @@ class InvoiceModel extends Model
   public function Customer(){
     return $this->belongsTo('App\CustomerModel','customer_id');
   }
+  
   public static function select_all_by_user_id($user_id){
     return DB::table('tb_invoice')
         ->join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')

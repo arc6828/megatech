@@ -16,11 +16,15 @@
 	@foreach ($customer as $customers)
 		@foreach ($customers->Invoice as $invoices)
 		<tr>
+			<td>รหัสลูกค้า</td> 
+			<td>{{ $customers->customer_code }}</td>
+		</tr>
+		<tr>
 			<td>{{ $invoices->invoice_code }}</td>
 			<td>{{ $invoices->datetime }}</td>
+			<td>{{ $invoices->Product}}</td>
 			<td></td>
-			<td></td>
-			<td>{{ $customers->user->short_name }}</td>
+			<td>{{ $invoices->User->short_name }}</td>
 			<td></td>
 			<td></td>
 		</tr>		
