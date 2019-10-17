@@ -1,0 +1,36 @@
+{
+    "fields": [
+        {
+            "name": "code",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
+            "name": "amount",
+            "type": "integer"
+        },
+        {
+            "name": "amount_in_stock",
+            "type": "integer"
+        },
+        {
+            "name": "pending_in",
+            "type": "integer"
+        },
+        {
+            "name": "pending_out",
+            "type": "integer"
+        },
+        {
+            "name": "product_id",
+            "type": "integer"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        }
+    ]
+}

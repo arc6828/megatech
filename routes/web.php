@@ -251,3 +251,6 @@ Route::get("report/inventory/4/4","Report\InventoryController@screen_4_4");
 Route::get('report/',function(){
   return view('report/index');
 });
+
+Route::resource('gaurd-stock', 'GaurdStockController');
+Route::resource('gaurd-stock', 'GaurdStockController');

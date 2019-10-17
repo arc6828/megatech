@@ -20,6 +20,8 @@ use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
 
+use App\GaurdStock;
+
 use PDF;
 
 class InvoiceController extends Controller
@@ -144,6 +146,27 @@ class InvoiceController extends Controller
         }
       }
       InvoiceDetailModel::insert($list);
+
+      //GAURD STOCK      
+      foreach($list as $item){
+        $product = ProductModel::findOrFail($item['product_id']);
+        $gaurd_stock = GaurdStock::create([
+          "code" => $item['invoice_id'],
+          "type" => "sales_invoice",
+          "amount" => $item['amount'],
+          "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+          "pending_in" => $product->pending_in,
+          "pending_out" => ($product->pending_out - $item['amount'] ),
+          "product_id" => $product->product_id,
+        ]);
+        
+        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+        $product->pending_in = $gaurd_stock['pending_in'];
+        $product->pending_out = $gaurd_stock['pending_out'];
+        $product->save();
+
+      }
 
       return redirect("sales/invoice/{$id}/edit");
     }

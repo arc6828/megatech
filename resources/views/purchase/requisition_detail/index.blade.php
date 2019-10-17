@@ -171,10 +171,12 @@
 							element.product_code,
 							element.product_name + " / " + element.grade ,
 							element.amount,
-							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:100px;' required>",
-							0,
-							0,
-							0,
+							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:50px;' required>",
+							//จำนวนที่ต้องสั่ง = ค้างส่ง - (สต๊อก + ค้างรับ)
+							parseInt(element.pending_out) - (parseInt(element.amount_in_stock) + parseInt(element.pending_in)),
+							element.pending_in,
+							element.pending_out,
+							element.amount_in_stock,
 						];
 						dataSet.push(row);
 					});
@@ -191,10 +193,11 @@
 								{ title: "รหัสสินค้า" },
 								{ title: "ชื่อสินค้า" },
 								{ title: "จำนวน" },
-								{ title: "จำนวนที่อนุมัติ" },
+								{ title: "ที่อนุมัติ" },
+								{ title: "ที่ต้องซื้อเพิ่ม" },
 								{ title: "ค้างรับ" },
 								{ title: "ค้างส่ง" },
-								{ title: "จำนวนคงคลัง" },
+								{ title: "คงคลัง" },
 						]
 					}).order( [ 2, 'desc' ] ).draw(); //END DATATABLE
 				}); //END DONE AJAX

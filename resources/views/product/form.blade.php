@@ -1,3 +1,6 @@
+<div class="form-group text-right">
+  <a href="{{ url('/') }}/gaurd-stock?product_id={{ $table_product[0]->product_id }}">ดู Gaurd Stock ของสินค้า</a>
+</div>
 <div class="form-group d-none {{ $errors->has('product_code') ? 'has-error' : ''}}">
     <label for="product_code" class="control-label">{{ 'รหัส MegaCode' }}</label>
     <input class="form-control form-control-sm" name="product_code" type="text" id="product_code" value="{{ isset($table_product[0]->product_code) ? $table_product[0]->product_code : ''}}" >

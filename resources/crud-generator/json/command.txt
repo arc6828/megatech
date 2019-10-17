@@ -1,1 +1,4 @@
 php artisan crud:generate Stock --fields_from_file="resources/crud-generator/json/stock.json"
+
+php artisan crud:generate GaurdStock --fields_from_file="resources/crud-generator/json/gaurd-stock.json"
+

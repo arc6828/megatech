@@ -11,6 +11,8 @@ class OrderDetailModel extends Model
   protected $primaryKey = 'order_detail_id';
   protected $fillable = [];
 
+  
+
   public static function select_all(){
 		return DB::table('tb_order_detail')
       ->join('tb_product','tb_order_detail.product_id','=','tb_product.product_id')

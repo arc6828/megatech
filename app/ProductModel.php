@@ -11,6 +11,10 @@ class ProductModel extends Model
     protected $primaryKey = 'product_id';
     protected $fillable = [];
 
+    public function gaurd_stock(){
+        return $this->hasMany('App\GaurdStock','product_id');
+    }
+
     public static function select_all(){
         return DB::table('tb_product')
             ->limit(20)
