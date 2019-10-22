@@ -2,3 +2,9 @@ php artisan crud:generate Stock --fields_from_file="resources/crud-generator/jso
 
 php artisan crud:generate GaurdStock --fields_from_file="resources/crud-generator/json/gaurd-stock.json"
 
+
+php artisan crud:generate CustomerDebt --fields_from_file="resources/crud-generator/json/customer-debt.json"
+php artisan crud:generate SupplierDebt --fields_from_file="resources/crud-generator/json/supplier-debt.json"
+php artisan crud:generate BankAccount --fields_from_file="resources/crud-generator/json/bank-account.json"
+php artisan crud:generate BankTransaction --fields_from_file="resources/crud-generator/json/bank-transaction.json"
+

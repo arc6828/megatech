@@ -1,0 +1,32 @@
+{
+    "fields": [
+        {
+            "name": "date",
+            "type": "date"
+        },
+        {
+            "name": "no",
+            "type": "string"
+        },
+        {
+            "name": "content",
+            "type": "string"
+        },
+        {
+            "name": "amount",
+            "type": "float"
+        },
+        {
+            "name": "status",
+            "type": "string"
+        },
+        {
+            "name": "return",
+            "type": "string"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        }     
+    ]
+}

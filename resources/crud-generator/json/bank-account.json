@@ -1,0 +1,32 @@
+{
+    "fields": [
+        {
+            "name": "code",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "branch",
+            "type": "string"
+        },
+        {
+            "name": "category_id",
+            "type": "integer"
+        },
+        {
+            "name": "account_no",
+            "type": "string"
+        },
+        {
+            "name": "balance_bring_forword",
+            "type": "float"
+        },  
+        {
+            "name": "balance",
+            "type": "float"
+        }        
+    ]
+}

@@ -1,0 +1,92 @@
+{
+    "fields": [
+        {
+            "name": "doc_no",
+            "type": "string"
+        },
+        {
+            "name": "date",
+            "type": "date"
+        },
+        {
+            "name": "supplier_id",
+            "type": "integer"
+        },
+        {
+            "name": "discount",
+            "type": "float"
+        },
+        {
+            "name": "amount",
+            "type": "float"
+        },
+        {
+            "name": "vat_percent",
+            "type": "float"
+        },
+        {
+            "name": "vat",
+            "type": "float"
+        },
+        {
+            "name": "total_before_vat",
+            "type": "float"
+        },
+        {
+            "name": "total",
+            "type": "float"
+        },              
+        {
+            "name": "tax_type_id",
+            "type": "integer"
+        },              
+        {
+            "name": "completed_at",
+            "type": "date"
+        },              
+        {
+            "name": "tax_category",
+            "type": "string"
+        },              
+        {
+            "name": "round",
+            "type": "string"
+        },              
+        {
+            "name": "type_debt",
+            "type": "string"
+        },              
+        {
+            "name": "debt_duration",
+            "type": "string"
+        },              
+        {
+            "name": "user_id",
+            "type": "integer"
+        },              
+        {
+            "name": "role",
+            "type": "string"
+        },              
+        {
+            "name": "reference",
+            "type": "string"
+        },              
+        {
+            "name": "zone_id",
+            "type": "integer"
+        },              
+        {
+            "name": "zone_id",
+            "type": "integer"
+        },              
+        {
+            "name": "cheque_id",
+            "type": "integer"
+        },              
+        {
+            "name": "payment_method",
+            "type": "integer"
+        }
+    ]
+}

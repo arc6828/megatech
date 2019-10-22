@@ -254,3 +254,8 @@ Route::get('report/',function(){
 
 Route::resource('gaurd-stock', 'GaurdStockController');
 Route::resource('gaurd-stock', 'GaurdStockController');
+Route::resource('customer-debt', 'CustomerDebtController');
+Route::resource('customer-debt', 'CustomerDebtController');
+Route::resource('supplier-debt', 'SupplierDebtController');
+Route::resource('bank-account', 'BankAccountController');
+Route::resource('bank-transaction', 'BankTransactionController');
