@@ -161,6 +161,9 @@
 						console.log(element,index);
             var id = element.purchase_requisition_detail_id;
 			var willing_amount = parseInt(element.pending_out) - (parseInt(element.amount_in_stock) + parseInt(element.pending_in));
+			if(willing_amount < 0){
+				willing_amount = 0;
+			}
 						var row = [
 							"<input type='checkbox' name='selected_purchase_requisition_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='purchase_requisition_detail_ids[]' value='"+id+"' >"+
