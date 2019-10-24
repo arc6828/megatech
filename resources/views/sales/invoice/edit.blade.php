@@ -59,6 +59,8 @@
 				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";
 				document.querySelector("#billing_duration").value = "{{ $row->billing_duration }}";
 				document.querySelector("#payment_condition").value = "{{ $row->payment_condition }}";
+				document.querySelector("#payment_method").value = "{{ $row->payment_method }}";
+				document.querySelector("#max_credit").value = "{{ $row->max_credit }}";
 				document.querySelector("#delivery_type_id").value = "{{ $row->delivery_type_id }}";
 				document.querySelector("#tax_type_id").value = "{{ $row->tax_type_id }}";
 				document.querySelector("#delivery_time").value = "{{ $row->delivery_time }}";

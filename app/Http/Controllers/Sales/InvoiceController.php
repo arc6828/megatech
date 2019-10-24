@@ -87,6 +87,8 @@ class InvoiceController extends Controller
           'debt_duration' => $request->input('debt_duration'),
           'billing_duration' => $request->input('billing_duration'),
           'payment_condition' => $request->input('payment_condition',""),
+          'payment_method' => $request->input('payment_method',""),
+          'max_credit' => $request->input('max_credit',""),
           'delivery_type_id' => $request->input('delivery_type_id'),
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time'),
@@ -98,7 +100,12 @@ class InvoiceController extends Controller
           'vat_percent' => $request->input('vat_percent',7),
           //'total' => $request->input('total_before_vat',0),
           'total' => $request->input('total_after_vat',0),
-      ];
+      
+          'total_debt' => $request->input('total_after_vat',0),
+        ];
+        if($input['payment_method'] != "credit"){
+          $input['total_debt'] = 0;
+        }
       $id = InvoiceModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL
@@ -260,6 +267,8 @@ class InvoiceController extends Controller
         'debt_duration' => $request->input('debt_duration'),
         'billing_duration' => $request->input('billing_duration'),
         'payment_condition' => $request->input('payment_condition',""),
+        'payment_method' => $request->input('payment_method',""),
+        'max_credit' => $request->input('max_credit',""),
         'delivery_type_id' => $request->input('delivery_type_id'),
         'tax_type_id' => $request->input('tax_type_id'),
         'delivery_time' => $request->input('delivery_time'),
@@ -271,7 +280,11 @@ class InvoiceController extends Controller
         'vat_percent' => $request->input('vat_percent',7),
         //'total' => $request->input('total_before_vat',0),
         'total' => $request->input('total_after_vat',0),
+        'total_debt' => $request->input('total_after_vat',0),
       ];
+      if($input['payment_method'] != "credit"){
+        $input['total_debt'] = 0;
+      }
       InvoiceModel::update_by_id($input,$id);
 
       //2.DELETE QUOTATION DETAIL FIRST

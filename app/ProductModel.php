@@ -17,18 +17,19 @@ class ProductModel extends Model
 
     public function InvoiceDetail(){
         return $this->hasMany('App\Sales\InvoiceDetailModel','product_id');
-      }
+    }
     public static function select_all(){
         return DB::table('tb_product')
             ->limit(20)
             ->get();
-	  }
+	}
 
     public static function select_by_keyword($q){
         return DB::table('tb_product')
             ->where('product_name', 'like' , "%{$q}%" )
             ->orWhere('item_code', 'like' , "%{$q}%" )
             ->orWhere('product_code', 'like' , "%{$q}%" )
+            ->orderBy('updated_at','desc')
             ->limit(20)
             ->get();
      }

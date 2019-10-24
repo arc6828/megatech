@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-		    $q = $request->input('q');
+		$q = $request->input('q');
         $data = [
         	'q' => $q
         ];
