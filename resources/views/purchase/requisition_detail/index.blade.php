@@ -167,7 +167,7 @@
 							willing_amount = 0;
 						}
 						//check if not in array
-						if(product_codes.indexOf(element.product_code)){
+						if(product_codes.indexOf(element.product_code) == -1){
 							product_codes.push(element.product_code);
 						}else{
 							willing_amount = 0;
