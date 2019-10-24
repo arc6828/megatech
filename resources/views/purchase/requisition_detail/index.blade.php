@@ -157,13 +157,21 @@
       }).done(function(result){
 					console.log(result);
 					var dataSet = [];
+					var product_codes = [];
 					result.forEach(function(element,index) {
 						console.log(element,index);
-            var id = element.purchase_requisition_detail_id;
-			var willing_amount = parseInt(element.pending_out) - (parseInt(element.amount_in_stock) + parseInt(element.pending_in));
-			if(willing_amount < 0){
-				willing_amount = 0;
-			}
+			
+						var id = element.purchase_requisition_detail_id;
+						var willing_amount = parseInt(element.pending_out) - (parseInt(element.amount_in_stock) + parseInt(element.pending_in));
+						if(willing_amount < 0){
+							willing_amount = 0;
+						}
+						//check if not in array
+						if(product_codes.indexOf(element.product_code)){
+							product_codes.push(element.product_code);
+						}else{
+							willing_amount = 0;
+						}
 						var row = [
 							"<input type='checkbox' name='selected_purchase_requisition_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='purchase_requisition_detail_ids[]' value='"+id+"' >"+
