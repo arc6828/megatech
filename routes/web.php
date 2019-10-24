@@ -94,6 +94,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
   });
+  Route::get('customer-debt', function(){return redirect('finance/customer-debt'); });
+  Route::get('supplier-debt', function(){return redirect('finance/supplier-debt'); });
+  Route::get('bank-account', function(){return redirect('finance/bank-account'); });
+  Route::get('bank-transaction', function(){return redirect('finance/bank-transaction'); });
+  Route::prefix('finance')->group(function () {
+    Route::resource('customer-debt', 'CustomerDebtController');
+    Route::resource('supplier-debt', 'SupplierDebtController');
+    Route::resource('bank-account', 'BankAccountController');
+    Route::resource('bank-transaction', 'BankTransactionController');
+  });
+
+
   Route::get('/user','UserController@index');
   Route::middleware(['role:admin'])->group(function () {
     Route::resource('/user','UserController')->except(['index']);
@@ -253,9 +265,3 @@ Route::get('report/',function(){
 });
 
 Route::resource('gaurd-stock', 'GaurdStockController');
-Route::resource('gaurd-stock', 'GaurdStockController');
-Route::resource('customer-debt', 'CustomerDebtController');
-Route::resource('customer-debt', 'CustomerDebtController');
-Route::resource('supplier-debt', 'SupplierDebtController');
-Route::resource('bank-account', 'BankAccountController');
-Route::resource('bank-transaction', 'BankTransactionController');

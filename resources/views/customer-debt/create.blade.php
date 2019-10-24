@@ -1,11 +1,12 @@
-@extends('layouts.app')
+@extends('layouts/argon-dashboard/theme')
+
+@section('title','ตั้งหนี้ / ลดหนี้ ลูกค้า')
 
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Create New CustomerDebt</div>
                     <div class="card-body">
