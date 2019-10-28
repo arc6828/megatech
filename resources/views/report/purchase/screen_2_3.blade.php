@@ -14,48 +14,61 @@
     <td style="border-bottom: solid 1px #000;"><b>จำนวนรับแล้ว</td>
     <td style="border-bottom: solid 1px #000;"><b>ยอดค้างรับ</td>
      
-    
-  <tr height="50">
-    <td>PO6208-00G83</td>
-    <td>28/8/2019</td>
-    <td>KKTHT04540   KGDFR-150-4C-C</td>
-    <td>HOLDER</td>
-    <td>1.00</td>
-    <td>0.00</td>
-    <td>1.00</td>
-   
-  </tr>
-  <tr height="50">
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>ยอดรวม</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    
-  </tr>
-  </tr>
-  <tr height="50">
-    <td></td>
-    <td></td>
-    <td></td>
-    <td>ยอดรวม</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    
-  </tr>
-  <tr height="50">
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    
-  </tr>
+    </tr>
+    @foreach ($OrderDetail as $OrderDetail)
+    <tr height="50">
+        <td>วันที่ส่งสินค้า</td>
+         <td></td> 
+      
+      
+    </tr>
+    <tr height="50">
+        <td>รหัสเจ้าหนี้</td>
+        <td>{{$OrderDetail->Order->Supplier->supplier_code}}</td>
+        
+        
+      </tr>     
+      <tr height="50">
+        <td>{{$OrderDetail->Order->purchase_order_code}}</td>
+        <td>
+            @php    
+              $timestamp = $OrderDetail->Order->datetime;
+              $splitTimeStamp = explode(" ",$timestamp);
+              $date = $splitTimeStamp[0];
+              $time = $splitTimeStamp[1];
+            @endphp
+          {{$date}}
+  </td>
+        <td>{{$OrderDetail->Product->product_code}}</td>
+        <td>{{$OrderDetail->Product->product_detail}}</td>
+        <td>{{$OrderDetail->amount}}</td>
+        <td>0.00</td>
+        <td>1.00</td>
+       
+      </tr>
+      <tr height="50">
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>ยอดรวมตามรหัสเจ้าหนี้</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        
+      </tr>
+      <tr height="50">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>ยอดรวมตามวันส่งสินค้า</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          
+        </tr>
+    @endforeach
+
+ 
 </table>
 
 

@@ -16,28 +16,28 @@
 		
 		
 	</tr>
-	<tr>
-		<td> 14/3/2019 </td>
-		<td> IV6203-00131 </td>
-        <td> N0030 </td>
-		<td> บริษัทน้ำตาลพิษณุโลก จำกัด </td>
-		<td> 20</td>
-		<td>  </td>
-		<td> 305.00</td>
-		<td> 6,100.00 </td>
+	@foreach ($Product as $Product)
+		<tr>
+			<td>รหัสสินค้า </td>
+			<td> {{$Product->product_code}} </td>
+		</tr>
+		@foreach ($Product->InvoiceDetail as $InvoiceDetail)
 		
+				<tr>
+					<td> </td>
+					<td>{{ $InvoiceDetail->invoice->invoice_code}} </td>
+					
+					<td> {{ $InvoiceDetail->invoice->Customer->customer_code}}  </td>
+					<td> {{ $InvoiceDetail->invoice->Customer->company_name}}</td>
+					<td> {{ $InvoiceDetail->amount}} </td>	
+					<td> </td>
+					<td> {{ $InvoiceDetail->discount_price}}</td>
+					<td>  {{ $InvoiceDetail->discount_price*$InvoiceDetail->amount}} </td>
+				</tr>
 		
-	</tr>
-    <tr>
-		<td> 18/4/2019</td>
-		<td> IV6204-00141 </td>
-        <td> O0007 </td>
-		<td> บริษัท ออยล์ฟิลด์ เซอร์วิสเซส แอนด์ ซัพท์ </td>
-		<td> 20 </td>
-		<td>  </td>
-		<td> 395.00</td>
-		<td> 7,900.00 </td>
-		
-
-	</tr>
+			
+		@endforeach
+	@endforeach
+	
+    
 </table>

@@ -16,52 +16,33 @@
     <td><center>รายละเอียดสถานะ</center></td>
     <td><center>รหัสสถานะ</center></td>
   </tr>
-
+@foreach ($QuotationDetail as $QuotationDetail)
   <tr>
-    <td><center>QT6208-00022</center></td>
-    <td><center>06/08/2019</center></td>
-    <td><center>O0007</center></td>
-    <td><center>บริษัท ออยล์ฟิลด์ เซอร์วิสเซส แอนด์ ซัพพลาย (ประเทศไทย) จำกัด</td>
-    <td><center>1.00</center></td>
-    <td><center>30%</center></td>
-    <td><center>17,500.00</center></td>
-    <td><center>17,500.00</center></td>
-    <td><center>TF2493846</center></td>
-    <td><center>A50M FLEL3  dOLDER</center></td>
-    <td><center>KANTACdAI</center></td>
-    <td><center>ส่งใบเสนอราคาแล้ว</center></td>
-    <td><center>01</center></td>
+    <td><center>{{$QuotationDetail->Quotation->quotation_code}}</center></td>
+    <td><center>
+        @php    
+        $timestamp = $QuotationDetail->Quotation->datetime;
+        $splitTimeStamp = explode(" ",$timestamp);
+        $date = $splitTimeStamp[0];
+        $time = $splitTimeStamp[1];
+      @endphp
+      {{$date}}
+     
+    </center></td>
+    <td><center>{{$QuotationDetail->Quotation->Customer->customer_code}}</center></td>
+    <td><center>{{$QuotationDetail->Quotation->Customer->company_name}}</td>
+    <td><center>{{$QuotationDetail->amount}}</center></td>
+    <td><center></center></td>
+    <td><center>{{$QuotationDetail->discount_price}}</center></td>
+    <td><center></center></td>
+    <td><center></center></td>
+    <td><center></center></td>
+    <td><center>{{$QuotationDetail->Quotation->User->name}}</center></td>
+    <td><center></center></td>
+    <td><center>{{$QuotationDetail->sale_status_id}}</center></td>
   </tr> 
+@endforeach
+  
 
-  <tr>
-    <td><center>QT6208-00023</center></td>
-    <td><center>06/08/2019</center></td>
-    <td><center>O0007</center></td>
-    <td><center>บริษัท ออยล์ฟิลด์ เซอร์วิสเซส แอนด์ ซัพพลาย (ประเทศไทย) จำกัด</center></td>
-    <td><center>1.00</center></td>
-    <td><center>30%</center></td>
-    <td><center>17,500.00</center></td>
-    <td><center>17,500.00</center></td>
-    <td><center>TF2438416</center></td>
-    <td><center>A50M FLEL3  dOLDER</center></td>
-    <td><center>KANTACdAI</center></td>
-    <td><center>ส่งใบเสนอราคาแล้ว</center></td>
-    <td><center>01</center></td>
-  </tr>
-
-  <tr>
-    <td><center>QT6208-00044</center></td>
-    <td><center>06/08/2019</center></td>
-    <td><center>K0004</center></td>
-    <td><center>บริษัท ออยล์ฟิลด์ เซอร์วิสเซส แอนด์ ซัพพลาย (ประเทศไทย) จำกัด</center></td>
-    <td><center>1.00</center></td>
-    <td><center>30%</center></td>
-    <td><center>685.00</center></td>
-    <td><center>685.00</center></td>
-    <td><center>TT4351474</center></td>
-    <td><center>EDG-33B  PART</center></td>
-    <td><center>KANTACdAI</center></td>
-    <td><center>ส่งใบเสนอราคาแล้ว</center></td>
-    <td><center>01</center></td>
-  </tr>
+  
 </table>

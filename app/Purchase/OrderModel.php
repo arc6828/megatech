@@ -8,10 +8,24 @@ use Illuminate\Support\Facades\DB;
 class OrderModel extends Model
 {
     protected $table = "tb_purchase_order";
-    protected $primaryKey = 'purchase_order';
+    protected $primaryKey = 'purchase_order_id';
     protected $fillable = [];
 
     
+      public function OrderDetail(){
+        return $this->hasMany('App\Purchase\OrderDetailModel','purchase_order_id');
+      }
+      public function User()
+      {
+          return $this->belongsTo('App\User','user_id');
+      }
+      public function Customer(){
+        return $this->belongsTo('App\CustomerModel','customer_id');
+      }
+      public function Supplier(){
+        return $this->belongsTo('App\SupplierModel','supplier_id');
+      }
+
 
     public static function select_all(){
       return DB::table('tb_purchase_order')

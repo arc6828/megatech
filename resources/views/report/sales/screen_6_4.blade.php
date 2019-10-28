@@ -18,32 +18,46 @@
 		<th>ต้นทุนสินค้า</th>
 		<th>กำไรเบื้องต้น</th>
 	</tr>
-	<tr>
-		<td> IV6208-00189 </td>
-		<td> 23/08/2019 </td>
-        <td> V0002A</td>
-		<td> บริษัท วาซิน อโนไดซ์ จำกัด </td>
-		<td> CM </td>
-		<td> 10 </td>
-		<td> PCS </td>
-		<td> 530.00 </td>
-		<td> 5,300.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 5,300.00 </td>
-	</tr>
-    <tr>
-		<td> IV6208-00189 </td>
-		<td> 23/08/2019 </td>
-        <td> V0002A</td>
-		<td> บริษัท วาซิน อโนไดซ์ จำกัด </td>
-		<td> CM </td>
-		<td> 10 </td>
-		<td> PCS </td>
-		<td> 530.00 </td>
-		<td> 5,300.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 5,300.00 </td>
-	</tr>
+	@foreach ($Product as $Product)
+		<tr>
+			<td> รหัสสินค้า </td>
+			<td> {{$Product->product_code}}</td>
+		</tr>
+		@foreach ($Product->InvoiceDetail as $InvoiceDetail)
+		<tr>
+				<td> {{$InvoiceDetail->Invoice->invoice_code}} </td>
+				<td> @php    
+						$timestamp = $InvoiceDetail->Invoice->datetime;
+						$splitTimeStamp = explode(" ",$timestamp);
+						$date = $splitTimeStamp[0];
+						$time = $splitTimeStamp[1];
+					@endphp
+					{{$date}}
+				</td>
+				<td> {{$InvoiceDetail->Invoice->Customer->customer_code}}</td>
+				<td>  {{$InvoiceDetail->Invoice->Customer->company_name}} </td>
+				<td> {{$InvoiceDetail->Invoice->User->short_name}} </td>
+				<td> {{$InvoiceDetail->amount}}</td>
+				<td>{{$Product->product_unit}}</td>
+				<td>{{$InvoiceDetail->discount_price}}</td>
+				<td> {{$InvoiceDetail->discount_price*$InvoiceDetail->amount}} </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+			</tr>
+			
+		@endforeach
+		<tr>	
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> ยอดรวมตามรหัสสินค้า</td>
+				<td> {{$Product->product_code}}</td>
+				<td> </td>
+			</tr>
+	@endforeach
+	
 </table>

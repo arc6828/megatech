@@ -62,18 +62,18 @@
 				<td><strong>ยอดรวม</strong></td>
 				<td></td>
 				<td><strong>{{$users->short_name}}</strong></td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
 				<td></td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 				
 			</tr>
 	@endforeach

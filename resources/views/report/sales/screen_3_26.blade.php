@@ -17,30 +17,32 @@
 		<th>วันที่ชำระ</th>
 		
 	</tr>
-	<tr>
-		<td> IV6206-00020 </td>
-		<td> บริษัท พนมไพร พรีซิชั่น จำกัด </td>
-        <td> TT6402104X </td>
-		<td> TDT 4E-2.0-RU TT6080</td>
-		<td> 20.00</td>
-		<td> PCX</td>
-		<td> 650.00 </td>
-		<td> 13,000.00 </td>
-		<td> BR6208-00061 </td>
-		<td> 20/8/2019</td>
+	@foreach ($users as $users)
+		<tr>
+			<td>รหัสพนักงานขาย</td>
+			<td> {{$users->short_name}} 
+			 {{$users->name}} 
+			</td>	
+		</tr>
+		@foreach ($users->Invoice as $Invoice)
+			@foreach ($Invoice->InvoiceDetail as $InvoiceDetail)
+				<tr>
+					<td> {{$Invoice->invoice_code}}  </td>
+					<td> {{$Invoice->Customer->company_name}} </td>
+					<td> {{$InvoiceDetail->Product->product_code}}  </td>
+					<td> {{$InvoiceDetail->Product->product_detail}} </td>
+					<td>{{$InvoiceDetail->amount}} </td>
+					<td>  {{$InvoiceDetail->Product->product_unit}}</td>	
+					<td>  </td>	
+					<td>  </td>
+					<td>  </td>
+					<td> </td>
+			
+				</tr>
+			@endforeach
 		
-	</tr>
-    <tr>
-		<td> IV6206-00021 </td>
-		<td> บริษัท กุลธรเคอร์บี้ จำกัด(มหาชน) </td>
-        <td> KKTHT00374 </td>
-		<td> KGMR1616JX-2.5 HOLDER </td>
-		<td> 2.00 </td>
-		<td>  </td>
-		<td> 3,000.00</td>
-		<td> 6,000.00 </td>
-		<td> BR6208-00059 </td>
-		<td> 19/8/2019</td>
-
-	</tr>
+		@endforeach
+		
+	@endforeach
+	
 </table>

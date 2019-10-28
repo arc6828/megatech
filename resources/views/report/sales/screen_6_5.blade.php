@@ -21,39 +21,25 @@
 		<th>DEC</th>
 		<th>รวม</th>
 	</tr>
-	<tr>
-		<td> J0008 </td>
-		<td> บริษัท ยูนิแมชชีน จำกัด </td>
-        <td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 1,100.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 5,300.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 6,400.00 </td>
-	</tr>
-    <tr>
-		<td> V0002 </td>
-		<td>บริษัท วาซิน เมทัล จำกัด </td>
-        <td> 14,068.00</td>
-		<td> 7,925.05</td>
-		<td> 6,568.80</td>
-		<td> 2,540.00 </td>
-		<td> 2,320.00 </td>
-		<td> 2,540.00 </td>
-		<td> 8,101.00 </td>
-		<td> 9,250.00 </td>
-		<td> 3,200.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 56,512.85 </td>
-
-	</tr>
+	@foreach ($customer as $customer)
+		<tr>
+			<td> {{$customer->customer_code}}</td>
+			<td>{{$customer->company_name}} </td>
+			<td> 0.00 </td>
+			<td> 0.00 </td>
+			<td> 1,100.00 </td>
+			<td> 0.00 </td>
+			<td> 0.00 </td>
+			<td> 0.00 </td>
+			<td> 0.00 </td>
+			<td> 5,300.00 </td>
+			<td> 0.00 </td>
+			<td> 0.00 </td>
+			<td> 0.00 </td>
+			<td> 0.00 </td>
+			<td> 6,400.00 </td>
+		</tr>
+	@endforeach
+	
+  
 </table>

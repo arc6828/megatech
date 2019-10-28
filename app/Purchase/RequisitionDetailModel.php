@@ -11,6 +11,20 @@ class RequisitionDetailModel extends Model
     protected $table = "tb_purchase_requisition_detail";
     protected $primaryKey = 'purchase_requisition_detail_id';
     protected $fillable = [];
+
+
+    public function Requisition()
+    {
+        return $this->belongsTo('App\Purchase\RequisitionModel',' purchase_requisition_id');
+    }
+    public function Product()
+    {
+        return $this->belongsTo('App\ProductModel','product_id');
+    }
+    
+    
+
+
   public static function select_all(){
 		return DB::table('tb_purchase_requisition_detail')
       ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')

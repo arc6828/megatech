@@ -11,6 +11,23 @@ class ReceiveModel extends Model
     protected $primaryKey = 'purchase_receive_id';
     protected $fillable = [];
 
+    public function ReceiveDetail()
+    {   
+        return $this->hasMany('App\Purchase\Purchase\ReceiveDetailModel','purchase_receive_id');
+    }
+    public function User()
+    {
+        return $this->belongsTo('App\User','user_id');
+    }
+    public function Customer()
+    {
+        return $this->belongsTo('App\Customer','customer_id');
+    }
+
+
+
+
+
     public static function select_all(){
       return DB::table('tb_purchase_receive')
           ->join('tb_supplier', 'tb_purchase_receive.supplier_id', '=', 'tb_supplier.supplier_id')

@@ -13,24 +13,27 @@
 		
 		
 	</tr>
+@foreach ($customer as $customer)
 	<tr>
-		
-		<td> KKTHC03345 </td>
-        <td> S10J-SWUBR08-08-02 </td>
-		<td> HOLDER </td>
-		<td> 1,850.00</td>
-		<td>  </td>
-		
-		
+		<td> รหัสลูกค้า </td>
+		<td> {{$customer->customer_code}} </td>
+		<td>{{$customer->company_name}}</td>
 	</tr>
-	<tr>
+	@foreach ($customer->Invoice as $Invoice)
+	@foreach ($Invoice->InvoiceDetail as $InvoiceDetail)
 		
-		<td> KKTHC03363 </td>
-        <td> S10J-SWUBR08-08 </td>
-		<td> HOLDER </td>
-		<td> 1,850.00</td>
-		<td>  </td>
-		
-		
-	</tr>
+	@endforeach
+		<tr>
+			<td></td>
+			<td> {{$InvoiceDetail->Product->product_code}} </td>
+			<td>  {{$InvoiceDetail->Product->product_name}} {{$InvoiceDetail->Product->grade}}</td>
+			<td>  </td>
+			<td> </td>
+			
+		</tr>
+	@endforeach
+	
+@endforeach
+	
+	
 </table>

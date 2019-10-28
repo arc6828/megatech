@@ -15,26 +15,41 @@
     <td style="border-bottom: solid 1px #000; " ><b>ราคาต่อหน่วย</td>
     <td style="border-bottom: solid 1px #000; " ><b>ยอดจำนวนซื้อ / ลดหนี้</td>
 </tr>
-<tr height="50">
-    <td>RC6208-00094</td> 
-    <td>21/8/2019</td>
-    <td>PO6208-00059</td>
-    <td>TT6108983</td>
-    <td>SEKN 1203 AFTN-HPN TT7080</td>
-    <td style="text-align:right">3,400.00</td>
-    <td>PCS</td>
-    <td style="text-align:right"> 10.00</td>
-</tr>
-<tr height="20">
-    <td>RC6208-00108</td> 
-    <td>26/8/2019</td>
-    <td>PO6208-00044</td>
-    <td>TT6132126</td>
-    <td>TCD-067-P TT9080</td>
-    <td style="text-align:right">17,300.00</td>
-    <td>PCS</td>
-    <td style="text-align:right"> 10.00</td>
-</tr>
+@foreach ($Supplier as $Supplier)
+    <tr>
+        <td>รหัสเจ้าหนี้</td>
+        <td>{{$Supplier->supplier_code}}</td>
+        <td>{{$Supplier->company_name}}</td>	
+    </tr>
+    @foreach ($Supplier->Order as $Order)
+       
+        <tr height="50">
+                <td></td> 
+                <td>
+                    @php    
+                        $timestamp = $Order->datetime;
+                        $splitTimeStamp = explode(" ",$timestamp);
+                        $date = $splitTimeStamp[0];
+                        $time = $splitTimeStamp[1];
+                    @endphp
+                    {{$date}}
+                    </td>
+                <td>{{$Order->purchase_order_code}}</td>
+                <td></td>
+                <td>SEKN 1203 AFTN-HPN TT7080</td>
+                <td style="text-align:right">3,400.00</td>
+                <td>PCS</td>
+                <td style="text-align:right"> 10.00</td>
+            </tr>
+      
+          
+       
+    
+        
+    @endforeach
+   
+@endforeach
+
 </table>
 </div>
 </body>

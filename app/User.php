@@ -39,6 +39,20 @@ class User extends Authenticatable
     public function Invoice(){
         return $this->hasMany('App\Sales\InvoiceModel','user_id');
     }
+    
+    //Purchase
+    public function Requisition()
+    {
+        return $this->hasMany('App\Purchase\RequisitionModel','user_id');
+    }
+    public function PurchaseOrder()
+    {
+        return $this->hasMany('App\Purchase\OrderModel','user_id');
+    }
+    public function Receive()
+    {
+        return $this->hasMany('App\Purchase\ReceiveModel','user_id');
+    }
    
    
 

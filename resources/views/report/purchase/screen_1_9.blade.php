@@ -22,9 +22,10 @@
     <td style="border-bottom: solid 1px #000; " ><b>DEC</td>
     <td style="border-bottom: solid 1px #000; " ><b>รวม</td>
 </tr>
-    <tr height="50">
-        <td>DC0002</td>
-        <td>บริษัท ซีเอกซ์ทังสเตน</td>
+@foreach ($Supplier as $Supplier)
+<tr height="50">
+        <td>{{$Supplier->supplier_code}}</td>
+        <td>{{$Supplier->company_name}}</td>
         <td>0.00</td>
         <td>0.00</td>
         <td>0.00</td>
@@ -39,23 +40,9 @@
         <td>0.00</td>
         <td>43,312.00</td>
     </tr>
-    <tr height="20">
-        <td>DF0002</td>
-        <td>บริษัท เอฟ ดีเอ็ม เทคโน</td>
-        <td>828,627.00</td>
-        <td>744,908.00</td>
-        <td>775,826.00</td>
-        <td>664,767.50</td>
-        <td>829,796.00</td>
-        <td>624,154.00</td>
-        <td>723,485.00</td>
-        <td>738,473.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>6,130,017.50</td>
-    </tr>
+@endforeach
+   
+    
     </table>
 </div>
 </body>

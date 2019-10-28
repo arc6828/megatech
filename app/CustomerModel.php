@@ -53,7 +53,8 @@ class CustomerModel extends Model
 							'payment_method',
 							
 							];
-							
+	//Relationships	
+	//sales			
 	public function Quotation(){
 		return $this->hasMany('App\Sales\QuotationModel','customer_id');
 	}
@@ -63,6 +64,27 @@ class CustomerModel extends Model
 	public function Invoice(){
 		return $this->hasMany('App\Sales\InvoiceModel','customer_id');
 	}
+	//Purchase
+	public function Requisition()
+    {
+        return $this->hasMany('App\Purchase\RequisitionModel','customer_id');
+    }
+    public function PurchaseOrder()
+    {
+        return $this->hasMany('App\Purchase\OrderModel','customer_id');
+    }
+    public function Receive()
+    {
+        return $this->hasMany('App\Purchase\ReceiveModel','customer_id');
+    }
+	//user
+	public function User()
+      {
+          return $this->belongsTo('App\User','user_id');
+      }
+
+
+
 	public static function select_all(){
 		return DB::table('tb_customer')->get();
 	}

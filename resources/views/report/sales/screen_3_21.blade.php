@@ -13,22 +13,17 @@
 		
 		
 	</tr>
+	@foreach ($customer as $customer)
 	<tr>
-		<td> N0004 </td>
-		<td> บริษัท นิตโต้ โคกิ อินดัสทรีย์(ประเทศไทย) จำกัด </td>
-        <td> 326,215.00 </td>
-		<td> 22,835.05 </td>
-		<td> 349,050.05</td>
-
-		
-	</tr>
-    <tr>
-		<td> T0045</td>
-		<td> บริษัท ไทยสิน เมทัล อินดัสตรี จำกัด </td>
-        <td> 245,280.00 </td>
-		<td> 17,169.60 </td>
-		<td> 262,449.60 </td>
-		
-
-	</tr>
+			<td> {{$customer->customer_code}} </td>
+			<td> {{$customer->company_name}} </td>
+			<td> 326,215.00 </td>
+			<td> 22,835.05 </td>
+			<td> 349,050.05</td>
+	
+			
+		</tr>
+	@endforeach
+	
+ 
 </table>

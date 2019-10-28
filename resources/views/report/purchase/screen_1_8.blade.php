@@ -22,9 +22,10 @@
     <td style="border-bottom: solid 1px #000; " ><b>DEC</td>
     <td style="border-bottom: solid 1px #000; " ><b>รวม</td>
 </tr>
-    <tr height="50">
-        <td>YAMAWA053</td>
-        <td>ต๊าปแป๊ปเตเปอ</td>
+@foreach ($Product as $Product)
+<tr height="50">
+        <td>{{$Product->product_code}}</td>
+        <td>{{$Product->product_detail}}</td>
         <td>1.00</td>
         <td>0.00</td>
         <td>0.00</td>
@@ -39,23 +40,9 @@
         <td>0.00</td>
         <td>1.00</td>
     </tr>
-    <tr height="20">
-        <td>YAMAWA060</td>
-        <td>ต๊าปแป๊ปเตเปอ</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>3.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>0.00</td>
-        <td>3.00</td>
-    </tr>
+@endforeach
+  
+    
     </table>
 </div>
 </body>

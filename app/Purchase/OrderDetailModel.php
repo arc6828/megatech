@@ -11,7 +11,16 @@ class OrderDetailModel extends Model
     protected $primaryKey = 'purchase_order_detail_id';
     protected $fillable = [];
 
-
+    public function Order()
+    {
+        return $this->belongsTo('App\Purchase\OrderModel','purchase_order_id');
+    }
+    public function Product()
+    {
+        return $this->belongsTo('App\ProductModel','product_id');
+    }
+    
+   
 
   public static function select_all(){
 		return DB::table('tb_purchase_order_detail')

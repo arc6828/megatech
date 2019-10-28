@@ -12,11 +12,10 @@ class UserModel extends Model
 	protected $fillable = [];
 
 
-    public function customer()
-    {
-        return $this->hasMany('App/CustomerModel','user_id');
-    }
-    
+   
+   
+
+
 
     public static function check_role($user_id,$role){
         return DB::table('users')

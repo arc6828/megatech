@@ -16,28 +16,53 @@
     <td style="border-bottom: solid 1px #000;"><b>ภาษีมูลค่าเพิ่ม</td>
     <td style="border-bottom: solid 1px #000;"><b>เลขที่ PR <br>ยอดเงิน</td>
   </tr>
+  @foreach ($Order as $Order)
   <tr height="50">
-    <td><b>เลขที่เอกสาร</td>
-    <td width="500"><b>PO6208-00091  วันที่เอกสาร   30/8/2019</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr height="50">
-    <td><b>รหัสเจ้าหนี้</td>
-    <td width="500"><b>DS0001  บริษัท สมาร์ท ทูลส์ จำกัด</td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
+      <td><b>เลขที่เอกสาร</td>
+      <td width="500"><b>{{$Order->purchase_order_code}}  
+        วันที่เอกสาร    
+       @php    
+          $timestamp = $Order->datetime;
+          $splitTimeStamp = explode(" ",$timestamp);
+          $date = $splitTimeStamp[0];
+          $time = $splitTimeStamp[1];
+        @endphp
+        {{$date}}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr height="50">
+        <td><b>รหัสเจ้าหนี้</td>
+        <td width="500"><b>{{$Order->Supplier->supplier_code}}  {{$Order->Supplier->company_name}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    @foreach ($Order->OrderDetail as $OrderDetail)
+    <tr height="50">
+        <td>{{$OrderDetail->Product->product_code}}</td>
+        <td width="500">{{$OrderDetail->Product->product_detail}}</td>
+        <td>{{$OrderDetail->amount}}</td>	
+        <td>{{$OrderDetail->Product->product_unit}}</td>
+        <td>{{$OrderDetail->Product->product_unit}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    @endforeach
+   
+  @endforeach
+  
 </table>
 </div>
 </body>
