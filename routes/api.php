@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+   return $request->user();
 });
 //QUOTATION
 Route::get('/quotation_detail/user/{user_id}', 'API\QuotationDetailController@index_by_user');

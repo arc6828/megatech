@@ -263,5 +263,14 @@ Route::get("report/inventory/4/4","Report\InventoryController@screen_4_4");
 Route::get('report/',function(){
   return view('report/index');
 });
-
 Route::resource('gaurd-stock', 'GaurdStockController');
+
+//REPORT Supplier
+Route::get('report/supplier/1/4',"Report\SupplierController@screen_1_4");
+Route::get('report/supplier/1/5',"Report\SupplierController@screen_1_5");
+Route::get('report/supplier/2/2',"Report\SupplierController@screen_2_2");
+Route::get('report/supplier/3/2',"Report\SupplierController@screen_3_2"); 
+Route::get('report/supplier/4/1',"Report\SupplierController@screen_4_1");
+Route::get('report/supplier/5/2',"Report\SupplierController@screen_5_2");
+Route::get('report/supplier/6/16',"Report\SupplierController@screen_6_16");
+Route::get('report/supplier/7/2',"Report\SupplierController@screen_7_2");
