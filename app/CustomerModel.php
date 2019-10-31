@@ -81,8 +81,9 @@ class CustomerModel extends Model
 	public function User()
       {
           return $this->belongsTo('App\User','user_id');
-      }
-
+	  }
+	  
+	 // Customer
 
 
 	public static function select_all(){
@@ -100,6 +101,7 @@ class CustomerModel extends Model
             ->where('tb_customer.company_name', 'like' , "%{$q}%" )
             ->get();
 	}
+	
 
 
 	public static function select_zone() {
@@ -180,4 +182,5 @@ class CustomerModel extends Model
 		DB::update($sql, []);
 	}
     */
+	
 }

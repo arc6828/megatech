@@ -270,7 +270,7 @@ Route::resource('gaurd-stock', 'GaurdStockController');
 Route::get("report/customer/1/3","Report\CustomerController@screen_1_3");
 Route::get("report/customer/1/5","Report\CustomerController@screen_1_5");
 Route::get("report/customer/2/3","Report\CustomerController@screen_2_3");
-Route::get("report/customer/4/4","Report\CustomerController@screen_4_4");
+Route::get("report/customer/4/1","Report\CustomerController@screen_4_1");
 Route::get("report/customer/3/2","Report\CustomerController@screen_3_2");
 Route::get("report/customer/5/8","Report\CustomerController@screen_5_8");
 Route::get("report/customer/5/9","Report\CustomerController@screen_5_9");
