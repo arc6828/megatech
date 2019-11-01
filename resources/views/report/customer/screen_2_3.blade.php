@@ -18,29 +18,31 @@
         <td style="border-bottom: solid 1px #000; text-align:center" ><b>รหัสพนักงานขาย</td>
     </tr>
 <br><br>
-    <tr>
-        <td style="border-bottom: solid 0px #000; text-align:center" >IN6209-00093</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >9/9/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >9/10/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >30</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >1,391.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >1,391.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >0.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >NT</td>
-    </tr>
-    <tr>
-        <td style="border-bottom: solid 0px #000; text-align:center" >IN6209-00176</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >18/9/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >18/10/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >30</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >2,942.50</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >0.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >2,942.50</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >NT</td>
-    </tr>
-    
+
+@foreach($customer as $customer)
+    @foreach ($customer->Invoice as $invoices)
+      
+            <tr>
+                <td style="border-bottom: solid 0px #000; text-align:center" >{{$invoices->invoice_code}}</td>
+                <td style="border-bottom: solid 0px #000; text-align:center" >{{$invoices->datetime}}</td>
+                <!-- หาวันครบกำหนดไม่เจอ -->
+                <td style="border-bottom: solid 0px #000; text-align:center" >9/10/2019</td>
+                <!-- หาวันเครดิตไม่เจอ -->
+                <td style="border-bottom: solid 0px #000; text-align:center" >30</td>
+                <!-- หายอดตั้งหนี้ไม่เจอ -->
+                <td style="border-bottom: solid 0px #000; text-align:center" >1,391.00</td>
+                 <!-- ยอดรับชำระไม่เจอ -->
+                <td style="border-bottom: solid 0px #000; text-align:center" >1,391.00</td>
+                <td style="border-bottom: solid 0px #000; text-align:center" >{{$customer->debt_balance}}</td>
+                <!-- เลขที่ PO -->
+                <td style="border-bottom: solid 0px #000; text-align:center" ></td>
+                <td style="border-bottom: solid 0px #000; text-align:center" >{{$invoices->User->short_name}}</td>
+            </tr>
+            
+        @endforeach
+    @endforeach
+   
+   
 </table>
 </div>
 </body>
