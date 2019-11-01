@@ -40,31 +40,23 @@
   <td width="10%" style=" text-align:center"><b>สาขาที่</td>
 </tr>
 
-<tr style=" text-align:center">
-  <td>243</td>
-  <td>25/9/2019</td>
-  <td>IV6209-00243</td>
-  <td>บริษัท ซิน ยอง ไทยเอ็นจิเนียริ่ง จำกัด</td>
-  <td>0205541003626</td>
-  <td >X</td>
-  <td ></td>
-  <td >13,200.00</td>
-  <td >924.00</td>
-  <td >14,124.00</td>
-</tr>
+@foreach($customer as $customer)
+    @foreach($customer->Invoice as $invoices)
+        <tr style = "height:60px;">
+            <td style="text-align:center" >{{ $invoices->invoice_id }}</td>
+            <td style="text-align:center" >{{ $invoices->datetime }}</td>
+            <td style="text-align:center" >{{ $invoices->invoice_code }}</td>
+            <td style="text-align:center" >{{ $customer->company_name }}</td>
+            <td style="text-align:center" >0</td>
+            <td style="text-align:center" >000</td>
+            <td style="text-align:center" >000</td>
+            <td style="text-align:center" >000</td>
+            <td style="text-align:center" >0</td>
+            <td style="text-align:center" >0</td>
+        </tr>
+    @endforeach
+@endforeach
 
-<tr style=" text-align:center">
-  <td>244</td>
-  <td>25/9/2019</td>
-  <td>IV6209-00244</td>
-  <td>บริษัท เอ็มพี ทูลล์ เทคโนโลยี จำกัด</td>
-  <td>0135557010202</td>
-  <td >X</td>
-  <td ></td>
-  <td >8,500.00</td>
-  <td >595.00</td>
-  <td >9,095.00</td>
-</tr>
 </table>
 
 </body>

@@ -30,15 +30,6 @@
 
     </tr>
     @endforeach
-
-
-    
-          
-       
-   
-        
-    
-   
 </table>
 </div>
 </body>

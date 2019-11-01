@@ -19,28 +19,30 @@
  
     </tr>
 <br><br>
+@foreach($customer as $customer)
     <tr>
-        <td style="border-bottom: solid 0px #000; text-align:center" >IV6208-00135</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >16/8/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >15/9/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >30</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >2,022.30</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >2,022.30</td>
+        <td>รหัสลูกหนี้</td>
+        <td style="text-align:center">{{ $customer->customer_code}} {{ $customer->company_name}}</td>	
     </tr>
-    <tr>
-        <td style="border-bottom: solid 0px #000; text-align:center" >IV6208-00189</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >23/8/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >22/9/2019</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >30</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >11,342.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" ></td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >11,342.00</td>
-    </tr>
+    @foreach($customer->Invoice as $invoices)
+
+        <tr style = "height:60px;">
+            <td style="text-align:center" >{{ $invoices->invoice_code }}</td>
+            <td style="text-align:center" >{{ $invoices->datetime }}</td>
+            <td style="text-align:center" >15/09/2019</td>
+            <td style="text-align:center" >30</td>
+            <td style="text-align:center" >000</td>
+            <td style="text-align:center" >000</td>
+            <td style="text-align:center" >000</td>
+            <td style="text-align:center" >000</td>
+            <td style="text-align:center" >0</td>
+        </tr>
+        <tr>
+            <td>ยอดรวมตามรหัสลูกค้า</td>
+            <td style="text-align:center">{{ $customer->customer_code}}</td>
+        </tr>
+    @endforeach
+@endforeach
 </table>
 </div>
 </body>

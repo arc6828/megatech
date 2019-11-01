@@ -17,27 +17,29 @@
         <td style="border-bottom: solid 1px #000; text-align:center" ><b>ชื่อ</td>
     </tr>
 <br><br>
+@foreach($customer as $customer)
     <tr>
-        <td style="border-bottom: solid 0px #000; text-align:center" >IN6209-00192</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >19/9/2018</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >18/11/2018</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >4,066.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >266.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >3,800.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >KC</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >KANTACHAI</td>
+        <td>รหัสลูกค้า</td>
+        <td style="border-bottom: solid 0px #000; text-align:center">{{ $customer->customer_code}} {{ $customer->company_name}}</td>	
     </tr>
-    
-    <tr>
-        <td style="border-bottom: solid 0px #000; text-align:center" >IN6209-00249</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >26/9/2018</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >25/11/2018</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >4,226.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >276.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >3,950.00</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >KC</td>
-        <td style="border-bottom: solid 0px #000; text-align:center" >KANTACHAI</td>
-    </tr>
+    @foreach($customer->Invoice as $invoices)
+
+        <tr style = "height:60px;">
+            <td style="border-bottom: solid 0px #000; text-align:center" >{{ $invoices->invoice_code }}</td>
+            <td style="border-bottom: solid 0px #000; text-align:center" >{{ $invoices->datetime }}</td>
+            <td style="border-bottom: solid 0px #000; text-align:center" >15/09/2019</td>
+            <td style="border-bottom: solid 0px #000; text-align:center" >30</td>
+            <td style="border-bottom: solid 0px #000; text-align:center" >000</td>
+            <td style="border-bottom: solid 0px #000; text-align:center" >000</td>
+            <td style="border-bottom: solid 0px #000; text-align:center" >KC</td>
+            <td style="border-bottom: solid 0px #000; text-align:center" >KANTACHAI</td>
+        </tr>
+        <tr>
+            <td>ยอดรวมตามรหัสลูกค้า</td>
+            <td style="border-bottom: solid 0px #000; text-align:center">{{ $customer->customer_code}}</td>
+        </tr>
+    @endforeach
+@endforeach
 </table>
 </div>
 </body>
