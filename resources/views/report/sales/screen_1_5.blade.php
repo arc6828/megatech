@@ -10,19 +10,19 @@
 		<th>ยอดขาย/ลดหนี้</th>
 	</tr>
 	@foreach ($users as $users)
-	<tr>
-		<td> รหัสพนักงานขาย </td>
-		<td>{{ $users->short_name }}  {{ $users->name }}</td>
-		<td></td>
-	</tr>
-	@foreach ($users->customer as $item)
-	<tr>
-			<td>{{ $item->customer_code }}</td>
-			<td>{{ $item->company_name }}</td>
+		<tr>
+			<td> รหัสพนักงานขาย </td>
+			<td>{{ $users->short_name }}  {{ $users->name }}</td>
 			<td></td>
-	</tr>
-	
-	@endforeach
+		</tr>
+		@foreach ($users->customer as $item)
+		<tr>
+				<td>{{ $item->customer_code }}</td>
+				<td>{{ $item->company_name }}</td>
+				<td></td>
+		</tr>
+		
+		@endforeach
 	
 	@endforeach
 	
