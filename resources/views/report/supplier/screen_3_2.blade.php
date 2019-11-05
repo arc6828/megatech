@@ -14,9 +14,12 @@
     <td style="border-bottom: solid 1px #000;"><b>ยอดชำระหนี้</td>
     <td style="border-bottom: solid 1px #000;"><b>ระยะเวลาจ่าย</td>
     </tr>
+@foreach($suppliers as $supplier)
+        @foreach($supplier->receives as $receive)
 <tr height="50">
+<!--หาไม่เจอทั้งหมดเลยค่ะ-->
     <td>BP6209-00004</td>
-    <td>5/9/2019 </td>
+    <td>{{$receive->datetime}}</td>
     <td>RC6207-00073</td>
     <td>10/07/2019</td>
     <td>9/8/2019</td>
@@ -25,7 +28,7 @@
 </tr>
 <tr height="30">
     <td>BP6209-00004</td>
-    <td>5/9/2019 </td>
+    <td>{{$receive->datetime}} </td>
     <td>RC6207-00027</td>
     <td>3/07/2019</td>
     <td>2/8/2019</td>
@@ -35,3 +38,5 @@
 <tr hight="50">
     <td colspan="5" hight="30"><b>ยอดรวมตามรหัสเจ้าหนี้ DS0001</td>
     <td><b>663,844.05</td>
+@endforeach
+    @endforeach

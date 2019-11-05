@@ -16,12 +16,15 @@
     <td style="border-bottom: solid 1px #000;"><b>ยอดหนี้คงเหลือ</td>
     <td style="border-bottom: solid 1px #000;"><b>เลขที่ใบกำกับภาษี</td>
     </tr>
-<tr height="50">
-    <td>รหัสเจ้าหนี้</td>
-    <td><b>DC0002 บริษัทซีเอ็กซ์ ทังสเตน คาร์ไบต์ (ประเทศไทย)จำกัด</td>
+    @foreach($suppliers as $supplier)
+        @foreach($supplier->receives as $receive)
+<tr height="50">  
+    <td><b>รหัสเจ้าหนี้</td>
+    <td><b>{{$supplier->supplier_code}} {{$supplier->company_name}}</td>  
 <tr hight="50">
-    <td>RC6208-00023</td>
-    <td>05/08/2019</td>
+    <td><b>{{$receive->purchase_receive_code}}</td>   
+    <td>{{$receive->datetime}}</td>
+    <!--หายอดตั้งหนี้ ยอดชำระ ยอดลดหนี้ ยอดหนี้คงเหลือ-- ไม่เจอ-->
     <td>04/09/2019</td>
     <td style="border-bottom: solid 1px #000;">1,2410.20</td>
     <td style="border-bottom: solid 1px #000;">0.00</td>
@@ -29,10 +32,7 @@
     <td style="border-bottom: solid 1px #000;">1,2410.20</td>
     <td>20190805K327<td>
     </tr>
-<tr hight="50">
-    <td colspan="3" hight="30"><b>ยอดรวมตามรหัสเจ้าหนี้ DC0002</td>
-    <td><b>1,2410.20</td>
-    <td><b>0.00</td>
-    <td><b>0.00</td>
-    <td><b>1,2410.20</td>
-</tr></table>
+      @endforeach
+    @endforeach
+    </tr></table>
+      

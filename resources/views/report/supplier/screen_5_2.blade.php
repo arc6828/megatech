@@ -15,33 +15,30 @@
     <td style="border-bottom: solid 1px #000;"><b> >90 </td>
     <td style="border-bottom: solid 1px #000;"><b>ยอดรวม</td>
     </tr>
-<td style="border-bottom: solid 1px #000;"><b>RC6208-00090</td>
-    <td><b>22/8/2019</td>
+ @foreach($suppliers as $supplier)
+        @foreach($supplier->receives as $receive)
+<td style="border-bottom: solid 1px #000;"><b>{{$receive->purchase_receive_code}}</td>
+    <td><b>{{$receive->datetime}}</td>
     <td><b>21/9/2019</td>
     <td><b>30</td>
-    <td><b></td>
-    <td><b>7,997.18 </td>
-    <td><b>  </td>
-    <td><b>   </td>
-    <td><b>   </td>
-    <td><b>  7,997.18 </td>
-    </tr>
-<td style="border-bottom: solid 1px #000;"><b>RC6209-00016</td>
-    <td><b>5/9/2019</td>
-    <td><b>5/10/2019</td>
-    <td><b>30</td>
-    <td><b>6,456.92</td>
-    <td><b>   </td>
-    <td><b>   </td>
-    <td><b>   </td>
-    <td><b>   </td>
-    <td><b>  6,456.92 </td>
-    </tr>
+    <td></td>
+    <td>7,997.18</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>   
+    @endforeach
+        @endforeach
 <tr hight="50">
-    <td colspan="4" hight="30"><b>ยอดรวมตามรหัสเจ้าหนี้ DS0006</td>
+    <td hight="30"><b>ยอดรวมตามรหัสเจ้าหนี้ DS0006</td>
     <td><b>27,727.88</td>
     <td><b>15,123.92</td>
     <td><b>0.00</td>
     <td><b>0.00</td>
     <td><b>0.00</td>
     <td><b>42,851.80</td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr></table>

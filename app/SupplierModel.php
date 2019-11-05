@@ -10,13 +10,16 @@ class SupplierModel extends Model
 	protected $table = "tb_supplier";
     protected $primaryKey = 'supplier_id';
 	protected $fillable = [];
+
 	
-
-
 	public function Order(){
         return $this->hasMany('App\Purchase\OrderModel','supplier_id');
 	}
-	
+//Re
+	public function receives(){
+        return $this->hasMany('App\Purchase\ReceiveModel','supplier_id');
+	}
+
 	public static function select_all(){
 		return DB::table('tb_supplier')->get();
 	}

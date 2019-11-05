@@ -15,19 +15,23 @@
     <td style="border-bottom: solid 1px #000;"><b>วันครบกำหนด</td>
     <td style="border-bottom: solid 1px #000;"><b>ยอดเงิน / เอกสาร</td>
 </tr>
-
-<tr> 
+<tr>
+@foreach($suppliers as $supplier)
+        @foreach($supplier->receives as $receive) 
+    <!--หาเจอแค่เวลา นอกนั้นไม่เจอ-->
     <td ><b>45</td>
-    <td ><b>29/8/2019</td>
-    <td ><b>RC6208-00136</td>
-    <td ><b>IV62-1221</td>
-    <td ><b>29/8/2019</td>
+    <td><b>{{$receive->datetime}}</td>
+    <td>RC6208-00136<b>
+    <td><b>IV62-1221</td>
+    <td><b>29/8/2019</td>
     <td><b>28/9/2019</td>
     <td ><b>3,263.50</td>
 </tr>
-
+@endforeach
+        @endforeach
 <tr hight="50">
     <td colspan="5" hight="30"><b>ยอดรวมตามเลขที่เอกสาร</td>
     <td><b>BA6209-00006</td>
-    <td><b>636,419.95</td>
+    <td><b>636,419.95</td> 
     </tr></table>
+    

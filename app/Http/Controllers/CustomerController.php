@@ -43,7 +43,6 @@ class CustomerController extends Controller
      */
     public function create()
     {
-
         $table_account = AccountModel::select_all();
         $table_user = UserModel::select_all();
         $table_zone = CustomerModel::select_zone();
@@ -294,9 +293,5 @@ class CustomerController extends Controller
     {
         CustomerModel::delete_by_id($id);
         return redirect('customer');
-
-    }
-
-
-
+}
 }

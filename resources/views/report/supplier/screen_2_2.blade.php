@@ -16,31 +16,33 @@
     <td style="border-bottom: solid 1px #000;"><b>รหัสแผนก</td>
     <td style="border-bottom: solid 1px #000;"><b>เลขที่ใบกำกับภาษี</td>
     </tr>
+    @foreach($suppliers as $supplier)
+        @foreach($supplier->receives as $receive)
 <tr height="50">
-    <td>RC6209-00036</td>
-    <td>7/9/2019 </td>
-    <td>7/10/2019</td>
+    <td>{{$receive->purchase_receive_code}}</td>
+    <td>{{$receive->datetime}}</td>
+    <!-- หาวันครบรอบกำหนดไม่เจอ-->
+    <!-- หายอดตั้งหนี้ ยอดรับชำระ ยอดหนี้คงเหลือไม่เจอ-->
+    <td>7/10/2019 </td>
     <td>240.75</td>
     <td>0.00</td>
     <td>240.75</td>
-    <td>PO6209-00025</td>
+    <!---->
+    <td>{{$receive->internal_reference_doc}}</td>
     <td>01</td>
     <td>IV6209174</td>
-    </tr>
-    <tr height="50">
-    <td>RC6209-00054</td>
-    <td>12/9/2019 </td>
-    <td>12/10/2019</td>
-    <td style="border-bottom: solid 1px #000;">5,859.32</td>
-    <td style="border-bottom: solid 1px #000;">0.00</td>
-    <td style="border-bottom: solid 1px #000;">5,859.32</td>
-    <td>PO6209-00040</td>
-    <td>01</td>
-    <td>IV6209229</td>
     </tr>
 <tr hight="50">
     <td colspan="3" hight="30"><b>ยอดรวมตามรหัสเจ้าหนี้ DC0002</td>
     <td><b>27,727.88</td>
     <td><b>0.00</td>
     <td><b>27,727.88</td>
+<tr>
+    <td><b>รหัสเจ้าหนี้</td>
+    <td><b>{{$supplier->supplier_code}} {{$supplier->company_name}}</td>  
+    <tr hight="50">
+    <td>{{$receive->purchase_receive_code}}</td>   
+</tr>
+ @endforeach
+        @endforeach
 </tr></table>

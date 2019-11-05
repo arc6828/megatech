@@ -23,25 +23,19 @@
         <td>สำนักงานใหญ่<td>สาขาที่</td>
     </tr>
 <tr>
-    <tr>
-       <td align="center"><b>43<td align="center"><b>18/9/2019</td>
-       <td align="center"><b>IV9090683<td align="center"><b>บริษัท ทรูเมค แมชชินเนอรี่ จำกัด</td>
+    <tr><!--เจอแค่ชื่อบริษัท และ วันเวลา นอกนั้นไม่เจอ-->
+    @foreach($suppliers as $supplier)
+        @foreach($supplier->receives as $receive)
+       <td align="center"><b>43<td align="center"><b>{{$receive->datetime}}</td>
+       <td align="center"><b>IV9090683<td align="center"><b>{{$supplier->company_name}}</td>
        <td align="center"><b>0105547141592</td>
        <td align="center"><b>X</td><td></td>
        <td align="center"><b>170.50</td>
        <td align="center"><b>11.94</td>
        <td align="center"><b>182.44</td>
     </tr>
-<tr>
-    <tr>
-       <td align="center"><b>44<td align="center"><b>18/9/2019</td>
-       <td align="center"><b>SF26038<td align="center"><b>MUSTAFA SIMSEK MAKINE TAKIM</td>
-       <td align="center"><b></td>
-       <td align="center"><b>X</td><td></td>
-       <td align="center"><b>73,128.80</td>
-       <td align="center"><b>0.00</td>
-       <td align="center"><b>73,128.80</td>
-    </tr>
+    @endforeach
+        @endforeach
 <tr hight="50">
     <td colspan="7" hight="30"><b>ยอดรวมตามเลขที่เอกสาร</td>
     <td><b>1,319,728.33</td>
