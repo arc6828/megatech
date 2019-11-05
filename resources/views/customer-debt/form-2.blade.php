@@ -1,3 +1,4 @@
+2
 <div class="form-group {{ $errors->has('doc_no') ? 'has-error' : ''}}">
     <label for="doc_no" class="control-label">{{ 'เลขที่เอกสาร' }}</label>
     <input class="form-control" name="doc_no" type="text" id="doc_no" value="{{ isset($customerdebt->doc_no) ? $customerdebt->doc_no : ''}}" >
