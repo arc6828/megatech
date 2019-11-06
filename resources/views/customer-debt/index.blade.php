@@ -1,12 +1,12 @@
 @extends('layouts/argon-dashboard/theme')
-@section('title','หนี้ลูกค้า')
+@section('title', request('debt_type') )
 @section('content')
     <div class="container">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">หนี้ลูกค้า</div>
+                    <div class="card-header"> {{ request('debt_type') }} </div>
                     <div class="card-body">
                         <a href="{{ url('/finance/customer-debt/create') }}?debt_type={{ request('debt_type') }}" class="btn btn-success btn-sm" title="Add New CustomerDebt">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New

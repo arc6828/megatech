@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','ตั้งหนี้ / ลดหนี้ ลูกค้า')
+@section('title',  request('debt_type')   )
 
 @section('content')
     <div class="container">
@@ -8,9 +8,9 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create New CustomerDebt</div>
+                    <div class="card-header">สร้าง {{ request('debt_type') }} </div>
                     <div class="card-body">
-                        <a href="{{ url('/finance/customer-debt') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/finance/customer-debt') }}?debt_type={{request('debt_type')}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -25,14 +25,14 @@
                         <form method="POST" action="{{ url('/finance/customer-debt') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @switch(request('debt_type'))
-                                @case ("ตั้งหนี้คงค้าง")                                 
-                                    @include ('customer-debt.form-1', ['formMode' => 'create', 'debt_type'=>'ตั้งหนี้คงค้าง'])
+                                @case ("ตั้งหนี้คงค้าง")   
+                                    @include ('customer-debt.form-1', ['formMode' => 'create', 'debt_type'=> request('debt_type') ])
                                     @break
                                 @case ("ตั้งหนี้ลูกหนี้") 
-                                    @include ('customer-debt.form-2', ['formMode' => 'create', 'debt_type'=>'ตั้งหนี้ลูกหนี้'])
+                                    @include ('customer-debt.form-2', ['formMode' => 'create', 'debt_type'=> request('debt_type') ])
                                     @break
                                 @case ("ลดหนี้ลูกหนี้")  
-                                    @include ('customer-debt.form-3', ['formMode' => 'create', 'debt_type'=>'ลดหนี้ลูกหนี้'])
+                                    @include ('customer-debt.form-3', ['formMode' => 'create', 'debt_type'=> request('debt_type') ])
                                     @break
                                 @default  
                                     @include ('customer-debt.form', ['formMode' => 'create', 'debt_type'=>'ตั้งหนี้คงค้าง'])
