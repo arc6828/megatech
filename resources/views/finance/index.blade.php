@@ -38,3 +38,11 @@
   </div>
 </div>
 @endsection
+@section('script')
+
+<script>
+  $(function () {
+    $("#{{ request('tab') }}").tab('show')
+  })
+</script>
+@endsection

@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','bank transaction')
+@section('title','ธุรกรรมธนาคาร')
 
 @section('content')
     <div class="container">
@@ -8,9 +8,10 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Banktransaction</div>
+                    <div class="card-header">ธุรกรรมธนาคาร ({{ request('transaction_code') }})</div>
                     <div class="card-body">
-                        <a href="{{ url('/finance/bank-transaction/create') }}" class="btn btn-success btn-sm" title="Add New BankTransaction">
+                        <a href="{{ url('/finance') }}?tab=bank-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/finance/bank-transaction/create') }}?transaction_code={{ request('transaction_code') }}" class="btn btn-success btn-sm" title="Add New BankTransaction">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
@@ -31,14 +32,21 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Code</th><th>Amount</th><th>Balance</th><th>Remark</th><th>User Id</th><th>Actions</th>
+                                        <th>#</th>
+                                        <th>Bank Code</th>
+                                        <th>Type</th>
+                                        <th>Amount</th><th>Balance</th><th>User Id</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($banktransaction as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->code }}</td><td>{{ $item->amount }}</td><td>{{ $item->balance }}</td><td>{{ $item->remark }}</td><td>{{ $item->user_id }}</td>
+                                        <td>{{ $item->bank_code }}</td>
+                                        <td>{{ $item->transaction_code }}</td>
+                                        <td>{{ $item->amount }}</td>
+                                        <td>{{ $item->balance }}</td>
+                                        <td>{{ $item->user->short_name }}</td>
                                         <td>
                                             <a href="{{ url('/finance/bank-transaction/' . $item->id) }}" title="View BankTransaction"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/finance/bank-transaction/' . $item->id . '/edit') }}" title="Edit BankTransaction"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

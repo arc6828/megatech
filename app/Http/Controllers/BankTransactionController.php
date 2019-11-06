@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\BankTransaction;
+use App\BankAccount;
 use Illuminate\Http\Request;
 
 class BankTransactionController extends Controller
@@ -17,11 +18,12 @@ class BankTransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
+        $keyword = $request->get('transaction_code');
         $perPage = 25;
 
         if (!empty($keyword)) {
             $banktransaction = BankTransaction::where('code', 'LIKE', "%$keyword%")
+                ->orWhere('transaction_code', 'LIKE', "%$keyword%")
                 ->orWhere('amount', 'LIKE', "%$keyword%")
                 ->orWhere('balance', 'LIKE', "%$keyword%")
                 ->orWhere('remark', 'LIKE', "%$keyword%")
@@ -41,7 +43,8 @@ class BankTransactionController extends Controller
      */
     public function create()
     {
-        return view('bank-transaction.create');
+        $bank_accounts = BankAccount::all();
+        return view('bank-transaction.create', compact('bank_accounts'));
     }
 
     /**
@@ -58,7 +61,8 @@ class BankTransactionController extends Controller
         
         BankTransaction::create($requestData);
 
-        return redirect('bank-transaction')->with('flash_message', 'BankTransaction added!');
+        return redirect("/finance/bank-transaction?transaction_code={$requestData['transaction_code']}")->with('flash_message', 'BankTransaction added!');
+        //return redirect()->route("/finance/bank-transaction?transaction_code={$requestData['transaction_code']}");
     }
 
     /**
@@ -85,8 +89,9 @@ class BankTransactionController extends Controller
     public function edit($id)
     {
         $banktransaction = BankTransaction::findOrFail($id);
+        $bank_accounts = BankAccount::all();
 
-        return view('bank-transaction.edit', compact('banktransaction'));
+        return view('bank-transaction.edit', compact('banktransaction','bank_accounts'));
     }
 
     /**
@@ -105,7 +110,7 @@ class BankTransactionController extends Controller
         $banktransaction = BankTransaction::findOrFail($id);
         $banktransaction->update($requestData);
 
-        return redirect('bank-transaction')->with('flash_message', 'BankTransaction updated!');
+        return redirect("/finance/bank-transaction?transaction_code={$requestData['transaction_code']}")->with('flash_message', 'BankTransaction updated!');
     }
 
     /**
@@ -119,6 +124,6 @@ class BankTransactionController extends Controller
     {
         BankTransaction::destroy($id);
 
-        return redirect('bank-transaction')->with('flash_message', 'BankTransaction deleted!');
+        return redirect('/finance/bank-transaction')->with('flash_message', 'BankTransaction deleted!');
     }
 }

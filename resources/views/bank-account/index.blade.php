@@ -10,6 +10,7 @@
                 <div class="card">
                     <div class="card-header">Bankaccount</div>
                     <div class="card-body">
+                        <a href="{{ url('/finance') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/finance/bank-account/create') }}" class="btn btn-success btn-sm" title="Add New BankAccount">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
@@ -31,14 +32,21 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Code</th><th>Name</th><th>Branch</th><th>Category Id</th><th>Account No</th><th>Balance Bring Forword</th><th>Balance</th><th>Actions</th>
+                                        <th>#</th>
+                                        <th>ธนาคาร</th>
+                                        <th>ยอดยกมา</th><th>ยอดเงินคงเหลือ</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($bankaccount as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->code }}</td><td>{{ $item->name }}</td><td>{{ $item->branch }}</td><td>{{ $item->category_id }}</td><td>{{ $item->account_no }}</td><td>{{ $item->balance_bring_forword }}</td><td>{{ $item->balance }}</td>
+                                    <tr>       
+                                        <td>{{ $item->id }}</td>                                 
+                                        <td>
+                                            <div>[{{ $item->code }}] {{ $item->account_no }}</div>
+                                            <div>{{ $item->name }} {{ $item->branch }}</div>
+                                        </td>
+                                        <td>{{ $item->balance_bring_forword }}</td>
+                                        <td>{{ $item->balance }}</td>
                                         <td>
                                             <a href="{{ url('/finance/bank-account/' . $item->id) }}" title="View BankAccount"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/finance/bank-account/' . $item->id . '/edit') }}" title="Edit BankAccount"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

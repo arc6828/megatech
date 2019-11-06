@@ -8,7 +8,7 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create New BankAccount</div>
+                    <div class="card-header">สร้างบัญชีธนาคาร</div>
                     <div class="card-body">
                         <a href="{{ url('/finance/bank-account') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />

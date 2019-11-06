@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','สร้าง transaction')
+@section('title','สร้าง transaction : '.request('transaction_code'))
 
 @section('content')
     <div class="container">
@@ -8,9 +8,9 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create New BankTransaction</div>
+                    <div class="card-header">สร้าง transaction : {{request('transaction_code')}}</div>
                     <div class="card-body">
-                        <a href="{{ url('/finance/bank-transaction') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/finance/bank-transaction') }}?transaction_code={{request('transaction_code')}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
