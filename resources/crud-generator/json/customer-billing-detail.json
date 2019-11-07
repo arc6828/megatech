@@ -1,0 +1,12 @@
+{
+    "fields": [
+        {
+            "name": "doc_id",
+            "type": "string"
+        },
+        {
+            "name": "customer_billing_id",
+            "type": "integer"
+        }
+    ]
+}

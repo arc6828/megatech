@@ -3,14 +3,14 @@
     <input class="form-control form-control-sm" name="code" type="text" id="code" value="{{ isset($banktransaction->code) ? $banktransaction->code : ''}}" >
     {!! $errors->first('code', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('bank_code') ? 'has-error' : ''}}">
-    <label for="bank_code" class="control-label">{{ 'รหัสธนาคาร' }}</label>
-    <select class="form-control form-control-sm" name="bank_code" id="bank_code" >
+<div class="form-group {{ $errors->has('bank_account_id') ? 'has-error' : ''}}">
+    <label for="bank_account_id" class="control-label">{{ 'รหัสธนาคาร' }}</label>
+    <select class="form-control form-control-sm" name="bank_account_id" id="bank_account_id" >
         @foreach( $bank_accounts as $bank_account )
-        <option value="{{ $bank_account->code }}">{{ $bank_account->name }} {{ $bank_account->branch }}</option>
+        <option value="{{ $bank_account->id }}">{{ $bank_account->name }} {{ $bank_account->branch }}</option>
         @endforeach
     </select>
-    {!! $errors->first('bank_code', '<p class="help-block">:message</p>') !!}
+    {!! $errors->first('bank_account_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('transaction_code') ? 'has-error' : ''}}">
     <label for="transaction_code" class="control-label">{{ 'ประเภท Transaction' }}</label>

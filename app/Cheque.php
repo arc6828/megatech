@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BankTransaction extends Model
+class Cheque extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'bank_transactions';
+    protected $table = 'cheques';
 
     /**
     * The database primary key value.
@@ -25,13 +25,9 @@ class BankTransaction extends Model
      *
      * @var array
      */
-    protected $fillable = ['code','bank_account_id','transaction_code', 'amount', 'balance', 'remark', 'user_id'];
+    protected $fillable = ['cheque_type_code','doc_no', 'cheque_date', 'cheque_type', 'cheque_no', 'total', 'bank_fee', 'bank_account_id', 'passed_cheque_date', 'reference', 'status', 'user_id'];
 
-    public function user(){
-        return $this->belongsTo('App\User','user_id');
-    }
-
-    public function bank_account(){        
+    public function bank_account(){
         return $this->belongsTo('App\BankAccount','bank_account_id');
     }
 }

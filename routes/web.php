@@ -103,6 +103,12 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('supplier-debt', 'SupplierDebtController');
     Route::resource('bank-account', 'BankAccountController');
     Route::resource('bank-transaction', 'BankTransactionController');
+    //NEW
+    Route::resource('cheque', 'ChequeController');
+    Route::resource('customer-payment-detail', 'CustomerPaymentDetailController');
+    Route::resource('customer-payment', 'CustomerPaymentController');
+    Route::resource('customer-billing-detail', 'CustomerBillingDetailController');
+    Route::resource('customer-billing', 'CustomerBillingController');
   });
 
 
@@ -285,3 +291,4 @@ Route::get("report/customer/5/8","Report\CustomerController@screen_5_8");
 Route::get("report/customer/5/9","Report\CustomerController@screen_5_9");
 Route::get("report/customer/6/15","Report\CustomerController@screen_6_15");
 Route::get("report/customer/7/8","Report\CustomerController@screen_7_8");
+

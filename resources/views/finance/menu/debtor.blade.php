@@ -26,16 +26,20 @@
         </a> 
       </div>
       <div class="col-6 col-md-4 ">
-      <a class="btn btn-outline-primary my-4 m" href="{{ url('/') }}/finance/billing">
-          <div class="px-4"><span class="round round-primary my-2">บ</span></i></div>
-          <div><br>ใบวางบิล</div>
-        </a>
+        <a class="btn btn-outline-primary btn-menu  my-3" href="{{url('/')}}/finance/customer-billing">
+          <div class="vertical-center">
+            <div class="px-4"><i class="round round-primary my-2 ni ni-single-copy-04"></i></div>
+            <div>ใบวางบิล</div>
+          </div>
+        </a> 
       </div>
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-primary my-4" href="#">
-          <div class="px-4"><span class="round round-primary my-2">ช</span></div>
-          <div><br>ชำระเงิน</div>
-        </a>
+        <a class="btn btn-outline-primary btn-menu  my-3" href="{{url('/')}}/finance/customer-payment">
+          <div class="vertical-center">
+            <div class="px-4"><i class="round round-primary my-2 ni ni-single-copy-04"></i></div>
+            <div><br>ชำระเงิน</div>
+          </div>
+        </a> 
       </div>
       <div class="col-6 col-md-4 ">
         <a class="btn btn-outline-success btn-menu  my-3" href="{{url('/')}}/customer">

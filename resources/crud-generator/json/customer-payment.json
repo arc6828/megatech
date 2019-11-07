@@ -1,0 +1,56 @@
+{
+    "fields": [
+        {
+            "name": "doc_no",
+            "type": "string"
+        },        
+        {
+            "name": "customer_id",
+            "type": "integer"
+        },
+        {
+            "name": "role",
+            "type": "string"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },
+        {
+            "name": "round",
+            "type": "string"
+        },        
+        {
+            "name": "customer_billing_id",
+            "type": "integer"
+        },
+        {
+            "name": "discount",
+            "type": "float"
+        },
+        {
+            "name": "debt_total",
+            "type": "float"
+        },
+        {
+            "name": "cash",
+            "type": "float"
+        },
+        {
+            "name": "credit",
+            "type": "float"
+        },
+        {
+            "name": "tax",
+            "type": "float"
+        },
+        {
+            "name": "payment_total",
+            "type": "float"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        }
+    ]
+}

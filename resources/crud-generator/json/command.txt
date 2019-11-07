@@ -8,3 +8,8 @@ php artisan crud:generate SupplierDebt --fields_from_file="resources/crud-genera
 php artisan crud:generate BankAccount --fields_from_file="resources/crud-generator/json/bank-account.json"
 php artisan crud:generate BankTransaction --fields_from_file="resources/crud-generator/json/bank-transaction.json"
 
+php artisan crud:generate CustomerBilling --fields_from_file="resources/crud-generator/json/customer-billing.json"
+php artisan crud:generate CustomerBillingDetail --fields_from_file="resources/crud-generator/json/customer-billing-detail.json"
+php artisan crud:generate CustomerPayment --fields_from_file="resources/crud-generator/json/customer-payment.json"
+php artisan crud:generate CustomerPaymentDetail --fields_from_file="resources/crud-generator/json/customer-payment-detail.json"
+php artisan crud:generate Cheque --fields_from_file="resources/crud-generator/json/cheque.json"

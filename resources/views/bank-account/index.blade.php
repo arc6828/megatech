@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-header">Bankaccount</div>
                     <div class="card-body">
-                        <a href="{{ url('/finance') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/finance') }}?tab=bank-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <a href="{{ url('/finance/bank-account/create') }}" class="btn btn-success btn-sm" title="Add New BankAccount">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>

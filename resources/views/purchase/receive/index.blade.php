@@ -36,6 +36,7 @@
 						<th class="text-center">วันที่</th>
 						<th class="text-center">รหัสเจ้าหนี้</th>
 						<th class="text-center">ชื่อบริษัท</th>
+						<th class="text-center">ยอดหนี้คงค้าง</th>
 						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
 						<th class="text-center d-none">สถานะ</th>
@@ -57,6 +58,7 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
+						<td></td>
 						<td>{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td class="d-none">{{ $row->purchase_status_name }}</td>

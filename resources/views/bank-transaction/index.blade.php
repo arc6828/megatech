@@ -42,7 +42,7 @@
                                 @foreach($banktransaction as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->bank_code }}</td>
+                                        <td>{{ $item->bank_account->code }}</td>
                                         <td>{{ $item->transaction_code }}</td>
                                         <td>{{ $item->amount }}</td>
                                         <td>{{ $item->balance }}</td>

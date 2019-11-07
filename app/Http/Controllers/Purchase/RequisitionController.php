@@ -108,7 +108,7 @@ class RequisitionController extends Controller
       //print_r($list);
       RequisitionDetailModel::insert($list);
 
-      return redirect("purchase/purchase_requisition/{$id}/edit");
+      return redirect("purchase/requisition/{$id}/edit");
     }
 
     public function getNewCode(){

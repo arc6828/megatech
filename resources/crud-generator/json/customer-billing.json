@@ -1,0 +1,40 @@
+{
+    "fields": [
+        {
+            "name": "doc_no",
+            "type": "string"
+        },
+        {
+            "name": "total",
+            "type": "float"
+        },
+        {
+            "name": "customer_id",
+            "type": "integer"
+        },
+        {
+            "name": "condition_billing",
+            "type": "string"
+        },
+        {
+            "name": "condition_cheque",
+            "type": "string"
+        },
+        {
+            "name": "date_billing",
+            "type": "date"
+        },
+        {
+            "name": "date_cheque",
+            "type": "date"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        }
+    ]
+}

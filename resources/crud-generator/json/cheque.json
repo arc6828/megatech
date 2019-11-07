@@ -1,29 +1,45 @@
 {
     "fields": [
         {
-            "name": "date",
+            "name": "doc_no",
+            "type": "string"
+        },
+        {
+            "name": "cheque_date",
             "type": "date"
         },
         {
-            "name": "no",
+            "name": "cheque_type",
             "type": "string"
         },
         {
-            "name": "content",
+            "name": "cheque_no",
             "type": "string"
         },
         {
-            "name": "amount",
+            "name": "total",
             "type": "float"
         },
         {
-            "name": "status",
-            "type": "string"
+            "name": "bank_fee",
+            "type": "float"
         },
         {
-            "name": "return",
-            "type": "string"
+            "name": "bank_account_id",
+            "type": "integer"
         },
+        {
+            "name": "passed_cheque_date",
+            "type": "date"
+        },
+        {
+            "name": "reference",
+            "type": "string"
+        },     
+        {
+            "name": "status",
+            "type": "string"
+        },    
         {
             "name": "user_id",
             "type": "integer"
