@@ -18,6 +18,9 @@ class ProductModel extends Model
     public function InvoiceDetail(){
         return $this->hasMany('App\Sales\InvoiceDetailModel','product_id');
     }
+    public function ReceiveDetail(){
+        return $this->hasMany('App\Purchase\ReceiveDetailModel','product_id');
+    }
     public static function select_all(){
         return DB::table('tb_product')
             ->limit(20)

@@ -8,6 +8,7 @@ use App\Purchase\OrderDetailModel;
 use App\SupplierModel;
 use App\ProductModel;
 use App\Purchase\OrderModel;
+use App\Purchase\ReceiveModel;
 class PurchaseController extends Controller
 {
     public function screen_2_2()
@@ -24,17 +25,20 @@ class PurchaseController extends Controller
 
     public function screen_3_2()
     {
-      return view('report/purchase/screen_3_2');
+      $Receive =ReceiveModel::all();
+      return view('report/purchase/screen_3_2',compact('Receive'));
     
     }
   public function screen_3_3()
   {
-    return view('report/purchase/screen_3_3');
+    $Supplier = SupplierModel::all();
+    return view('report/purchase/screen_3_3',compact('Supplier'));
 }
 
 public function screen_3_5()
   {
-    return view('report/purchase/screen_3_5');
+    $Product = ProductModel::where('product_code', 'KKTJY18011')->get();
+    return view('report/purchase/screen_3_5',compact('Product'));
 }
 
 public function screen_1_4()

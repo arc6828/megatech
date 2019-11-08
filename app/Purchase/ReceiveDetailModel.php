@@ -14,7 +14,7 @@ class ReceiveDetailModel extends Model
 
   public function Receive()
   {
-      return $this->belongsTo('App\Purchase\ReceiveModel',' puchase_receive_id');
+      return $this->belongsTo('App\Purchase\ReceiveModel','purchase_receive_id');
   }
   public function Product()
   {

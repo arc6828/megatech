@@ -14,8 +14,9 @@ class ReceiveModel extends Model
     
     public function ReceiveDetail()
     {   
-        return $this->hasMany('App\Purchase\Purchase\ReceiveDetailModel','purchase_receive_id');
-	}
+        return $this->hasMany('App\Purchase\ReceiveDetailModel','purchase_receive_id');
+    }
+    
     public function User()
     {
         return $this->belongsTo('App\User','user_id');
@@ -24,6 +25,10 @@ class ReceiveModel extends Model
     {
         return $this->belongsTo('App\Customer','customer_id');
     }
+    public function Supplier(){
+        return $this->belongsTo('App\SupplierModel','supplier_id');
+      }
+
 
     public static function select_all(){
       return DB::table('tb_purchase_receive')

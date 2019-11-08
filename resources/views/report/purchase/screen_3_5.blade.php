@@ -17,17 +17,36 @@
     <td style="border-bottom: solid 1px #000;"><b>เลขที่<br>ใบกำกับภาษี</td>
 
   </tr>
+  @foreach ($Product as $Product)
   <tr height="50">
-    <td>RC6208-00131</td>
-    <td>29/8/2019</td>
-    <td>28/9/2019</td>
-    <td>DS0001</td>
-    <td>บริษัท สมาร์ท ทูลส์ จำกัด</td>
-    <td>1.00</td>
-    <td>0.00</td>
-    <td>0.00</td>
-    <td>IV62-1221</td>
+    <td>รหัสสินค้า {{$Product->product_code}}</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    
   </tr>
+  @foreach ($Product->ReceiveDetail as $ReceiveDetail)
+    <tr height="50">
+      <td>{{$ReceiveDetail->Receive->purchase_receive_code}}</td>
+      <td>  @php    
+        $timestamp = $ReceiveDetail->Receive->datetime;
+        $splitTimeStamp = explode(" ",$timestamp);
+        $date = $splitTimeStamp[0];
+        $time = $splitTimeStamp[1];
+      @endphp
+      {{$date}}</td>
+      <td></td>
+      <td>{{$ReceiveDetail->Receive->Supplier->supplier_code}}</td>
+      <td>{{$ReceiveDetail->Receive->Supplier->company_name}}</td>
+      <td>1.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>IV62-1221</td>
+    </tr>
+  @endforeach
+  
+  @endforeach
+ 
   
 </table>
 

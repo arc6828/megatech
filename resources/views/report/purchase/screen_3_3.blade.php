@@ -18,18 +18,39 @@
     <td style="border-bottom: solid 1px #000;"><b>เลขที่<br>ใบกำกับภาษี</td>
 
   </tr>
+  @foreach ($Supplier as $Supplier)
   <tr height="50">
-    <td>RC6208-00052</td>
+    <td>รหัสเจ้าหนี้ {{$Supplier->supplier_code}}</td>
     <td>14/8/2019</td>
-    <td>13/9/2019</td>
-    <td>DB402020</td>
-    <td>ENDILL BALL 2F D.2x3x42x6 (R1.0)</td>
-    <td>3.00</td>
-    <td>PCS</td>
-    <td>429.20</td>
-    <td>1,287.60</td>
-    <td>IV6208225</td>
+    
   </tr>
+  @foreach ($Supplier->receives as $receives)
+    @foreach ($receives->ReceiveDetail as $ReceiveDetail)
+    <tr height="50">
+      <td>{{$receives->purchase_receive_code}}</td>
+      <td>
+        @php    
+        $timestamp = $receives->datetime;
+        $splitTimeStamp = explode(" ",$timestamp);
+        $date = $splitTimeStamp[0];
+        $time = $splitTimeStamp[1];
+      @endphp
+      {{$date}}</td>
+      <td></td>
+      <td>{{$ReceiveDetail->Product->product_code}}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    @endforeach
+ 
+  @endforeach
+
+  @endforeach
+  
   
 </table>
 

@@ -16,8 +16,32 @@
     <td style="border-bottom: solid 1px #000;"><b>ภาษีมูลค่าเพิ่ม</td>
     <td style="border-bottom: solid 1px #000;"><b>ยอดเงิน</td>
   </tr>
+  @foreach ($Receive as $Receive)
   <tr height="50">
-    <td>IT3113128</td>
+    <td>เลขที่เอกสาร {{$Receive->purchase_receive_code}}</td>
+    <td> วันที่ {{$Receive->datetime}}  </td>
+    <td>วันครบกำหนด </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr height="50">
+    <td>รหัสเจ้าหนี้ </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  @foreach ($Receive->ReceiveDetail as $ReceiveDetail)
+  <tr height="50">
+    <td>{{$ReceiveDetail->Product->product_code}}</td>
     <td>TERNS 325-25-10-L160  HOLDER</td>
     <td>1.00</td>
     <td>PCS</td>
@@ -27,6 +51,8 @@
     <td></td>
     <td></td>
   </tr>
+  @endforeach
+ 
   <tr height="50">
     <td></td>
     <td></td>
@@ -38,6 +64,9 @@
     <td></td>
     <td></td>
   </tr>
+  @endforeach
+  
+ 
 </table>
 
 
