@@ -16,6 +16,15 @@
 		<th>รหัสคลัง</th>
 		<th>ชนิด</th>
 	</tr>
+	@foreach ($Product as $Product)
+	<tr>
+		<td>รหัสสินค้า</td>
+		<td> {{$Product->product_code}} </td>
+      
+	</tr>
+	
+
+	@foreach ($Product->gaurd_stock as $gaurd_stock)
 	<tr>
 		<td> 15/8/2019 </td>
 		<td> AJ6208-00029 </td>
@@ -29,17 +38,6 @@
 		<td> 01 </td>
 		<td> 02-ปรับปรุงลด </td>
 	</tr>
-    <tr>
-		<td> 27/8/2019 </td>
-		<td> AJ6208-00053 </td>
-        <td>  </td>
-		<td>  </td>
-		<td> คืนใบส่งของชั่วคราว </td>
-        <td> 1.00 </td>
-		<td> PC </td>
-		<td> 0.00 </td>
-		<td> 0.00 </td>
-		<td> 01 </td>
-		<td> 01-ปรับปรุงเพิ่ม </td>
-	</tr>
+	@endforeach
+	@endforeach
 </table>

@@ -9,6 +9,7 @@ use App\SupplierModel;
 use App\ProductModel;
 use App\Purchase\OrderModel;
 use App\Purchase\ReceiveModel;
+use App\Purchase\RequisitionModel;
 class PurchaseController extends Controller
 {
     public function screen_2_2()
@@ -72,7 +73,8 @@ public function screen_4_1()
 
 public function screen_5_3()
   {
-    return view("report/purchase/screen_5_3");
+    $Requisition =RequisitionModel::all();
+    return view("report/purchase/screen_5_3",compact('Requisition'));
   }
 
 }

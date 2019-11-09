@@ -14,24 +14,18 @@
     <td style="border-bottom: solid 1px #000;"><b>ต้นทุน/หน่วย</td>
     <td style="border-bottom: solid 1px #000;"><b>มูลค่าปลายงวด<br></td>
   </tr>
+@foreach ($Product as $Product)
+<tr height="40" >
+  <td align = 'left'>{{$Product->product_code}}</td>
+  <td align = 'left'>{{$Product->product_detail}} &nbsp; TT9080</td>
+  <td align = 'right'>280.00 &nbsp;</td>
+  <td align = 'left'>&nbsp; {{$Product->product_unit}}</td>
+  <td>325.00</td>
+  <td>91,000.00</td>
+</tr>
+@endforeach
+  
 
-  <tr height="40" >
-    <td align = 'left'>TT6125135X</td>
-    <td align = 'left'>4NKT 060308R-ML &nbsp; TT9080</td>
-    <td align = 'right'>280.00 &nbsp;</td>
-    <td align = 'left'>&nbsp; PC</td>
-    <td>325.00</td>
-    <td>91,000.00</td>
-  </tr>
-
-  <tr height="40" >
-    <td align = 'left'>TT6125404</td>
-    <td align = 'left'>TS 30B0681/HG &nbsp; SPARE PART</td>
-    <td align = 'right'>5.00 &nbsp;</td>
-    <td align = 'left'>&nbsp; PC</td>
-    <td>95.00</td>
-    <td>475.00</td>
-  </tr>
 </table>
 </div>
 </body>

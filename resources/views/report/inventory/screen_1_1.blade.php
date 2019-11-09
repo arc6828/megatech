@@ -14,24 +14,19 @@
     <td style="border-bottom: solid 1px #000;"><b>ยอดค้างรับ</td>
     <td style="border-bottom: solid 1px #000;"><b>ยอดค้างส่ง<br></td>
   </tr>
-
+  @foreach ($Product as $Product)
   <tr height="40">
-    <td>298 &nbsp; TT6130364</td>
-    <td>S20Q HWLNR 0604 &nbsp; Holder</td>
-    <td>PC</td>
+    <td>298 &nbsp; {{$Product->product_code}}</td>
+    <td>{{$Product->product_detail}} &nbsp; Holder</td>
+    <td>{{$Product->product_unit}}</td>
     <td>2.00</td>
     <td>0.00</td>
     <td>0.00</td>
   </tr>
+  @endforeach
+ 
 
-  <tr height="40">
-  <td>299 &nbsp; TT6130366</td>
-    <td>S25R HWLNR 0604 &nbsp; Holder</td>
-    <td>PCs</td>
-    <td>1.00</td>
-    <td>0.00</td>
-    <td>0.00</td>
-  </tr>
+ 
 </table>
 </div>
 </body>

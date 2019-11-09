@@ -13,24 +13,18 @@
 		<th>วันล่าสุด</th>
 		<th>วัน</th>
 	</tr>
+	@foreach ($Product as $Product)
 	<tr>
-		<td> TT6101310 </td>
+		<td>  {{$Product->product_code}}</td>
 		<td> TOP 3275-32T2-09 HOLDER </td>
         <td> 1.00 </td>
-		<td> PCS </td>
+		<td> {{$Product->product_unit}} </td>
 		<td> 6,625.000 </td>
         <td> 6,625.000 </td>
 		<td> 26/1/2018 </td>
 		<td> 585 </td>
 	</tr>
-    <tr>
-		<td> TT6101675 </td>
-		<td> LCL 09B-NX PART </td>
-        <td> 3.00 </td>
-		<td> PC </td>
-		<td> 750.000 </td>
-        <td> 250.000 </td>
-		<td> 27/6/2016 </td>
-		<td> 1162 </td>
-	</tr>
+	@endforeach
+
+   
 </table>

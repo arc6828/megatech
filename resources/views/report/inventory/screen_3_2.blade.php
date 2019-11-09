@@ -19,6 +19,13 @@
 		<th>ต้นทุน/หน่วย(สุทธิ)</th>
 		<th>เลขที่อ้างอิง</th>
 	</tr>
+	@foreach ($Product as $Product)
+	<tr>
+		<td>รหัสสินค้า</td>
+		<td> {{$Product->product_code}} </td>
+      
+	</tr>
+	@foreach ($Product->gaurd_stock as $gaurd_stock)
 	<tr>
 		<td> 2/9/2019 </td>
 		<td> 01 </td>
@@ -35,20 +42,9 @@
 		<td> 1,013.2353 </td>
 		<td> OE6209-00003 </td>
 	</tr>
-    <tr>
-		<td> 2/9/2019 </td>
-		<td> 01 </td>
-        <td> IV6209-00027 </td>
-		<td>  </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 10.000 </td>
-		<td>  </td>
-        <td>  </td>
-		<td> 75.000 </td>
-		<td> PCS </td>
-        <td> 86,125.000 </td>
-		<td> 1,148.3333 </td>
-		<td> OE6209-00008 </td>
-	</tr>
+	@endforeach
+
+	@endforeach
+
+    
 </table>

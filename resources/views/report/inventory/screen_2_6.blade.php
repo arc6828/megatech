@@ -17,19 +17,13 @@
     <td style="border-bottom: solid 1px #000;"><b>มูลค่าคงเหลือ</td>
     <td style="border-bottom: solid 1px #000;"><b>ต้นทุน/หน่วย</td>
   </tr>
-
+  @foreach ($Product as $Product)
   <tr height="40">
-    <td>9/8/2019</td>
-    <td>RC6110-00043</td>
-    <td>01</td>
-    <td>130.00</td>
-    <td>40.00</td>
-    <td>90.00</td>
-    <td>ชิ้น</td>
-    <td>14,760.00</td>
-    <td>164.00</td>
+    <td>สินค้า</td>
+    <td>{{$Product->product_code}}</td>
+  
   </tr>
-
+  @foreach ($Product->gaurd_stock as $gaurd_stock)
   <tr height="40">
     <td>11/3/2019</td>
     <td>AJ6203-00023</td>
@@ -41,6 +35,10 @@
     <td>1,640.00</td>
     <td>164.00</td>
   </tr>
+  @endforeach
+
+  @endforeach
+  
 </table>
 </div>
 </body>

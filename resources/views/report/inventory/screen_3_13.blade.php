@@ -15,19 +15,14 @@
 		<th>ยอดสุทธิ</th>
 		<th>หน่วย</th>
 	</tr>
+	@foreach ($Product as $Product)
 	<tr>
-		<td> 3/9/2019 </td>
-		<td> IV6209-00039 </td>
-        <td> OE6209-00020 </td>
-		<td> P0048 </td>
-		<td> บริษัท พรีซิชั่นแมชชีนเนอรีเอ็น </td>
-        <td> 01 </td>
-		<td>  </td>
-		<td> 10.0000 </td>
-		<td> 280.0000 </td>
-		<td>  </td>
+		<td> รหัสสินค้า </td>
+		<td>  {{$Product->product_code}}</td>
+        
 	</tr>
-    <tr>
+	@foreach ($Product->gaurd_stock as $gaurd_stock)
+	<tr>
 		<td> 3/9/2019 </td>
 		<td> AJ6209-00007 </td>
         <td>  </td>
@@ -39,4 +34,8 @@
 		<td> 20.0000 </td>
 		<td>  </td>
 	</tr>
+	@endforeach
+  
+	@endforeach
+	
 </table>

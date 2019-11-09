@@ -20,36 +20,23 @@
     <td style="border-bottom: solid 1px #000;"width="100"><b>มูลค่าคงเหลือ</td>
     <td style="border-bottom: solid 1px #000;"width="100"><b>ต้นทุนเฉลี่ย</td>
   </tr>
-
+  @foreach ($Product as $Product)
   <tr height="40">
-    <td align = 'left'>TT6000491X</td>
+    <td align = 'left'>{{$Product->product_code}}</td>
     <td align = 'left'>TDC 3 &nbsp; TT9030</td>
     <td align = 'right'>110.00</td>
     <td align = 'right'>100.00</td>
     <td></td>
     <td align = 'right'>120.00</td>
-    <td>PCS</td>
+    <td>{{$Product->product_unit}}</td>
     <td align = 'right'>40,700.00</td>
     <td align = 'right'>3,700.00</td>
     <td align = 'right'></td>
     <td align = 'right'>44,400.00</td>
     <td align = 'right'>370.00</td>
   </tr>
-
-  <tr height="40">
-    <td align = 'left'>TT6000490X</td>
-    <td align = 'left'>TDC 2 &nbsp; TT9030</td>
-    <td align = 'right'>205.00</td>
-    <td align = 'right'>50.00</td>
-    <td></td>
-    <td align = 'right'>255.00</td>
-    <td>PCS</td>
-    <td align = 'right'>66,625.00</td>
-    <td align = 'right'>16,250.00</td>
-    <td align = 'right'></td>
-    <td align = 'right'>82,875.00</td>
-    <td align = 'right'>325.00</td>
-  </tr>
+@endforeach
+ 
 
 </table>
 </div>
