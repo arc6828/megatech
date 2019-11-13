@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@extends('layouts/argon-dashboard/theme')
+
+@section('title',  'สร้างใบวางบิล'  )
 
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Create New CustomerBilling</div>
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">@yield('title')</div>
                     <div class="card-body">
                         <a href="{{ url('/finance/customer-billing') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
@@ -27,6 +28,64 @@
                             @include ('customer-billing.form', ['formMode' => 'create'])
 
                         </form>
+
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                    <div class="mb-4">
+                    <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                    </a>
+                    </div>
+                        <div class="table-responsive table-binvoiceed">
+                            <table width="100%" class="table table-hover text-center table-sm" id="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">เลขที่เอกสาร</th>
+                                        <th class="text-center">วันที่</th>
+                                        <th class="text-center">รหัสลูกค้า</th>
+                                        <th class="text-center">ชื่อบริษัท</th>
+                                        <th class="text-center">ยอดหนี้คงค้าง</th>
+                                        <th class="text-center">ยอดรวม</th>
+                                        <th class="text-center">รหัสพนักงาน</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($table_invoice as $row)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
+                                                {{ $row->invoice_code }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $row->datetime }}</td>
+                                        <td>{{ $row->Customer->customer_code }}</td>
+                                        <td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->Customer->company_name }}</a></td>
+                                        <td>{{ $row->total_debt }}</td>
+                                        <td>{{ number_format($row->total?$row->total:0,2) }}</td>
+                                        <td>{{ $row->User->short_name }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    <div class="text-center mt-4">
+                    <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+                    <a href="{{ url('/') }}/sales/invoice/create" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> เพิ่มใบขาย
+                    </a>
+                    </div>
+                        <script>
+                        document.addEventListener("DOMContentLoaded", function(event) {
+                                console.log("555");
+                                $('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+                        });
+
+                        </script>
 
                     </div>
                 </div>

@@ -64,6 +64,9 @@ class CustomerModel extends Model
 	public function Invoice(){
 		return $this->hasMany('App\Sales\InvoiceModel','customer_id');
 	}
+	public function Invoice_on_debt(){
+		return $this->hasMany('App\Sales\InvoiceModel','customer_id')->where('total_debt','>',0);
+	}
 	//Purchase
 	public function Requisition()
     {

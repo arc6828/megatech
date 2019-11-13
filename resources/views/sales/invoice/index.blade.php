@@ -39,7 +39,7 @@
 						</td>
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
-						<td>{{ $row->company_name }}</td>
+						<td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->company_name }}</a></td>
 						<td>{{ $row->total_debt }}</td>
 						<td>{{ number_format($row->total?$row->total:0,2) }}</td>
 						<td>{{ $row->short_name }}</td>

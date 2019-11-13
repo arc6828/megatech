@@ -1,13 +1,15 @@
-@extends('layouts.app')
+@extends('layouts/argon-dashboard/theme')
+
+@section('title',  'ใบวางบิล'   )
 
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
+        
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Customerbilling</div>
+                    <div class="card-header">@yield('title')</div>
                     <div class="card-body">
                         <a href="{{ url('/finance/customer-billing/create') }}" class="btn btn-success btn-sm" title="Add New CustomerBilling">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -30,14 +32,21 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Doc No</th><th>Total</th><th>Customer Id</th><th>Condition Billing</th><th>Condition Cheque</th><th>Date Billing</th><th>Date Cheque</th><th>Remark</th><th>User Id</th><th>Actions</th>
+                                        <th>เลขที่เอกสาร</th>
+                                        <th>วันที่</th>
+                                        <th>ยอดเงินรวม</th>
+                                        <th>รหัสลูกค้า</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($customerbilling as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->doc_no }}</td><td>{{ $item->total }}</td><td>{{ $item->customer_id }}</td><td>{{ $item->condition_billing }}</td><td>{{ $item->condition_cheque }}</td><td>{{ $item->date_billing }}</td><td>{{ $item->date_cheque }}</td><td>{{ $item->remark }}</td><td>{{ $item->user_id }}</td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>{{ $item->doc_no }}</td>
+                                        <td>{{ $item->total }}</td>
+                                        <td>{{ $item->customer_id }}</td>                                        
                                         <td>
                                             <a href="{{ url('/finance/customer-billing/' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/finance/customer-billing/' . $item->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

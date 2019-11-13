@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Sales\InvoiceModel;
+use App\CustomerModel;
 use App\CustomerBilling;
 use Illuminate\Http\Request;
 
@@ -45,7 +47,12 @@ class CustomerBillingController extends Controller
      */
     public function create()
     {
-        return view('customer-billing.create');
+        $customer_id = request('customer_id',0);
+        $customer = CustomerModel::find($customer_id);
+        $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+            ->where('total_debt','>',0)
+            ->get();
+        return view('customer-billing.create', compact('table_invoice','customer') );
     }
 
     /**

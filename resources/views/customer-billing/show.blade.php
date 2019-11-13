@@ -1,11 +1,13 @@
-@extends('layouts.app')
+@extends('layouts/argon-dashboard/theme')
+
+@section('title',  request('debt_type')   )
 
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
+        
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">CustomerBilling {{ $customerbilling->id }}</div>
                     <div class="card-body">

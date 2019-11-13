@@ -22,10 +22,10 @@ class CustomerController extends Controller
         $table_customer = [];
         switch(Auth::user()->role){
           case "admin" :
-            $table_customer = CustomerModel::select_all();
+            $table_customer = CustomerModel::all();
             break;
           case "sales" :
-            $table_customer = CustomerModel::select_by_user_id(Auth::user()->id);
+            $table_customer = CustomerModel::where('user_id', Auth::id() )->get();
             break;
         }
 

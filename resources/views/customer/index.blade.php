@@ -31,19 +31,25 @@
 						<th class="text-center">อีเมล์</th>
 						<th class="text-center">เบอร์โทรศัพท์</th>
 						<th class="text-center">ยอดหนึ้ขณะนี้</th>
-						<th class="text-center d-none">action</th>
+						<th class="text-center">action</th>
 					</tr>
 				</thead>
 				<tbody>
 				@foreach($table_customer as $row)
+				@php
+					$total_debt = $row->Invoice_on_debt->sum('total_debt');
+				@endphp
 				<tr>
 					<td><a href="{{ url('/') }}/customer/{{ $row->customer_id }}/edit">{{ $row->customer_code }}</a></td>
 					<td>{{ $row->company_name }}</td>
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->telephone }}</td>
-					<td>0</td>
-					<td class=" d-none">
-						<a href="javascript:void(0)" onclick="onDelete( {{ $row->customer_id }} )" class="text-danger">
+					<td>{{ $total_debt }}</td>
+					<td>
+						@if($total_debt > 0)
+						<a class="btn btn-sm btn-warning" href="{{ url('/') }}/finance/customer-billing/create?customer_id={{ $row->customer_id }}">วางบิล</a>
+						@endif
+						<a href="javascript:void(0)" onclick="onDelete( {{ $row->customer_id }} )" class="text-danger d-none">
 							<span class="fa fa-trash"></span>
 						</a>
 					</td>
