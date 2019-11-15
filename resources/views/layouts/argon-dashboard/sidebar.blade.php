@@ -115,6 +115,11 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="{{url('/')}}/report">
+            <i class="ni ni-bullet-list-67 text-red"></i> รายงาน
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="{{url('/')}}/others">
             <i class="ni ni-bullet-list-67 text-red"></i> อื่นๆ
           </a>

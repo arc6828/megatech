@@ -27,5 +27,14 @@ class CustomerPayment extends Model
      */
     protected $fillable = ['doc_no', 'customer_id', 'role', 'remark', 'round', 'customer_billing_id', 'discount', 'debt_total', 'cash', 'credit', 'tax', 'payment_total', 'user_id'];
 
-    
+    public function customer(){
+        return $this->belongsTo('App\CustomerModel','customer_id');
+    }
+    public function user(){
+        return $this->belongsTo('App\User','user_id');
+    }
+
+    public function customer_billing(){
+        return $this->belongsTo('App\CustomerBilling','customer_billing_id');
+    }
 }

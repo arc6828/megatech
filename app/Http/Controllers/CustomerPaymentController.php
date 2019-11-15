@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\CustomerPayment;
+use App\CustomerBilling;
+use App\Cheque;
 use Illuminate\Http\Request;
 
 class CustomerPaymentController extends Controller
@@ -49,7 +51,24 @@ class CustomerPaymentController extends Controller
      */
     public function create()
     {
-        return view('customer-payment.create');
+        
+        /*
+        $customer_id = request('customer_id',0);
+        $customer = CustomerModel::find($customer_id);
+        $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+            ->where('total_debt','>',0)
+            ->get();
+        */
+        $customer_billing_id = request('customer_billing_id',0);
+        $customer_billing = CustomerBilling::find($customer_billing_id);
+        /*$customer_billings = CustomerBilling::where('customer_billing_id', $customer_billing_id)
+            ->where('total_debt','>',0)
+            ->get();
+            */
+
+            
+
+        return view('customer-payment.create', compact('customer_billing') );
     }
 
     /**
@@ -63,10 +82,32 @@ class CustomerPaymentController extends Controller
     {
         
         $requestData = $request->all();
+        $requestData['doc_no'] = $this->getNewCode("BR");
         
         CustomerPayment::create($requestData);
 
-        return redirect('customer-payment')->with('flash_message', 'CustomerPayment added!');
+        //FOR CHEQUE -- ADD TO CHEQUE
+        if( $requestData['credit'] ){
+            $requestData = $request->all();
+            $requestData['total'] = $requestData['total_cheque'];
+            
+        
+            Cheque::create($requestData);
+        }
+
+        return redirect('finance/customer-payment')->with('flash_message', 'CustomerPayment added!');
+    }
+
+    public function getNewCode($code){
+        //COUNT BY CURRENT MONTH
+        $number = CustomerPayment::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
+        $count =  $number + 1;
+        //$year = (date("Y") + 543) % 100;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $code = "{$code}{$year}{$month}-{$number}";
+        return $code;
     }
 
     /**

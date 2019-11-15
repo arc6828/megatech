@@ -1,20 +1,21 @@
-@extends('layouts.app')
+@extends('layouts/argon-dashboard/theme')
 
+@section('title',  'การรับชำระเงิน'  )
 @section('content')
     <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
-
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Customerpayment</div>
+        <div class="row"> 
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">@yield('title')</div>
                     <div class="card-body">
+                        <a href="{{ url('/finance') }}?tab=debtor-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        
                         <a href="{{ url('/finance/customer-payment/create') }}" class="btn btn-success btn-sm" title="Add New CustomerPayment">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
                         <form method="GET" action="{{ url('/finance/customer-payment') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
+                            <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                                 <span class="input-group-append">
                                     <button class="btn btn-secondary" type="submit">
@@ -27,17 +28,24 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Doc No</th><th>Customer Id</th><th>Role</th><th>Remark</th><th>Round</th><th>Customer Billing Id</th><th>Discount</th><th>Debt Total</th><th>Cash</th><th>Credit</th><th>Tax</th><th>Payment Total</th><th>User Id</th><th>Actions</th>
+                                        <th>เลขที่เอกสาร</th>
+                                        <th>วันที่</th>                                        
+                                        <th>ยอดรวมรับชำระหนี้</th>
+                                        <th>รหัสลูกค้า</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($customerpayment as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->doc_no }}</td><td>{{ $item->customer_id }}</td><td>{{ $item->role }}</td><td>{{ $item->remark }}</td><td>{{ $item->round }}</td><td>{{ $item->customer_billing_id }}</td><td>{{ $item->discount }}</td><td>{{ $item->debt_total }}</td><td>{{ $item->cash }}</td><td>{{ $item->credit }}</td><td>{{ $item->tax }}</td><td>{{ $item->payment_total }}</td><td>{{ $item->user_id }}</td>
+                                        <td>{{ $item->doc_no }}</td>
+                                        <td>{{ $item->created_at }}</td>                                       
+                                        <td>{{ number_format($item->payment_total,2) }}</td>                                    
+                                        <td>{{ $item->customer->customer_code }} {{ $item->customer->company_name }}</td>
+                                        
                                         <td>
                                             <a href="{{ url('/finance/customer-payment/' . $item->id) }}" title="View CustomerPayment"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/finance/customer-payment/' . $item->id . '/edit') }}" title="Edit CustomerPayment"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

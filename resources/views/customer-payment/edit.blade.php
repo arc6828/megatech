@@ -1,13 +1,14 @@
-@extends('layouts.app')
+@extends('layouts/argon-dashboard/theme')
+
+@section('title',  'แก้ไขการรับชำระเงิน'  )
 
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Edit CustomerPayment #{{ $customerpayment->id }}</div>
+                    <div class="card-header">@yield('title') #{{ $customerpayment->id }}</div>
                     <div class="card-body">
                         <a href="{{ url('/finance/customer-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />

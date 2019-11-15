@@ -44,7 +44,7 @@
 					<td>{{ $row->company_name }}</td>
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->telephone }}</td>
-					<td>{{ $total_debt }}</td>
+					<td>{{ number_format($total_debt,2) }}</td>
 					<td>
 						@if($total_debt > 0)
 						<a class="btn btn-sm btn-warning" href="{{ url('/') }}/finance/customer-billing/create?customer_id={{ $row->customer_id }}">วางบิล</a>

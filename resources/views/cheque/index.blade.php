@@ -48,7 +48,7 @@
                                         <td class="d-none">{{ $item->cheque_type_code }}</td>
                                         <td><a href="{{ url('/finance/cheque') }}/{{ $item->id }}">{{ $item->cheque_no }}</a></td>
                                         <td>{{ $item->total }}</td>
-                                        <td>{{ $item->bank_account->code }} {{ $item->bank_account->name }}</td>
+                                        <td></td>
 
                                         
                                         <td>

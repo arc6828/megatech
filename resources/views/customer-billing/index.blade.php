@@ -11,14 +11,16 @@
                 <div class="card">
                     <div class="card-header">@yield('title')</div>
                     <div class="card-body">
+                        <a href="{{ url('/finance') }}?tab=debtor-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        
                         <a href="{{ url('/finance/customer-billing/create') }}" class="btn btn-success btn-sm" title="Add New CustomerBilling">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
                         <form method="GET" action="{{ url('/finance/customer-billing') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
-                            <div class="input-group">
+                            <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                                <span class="input-group-append">
+                                <span class="input-group-append ">
                                     <button class="btn btn-secondary" type="submit">
                                         <i class="fa fa-search"></i>
                                     </button>
@@ -29,29 +31,40 @@
                         <br/>
                         <br/>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-sm">
                                 <thead>
                                     <tr>
                                         <th>เลขที่เอกสาร</th>
                                         <th>วันที่</th>
                                         <th>ยอดเงินรวม</th>
                                         <th>รหัสลูกค้า</th>
+                                        <th>เลขที่รับชำระ</th>
+                                        <th>Action</th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($customerbilling as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->created_at }}</td>
                                         <td>{{ $item->doc_no }}</td>
-                                        <td>{{ $item->total }}</td>
-                                        <td>{{ $item->customer_id }}</td>                                        
+                                        <td>{{ $item->created_at }}</td>
+                                        <td class="text-right">{{number_format( $item->total , 2 )}}</td>
+                                        <td><a href="{{ url('/customer') }}/{{  $item->customer_id }}/edit">{{ $item->customer->customer_code }} {{ $item->customer->company_name }}</a></td>                                        
                                         <td>
+                                            @if($item->customer_payment)                                                
+                                                <a href="{{ url('/finance/customer-payment/' . $item->customer_payment->id) }}">{{ $item->customer_payment->doc_no }}</a>
+                                            @else
+                                                <a href="{{ url('/finance/customer-payment/create?customer_billing_id=' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
+                                            @endif
+                                        
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('/finance/customer-billing/' . $item->id) }}/pdf" title="View CustomerBilling"><button class="btn btn-success btn-sm"><i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</button></a>
+                                            
                                             <a href="{{ url('/finance/customer-billing/' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a href="{{ url('/finance/customer-billing/' . $item->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a class="d-none" href="{{ url('/finance/customer-billing/' . $item->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                                            <form method="POST" action="{{ url('/finance/customer-billing' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
+                                            <form class="d-none" method="POST" action="{{ url('/finance/customer-billing' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
                                                 {{ method_field('DELETE') }}
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete CustomerBilling" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>

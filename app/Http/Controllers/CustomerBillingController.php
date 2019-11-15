@@ -6,9 +6,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Sales\InvoiceModel;
+use App\CustomerBillingDetail;
 use App\CustomerModel;
 use App\CustomerBilling;
 use Illuminate\Http\Request;
+use PDF;
 
 class CustomerBillingController extends Controller
 {
@@ -64,12 +66,37 @@ class CustomerBillingController extends Controller
      */
     public function store(Request $request)
     {
-        
+        //CREATE CustomerBillingDetail
         $requestData = $request->all();
-        
-        CustomerBilling::create($requestData);
+        $requestData['doc_no'] = $this->getNewCode("BI");
+        $customer_billing = CustomerBilling::create($requestData);
 
-        return redirect('customer-billing')->with('flash_message', 'CustomerBilling added!');
+        //CREATE CustomerBillingDetail
+        $customer_id = $requestData['customer_id'];
+        $customer = CustomerModel::find($customer_id);
+        $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+            ->where('total_debt','>',0)
+            ->get();
+        foreach($table_invoice as $item){
+            $customer_billing_detail = new CustomerBillingDetail;
+            $customer_billing_detail->doc_id = $item->invoice_id;            
+            $customer_billing_detail->customer_billing_id = $customer_billing->id;
+            $customer_billing_detail->save();
+        }     
+
+        return redirect('/finance/customer-billing')->with('flash_message', 'CustomerBilling added!');
+    }
+
+    public function getNewCode($code){
+        //COUNT BY CURRENT MONTH
+        $number = CustomerBilling::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
+        $count =  $number + 1;
+        //$year = (date("Y") + 543) % 100;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $code = "{$code}{$year}{$month}-{$number}";
+        return $code;
     }
 
     /**
@@ -84,6 +111,15 @@ class CustomerBillingController extends Controller
         $customerbilling = CustomerBilling::findOrFail($id);
 
         return view('customer-billing.show', compact('customerbilling'));
+    }
+    public function pdf($id)
+    {
+        $customerbilling = CustomerBilling::findOrFail($id);        
+
+        //return view('customer-billing.show', compact('customerbilling'));
+
+        return  PDF::loadView('customer-billing/pdf', compact('customerbilling'))->stream('test.pdf');
+        
     }
 
     /**
@@ -116,7 +152,7 @@ class CustomerBillingController extends Controller
         $customerbilling = CustomerBilling::findOrFail($id);
         $customerbilling->update($requestData);
 
-        return redirect('customer-billing')->with('flash_message', 'CustomerBilling updated!');
+        return redirect('/finance/customer-billing')->with('flash_message', 'CustomerBilling updated!');
     }
 
     /**
@@ -130,6 +166,6 @@ class CustomerBillingController extends Controller
     {
         CustomerBilling::destroy($id);
 
-        return redirect('customer-billing')->with('flash_message', 'CustomerBilling deleted!');
+        return redirect('/finance/customer-billing')->with('flash_message', 'CustomerBilling deleted!');
     }
 }

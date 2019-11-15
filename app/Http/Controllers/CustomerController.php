@@ -147,13 +147,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $model = new CustomerModel();
-        $table_customer = $model->select_id($id);
-        $data = [
-            'table_customer' => $table_customer
-        ];
-        return view('finance/debtor/show',$data);
-
+        $table_customer = CustomerModel::findOrFail($id);
+        return view('finance/debtor/show', compact('table_customer') );
     }
 
     public function getUploadTemplate($upload = null)

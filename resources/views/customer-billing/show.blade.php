@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  request('debt_type')   )
+@section('title',  'ใบวางบิล #'.$customerbilling->id   )
 
 @section('content')
     <div class="container">
@@ -8,8 +8,8 @@
         
 
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">CustomerBilling {{ $customerbilling->id }}</div>
+                <div class="card mb-4">
+                    <div class="card-header">@yield('title')</div>
                     <div class="card-body">
 
                         <a href="{{ url('/finance/customer-billing') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -29,10 +29,70 @@
                                     <tr>
                                         <th>ID</th><td>{{ $customerbilling->id }}</td>
                                     </tr>
-                                    <tr><th> Doc No </th><td> {{ $customerbilling->doc_no }} </td></tr><tr><th> Total </th><td> {{ $customerbilling->total }} </td></tr><tr><th> Customer Id </th><td> {{ $customerbilling->customer_id }} </td></tr><tr><th> Condition Billing </th><td> {{ $customerbilling->condition_billing }} </td></tr><tr><th> Condition Cheque </th><td> {{ $customerbilling->condition_cheque }} </td></tr><tr><th> Date Billing </th><td> {{ $customerbilling->date_billing }} </td></tr><tr><th> Date Cheque </th><td> {{ $customerbilling->date_cheque }} </td></tr><tr><th> Remark </th><td> {{ $customerbilling->remark }} </td></tr><tr><th> User Id </th><td> {{ $customerbilling->user_id }} </td></tr>
+                                    <tr><th> Doc No </th><td> {{ $customerbilling->doc_no }} </td></tr>
+                                    <tr><th> Total </th><td> {{ number_format($customerbilling->total,2) }} </td></tr>
+                                    <tr><th> Customer Id </th><td> {{ $customerbilling->customer->customer_code }}  {{ $customerbilling->customer->company_name }} </td></tr>
+                                    <tr><th> Condition Billing </th><td> {{ $customerbilling->condition_billing }} </td></tr>
+                                    <tr><th> Condition Cheque </th><td> {{ $customerbilling->condition_cheque }} </td></tr>
+                                    <tr><th> Date Billing </th><td> {{ $customerbilling->date_billing }} </td></tr>
+                                    <tr><th> Date Cheque </th><td> {{ $customerbilling->date_cheque }} </td></tr>
+                                    <tr><th> Remark </th><td> {{ $customerbilling->remark }} </td></tr>
+                                    <tr><th> User Id </th><td> {{ $customerbilling->user->name }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
+
+                    </div>
+                </div>
+
+                @php
+                    $customer_billing_details = $customerbilling->customer_billing_details;
+                @endphp
+                <div class="card">
+                    <div class="card-header">รายละเอียดใบวางบิล</div>
+                    <div class="card-body">
+                        <div class="table-responsive table-binvoiceed">
+                            <table width="100%" class="table table-hover text-center table-sm" id="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">เลขที่เอกสาร</th>
+                                        <th class="text-center">วันที่</th>
+                                        <th class="text-center">รหัสลูกค้า</th>
+                                        <th class="text-center">ชื่อบริษัท</th>
+                                        <th class="text-center">ยอดหนี้คงค้าง</th>
+                                        <th class="text-center">ยอดรวม</th>
+                                        <th class="text-center">รหัสพนักงาน</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($customer_billing_details as $row)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice->invoice_id }}/edit">
+                                                {{ $row->invoice->invoice_code }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $row->invoice->datetime }}</td>
+                                        <td>{{ $row->invoice->Customer->customer_code }}</td>
+                                        <td><a href="{{ url('/customer') }}/{{ $row->invoice->customer_id }}">{{ $row->invoice->Customer->company_name }}</a></td>
+                                        <td>{{ $row->invoice->total_debt }}</td>
+                                        <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td>
+                                        <td>{{ $row->invoice->User->short_name }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                   
+                        <script>
+                        document.addEventListener("DOMContentLoaded", function(event) {
+                                console.log("555");
+                                //$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+                        });
+
+                        </script>
 
                     </div>
                 </div>

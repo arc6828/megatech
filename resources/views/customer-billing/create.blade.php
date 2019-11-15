@@ -27,18 +27,16 @@
 
                             @include ('customer-billing.form', ['formMode' => 'create'])
 
+                            
+
                         </form>
 
                     </div>
                 </div>
                 
                 <div class="card">
+                    <div class="card-header">รายละเอียดใบวางบิล</div>
                     <div class="card-body">
-                    <div class="mb-4">
-                    <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                    </a>
-                    </div>
                         <div class="table-responsive table-binvoiceed">
                             <table width="100%" class="table table-hover text-center table-sm" id="table">
                                 <thead>
@@ -72,20 +70,6 @@
 
                             </table>
                         </div>
-
-                    <div class="text-center mt-4">
-                    <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
-                    <a href="{{ url('/') }}/sales/invoice/create" class="btn btn-primary">
-                        <i class="fa fa-plus"></i> เพิ่มใบขาย
-                    </a>
-                    </div>
-                        <script>
-                        document.addEventListener("DOMContentLoaded", function(event) {
-                                console.log("555");
-                                $('#table').DataTable().order( [ 0, 'desc' ] ).draw();
-                        });
-
-                        </script>
 
                     </div>
                 </div>

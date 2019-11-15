@@ -27,5 +27,21 @@ class CustomerBilling extends Model
      */
     protected $fillable = ['doc_no', 'total', 'customer_id', 'condition_billing', 'condition_cheque', 'date_billing', 'date_cheque', 'remark', 'user_id'];
 
-    
+    public function customer(){
+        return $this->belongsTo('App\CustomerModel','customer_id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User','user_id');
+    }
+
+    public function customer_billing_details(){
+        return $this->hasMany('App\CustomerBillingDetail','customer_billing_id');
+    }
+
+    public function customer_payment(){ 
+        //NOT SURE hasOne or hasMany
+        return $this->hasOne('App\CustomerPayment','customer_billing_id');
+    }
+
 }

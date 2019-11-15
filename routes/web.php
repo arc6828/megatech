@@ -108,6 +108,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customer-payment-detail', 'CustomerPaymentDetailController');
     Route::resource('customer-payment', 'CustomerPaymentController');
     Route::resource('customer-billing-detail', 'CustomerBillingDetailController');
+    
+    Route::get('customer-billing/{id}/pdf', 'CustomerBillingController@pdf');
     Route::resource('customer-billing', 'CustomerBillingController');
   });
 

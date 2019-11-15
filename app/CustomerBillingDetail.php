@@ -27,5 +27,12 @@ class CustomerBillingDetail extends Model
      */
     protected $fillable = ['doc_id', 'customer_billing_id'];
 
+    public function customer_billing(){
+        return $this->belongsTo('App\CustomerBilling','customer_billing_id');
+    }
+
+    public function invoice(){
+        return $this->belongsTo('App\Sales\InvoiceModel','doc_id');
+    }
     
 }

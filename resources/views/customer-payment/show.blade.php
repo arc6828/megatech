@@ -1,13 +1,13 @@
-@extends('layouts.app')
+@extends('layouts/argon-dashboard/theme')
 
+@section('title',  'รายละเอียดรับชำระเงิน'  )
 @section('content')
     <div class="container">
         <div class="row">
-            @include('admin.sidebar')
 
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">CustomerPayment {{ $customerpayment->id }}</div>
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">@yield('title') {{ $customerpayment->id }}</div>
                     <div class="card-body">
 
                         <a href="{{ url('/finance/customer-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
@@ -22,15 +22,79 @@
                         <br/>
 
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-sm">
                                 <tbody>
                                     <tr>
                                         <th>ID</th><td>{{ $customerpayment->id }}</td>
                                     </tr>
-                                    <tr><th> Doc No </th><td> {{ $customerpayment->doc_no }} </td></tr><tr><th> Customer Id </th><td> {{ $customerpayment->customer_id }} </td></tr><tr><th> Role </th><td> {{ $customerpayment->role }} </td></tr><tr><th> Remark </th><td> {{ $customerpayment->remark }} </td></tr><tr><th> Round </th><td> {{ $customerpayment->round }} </td></tr><tr><th> Customer Billing Id </th><td> {{ $customerpayment->customer_billing_id }} </td></tr><tr><th> Discount </th><td> {{ $customerpayment->discount }} </td></tr><tr><th> Debt Total </th><td> {{ $customerpayment->debt_total }} </td></tr><tr><th> Cash </th><td> {{ $customerpayment->cash }} </td></tr><tr><th> Credit </th><td> {{ $customerpayment->credit }} </td></tr><tr><th> Tax </th><td> {{ $customerpayment->tax }} </td></tr><tr><th> Payment Total </th><td> {{ $customerpayment->payment_total }} </td></tr><tr><th> User Id </th><td> {{ $customerpayment->user_id }} </td></tr>
+                                    <tr><th> Doc No </th><td> {{ $customerpayment->doc_no }} </td></tr>
+                                    <tr><th> Customer Id </th><td> {{ $customerpayment->customer->customer_code }} {{ $customerpayment->customer->company_name }} </td></tr>
+                                    <tr><th> Role </th><td> {{ $customerpayment->role }} </td></tr>
+                                    <tr><th> Remark </th><td> {{ $customerpayment->remark }} </td></tr>
+                                    <tr><th> Round </th><td> {{ $customerpayment->round }} </td></tr>
+                                    <tr><th> Customer Billing Id </th><td> {{ $customerpayment->customer_billing->doc_no }} </td></tr>
+                                    <tr><th> Discount </th><td> {{ number_format($customerpayment->discount,2)  }} </td></tr>
+                                    <tr><th> Debt Total </th><td> {{ number_format($customerpayment->debt_total,2) }} </td></tr>
+                                    <tr><th> Cash </th><td> {{ number_format($customerpayment->cash,2)  }} </td></tr>
+                                    <tr><th> Credit </th><td> {{ number_format($customerpayment->credit,2)  }} </td></tr>
+                                    <tr><th> Tax </th><td> {{ number_format($customerpayment->tax,2)  }} </td></tr>
+                                    <tr><th> Payment Total </th><td> {{ number_format($customerpayment->payment_total,2)  }} </td></tr>
+                                    <tr><th> User Id </th><td> {{ $customerpayment->user->name }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
+
+                    </div>
+                </div>
+
+                @php
+                    $customer_billing_details = $customerpayment->customer_billing->customer_billing_details;
+                @endphp
+                <div class="card">
+                    <div class="card-header">รายละเอียดใบรับชำระเงิน</div>
+                    <div class="card-body">
+                        <div class="table-responsive table-binvoiceed">
+                            <table width="100%" class="table table-hover text-center table-sm" id="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">เลขที่เอกสาร</th>
+                                        <th class="text-center">วันที่</th>
+                                        <th class="text-center">รหัสลูกค้า</th>
+                                        <th class="text-center">ชื่อบริษัท</th>
+                                        <th class="text-center">ยอดหนี้คงค้าง</th>
+                                        <th class="text-center">ยอดรวม</th>
+                                        <th class="text-center">รหัสพนักงาน</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($customer_billing_details as $row)
+                                    <tr>
+                                        <td>
+                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice->invoice_id }}/edit">
+                                                {{ $row->invoice->invoice_code }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $row->invoice->datetime }}</td>
+                                        <td>{{ $row->invoice->Customer->customer_code }}</td>
+                                        <td><a href="{{ url('/customer') }}/{{ $row->invoice->customer_id }}">{{ $row->invoice->Customer->company_name }}</a></td>
+                                        <td>{{ $row->invoice->total_debt }}</td>
+                                        <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td>
+                                        <td>{{ $row->invoice->User->short_name }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                   
+                        <script>
+                        document.addEventListener("DOMContentLoaded", function(event) {
+                                console.log("555");
+                                //$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+                        });
+
+                        </script>
 
                     </div>
                 </div>
