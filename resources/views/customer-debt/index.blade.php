@@ -8,6 +8,8 @@
                 <div class="card">
                     <div class="card-header"> {{ request('debt_type') }} </div>
                     <div class="card-body">
+                        <a href="{{ url('/finance') }}?tab=debtor-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                       
                         <a href="{{ url('/finance/customer-debt/create') }}?debt_type={{ request('debt_type') }}" class="btn btn-success btn-sm" title="Add New CustomerDebt">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>

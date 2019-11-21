@@ -11,6 +11,7 @@
                 <div class="card">
                     <div class="card-header">@yield('title')</div>
                     <div class="card-body">
+                    
                         <a href="{{ url('/finance') }}?tab=debtor-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         
                         <a href="{{ url('/finance/customer-billing/create') }}" class="btn btn-success btn-sm" title="Add New CustomerBilling">
@@ -46,7 +47,11 @@
                                 <tbody>
                                 @foreach($customerbilling as $item)
                                     <tr>
-                                        <td>{{ $item->doc_no }}</td>
+                                        <td>
+                                            <a href="{{ url('/finance/customer-billing/' . $item->id) }}" title="View CustomerBilling">
+                                                {{ $item->doc_no }}
+                                            </a>
+                                        </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td class="text-right">{{number_format( $item->total , 2 )}}</td>
                                         <td><a href="{{ url('/customer') }}/{{  $item->customer_id }}/edit">{{ $item->customer->customer_code }} {{ $item->customer->company_name }}</a></td>                                        
@@ -54,14 +59,14 @@
                                             @if($item->customer_payment)                                                
                                                 <a href="{{ url('/finance/customer-payment/' . $item->customer_payment->id) }}">{{ $item->customer_payment->doc_no }}</a>
                                             @else
-                                                <a href="{{ url('/finance/customer-payment/create?customer_billing_id=' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
+                                                <a href="{{ url('/finance/customer-payment/create?customer_id=' . $item->customer_id) }}&filter=billing-only" title="Payment"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
                                             @endif
                                         
                                         </td>
                                         <td>
                                             <a href="{{ url('/finance/customer-billing/' . $item->id) }}/pdf" title="View CustomerBilling"><button class="btn btn-success btn-sm"><i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</button></a>
                                             
-                                            <a href="{{ url('/finance/customer-billing/' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a class="d-none"  href="{{ url('/finance/customer-billing/' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a class="d-none" href="{{ url('/finance/customer-billing/' . $item->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
                                             <form class="d-none" method="POST" action="{{ url('/finance/customer-billing' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">

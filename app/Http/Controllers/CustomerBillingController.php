@@ -47,11 +47,14 @@ class CustomerBillingController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
+        $end_date = !empty( $request->get('end_date') ) ? request('end_date') : date('Y-m-d');
         $customer_id = request('customer_id',0);
         $customer = CustomerModel::find($customer_id);
         $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+            ->where('datetime','<=', $end_date )
+            ->where('sales_status_id','<',12) //sales_status_id 12 : วางบิลแล้ว
             ->where('total_debt','>',0)
             ->get();
         return view('customer-billing.create', compact('table_invoice','customer') );
@@ -71,10 +74,15 @@ class CustomerBillingController extends Controller
         $requestData['doc_no'] = $this->getNewCode("BI");
         $customer_billing = CustomerBilling::create($requestData);
 
-        //CREATE CustomerBillingDetail
+        
+
+        //CREATE CustomerBillingDetail        
+        $end_date = !empty( $request->get('end_date') ) ? request('end_date') : date('Y-m-d');
         $customer_id = $requestData['customer_id'];
         $customer = CustomerModel::find($customer_id);
-        $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+        $table_invoice = InvoiceModel::where('customer_id', $customer_id)        
+            ->where('datetime','<=', $end_date )
+            ->where('sales_status_id','<',12) //sales_status_id 12 : วางบิลแล้ว
             ->where('total_debt','>',0)
             ->get();
         foreach($table_invoice as $item){
@@ -82,6 +90,9 @@ class CustomerBillingController extends Controller
             $customer_billing_detail->doc_id = $item->invoice_id;            
             $customer_billing_detail->customer_billing_id = $customer_billing->id;
             $customer_billing_detail->save();
+
+            $item->sales_status_id = 12; //sales_status_id 12 : วางบิลแล้ว
+            $item->save();
         }     
 
         return redirect('/finance/customer-billing')->with('flash_message', 'CustomerBilling added!');

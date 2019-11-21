@@ -33,10 +33,10 @@
                 </div>
 
                 @php
-                    $customer_billing_details = $customer_billing->customer_billing_details;
+                //$invoices = $invoices? $invoices : [];
                 @endphp
                 <div class="card">
-                    <div class="card-header">รายละเอียดใบวางบิล</div>
+                    <div class="card-header">รายละเอียด</div>
                     <div class="card-body">
                         <div class="table-responsive table-binvoiceed">
                             <table width="100%" class="table table-hover text-center table-sm" id="table">
@@ -52,19 +52,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($customer_billing_details as $row)
+                                    @foreach($invoices as $row)
                                     <tr>
                                         <td>
-                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice->invoice_id }}/edit">
-                                                {{ $row->invoice->invoice_code }}
+                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
+                                                {{ $row->invoice_code }}
                                             </a>
                                         </td>
-                                        <td>{{ $row->invoice->datetime }}</td>
-                                        <td>{{ $row->invoice->Customer->customer_code }}</td>
-                                        <td><a href="{{ url('/customer') }}/{{ $row->invoice->customer_id }}">{{ $row->invoice->Customer->company_name }}</a></td>
-                                        <td>{{ $row->invoice->total_debt }}</td>
-                                        <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td>
-                                        <td>{{ $row->invoice->User->short_name }}</td>
+                                        <td>{{ $row->datetime }}</td>
+                                        <td>{{ $row->Customer->customer_code }}</td>
+                                        <td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->Customer->company_name }}</a></td>
+                                        <td>{{ $row->total_debt }}</td>
+                                        <td>{{ number_format($row->total?$row->total:0,2) }}</td>
+                                        <td>{{ $row->User->short_name }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

@@ -19,14 +19,14 @@
     $date_billing = $customer ? $customer->date_billing : '';
     $date_cheque = $customer ? $customer->date_cheque : '';
 @endphp
-<div class="form-group d-none {{ $errors->has('customer_id') ? 'has-error' : ''}}">    
-    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label>
+<div class="form-group d-none {{ $errors->has('customer_id') ? 'has-error' : ''}}">  
+    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> 
     <input class="form-control form-control-sm" name="customer_id" type="number" id="customer_id" value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer_id : $customer_id }}" >
     {!! $errors->first('customer_id', '<p class="help-block">:message</p>') !!}
 </div>
 
 <div class="form-group {{ $errors->has('company') ? 'has-error' : ''}}">    
-    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label>
+    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> <a href="{{ url('/customer') }}" class="btn btn-sm btn-light">เลือกลูกค้า</a>
     <input class="form-control form-control-sm"  value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer_id : $customer_name  }}" disabled>
     {!! $errors->first('customer_id', '<p class="help-block">:message</p>') !!}
 </div>

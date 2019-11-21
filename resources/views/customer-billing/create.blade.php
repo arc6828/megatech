@@ -22,7 +22,7 @@
                             </ul>
                         @endif
 
-                        <form method="POST" action="{{ url('/finance/customer-billing') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('/finance/customer-billing') }}?end_date={{ request('end_date') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                             {{ csrf_field() }}
 
                             @include ('customer-billing.form', ['formMode' => 'create'])

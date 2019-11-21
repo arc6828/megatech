@@ -4,15 +4,15 @@
     {!! $errors->first('doc_no', '<p class="help-block">:message</p>') !!}
 </div>
 @php
-    $customer_id = $customer_billing ? $customer_billing->customer_id : '';
-    $customer_name = $customer_billing ? $customer_billing->customer->customer_code." ".$customer_billing->customer->company_name : '';
-    $customer_billing_id = $customer_billing ? $customer_billing->id : '';
-    $customer_billing_doc_no = $customer_billing ? $customer_billing->doc_no : '';
-    $customer_billing_total = $customer_billing ? $customer_billing->total : '';
+    $customer_id = $customer ? $customer->customer_id : '';
+    $customer_name = $customer ? $customer->customer_code." ".$customer->company_name : '';
+    $customer_billing_id = '';
+    $customer_billing_doc_no = '';
+    $customer_billing_total = $invoices ? $invoices->sum('total_debt') : '';
     
 @endphp
 <div class="form-group {{ $errors->has('customer_id') ? 'has-error' : ''}}">
-    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label>
+    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> <a href="{{ url('/customer') }}" class="btn btn-sm btn-light">เลือกลูกค้า</a>
     <input class="form-control form-control-sm d-none" name="customer_id" type="number" id="customer_id" value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_id}}" >
     <input class="form-control form-control-sm"  value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_name}}" disabled>
     {!! $errors->first('customer_id', '<p class="help-block">:message</p>') !!}

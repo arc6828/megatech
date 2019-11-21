@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\CustomerPayment;
 use App\CustomerBilling;
+use App\CustomerModel;
+use App\Sales\InvoiceModel;
 use App\Cheque;
 use Illuminate\Http\Request;
 
@@ -59,8 +61,20 @@ class CustomerPaymentController extends Controller
             ->where('total_debt','>',0)
             ->get();
         */
-        $customer_billing_id = request('customer_billing_id',0);
-        $customer_billing = CustomerBilling::find($customer_billing_id);
+        $customer_id = request('customer_id',0);
+        $customer = CustomerModel::find($customer_id);
+        $invoices = null;
+        if( request('filter')=="billing-only"){
+            //วางบิลแล้วเท่านั้น 12
+            $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();
+   
+        }else{
+            //ที่ยอดมีหนี้ทั้งหมด
+            $invoices = InvoiceModel::where('total_debt','>',0)->where('customer_id',$customer_id)->get();
+                   
+        }
+            
+             
         /*$customer_billings = CustomerBilling::where('customer_billing_id', $customer_billing_id)
             ->where('total_debt','>',0)
             ->get();
@@ -68,7 +82,7 @@ class CustomerPaymentController extends Controller
 
             
 
-        return view('customer-payment.create', compact('customer_billing') );
+        return view('customer-payment.create', compact('invoices','customer') );
     }
 
     /**
