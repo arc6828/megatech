@@ -74,30 +74,28 @@
     <input class="form-control form-control-sm"  value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::user()->name }}" disabled>
     {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
 </div>
-<hr>
-<h2>For cheque</h2>
 <!--for cheque -->
 <div class="form-group d-none {{ $errors->has('cheque_type_code') ? 'has-error' : ''}}">
     <label for="cheque_type_code" class="control-label">{{ 'Cheque Type Code' }}</label>
     <input class="form-control form-control-sm" name="cheque_type_code" type="text" id="cheque_type_code" value="{{ isset($cheque->cheque_type_code) ? $cheque->cheque_type_code :  'cheque-in' }}" readonly>
     {!! $errors->first('cheque_type_code', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('cheque_date') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('cheque_date') ? 'has-error' : ''}}">
     <label for="cheque_date" class="control-label">{{ 'Cheque Date' }}</label>
     <input class="form-control form-control-sm" name="cheque_date" type="date" id="cheque_date" value="{{ isset($cheque->cheque_date) ? $cheque->cheque_date : ''}}" >
     {!! $errors->first('cheque_date', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('cheque_no') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('cheque_no') ? 'has-error' : ''}}">
     <label for="cheque_no" class="control-label">{{ 'เลขที่เช็ค' }}</label>
     <input class="form-control form-control-sm" name="cheque_no" type="text" id="cheque_no" value="{{ isset($cheque->cheque_no) ? $cheque->cheque_no : ''}}" >
     {!! $errors->first('cheque_no', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('total_cheque') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('total_cheque') ? 'has-error' : ''}}">
     <label for="total_cheque" class="control-label">{{ 'ยอดเช็ครับ' }}</label>
     <input class="form-control form-control-sm" name="total_cheque" type="number" id="total_cheque" value="{{ isset($cheque->total_cheque) ? $cheque->total_cheque : ''}}" >
     {!! $errors->first('total_cheque', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('reference') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('reference') ? 'has-error' : ''}}">
     <label for="reference" class="control-label">{{ 'รายละเอียดสาขา' }}</label>
     <input class="form-control form-control-sm" name="reference" type="text" id="reference" value="{{ isset($cheque->reference) ? $cheque->reference : ''}}" >
     {!! $errors->first('reference', '<p class="help-block">:message</p>') !!}
@@ -109,6 +107,6 @@
 </div>
 
 
-<div class="form-group">
+<div class="form-group d-none">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>

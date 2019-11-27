@@ -10,6 +10,7 @@ use App\CustomerBilling;
 use App\CustomerModel;
 use App\Sales\InvoiceModel;
 use App\Cheque;
+use App\BankAccount;
 use Illuminate\Http\Request;
 
 class CustomerPaymentController extends Controller
@@ -74,6 +75,7 @@ class CustomerPaymentController extends Controller
                    
         }
             
+
              
         /*$customer_billings = CustomerBilling::where('customer_billing_id', $customer_billing_id)
             ->where('total_debt','>',0)
@@ -81,8 +83,9 @@ class CustomerPaymentController extends Controller
             */
 
             
+        $bank_accounts = BankAccount::all();
 
-        return view('customer-payment.create', compact('invoices','customer') );
+        return view('customer-payment.create', compact('invoices','customer','bank_accounts') );
     }
 
     /**
@@ -99,6 +102,8 @@ class CustomerPaymentController extends Controller
         $requestData['doc_no'] = $this->getNewCode("BR");
         
         CustomerPayment::create($requestData);
+
+        
 
         //FOR CHEQUE -- ADD TO CHEQUE
         if( $requestData['credit'] ){
