@@ -33,6 +33,7 @@
                                 <thead>
                                     <tr>
                                         <th class="d-none">Cheque Type</th>
+                                        <th>Date</th>
                                         <th>Cheque No</th>
                                         <th>Total</th>
                                         
@@ -44,16 +45,19 @@
                                 <tbody>
                                 @foreach($cheque as $item)
                                     <tr>
+                                        <td class="d-none">{{ $item->cheque_type_code }}</td>                                 
                                         <td>{{ $item->cheque_date }}</td>
-                                        <td class="d-none">{{ $item->cheque_type_code }}</td>
+                                        <td>{{ $item->cheque_no }}</td>       
                                         <td><a href="{{ url('/finance/cheque') }}/{{ $item->id }}">{{ $item->cheque_no }}</a></td>
                                         <td>{{ $item->total }}</td>
-                                        <td></td>
+                                        <td>{{ $item->status }}</td>
 
                                         
                                         <td>
                                             @if($item->status =="pending")
-                                            <button class="btn btn-warning btn-sm">ตรวจสอบเช็ค</button>
+                                            <button class="btn btn-success btn-sm">ผ่านเช็ค</button>
+                                            <button class="btn btn-warning btn-sm">ยกเลิกเช็ค</button>
+                                            
                                             @else                                            
                                             {{ $item->status }}
                                             @endif

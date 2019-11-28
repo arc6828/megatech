@@ -64,7 +64,11 @@
                                         <td>{{ $row->Customer->customer_code }}</td>
                                         <td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->Customer->company_name }}</a></td>
                                         <td>{{ $row->total_debt }}</td>
-                                        <td><input style="width:100px;"></td>
+                                        <td>
+                                            <input style="width:100px;" name="invoice_payments[]">
+                                            
+                                            <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
+                                        </td>
                                         <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
                                         <td>{{ $row->User->short_name }}</td>
                                     </tr>
@@ -105,29 +109,30 @@
                                         "cash-transfer" => "โอนเงินสด",
                                         "discount-fee" => "ส่วนลด/ค่าธรรมเนียม",
                                         "deposite-cheque" => "ฝากด้วยเช็ค",
+                                        "credit" => "บัตรเครดิต",
                                     ];
                                 @endphp
                                 @foreach($transaction_code_object as $key => $value)
                                 <tr>
                                     <td>
-                                        <input class="form-control form-control-sm" name="transaction_code" type="hidden" id="transaction_code" value="{{ $key }}">   
+                                        <input class="form-control form-control-sm" name="transaction_code[]" type="hidden" id="transaction_code" value="{{ $key }}">   
                                         <input class="form-control form-control-sm" name="" type="text" id="" value="{{ $value }}" readonly>  
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="date" type="date" id="date" value="">    
+                                        <input class="form-control form-control-sm" name="date[]" type="date" id="date" value="">    
                                     </td>
                                     <td>
-                                        <select class="form-control form-control-sm" name="bank_account_id" id="bank_account_id" >
+                                        <select class="form-control form-control-sm" name="bank_account_id[]" id="bank_account_id" >
                                             @foreach( $bank_accounts as $bank_account )
                                             <option value="{{ $bank_account->id }}">{{ $bank_account->name }} {{ $bank_account->branch }}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="amount" type="number" id="amount" value="" >                            
+                                        <input class="form-control form-control-sm" name="amount[]" type="number" id="amount" value="" >                            
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="remark" type="text" id="remark" value="" >  
+                                        <input class="form-control form-control-sm" name="remark[]" type="text" id="remark" value="" >  
                                     </td>
                                 </tr>
                                 @endforeach

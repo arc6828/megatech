@@ -11,7 +11,10 @@ use App\CustomerModel;
 use App\Sales\InvoiceModel;
 use App\Cheque;
 use App\BankAccount;
+use App\BankTransaction;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Auth;
 
 class CustomerPaymentController extends Controller
 {
@@ -98,13 +101,60 @@ class CustomerPaymentController extends Controller
     public function store(Request $request)
     {
         
-        $requestData = $request->all();
+        
+        $requestData = $request->except(['transaction_code','date','bank_account_id','amount','remark']);
         $requestData['doc_no'] = $this->getNewCode("BR");
         
         CustomerPayment::create($requestData);
 
-        
+        //UPDATE INVOICE 
+        if (is_array ($requestData['invoice_payments'])){
+            for( $i=0; $i<count($requestData['invoice_payments']); $i++ ){
+                $invoice_payment = $requestData['invoice_payments'][$i];
+                $invoice_id = $requestData['invoice_ids'][$i];
+                $invoice = InvoiceModel::find($invoice_id);
+                if($invoice){
+                    //ADD UP
+                    $invoice->total_payment = $invoice->total_payment + $invoice_payment;
+                    $invoice->total_debt = $invoice->total_debt - $invoice_payment;
+                    $invoice->save();
+                }
+            }
+        }
 
+        //INSERT BANK-ACCOUNT
+        $requestData = $request->all();
+        if (is_array ($requestData['amount'])){
+            for( $i=0; $i<count($requestData['amount']); $i++ ){                
+                
+                //INSERT
+                if($requestData['amount'][$i]){
+                    BankTransaction::create([
+                        'transaction_code' => $requestData['transaction_code'][$i] ,
+                        'date' => $requestData['date'][$i],
+                        'bank_account_id' => $requestData['bank_account_id'][$i],
+                        'amount' => $requestData['amount'][$i],
+                        'remark' => $requestData['remark'][$i],
+                        'user_id' => Auth::id() ,
+                    ]);
+
+                    //INSERT CHEQUE IF EXIST
+                    if( $requestData['transaction_code'][$i] == "deposite-cheque" ){
+                          /*                  
+                    
+                        Cheque::create([
+                            'cheque_date' => $requestData['date'][$i] ,
+                            'total' => $requestData['total_cheque'] ,
+                        ]);*/
+                    }
+
+                }                
+            }
+        }
+
+        
+        
+        /*
         //FOR CHEQUE -- ADD TO CHEQUE
         if( $requestData['credit'] ){
             $requestData = $request->all();
@@ -113,6 +163,8 @@ class CustomerPaymentController extends Controller
         
             Cheque::create($requestData);
         }
+        */
+
 
         return redirect('finance/customer-payment')->with('flash_message', 'CustomerPayment added!');
     }

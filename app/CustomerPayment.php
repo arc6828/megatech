@@ -37,4 +37,8 @@ class CustomerPayment extends Model
     public function customer_billing(){
         return $this->belongsTo('App\CustomerBilling','customer_billing_id');
     }
+
+    public function customer_invoices(){
+        return $this->hasMany('App\Sales\InvoiceModel','customer_payment_id');
+    }
 }

@@ -28,6 +28,8 @@ class InvoiceModel extends Model
                           'external_reference_id',
                           'internal_reference_id',
                           'total',
+                          'total_payment',
+                          'total_debt',
                         ];
   public function QuotationDetail(){
     return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
