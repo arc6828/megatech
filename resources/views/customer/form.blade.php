@@ -3,7 +3,7 @@
     <div class="row">
       <div class="form-group col-lg-2">
         <label>รหัสลูกค้า</label>
-        <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value=""  readonly>
+        <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value="" >
       </div>
       <div class="form-group col-lg-8">
         <label>ชื่อบริษัท</label>
