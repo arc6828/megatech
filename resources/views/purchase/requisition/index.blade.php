@@ -36,7 +36,7 @@
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
-						<th class="text-center">ยอดรวม</th>
+						<th class="text-center d-none">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
 						<th class="text-center">สถานะ</th>
 						<th class="text-center">action</th>
@@ -52,7 +52,7 @@
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ number_format($row->total,2) }}</td>
+						<td class="d-none">{{ number_format($row->total,2) }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td>{{ $row->purchase_status_name }}</td>
 						<td>
