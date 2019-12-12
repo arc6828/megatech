@@ -105,7 +105,7 @@
               //console.log(element,index);
               var id = element.order_detail_id;
               var row = [
-                element.purchase_order_code,
+                "<a href='{{ url('/') }}/purchase/receive/create?purchase_order_code="+element.purchase_order_code+"'>"+element.purchase_order_code+"</a>",
                 element.datetime,
                 //element.delivery_time,
                 element.supplier_code,
