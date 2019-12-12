@@ -120,7 +120,7 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
+      <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
       <div class="col-lg-3 d-none">
         <select name="zone_id" id="zone_id" class="form-control form-control-sm" >
           <option value="" >None</option>
