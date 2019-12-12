@@ -36,25 +36,25 @@
       </div>
     </div>
 
-    <div class="form-group form-inline">
+    <div class="form-group form-inline d-none">
       <label class="col-lg-2">ระยะเวลาหนี้</label>
       <div class="col-lg-3">
-        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
+        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	>
       </div>
       <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา</label>
       <div class="col-lg-3">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required>
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  >
       </div>
     </div>
 
-    <div class="form-group form-inline">
+    <div class="form-group form-inline d-none">
       <label class="col-lg-2">เงื่อนไขการชำระเงิน</label>
       <div class="col-lg-3">
-        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required>
+        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" >
       </div>
       <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
       <div class="col-lg-3">
-        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" >
           <option value="" >None</option>
           @foreach($table_delivery_type as $row_delivery_type)
           <option value="{{ $row_delivery_type->delivery_type_id }}" >
@@ -65,10 +65,10 @@
       </div>
     </div>
 
-    <div class="form-group form-inline">
+    <div class="form-group form-inline d-none">
       <label class="col-lg-2">ชนิดภาษี</label>
       <div class="col-lg-3">
-        <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required>
+        <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  >
           <option value="" >None</option>
           @foreach($table_tax_type as $row_tax_type)
           <option value="{{ $row_tax_type->tax_type_id }}" >
@@ -79,7 +79,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
       <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
+      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" >
       </div>
     </div>
 
@@ -121,8 +121,8 @@
         </select>
       </div>
       <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
-      <div class="col-lg-3">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
+      <div class="col-lg-3 d-none">
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm" >
           <option value="" >None</option>
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >
@@ -151,8 +151,8 @@
 				<div class="form-group form-inline">
 					<input type="hidden" name="total" id="total"	class="form-control form-control-sm form-control-line"  >
 					<label class="col-lg-6">หมายเหตุ</label>
-					<label class="col-lg-3">ยอดรวมก่อนภาษี</label>
-					<div class="col-lg-3">
+					<label class="col-lg-3 d-none">ยอดรวมก่อนภาษี</label>
+					<div class="col-lg-3  d-none">
 						<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly disabled>
 					</div>
 				</div>
@@ -161,7 +161,7 @@
 						<input name="remark" id="remark" class="form-control form-control-sm form-control-line" >
 
 					</label>
-					<label class="col-lg-3">
+					<label class="col-lg-3  d-none">
 						ภาษีมูลค่าเพิ่ม
 						<input type="number"
 							name="vat_percent" id="vat_percent"
@@ -170,11 +170,11 @@
 							class="form-control form-control-sm form-control-line roundnum"
 							style="width: 50px; margin: 10px;"> %
 					</label>
-					<div class="col-lg-3">
+					<div class="col-lg-3  d-none">
 						<input type="number" step="0.01" name="vat" id="vat" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-sm form-control-line  roundnum" readonly disabled >
 					</div>
 				</div>
-				<div class="form-group form-inline">
+				<div class="form-group form-inline  d-none">
 	   				<label class="col-lg-6">
 
 					</label>
