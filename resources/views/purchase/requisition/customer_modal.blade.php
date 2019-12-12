@@ -74,12 +74,12 @@
   		//document.querySelector("#department_id").value = element.department_id ;
   		document.querySelector("#purchase_status_id").value = 1 ;
 		  */
-		  document.querySelector("#debt_duration").value = "-";
-  		document.querySelector("#billing_duration").value = "-";
-  		document.querySelector("#payment_condition").value = "-";
+		  document.querySelector("#debt_duration").value = "0";
+  		document.querySelector("#billing_duration").value = "0";
+  		document.querySelector("#payment_condition").value = "0";
   		document.querySelector("#delivery_type_id").value = 1;
   		document.querySelector("#tax_type_id").value = 2 ;
-  		document.querySelector("#delivery_time").value = "-";
+  		document.querySelector("#delivery_time").value = "0";
   		//document.querySelector("#department_id").value = element.department_id ;
   		document.querySelector("#purchase_status_id").value = 1 ;
   		//document.querySelector("#user_id").value = element.user_id ;
