@@ -108,9 +108,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('customer-payment-detail', 'CustomerPaymentDetailController');
     Route::resource('customer-payment', 'CustomerPaymentController');
     Route::resource('customer-billing-detail', 'CustomerBillingDetailController');
-    
+    //NEW2
     Route::get('customer-billing/{id}/pdf', 'CustomerBillingController@pdf');
     Route::resource('customer-billing', 'CustomerBillingController');
+
+    //Route::resource('cheque', 'ChequeController');
+    Route::resource('supplier-payment-detail', 'SupplierPaymentDetailController');
+    Route::resource('supplier-payment', 'SupplierPaymentController');
+    Route::resource('supplier-billing-detail', 'SupplierBillingDetailController');
+    
+    Route::get('supplier-billing/{id}/pdf', 'SupplierBillingController@pdf');
+    Route::resource('supplier-billing', 'SupplierBillingController');
   });
 
 

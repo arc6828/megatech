@@ -19,18 +19,41 @@
 						<th class="text-center">อีเมล์</th>
 						<th class="text-center">เบอร์โทรศัพท์</th>
 						<th class="text-center">ยอดหนึ้ขณะนี้</th>
-						<th class="text-center">action</th>
+						<th class="text-center">วางบิล</th>
+						<th class="text-center">จ่ายชำระ</th>
+						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
 				<tbody>
 				@foreach($table_supplier as $row)
+				@php
+					$total_debt = $row->Receives_on_debt->sum('total_debt');
+				@endphp
 				<tr>
 					<td><a href="{{ url('/') }}/supplier/{{ $row->supplier_id }}/edit">{{ $row->supplier_code }}</a></td>
 					<td>{{ $row->company_name }}</td>
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->telephone }}</td>
-					<td>0</td>
+					<td>{{ number_format($total_debt,2) }}</td>
 					<td>
+						@if($total_debt > 0)
+						<div><a class=" " href="{{ url('/') }}/finance/supplier-billing/create?supplier_id={{ $row->supplier_id }}&end_date={{ date('Y-m-t', strtotime( '-1 month' ) ) }}">วางบิลเดือนที่ผ่านมา</a></div>
+						<div><a class=" " href="{{ url('/') }}/finance/supplier-billing/create?supplier_id={{ $row->supplier_id }}&end_date={{ date('Y-m-t' ) }}">วางบิลทั้งหมด</a></div>
+						@endif
+						<a href="javascript:void(0)" onclick="onDelete( {{ $row->supplier_id }} )" class="text-danger d-none">
+							<span class="fa fa-trash"></span>
+						</a>
+					</td>
+					<td>
+						@if($total_debt > 0)
+						<div><a class="" href="{{ url('/') }}/finance/supplier-payment/create?supplier_id={{ $row->supplier_id }}&filter=billing-only">รับชำระที่วางบิล</a></div>
+						<div><a class="" href="{{ url('/') }}/finance/supplier-payment/create?supplier_id={{ $row->supplier_id }}">รับชำระทั้งหมด</a></div>
+						@endif
+						<a href="javascript:void(0)" onclick="onDelete( {{ $row->supplier_id }} )" class="text-danger d-none">
+							<span class="fa fa-trash"></span>
+						</a>
+					</td>
+					<td class="d-none">
 						<a href="javascript:void(0)" onclick="onDelete( {{ $row->supplier_id }} )" class="text-danger">
 							<span class="fa fa-trash"></span>
 						</a>

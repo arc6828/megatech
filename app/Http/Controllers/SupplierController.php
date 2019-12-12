@@ -21,12 +21,15 @@ class SupplierController extends Controller
         $q = $request->input('q');
         $table_supplier = [];
         switch(Auth::user()->role){
-          case "admin" :
-            $table_supplier = SupplierModel::select_all();
+          case "admin" :          
+          case "purchase" :
+            $table_supplier = SupplierModel::all();
             break;
           case "sales" :
-            $table_supplier = SupplierModel::select_by_user_id(Auth::user()->id);
+            $table_supplier = SupplierModel::where('user_id', Auth::id() )->get();
             break;
+
+           
         }
 
         $data = [

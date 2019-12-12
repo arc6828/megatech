@@ -58,7 +58,7 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td></td>
+						<td>{{ $row->total_debt?$row->total_debt:0 }}</td>
 						<td>{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td class="d-none">{{ $row->purchase_status_name }}</td>
@@ -76,7 +76,7 @@
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
-				$('#table').DataTable().receive( [ 1, 'desc' ] ).draw();
+				$('#table').DataTable().order( [ 1, 'desc' ] ).draw();
 		});
 
 		</script>

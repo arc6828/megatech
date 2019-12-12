@@ -6,7 +6,7 @@
     <div class="container">
     
 
-        <form method="POST" action="{{ url('/finance/customer-payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+        <form method="POST" action="{{ url('/finance/supplier-payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row">
 
@@ -14,7 +14,7 @@
                 <div class="card mb-4">
                     <div class="card-header">@yield('title')</div>
                     <div class="card-body">
-                        <a href="{{ url('/finance/customer-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/finance/supplier-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
@@ -26,19 +26,19 @@
                             </ul>
                         @endif
 
-                        @include ('customer-payment.form', ['formMode' => 'create'])
+                        @include ('supplier-payment.form', ['formMode' => 'create'])
 
 
                     </div>
                 </div>
 
                 @php
-                //$invoices = $invoices? $invoices : [];
+                //$receives = $receives? $receives : [];
                 @endphp
                 <div class="card mb-4">
-                    <div class="card-header">รายละเอียด Invoice</div>
+                    <div class="card-header">รายละเอียด Receive</div>
                     <div class="card-body">
-                        <div class="table-responsive table-binvoiceed">
+                        <div class="table-responsive table-breceiveed">
                             <table width="100%" class="table table-hover text-center table-sm" id="table">
                                 <thead>
                                     <tr>
@@ -53,21 +53,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($invoices as $row)
+                                    @foreach($receives as $row)
                                     <tr>
                                         <td>
-                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
-                                                {{ $row->invoice_code }}
+                                            <a href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/edit">
+                                                {{ $row->purchase_receive_code }}
                                             </a>
                                         </td>
                                         <td>{{ $row->datetime }}</td>
-                                        <td>{{ $row->Customer->customer_code }}</td>
-                                        <td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->Customer->company_name }}</a></td>
+                                        <td>{{ $row->Supplier->supplier_code }}</td>
+                                        <td><a href="{{ url('/supplier') }}/{{ $row->supplier_id }}">{{ $row->Supplier->company_name }}</a></td>
                                         <td>{{ $row->total_debt }}</td>
                                         <td>
-                                            <input style="width:100px;" name="invoice_payments[]">
+                                            <input style="width:100px;" name="receive_payments[]">
                                             
-                                            <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
+                                            <input type="hidden" name="receive_ids[]" value="{{ $row->purchase_receive_id }}">
                                         </td>
                                         <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
                                         <td>{{ $row->User->short_name }}</td>
@@ -108,7 +108,7 @@
                                     $transaction_code_object = [
                                         "cash-transfer-out" => "โอนเงินสด",
                                         "discount-fee" => "ส่วนลด/ค่าธรรมเนียม",
-                                        "deposite-cheque" => "ฝากด้วยเช็ค",
+                                        "withdraw-cheque" => "จ่ายด้วยเช็ค",
                                         "credit" => "บัตรเครดิต",
                                     ];
                                 @endphp

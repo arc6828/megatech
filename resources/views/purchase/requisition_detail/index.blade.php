@@ -183,7 +183,7 @@
 							element.product_code,
 							element.product_name + " / " + element.grade ,
 							element.amount,
-							"<input type='number' name='approve_amounts[]' value='"+willing_amount+"' class='form-control form-control-sm' style='max-width:50px;' required>",
+							"<input type='number' name='approve_amounts[]' value='"+willing_amount+"' class='form-control form-control-sm' style='width:100px;' required>",
 							//จำนวนที่ต้องสั่ง = ค้างส่ง - (สต๊อก + ค้างรับ)
 							willing_amount,
 							element.pending_in,

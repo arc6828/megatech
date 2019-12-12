@@ -92,6 +92,7 @@ class ReceiveController extends Controller
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
           'total' => $request->input('total',0),
+          'total_debt' => $request->input('total',0),
       ];
       $id = ReceiveModel::insert($input);
 

@@ -16,8 +16,17 @@ class SupplierModel extends Model
         return $this->hasMany('App\Purchase\OrderModel','supplier_id');
 	}
 //Re
+	/*
 	public function receives(){
         return $this->hasMany('App\Purchase\ReceiveModel','supplier_id');
+	}
+	*/
+
+	public function Receives(){
+		return $this->hasMany('App\Purchase\ReceiveModel','supplier_id');
+	}
+	public function Receives_on_debt(){
+		return $this->hasMany('App\Purchase\ReceiveModel','supplier_id')->where('total_debt','>',0);
 	}
 
 	public static function select_all(){

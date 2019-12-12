@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\CustomerPayment;
-use App\CustomerBilling;
-use App\CustomerModel;
-use App\Sales\InvoiceModel;
+use App\SupplierPayment;
+use App\SupplierBilling;
+use App\SupplierModel;
+use App\Purchase\ReceiveModel;
 use App\Cheque;
 use App\BankAccount;
 use App\BankTransaction;
@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
-class CustomerPaymentController extends Controller
+class SupplierPaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,12 +29,12 @@ class CustomerPaymentController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $customerpayment = CustomerPayment::where('doc_no', 'LIKE', "%$keyword%")
-                ->orWhere('customer_id', 'LIKE', "%$keyword%")
+            $supplierpayment = SupplierPayment::where('doc_no', 'LIKE', "%$keyword%")
+                ->orWhere('supplier_id', 'LIKE', "%$keyword%")
                 ->orWhere('role', 'LIKE', "%$keyword%")
                 ->orWhere('remark', 'LIKE', "%$keyword%")
                 ->orWhere('round', 'LIKE', "%$keyword%")
-                ->orWhere('customer_billing_id', 'LIKE', "%$keyword%")
+                ->orWhere('supplier_billing_id', 'LIKE', "%$keyword%")
                 ->orWhere('discount', 'LIKE', "%$keyword%")
                 ->orWhere('debt_total', 'LIKE', "%$keyword%")
                 ->orWhere('cash', 'LIKE', "%$keyword%")
@@ -44,10 +44,10 @@ class CustomerPaymentController extends Controller
                 ->orWhere('user_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $customerpayment = CustomerPayment::latest()->paginate($perPage);
+            $supplierpayment = SupplierPayment::latest()->paginate($perPage);
         }
 
-        return view('customer-payment.index', compact('customerpayment'));
+        return view('supplier-payment.index', compact('supplierpayment'));
     }
 
     /**
@@ -59,28 +59,28 @@ class CustomerPaymentController extends Controller
     {
         
         /*
-        $customer_id = request('customer_id',0);
-        $customer = CustomerModel::find($customer_id);
-        $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+        $supplier_id = request('supplier_id',0);
+        $supplier = SupplierModel::find($supplier_id);
+        $table_receive = ReceiveModel::where('supplier_id', $supplier_id)
             ->where('total_debt','>',0)
             ->get();
         */
-        $customer_id = request('customer_id',0);
-        $customer = CustomerModel::find($customer_id);
-        $invoices = null;
+        $supplier_id = request('supplier_id',0);
+        $supplier = SupplierModel::find($supplier_id);
+        $receives = null;
         if( request('filter')=="billing-only"){
             //วางบิลแล้วเท่านั้น 12
-            $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();
+            $receives = ReceiveModel::where('purchase_status_id',12)->where('supplier_id',$supplier_id)->get();
    
         }else{
             //ที่ยอดมีหนี้ทั้งหมด
-            $invoices = InvoiceModel::where('total_debt','>',0)->where('customer_id',$customer_id)->get();
+            $receives = ReceiveModel::where('total_debt','>',0)->where('supplier_id',$supplier_id)->get();
                    
         }
             
 
              
-        /*$customer_billings = CustomerBilling::where('customer_billing_id', $customer_billing_id)
+        /*$supplier_billings = SupplierBilling::where('supplier_billing_id', $supplier_billing_id)
             ->where('total_debt','>',0)
             ->get();
             */
@@ -88,7 +88,7 @@ class CustomerPaymentController extends Controller
             
         $bank_accounts = BankAccount::all();
 
-        return view('customer-payment.create', compact('invoices','customer','bank_accounts') );
+        return view('supplier-payment.create', compact('receives','supplier','bank_accounts') );
     }
 
     /**
@@ -103,21 +103,21 @@ class CustomerPaymentController extends Controller
         
         
         $requestData = $request->except(['transaction_code','date','bank_account_id','amount','remark']);
-        $requestData['doc_no'] = $this->getNewCode("BR");
+        $requestData['doc_no'] = $this->getNewCode("BP");
         
-        CustomerPayment::create($requestData);
+        SupplierPayment::create($requestData);
 
-        //UPDATE INVOICE 
-        if (is_array ($requestData['invoice_payments'])){
-            for( $i=0; $i<count($requestData['invoice_payments']); $i++ ){
-                $invoice_payment = $requestData['invoice_payments'][$i];
-                $invoice_id = $requestData['invoice_ids'][$i];
-                $invoice = InvoiceModel::find($invoice_id);
-                if($invoice){
+        //UPDATE RECEIVE 
+        if (is_array ($requestData['receive_payments'])){
+            for( $i=0; $i<count($requestData['receive_payments']); $i++ ){
+                $receive_payment = $requestData['receive_payments'][$i];
+                $receive_id = $requestData['receive_ids'][$i];
+                $receive = ReceiveModel::find($receive_id);
+                if($receive){
                     //ADD UP
-                    $invoice->total_payment = $invoice->total_payment + $invoice_payment;
-                    $invoice->total_debt = $invoice->total_debt - $invoice_payment;
-                    $invoice->save();
+                    $receive->total_payment = $receive->total_payment + $receive_payment;
+                    $receive->total_debt = $receive->total_debt - $receive_payment;
+                    $receive->save();
                 }
             }
         }
@@ -140,23 +140,12 @@ class CustomerPaymentController extends Controller
 
                     //INSERT CHEQUE IF EXIST
                     if( $requestData['transaction_code'][$i] == "deposite-cheque" ){
-                                            
+                          /*                  
                     
-                        Cheque::create([                           
-                            
-                            'cheque_type_code' => 'cheque-in' ,
-                            //'doc_no' => '' , 
+                        Cheque::create([
                             'cheque_date' => $requestData['date'][$i] ,
-                            //'cheque_type' => '' , 
-                            'cheque_no' => $requestData['remark'][$i] ,
-                            'total' => $requestData['amount'][$i] ,
-                            //'bank_fee' => '' ,
-                            'bank_account_id' => $requestData['bank_account_id'][$i] , 
-                            //'passed_cheque_date' => '' , 
-                            //'reference' => '' , 
-                            'status' => 'pending' , 
-                            'user_id' => Auth::id()
-                        ]);
+                            'total' => $requestData['total_cheque'] ,
+                        ]);*/
                     }
 
                 }                
@@ -177,12 +166,12 @@ class CustomerPaymentController extends Controller
         */
 
 
-        return redirect('finance/customer-payment')->with('flash_message', 'CustomerPayment added!');
+        return redirect('finance/supplier-payment')->with('flash_message', 'SupplierPayment added!');
     }
 
     public function getNewCode($code){
         //COUNT BY CURRENT MONTH
-        $number = CustomerPayment::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
+        $number = SupplierPayment::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
@@ -201,9 +190,9 @@ class CustomerPaymentController extends Controller
      */
     public function show($id)
     {
-        $customerpayment = CustomerPayment::findOrFail($id);
+        $supplierpayment = SupplierPayment::findOrFail($id);
 
-        return view('customer-payment.show', compact('customerpayment'));
+        return view('supplier-payment.show', compact('supplierpayment'));
     }
 
     /**
@@ -215,9 +204,9 @@ class CustomerPaymentController extends Controller
      */
     public function edit($id)
     {
-        $customerpayment = CustomerPayment::findOrFail($id);
+        $supplierpayment = SupplierPayment::findOrFail($id);
 
-        return view('customer-payment.edit', compact('customerpayment'));
+        return view('supplier-payment.edit', compact('supplierpayment'));
     }
 
     /**
@@ -233,10 +222,10 @@ class CustomerPaymentController extends Controller
         
         $requestData = $request->all();
         
-        $customerpayment = CustomerPayment::findOrFail($id);
-        $customerpayment->update($requestData);
+        $supplierpayment = SupplierPayment::findOrFail($id);
+        $supplierpayment->update($requestData);
 
-        return redirect('customer-payment')->with('flash_message', 'CustomerPayment updated!');
+        return redirect('supplier-payment')->with('flash_message', 'SupplierPayment updated!');
     }
 
     /**
@@ -248,8 +237,8 @@ class CustomerPaymentController extends Controller
      */
     public function destroy($id)
     {
-        CustomerPayment::destroy($id);
+        SupplierPayment::destroy($id);
 
-        return redirect('customer-payment')->with('flash_message', 'CustomerPayment deleted!');
+        return redirect('supplier-payment')->with('flash_message', 'SupplierPayment deleted!');
     }
 }
