@@ -284,6 +284,9 @@ function validate_po(){
           console.log("repeat",result.length);
 
           $("#external_reference_id").addClass("bg-danger");
+          alert("PO ซ้ำ");
+          $("#external_reference_id").val("");
+          
           if(result.length == 1){
             $("#external_reference_id").addClass("bg-dander");
             if($("#external_reference_id").val() === $("#external_reference_id").attr("data")){
