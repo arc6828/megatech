@@ -189,7 +189,7 @@
       </div>
       <div class="form-group col-lg-3">
         <label  >สำนักงาน/สาขา (แสดงในภาษี) </label>
-        <input name="branch_id" id="branch_id"  class="form-control form-control-sm  "  value="{{ $row->branch_id }}" >
+        <input name="branch_id" id="branch_id"  class="form-control form-control-sm  "  value="" >
       </div>
     </div>
   </div>
@@ -249,10 +249,10 @@ function getUploadTemplate()
 <div>
   <div class="form-group col-lg-3 d-none">
     <label >ระดับของราคาสินค้า</label>
-    <input type="number" name="degree_product"  class="form-control form-control-sm  "   value="{{ $row->degree_product }}" >
+    <input type="number" name="degree_product"  class="form-control form-control-sm  "   value="" >
   </div>
   <div class="form-group col-lg-3 d-none">
     <label >ส่วนลด </label>
-    <input type="number" name="loyalty_discount"  class="form-control form-control-sm  "value="{{ $row->loyalty_discount }}" >
+    <input type="number" name="loyalty_discount"  class="form-control form-control-sm  " value="" >
   </div>
 </div>
