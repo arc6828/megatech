@@ -30,10 +30,10 @@
   			<div class="col-lg-3">
   					<select name="purchase_requisition_detail_status_id" id="purchase_requisition_detail_status_id" class="form-control form-control-sm"
               onchange="onSubmit(this);" required>
-  							<option value="" >None</option>
+			  
   							@foreach($table_purchase_requisition_detail_status as $row_purchase_requisition_detail_status)
-  							<option
-                  value="{{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id }}"
+  							<option class="{{ ( in_array($row_purchase_requisition_detail_status->purchase_requisition_detail_status_name, ['อนุมัติ','ไม่อนุมัติ','รออนุมัติ'] ) )?'' : 'd-none'}}"
+               value="{{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id }}"
                   {{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id == $filter->purchase_requisition_detail_status_id ? "selected" : "" }} >
   									{{  $row_purchase_requisition_detail_status->purchase_requisition_detail_status_name }}
   							</option>

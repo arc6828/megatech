@@ -3,7 +3,7 @@
     <div class="row">
       <div class="form-group col-lg-2">
         <label>รหัสลูกค้า</label>
-        <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value="" >
+        <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value=""  required="" >
       </div>
       <div class="form-group col-lg-8">
         <label>ชื่อบริษัท</label>
@@ -44,14 +44,14 @@
       <div class="form-group col-lg-4">
         <label >ชื่อพนักงานที่ดูแล</label>
         <div class="input-group">
-          <input name="short_name" id="name"  class="form-control form-control-sm  "  >
+          <input name="short_name" id="name"  class="form-control form-control-sm  "  readonly >
           <div class="input-group-append">
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
               <i class="fa fa-plus"></i> รหัสพนักงาน
             </button>
           </div>
         </div>
-        <input type="hidden" name="user_id" id="user_id" >
+        <input type="text" class="d-none" name="user_id" id="user_id"  required="" />
         @include('customer/modal-user')
       </div>
     </div>
@@ -233,6 +233,7 @@
     </div>
   </div>
 </div>
+
 <script>
 function getUploadTemplate()
 {
