@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
 	<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
 </button>
 

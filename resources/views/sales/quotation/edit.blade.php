@@ -30,8 +30,8 @@
 			@include('sales/quotation/form')
 
 			<div class="text-center mt-4">
-				<a href="{{ url('/') }}/sales/quotation" class="btn btn-outline-primary" style="width:150px;">back</a>
-				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
+				<a href="{{ url('/') }}/sales/quotation" class="btn btn-outline-success" style="width:150px;">back</a>
+				<button type="submit" class="btn btn-success " id="form-submit" style="width:150px;">Save</button>
 			</div>
 
 		</form>
@@ -69,14 +69,13 @@
             element.disabled = true;            
           });     
         @endif
-        document.querySelectorAll("input,button,textarea,select").forEach(function(element){
-          element.addEventListener("keydown", function(event) {
-            if(event.keyCode == 13) {
-              event.preventDefault();
-              return false;
-            }  
-          });                  
-        });  
+        $('form input').keydown(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+          
       });
       
 

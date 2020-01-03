@@ -18,14 +18,14 @@
   </div>
 </div>
 
-<form class="" action="{{ url('/') }}/sales/order" method="POST">
+<form class="" action="{{ url('/') }}/sales/order" method="POST" onsubmit="return confirm('Do you confirm to save?')">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/order/form')
     <div class="text-center mt-4">
 
-      <a class="btn btn-outline-primary " href="{{ url('/') }}/sales/order">back</a>
-      <button class="btn btn-primary" type="submit" id="form-submit">Save</button>
+      <a class="btn btn-outline-success " href="{{ url('/') }}/sales/order">back</a>
+      <button class="btn btn-success" type="submit" id="form-submit">Save</button>
     </div>
 </form>
 
@@ -62,6 +62,15 @@
 
     existQuotationCode();
 
+    
+    $('form input').keydown(function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    
 
   });
 

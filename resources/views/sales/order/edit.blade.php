@@ -36,8 +36,8 @@
 			@include('sales/order/form')
 
 			<div class="text-center mt-4">
-				<a href="{{ url('/') }}/sales/order" class="btn btn-outline-primary" style="width:150px;">back</a>
-				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
+				<a href="{{ url('/') }}/sales/order" class="btn btn-outline-success" style="width:150px;">back</a>
+				<button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">Save</button>
 			</div>
 
 		</form>
@@ -69,6 +69,13 @@
 				document.querySelector("#vat_percent").value = "{{ $row->vat_percent }}";
 
 				onChange(document.querySelector("#vat_percent"));
+				$('form input').keydown(function (e) {
+					if (e.keyCode == 13) {
+						e.preventDefault();
+						return false;
+					}
+				});
+
 			});
 
 		</script>

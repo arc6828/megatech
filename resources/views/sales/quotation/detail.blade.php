@@ -156,6 +156,12 @@
 				toDelete();
         calculateNumber();
         onChange(document.getElementById("vat_percent"));
+        $('table input').keydown(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
       }
 
       function onChangeDangerPrice(obj){

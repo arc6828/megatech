@@ -46,6 +46,7 @@
           document.querySelector("#delivery_time").value = obj.delivery_time;
           //document.querySelector("#contact_name").value = obj.contact_name;
           document.querySelector("#zone_id").value = obj.zone_id;
+          document.querySelector("#max_credit").value = obj.max_credit;
 
           $('#table-customer-modal').DataTable().search(code).draw();
 					onChangeCustomer();

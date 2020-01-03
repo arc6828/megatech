@@ -40,6 +40,9 @@
       transform: translate(-50%,-50%);
 
     }
+    .modal-lg{
+      max-width: 1200px;
+    }
   </style>
 
 </head>

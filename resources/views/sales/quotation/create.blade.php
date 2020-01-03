@@ -4,13 +4,13 @@
 
 @section('content')
 
-<form class="" action="{{ url('/') }}/sales/quotation" method="POST">
+<form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to save?')" >
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/quotation/form')
     <div class="text-center mt-5">
-      <a class="btn btn-outline-primary " href="{{ url('/') }}/sales/quotation">back</a>
-      <button type="submit" class="btn btn-primary " id="form-submit">Save</button>
+      <a class="btn btn-outline-success " href="{{ url('/') }}/sales/quotation">back</a>
+      <button type="submit" class="btn btn-success " id="form-submit">Save</button>
 
     </div>
 </form>
@@ -43,6 +43,12 @@
     document.querySelector("#vat_percent").value = "7";
 
     //onChange(document.querySelector("#vat"));
+    $('form input').keydown(function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            return false;
+        }
+    });
   });
 
 </script>

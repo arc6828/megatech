@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#customerModal">
+<button type="button" class="btn btn-primary btn-sm d-none" data-toggle="modal" data-target="#customerModal">
 	<i class="fa fa-plus"></i> เลือกลูกหนี้
 </button>
 

@@ -29,7 +29,7 @@
 					"columns": [
 							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
-							{ title: "QT" },
+							//{ title: "QT" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
 							{ title: "ราคาตั้ง" },
@@ -62,8 +62,7 @@
 
           element.product_code +
             "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
-            "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.quotation_code +
+            "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +
             "<input type='hidden' class='quotation_code_edit' name='quotation_code_edit[]'  value='"+element.quotation_code+"' >",
 
           element.product_name + " / "+ element.grade,
@@ -123,6 +122,8 @@
 
         //console.log(obj.value, obj.id);
 
+        
+
 
         onChange(document.getElementById("vat_percent"));
       }
@@ -154,6 +155,12 @@
 				toDelete();
         calculateNumber();
         onChange(document.getElementById("vat_percent"));
+        $('table input').keydown(function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
       }
 
       function onChangeDangerPrice(obj){

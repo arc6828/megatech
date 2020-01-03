@@ -18,14 +18,14 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสลูกหนี้</label>
       <div class="col-lg-4">
-        <input type="hidden" name="customer_id" id="customer_id" class="form-control form-control-sm"  required>
+        <input type="text" name="customer_id" id="customer_id" class="form-control form-control-sm d-none"  required>
         <div class="input-group input-group-sm ">
           <div class="input-group-prepend">
             <span class="input-group-text" name="customer_code" id="customer_code" ></span>
           </div>
           <input class="form-control" name="company_name" id="company_name" readonly>
           <div class="input-group-append">
-            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#customerModal">
               <i class="fa fa-plus"></i> เลือกลูกหนี้
             </button>
           </div>
@@ -135,6 +135,20 @@
         </select>
       </div>
     </div>
+
+    <div class="form-group form-inline">
+      <label class="col-lg-2">วงเงินเครดิต</label>
+      <div class="col-lg-3">
+        <input type="number" name="max_credit"	id="max_credit" class="form-control form-control-sm form-control-line" >      
+      </div>
+      <label class="col-lg-2 offset-lg-1">หนี้สะสม</label>
+      <div class="col-lg-3">
+        <input type="number" name="debt_balance"	id="debt_balance" class="form-control form-control-sm form-control-line" >      
+      </div>
+    </div>
+
+
+
   </div>
 </div>
 
@@ -193,6 +207,7 @@
 
 
 <script>
+
 function refreshTotal(){
   var total = 0;
   document.querySelectorAll("#table-order-detail .total_edit").forEach(function(element,index){
@@ -263,6 +278,8 @@ function onChange(obj){
     //element.value = parseFloat(element.value).toFixed(2)
   });
 
+  
+
 }
 
 function onChangeCustomer(){
@@ -283,9 +300,9 @@ function validate_po(){
         if(result.length > 0){
           console.log("repeat",result.length);
 
-          $("#external_reference_id").addClass("bg-danger");          
+          $("#external_reference_id").addClass("bg-danger");    
+          alert("P/O ลูกหนี้ : "+ $("#external_reference_id").val() + " มีอยู่ในระบบแล้ว");      
           $("#external_reference_id").val("");
-          alert("PO ซ้ำ");
           
           if(result.length == 1){
             $("#external_reference_id").addClass("bg-dander");
