@@ -143,7 +143,21 @@
                 //0,
                 //0,
               ];
-              dataSet.push(row);
+              var found = false;
+              var found_index = -1;
+
+              for(var i=; i<dataSet.length; i++){
+                if(item.supplier_code == element.supplier_code){
+                  found = true;
+                  found_index = i;
+                  break;
+                }
+              }
+              if(found){ // check if supplier exist
+                dataSet[i][6] += element.amount;
+              }else{                
+                dataSet.push(row);
+              }
             });
             //console.log(dataSet);
 

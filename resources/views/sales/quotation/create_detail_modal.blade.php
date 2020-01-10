@@ -56,6 +56,9 @@
 							{ title: "จำนวนในคลัง" },
 							{ title: "ราคาขาย" },
 							{ title: "จำนวน" },
+							{ title: "ค้างส่ง" },
+							{ title: "ค้างรับ" },
+							{ title: "คงเหลือ - ค้างส่ง" },
 							{ title: "action" },
 						],
 					}); // END DATATABLE
@@ -97,6 +100,9 @@
         element.amount_in_stock,
         price,
         "<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",
+		element.pending_in,
+		element.pending_out,
+		element.amount_in_stock - element.pending_out,
         "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);'>" +
           "<span class='fa fa-plus'></span>" +
         "</button>",
