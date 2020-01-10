@@ -143,10 +143,11 @@
                 //0,
                 //0,
               ];
+              //GROUP BY PRODUCT
               var found = false;
               var found_index = -1;
 
-              for(var i=; i<dataSet.length; i++){
+              for(var i=0; i<index; i++){
                 if(item.supplier_code == element.supplier_code){
                   found = true;
                   found_index = i;
@@ -158,6 +159,7 @@
               }else{                
                 dataSet.push(row);
               }
+              //
             });
             //console.log(dataSet);
 
