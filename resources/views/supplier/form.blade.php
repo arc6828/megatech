@@ -9,7 +9,7 @@
         <label>ชื่อบริษัท</label>
         <input type="text" name="company_name"   id="company_name"   class="form-control form-control-sm  "  >
       </div>
-      <div class="form-group col-lg-2">
+      <div class="form-group col-lg-2  d-none">
         <label >ประเภทเจ้าหนี้</label>
         <select name="supplier_type" id="supplier_type"  class="form-control form-control-sm  ">
           @foreach ($table_supplier_type as $cus)
@@ -122,7 +122,7 @@
 
 
     <div class="row">
-      <div class="form-group col-lg-3">
+      <div class="form-group col-lg-3  d-none">
         <label >เขตการขายของ</label>
         <select name="zone_id" id="zone_id" class="form-control form-control-sm  " >
           @foreach ($table_zone as $zone)
