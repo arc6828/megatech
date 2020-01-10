@@ -86,7 +86,7 @@
 							{ title: "#ในคลัง" },
 							{ title: "#ค้างส่ง" },
 							{ title: "#ค้างรับ" },
-							{ title: "action" },
+							//{ title: "action" },
 						],
 					}); // END DATATABLE
 
@@ -124,7 +124,7 @@
           element.amount_in_stock,
           element.pending_out,
           element.pending_in,
-          "<a href='javascript:void(0)' onclick='onDelete("+id+")' class='text-danger'><span class='fa fa-trash'></span></a>",
+          //"<a href='javascript:void(0)' onclick='onDelete("+id+")' class='text-danger'><span class='fa fa-trash'></span></a>",
         ];
         dataSet.push(row);
       }); //END FOREACH
