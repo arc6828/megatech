@@ -1,0 +1,36 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "department",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "type": "string"
+        },
+        {
+            "name": "phone",
+            "type": "string"
+        },
+        {
+            "name": "contact_type",
+            "type": "select",
+            "options": {
+                "customer": "Customer",
+                "supplier": "Supplier"
+            }
+        },
+        {
+            "name": "customer_id",
+            "type": "string"
+        },
+        {
+            "name": "supplier_id",
+            "type": "string"
+        }
+    ]
+}

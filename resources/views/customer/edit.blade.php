@@ -31,7 +31,7 @@
     </form>
   </div>
   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-    @include('customer/form-contact')
+    @include('contact/index-item')
   </div>
   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
     @include('customer/form-comment')

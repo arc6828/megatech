@@ -198,6 +198,7 @@ class CustomerController extends Controller
             'table_delivery_type' => $table_delivery_type,
 
             'table_upload' => $this->getUploadTemplate(),
+            'customer' => CustomerModel::findOrFail($id),
         ];
         return view('customer/edit',$data);
     }

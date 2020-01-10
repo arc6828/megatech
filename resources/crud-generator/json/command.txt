@@ -13,3 +13,6 @@ php artisan crud:generate CustomerBillingDetail --fields_from_file="resources/cr
 php artisan crud:generate CustomerPayment --fields_from_file="resources/crud-generator/json/customer-payment.json"
 php artisan crud:generate CustomerPaymentDetail --fields_from_file="resources/crud-generator/json/customer-payment-detail.json"
 php artisan crud:generate Cheque --fields_from_file="resources/crud-generator/json/cheque.json"
+
+
+php artisan crud:generate Contact --fields_from_file="resources/crud-generator/json/contact.json"

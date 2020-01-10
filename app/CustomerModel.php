@@ -54,7 +54,10 @@ class CustomerModel extends Model
 							
 							];
 	//Relationships	
-	//sales			
+	//sales		
+	public function contacts(){
+		return $this->hasMany('App\Contact','customer_id');
+	}	
 	public function Quotation(){
 		return $this->hasMany('App\Sales\QuotationModel','customer_id');
 	}

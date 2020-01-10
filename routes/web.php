@@ -302,3 +302,5 @@ Route::get("report/customer/5/9","Report\CustomerController@screen_5_9");
 Route::get("report/customer/6/15","Report\CustomerController@screen_6_15");
 Route::get("report/customer/7/8","Report\CustomerController@screen_7_8");
 
+
+Route::resource('contact', 'ContactController');
