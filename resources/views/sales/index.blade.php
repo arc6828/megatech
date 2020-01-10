@@ -2,6 +2,8 @@
 
 @section('title','การขาย')
 
+@section('background-tag','bg-warning')
+
 @section('content')
 
 <div class="card">
