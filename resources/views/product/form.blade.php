@@ -19,9 +19,9 @@
         {!! $errors->first('brand', '<p class="help-block">:message</p>') !!}
       </div>
       <div class="col-lg-4 {{ $errors->has('item_code') ? 'has-error' : ''}}">
-        <label for="item_code" class="control-label">{{ 'Item Code' }}</label>
-        <input class="form-control form-control-sm" name="item_code" type="text" id="item_code" value="{{ isset($table_product[0]->item_code) ? $table_product[0]->item_code : ''}}" >
-        {!! $errors->first('item_code', '<p class="help-block">:message</p>') !!}
+        <label for="item_code" class="control-label">{{ 'Product Code' }}</label>
+        <input class="form-control form-control-sm" name="product_code" type="text" id="product_code" value="{{ isset($table_product[0]->product_code) ? $table_product[0]->product_code : ''}}" >
+        {!! $errors->first('product_code', '<p class="help-block">:message</p>') !!}
       </div>
   </div>
 </div>

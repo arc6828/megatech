@@ -143,22 +143,25 @@
                 //0,
                 //0,
               ];
+              dataSet.push(row);
               //GROUP BY PRODUCT
+              /*
               var found = false;
               var found_index = -1;
 
               for(var i=0; i<index; i++){
-                if(item.supplier_code == element.supplier_code){
+                if(dataSet[i][2] == element.supplier_code){
                   found = true;
                   found_index = i;
                   break;
                 }
               }
               if(found){ // check if supplier exist
-                dataSet[i][6] += element.amount;
+                dataSet[i][6] = parseInt(dataSet[i][6]) + parseInt(element.amount);
               }else{                
                 dataSet.push(row);
               }
+              */
               //
             });
             //console.log(dataSet);
