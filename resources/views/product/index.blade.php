@@ -77,7 +77,7 @@
 					var table = $('#table-product').DataTable({
 						"data": dataSet,
 						"deferRender" : true,
-            "pageLength": 5,
+            //"pageLength": 10,
 						"columns": [
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
