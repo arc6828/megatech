@@ -252,7 +252,7 @@
 							//element.delivery_time,
 							//element.company_name,
 							element.BARCODE,
-							element.brand+element.item_code,
+							element.product_code,
 							//element.product_name + " " + element.quantity + " หน่วย/กล่อง",
               element.product_name + " / " + element.grade,
 							element.amount,
