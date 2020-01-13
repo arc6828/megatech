@@ -127,8 +127,8 @@ public static function select_search2($order_detail_status_id){
 	}
 
   public static function duplicate_by_id($new_amount, $id){
-    $sql = "INSERT INTO tb_order_detail
-      SELECT null,product_id,{$new_amount},{$new_amount},discount_price,order_id,order_detail_status_id,null,null,null
+    $sql = "INSERT INTO tb_order_detail ( product_id, amount, approved_amount, discount_price,  order_id, order_detail_status_id )
+      SELECT product_id,{$new_amount},{$new_amount},discount_price,order_id,order_detail_status_id 
       FROM tb_order_detail
       WHERE order_detail_id = {$id}";
     return DB::insert($sql);
