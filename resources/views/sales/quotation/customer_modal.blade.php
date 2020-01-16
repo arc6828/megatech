@@ -88,6 +88,12 @@
 									{ title: "#" },
 							]
 						});
+						@if( !empty(request('customer_id')) )
+							//$("#btn-customer").click();
+							//select_item("{{ $customer->customer_id }}","{{ $customer->company_name }}","{{ $customer->company_code }}");
+							//$("button.close").click();
+
+						@endif
 					}); //END AJAX
 			}
 		}); // END MODAL EVENT

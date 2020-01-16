@@ -37,7 +37,7 @@ class QuotationController extends Controller
       $data = [
         //QUOTATION
         'table_quotation' => $table_quotation,
-        'q' => $request->input('q')
+        'q' => $request->input('q'),
       ];
       return view('sales/quotation/index',$data);
     }
@@ -62,6 +62,9 @@ class QuotationController extends Controller
           //QUOTATION DETAIL
           'table_quotation_detail' => [],
           'table_product' => ProductModel::select_all(),
+          
+          'customer' => !empty(request('customer_id'))? CustomerModel::findOrFail(request('customer_id')): '',
+          'customer_json' => json_encode(CustomerModel::findOrFail(request('customer_id'))),
       ];
       return view('sales/quotation/create',$data);
     }

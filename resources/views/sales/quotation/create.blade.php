@@ -49,6 +49,12 @@
             return false;
         }
     });
+    @if( !empty(request('customer_id')) )
+      $("#btn-customer").click();
+      //select_item(395,`บริษัท อะมะดะ แมชชีน ทูลส์ (ประเทศไทย) จำกัด`,`A0001`);
+    
+    @endif
+    
   });
 
 </script>
