@@ -22,14 +22,21 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>#</th><th>Name</th><th>Department</th><th>Email</th><th>Phone</th><th>Contact Type</th><th>Customer Id</th><th>Supplier Id</th><th>Actions</th>
+                        <th>#</th><th>Name</th><th>Department</th><th>Email</th><th>Phone</th><th>อ้างอิงเมื่อ</th><th>Contact Type</th><th>Customer Id</th><th>Supplier Id</th><th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($customer->contacts as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->name }}</td><td>{{ $item->department }}</td><td>{{ $item->email }}</td><td>{{ $item->phone }}</td><td>{{ $item->contact_type }}</td><td>{{ $item->customer_id }}</td><td>{{ $item->supplier_id }}</td>
+                        <td>{{ $item->name }}</td><td>{{ $item->department }}</td><td>{{ $item->email }}</td>
+                        <td>{{ $item->phone }}</td>
+                        <td>
+                            <input type="checkbox"> ใบเสนอราคา <br>
+                            <input type="checkbox"> ใบวางบิล <br>
+                            <input type="checkbox"> ใบสั่งซื้อ <br>
+                        </td>
+                        <td>{{ $item->contact_type }}</td><td>{{ $item->customer_id }}</td><td>{{ $item->supplier_id }}</td>
                         <td>
                             <a href="{{ url('/contact/' . $item->id) }}" title="View Contact"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                             <a href="{{ url('/contact/' . $item->id . '/edit') }}" title="Edit Contact"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
