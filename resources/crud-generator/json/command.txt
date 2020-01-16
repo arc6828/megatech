@@ -16,3 +16,7 @@ php artisan crud:generate Cheque --fields_from_file="resources/crud-generator/js
 
 
 php artisan crud:generate Contact --fields_from_file="resources/crud-generator/json/contact.json"
+
+php artisan crud:generate Calendar --fields_from_file="resources/crud-generator/json/calendar.json"
+php artisan crud:generate CalendarDate --fields_from_file="resources/crud-generator/json/calendar_date.json"
+php artisan crud:generate FullCalendar --fields_from_file="resources/crud-generator/json/full-calendar.json"

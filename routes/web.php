@@ -304,3 +304,10 @@ Route::get("report/customer/7/8","Report\CustomerController@screen_7_8");
 
 
 Route::resource('contact', 'ContactController');
+Route::resource('calendar', 'CalendarController');
+Route::resource('calendar-date', 'CalendarDateController');
+Route::resource('calendar-date', 'CalendarDateController');
+Route::resource('calendar', 'CalendarController');
+Route::resource('calendar', 'CalendarController');
+Route::resource('calendar-date', 'CalendarDateController');
+Route::resource('full-calendar', 'FullCalendarController');

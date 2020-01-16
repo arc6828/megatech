@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "select",
+            "options": {
+                "billing": "billing",
+                "cheque": "cheque"
+            }
+        },
+        {
+            "name": "pin_date",
+            "type": "date"
+        },
+        {
+            "name": "calender_id",
+            "type": "integer"
+        }
+    ]
+}

@@ -192,6 +192,9 @@
         <input name="branch_id" id="branch_id"  class="form-control form-control-sm  "  value="" >
       </div>
     </div>
+    <div class="text-center">
+      <a href="{{ url('full-calendar') }}?customer_id={{$customer->customer_id}}" class="btn btn-warning btn-sm">ดูปฏิทินวางบิลและรับเช็ค</a>
+    </div>
   </div>
 </div>
 

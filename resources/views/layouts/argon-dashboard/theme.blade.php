@@ -44,7 +44,7 @@
       max-width: 1200px;
     }
   </style>
-
+  @yield('head')
 </head>
 
 <body>

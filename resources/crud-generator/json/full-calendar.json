@@ -1,0 +1,32 @@
+{
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "start",
+            "type": "date"
+        },
+        {
+            "name": "end",
+            "type": "date"
+        },
+        {
+            "name": "name",
+            "type": "select",
+            "options": {
+                "billing": "billing",
+                "cheque": "cheque"
+            }
+        },
+        {
+            "name": "customer_id",
+            "type": "integer"
+        },
+        {
+            "name": "supplier_id",
+            "type": "integer"
+        }  
+    ]
+}

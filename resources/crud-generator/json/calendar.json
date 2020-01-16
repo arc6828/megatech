@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "first_billing_date",
+            "type": "date"
+        },
+        {
+            "name": "customer_id",
+            "type": "integer"
+        },
+        {
+            "name": "supplier_id",
+            "type": "integer"
+        }  
+    ]
+}
