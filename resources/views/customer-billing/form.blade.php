@@ -35,6 +35,9 @@
     <input class="form-control form-control-sm" name="condition_billing" type="text" id="condition_billing" value="{{ isset($customerbilling->condition_billing) ? $customerbilling->condition_billing : $condition_billing}}" >
     {!! $errors->first('condition_billing', '<p class="help-block">:message</p>') !!}
 </div>
+<div>
+
+</div>
 <div class="form-group {{ $errors->has('condition_cheque') ? 'has-error' : ''}}">
     <label for="condition_cheque" class="control-label">{{ 'เงื่อนไขรับเช็ค' }}</label>
     <input class="form-control form-control-sm" name="condition_cheque" type="text" id="condition_cheque" value="{{ isset($customerbilling->condition_cheque) ? $customerbilling->condition_cheque : $condition_cheque}}" >

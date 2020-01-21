@@ -1,13 +1,28 @@
 <div class="card">
   <div class="card-body">
+
+    <h2>ข้อมูลพื้นฐานลูกค้า</h2>
     <div class="row">
       <div class="form-group col-lg-2">
         <label>รหัสลูกค้า</label>
         <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value=""  required="" >
       </div>
-      <div class="form-group col-lg-8">
+      <div class="form-group col-lg-6">
         <label>ชื่อบริษัท</label>
         <input type="text" name="company_name"   id="company_name"   class="form-control form-control-sm  "  >
+      </div>
+      <div class="form-group col-lg-4">
+        <label >ชื่อพนักงานที่ดูแล</label>
+        <div class="input-group">
+          <input name="short_name" id="name"  class="form-control form-control-sm  "  readonly >
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
+              <i class="fa fa-plus"></i> รหัสพนักงาน
+            </button>
+          </div>
+        </div>
+        <input type="text" class="d-none" name="user_id" id="user_id"  required="" />
+        @include('customer/modal-user')
       </div>
       <div class="form-group col-lg-2 d-none">
         <label >ประเภทลูกค้า</label>
@@ -18,14 +33,24 @@
         </select>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="card mt-4">
-  <div class="card-body">
-    <h2>รายละเอียดข้อมูลลูกค้า / บริษัท</h2>
     <div class="row">
-      <div class="form-group col-lg-4">
+      <div class="form-group col-lg-3">
+        <label >เลขภาษี </label>
+        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  tax-format"    >
+      </div>
+      <div class="form-group col-lg-3">
+        <label >ชนิดสถานที่ประกอบการ </label>
+        <select name="location_type_id" id="location_type_id" class="form-control form-control-sm  "  >
+            @foreach ($table_location as $location)
+            <option value="{{ $location->location_type_id }}">{{ $location->location_type_name }}</option>
+            @endforeach
+        </select>
+      </div>
+      <div class="form-group col-lg-3">
+        <label  >สำนักงาน/สาขา (แสดงในภาษี) </label>
+        <input name="branch_id" id="branch_id"  class="form-control form-control-sm  "  value="" >
+      </div>
+      <div class="form-group col-lg-3">
         <label >รหัสผังบัญชี</label>
         <div class="input-group">
           <input name="account_id" id="account_id"  class="form-control form-control-sm  ">
@@ -40,37 +65,7 @@
 
         </div>
       </div>
-
-      <div class="form-group col-lg-4">
-        <label >ชื่อพนักงานที่ดูแล</label>
-        <div class="input-group">
-          <input name="short_name" id="name"  class="form-control form-control-sm  "  readonly >
-          <div class="input-group-append">
-            <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
-              <i class="fa fa-plus"></i> รหัสพนักงาน
-            </button>
-          </div>
-        </div>
-        <input type="text" class="d-none" name="user_id" id="user_id"  required="" />
-        @include('customer/modal-user')
-      </div>
     </div>
-
-    <div class="row">
-      <div class="form-group  col-lg-6">
-          <label >รายชื่อผู้ติดต่อ</label>
-          <input name="contact_name" id="contact_name" class="form-control form-control-sm "  >
-      </div>
-      <div class="form-group col-lg-3">
-          <label >เบอร์โทรศัพท์</label>
-          <input name="telephone" id="telephone" class="form-control form-control-sm "  >
-      </div>
-      <div class="form-group col-lg-3">
-        <label >เบอร์ FAX</label>
-        <input name="fax" id="fax"  class="form-control form-control-sm  "   >
-      </div>
-    </div>
-
 
     <div class="row">
       <div class="form-group col-lg-4">
@@ -95,6 +90,27 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="form-group  col-lg-6 d-none">
+          <label >รายชื่อผู้ติดต่อ</label>
+          <input name="contact_name" id="contact_name" class="form-control form-control-sm "  >
+      </div>
+      <div class="form-group col-lg-3">
+          <label >เบอร์โทรศัพท์</label>
+          <input name="telephone" id="telephone" class="form-control form-control-sm "  >
+      </div>
+      <div class="form-group col-lg-3">
+        <label >เบอร์ FAX</label>
+        <input name="fax" id="fax"  class="form-control form-control-sm  "   >
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <h2>ข้อมูลสถานที่ส่งของ</h2>
 
     <div class="row">
       <div class="form-group col-lg-4">
@@ -120,7 +136,6 @@
     </div>
     @include('customer/district_modal')
 
-
     <div class="row">
       <div class="form-group col-lg-3  d-none">
         <label >เขตการขายของ</label>
@@ -139,61 +154,96 @@
         </select>
       </div>
 
+    </div>
+    
+  </div>
+</div>
+
+<div class="card  mt-4">
+  <div class="card-body">
+    <h2>เครดิต</h2>
+    <div class="row">      
+
       <div class="form-group col-lg-3">
-        <label >วิธีการชำระเงิน</label>
+        <label >วิธีการขาย</label>
         <select class="form-control form-control-sm"  name="payment_method"  id="payment_method" >
-          <option value="credit">ซื้อเชื่อ</option>
-          <option value="cash">ซื้อสด</option>
+          <option value="credit">ขายเชื่อ</option>
+          <option value="cash">ขายสด</option>
         </select>
       </div>
       <div class="form-group col-lg-3">
-        <label >วงเงินเคดิต</label>
+        <label >วงเงินเครดิต</label>
         <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  "   >
+      </div>
+      <div class="form-group col-lg-3">
+        <label >ระยะเวลาหนี้</label>
+          <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "    >
+      </div>
+      <div class="form-group col-lg-3">
+        <label >วันที่ตัดรอบบิล</label>
+        <select class="form-control form-control-sm"  name="billing_cycle_date"  id="billing_cycle_date" >          
+          @for($i=1; $i<=31; $i++)
+          <option value="{{ $i }}">{{ $i }}</option>
+          @endfor
+          <option value="last-day" selected>วันสุดท้ายของเดือน</option>
+        </select>
       </div>
     </div>
 
 
 
-    <div class="row">
-      <div class="form-group col-lg-3">
-        <label >ระยะเวลาหนี้</label>
-          <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "    >
-      </div>
+    
+    
+    <div class="text-center">
+      <a href="{{ url('full-calendar') }}?customer_id={{$customer->customer_id}}" class="btn btn-warning btn-sm">ดูปฏิทินวางบิลและรับเช็ค</a>
+    </div>
+  </div>
+</div>
+
+<div class="card  mt-4">
+  <div class="card-body">
+    <h2>วางบิล</h2>
+    <div class="row">      
 
 
       <div class="form-group col-lg-3">
         <label >เงื่อนไขวางบิล </label>
         <input name="billing_duration" id="billing_duration" class="form-control form-control-sm  " >
       </div>
+      
+      <div class="form-group col-lg-3">
+        <label >หมายเหตุการวางบิล</label>
+        <input name="billing_remark" id="billing_remark" class="form-control form-control-sm  "  >
+      </div>
+      <div class="form-group col-lg-3">
+        <label >ช่องทางการวางบิล</label>
+        <select name="billing_method" id="billing_method" class="form-control form-control-sm  ">
+          <option value="drive">ไปวางเอง</option>
+          <option value="post">ไปรษณีย์</option>
+          <option value="email">อีเมล์</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <a href="{{ url('full-calendar') }}?customer_id={{$customer->customer_id}}" class="btn btn-warning btn-sm">ดูปฏิทินวางบิลและรับเช็ค</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="card  mt-4">
+  <div class="card-body">
+    <h2>รับเช็ค</h2>
+    <div class="row">            
       <div class="form-group col-lg-3">
         <label  >เงื่อนไขรับเช็ค </label>
         <input name="cheqe_condition"  id="cheqe_condition"  class="form-control form-control-sm  "  >
       </div>
       <div class="form-group col-lg-3">
-        <label >หมายเหตุ</label>
-        <input name="remark" id="remark" class="form-control form-control-sm  "  >
+        <label >หมายเหตุการรับเช็ค</label>
+        <input name="remark_cheque" id="remark_cheque" class="form-control form-control-sm  "  >
       </div>
-    </div>
-    <div class="row">
-      <div class="form-group col-lg-3">
-        <label >เลขภาษี </label>
-        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  tax-format"    >
-      </div>
-      <div class="form-group col-lg-3">
-        <label >ชนิดสถานที่ประกอบการ </label>
-        <select name="location_type_id" id="location_type_id" class="form-control form-control-sm  "  >
-            @foreach ($table_location as $location)
-            <option value="{{ $location->location_type_id }}">{{ $location->location_type_name }}</option>
-            @endforeach
-        </select>
-      </div>
-      <div class="form-group col-lg-3">
-        <label  >สำนักงาน/สาขา (แสดงในภาษี) </label>
-        <input name="branch_id" id="branch_id"  class="form-control form-control-sm  "  value="" >
-      </div>
-    </div>
-    <div class="text-center">
-      <a href="{{ url('full-calendar') }}?customer_id={{$customer->customer_id}}" class="btn btn-warning btn-sm">ดูปฏิทินวางบิลและรับเช็ค</a>
     </div>
   </div>
 </div>
