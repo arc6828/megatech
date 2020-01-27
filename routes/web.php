@@ -311,3 +311,4 @@ Route::resource('calendar', 'CalendarController');
 Route::resource('calendar', 'CalendarController');
 Route::resource('calendar-date', 'CalendarDateController');
 Route::resource('full-calendar', 'FullCalendarController');
+Route::resource('checklist', 'ChecklistController');

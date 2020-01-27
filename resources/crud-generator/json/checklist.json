@@ -1,0 +1,52 @@
+{
+    "fields": [        
+        {
+            "name": "billing_invoice",
+            "type": "string"
+        },
+        {
+            "name": "billing_po",
+            "type": "string"
+        },
+        {
+            "name": "billing_receipt",
+            "type": "string"
+        },
+        {
+            "name": "billing_envelope",
+            "type": "string"
+        },
+        {
+            "name": "billing_delivery",
+            "type": "string"
+        },
+        {
+            "name": "billing_reference",
+            "type": "string"
+        },
+        {
+            "name": "cheque_billing",
+            "type": "string"
+        },
+        {
+            "name": "cheque_receipt",
+            "type": "string"
+        },
+        {
+            "name": "cheque_po",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
+            "name": "customer_id",
+            "type": "string"
+        },
+        {
+            "name": "supplier_id",
+            "type": "string"
+        }  
+    ]
+}
