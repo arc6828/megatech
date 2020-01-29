@@ -251,57 +251,6 @@
 
 @include('customer/form-upload')
 
-<div class="card  mt-4">
-  <div class="card-body">
-
-    <h2>อัพโหลดเอกสาร</h2>
-    <div class="table-responsive">
-      <table class="table table-sm table-bordered text-center" id="table">
-        <thead>
-          <tr>
-            <th class="text-center">Document</th>
-            <th class="text-center">File name</th>
-            <th class="text-center">Upload</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          @foreach($table_upload as $row_upload)
-          <tr>
-            <td>
-              {{ $row_upload->name }}
-            </td>
-            <td>
-              <a href="#" id="file_name_{{ $row_upload->key }}" target="_blank">...</a>
-            </td>
-            <td>
-              <div class="input-group  input-group-sm">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" name="upload_{{ $row_upload->key }}" id="upload_{{ $row_upload->key }}" onchange="var fileName = $(this)[0].files[0].name; $(this).next().text(fileName)">
-                  <label class="custom-file-label" >Choose file</label>
-                </div>
-              </div>
-            </td>
-          </tr>
-          @endforeach
-      </tbody>
-    </table>
-    </div>
-  </div>
-</div>
-
-<script>
-function getUploadTemplate()
-{
-  return [
-    {"key" : "map" , "name" : "แผนที่", "value":""},
-    {"key" : "cc" , "name" : "ใบรับรองบริษัท", "value":""},
-    {"key" : "cv_20" , "name" : "ใบภพ.20", "value":""},
-    {"key" : "cheque" , "name" : "ระเบียบวางบิล-รับเช็ค", "value":"" },
-  ];
-}
-</script>
-
 
 <div>
   <div class="form-group col-lg-3 d-none">
