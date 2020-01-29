@@ -51,6 +51,10 @@ class CustomerModel extends Model
 							'upload',
 							'contact',
 							'payment_method',
+							'file_map',
+							'file_cc',
+							'file_cv_20',
+							'file_cheque',
 							
 							];
 	//Relationships	

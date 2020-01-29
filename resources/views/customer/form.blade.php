@@ -232,6 +232,7 @@
   </div>
 </div>
 
+
 <div class="card  mt-4">
   <div class="card-body">
     <h2>รับเช็ค</h2>
@@ -247,6 +248,8 @@
     </div>
   </div>
 </div>
+
+@include('customer/form-upload')
 
 <div class="card  mt-4">
   <div class="card-body">

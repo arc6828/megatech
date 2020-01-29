@@ -132,7 +132,12 @@ class CustomerController extends Controller
             'billing_duration' => $request->input('billing_duration'),
             'cheqe_condition' => $request->input('cheqe_condition'),
             'location_type_id' => $request->input('location_type_id'),
-            'branch_id' => $request->input('branch_id')
+            'branch_id' => $request->input('branch_id'),
+              
+            'file_map' => $request->input('file_map'),
+            'file_cc' => $request->input('file_cc'),
+            'file_cv_20' => $request->input('file_cv_20'),
+            'file_cheque' => $request->input('file_cheque'),
         ];
 
         CustomerModel::insert($input);
@@ -274,6 +279,23 @@ class CustomerController extends Controller
           'upload' => json_encode($upload_json),
       ];
 
+      //
+      if ($request->hasFile('file_map')) {
+          $folder = "customer/{$request->input('customer_code')}/file_map";
+          $input['file_map'] = $request->file('file_map')->store($folder, 'public');
+      }
+      if ($request->hasFile('file_cc')) {
+        $folder = "customer/{$request->input('customer_code')}/file_cc";
+          $input['file_cc'] = $request->file('file_cc')->store($folder, 'public');
+      }
+      if ($request->hasFile('file_cv_20')) {
+        $folder = "customer/{$request->input('customer_code')}/file_cv_20";
+          $input['file_cv_20'] = $request->file('file_cv_20')->store($folder, 'public');
+      }
+      if ($request->hasFile('file_cheque')) {
+        $folder = "customer/{$request->input('customer_code')}/file_cheque";
+          $input['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
+      }
       CustomerModel::update_by_id($input,$id);
       return redirect("customer/{$id}/edit");
 
