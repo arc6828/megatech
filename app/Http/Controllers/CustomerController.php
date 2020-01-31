@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\CustomerModel;
 use App\AccountModel;
 use App\UserModel;
-use App\CheckList;
+use App\Checklist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -154,7 +154,7 @@ class CustomerController extends Controller
 
             'table_upload' => $this->getUploadTemplate(),
             'customer' => CustomerModel::findOrFail($id),
-            'checklist' => CheckList::firstOrCreate(
+            'checklist' => Checklist::firstOrCreate(
               ['customer_id' => $id],
               ['type' => 'customer']
             ),
