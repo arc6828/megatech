@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CustomerModel;
 use App\AccountModel;
 use App\UserModel;
+use App\CheckList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -68,91 +69,28 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // $id_customer = $request->input('id_customer');
-        // $type_customer = $request->input('type_customer');
-        // $name_company = $request->input('name_company');
-        // $id_account = $request->input('id_account');
-        // $name_customer = $request->input('name_customer');
-        // $address = $request->input('address');
-        // $place_delivery = $request->input('place_delivery');
-        // $id_user = $request->input('id_user');
-        // $telephone = $request->input('telephone');
-        // $sales_area = $request->input('sales_area');
-        // $transpot = $request->input('transpot');
-        // $note = $request->input('note');
-        // $credit = $request->input('credit');
-        // $debt_period = $request->input('debt_period');
-        // $degree_product = $request->input('degree_product');
-        // $deposit_discount = $request->input('deposit_discount');
-        // $tax_number = $request->input('tax_number');
-        // $bill_condition = $request->input('bill_condition');
-        // $check_condition = $request->input('check_condition');
-        // $location = $request->input('location');
-        // $branch = $request->input('branch');
-        // $fax_number = $request->input('fax_number');
+    {     
+        
+        $requestData = $request->all();
 
-        // $debt_balance = 0;
-
-
-        // $model = new CustomerModel();
-        // $model->insert($id_customer, $type_customer, $name_company, $id_account, $name_customer, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number, $debt_balance);
-        // return redirect('finance/debtor');
-
-        $input = [
-            'customer_code' => $request->input('customer_code'),
-            'customer_type' => $request->input('customer_type'),
-            'company_name' => $request->input('company_name'),
-            'account_id' => $request->input('account_id'),
-            'contact_name' => $request->input('contact_name'),
-            'address' => $request->input('address'),
-            'address2' => "",
-            'sub_district' => $request->input('sub_district'),
-            'district' => $request->input('district'),
-            'province' => $request->input('province'),
-            'zipcode' => $request->input('zipcode'),
-            'delivery_address' => $request->input('delivery_address'),
-            'delivery_address2' => "",
-            'delivery_sub_district' => $request->input('delivery_sub_district'),
-            'delivery_district' => $request->input('delivery_district'),
-            'delivery_province' => $request->input('delivery_province'),
-            'delivery_zipcode' => $request->input('delivery_zipcode'),
-            'user_id' => $request->input('user_id'),
-            'telephone' => $request->input('telephone'),
-            'fax' => $request->input('fax'),
-            'zone_id' => $request->input('zone_id'),
-            'delivery_type_id' => $request->input('delivery_type_id'),
-            'remark' => $request->input('remark'),
-            'payment_method' => $request->input('payment_method'),
-            'max_credit' => $request->input('max_credit'),
-            'debt_duration' => $request->input('debt_duration'),
-            'degree_product' => $request->input('degree_product'),
-            'loyalty_discount' => $request->input('loyalty_discount'),
-            'tax_number' => $request->input('tax_number'),
-            'billing_duration' => $request->input('billing_duration'),
-            'cheqe_condition' => $request->input('cheqe_condition'),
-            'location_type_id' => $request->input('location_type_id'),
-            'branch_id' => $request->input('branch_id'),
-            
-        ];
         if ($request->hasFile('file_map')) {
-          $folder = "customer/{$request->input('customer_code')}/file_map";
-          $input['file_map'] = $request->file('file_map')->store($folder, 'public');
-      }
-      if ($request->hasFile('file_cc')) {
-        $folder = "customer/{$request->input('customer_code')}/file_cc";
-          $input['file_cc'] = $request->file('file_cc')->store($folder, 'public');
-      }
-      if ($request->hasFile('file_cv_20')) {
-        $folder = "customer/{$request->input('customer_code')}/file_cv_20";
-          $input['file_cv_20'] = $request->file('file_cv_20')->store($folder, 'public');
-      }
-      if ($request->hasFile('file_cheque')) {
-        $folder = "customer/{$request->input('customer_code')}/file_cheque";
-          $input['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
-      }
-
-        CustomerModel::insert($input);
+            $folder = "customer/{$request->input('customer_code')}/file_map";
+            $requestData['file_map'] = $request->file('file_map')->store($folder, 'public');
+        }
+        if ($request->hasFile('file_cc')) {
+          $folder = "customer/{$request->input('customer_code')}/file_cc";
+            $requestData['file_cc'] = $request->file('file_cc')->store($folder, 'public');
+        }
+        if ($request->hasFile('file_cv_20')) {
+          $folder = "customer/{$request->input('customer_code')}/file_cv_20";
+            $requestData['file_cv_20'] = $request->file('file_cv_20')->store($folder, 'public');
+        }
+        if ($request->hasFile('file_cheque')) {
+          $folder = "customer/{$request->input('customer_code')}/file_cheque";
+            $requestData['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
+        }
+        //UPDATE CUSTOMER
+        CustomerModel::create($requestData);
         return redirect('customer');
     }
 
@@ -216,6 +154,10 @@ class CustomerController extends Controller
 
             'table_upload' => $this->getUploadTemplate(),
             'customer' => CustomerModel::findOrFail($id),
+            'checklist' => CheckList::firstOrCreate(
+              ['customer_id' => $id],
+              ['type' => 'customer']
+            ),
         ];
         return view('customer/edit',$data);
     }
@@ -228,87 +170,33 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-      //Save upload image to 'avatar' folder which in 'storage/app/public' folder
-      $upload = CustomerModel::select_upload_by_id($id);
-      $upload_json = $this->getUploadTemplate($upload);
-      if ($request->hasFile('upload_map')) {
-        //$path = $request->file('upload_map')->store('avatar','public');
-      }
+    {           
+      $requestData = $request->all();
 
-      $i = 0;
-      foreach($upload_json as $row)
-      {
-        //$path = $request->file('image')->store('avatar','public');
-        $filename = "upload_".$row->key;
-        echo $filename;
-        if ($request->hasFile($filename)) {
-          $folder = "customer/{$request->input('customer_code')}/{$row->key}";
-          $value = $request->file($filename)->store($folder,'public');
-          $upload_json[$i]->value = $value;
-          echo $row->key."<br>";
-        }
-        $i++;
-      }
-      //$path = $request->file('image')->store('avatar','public');
-      //echo $path;
-      //Save $path to database or anything else
-      //...
-      $input = [
-          'customer_code' => $request->input('customer_code'),
-          'customer_type' => $request->input('customer_type'),
-          'company_name' => $request->input('company_name'),
-          'account_id' => $request->input('account_id'),
-          'contact_name' => $request->input('contact_name'),
-          'address' => $request->input('address'),
-          'address2' => "",
-          'sub_district' => $request->input('sub_district'),
-          'district' => $request->input('district'),
-          'province' => $request->input('province'),
-          'zipcode' => $request->input('zipcode'),
-          'delivery_address' => $request->input('delivery_address'),
-          'delivery_address2' => "",
-          'delivery_sub_district' => $request->input('delivery_sub_district'),
-          'delivery_district' => $request->input('delivery_district'),
-          'delivery_province' => $request->input('delivery_province'),
-          'delivery_zipcode' => $request->input('delivery_zipcode'),
-          'user_id' => $request->input('user_id'),
-          'telephone' => $request->input('telephone'),
-          'fax' => $request->input('fax'),
-          'zone_id' => $request->input('zone_id'),
-          'delivery_type_id' => $request->input('delivery_type_id'),
-          'remark' => $request->input('remark'),
-          'payment_method' => $request->input('payment_method'),
-          'max_credit' => $request->input('max_credit'),
-          'debt_duration' => $request->input('debt_duration'),
-          'degree_product' => $request->input('degree_product'),
-          'loyalty_discount' => $request->input('loyalty_discount'),
-          'tax_number' => $request->input('tax_number'),
-          'billing_duration' => $request->input('billing_duration'),
-          'cheqe_condition' => $request->input('cheqe_condition'),
-          'location_type_id' => $request->input('location_type_id'),
-          'branch_id' => $request->input('branch_id'),
-          'upload' => json_encode($upload_json),
-      ];
-
-      //
+      //FILE
       if ($request->hasFile('file_map')) {
           $folder = "customer/{$request->input('customer_code')}/file_map";
-          $input['file_map'] = $request->file('file_map')->store($folder, 'public');
+          $requestData['file_map'] = $request->file('file_map')->store($folder, 'public');
       }
       if ($request->hasFile('file_cc')) {
         $folder = "customer/{$request->input('customer_code')}/file_cc";
-          $input['file_cc'] = $request->file('file_cc')->store($folder, 'public');
+          $requestData['file_cc'] = $request->file('file_cc')->store($folder, 'public');
       }
       if ($request->hasFile('file_cv_20')) {
         $folder = "customer/{$request->input('customer_code')}/file_cv_20";
-          $input['file_cv_20'] = $request->file('file_cv_20')->store($folder, 'public');
+          $requestData['file_cv_20'] = $request->file('file_cv_20')->store($folder, 'public');
       }
       if ($request->hasFile('file_cheque')) {
         $folder = "customer/{$request->input('customer_code')}/file_cheque";
-          $input['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
+          $requestData['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
       }
-      CustomerModel::update_by_id($input,$id);
+      //UPDATE CUSTOMER
+      $customer = CustomerModel::findOrFail($id);
+      $customer->update($requestData);
+      //UPDATE CHECKLIST
+      $checklist = Checklist::findOrFail($customer->checklist->id);
+      $checklist->update($requestData);
+
       return redirect("customer/{$id}/edit");
 
     }

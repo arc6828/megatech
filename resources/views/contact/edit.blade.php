@@ -10,8 +10,17 @@
                 <div class="card">
                     <div class="card-header">Edit Contact #{{ $contact->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/contact') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
+                        @php
+                            switch($contact->contact_type){
+                                case("customer"):
+                                    $id = $contact->customer_id;
+                                    break;
+                                case("supplier"):
+                                    $id = $contact->supplier_id;
+                                    break;
+                            }
+                        @endphp
+                        <a href="{{ url('/') }}/{{$contact->contact_type}}/{{$id}}/edit" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a><br />
                         <br />
 
                         @if ($errors->any())

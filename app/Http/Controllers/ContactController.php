@@ -43,7 +43,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('contact.create');
+        $contact = new Contact;
+        return view('contact.create',compact('contact'));
     }
 
     /**
@@ -60,9 +61,16 @@ class ContactController extends Controller
         
         $contact = Contact::create($requestData);
 
+        if($contact->contact_type == "customer"){
+            $url = "customer/{$contact->customer_id}/edit";
+        }else{
+            $url = "customer/{$contact->supplier_id}/edit";
+        }
+        return redirect($url)->with('flash_message', 'Contact added!');
+
         
 
-        return redirect($contact->contact_type."/".$contact->customer_id."/edit")->with('flash_message', 'Contact added!');
+        //return redirect($contact->contact_type."/".$contact->customer_id."/edit")->with('flash_message', 'Contact added!');
     }
 
     /**
@@ -108,8 +116,12 @@ class ContactController extends Controller
         
         $contact = Contact::findOrFail($id);
         $contact->update($requestData);
-
-        return redirect('contact')->with('flash_message', 'Contact updated!');
+        if($contact->contact_type == "customer"){
+            $url = "customer/{$contact->customer_id}/edit";
+        }else{
+            $url = "customer/{$contact->supplier_id}/edit";
+        }
+        return redirect($url)->with('flash_message', 'Contact updated!');
     }
 
     /**

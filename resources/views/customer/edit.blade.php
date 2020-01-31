@@ -31,10 +31,10 @@
     </form>
   </div>
   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-    @include('contact/index-item')
+    @include('contact/index-item', ['type' => 'customer'])
   </div>
   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-    @include('customer/form-comment')
+    @include('customer/form-comment', ['type' => 'customer'])
   </div>
 </div>
 @empty

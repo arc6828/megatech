@@ -43,7 +43,11 @@
     .modal-lg{
       max-width: 1200px;
     }
-  </style>
+    
+    input.checklist {
+        display : none;
+    }
+    </style>
   @yield('head')
 </head>
 

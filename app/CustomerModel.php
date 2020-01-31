@@ -59,6 +59,10 @@ class CustomerModel extends Model
 							];
 	//Relationships	
 	//sales		
+	public function checklist(){
+		return $this->hasOne('App\CheckList','customer_id');
+	}
+
 	public function contacts(){
 		return $this->hasMany('App\Contact','customer_id');
 	}	

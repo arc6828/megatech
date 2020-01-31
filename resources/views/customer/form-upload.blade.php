@@ -17,8 +17,8 @@
             <td>แผนที่</td>
             <td>
               @if( $customer->file_map )
-              <a href="{{ url('/storage') }}/{{ $customer->file_map }}"  target="_blank">
-                {{ $customer->file_map }}
+              <a class="btn btn-sm btn-warning" href="{{ url('/storage') }}/{{ $customer->file_map }}"  target="_blank">
+                Download
               </a>
               @endif
             </td>
@@ -36,8 +36,8 @@
             <td>ใบรับรองบริษัท	</td>
             <td>
               @if( $customer->file_cc )
-              <a href="{{ url('/storage') }}/{{ $customer->file_cc }}"   target="_blank">
-                {{ $customer->file_cc }}
+              <a class="btn btn-sm btn-warning" href="{{ url('/storage') }}/{{ $customer->file_cc }}"   target="_blank">
+                Download
               </a>
               @endif
             </td>
@@ -55,8 +55,8 @@
             <td>ใบภพ.20		</td>
             <td>
               @if( $customer->file_cv_20 )
-              <a href="{{ url('/storage') }}/{{ $customer->file_cv_20 }}"   target="_blank">
-                {{ $customer->file_cv_20 }}
+              <a class="btn btn-sm btn-warning" href="{{ url('/storage') }}/{{ $customer->file_cv_20 }}"   target="_blank">
+                Download
               </a>
               @endif
             </td>
@@ -74,8 +74,8 @@
             <td>ระเบียบวางบิล-รับเช็ค	</td>
             <td>
               @if( $customer->file_cheque )
-              <a href="{{ url('/storage') }}/{{ $customer->file_cheque }}"   target="_blank">
-                {{ $customer->file_cheque }}
+              <a class="btn btn-sm btn-warning" href="{{ url('/storage') }}/{{ $customer->file_cheque }}"   target="_blank">
+                Download
               </a>
               @endif
             </td>

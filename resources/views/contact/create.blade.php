@@ -10,7 +10,18 @@
                 <div class="card">
                     <div class="card-header">Create New Contact</div>
                     <div class="card-body">
-                        <a href="{{ url('/contact') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        @php
+                        $contact_type = request('customer_id')?'customer':'supplier';
+                        switch($contact_type){
+                            case("customer"):
+                                $id = request('customer_id');
+                                break;
+                            case("supplier"):
+                                $id = request('supplier_id');
+                                break;
+                        }
+                        @endphp
+                        <a href="{{ url('/') }}/{{$contact_type}}/{{$id}}/edit" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
                         <br />
 
