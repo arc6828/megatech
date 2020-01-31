@@ -60,7 +60,7 @@ class CustomerModel extends Model
 	//Relationships	
 	//sales		
 	public function checklist(){
-		return $this->hasOne('App\CheckList','customer_id');
+		return $this->hasOne('App\Checklist','customer_id');
 	}
 
 	public function contacts(){
