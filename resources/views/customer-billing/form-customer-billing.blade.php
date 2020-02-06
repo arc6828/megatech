@@ -16,7 +16,7 @@ $checklist = $customer->checklist;
       </div>
       <div class="form-group col-lg-3">
         <label >วงเงินเครดิต</label>
-        <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  "  value="{{isset($customer)? $cusmtomer->max_credit : ''}}"  >
+        <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  "  value="{{isset($customer)? $customer->max_credit : ''}}"  >
       </div>
       <div class="form-group col-lg-3">
         <label >ระยะเวลาหนี้</label>
