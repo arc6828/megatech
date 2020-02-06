@@ -201,28 +201,20 @@ $checklist = $customer->checklist;
     <div class="row">      
 
       <div class="form-group col-lg-3">
-        <label >วิธีการขาย</label>
-        <select class="form-control form-control-sm"  name="payment_method"  id="payment_method" >
-          <option value="credit">ขายเชื่อ</option>
-          <option value="cash">ขายสด</option>
-        </select>
+        <label >วิธีการขาย </label> {{isset($customer)? $customer->payment_method : ''}}
+        
       </div>
       <div class="form-group col-lg-3">
-        <label >วงเงินเครดิต</label>
-        <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  "  value="{{isset($customer)? $customer->max_credit : ''}}"  >
+        <label >วงเงินเครดิต</label> {{isset($customer)? $customer->max_credit : ''}}
+        
       </div>
       <div class="form-group col-lg-3">
-        <label >ระยะเวลาหนี้</label>
+        <label >ระยะเวลาหนี้</label>  {{isset($customer)? $customer->debt_duration : ''}}
           <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "   value="{{isset($customer)? $customer->debt_duration : ''}}"  >
       </div>
       <div class="form-group col-lg-3">
-        <label >วันที่ตัดรอบบิล <span class="text-red">*</span></label>
-        <select class="form-control form-control-sm"  name="billing_cycle_date"  id="billing_cycle_date" >          
-          @for($i=1; $i<=31; $i++)
-          <option value="{{ $i }}">{{ $i }}</option>
-          @endfor
-          <option value="last-day" selected>วันสุดท้ายของเดือน</option>
-        </select>
+        <label >วันที่ตัดรอบบิล  </label>  {{isset($customer)? $customer->billing_cycle_date : ''}}
+        
       </div>
     </div>
 
@@ -230,9 +222,6 @@ $checklist = $customer->checklist;
 
     
     
-    <div class="text-center">
-      <a href="{{ url('full-calendar') }}?customer_id={{$customer->customer_id}}" class="btn btn-warning btn-sm">ดูปฏิทินวางบิลและรับเช็ค</a>
-    </div>
   </div>
 </div>
 
