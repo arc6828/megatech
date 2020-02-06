@@ -51,11 +51,11 @@ $checklist = $customer->checklist;
 
       <div class="form-group col-lg-3">
         <label >เงื่อนไขวางบิล </label>
-        <input name="billing_duration" id="billing_duration" class="form-control form-control-sm  " >
+        <input name="billing_duration" id="billing_duration" class="form-control form-control-sm  "  value="{{isset($customer)? $customer->billing_duration : ''}}">
       </div>
       <div class="form-group col-lg-3">
         <label >ช่องทางการวางบิล<span class="text-red">*</span></label>
-        <select name="billing_method" id="billing_method" class="form-control form-control-sm  ">
+        <select name="billing_method" id="billing_method" class="form-control form-control-sm  " >
           <option value="drive">ไปวางเอง</option>
           <option value="post">ไปรษณีย์</option>
           <option value="email">อีเมล์</option>

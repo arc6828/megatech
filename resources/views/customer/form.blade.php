@@ -182,7 +182,7 @@
       <div class="form-group col-lg-3">
         <label >วันที่ตัดรอบบิล <span class="text-red">*</span></label>
         <select class="form-control form-control-sm"  name="billing_cycle_date"  id="billing_cycle_date" >          
-          @for($i=1; $i<=31; $i++)
+          @for($i=1; $i<=28; $i++)
           <option value="{{ $i }}">{{ $i }}</option>
           @endfor
           <option value="last-day" selected>วันสุดท้ายของเดือน</option>
