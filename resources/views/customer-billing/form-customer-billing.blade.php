@@ -20,7 +20,7 @@ $checklist = $customer->checklist;
       </div>
       <div class="form-group col-lg-3">
         <label >ระยะเวลาหนี้</label>
-          <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "    >
+          <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "   value="{{isset($customer)? $customer->debt_duration : ''}}"  >
       </div>
       <div class="form-group col-lg-3">
         <label >วันที่ตัดรอบบิล <span class="text-red">*</span></label>
