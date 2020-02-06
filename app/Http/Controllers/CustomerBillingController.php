@@ -54,10 +54,13 @@ class CustomerBillingController extends Controller
         $end_date = !empty( $request->get('end_date') ) ? request('end_date') : date('Y-m-d');
         $customer_id = request('customer_id',0);
         $customer = CustomerModel::find($customer_id);
-        Checklist::firstOrCreate(
-            ['customer_id' => $customer->customer_id],
-            ['type' => 'customer']
-        );
+        if($customer){
+            Checklist::firstOrCreate(
+                ['customer_id' => $customer->customer_id],
+                ['type' => 'customer']
+            );
+        }
+        
         $table_invoice = InvoiceModel::where('customer_id', $customer_id)
             ->where('datetime','<=', $end_date )
             ->where('sales_status_id','<',12) //sales_status_id 12 : วางบิลแล้ว
