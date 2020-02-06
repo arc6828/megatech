@@ -2,6 +2,8 @@
 
 @section('title','ใบส่งของชั่วคราว')
 
+@section('background-tag','bg-warning')
+
 @section('content')
 
   <style>

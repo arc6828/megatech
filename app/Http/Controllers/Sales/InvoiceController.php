@@ -19,6 +19,7 @@ use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use App\Functions;
 
 use App\GaurdStock;
 
@@ -197,6 +198,28 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
+      $data = [
+          //QUOTATION
+          'table_invoice' => InvoiceModel::select_by_id($id),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_by_category('order'),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
+          'table_zone' => ZoneModel::select_all(),
+          'invoice_id'=> $id,
+          //QUOTATION Detail
+          'table_invoice_detail' => InvoiceDetailModel::select_by_invoice_id($id),
+          'table_product' => ProductModel::select_all(),
+          'mode' => 'show',
+      ];
+      return view('sales/invoice/edit',$data);
+    }
+
+    public function pdf($id)
+    {
         //no show
 
       $data = [
@@ -214,6 +237,8 @@ class InvoiceController extends Controller
           //QUOTATION Detail
           'table_invoice_detail' => InvoiceDetailModel::select_by_invoice_id($id),
           'table_product' => ProductModel::select_all(),
+          
+          'total_text' => count(InvoiceModel::select_by_id($id))>0 ?  Functions::baht_text(InvoiceModel::select_by_id($id)[0]->total) : "-",
       ];
       //return view('sales/invoice/edit',$data);
 
@@ -245,6 +270,7 @@ class InvoiceController extends Controller
           //QUOTATION Detail
           'table_invoice_detail' => InvoiceDetailModel::select_by_invoice_id($id),
           'table_product' => ProductModel::select_all(),
+          'mode' => 'edit',
       ];
       return view('sales/invoice/edit',$data);
     }

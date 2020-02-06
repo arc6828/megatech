@@ -59,11 +59,15 @@ Route::middleware(['auth'])->group(function () {
       Route::resource('/quotation', 'Sales\QuotationController');
       //Route::resource('/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
       //Route::resource('/quotation', 'Sales\QuotationController');
+
+      Route::get('/order/{id}/pdf', 'Sales\OrderController@pdf');
       Route::resource('/order', 'Sales\OrderController');
       Route::get('/order_detail', 'Sales\OrderDetailController@index');
       Route::put('/order_detail/approve', 'Sales\OrderDetailController@approve');
       //Route::resource('/requisition', 'Sales\RequisitionController');
       //Route::resource('/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
+      
+      Route::get('/invoice/{id}/pdf', 'Sales\InvoiceController@pdf');
       Route::resource('/invoice', 'Sales\InvoiceController');
       Route::resource('/delivery_temporary', 'Sales\DeliveryTemporaryController');
       //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');

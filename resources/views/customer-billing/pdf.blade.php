@@ -68,7 +68,12 @@
         </tr>
         <tr>
           <th>วันที่</th>
-          <td>{{ $row->created_at }}</td>
+          @php
+            $datetime_array = explode(" ", $row->created_at);
+            $date_array = explode("-", $datetime_array[0]);
+            $date = "{$date_array[2]}/{$date_array[1]}/{$date_array[0]}";
+          @endphp
+          <td>{{ $date }} </td>
         </tr>
       </table>
       </div>
@@ -80,12 +85,13 @@
         <strong>ลูกค้า :</strong> {{ $row->customer->company_name }} <br>
         <strong>ที่อยู่ :</strong> {{ $row->customer->address }} {{ $row->customer->address2 }}  <br>
         <strong>โทร :</strong> {{ $row->customer->telephone }}
-        <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> {{ $row->customer->fax }}
-        <strong style="margin-left:150px;">รหัสลูกค้า :</strong> {{ $row->customer->customer_code }}  <br>
+        <strong style="margin-left:100px;">แฟ๊กซ์ :</strong> {{ $row->customer->fax }}
+        <strong style="margin-left:100px;">รหัสลูกค้า :</strong> {{ $row->customer->customer_code }}  
+        <strong style="margin-left:100px;">Sale :</strong> {{ $row->customer->user->short_name }}  <br>
       </td></tr>
     </table>
   </div>
-  <div style="margin-top:10px;">
+  <div style="margin-top:10px; display : none; ">
     <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
       <tr>
         <th>กำหนดยืนราคา</th>
@@ -95,7 +101,7 @@
       </tr>
       <tr>
         <td>30 วัน</td>
-        <td>{{ $row->customer->delivery_time }}</td>
+        <td>{{ $row->customer->delivery_time }} วัน</td>
         <td>{{ $row->customer->debt_duration }}</td>
         <td>{{ $row->user->name }}</td>
       </tr>
@@ -105,24 +111,21 @@
     <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
         <thead>
             <tr>
+                <th class="text-center">ลำดับ</th>
                 <th class="text-center">เลขที่เอกสาร</th>
                 <th class="text-center">วันที่</th>
-                <th class="text-center">รหัสลูกค้า</th>
-                <th class="text-center">ชื่อบริษัท</th>
-                <th class="text-center">ยอดหนี้คงค้าง</th>
+                <th class="text-center">เอกสารอ้างอิง</th>
                 <th class="text-center">ยอดรวม</th>
-                <th class="text-center">รหัสพนักงาน</th>
             </tr>
         </thead>
       @foreach($row->customer_billing_details as $row_detail)
         <tr>
+            <td> {{ $loop->iteration }}  </td>
             <td> {{ $row_detail->invoice->invoice_code }}  </td>
             <td>{{ $row_detail->invoice->datetime }}</td>
-            <td>{{ $row_detail->invoice->Customer->customer_code }}</td>
-            <td> {{ $row_detail->invoice->Customer->company_name }} </td>
-            <td>{{ $row_detail->invoice->total_debt }}</td>
+            <td>{{ $row_detail->invoice->external_reference_id }}</td>
             <td>{{ number_format($row_detail->invoice->total?$row_detail->invoice->total:0,2) }}</td>
-            <td>{{ $row_detail->invoice->User->short_name }}</td>
+            
         </tr>
       @endforeach
       @for($i=0; $i<(10-count($row->customer_billing_details)); $i++)
@@ -132,40 +135,48 @@
         <td><br></td>
         <td><br></td>
         <td><br></td>
-        <td><br></td>
-        <td><br></td>
       </tr>
       @endfor
       <tr>
-        <td colspan="4" style="text-align:left;"><strong>หมายเหตุ</strong><br /> {{ $row->remark !="" ? $row->remark : "-" }}</td>
-        <td rowspan="2" colspan="3">
-          รวมเป็นเงิน {{ $row->total }}<br>
-          ภาษีมูลค่าเพิ่ม 7% {{ $row->total * $row->vat_percent / 100 }}<br>
-          รวมทั้งสิ้น {{ $row->total + $row->total * $row->vat_percent / 100 }}<br>
+        <td colspan="3" style="text-align:center;">
+          ({{ $total_text }})
+        </td>
+        <td colspan="1" style="text-align:right;">
+          <strong>รวมทั้งสิ้น</strong>            
+        </td>
+        <td colspan="1" style="text-align:center;">   
+          <strong>{{ number_format($row->total,2) }}</strong>
         </td>
       </tr>
       <tr>
-        <td colspan="4">
-          (...)
+        <td colspan="5" style="text-align:left;">
+          <strong>หมายเหตุ</strong> {{ $row->remark !="" ? $row->remark : "-" }}        
         </td>
       </tr>
     </table>
   </div>
 
-  <div style="text-align:center; margin-top:70px;">
-    <div class="inline" style="width:5%;"></div>
-    <div class="inline" style="width:33%;">
-      _______________________________________<br>
-      ผู้เสนอราคา<br>
-      วันที่ 21/06/2019
+  <div style="text-align:center; margin-top:100px;">
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      ผู้รับวางบิล<br>
+      วันที่ __/__/____
     </div>
-    <div class="inline" style="width:23%;"></div>
-    <div class="inline" style="width:33%;">
-      _______________________________________<br>
-      ผู้อนุมัติ<br>
-      วันที่ 21/06/2019
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      ผู้วางบิล<br>
+      วันที่ __/__/____
     </div>
-    <div class="inline" style="width:5%;"></div>
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      วันที่นัดรับเช็ค / โอนเงิน<br>
+       .
+    </div>
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      ผู้ตรวจสอบ<br>
+       .
+    </div>
   </div>
 
   <div class="" style="text-align : center; margin-top:30px;">

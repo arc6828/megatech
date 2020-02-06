@@ -45,7 +45,6 @@ class OrderController extends Controller
       $data = [
         //QUOTATION
         'table_order' => $table_order,
-        'q' => $request->input('q')
       ];
       return view('sales/order/index',$data);
     }
@@ -66,18 +65,18 @@ class OrderController extends Controller
       }
       $data = [
           //QUOTATION
-          'table_customer' => CustomerModel::select_all(),
-          'table_delivery_type' => DeliveryTypeModel::select_all(),
-          'table_department' => DepartmentModel::select_all(),
-          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_customer' => CustomerModel::all(),
+          'table_delivery_type' => DeliveryTypeModel::all(),
+          'table_department' => DepartmentModel::all(),
+          'table_tax_type' => TaxTypeModel::all(),
           'table_sales_status' => SalesStatusModel::select_by_category('order'),
           //'table_sales_user' => UserModel::select_by_role('sales'),
-          'table_sales_user' => UserModel::select_all(),
-          'table_zone' => ZoneModel::select_all(),
+          'table_sales_user' => UserModel::all(),
+          'table_zone' => ZoneModel::all(),
           'customer_code' => $customer_code,
           //QUOTATION DETAIL
           'table_order_detail' => [],
-          'table_product' => ProductModel::select_all(),
+          'table_product' => ProductModel::all(),
       ];
       return view('sales/order/create',$data);
     }
@@ -268,6 +267,29 @@ class OrderController extends Controller
       $data = [
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_by_category('order'),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
+          'table_zone' => ZoneModel::select_all(),
+          'order_id'=> $id,
+          //QUOTATION Detail
+          'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
+          'table_product' => ProductModel::select_all(),
+          'mode' => 'show',
+      ];
+      return view('sales/order/edit',$data);
+    }
+
+    public function pdf($id)
+    {
+
+      $data = [
+          //QUOTATION
+          'table_order' => OrderModel::select_by_id($id),
           //QUOTATION Detail
           'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
           'total_text' => count(OrderModel::select_by_id($id))>0 ?  Functions::baht_text(OrderModel::select_by_id($id)[0]->total) : "-",
@@ -302,6 +324,7 @@ class OrderController extends Controller
           //QUOTATION Detail
           'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
           'table_product' => ProductModel::select_all(),
+          'mode' => 'edit',
       ];
       return view('sales/order/edit',$data);
     }

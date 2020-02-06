@@ -1,6 +1,7 @@
 @extends('monster-lite/layouts/theme')
 
 @section('title','รายละเอียดรายการในใบเสนอราคา')
+@section('background-tag','bg-success')
 
 @section('breadcrumb-menu')
 <a href="{{ url('/') }}/purchase/purchase_receive/{{ $purchase_receive_id }}/purchase_receive_detail/create" class="pull-right  btn btn-success">

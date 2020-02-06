@@ -1,6 +1,7 @@
 @extends('monster-lite/layouts/theme')
 
 @section('title','แก้ไขรายละเอียดใบเสนอราคา')
+@section('background-tag','bg-success')
 
 @section('breadcrumb-menu')
 

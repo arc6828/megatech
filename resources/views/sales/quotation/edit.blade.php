@@ -2,6 +2,8 @@
 
 @section('title','รายละเอียดใบเสนอราคา')
 
+@section('background-tag','bg-warning')
+
 @section('content')
   
 

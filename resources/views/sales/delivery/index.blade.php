@@ -2,6 +2,8 @@
 
 @section('title','ใบเบิกของ')
 
+@section('background-tag','bg-warning')
+
 @section('navbar-menu')
 <div style="margin:21px;">
   <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>

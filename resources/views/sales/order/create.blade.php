@@ -2,6 +2,8 @@
 
 @section('title','สร้างใบจอง')
 
+@section('background-tag','bg-warning')
+
 
 @section('content')
 

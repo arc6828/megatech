@@ -2,6 +2,8 @@
 
 @section('title','สร้างใบส่งของชั่วคราว')
 
+@section('background-tag','bg-warning')
+
 @section('content')
 
 <form class="" action="{{ url('/') }}/sales/delivery_temporary" method="POST">

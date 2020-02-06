@@ -2,6 +2,8 @@
 
 @section('title','ใบจอง')
 
+@section('background-tag','bg-warning')
+
 @section('content')
 
   <style>
@@ -156,7 +158,7 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $row_detail->product_code }} </td>
               <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
-              <td>{{ number_format($row_detail->amount) }}</td>
+              <td>{{ $row_detail->amount }}</td>
               <td>{{ number_format($row_detail->discount_price,2) }}</td>
               <td>{{ number_format($row_detail->amount * $row_detail->discount_price,2) }}</td>
             </tr>

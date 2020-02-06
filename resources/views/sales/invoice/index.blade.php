@@ -2,6 +2,8 @@
 
 @section('title','ใบขาย')
 
+@section('background-tag','bg-warning')
+
 
 @section('breadcrumb-menu')
 
@@ -33,13 +35,13 @@
 					@foreach($table_invoice as $row)
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
+							<a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}">
 								{{ $row->invoice_code }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
-						<td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->company_name }}</a></td>
+						<td><a href="{{ url('/customer') }}/{{ $row->customer_id }}/edit" target="_blank">{{ $row->company_name }}</a></td>
 						<td>{{ $row->total_debt }}</td>
 						<td>{{ number_format($row->total?$row->total:0,2) }}</td>
 						<td>{{ $row->short_name }}</td>

@@ -1,6 +1,7 @@
 @extends('layouts/argon-dashboard/theme')
 
 @section('title','Picking')
+@section('background-tag','bg-success')
 
 @section('navbar-menu')
 <div style="margin:21px;">

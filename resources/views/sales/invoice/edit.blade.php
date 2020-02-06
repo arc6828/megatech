@@ -2,6 +2,8 @@
 
 @section('title','แก้ไขรายละเอียดใบขาย')
 
+@section('background-tag','bg-warning')
+
 @section('navbar-menu')
 <div style="margin: 21px;">
 	<a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/invoice">back</a>
@@ -18,15 +20,19 @@
 	@forelse($table_invoice as $row)
 		<div class="text-center mb-4">
 
-			<a class="float-right btn-print" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}" target="_blank">
+			@if(Auth::user()->role == "admin" )
+			<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit" title="แก้ไข">
+				<i class="fas fa-edit"></i>
+			</a>
+			@endif
+			<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/pdf" target="_blank"  title="พิมพ์">
 				<i class="fas fa-print"></i>
 			</a>
-			<div class="">
-				<img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, "C128") }}" alt="barcode"   />
+			<div class="" style="width:90%;">
+				<div><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, "C128") }}" alt="barcode"   /></div>
+				<div>{{ $row->invoice_code }}</div>
 			</div>
-			<div class="">
-				{{ $row->invoice_code }}
-			</div>
+			
 
 		</div>
 		<form class="" action="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}" id="form" method="POST">
@@ -35,11 +41,13 @@
 
 			@include('sales/invoice/form')
 
+			@if( $mode == "edit")
 			<div class="mt-4 text-center">
 				<a href="{{ url('/') }}/sales/invoice" class="btn btn-outline-primary" style="width:150px;">back</a>
 				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
 				<button class="d-none" type="button" onclick="setPreLoader(true);">CSSS</button>
 			</div>
+			@endif
 
 		</form>
 

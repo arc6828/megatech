@@ -11,6 +11,7 @@ use App\CustomerBillingDetail;
 use App\CustomerModel;
 use App\CustomerBilling;
 use Illuminate\Http\Request;
+use App\Functions;
 use PDF;
 
 class CustomerBillingController extends Controller
@@ -130,11 +131,13 @@ class CustomerBillingController extends Controller
     }
     public function pdf($id)
     {
-        $customerbilling = CustomerBilling::findOrFail($id);        
+        $customerbilling = CustomerBilling::findOrFail($id);   
+        
+        $total_text = $customerbilling->total > 0  ?  Functions::baht_text($customerbilling->total) : "-";     
 
         //return view('customer-billing.show', compact('customerbilling'));
 
-        return  PDF::loadView('customer-billing/pdf', compact('customerbilling'))->stream('test.pdf');
+        return  PDF::loadView('customer-billing/pdf', compact('customerbilling','total_text'))->stream('test.pdf');
         
     }
 

@@ -1,6 +1,7 @@
 @extends('layouts/argon-dashboard/theme')
 
 @section('title','แก้ไขรายละเอียดใบรับ/ซื้อสินค้า')
+@section('background-tag','bg-success')
 
 
 

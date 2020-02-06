@@ -2,6 +2,8 @@
 
 @section('title','แก้ไขรายละเอียดใบจอง')
 
+@section('background-tag','bg-warning')
+
 @section('navbar-menu')
 <div style="margin: 21px;">
 	<a class="btn btn-outline-primary btn-sm" href="{{ url('/') }}/sales/order">back</a>
@@ -17,8 +19,11 @@
 
 	@forelse($table_order as $row)
 		<div class="text-center mb-4">
-
-		  	<a class="float-right btn-print" href="{{ url('/') }}/sales/order/{{ $row->order_id }}" target="_blank">
+			
+			<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit" title="แก้ไข" >
+		      <i class="fas fa-edit"></i>
+		    </a>
+		  	<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/pdf" target="_blank"  title="พิมพ์">
 		      <i class="fas fa-print"></i>
 		    </a>
 		  <div class="">
@@ -35,10 +40,13 @@
 
 			@include('sales/order/form')
 
+			@if($mode == "edit")
+
 			<div class="text-center mt-4">
 				<a href="{{ url('/') }}/sales/order" class="btn btn-outline-success" style="width:150px;">back</a>
 				<button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">Save</button>
 			</div>
+			@endif
 
 		</form>
 

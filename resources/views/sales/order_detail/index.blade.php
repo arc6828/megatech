@@ -2,6 +2,8 @@
 
 @section('title','ใบเบิกของ')
 
+@section('background-tag','bg-warning')
+
 @section('navbar-menu')
 <div style="margin:21px;">
   <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
@@ -247,14 +249,14 @@
               "<input type='hidden' name='order_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
 
-							element.order_code,
+							`<a href="{{url('/sales/order')}}/`+element.order_id+`" target="_blank">`+element.order_code+"</a>",
               element.date,
 							//element.delivery_time,
 							//element.company_name,
 							element.BARCODE,
 							element.product_code,
 							//element.product_name + " " + element.quantity + " หน่วย/กล่อง",
-              element.product_name + " / " + element.grade,
+              `<a href="{{url('/product')}}/`+element.product_id+`/edit" target="_blank">`+element.product_name + " / " + element.grade+`</a>`,
 							element.amount,
 							"<input type='number' name='approve_amounts[]' value='0' class='approve_amount form-control form-control-sm "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:100px;'  required>",
               element.quantity,

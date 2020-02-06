@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\UserModel;
+use App\User;
 use App\DepartmentModel;
 
 class UserController extends Controller
@@ -54,7 +55,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-       //
+        $user = User::findOrFail($id);
+
+        return view('user.show', compact('user'));
     }
 
     /**

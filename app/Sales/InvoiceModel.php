@@ -72,8 +72,7 @@ class InvoiceModel extends Model
 	}
 
 	public static function select_by_id($id){
-    return DB::table('tb_invoice')
-      ->join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+    return self::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
       ->where('tb_invoice.invoice_id', '=' , $id )
 			->select( DB::raw('tb_customer.*,tb_invoice.*'))
       ->get();

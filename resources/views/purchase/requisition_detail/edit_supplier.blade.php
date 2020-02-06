@@ -1,6 +1,7 @@
 @extends('layouts/argon-dashboard/theme')
 
 @section('title','กำหนดเจ้าหนี้ใบเสนอซื้อ')
+@section('background-tag','bg-success')
 
 @section('navbar-menu')
 <div style="margin:21px;">

@@ -2,6 +2,8 @@
 
 @section('title','สร้างใบเสนอราคา')
 
+@section('background-tag','bg-warning')
+
 @section('content')
 
 <form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to save?')" >

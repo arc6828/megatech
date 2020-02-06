@@ -1,6 +1,7 @@
 @extends('layouts/print')
 
 @section('title','ใบรับสินค้า')
+@section('background-tag','bg-success')
 
 @section('content')
 

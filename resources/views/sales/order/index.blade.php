@@ -2,6 +2,8 @@
 
 @section('title','ใบจอง')
 
+@section('background-tag','bg-warning')
+
 @section('navbar-menu')
 
 @endsection
@@ -39,15 +41,15 @@
 
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit">
+							<a href="{{ url('/') }}/sales/order/{{ $row->order_id }}">
 								{{ $row->order_code }}
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
-						<td>{{ $row->company_name }}</td>
+						<td><a href="{{ url('customer') }}/{{ $row->customer_id }}/edit" target="_blank">{{ $row->company_name }}</a></td>
 						<td class="text-right">{{ number_format($row->total,2) }}</td>
-						<td>{{ $row->short_name }}</td>
+						<td><a href="{{ url('user') }}/{{ $row->user_id }}" target="_blank">{{ $row->short_name }}</a></td>
 						<td>
               @if( $row->sales_status_id == 7)
               <a class="btn btn-sm btn-warning"
