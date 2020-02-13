@@ -65,18 +65,18 @@ class OrderController extends Controller
       }
       $data = [
           //QUOTATION
-          'table_customer' => CustomerModel::all(),
-          'table_delivery_type' => DeliveryTypeModel::all(),
-          'table_department' => DepartmentModel::all(),
-          'table_tax_type' => TaxTypeModel::all(),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
           'table_sales_status' => SalesStatusModel::select_by_category('order'),
           //'table_sales_user' => UserModel::select_by_role('sales'),
-          'table_sales_user' => UserModel::all(),
-          'table_zone' => ZoneModel::all(),
+          'table_sales_user' => UserModel::select_all(),
+          'table_zone' => ZoneModel::select_all(),
           'customer_code' => $customer_code,
           //QUOTATION DETAIL
           'table_order_detail' => [],
-          'table_product' => ProductModel::all(),
+          'table_product' => ProductModel::select_all(),
       ];
       return view('sales/order/create',$data);
     }
