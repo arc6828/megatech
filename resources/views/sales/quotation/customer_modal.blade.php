@@ -89,10 +89,12 @@
 							]
 						});
 						@if( !empty(request('customer_id')) )
-							//$("#btn-customer").click();
-							//select_item("{{ $customer->customer_id }}","{{ $customer->company_name }}","{{ $customer->company_code }}");
-							//$("button.close").click();
-
+						//$("#btn-customer").click();
+						
+						//$("#text-{{ $customer->customer_id }}").text( @json($customer) );
+						console.log("BTN : ",  $("#text-{{ $customer->customer_id }}"),  $("#text-{{ $customer->customer_id }}").prev());
+						$("#text-{{ $customer->customer_id }}").prev().click();
+						//select_item(395,`บริษัท อะมะดะ แมชชีน ทูลส์ (ประเทศไทย) จำกัด`,`A0001`);
 						@endif
 					}); //END AJAX
 			}

@@ -167,7 +167,7 @@
 				<div class="form-group form-inline">
 					<label class="col-lg-6">
             <textarea name="remark" id="remark" class="form-control" style="width:100%"></textarea>
-
+            
 					</label>
 					<label class="col-lg-3">
 						ภาษีมูลค่าเพิ่ม
@@ -184,7 +184,25 @@
 				</div>
 				<div class="form-group form-inline">
 	   				<label class="col-lg-6">
-
+              <div>
+                @if( isset($customer) )
+                  @foreach ($customer->contacts as $contact)
+                      @if(isset($contact->ref_qt))
+                        ติดต่อ : {{ $contact->name}} / Email : {{ $contact->email}}
+                      @endif
+                  @endforeach
+                  <script>
+                    alert(""
+                      @foreach ($customer->contacts as $contact)
+                          @if(isset($contact->ref_qt))
+                            +"ติดต่อ : {{ $contact->name}} / Email : {{ $contact->email}}"
+                          @endif
+                      @endforeach
+                    
+                    );
+                  </script>
+                @endif
+              </div>
 					</label>
 					<label class="col-lg-3">ยอดสุทธิ</label>
 					<div class="col-lg-3">

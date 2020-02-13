@@ -63,8 +63,8 @@ class QuotationController extends Controller
           'table_quotation_detail' => [],
           'table_product' => ProductModel::select_all(),
           
-          'customer' => !empty(request('customer_id'))? CustomerModel::where('',request('customer_id'))->first(): '',
-          'customer_json' => !empty(request('customer_id'))? CustomerModel::where('',request('customer_id'))->first(): '',
+          'customer' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
+          'customer_json' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
           //'customer_json' => json_encode(CustomerModel::findOrFail(request('customer_id'))),
       ];
       return view('sales/quotation/create',$data);
@@ -156,6 +156,9 @@ class QuotationController extends Controller
           //QUOTATION Detail
           'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
           'table_product' => ProductModel::select_all(),
+          'customer' =>  CustomerModel::where('customer_id',QuotationModel::findOrFail($id)->customer_id )->first(),
+          'customer_json' =>  CustomerModel::where('customer_id',QuotationModel::findOrFail($id)->customer_id)->first() ,
+          
           'mode' => 'show'
       ];
       return view('sales/quotation/edit',$data);
