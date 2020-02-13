@@ -38,12 +38,12 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>
-							<a href="{{ url('/customer') }}/{{ $row->Customer->customer_id }}/edit" target="_blank">
+							<a href2="{{ url('/customer') }}/{{ $row->Customer->customer_id }}/edit" target="_blank">
 								{{ $row->company_name }}
 							</a>
 						</td>
 						<td class="text-right">{{ number_format($row->total?$row->total:0,2) }}</td>
-						<td><a href="{{ url('/user') }}/{{ $row->user_id }}" title="{{ $row->name }}" target="_blank">{{ $row->short_name }}</a></td>
+						<td><a href2="{{ url('/user') }}/{{ $row->user_id }}" title="{{ $row->name }}" target="_blank">{{ $row->short_name }}</a></td>
 						<td>
 							@if( $row->sales_status_id >= 1 &&  $row->sales_status_id <= 3 )
 							<a  href="#"
