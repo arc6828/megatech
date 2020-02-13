@@ -20,7 +20,7 @@
   </div>
 </div>
 
-<form class="" action="{{ url('/') }}/sales/order" method="POST" onsubmit="return confirm('Do you confirm to save?')">
+<form class="main-form" action="{{ url('/') }}/sales/order" method="POST" onsubmit="return confirm('Do you confirm to save?')">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/order/form')
@@ -65,7 +65,7 @@
     existQuotationCode();
 
     
-    $('form input').keydown(function (e) {
+    $('form.main-form input').keydown(function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
             return false;

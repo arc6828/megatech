@@ -46,7 +46,8 @@
 						<td><a href="{{ url('/user') }}/{{ $row->user_id }}" title="{{ $row->name }}" target="_blank">{{ $row->short_name }}</a></td>
 						<td>
 							@if( $row->sales_status_id >= 1 &&  $row->sales_status_id <= 3 )
-							<a  href="{{ url('/') }}/sales/order/create?quotation_code={{ $row->quotation_code }}"
+							<a  href="#"
+								href2="{{ url('/') }}/sales/order/create?quotation_code={{ $row->quotation_code }}"
 								title="{{ $row->sales_status_name }}"
 								class="btn btn-warning btn-sm"
 								>
