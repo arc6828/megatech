@@ -36,7 +36,7 @@
     <div class="row">
       <div class="form-group col-lg-3">
         <label >เลขภาษี <span class="text-red">*</span> </label>
-        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  tax-format"    >
+        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  tax-format"    maxlength="13" >
       </div>
       <div class="form-group col-lg-3">
         <label >ชนิดสถานที่ประกอบการ </label>
