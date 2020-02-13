@@ -67,6 +67,8 @@ class QuotationController extends Controller
           'customer_json' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
           //'customer_json' => json_encode(CustomerModel::findOrFail(request('customer_id'))),
       ];
+     
+      
       return view('sales/quotation/create',$data);
     }
 

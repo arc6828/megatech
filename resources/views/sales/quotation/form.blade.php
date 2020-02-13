@@ -186,6 +186,7 @@
 	   				<label class="col-lg-6">
               <div>
                 @if( isset($customer) )
+                  if($customer->contacts)
                   @foreach ($customer->contacts as $contact)
                       @if(isset($contact->ref_qt))
                         ติดต่อ : {{ $contact->name}} / Email : {{ $contact->email}}
@@ -201,6 +202,7 @@
                     
                     );
                   </script>
+                  @endif
                 @endif
               </div>
 					</label>
