@@ -11,7 +11,7 @@
   <div class="card-body">
     <form action="" method="GET">
       <input class="form-control"
-        name="purchase_order_code" id="quotation_code"
+        name="quotation_code" id="quotation_code"
         placeholder="Enter quotation Code ..."
         value="{{ request('quotation_code') }}"
         />
