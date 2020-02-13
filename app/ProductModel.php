@@ -18,6 +18,15 @@ class ProductModel extends Model
     public function InvoiceDetail(){
         return $this->hasMany('App\Sales\InvoiceDetailModel','product_id');
     }
+    public function invoiceDetails(){
+        return $this->hasMany('App\Sales\InvoiceDetailModel','product_id')
+            ->join('tb_invoice','tb_invoice.invoice_id','tb_invoice_detail.invoice_id');
+    }
+    public function invoiceDetails_by_month($month){
+        return $this->hasMany('App\Sales\InvoiceDetailModel','product_id')
+            ->join('tb_invoice','tb_invoice.invoice_id','tb_invoice_detail.invoice_id')
+            ->whereMonth('datetime',$month);
+    }
     public function ReceiveDetail(){
         return $this->hasMany('App\Purchase\ReceiveDetailModel','product_id');
     }

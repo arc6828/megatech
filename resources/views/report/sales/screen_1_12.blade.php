@@ -17,14 +17,14 @@
 			<tr>
 				<td><strong>รหัสลูกค้า</strong></td> 
 				<td><strong>{{ $customers->customer_code }}</strong></td>
-				<td col	span="2"><strong>{{ $customers->company_name }}</strong></td>
+				<td colspan="5"><strong>{{ $customers->company_name }}</strong></td>
 			</tr>
 			@foreach ($invoices->InvoiceDetail as $InvoiceDetail)
 				<tr>
 					<td>{{ $invoices->invoice_code }}</td>
 					<td>{{ $invoices->datetime }}</td>
 					<td>{{ $InvoiceDetail->Product->product_code }}</td>
-					<td>{{ $InvoiceDetail->Product->product_detail }}</td>
+					<td>{{ $InvoiceDetail->Product->product_name }} / {{ $InvoiceDetail->Product->grade }}</td>
 					<td>{{ $invoices->User->short_name }}</td>
 					<td>{{ $InvoiceDetail->discount_price }}</td>	
 					<td>{{ $InvoiceDetail->amount }}</td>

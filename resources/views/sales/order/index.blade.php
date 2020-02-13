@@ -53,12 +53,15 @@
 						<td>
               @if( $row->sales_status_id == 7)
               <a class="btn btn-sm btn-warning"
-                href="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
+			  
+			  	href="#"
+                href2="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
                 รอการเบิกสินค้า
               </a>
               @elseif($row->sales_status_id == 8)
               <a class="btn btn-sm btn-success"
-                href="{{ url('/') }}/sales/invoice/create?order_code={{ $row->order_code }}">
+			  	href="#"
+                href2="{{ url('/') }}/sales/invoice/create?order_code={{ $row->order_code }}" >
                 เปิด Invoice ใหม่
               </a>
               @else

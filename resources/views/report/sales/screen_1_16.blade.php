@@ -19,24 +19,31 @@
 		<th>เดือน 11</th>
 		<th>เดือน 12</th>
 		<th>รวม</th>
-	</tr>
+	</tr>	
+	<style>
+		.number{
+			text-align:right;
+		}
+	</style>
 	@foreach ($customer as $customers)
+		@if($customers->invoices->sum('total') > 0)
 		<tr>
 			<td> {{$customers->customer_code}} </td>
 			<td> {{$customers->company_name}}</td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td> 11,140.00 </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td> 11,140.00 </td>
+			<td class="number">  {{number_format($customers->invoices_by_month(1)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(2)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(3)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(4)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(5)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(6)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(7)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(8)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(9)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(10)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(11)->sum('total'),2) }}</td>
+			<td class="number">  {{number_format($customers->invoices_by_month(12)->sum('total'),2)}}</td>
+			<td class="number"> {{number_format($customers->invoices->sum('total'),2)}}</td>
 		</tr>
+		@endif
 	@endforeach
 </table>

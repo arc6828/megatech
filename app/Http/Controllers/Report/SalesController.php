@@ -41,8 +41,8 @@ class SalesController extends Controller
     }
 
     public function screen_1_18(){
-        $InvoiceDetail = InvoiceDetailModel::all();
-        return view('report.sales.screen_1_18',compact('InvoiceDetail'));
+        $products = ProductModel::join('tb_invoice_detail', 'tb_product.product_id', '=', 'tb_invoice_detail.product_id')->get();
+        return view('report.sales.screen_1_18',compact('products'));
     }
 
     public function screen_1_19(){

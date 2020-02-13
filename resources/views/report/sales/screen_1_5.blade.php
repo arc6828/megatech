@@ -12,15 +12,16 @@
 	@foreach ($users as $users)
 		<tr>
 			<td> รหัสพนักงานขาย </td>
-			<td>{{ $users->short_name }}  {{ $users->name }}</td>
-			<td></td>
+			<td colspan="2">[{{ $users->short_name }}] : {{ $users->name }}</td>
 		</tr>
 		@foreach ($users->customer as $item)
-		<tr>
+			@if( $item->invoices->sum('total')  > 0)
+			<tr>
 				<td>{{ $item->customer_code }}</td>
 				<td>{{ $item->company_name }}</td>
-				<td></td>
-		</tr>
+				<td style="text-align:right;">{{ number_format($item->invoices->sum('total'),2) }}</td>
+			</tr>
+			@endif
 		
 		@endforeach
 	

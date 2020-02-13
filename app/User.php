@@ -39,6 +39,12 @@ class User extends Authenticatable
     public function Invoice(){
         return $this->hasMany('App\Sales\InvoiceModel','user_id');
     }
+    public function invoices(){
+        return $this->hasMany('App\Sales\InvoiceModel','user_id');
+    }
+    public function invoices_by_month($month){
+        return $this->hasMany('App\Sales\InvoiceModel','user_id')->whereMonth('datetime',$month);
+    }
     
     //Purchase
     public function Requisition()

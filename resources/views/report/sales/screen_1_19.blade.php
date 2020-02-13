@@ -20,60 +20,55 @@
 		<th>เดือน 12</th>
 		<th>รวม</th>
 	</tr>
-	@foreach ($users as $users)
+	
+	<style>
+		.number{
+			text-align:right;
+		}
+	</style>
+	@foreach ($users as $user)
 		<tr>
 			<td><strong>รหัสพนักงานขาย</strong></td>
-			<td><strong>{{$users->short_name}}</strong></td>
-			<td><strong>{{$users->name}}</strong></td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td></td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
-			<td>  </td>
+			<td colspan="14"><strong>{{$user->short_name}} {{$user->name}}</strong></td>			
 			
 		</tr>
-		@foreach ($users->customer as $customers)
+		@foreach ($user->customer as $customers)
+			@if($customers->invoices->sum('total') > 0)
 			<tr>
 				<td> {{$customers->customer_code}} </td>
 				<td> {{$customers->company_name}}</td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td> 2,900 </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td>  </td>
-				<td> 2,900.00 </td>
+				<td class="number">  {{number_format($customers->invoices_by_month(1)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(2)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(3)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(4)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(5)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(6)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(7)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(8)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(9)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(10)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(11)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($customers->invoices_by_month(12)->sum('total'),2)}}</td>
+				<td class="number"> {{number_format($customers->invoices->sum('total'),2)}}</td>
 			</tr>
+			@endif
 		@endforeach
-		<tr>
+		<tr style="font-weight : 900;">
 				<td><strong>ยอดรวม</strong></td>
-				<td></td>
-				<td><strong>{{$users->short_name}}</strong></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><strong>{{$user->short_name}} {{$user->name}}</strong></td>
+				<td class="number">  {{number_format($user->invoices_by_month(1)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(2)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(3)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(4)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(5)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(6)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(7)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(8)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(9)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(10)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(11)->sum('total'),2) }}</td>
+				<td class="number">  {{number_format($user->invoices_by_month(12)->sum('total'),2)}}</td>
+				<td class="number"> {{number_format($user->invoices->sum('total'),2)}}</td>
 				
 			</tr>
 	@endforeach

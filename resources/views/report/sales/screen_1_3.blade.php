@@ -40,10 +40,13 @@
 		<th>ยอดขาย/ลดหนี้</th>
 	</tr>
 	@foreach ($customer as $item)
+	@if( $item->invoices->sum('total')  > 0)
 	<tr>
-		<td> {{ $item->customer_code }} </td>
+		<td>{{ $item->customer_code }} </td>
 		<td>{{ $item->company_name }}</td>
-        <td></td>
-	</tr>@endforeach
+        <td style="text-align:right;">{{ number_format($item->invoices->sum('total'),2) }}</td>
+	</tr>
+	@endif
+	@endforeach
     
 </table>
