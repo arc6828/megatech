@@ -51,14 +51,14 @@
 						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
-							{ title: "Barcode" },
+							//{ title: "Barcode" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "ราคาขาย" },
 							{ title: "จำนวน" },
-							{ title: "จำนวนในคลัง" },
-							{ title: "ค้างส่ง" },
-							{ title: "ค้างรับ" },
-							{ title: "คงเหลือ - ค้างส่ง" },
+							{ title: "#คงเหลือ" },
+							{ title: "#ค้างส่ง" },
+							{ title: "#ค้างรับ" },
+							{ title: "#คงเหลือ - ค้างส่ง" },
 							{ title: "action" },
 						],
 					}); // END DATATABLE
@@ -95,7 +95,7 @@
       var price = parseFloat(element.promotion_price? element.promotion_price : element.normal_price).toFixed(2);
       var row = [
         element.product_code,
-        element.BARCODE,
+        //element.BARCODE,
         element.product_name + " / "+ element.grade,
         price,
         "<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",

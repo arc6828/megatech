@@ -8,33 +8,7 @@
   
 
 	@forelse($table_quotation as $row)
-      <div class="row">
-        <div class="col-lg-4">
-          <a href="{{ url('/sales/quotation') }}" title="Back" class="btn btn-warning btn-sm" >
-              <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-          </a>
-        </div>
-        <div class="col-lg-4 text-center">
-          <div class="">
-            <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->quotation_code, 'C128') }}" alt="barcode"   />
-          </div>
-          <div class="">
-            {{ $row->quotation_code }}
-          </div>        
-        </div>
-        <div class="col-lg-4 text-right">
-          <a class="px-2 btn btn-sm btn-primary d-none" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
-            <i class="fas fa-redo"></i> เปลี่ยนสถานะ
-          </a>
-          <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
-            <i class="fas fa-print"></i> พิมพ์
-          </a>
-          <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
-            <i class="fas fa-edit"></i> แก้ไข
-          </a>
-        
-        </div>
-      </div>
+      
       
 
 		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST" onsubmit="validateForm(event);">
