@@ -144,6 +144,7 @@ class QuotationController extends Controller
      */
     public function show($id)
     {
+      QuotationModel::findOrFail($id);
       $data = [
           //QUOTATION
           'table_quotation' => QuotationModel::select_by_id($id),
@@ -169,6 +170,7 @@ class QuotationController extends Controller
 
     public function pdf($id)
     {
+      QuotationModel::findOrFail($id);
       $data = [
           //QUOTATION
           'table_quotation' => QuotationModel::select_by_id($id),
@@ -196,6 +198,7 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
+      QuotationModel::findOrFail($id);
       $data = [
           //QUOTATION
           'table_quotation' => QuotationModel::select_by_id($id),

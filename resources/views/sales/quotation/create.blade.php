@@ -5,7 +5,20 @@
 @section('background-tag','bg-warning')
 
 @section('content')
-
+<div class="row">
+  <div class="col-lg-4">
+    <a href="{{ url('/sales/quotation') }}" title="Back" class="btn btn-warning btn-sm" >
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+    </a>
+  </div>
+  <div class="col-lg-4 text-center">
+         
+  </div>
+  <div class="col-lg-4 text-right">
+    
+  
+  </div>
+</div>
 <form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to save?')" >
     {{ csrf_field() }}
     {{ method_field('POST') }}
