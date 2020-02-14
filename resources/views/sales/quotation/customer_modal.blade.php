@@ -28,32 +28,32 @@
 <script>
 	//onClick
 	function select_item(id,name,code) {
-			console.log("ID COMPANY : ",id,name,code);
-					$('#customer_id').val(id);
-					$('#company_name').val(name);
-					//$('#customer_code').val(code);
-					$('#customer_code').text(code);
+		console.log("ID COMPANY : ",id,name,code);
+		$('#customer_id').val(id);
+		$('#company_name').val(name);
+		//$('#customer_code').val(code);
+		$('#customer_code').text(code);
 
           var obj = JSON.parse($("#text-"+id).val());
-          //console.log("Customer", obj, obj.billing_duration);
+		//console.log("Customer", obj, obj.billing_duration);
 
-          document.querySelector("#debt_duration").value = obj.debt_duration;
-          document.querySelector("#billing_duration").value = obj.billing_duration;
-          document.querySelector("#payment_condition").value = obj.payment_condition;
-          document.querySelector("#delivery_type_id").value = obj.delivery_type_id;
-          document.querySelector("#tax_type_id").value = obj.tax_type_id;
-          document.querySelector("#delivery_time").value = obj.delivery_time;
-          document.querySelector("#contact_name").value = obj.contact_name;
-          document.querySelector("#zone_id").value = obj.zone_id;
+		document.querySelector("#debt_duration").value = obj.debt_duration;
+		document.querySelector("#billing_duration").value = obj.billing_duration;
+		document.querySelector("#payment_condition").value = obj.payment_condition;
+		document.querySelector("#delivery_type_id").value = obj.delivery_type_id;
+		document.querySelector("#tax_type_id").value = obj.tax_type_id;
+		document.querySelector("#delivery_time").value = obj.delivery_time;
+		document.querySelector("#contact_name").value = obj.contact_name;
+		document.querySelector("#zone_id").value = obj.zone_id;
 
 
-					$('#customerModal').modal('hide');
-					onChangeCustomer();
+		$('#customerModal').modal('hide');
+		onChangeCustomer();
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		//console.log("555");
 		//AJAX
-		$('#customerModal').on('show.bs.modal', function (e) {
+		$('#customerModal').on('shown.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
 				$.ajax({
 	          url: "{{ url('/') }}/api/customer?user_id={{ Auth::id() }}",
@@ -68,8 +68,12 @@
 								element.customer_code,
 								element.company_name,
 								element.contact_name,
-								"<button type='button' "
+								"<a "
 										+"class='btn btn-warning btn-sm'"
+										+"href='{{ url('/') }}/sales/quotation/create?customer_id="+element.customer_id+"'"
+										+">เลือก</a>"+
+								"<button type='button' "
+										+"class='btn btn-warning btn-sm d-none'"
 										+"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
 										+">เลือก</button>"
                     +"<textarea class='d-none' id='text-"+element.customer_id+"'>"+JSON.stringify(element)+"</textarea>",
@@ -80,24 +84,28 @@
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,
-  						deferRender : true,
+  							deferRender : true,
 							columns: [
 									{ title: "รหัส" },
 									{ title: "บริษัท" },
 									{ title: "ผู้ติดต่อ" },
 									{ title: "#" },
 							]
-						});
+						}).search("{{ isset($customer)? $customer->customer_code : '' }}").draw();// END DATATABLE;
 						@if( !empty(request('customer_id')) )
-						//$("#btn-customer").click();
-						
-						//$("#text-{{ $customer->customer_id }}").text( @json($customer) );
-						console.log("BTN : ",  $("#text-{{ $customer->customer_id }}"),  $("#text-{{ $customer->customer_id }}").prev());
-						$("#text-{{ $customer->customer_id }}").prev().click();
-						//select_item(395,`บริษัท อะมะดะ แมชชีน ทูลส์ (ประเทศไทย) จำกัด`,`A0001`);
+							//$("#btn-customer").click();
+							
+							//$("#text-{{ $customer->customer_id }}").text( @json($customer) );
+
+							console.log("BTN : ",  $("#text-{{ $customer->customer_id }}"),  $("#text-{{ $customer->customer_id }}").prev());
+							$("#text-{{ $customer->customer_id }}").prev().click();
+							//select_item(395,`บริษัท อะมะดะ แมชชีน ทูลส์ (ประเทศไทย) จำกัด`,`A0001`);
+							//$('#customerModal').modal('hide');
+
 						@endif
 					}); //END AJAX
 			}
 		}); // END MODAL EVENT
+
 	});//END ADD EVENT LISTENER
 </script>

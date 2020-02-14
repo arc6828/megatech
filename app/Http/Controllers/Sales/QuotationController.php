@@ -49,6 +49,7 @@ class QuotationController extends Controller
      */
     public function create()
     {
+      
       $data = [
           //QUOTATION
           'table_customer' => CustomerModel::select_all(),
@@ -63,8 +64,8 @@ class QuotationController extends Controller
           'table_quotation_detail' => [],
           'table_product' => ProductModel::select_all(),
           
-          'customer' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
-          'customer_json' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
+          'customer' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->firstOrFail(): null,
+          //'customer_json' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
           //'customer_json' => json_encode(CustomerModel::findOrFail(request('customer_id'))),
       ];
      
@@ -121,7 +122,7 @@ class QuotationController extends Controller
       }
       QuotationDetailModel::insert($list);
 
-      return redirect("sales/quotation/{$id}");
+      return redirect("sales/quotation/{$id}")->with('flash_message', 'popup');
     }
 
     public function getNewCode(){

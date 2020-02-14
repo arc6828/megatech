@@ -34,8 +34,8 @@
         </div>
       </div>
       @include('sales/quotation/customer_modal')
-      <label class="col-lg-2">ผู้ติดต่อ</label>
-      <div class="col-lg-3">
+      <label class="col-lg-2 d-none">ผู้ติดต่อ</label>
+      <div class="col-lg-3 d-none">
         <input name="contact_name" id="contact_name" class="form-control form-control-sm"	>
       </div>
     </div>
@@ -186,22 +186,25 @@
 	   				<label class="col-lg-6">
               <div>
                 @if( isset($customer) )
-                  if($customer->contacts)
-                  @foreach ($customer->contacts as $contact)
-                      @if(isset($contact->ref_qt))
-                        ติดต่อ : {{ $contact->name}} / Email : {{ $contact->email}}
-                      @endif
-                  @endforeach
-                  <script>
-                    alert(""
-                      @foreach ($customer->contacts as $contact)
-                          @if(isset($contact->ref_qt))
-                            +"ติดต่อ : {{ $contact->name}} / Email : {{ $contact->email}}"
-                          @endif
-                      @endforeach
-                    
-                    );
-                  </script>
+                  @if(isset($customer->contacts))
+                    @foreach ($customer->contacts as $contact)
+                        @if(isset($contact->ref_qt))
+
+                          ติดต่อ : {{ $contact->name}} / Email : {{ $contact->email}}
+                        @endif
+                    @endforeach
+                    @if (session('flash_message'))
+                    <script>
+                      alert(""
+                        @foreach ($customer->contacts as $contact)
+                            @if(isset($contact->ref_qt))
+                              +"ติดต่อ : {{ $contact->name}} / Email : {{ $contact->email}}"
+                            @endif
+                        @endforeach
+                      
+                      );
+                    </script>
+                    @endif
                   @endif
                 @endif
               </div>
