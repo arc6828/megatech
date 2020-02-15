@@ -32,7 +32,7 @@
         <input class="form-control form-control-sm form-control form-control-sm-sm checklist" name="ref_qt" type="text" id="ref_qt" value="{{ isset($contact->ref_qt) ? $contact->ref_qt : ''}}" >
         {!! $errors->first('ref_qt', '<p class="help-block">:message</p>') !!}
     </div>
-    <div class="form-group col-lg-3 {{ $errors->has('ref_iv') ? 'has-error' : ''}}">
+    <div class="form-group col-lg-3 {{ $errors->has('ref_iv') ? 'has-error' : ''}} d-none">
         <label for="ref_iv" class="control-label">
         <input type="checkbox" {{ $contact->ref_iv === "true" ? 'checked' : ''}} onclick="document.querySelector('#ref_iv').value = this.checked"> 
         {{ 'ใบขาย (IV)' }}
