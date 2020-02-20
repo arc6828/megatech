@@ -40,7 +40,7 @@
                                         <th>ยอดเงินรวม</th>
                                         <th>รหัสลูกค้า</th>
                                         <th>เลขที่รับชำระ</th>
-                                        <th>Action</th>
+                                        <th class="d-none">Action</th>
                                         
                                     </tr>
                                 </thead>
@@ -54,17 +54,17 @@
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td class="text-right">{{number_format( $item->total , 2 )}}</td>
-                                        <td><a href="{{ url('/customer') }}/{{  $item->customer_id }}/edit">{{ $item->customer->customer_code }} {{ $item->customer->company_name }}</a></td>                                        
+                                        <td><a href2="{{ url('/customer') }}/{{  $item->customer_id }}/edit">{{ $item->customer->customer_code }} {{ $item->customer->company_name }}</a></td>                                        
                                         <td>
                                             @if($item->customer_payment)                                                
-                                                <a href="{{ url('/finance/customer-payment/' . $item->customer_payment->id) }}">{{ $item->customer_payment->doc_no }}</a>
+                                                <a href2="{{ url('/finance/customer-payment/' . $item->customer_payment->id) }}">{{ $item->customer_payment->doc_no }}</a>
                                             @else
-                                                <a href="{{ url('/finance/customer-payment/create?customer_id=' . $item->customer_id) }}&filter=billing-only" title="Payment"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
+                                                <a href2="{{ url('/finance/customer-payment/create?customer_id=' . $item->customer_id) }}&filter=billing-only" title="Payment"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
                                             @endif
                                         
                                         </td>
                                         <td>
-                                            <a href="{{ url('/finance/customer-billing/' . $item->id) }}/pdf" title="View CustomerBilling"><button class="btn btn-success btn-sm"><i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</button></a>
+                                            <a href="{{ url('/finance/customer-billing/' . $item->id) }}/pdf" title="View CustomerBilling"><button class="btn btn-success btn-sm d-none"><i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</button></a>
                                             
                                             <a class="d-none"  href="{{ url('/finance/customer-billing/' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a class="d-none" href="{{ url('/finance/customer-billing/' . $item->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

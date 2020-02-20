@@ -74,7 +74,7 @@
                                         </td>
                                         <td>{{ $row->invoice->datetime }}</td>
                                         <td>{{ $row->invoice->Customer->customer_code }}</td>
-                                        <td><a href="{{ url('/customer') }}/{{ $row->invoice->customer_id }}">{{ $row->invoice->Customer->company_name }}</a></td>
+                                        <td><a href2="{{ url('/customer') }}/{{ $row->invoice->customer_id }}">{{ $row->invoice->Customer->company_name }}</a></td>
                                         <td>{{ $row->invoice->total_debt }}</td>
                                         <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td>
                                         <td>{{ $row->invoice->User->short_name }}</td>
