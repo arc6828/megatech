@@ -31,8 +31,8 @@
 						<th class="text-center">อีเมล์</th>
 						<th class="text-center">เบอร์โทรศัพท์</th>
 						<th class="text-center">ยอดหนึ้ขณะนี้</th>
-						<th class="text-center d-none">วางบิล</th>
-						<th class="text-center d-none">รับชำระ</th>
+						<th class="text-center ">วางบิล</th>
+						<th class="text-center ">รับชำระ</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -46,7 +46,7 @@
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->telephone }}</td>
 					<td>{{ number_format($total_debt,2) }}</td>
-					<td class="d-none">
+					<td class=" ">
 						@if($total_debt > 0)
 						<div><a class=" " href="{{ url('/') }}/finance/customer-billing/create?customer_id={{ $row->customer_id }}&end_date={{ date('Y-m-t', strtotime( '-1 month' ) ) }}">วางบิลเดือนที่ผ่านมา</a></div>
 						<div><a class=" " href="{{ url('/') }}/finance/customer-billing/create?customer_id={{ $row->customer_id }}&end_date={{ date('Y-m-t' ) }}">วางบิลทั้งหมด</a></div>
@@ -55,7 +55,7 @@
 							<span class="fa fa-trash"></span>
 						</a>
 					</td>
-					<td class="d-none">
+					<td class=" ">
 						@if($total_debt > 0)
 						<div><a class="" href="{{ url('/') }}/finance/customer-payment/create?customer_id={{ $row->customer_id }}&filter=billing-only">รับชำระที่วางบิล</a></div>
 						<div><a class="" href="{{ url('/') }}/finance/customer-payment/create?customer_id={{ $row->customer_id }}">รับชำระทั้งหมด</a></div>
