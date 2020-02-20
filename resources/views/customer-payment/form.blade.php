@@ -38,9 +38,9 @@
     <input class="form-control form-control-sm" value="{{ isset($customerpayment->customer_billing_id) ? $customerpayment->customer_billing_id : $customer_billing_doc_no }}" disabled>
     {!! $errors->first('customer_billing_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('discount') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('discount') ? 'has-error' : ''}}">
     <label for="discount" class="control-label">{{ 'ส่วนลด ณ รับชำระ' }}</label>
-    <input class="form-control form-control-sm" name="discount" type="number" id="discount" value="{{ isset($customerpayment->discount) ? $customerpayment->discount : ''}}" >
+    <input class="form-control form-control-sm" name="discount" type="number" id="discount" value="{{ isset($customerpayment->discount) ? $customerpayment->discount : ''}}" readonly>
     {!! $errors->first('discount', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('debt_total') ? 'has-error' : ''}}">
@@ -48,12 +48,12 @@
     <input class="form-control form-control-sm" name="debt_total" type="number" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}" >
     {!! $errors->first('debt_total', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('cash') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('cash') ? 'has-error' : ''}}">
     <label for="cash" class="control-label">{{ 'ยอดเงินสดรับ' }}</label>
     <input class="form-control form-control-sm" name="cash" type="number" id="cash" value="{{ isset($customerpayment->cash) ? $customerpayment->cash : ''}}" readonly >
     {!! $errors->first('cash', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('credit') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('credit') ? 'has-error' : ''}}">
     <label for="credit" class="control-label">{{ 'ยอดเช็ครับ' }}</label>
     <input class="form-control form-control-sm" name="credit" type="number" id="credit" value="{{ isset($customerpayment->credit) ? $customerpayment->credit : ''}}" readonly>
     {!! $errors->first('credit', '<p class="help-block">:message</p>') !!}
@@ -65,7 +65,7 @@
 </div>
 <div class="form-group {{ $errors->has('payment_total') ? 'has-error' : ''}}">
     <label for="payment_total" class="control-label">{{ 'ยอดรวมรับชำระ' }}</label>
-    <input class="form-control form-control-sm" name="payment_total" type="number" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : ''}}" >
+    <input class="form-control form-control-sm" name="payment_total" type="number" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" >
     {!! $errors->first('payment_total', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">

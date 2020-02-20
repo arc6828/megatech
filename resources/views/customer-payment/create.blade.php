@@ -65,7 +65,7 @@
                                         <td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->Customer->company_name }}</a></td>
                                         <td>{{ $row->total_debt }}</td>
                                         <td>
-                                            <input style="width:100px;" name="invoice_payments[]">
+                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
                                             
                                             <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
                                         </td>
