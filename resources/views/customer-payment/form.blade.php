@@ -1,6 +1,6 @@
 <div class="form-group {{ $errors->has('doc_no') ? 'has-error' : ''}}">
     <label for="doc_no" class="control-label">{{ 'เลขที่เอกสาร' }}</label>
-    <input class="form-control form-control-sm" name="doc_no" type="text" id="doc_no" value="{{ isset($customerpayment->doc_no) ? $customerpayment->doc_no : ''}}" >
+    <input class="form-control form-control-sm" name="doc_no" type="text" id="doc_no" value="{{ isset($customerpayment->doc_no) ? $customerpayment->doc_no : ''}}" readonly>
     {!! $errors->first('doc_no', '<p class="help-block">:message</p>') !!}
 </div>
 @php
@@ -50,15 +50,15 @@
 </div>
 <div class="form-group {{ $errors->has('cash') ? 'has-error' : ''}}">
     <label for="cash" class="control-label">{{ 'ยอดเงินสดรับ' }}</label>
-    <input class="form-control form-control-sm" name="cash" type="number" id="cash" value="{{ isset($customerpayment->cash) ? $customerpayment->cash : ''}}" >
+    <input class="form-control form-control-sm" name="cash" type="number" id="cash" value="{{ isset($customerpayment->cash) ? $customerpayment->cash : ''}}" readonly >
     {!! $errors->first('cash', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('credit') ? 'has-error' : ''}}">
     <label for="credit" class="control-label">{{ 'ยอดเช็ครับ' }}</label>
-    <input class="form-control form-control-sm" name="credit" type="number" id="credit" value="{{ isset($customerpayment->credit) ? $customerpayment->credit : ''}}" >
+    <input class="form-control form-control-sm" name="credit" type="number" id="credit" value="{{ isset($customerpayment->credit) ? $customerpayment->credit : ''}}" readonly>
     {!! $errors->first('credit', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('tax') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('tax') ? 'has-error' : ''}}">
     <label for="tax" class="control-label">{{ 'ภาษี ณ  ที่จ่าย' }}</label>
     <input class="form-control form-control-sm" name="tax" type="number" id="tax" value="{{ isset($customerpayment->tax) ? $customerpayment->tax : ''}}" >
     {!! $errors->first('tax', '<p class="help-block">:message</p>') !!}
