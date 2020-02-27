@@ -17,6 +17,10 @@ class RequisitionDetailModel extends Model
     {
         return $this->belongsTo('App\Purchase\RequisitionModel','purchase_requisition_id');
     }
+    public function RequisitionDetailStatus()
+    {
+        return $this->belongsTo('App\Purchase\RequisitionDetailStatusModel','purchase_requisition_detail_status_id');
+    }
     public function Product()
     {
         return $this->belongsTo('App\ProductModel','product_id');

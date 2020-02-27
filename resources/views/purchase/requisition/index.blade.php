@@ -55,7 +55,21 @@
 						<td>{{ $row->datetime }}</td>
 						<td class="d-none">{{ number_format($row->total,2) }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td>{{ $row->purchase_status_name }}</td>
+						<td class="d-none">{{ $row->purchase_status_name }}</td>
+						
+						<td>
+							
+							@foreach($row->RequisitionDetail as $rd)
+								{{ $rd->RequisitionDetailStatus->purchase_requisition_detail_status_name}}
+								
+
+
+							
+								
+							
+							@endforeach
+							
+						</td>
 						<td>
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_requisition_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

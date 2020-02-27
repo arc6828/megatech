@@ -26,8 +26,8 @@ class RequisitionModel extends Model
 
     
     public static function select_all(){
-      return DB::table('tb_purchase_requisition')
-          ->join('tb_customer', 'tb_purchase_requisition.customer_id', '=', 'tb_customer.customer_id')
+      //return DB::table('tb_purchase_requisition')
+            return self::join('tb_customer', 'tb_purchase_requisition.customer_id', '=', 'tb_customer.customer_id')
           ->join('tb_delivery_type', 'tb_purchase_requisition.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
           ->join('tb_tax_type', 'tb_purchase_requisition.tax_type_id', '=', 'tb_tax_type.tax_type_id')
           ->join('tb_purchase_status', 'tb_purchase_requisition.purchase_status_id', '=', 'tb_purchase_status.purchase_status_id')
