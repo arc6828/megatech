@@ -55,7 +55,6 @@
 						<td>{{ $row->datetime }}</td>
 						<td class="d-none">{{ number_format($row->total,2) }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td class="d-none">{{ $row->purchase_status_name }}</td>
 						
 						<td class="d-none">
 							
