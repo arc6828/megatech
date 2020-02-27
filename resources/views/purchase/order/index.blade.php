@@ -65,7 +65,7 @@
               @if( $row->purchase_status_id == 3 )
               <a
                 class="btn btn-sm btn-warning"
-                href="{{ url('/') }}/purchase/receive/create?purchase_order_code={{ $row->purchase_order_code }}">
+                href2="{{ url('/') }}/purchase/receive/create?purchase_order_code={{ $row->purchase_order_code }}">
                 {{ $row->purchase_status_name }}
               </a>
               @else
