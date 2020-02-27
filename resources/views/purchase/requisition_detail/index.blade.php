@@ -130,6 +130,7 @@
 	  				if($index == 2){
 						break;
 					}
+					$index++;
 				@endphp
               @endforeach
           </select>
