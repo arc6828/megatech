@@ -117,11 +117,20 @@
       <div class="form-group form-inline text-center">
         <div class="col-lg-4 offset-lg-4">
           <select name="action" id="action" class="form-control form-control-sm" required>
-              @foreach($table_purchase_requisition_detail_status as $row_purchase_requisition_detail_status)
-              <option
-                value="{{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id }}" >
-                  {{  $row_purchase_requisition_detail_status->purchase_requisition_detail_status_name }}
-              </option>
+	  			@php
+	  				$index = 0;
+				@endphp
+              	@foreach($table_purchase_requisition_detail_status as $row_purchase_requisition_detail_status)
+
+				<option
+					value="{{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id }}" >
+					{{  $row_purchase_requisition_detail_status->purchase_requisition_detail_status_name }}
+				</option>
+				@php
+	  				if($index == 2){
+						break;
+					}
+				@endphp
               @endforeach
           </select>
           <button type="summit" id="form_summit_table" class="btn btn-primary">
