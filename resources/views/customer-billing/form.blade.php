@@ -43,11 +43,10 @@
 <h2>ข้อมูลวางบิล</h2>
 <div class="row">
     <div class="form-group col-lg-3 {{ $errors->has('status') ? 'has-error' : ''}}">
-
         <label >สถานะการวางบิล<span class="text-red">*</span></label>
         <select name="status" id="status" class="form-control form-control-sm  ">
           <option value="ready">รอวางบิล</option>
-          <option value="wait-for-cheque">รอรับเช็ค-โอน</option>
+          <option value="wait-for-cheque" >รอรับเช็ค-โอน</option>
           <option value="delay">เลื่อน</option>
         </select>
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}

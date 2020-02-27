@@ -37,22 +37,48 @@
                                     <tr><th> Date Billing </th><td> {{ $customerbilling->date_billing }} </td></tr>
                                     <tr>
                                         <th> Date Cheque </th>
+                                        <td>                                             
+                                            <form method="POST" action="{{ url('/finance/customer-billing/' . $customerbilling->id) }}" accept-charset="UTF-8" class="form-horizontal form-inline" enctype="multipart/form-data">
+                                                {{ method_field('PATCH') }}
+                                                {{ csrf_field() }}       
+                                                    
+                                                    {{ $customerbilling->date_cheque }}                                              
+                                                    <input class="form-control form-control-sm ml-4 mr-4" name="date_cheque" type="date" id="date_cheque" value="{{ isset($customerbilling->date_cheque) ? $customerbilling->date_cheque : ''}}" >                                                    
+                                                    <input class="form-control form-control-sm " name="status" type="hidden" id="status" value="wait-for-cheque" >                                                    
+                                                    <button type="submit" class="btn btn-sm btn-primary">save</button>                                              
+
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> Status </th>
                                         <td> 
-                                            {{ $customerbilling->date_cheque }} 
+                                            
+                                            
                                             
                                             <form method="POST" action="{{ url('/finance/customer-billing/' . $customerbilling->id) }}" accept-charset="UTF-8" class="form-horizontal form-inline" enctype="multipart/form-data">
                                                 {{ method_field('PATCH') }}
-                                                {{ csrf_field() }}
-
-                                                    
-                                                    <input class="form-control form-control-sm mr-4" name="date_cheque" type="date" id="date_cheque" value="{{ isset($customerbilling->date_cheque) ? $customerbilling->date_cheque : ''}}" >
-                                                    
-                                                    <input class="form-control form-control-sm " name="status" type="hidden" id="status" value="wait-for-cheque" >
-                                                    
-                                                    <button type="submit" class="btn btn-sm btn-primary">save</button>
-                                                
+                                                {{ csrf_field() }}     
+                                                @switch($customerbilling->status)
+                                                    @case("ready") 
+                                                        <span class="badge badge-pill badge-warning">รอวางบิล</span>
+                                                        @break
+                                                    @case("wait-for-cheque") 
+                                                        <span class="badge badge-pill badge-success">รอรับเช็ค-โอน</span>
+                                                        @break
+                                                    @case("delay") 
+                                                        <span class="badge badge-pill badge-danger">เลื่อน</span>
+                                                        @break
+                                                @endswitch 
+                                                <select name="status" id="status" class="form-control form-control-sm ml-4">
+                                                    <option value="ready">รอวางบิล</option>
+                                                    <option value="wait-for-cheque" >รอรับเช็ค-โอน</option>
+                                                    <option value="delay">เลื่อน</option>
+                                                </select>                                
+                                                <button type="submit" class="btn btn-sm btn-primary ml-4">save</button>                                              
 
                                             </form>
+
                                         </td>
                                     </tr>
                                     <tr><th> Remark </th><td> {{ $customerbilling->remark }} </td></tr>

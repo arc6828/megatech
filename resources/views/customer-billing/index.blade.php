@@ -63,7 +63,7 @@
                                                 
                                                 @switch($item->status)
                                                     @case("ready") 
-                                                        <span class="badge badge-pill badge-warning">รอการชำระ</span>
+                                                        <span class="badge badge-pill badge-warning">รอวางบิล</span>
                                                         @break
                                                     @case("wait-for-cheque") 
                                                         <span class="badge badge-pill badge-success">รอรับเช็ค-โอน</span>
