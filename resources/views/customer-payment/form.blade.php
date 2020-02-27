@@ -46,11 +46,7 @@
     <input class="form-control form-control-sm" name="discount" type="number" id="discount" value="{{ isset($customerpayment->discount) ? $customerpayment->discount : ''}}" readonly>
     {!! $errors->first('discount', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('debt_total') ? 'has-error' : ''}}">
-    <label for="debt_total" class="control-label">{{ 'ยอดรวมหนี้' }}</label>
-    <input class="form-control form-control-sm" name="debt_total" type="number" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}" >
-    {!! $errors->first('debt_total', '<p class="help-block">:message</p>') !!}
-</div>
+
 <div class="form-group d-none {{ $errors->has('cash') ? 'has-error' : ''}}">
     <label for="cash" class="control-label">{{ 'ยอดเงินสดรับ' }}</label>
     <input class="form-control form-control-sm" name="cash" type="number" id="cash" value="{{ isset($customerpayment->cash) ? $customerpayment->cash : ''}}" readonly >
@@ -65,11 +61,6 @@
     <label for="tax" class="control-label">{{ 'ภาษี ณ  ที่จ่าย' }}</label>
     <input class="form-control form-control-sm" name="tax" type="number" id="tax" value="{{ isset($customerpayment->tax) ? $customerpayment->tax : ''}}" >
     {!! $errors->first('tax', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('payment_total') ? 'has-error' : ''}}">
-    <label for="payment_total" class="control-label">{{ 'ยอดรวมรับชำระ' }}</label>
-    <input class="form-control form-control-sm" name="payment_total" type="number" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" >
-    {!! $errors->first('payment_total', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
     <label for="user_id" class="control-label">{{ 'รหัสพนักงาน' }}</label>
@@ -109,6 +100,20 @@
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
+    <div class="form-group col-lg-3 {{ $errors->has('debt_total') ? 'has-error' : ''}}">
+        <label for="debt_total" class="control-label">{{ 'ยอดรวมหนี้' }}</label>
+        <input class="form-control form-control-sm" name="debt_total" type="number" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}" >
+        {!! $errors->first('debt_total', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="form-group col-lg-3 {{ $errors->has('payment_total') ? 'has-error' : ''}}">
+        <label for="payment_total" class="control-label">{{ 'ยอดรวมรับชำระ' }}</label>
+        <input class="form-control form-control-sm" name="payment_total" type="number" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" >
+        {!! $errors->first('payment_total', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 
 <div class="form-group d-none">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
