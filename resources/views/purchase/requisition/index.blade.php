@@ -57,10 +57,10 @@
 						<td>{{ $row->short_name }}</td>
 						<td class="d-none">{{ $row->purchase_status_name }}</td>
 						
-						<td>
+						<td class="d-none">
 							
 							@foreach($row->RequisitionDetail as $rd)
-								{{ $rd->RequisitionDetailStatus->purchase_requisition_detail_status_name}}
+								{{ $rd->RequisitionDetailStatus->purchase_requisition_detail_status_name}} / 
 								
 
 
