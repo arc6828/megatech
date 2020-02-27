@@ -36,7 +36,7 @@
 							
 						@endphp
 						<tr>
-							<td><a href="{{ url('/') }}/customer/{{ $row->customer_id }}/edit">{{ $row->customer_code }}</a></td>
+							<td><a href2="{{ url('/') }}/customer/{{ $row->customer_id }}/edit">{{ $row->customer_code }}</a></td>
 							<td>{{ $row->company_name }}</td>
 							<td>{{ number_format($total_debt_billing,2) }}</td>
 							<td>{{ number_format($total_debt,2) }}</td>
