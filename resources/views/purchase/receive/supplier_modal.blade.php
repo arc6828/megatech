@@ -58,7 +58,7 @@
 								element.company_name,
 								//element.contact_name,
 								"<button type='button' " +
-										"class='btn btn-warning btn-sm'" +
+										"class='btn btn-warning btn-sm d-none'" +
 										"onClick='select_item("+element.supplier_id+",`"+element.company_name+"`,`"+element.supplier_code+"`)' "
 										+">เลือก</button>",
 							];
