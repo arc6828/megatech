@@ -39,7 +39,7 @@
 						<th class="text-center">วันที่</th>
 						<th class="text-center d-none">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center">สถานะ</th>
+						<th class="text-center d-none">สถานะ</th>
 						<th class="text-center">action</th>
 					</tr>
 				</thead>
