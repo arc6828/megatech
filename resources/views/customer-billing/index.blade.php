@@ -39,6 +39,7 @@
                                         <th>วันที่</th>
                                         <th>ยอดเงินรวม</th>
                                         <th>รหัสลูกค้า</th>
+                                        <th>ลูกค้า</th>
                                         <th>เลขที่รับชำระ</th>
                                         <th class="d-none">Action</th>
                                         
@@ -54,7 +55,9 @@
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td class="text-right">{{number_format( $item->total , 2 )}}</td>
-                                        <td><a href2="{{ url('/customer') }}/{{  $item->customer_id }}/edit">{{ $item->customer->customer_code }} {{ $item->customer->company_name }}</a></td>                                        
+                                        <td>{{ $item->customer->customer_code }}</td>                                        
+                                        
+                                        <td>{{ $item->customer->company_name }}</td>                                        
                                         <td>
                                             @if($item->customer_payment)                                                
                                                 <a href2="{{ url('/finance/customer-payment/' . $item->customer_payment->id) }}">{{ $item->customer_payment->doc_no }}</a>
