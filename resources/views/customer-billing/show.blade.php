@@ -43,7 +43,7 @@
                                                 {{ csrf_field() }}       
                                                     
                                                                                                  
-                                                    <input class="form-control form-control-sm mr-4" name="date_cheque" type="date" id="date_cheque" value="{{ isset($customerbilling->date_cheque) ? $customerbilling->date_cheque : ''}}" >                                                    
+                                                    <input class="form-control form-control-sm mr-4" name="date_cheque" type="date" id="date_cheque" value="{{ isset($customerbilling->date_cheque) ? $customerbilling->date_cheque : ''}}" required>                                                    
                                                     <input class="form-control form-control-sm " name="status" type="hidden" id="status" value="wait-for-cheque" >                                                    
                                                     <button type="submit" class="btn btn-sm btn-primary">save</button>                                              
 
