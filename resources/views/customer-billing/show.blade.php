@@ -96,8 +96,7 @@
                                     <tr>
                                         <th class="text-center">เลขที่เอกสาร</th>
                                         <th class="text-center">วันที่</th>
-                                        <th class="text-center">รหัสลูกค้า</th>
-                                        <th class="text-center">ชื่อบริษัท</th>
+                                        <th class="text-center">เอกสารอ้างอิง</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
                                         <th class="text-center">ยอดรวม</th>
                                         <th class="text-center">รหัสพนักงาน</th>
@@ -112,8 +111,7 @@
                                             </a>
                                         </td>
                                         <td>{{ $row->invoice->datetime }}</td>
-                                        <td>{{ $row->invoice->Customer->customer_code }}</td>
-                                        <td><a href2="{{ url('/customer') }}/{{ $row->invoice->customer_id }}">{{ $row->invoice->Customer->company_name }}</a></td>
+                                        <td>{{ $row->invoice->external_reference_id }}</td>
                                         <td>{{ number_format($row->invoice->total_debt,2) }}</td>
                                         <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td>
                                         <td>{{ $row->invoice->User->short_name }}</td>
