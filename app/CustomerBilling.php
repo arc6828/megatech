@@ -25,7 +25,7 @@ class CustomerBilling extends Model
      *
      * @var array
      */
-    protected $fillable = ['doc_no', 'total', 'customer_id', 'condition_billing', 'condition_cheque', 'date_billing', 'date_cheque', 'remark', 'user_id'];
+    protected $fillable = ['doc_no', 'total', 'customer_id', 'condition_billing', 'condition_cheque', 'date_billing', 'date_cheque', 'remark', 'user_id','status'];
 
     public function customer(){
         return $this->belongsTo('App\CustomerModel','customer_id');

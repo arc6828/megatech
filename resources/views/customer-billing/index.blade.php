@@ -59,7 +59,19 @@
                                             @if($item->customer_payment)                                                
                                                 <a href2="{{ url('/finance/customer-payment/' . $item->customer_payment->id) }}">{{ $item->customer_payment->doc_no }}</a>
                                             @else
-                                                <a href2="{{ url('/finance/customer-payment/create?customer_id=' . $item->customer_id) }}&filter=billing-only" title="Payment"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
+                                                <a class="d-none" href2="{{ url('/finance/customer-payment/create?customer_id=' . $item->customer_id) }}&filter=billing-only" title="Payment"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
+                                                
+                                                @switch($item->status)
+                                                    @case("ready") 
+                                                        <span class="badge badge-pill badge-warning">รอการชำระ</span>
+                                                        @break
+                                                    @case("wait-for-cheque") 
+                                                        <span class="badge badge-pill badge-success">รอรับเช็ค-โอน</span>
+                                                        @break
+                                                    @case("delay") 
+                                                        <span class="badge badge-pill badge-danger">เลื่อน</span>
+                                                        @break
+                                                @endswitch
                                             @endif
                                         
                                         </td>

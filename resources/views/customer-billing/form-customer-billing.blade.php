@@ -72,7 +72,8 @@ $checklist = $customer->checklist;
     <div class="row">      
       <div class="form-group col-lg-3 {{ $errors->has('billing_invoice') ? 'has-error' : ''}}">
           <label for="billing_invoice" class="control-label">
-            <input type="checkbox" {{ $checklist->billing_invoice === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_invoice').value = this.checked"> 
+            <input class="d-none"  type="checkbox" {{ $checklist->billing_invoice === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_invoice').value = this.checked"> 
+            <i class="{{ $checklist->billing_invoice === "true" ? 'fa fa-check-square' : 'far fa-square'}}"></i>
             {{ 'ใบกำกับภาษี' }}
           </label>
           <input class="form-control form-control-sm checklist" name="billing_invoice" type="text" id="billing_invoice" value="{{ isset($checklist->billing_invoice) ? $checklist->billing_invoice : ''}}" >
@@ -80,7 +81,8 @@ $checklist = $customer->checklist;
       </div>
       <div class="form-group col-lg-3 {{ $errors->has('billing_po') ? 'has-error' : ''}}">
           <label for="billing_po" class="control-label">
-            <input type="checkbox" {{ $checklist->billing_po === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_po').value = this.checked"> 
+            <input class="d-none"  type="checkbox" {{ $checklist->billing_po === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_po').value = this.checked"> 
+            <i class="{{ $checklist->billing_po === "true" ? 'fa fa-check-square' : 'far fa-square'}}"></i>
             {{ 'P/O' }}
           </label>
           <input class="form-control form-control-sm checklist" name="billing_po" type="text" id="billing_po" value="{{ isset($checklist->billing_po) ? $checklist->billing_po : ''}}" >
@@ -88,7 +90,8 @@ $checklist = $customer->checklist;
       </div>
       <div class="form-group col-lg-3 {{ $errors->has('billing_receipt') ? 'has-error' : ''}}">
           <label for="billing_receipt" class="control-label">
-            <input type="checkbox" {{ $checklist->billing_receipt === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_receipt').value = this.checked"> 
+            <input class="d-none"  type="checkbox" {{ $checklist->billing_receipt === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_receipt').value = this.checked"> 
+            <i class="{{ $checklist->billing_receipt === "true" ? 'fa fa-check-square' : 'far fa-square'}}"></i>
             {{ 'ใบเสร็จรับเงิน' }}
           </label>
           <input class="form-control form-control-sm checklist" name="billing_receipt" type="text" id="billing_receipt" value="{{ isset($checklist->billing_receipt) ? $checklist->billing_receipt : ''}}" >
@@ -96,7 +99,8 @@ $checklist = $customer->checklist;
       </div>
       <div class="form-group col-lg-3 {{ $errors->has('billing_envelope') ? 'has-error' : ''}}">
           <label for="billing_envelope" class="control-label">
-            <input type="checkbox" {{ $checklist->billing_envelope === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_envelope').value = this.checked"> 
+            <input class="d-none"  type="checkbox" {{ $checklist->billing_envelope === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_envelope').value = this.checked"> 
+            <i class="{{ $checklist->billing_envelope === "true" ? 'fa fa-check-square' : 'far fa-square'}}"></i>
             {{ 'ซองจดหมายติดแสตมป์' }}
           </label>
           <input class="form-control form-control-sm checklist" name="billing_envelope" type="text" id="billing_envelope" value="{{ isset($checklist->billing_envelope) ? $checklist->billing_envelope : ''}}" >
@@ -104,7 +108,8 @@ $checklist = $customer->checklist;
       </div>
       <div class="form-group col-lg-3 {{ $errors->has('billing_delivery') ? 'has-error' : ''}}">
           <label for="billing_delivery" class="control-label">
-            <input type="checkbox" {{ $checklist->billing_delivery === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_delivery').value = this.checked"> 
+            <input class="d-none"  type="checkbox" {{ $checklist->billing_delivery === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_delivery').value = this.checked"> 
+            <i class="{{ $checklist->billing_delivery === "true" ? 'fa fa-check-square' : 'far fa-square'}}"></i>
             {{ 'ส่งของพร้อมวางบิล' }}
           </label>
           <input class="form-control form-control-sm checklist" name="billing_delivery" type="text" id="billing_delivery" value="{{ isset($checklist->billing_delivery) ? $checklist->billing_delivery : ''}}" >
@@ -112,7 +117,8 @@ $checklist = $customer->checklist;
       </div>
       <div class="form-group col-lg-3 {{ $errors->has('billing_reference') ? 'has-error' : ''}}">
           <label for="billing_reference" class="control-label">
-            <input type="checkbox" {{ $checklist->billing_reference === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_reference').value = this.checked"> 
+            <input class="d-none" type="checkbox" {{ $checklist->billing_reference === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_reference').value = this.checked"> 
+            <i class="{{ $checklist->billing_reference === "true" ? 'fa fa-check-square' : 'far fa-square'}}"></i>
             {{ 'พิมพ์เอกสารแนบใบวางบิล' }}
           </label>
           <input class="form-control form-control-sm checklist" name="billing_reference" type="text" id="billing_reference" value="{{ isset($checklist->billing_reference) ? $checklist->billing_reference : ''}}" >

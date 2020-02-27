@@ -87,8 +87,9 @@ class CustomerPaymentController extends Controller
 
             
         $bank_accounts = BankAccount::all();
+        $customers = CustomerModel::all();
 
-        return view('customer-payment.create', compact('invoices','customer','bank_accounts') );
+        return view('customer-payment.create', compact('invoices','customer','bank_accounts','customers') );
     }
 
     /**

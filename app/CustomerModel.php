@@ -84,6 +84,13 @@ class CustomerModel extends Model
 	public function Invoice_on_debt(){
 		return $this->hasMany('App\Sales\InvoiceModel','customer_id')->where('total_debt','>',0);
 	}
+	public function Invoice_on_debt_last_cycle(){
+		return $this->hasMany('App\Sales\InvoiceModel','customer_id')->where('total_debt','>',0)->where('datetime','<=',date('Y-m-t', strtotime( '-1 month' ) ));
+	}
+	public function Invoice_on_debt_billing(){
+		//sales_status_id = 12 คือ วางบิลแล้ว
+		return $this->hasMany('App\Sales\InvoiceModel','customer_id')->where('total_debt','>',0)->where('sales_status_id',12);
+	}
 	//Purchase
 	public function Requisition()
     {

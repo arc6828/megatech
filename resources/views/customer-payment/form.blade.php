@@ -12,9 +12,12 @@
     
 @endphp
 <div class="form-group {{ $errors->has('customer_id') ? 'has-error' : ''}}">
-    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> <a href="{{ url('/customer') }}" class="btn btn-sm btn-light">เลือกลูกค้า</a>
+    <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> 
+        <a href="{{ url('/customer') }}" class="btn btn-sm btn-light d-none">เลือกลูกค้า</a>        
+        @include('customer-payment/customer_modal')
     <input class="form-control form-control-sm d-none" name="customer_id" type="number" id="customer_id" value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_id}}" >
     <input class="form-control form-control-sm"  value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_name}}" disabled>
+    
     {!! $errors->first('customer_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">

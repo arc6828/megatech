@@ -20,7 +20,12 @@
     </div>
 
     <div class="form-group col-lg-6 {{ $errors->has('company') ? 'has-error' : ''}}">    
-        <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> <a href="{{ url('/customer') }}" class="btn btn-sm btn-light">เลือกลูกค้า</a>
+        <label for="customer_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> 
+        <a href="{{ url('/customer') }}" class="btn btn-sm btn-light d-none">เลือกลูกค้า</a>
+
+        
+        @include('customer-billing/customer_modal')
+        
         <input class="form-control form-control-sm"  value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer_id : $customer_name  }}" disabled>
         {!! $errors->first('customer_id', '<p class="help-block">:message</p>') !!}
     </div>
@@ -47,7 +52,7 @@
         </select>
         {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
     </div>
-    <div class="form-group col-lg-3 {{ $errors->has('condition_billing') ? 'has-error' : ''}}">
+    <div class="form-group col-lg-3 d-none {{ $errors->has('condition_billing') ? 'has-error' : ''}}">
         <label for="condition_billing" class="control-label">{{ 'เงื่อนไขการวางบิล' }}</label>
         <input class="form-control form-control-sm" name="condition_billing" type="text" id="condition_billing" value="{{ isset($customerbilling->condition_billing) ? $customerbilling->condition_billing : $condition_billing}}" >
         {!! $errors->first('condition_billing', '<p class="help-block">:message</p>') !!}
@@ -66,7 +71,7 @@
 
 <h2>กำหนดการจ่ายชำระหนี้</h2>
 <div class="row">
-    <div class="form-group col-lg-3  {{ $errors->has('condition_cheque') ? 'has-error' : ''}}">
+    <div class="form-group col-lg-3 d-none  {{ $errors->has('condition_cheque') ? 'has-error' : ''}}">
         <label for="condition_cheque" class="control-label">{{ 'เงื่อนไขรับเช็ค' }}</label>
         <input class="form-control form-control-sm" name="condition_cheque" type="text" id="condition_cheque" value="{{ isset($customerbilling->condition_cheque) ? $customerbilling->condition_cheque : $condition_cheque}}" >
         {!! $errors->first('condition_cheque', '<p class="help-block">:message</p>') !!}

@@ -13,12 +13,12 @@
                     <div class="card-body">
 
                         <a href="{{ url('/finance/customer-billing') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/finance/customer-billing/' . $customerbilling->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                        <a class="d-none" href="{{ url('/finance/customer-billing/' . $customerbilling->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
                         <form method="POST" action="{{ url('customerbilling' . '/' . $customerbilling->id) }}" accept-charset="UTF-8" style="display:inline">
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete CustomerBilling" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm d-none" title="Delete CustomerBilling" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                         </form>
                         <br/>
                         <br/>
@@ -35,7 +35,26 @@
                                     <tr><th> Condition Billing </th><td> {{ $customerbilling->condition_billing }} </td></tr>
                                     <tr><th> Condition Cheque </th><td> {{ $customerbilling->condition_cheque }} </td></tr>
                                     <tr><th> Date Billing </th><td> {{ $customerbilling->date_billing }} </td></tr>
-                                    <tr><th> Date Cheque </th><td> {{ $customerbilling->date_cheque }} </td></tr>
+                                    <tr>
+                                        <th> Date Cheque </th>
+                                        <td> 
+                                            {{ $customerbilling->date_cheque }} 
+                                            
+                                            <form method="POST" action="{{ url('/finance/customer-billing/' . $customerbilling->id) }}" accept-charset="UTF-8" class="form-horizontal form-inline" enctype="multipart/form-data">
+                                                {{ method_field('PATCH') }}
+                                                {{ csrf_field() }}
+
+                                                    
+                                                    <input class="form-control form-control-sm mr-4" name="date_cheque" type="date" id="date_cheque" value="{{ isset($customerbilling->date_cheque) ? $customerbilling->date_cheque : ''}}" >
+                                                    
+                                                    <input class="form-control form-control-sm " name="status" type="hidden" id="status" value="wait-for-cheque" >
+                                                    
+                                                    <button type="submit" class="btn btn-sm btn-primary">save</button>
+                                                
+
+                                            </form>
+                                        </td>
+                                    </tr>
                                     <tr><th> Remark </th><td> {{ $customerbilling->remark }} </td></tr>
                                     <tr><th> User Id </th><td> {{ $customerbilling->user->name }} </td></tr>
                                 </tbody>
