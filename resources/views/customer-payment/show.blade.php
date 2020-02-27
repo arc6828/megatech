@@ -48,7 +48,7 @@
                 </div>
 
                 @php
-                    $customer_billing_details = $customerpayment->customer_invoices;
+                    $customer_invoices = $customerpayment->customer_invoices;
                 @endphp
                 <div class="card">
                     <div class="card-header">รายละเอียดใบรับชำระเงิน</div>
@@ -68,18 +68,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($customer_billing_details as $row)
+                                    @foreach($customer_invoices as $row)
                                     <tr>
-                                        <td>{{ $row->customer_billing->doc_no }}</td>
+                                        <td>{{ $row->customer_billing_detail->customer_billing->doc_no }}</td>
                                         <td>
                                             <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
                                                 {{ $row->invoice_code }}
                                             </a>
                                         </td>
                                         <td>{{ $row->datetime }}</td>
-                                        <td>{{ $row->invoice->external_reference_id }}</td>
+                                        
+                                        <td>{{ $row->external_reference_id }}</td>
                                         <td>{{ $row->total_debt }}</td>
-                                        <td>{{ number_format($row->total?$row->total:0,2) }}</td>
+                                        <td>
+                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
+                                            
+                                            <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
+                                        </td>
+                                        <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
                                         <td>{{ $row->User->short_name }}</td>
                                     </tr>
                                     @endforeach
