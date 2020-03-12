@@ -22,6 +22,9 @@ class InvoiceDetailModel extends Model
   public function Product(){
     return $this->belongsTo('App\ProductModel','product_id');
   }
+
+ 
+
   public static function select_all(){
 		return DB::table('tb_invoice_detail')
       ->join('tb_product','tb_invoice_detail.product_id','=','tb_product.product_id')

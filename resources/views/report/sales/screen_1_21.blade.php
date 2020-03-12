@@ -20,6 +20,11 @@
 		<th>เดือน 12</th>
 		<th>รวม</th>
 	</tr>
+	<style>
+		.number{
+			text-align:right;
+		}
+	</style>
 
 	@foreach ($customer as $customers)
 		@foreach ($customers->Invoice as $invoices)
@@ -29,25 +34,25 @@
 			</tr>
 			@foreach ($invoices->InvoiceDetail as $InvoiceDetail)
 				<tr>
-					<td>{{ $InvoiceDetail->Product->product_code }}</td>
-					<td>{{ $InvoiceDetail->Product->product_name }} {{ $InvoiceDetail->Product->grade }}</td>
+					<td> {{ $InvoiceDetail->Product->product_code }} </td>
+					<td> {{ $InvoiceDetail->Product->product_name }} / {{$InvoiceDetail->Product->grade}} </td>	
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 1 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 2 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 3 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 4 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 5 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 6 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 7 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 8 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 9 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 10 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 11 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ date("n",strtotime($invoices->datetime)) == 12 ? number_format($InvoiceDetail->amount,0) : '' }}</td>
+					<td class="number">  {{ number_format($InvoiceDetail->amount,0) }}</td>
 					
-					
-					<td class="number">  {{number_format($customers->invoices_by_month(1)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(2)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(3)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(4)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(5)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(6)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(7)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(8)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(9)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(10)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(11)->sum('total'),2) }}</td>
-					<td class="number">  {{number_format($customers->invoices_by_month(12)->sum('total'),2)}}</td>
-					<td class="number"> {{number_format($customers->invoices->sum('total'),2)}}</td>
-				</tr>		
+				</tr>	
 			@endforeach
+			
 		@endforeach
 	@endforeach
     
