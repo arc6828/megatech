@@ -107,7 +107,7 @@
                             <tbody>
                                 @php
                                     $transaction_code_object = [
-                                        "cash-transfer-out" => "โอนเงินสด",
+                                        "cash-transfer-in" => "โอนเงินสด",
                                         "discount-fee" => "ส่วนลด/ค่าธรรมเนียม",
                                         "deposite-cheque" => "ฝากด้วยเช็ค",
                                         "credit" => "บัตรเครดิต",
