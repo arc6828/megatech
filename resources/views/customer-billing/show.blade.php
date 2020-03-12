@@ -28,12 +28,10 @@
                                 <tbody>
                                     <tr>
                                         <th>ID</th><td>{{ $customerbilling->id }}</td>
+                                        <th> Doc No </th><td> {{ $customerbilling->doc_no }} </td>
                                     </tr>
-                                    <tr><th> Doc No </th><td> {{ $customerbilling->doc_no }} </td></tr>
-                                    <tr><th> Total </th><td> {{ number_format($customerbilling->total,2) }} </td></tr>
-                                    <tr><th> Customer Id </th><td> {{ $customerbilling->customer->customer_code }}  {{ $customerbilling->customer->company_name }} </td></tr>
-                                    <tr><th> Condition Billing </th><td> {{ $customerbilling->condition_billing }} </td></tr>
-                                    <tr><th> Condition Cheque </th><td> {{ $customerbilling->condition_cheque }} </td></tr>
+                                    <tr><th> Total </th><td> {{ number_format($customerbilling->total,2) }} </td><th> Customer Id </th><td> {{ $customerbilling->customer->customer_code }}  {{ $customerbilling->customer->company_name }} </td></tr>
+                                    <tr><th> Condition Billing </th><td> {{ $customerbilling->condition_billing }} </td><th> Condition Cheque </th><td> {{ $customerbilling->condition_cheque }} </td></tr>
                                     <tr><th> Date Billing </th><td> {{ $customerbilling->date_billing }} </td></tr>
                                     <tr>
                                         <th> Date Cheque </th>
@@ -49,8 +47,7 @@
 
                                             </form>
                                         </td>
-                                    </tr>
-                                    <tr>
+                                    
                                         <th> Status </th>
                                         <td> 
                                             
@@ -75,8 +72,7 @@
 
                                         </td>
                                     </tr>
-                                    <tr><th> Remark </th><td> {{ $customerbilling->remark }} </td></tr>
-                                    <tr><th> User Id </th><td> {{ $customerbilling->user->name }} </td></tr>
+                                    <tr><th> Remark </th><td> {{ $customerbilling->remark }} </td><th> User Id </th><td> {{ $customerbilling->user->name }} </td></tr>
                                 </tbody>
                             </table>
                         </div>
