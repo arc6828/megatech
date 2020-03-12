@@ -4,9 +4,46 @@
 
 @section('content')
     <div class="container">
+        <script>
+            function validate(form) {
+
+                
+                // validation code here ...
+                var invoice_payments = document.querySelectorAll(".invoice_payments");
+                var sum = 0;
+                for(element of invoice_payments){
+                    sum += parseFloat(element.value ? element.value : '0'); 
+                }
+                var amount_discount_fee = parseFloat((document.querySelector("#amount-discount-fee").value != "" ? document.querySelector("#amount-discount-fee").value : '0'));
+                var amount_cash_transfer_in = parseFloat((document.querySelector("#amount-cash-transfer-in").value != "" ? document.querySelector("#amount-cash-transfer-in").value : '0'));
+                var amount_deposite_cheque = parseFloat((document.querySelector("#amount-deposite-cheque").value != "" ? document.querySelector("#amount-deposite-cheque").value : '0'));
+                var amount_credit = parseFloat((document.querySelector("#amount-credit").value != "" ? document.querySelector("#amount-credit").value : '0'));
+                var total_payment = amount_cash_transfer_in + amount_deposite_cheque + amount_credit;
+                var valid = false;
+                console.log(sum);
+                console.log(amount_discount_fee);
+                console.log(amount_cash_transfer_in);
+                console.log(amount_deposite_cheque);
+                console.log(amount_credit);
+                console.log(total_payment);
+                if(total_payment == sum - amount_discount_fee){
+                    valid = true;
+                }else{
+                    valid = false;
+                }
+                //return false;
+                if(!valid) {
+                    alert('Please correct the errors in the form!');
+                    return false;
+                }
+                else {
+                    return confirm('Do you really want to submit the form?');
+                }
+            }
+        </script>
     
 
-        <form method="POST" action="{{ url('/finance/customer-payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+        <form method="POST" onsubmit="return validate(this);" action="{{ url('/finance/customer-payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row">
 
@@ -66,7 +103,7 @@
                                         <td>{{ $row->external_reference_id }}</td>
                                         <td>{{ $row->total_debt }}</td>
                                         <td>
-                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
+                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}" class="invoice_payments">
                                             
                                             <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
                                         </td>
@@ -107,8 +144,8 @@
                             <tbody>
                                 @php
                                     $transaction_code_object = [
-                                        "cash-transfer-in" => "โอนเงินสด",
                                         "discount-fee" => "ส่วนลด/ค่าธรรมเนียม",
+                                        "cash-transfer-in" => "โอนเงินสด",
                                         "deposite-cheque" => "ฝากด้วยเช็ค",
                                         "credit" => "บัตรเครดิต",
                                     ];
@@ -130,7 +167,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="amount[]" type="number" id="amount" value="" >                            
+                                        <input class="form-control form-control-sm" name="amount[]" type="number" id="amount-{{$key}}" step="any" value="" >                            
                                     </td>
                                     <td>
                                         <input class="form-control form-control-sm" name="remark[]" type="text" id="remark" value="" >  
@@ -145,7 +182,8 @@
             </div>
         </div>
         <div class="text-center mb-4">
-            <input class="btn btn-primary" type="submit" value="create">
+            <input class="btn btn-primary" type="submit" onclick="validate(this)" value="create">
+            <button type="button" onclick="validate(this);"></button>
         </div>
         
         </form>
