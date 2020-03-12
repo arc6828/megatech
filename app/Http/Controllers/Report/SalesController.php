@@ -10,6 +10,8 @@ use App\UserModel;
 use App\ProductModel;
 use App\Sales\QuotationModel;
 use App\Sales\QuotationDetailModel;
+
+use Illuminate\Support\Facades\DB;
 use PDF;
 class SalesController extends Controller
 {
@@ -87,8 +89,12 @@ class SalesController extends Controller
     }
 
     public function screen_3_11(){
-        $Product = ProductModel::all();
-        return view('report.sales.screen_3_11',compact('Product'));
+        $Products = ProductModel::join('tb_invoice_detail','tb_invoice_detail.product_id','tb_product.product_id')            
+            ->select(DB::raw('tb_product.*, count(tb_invoice_detail.product_id) as product_count'))
+            ->groupBy('tb_invoice_detail.product_id')
+            ->havingRaw('count(tb_invoice_detail.product_id) > 0')
+            ->get();
+        return view('report.sales.screen_3_11',compact('Products'));
     }
 
     public function screen_4_1(){
