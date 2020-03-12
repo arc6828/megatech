@@ -70,7 +70,7 @@
 				<td class="number">  {{number_format($user->invoices_by_month(12)->sum('total'),2)}}</td>
 				<td class="number"> {{number_format($user->invoices->sum('total'),2)}}</td>
 				
-			</tr>
+		</tr>
 	@endforeach
 	
     
