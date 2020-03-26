@@ -37,6 +37,9 @@ class OrderModel extends Model
   public function QuotationDetail(){
     return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
   }
+  public function order_details(){
+    return $this->hasMany('App\Sales\OrderDetailModel','order_id');
+  }
   public function User(){
     return $this->belongsTo('App\User','user_id');
   }
@@ -44,8 +47,7 @@ class OrderModel extends Model
     return $this->belongsTo('App\CustomerModel','customer_id');
   }
   public static function select_all_by_user_id($user_id){
-    return DB::table('tb_order')
-        ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+    return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
         ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
         ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
         ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
@@ -55,8 +57,7 @@ class OrderModel extends Model
 	}
 
   public static function select_all(){
-    return DB::table('tb_order')
-        ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+    return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
         ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
         ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
         ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')

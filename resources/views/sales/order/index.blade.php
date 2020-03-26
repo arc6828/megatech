@@ -31,8 +31,9 @@
 						<th class="text-center">รหัสลูกค้า</th>
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">รหัสพนักงาน</th>
+						<th class="text-center">พนักงาน</th>
 						<th class="text-center">สถานะ</th>
+						<th class="text-center">รายละเอียด</th>
 						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
@@ -45,29 +46,50 @@
 								{{ $row->order_code }}
 							</a>
 						</td>
-						<td>{{ $row->datetime }}</td>
+						<td>{{ explode(" ", $row->datetime)[0] }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td><a href2="{{ url('customer') }}/{{ $row->customer_id }}/edit" target="_blank">{{ $row->company_name }}</a></td>
 						<td class="text-right">{{ number_format($row->total,2) }}</td>
 						<td><a href2="{{ url('user') }}/{{ $row->user_id }}" target="_blank">{{ $row->short_name }}</a></td>
 						<td>
-              @if( $row->sales_status_id == 7)
-              <a class="btn btn-sm btn-warning"
-			  
-			  	href="#"
-                href2="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
-                รอการเบิกสินค้า
-              </a>
-              @elseif($row->sales_status_id == 8)
-              <a class="btn btn-sm btn-success"
-			  	href="#"
-                href2="{{ url('/') }}/sales/invoice/create?order_code={{ $row->order_code }}" >
-                เปิด Invoice ใหม่
-              </a>
-              @else
-              {{ $row->sales_status_name }}
-              @endif
-            </td>
+							
+							@if( $row->sales_status_id == 7)
+							<span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
+							<a class="btn btn-sm btn-warning d-none"
+							
+								href="#"
+								href2="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
+								รอการเบิกสินค้า
+							</a>
+							@elseif($row->sales_status_id == 8)							
+							<span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
+							<a class="btn btn-sm btn-success d-none"
+								href="#"
+								href2="{{ url('/') }}/sales/invoice/create?order_code={{ $row->order_code }}" >
+								เปิด Invoice ใหม่
+							</a>
+							@else
+							<span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
+							{{-- $row->sales_status_name --}}
+							@endif
+							
+						</td>
+						<td class="text-left">
+							@foreach($row->order_details as $order_detail)
+								@switch($order_detail->order_detail_status_id)
+									@case(1)
+										<span class="badge badge-pill badge-primary" title="รอเบิกสินค้า">Y</span>
+										@break
+									@case(3)
+										<span class="badge badge-pill badge-warning" title="รอเปิด Invoice">W</span>
+										@break
+									@case(4)
+										<span class="badge badge-pill badge-success" title="Invoice แล้ว">IV</span>
+										@break
+								@endswitch
+							@endforeach
+
+						</td>
 						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->order_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

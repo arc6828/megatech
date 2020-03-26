@@ -168,7 +168,7 @@
 				<div class="form-group form-inline">
 					<input type="hidden" name="total" id="total"	class="form-control form-control-sm form-control-line"  >
 					<label class="col-lg-6">หมายเหตุ</label>
-					<label class="col-lg-3">ยอดรวมก่อนภาษี</label>
+					<label class="col-lg-3 text-right">ยอดรวมก่อนภาษี</label>
 					<div class="col-lg-3">
 						<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly>
 					</div>
@@ -178,7 +178,7 @@
             <textarea name="remark" id="remark" class="form-control" style="width:100%"></textarea>
 
 					</label>
-					<label class="col-lg-3">
+					<label class="col-lg-3  text-right">
 						ภาษีมูลค่าเพิ่ม
 						<input type="number"
 							name="vat_percent" id="vat_percent"
@@ -195,7 +195,7 @@
 	   				<label class="col-lg-6">
 
 					</label>
-					<label class="col-lg-3">ยอดสุทธิ</label>
+					<label class="col-lg-3 text-right">ยอดสุทธิ</label>
 					<div class="col-lg-3">
 						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly >
 					</div>

@@ -166,7 +166,7 @@ class OrderController extends Controller
 
 
 
-      return redirect("sales/order/{$id}/edit");
+      return redirect("sales/order/{$id}");
     }
 
     public function getNewCode(){

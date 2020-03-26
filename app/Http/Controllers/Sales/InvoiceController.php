@@ -176,7 +176,7 @@ class InvoiceController extends Controller
 
       }
 
-      return redirect("sales/invoice/{$id}/edit");
+      return redirect("sales/invoice/{$id}");
     }
 
     public function getNewCode(){
