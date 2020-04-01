@@ -23,7 +23,7 @@
 		</div>
 
 		<div class="table-responsive">
-			<table class="table table-hover text-center" id="table">
+			<table class="table table-hover text-center table-sm" id="table">
 				<thead>
 					<tr>
 						<th class="text-center">รหัส</th>
@@ -31,8 +31,8 @@
 						<th class="text-center">อีเมล์</th>
 						<th class="text-center">เบอร์โทรศัพท์</th>
 						<th class="text-center">ยอดหนึ้ขณะนี้</th>
-						<th class="text-center ">วางบิล</th>
-						<th class="text-center ">รับชำระ</th>
+						<!--th class="text-center ">วางบิล</th>
+						<th class="text-center ">รับชำระ</th-->
 					</tr>
 				</thead>
 				<tbody>
@@ -46,7 +46,7 @@
 					<td>{{ $row->email }}</td>
 					<td>{{ $row->telephone }}</td>
 					<td>{{ number_format($total_debt,2) }}</td>
-					<td class=" ">
+					<!--td class=" ">
 						@if($total_debt > 0)
 						<div><a class=" " href="{{ url('/') }}/finance/customer-billing/create?customer_id={{ $row->customer_id }}&end_date={{ date('Y-m-t', strtotime( '-1 month' ) ) }}">วางบิลเดือนที่ผ่านมา</a></div>
 						<div><a class=" " href="{{ url('/') }}/finance/customer-billing/create?customer_id={{ $row->customer_id }}&end_date={{ date('Y-m-t' ) }}">วางบิลทั้งหมด</a></div>
@@ -63,7 +63,7 @@
 						<a href="javascript:void(0)" onclick="onDelete( {{ $row->customer_id }} )" class="text-danger d-none">
 							<span class="fa fa-trash"></span>
 						</a>
-					</td>
+					</td-->
 				</tr>
 				@endforeach
 				</tbody>
@@ -104,10 +104,12 @@
 	</script>
 
 
-<div class="form-group mt-5">
+<div class="form-group mt-4">
   <div class="col-lg-12">
     <div class="text-center">
-        <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
+        <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">
+			<i class="fa fa-arrow-left"></i> back
+		</a>
         <a href="{{ url('/') }}/customer/create" class="btn btn-primary">
           <i class="fa fa-plus"></i> เพิ่มลูกค้า
         </a>

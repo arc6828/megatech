@@ -5,40 +5,32 @@
 @section('content')
 @forelse ($table_customer as $row)
 
-<nav>
-  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Profile</a>
-    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Contact</a>
-    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Comment</a>
-  </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-    <form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data" class="mt-4">
-      {{ csrf_field() }}
-      {{ method_field('PUT') }}
+<form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data" class="mt-4">
+  {{ csrf_field() }}
+  {{ method_field('PUT') }}
 
-      @include('customer/form')
+  @include('customer/form')
 
-      @include('contact/index-item', ['type' => 'customer'])
+  @php
+  $contact = $customer->contacts;
+  @endphp
+  @include('customer/contact-index-card', ['type' => 'customer'])
 
-      <div class="form-group mt-5">
-        <div class="col-lg-12">
-          <div class="text-center">
-            <a class="btn btn-outline-primary " href="{{ url('/') }}/customer">back</a>
-            <button class="btn btn-primary" type="submit" >Update</button>
-          </div>
-        </div>
+
+  @php
+  $comment = $customer->comments;
+  @endphp
+  @include('customer/comment-index-card', ['type' => 'customer'])
+
+  <div class="form-group mt-5">
+    <div class="col-lg-12">
+      <div class="text-center">
+        <a class="btn btn-outline-primary " href="{{ url('/') }}/customer">back</a>
+        <button class="btn btn-primary" type="submit" >Update</button>
       </div>
-    </form>
+    </div>
   </div>
-  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-  @include('contact/index-item', ['type' => 'customer'])
-  </div>
-  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-    @include('customer/form-comment', ['type' => 'customer'])
-  </div>
-</div>
+</form>
 @empty
 
 @endforelse

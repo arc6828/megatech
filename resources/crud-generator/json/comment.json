@@ -1,0 +1,24 @@
+{
+    "fields": [
+        {
+            "name": "user_id",
+            "type": "integer"
+        },
+        {
+            "name": "comment",
+            "type": "text"
+        },
+        {
+            "name": "key",
+            "type": "string"
+        },
+        {
+            "name": "value",
+            "type": "string"
+        },
+        {
+            "name": "remark",
+            "type": "string"
+        }
+    ]
+}

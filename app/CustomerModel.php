@@ -62,7 +62,9 @@ class CustomerModel extends Model
 	public function checklist(){
 		return $this->hasOne('App\Checklist','customer_id');
 	}
-
+	public function comments(){
+		return $this->hasMany('App\Comment','value');
+	}	
 	public function contacts(){
 		return $this->hasMany('App\Contact','customer_id');
 	}	
