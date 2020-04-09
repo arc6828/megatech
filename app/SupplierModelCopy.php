@@ -1,127 +1,33 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class SupplierModel extends Model
+class SupplierModelCopy extends Model
 {
-	protected $table = 'tb_supplier';
+	protected $table = "tb_supplier";
     protected $primaryKey = 'supplier_id';
-	protected $fillable = ['supplier_code',
-							'supplier_type',
-							'company_name',
-							'account_id',
-							'contact_name',
-							'supplier_name',
-							'address',
-							'address2',
-							'sub_district',
-							'district',
-							'province',
-							'zipcode',
-							'delivery_address',
-							'delivery_address2',
-							'delivery_sub_district',
-							'delivery_district',
-							'delivery_province',
-							'delivery_zipcode',
-							'user_id',
-							'telephone',
-							'fax',
-							'email',
-							'zone_id',
-							'delivery_type_id',
-							'remark',
-							'max_credit',
-							'debt_duration',
-							'degree_product',
-							'loyalty_discount',
-							'tax_number',
-							'billing_duration',
-							'cheqe_condition',
-							'delivery_time',
-							'payment_condition',
-							'tax_type_id',
-							'location_type_id',
-							'branch_id',
-							'debt_balance',
-							'upload',
-							'contact',
-							'payment_method',
-							'file_map',
-							'file_cc',
-							'file_cv_20',
-							'file_cheque',
-							
-							];
-	//Relationships	
-	//sales		
-	public function checklist(){
-		return $this->hasOne('App\Checklist','supplier_id');
-	}
-	public function comments(){
-		return $this->hasMany('App\Comment','value');
-	}	
-	public function contacts(){
-		return $this->hasMany('App\Contact','supplier_id');
-	}	
-	public function contacts2(){
-		return $this->hasMany('App\Contact','supplier_id');
-	}
+	protected $fillable = [];
+
 	
-	public function Quotation(){
-		return $this->hasMany('App\Sales\QuotationModel','supplier_id');
-	}
 	public function Order(){
-		return $this->hasMany('App\Sales\OrderModel','supplier_id');
-	}
-	public function Invoice(){
-		return $this->hasMany('App\Sales\InvoiceModel','supplier_id');
-	}
-	public function invoices(){
-		return $this->hasMany('App\Sales\InvoiceModel','supplier_id');
-	}
-    public function invoices_by_month($month){
-        return $this->hasMany('App\Sales\InvoiceModel','supplier_id')->whereMonth('datetime',$month);
-    }
-	public function Invoice_on_debt(){
-		return $this->hasMany('App\Sales\InvoiceModel','supplier_id')->where('total_debt','>',0);
-	}
-	public function Invoice_on_debt_last_cycle(){
-		return $this->hasMany('App\Sales\InvoiceModel','supplier_id')->where('total_debt','>',0)->where('datetime','<=',date('Y-m-t', strtotime( '-1 month' ) ));
-	}
-	public function Invoice_on_debt_billing(){
-		//sales_status_id = 12 คือ วางบิลแล้ว
-		return $this->hasMany('App\Sales\InvoiceModel','supplier_id')->where('total_debt','>',0)->where('sales_status_id',12);
-	}
-	//Purchase
-	public function Requisition()
-    {
-        return $this->hasMany('App\Purchase\RequisitionModel','supplier_id');
-    }
-    public function PurchaseOrder()
-    {
         return $this->hasMany('App\Purchase\OrderModel','supplier_id');
-    }
-    public function Receive()
-    {
+	}
+//Re
+	/*
+	public function receives(){
         return $this->hasMany('App\Purchase\ReceiveModel','supplier_id');
 	}
+	*/
+
 	public function Receives(){
 		return $this->hasMany('App\Purchase\ReceiveModel','supplier_id');
 	}
 	public function Receives_on_debt(){
 		return $this->hasMany('App\Purchase\ReceiveModel','supplier_id')->where('total_debt','>',0);
 	}
-	//user
-	public function User()
-      {
-          return $this->belongsTo('App\User','user_id');
-	  }
-	  
-	 // Supplier
-
 
 	public static function select_all(){
 		return DB::table('tb_supplier')->get();
@@ -138,7 +44,6 @@ class SupplierModel extends Model
             ->where('tb_supplier.company_name', 'like' , "%{$q}%" )
             ->get();
 	}
-	
 
 
 	public static function select_zone() {
@@ -219,5 +124,4 @@ class SupplierModel extends Model
 		DB::update($sql, []);
 	}
     */
-	
 }

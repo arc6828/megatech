@@ -81,7 +81,7 @@
 </div>
 <div class="form-group {{ $errors->has('supplier_id') ? 'has-error' : ''}}">
     <label for="supplier_id" class="control-label">{{ 'Supplier Id' }}</label>
-    <input class="form-control form-control-sm" name="supplier_id" type="text" id="supplier_id" value="{{ isset($contact->supplier_id) ? $contact->supplier_id : ''}}" readonly>
+    <input class="form-control form-control-sm" name="supplier_id" type="text" id="supplier_id" value="{{ isset($contact->supplier_id) ? $contact->supplier_id : request('supplier_id')}}" readonly>
     {!! $errors->first('supplier_id', '<p class="help-block">:message</p>') !!}
 </div>
 

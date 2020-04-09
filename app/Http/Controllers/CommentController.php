@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Comment;
 use App\CustomerModel;
+use App\SupplierModel;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -48,6 +49,14 @@ class CommentController extends Controller
             $key = "customer";
             $value = $customer_id;
             return view('comment.create' , compact('customer','key','value') );
+        }
+        
+        $supplier_id = $request->get('supplier_id');
+        if(!empty($supplier_id)){
+            $supplier = SupplierModel::findOrFail($supplier_id);
+            $key = "supplier";
+            $value = $supplier_id;
+            return view('comment.create' , compact('supplier','key','value') );
         }
         
     }

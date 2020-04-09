@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\SupplierModel;
 use App\AccountModel;
 use App\UserModel;
+use App\Checklist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -21,15 +22,12 @@ class SupplierController extends Controller
         $q = $request->input('q');
         $table_supplier = [];
         switch(Auth::user()->role){
-          case "admin" :          
-          case "purchase" :
+          case "admin" :
             $table_supplier = SupplierModel::all();
             break;
           case "sales" :
             $table_supplier = SupplierModel::where('user_id', Auth::id() )->get();
             break;
-
-           
         }
 
         $data = [
@@ -46,7 +44,6 @@ class SupplierController extends Controller
      */
     public function create()
     {
-
         $table_account = AccountModel::select_all();
         $table_user = UserModel::select_all();
         $table_zone = SupplierModel::select_zone();
@@ -72,73 +69,28 @@ class SupplierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // $id_supplier = $request->input('id_supplier');
-        // $type_supplier = $request->input('type_supplier');
-        // $name_company = $request->input('name_company');
-        // $id_account = $request->input('id_account');
-        // $name_supplier = $request->input('name_supplier');
-        // $address = $request->input('address');
-        // $place_delivery = $request->input('place_delivery');
-        // $id_user = $request->input('id_user');
-        // $telephone = $request->input('telephone');
-        // $sales_area = $request->input('sales_area');
-        // $transpot = $request->input('transpot');
-        // $note = $request->input('note');
-        // $credit = $request->input('credit');
-        // $debt_period = $request->input('debt_period');
-        // $degree_product = $request->input('degree_product');
-        // $deposit_discount = $request->input('deposit_discount');
-        // $tax_number = $request->input('tax_number');
-        // $bill_condition = $request->input('bill_condition');
-        // $check_condition = $request->input('check_condition');
-        // $location = $request->input('location');
-        // $branch = $request->input('branch');
-        // $fax_number = $request->input('fax_number');
+    {     
+        
+        $requestData = $request->all();
 
-        // $debt_balance = 0;
-
-
-        // $model = new SupplierModel();
-        // $model->insert($id_supplier, $type_supplier, $name_company, $id_account, $name_supplier, $address,$place_delivery, $id_user, $telephone, $sales_area, $transpot, $note,$credit, $debt_period, $degree_product, $deposit_discount, $tax_number, $bill_condition, $check_condition,$location, $branch, $fax_number, $debt_balance);
-        // return redirect('finance/debtor');
-
-        $input = [
-            'supplier_code' => $request->input('supplier_code'),
-            'supplier_type' => $request->input('supplier_type'),
-            'company_name' => $request->input('company_name'),
-            'account_id' => $request->input('account_id'),
-            'contact_name' => $request->input('contact_name'),
-            'address' => $request->input('address'),
-            'address2' => "",
-            'sub_district' => $request->input('sub_district'),
-            'district' => $request->input('district'),
-            'province' => $request->input('province'),
-            'zipcode' => $request->input('zipcode'),
-            'delivery_address' => $request->input('delivery_address'),
-            'delivery_address2' => "",
-            'delivery_sub_district' => $request->input('delivery_sub_district'),
-            'delivery_district' => $request->input('delivery_district'),
-            'delivery_province' => $request->input('delivery_province'),
-            'delivery_zipcode' => $request->input('delivery_zipcode'),
-            'user_id' => $request->input('user_id'),
-            'telephone' => $request->input('telephone'),
-            'fax' => $request->input('fax'),
-            'zone_id' => $request->input('zone_id'),
-            'transpotation_id' => $request->input('transpotation_id'),
-            'remark' => $request->input('remark'),
-            'max_credit' => $request->input('max_credit'),
-            'debt_duration' => $request->input('debt_duration'),
-            'degree_product' => $request->input('degree_product'),
-            'loyalty_discount' => $request->input('loyalty_discount'),
-            'tax_number' => $request->input('tax_number'),
-            'billing_condition' => $request->input('billing_condition'),
-            'cheqe_condition' => $request->input('cheqe_condition'),
-            'location_type_id' => $request->input('location_type_id'),
-            'branch_id' => $request->input('branch_id')
-        ];
-
-        SupplierModel::insert($input);
+        if ($request->hasFile('file_map')) {
+            $folder = "supplier/{$request->input('supplier_code')}/file_map";
+            $requestData['file_map'] = $request->file('file_map')->store($folder, 'public');
+        }
+        if ($request->hasFile('file_cc')) {
+          $folder = "supplier/{$request->input('supplier_code')}/file_cc";
+            $requestData['file_cc'] = $request->file('file_cc')->store($folder, 'public');
+        }
+        if ($request->hasFile('file_cv_20')) {
+          $folder = "supplier/{$request->input('supplier_code')}/file_cv_20";
+            $requestData['file_cv_20'] = $request->file('file_cv_20')->store($folder, 'public');
+        }
+        if ($request->hasFile('file_cheque')) {
+          $folder = "supplier/{$request->input('supplier_code')}/file_cheque";
+            $requestData['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
+        }
+        //UPDATE CUSTOMER
+        SupplierModel::create($requestData);
         return redirect('supplier');
     }
 
@@ -150,13 +102,8 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        $model = new SupplierModel();
-        $table_supplier = $model->select_id($id);
-        $data = [
-            'table_supplier' => $table_supplier
-        ];
-        return view('finance/debtor/show',$data);
-
+        $table_supplier = SupplierModel::findOrFail($id);
+        return view('finance/debtor/show', compact('table_supplier') );
     }
 
     public function getUploadTemplate($upload = null)
@@ -206,6 +153,12 @@ class SupplierController extends Controller
             'table_delivery_type' => $table_delivery_type,
 
             'table_upload' => $this->getUploadTemplate(),
+            'supplier' => SupplierModel::findOrFail($id),
+            'supplier2' => SupplierModel::findOrFail($id),
+            'checklist' => Checklist::firstOrCreate(
+              ['supplier_id' => $id],
+              ['type' => 'supplier']
+            ),
         ];
         return view('supplier/edit',$data);
     }
@@ -218,70 +171,34 @@ class SupplierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-      //Save upload image to 'avatar' folder which in 'storage/app/public' folder
-      $upload = SupplierModel::select_upload_by_id($id);
-      $upload_json = $this->getUploadTemplate($upload);
-      if ($request->hasFile('upload_map')) {
-        //$path = $request->file('upload_map')->store('avatar','public');
-      }
+    {           
+      $requestData = $request->all();
 
-      $i = 0;
-      foreach($upload_json as $row)
-      {
-        //$path = $request->file('image')->store('avatar','public');
-        $filename = "upload_".$row->key;
-        echo $filename;
-        if ($request->hasFile($filename)) {
-          $folder = "supplier/{$request->input('supplier_code')}/{$row->key}";
-          $value = $request->file($filename)->store($folder,'public');
-          $upload_json[$i]->value = $value;
-          echo $row->key."<br>";
-        }
-        $i++;
+      //FILE
+      if ($request->hasFile('file_map')) {
+          $folder = "supplier/{$request->input('supplier_code')}/file_map";
+          $requestData['file_map'] = $request->file('file_map')->store($folder, 'public');
       }
-      //$path = $request->file('image')->store('avatar','public');
-      //echo $path;
-      //Save $path to database or anything else
-      //...
-      $input = [
-          'supplier_code' => $request->input('supplier_code'),
-          'supplier_type' => $request->input('supplier_type'),
-          'company_name' => $request->input('company_name'),
-          'account_id' => $request->input('account_id'),
-          'contact_name' => $request->input('contact_name'),
-          'address' => $request->input('address'),
-          'address2' => "",
-          'sub_district' => $request->input('sub_district'),
-          'district' => $request->input('district'),
-          'province' => $request->input('province'),
-          'zipcode' => $request->input('zipcode'),
-          'delivery_address' => $request->input('delivery_address'),
-          'delivery_address2' => "",
-          'delivery_sub_district' => $request->input('delivery_sub_district'),
-          'delivery_district' => $request->input('delivery_district'),
-          'delivery_province' => $request->input('delivery_province'),
-          'delivery_zipcode' => $request->input('delivery_zipcode'),
-          'user_id' => $request->input('user_id'),
-          'telephone' => $request->input('telephone'),
-          'fax' => $request->input('fax'),
-          'zone_id' => $request->input('zone_id'),
-          'transpotation_id' => $request->input('transpotation_id'),
-          'remark' => $request->input('remark'),
-          'max_credit' => $request->input('max_credit'),
-          'debt_duration' => $request->input('debt_duration'),
-          'degree_product' => $request->input('degree_product'),
-          'loyalty_discount' => $request->input('loyalty_discount'),
-          'tax_number' => $request->input('tax_number'),
-          'billing_condition' => $request->input('billing_condition'),
-          'cheqe_condition' => $request->input('cheqe_condition'),
-          'location_type_id' => $request->input('location_type_id'),
-          'branch_id' => $request->input('branch_id'),
-          'upload' => json_encode($upload_json),
-      ];
+      if ($request->hasFile('file_cc')) {
+        $folder = "supplier/{$request->input('supplier_code')}/file_cc";
+          $requestData['file_cc'] = $request->file('file_cc')->store($folder, 'public');
+      }
+      if ($request->hasFile('file_cv_20')) {
+        $folder = "supplier/{$request->input('supplier_code')}/file_cv_20";
+          $requestData['file_cv_20'] = $request->file('file_cv_20')->store($folder, 'public');
+      }
+      if ($request->hasFile('file_cheque')) {
+        $folder = "supplier/{$request->input('supplier_code')}/file_cheque";
+          $requestData['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
+      }
+      //UPDATE CUSTOMER
+      $supplier = SupplierModel::findOrFail($id);
+      $supplier->update($requestData);
+      //UPDATE CHECKLIST
+      $checklist = Checklist::findOrFail($supplier->checklist->id);
+      $checklist->update($requestData);
 
-      SupplierModel::update_by_id($input,$id);
-      return redirect('supplier');
+      return redirect("supplier/{$id}/edit");
 
     }
 
@@ -295,6 +212,5 @@ class SupplierController extends Controller
     {
         SupplierModel::delete_by_id($id);
         return redirect('supplier');
-
-    }
+}
 }

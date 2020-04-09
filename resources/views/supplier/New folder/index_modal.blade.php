@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#supplierModal">
+<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#supplierModal">
 	<i class="fa fa-plus"></i> เลือกเจ้าหนี้
 </button>
 
@@ -15,7 +15,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center table-sm" id="table-supplier-modal" style="width:100%"></table>
+					<table class="table table-hover text-center" id="table-supplier-modal" style="width:100%"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -33,7 +33,7 @@
 					$('#contact_name').val(name);
 					$('#supplier_code').val(code);
 					$('#supplierModal').modal('hide');
-					onChangeSupplier();
+					onChangesupplier();
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		console.log("555");
