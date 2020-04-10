@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  'ใบวางบิล'   )
+@section('title',  'ใบรับวางบิล'   )
 
 @section('content')
     <div class="container">
@@ -39,8 +39,9 @@
                                         <th>วันที่</th>
                                         <th>ยอดเงินรวม</th>
                                         <th>รหัสลูกค้า</th>
+                                        <th>ลูกค้า</th>
                                         <th>เลขที่รับชำระ</th>
-                                        <th>Action</th>
+                                        <th class="d-none">Action</th>
                                         
                                     </tr>
                                 </thead>
@@ -54,17 +55,31 @@
                                         </td>
                                         <td>{{ $item->created_at }}</td>
                                         <td class="text-right">{{number_format( $item->total , 2 )}}</td>
-                                        <td><a href="{{ url('/supplier') }}/{{  $item->supplier_id }}/edit">{{ $item->supplier->supplier_code }} {{ $item->supplier->company_name }}</a></td>                                        
+                                        <td>{{ $item->supplier->supplier_code }}</td>                                        
+                                        
+                                        <td>{{ $item->supplier->company_name }}</td>                                        
                                         <td>
                                             @if($item->supplier_payment)                                                
-                                                <a href="{{ url('/finance/supplier-payment/' . $item->supplier_payment->id) }}">{{ $item->supplier_payment->doc_no }}</a>
+                                                <a href2="{{ url('/finance/supplier-payment/' . $item->supplier_payment->id) }}">{{ $item->supplier_payment->doc_no }}</a>
                                             @else
-                                                <a href="{{ url('/finance/supplier-payment/create?supplier_id=' . $item->supplier_id) }}&filter=billing-only" title="Payment"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
+                                                <a class="d-none" href2="{{ url('/finance/supplier-payment/create?supplier_id=' . $item->supplier_id) }}&filter=billing-only" title="Payment"><button class="btn btn-warning btn-sm"><i class="fa fa-credit-card" aria-hidden="true"></i> รอการชำระ</button></a>                                            
+                                                
+                                                @switch($item->status)
+                                                    @case("ready") 
+                                                        <span class="badge badge-pill badge-warning">รอวางบิล</span>
+                                                        @break
+                                                    @case("wait-for-cheque") 
+                                                        <span class="badge badge-pill badge-success">รอรับเช็ค-โอน</span>
+                                                        @break
+                                                    @case("delay") 
+                                                        <span class="badge badge-pill badge-danger">เลื่อน</span>
+                                                        @break
+                                                @endswitch
                                             @endif
                                         
                                         </td>
                                         <td>
-                                            <a href="{{ url('/finance/supplier-billing/' . $item->id) }}/pdf" title="View SupplierBilling"><button class="btn btn-success btn-sm"><i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</button></a>
+                                            <a href="{{ url('/finance/supplier-billing/' . $item->id) }}/pdf" title="View SupplierBilling"><button class="btn btn-success btn-sm d-none"><i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</button></a>
                                             
                                             <a class="d-none"  href="{{ url('/finance/supplier-billing/' . $item->id) }}" title="View SupplierBilling"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a class="d-none" href="{{ url('/finance/supplier-billing/' . $item->id . '/edit') }}" title="Edit SupplierBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

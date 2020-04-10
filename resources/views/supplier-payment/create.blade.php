@@ -1,12 +1,49 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  'สร้างการรับชำระเงิน'  )
+@section('title',  'สร้างการชำระเงิน'  )
 
 @section('content')
     <div class="container">
+        <script>
+            function validate(form) {
+
+                
+                // validation code here ...
+                var receive_payments = document.querySelectorAll(".receive_payments");
+                var sum = 0;
+                for(element of receive_payments){
+                    sum += parseFloat(element.value ? element.value : '0'); 
+                }
+                var amount_discount_fee = parseFloat((document.querySelector("#amount-discount-fee").value != "" ? document.querySelector("#amount-discount-fee").value : '0'));
+                var amount_cash_transfer_in = parseFloat((document.querySelector("#amount-cash-transfer-in").value != "" ? document.querySelector("#amount-cash-transfer-in").value : '0'));
+                var amount_deposite_cheque = parseFloat((document.querySelector("#amount-deposite-cheque").value != "" ? document.querySelector("#amount-deposite-cheque").value : '0'));
+                var amount_credit = parseFloat((document.querySelector("#amount-credit").value != "" ? document.querySelector("#amount-credit").value : '0'));
+                var total_payment = amount_cash_transfer_in + amount_deposite_cheque + amount_credit;
+                var valid = false;
+                console.log(sum);
+                console.log(amount_discount_fee);
+                console.log(amount_cash_transfer_in);
+                console.log(amount_deposite_cheque);
+                console.log(amount_credit);
+                console.log(total_payment);
+                if(total_payment == sum - amount_discount_fee){
+                    valid = true;
+                }else{
+                    valid = false;
+                }
+                //return false;
+                if(!valid) {
+                    alert('คุณกรอกวิธีการชำระเงินไม่ตรงกับยอด!');
+                    return false;
+                }
+                else {
+                    return confirm('Do you really want to submit the form?');
+                }
+            }
+        </script>
     
 
-        <form method="POST" action="{{ url('/finance/supplier-payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+        <form method="POST" onsubmit="return validate(this);" action="{{ url('/finance/supplier-payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row">
 
@@ -42,10 +79,10 @@
                             <table width="100%" class="table table-hover text-center table-sm" id="table">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">ใบวางบิล</th>
                                         <th class="text-center">เลขที่เอกสาร</th>
                                         <th class="text-center">วันที่</th>
-                                        <th class="text-center">รหัสลูกค้า</th>
-                                        <th class="text-center">ชื่อบริษัท</th>
+                                        <th class="text-center">เอกสารอ้างอิง</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
                                         <th class="text-center">รับชำระ</th>
                                         <th class="text-center d-none">ยอดรวม</th>
@@ -55,17 +92,18 @@
                                 <tbody>
                                     @foreach($receives as $row)
                                     <tr>
+                                        <td>{{ isset($row->supplier_billing_detail) ? $row->supplier_billing_detail->supplier_billing->doc_no : '' }}</td>
                                         <td>
-                                            <a href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/edit">
+                                            <a href="{{ url('/') }}/sales/receive/{{ $row->purchase_receive_id }}/edit">
                                                 {{ $row->purchase_receive_code }}
                                             </a>
                                         </td>
                                         <td>{{ $row->datetime }}</td>
-                                        <td>{{ $row->Supplier->supplier_code }}</td>
-                                        <td><a href="{{ url('/supplier') }}/{{ $row->supplier_id }}">{{ $row->Supplier->company_name }}</a></td>
+                                        
+                                        <td>{{ $row->external_reference_doc }}</td>
                                         <td>{{ $row->total_debt }}</td>
                                         <td>
-                                            <input style="width:100px;" name="receive_payments[]">
+                                            <input style="width:100px;" name="receive_payments[]" value="{{ $row->total_debt }}" class="receive_payments">
                                             
                                             <input type="hidden" name="receive_ids[]" value="{{ $row->purchase_receive_id }}">
                                         </td>
@@ -106,10 +144,10 @@
                             <tbody>
                                 @php
                                     $transaction_code_object = [
-                                        "cash-transfer-out" => "โอนเงินสด",
                                         "discount-fee" => "ส่วนลด/ค่าธรรมเนียม",
-                                        "withdraw-cheque" => "จ่ายด้วยเช็ค",
-                                        "credit" => "บัตรเครดิต",
+                                        "cash-transfer-out" => "โอนเงินสด",
+                                        "pay-cheque" => "จ่ายด้วยเช็ค",
+                                        "pay-credit" => "จ่ายด้วยบัตรเครดิต",
                                     ];
                                 @endphp
                                 @foreach($transaction_code_object as $key => $value)
@@ -129,7 +167,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="amount[]" type="number" id="amount" value="" >                            
+                                        <input class="form-control form-control-sm" name="amount[]" type="number" id="amount-{{$key}}" step="any" value="" >                            
                                     </td>
                                     <td>
                                         <input class="form-control form-control-sm" name="remark[]" type="text" id="remark" value="" >  
@@ -144,7 +182,8 @@
             </div>
         </div>
         <div class="text-center mb-4">
-            <input class="btn btn-primary" type="submit" value="create">
+            <input class="btn btn-primary" type="submit" onclick="validate(this)" value="create">
+            <button type="button" onclick="validate(this);"></button>
         </div>
         
         </form>

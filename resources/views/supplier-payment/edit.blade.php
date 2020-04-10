@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  'แก้ไขการรับชำระเงิน'  )
+@section('title',  'แก้ไขการชำระเงิน'  )
 
 @section('content')
     <div class="container">

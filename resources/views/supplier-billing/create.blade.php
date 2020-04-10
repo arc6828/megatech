@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  'สร้างใบวางบิล'  )
+@section('title',  'สร้างใบรับวางบิล'  )
 
 @section('content')
     <div class="container">
@@ -35,7 +35,7 @@
                 </div>
                 
                 <div class="card">
-                    <div class="card-header">รายละเอียดใบวางบิล</div>
+                    <div class="card-header">รายละเอียดใบรับวางบิล</div>
                     <div class="card-body">
                         <div class="table-responsive table-breceiveed">
                             <table width="100%" class="table table-hover text-center table-sm" id="table">
@@ -43,7 +43,7 @@
                                     <tr>
                                         <th class="text-center">เลขที่เอกสาร</th>
                                         <th class="text-center">วันที่</th>
-                                        <th class="text-center">รหัสเจ้าหนี้</th>
+                                        <th class="text-center">รหัสลูกค้า</th>
                                         <th class="text-center">ชื่อบริษัท</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
                                         <th class="text-center">ยอดรวม</th>
@@ -54,8 +54,8 @@
                                     @foreach($table_receive as $row)
                                     <tr>
                                         <td>
-                                            <a href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/edit">
-                                                {{ $row->purchase_receive_code }}
+                                            <a href="{{ url('/') }}/sales/receive/{{ $row->receive_id }}/edit">
+                                                {{ $row->receive_code }}
                                             </a>
                                         </td>
                                         <td>{{ $row->datetime }}</td>

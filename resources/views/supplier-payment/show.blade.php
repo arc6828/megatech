@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  'รายละเอียดรับชำระเงิน'  )
+@section('title',  'รายละเอียดชำระเงิน'  )
 @section('content')
     <div class="container">
         <div class="row">
@@ -48,7 +48,7 @@
                 </div>
 
                 @php
-                    $supplier_billing_details = $supplierpayment->supplier_receives;
+                    $supplier_receives = $supplierpayment->supplier_receives;
                 @endphp
                 <div class="card">
                     <div class="card-header">รายละเอียดใบรับชำระเงิน</div>
@@ -57,28 +57,35 @@
                             <table width="100%" class="table table-hover text-center table-sm" id="table">
                                 <thead>
                                     <tr>
+                                        
+                                        <th class="text-center">ใบวางบิล</th>
                                         <th class="text-center">เลขที่เอกสาร</th>
                                         <th class="text-center">วันที่</th>
-                                        <th class="text-center">รหัสลูกค้า</th>
-                                        <th class="text-center">ชื่อบริษัท</th>
+                                        <th class="text-center">เอกสารอ้างอิง</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
                                         <th class="text-center">ยอดรวม</th>
                                         <th class="text-center">รหัสพนักงาน</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($supplier_billing_details as $row)
+                                    @foreach($supplier_receives as $row)
                                     <tr>
+                                        <td>{{ $row->supplier_billing_detail->supplier_billing->doc_no }}</td>
                                         <td>
-                                            <a href="{{ url('/') }}/purchase/receive/{{ $row->receive_id }}/edit">
+                                            <a href="{{ url('/') }}/sales/receive/{{ $row->receive_id }}/edit">
                                                 {{ $row->receive_code }}
                                             </a>
                                         </td>
                                         <td>{{ $row->datetime }}</td>
-                                        <td>{{ $row->Supplier->supplier_code }}</td>
-                                        <td><a href="{{ url('/supplier') }}/{{ $row->supplier_id }}">{{ $row->Supplier->company_name }}</a></td>
+                                        
+                                        <td>{{ $row->external_reference_id }}</td>
                                         <td>{{ $row->total_debt }}</td>
-                                        <td>{{ number_format($row->total?$row->total:0,2) }}</td>
+                                        <td>
+                                            <input style="width:100px;" name="receive_payments[]" value="{{ $row->total_debt }}">
+                                            
+                                            <input type="hidden" name="receive_ids[]" value="{{ $row->receive_id }}">
+                                        </td>
+                                        <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
                                         <td>{{ $row->User->short_name }}</td>
                                     </tr>
                                     @endforeach

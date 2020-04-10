@@ -9,12 +9,37 @@ class ReceiveModel extends Model
 {
     protected $table = 'tb_purchase_receive';
     protected $primaryKey = 'purchase_receive_id';
-    protected $fillable = [];
+    protected $fillable = [
+        'invoice_code',
+        'datetime',
+        'supplier_id',
+        'debt_duration',
+        'billing_duration',
+        'payment_condition',
+        'delivery_type_id',
+        'tax_type_id',
+        'delivery_time',
+        'department_id',
+        'purchase_status_id',
+        'user_id',
+        'zone_id',
+        'remark',
+        'vat_percent',
+        'external_reference_id',
+        'internal_reference_id',
+        'total',
+        'total_payment',
+        'total_debt',
+      ];
 
     
     public function ReceiveDetail()
     {   
         return $this->hasMany('App\Purchase\ReceiveDetailModel','purchase_receive_id');
+    }
+
+    public function supplier_billing_detail(){
+        return $this->hasOne('App\SupplierBillingDetail','doc_id');
     }
     
     public function User()

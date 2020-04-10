@@ -1,6 +1,6 @@
 @extends('layouts/print')
 
-@section('title','ใบวางบิล')
+@section('title','ใบรับวางบิล')
 
 @section('content')
 
@@ -68,7 +68,12 @@
         </tr>
         <tr>
           <th>วันที่</th>
-          <td>{{ $row->created_at }}</td>
+          @php
+            $datetime_array = explode(" ", $row->created_at);
+            $date_array = explode("-", $datetime_array[0]);
+            $date = "{$date_array[2]}/{$date_array[1]}/{$date_array[0]}";
+          @endphp
+          <td>{{ $date }} </td>
         </tr>
       </table>
       </div>
@@ -77,15 +82,16 @@
   <div style="margin-top:10px;">
     <table border="1" style="border-collapse: collapse; width:100%;">
       <tr><td>
-        <strong>เจ้าหนี้ :</strong> {{ $row->supplier->company_name }} <br>
+        <strong>ลูกค้า :</strong> {{ $row->supplier->company_name }} <br>
         <strong>ที่อยู่ :</strong> {{ $row->supplier->address }} {{ $row->supplier->address2 }}  <br>
         <strong>โทร :</strong> {{ $row->supplier->telephone }}
-        <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> {{ $row->supplier->fax }}
-        <strong style="margin-left:150px;">รหัสเจ้าหนี้ :</strong> {{ $row->supplier->supplier_code }}  <br>
+        <strong style="margin-left:100px;">แฟ๊กซ์ :</strong> {{ $row->supplier->fax }}
+        <strong style="margin-left:100px;">รหัสลูกค้า :</strong> {{ $row->supplier->supplier_code }}  
+        <strong style="margin-left:100px;">Sale :</strong> {{ $row->supplier->user->short_name }}  <br>
       </td></tr>
     </table>
   </div>
-  <div style="margin-top:10px;">
+  <div style="margin-top:10px; display : none; ">
     <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
       <tr>
         <th>กำหนดยืนราคา</th>
@@ -95,7 +101,7 @@
       </tr>
       <tr>
         <td>30 วัน</td>
-        <td>{{ $row->supplier->delivery_time }}</td>
+        <td>{{ $row->supplier->delivery_time }} วัน</td>
         <td>{{ $row->supplier->debt_duration }}</td>
         <td>{{ $row->user->name }}</td>
       </tr>
@@ -105,24 +111,21 @@
     <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
         <thead>
             <tr>
+                <th class="text-center">ลำดับ</th>
                 <th class="text-center">เลขที่เอกสาร</th>
                 <th class="text-center">วันที่</th>
-                <th class="text-center">รหัสเจ้าหนี้</th>
-                <th class="text-center">ชื่อบริษัท</th>
-                <th class="text-center">ยอดหนี้คงค้าง</th>
+                <th class="text-center">เอกสารอ้างอิง</th>
                 <th class="text-center">ยอดรวม</th>
-                <th class="text-center">รหัสพนักงาน</th>
             </tr>
         </thead>
       @foreach($row->supplier_billing_details as $row_detail)
         <tr>
-            <td> {{ $row_detail->receive->receive_code }}  </td>
-            <td>{{ $row_detail->receive->datetime }}</td>
-            <td>{{ $row_detail->receive->Supplier->supplier_code }}</td>
-            <td> {{ $row_detail->receive->Supplier->company_name }} </td>
-            <td>{{ $row_detail->receive->total_debt }}</td>
-            <td>{{ number_format($row_detail->receive->total?$row_detail->receive->total:0,2) }}</td>
-            <td>{{ $row_detail->receive->User->short_name }}</td>
+            <td> {{ $loop->iteration }}  </td>
+            <td> {{ $row_detail->invoice->invoice_code }}  </td>
+            <td>{{ $row_detail->invoice->datetime }}</td>
+            <td>{{ $row_detail->invoice->external_reference_id }}</td>
+            <td>{{ number_format($row_detail->invoice->total?$row_detail->invoice->total:0,2) }}</td>
+            
         </tr>
       @endforeach
       @for($i=0; $i<(10-count($row->supplier_billing_details)); $i++)
@@ -132,40 +135,48 @@
         <td><br></td>
         <td><br></td>
         <td><br></td>
-        <td><br></td>
-        <td><br></td>
       </tr>
       @endfor
       <tr>
-        <td colspan="4" style="text-align:left;"><strong>หมายเหตุ</strong><br /> {{ $row->remark !="" ? $row->remark : "-" }}</td>
-        <td rowspan="2" colspan="3">
-          รวมเป็นเงิน {{ $row->total }}<br>
-          ภาษีมูลค่าเพิ่ม 7% {{ $row->total * $row->vat_percent / 100 }}<br>
-          รวมทั้งสิ้น {{ $row->total + $row->total * $row->vat_percent / 100 }}<br>
+        <td colspan="3" style="text-align:center;">
+          ({{ $total_text }})
+        </td>
+        <td colspan="1" style="text-align:right;">
+          <strong>รวมทั้งสิ้น</strong>            
+        </td>
+        <td colspan="1" style="text-align:center;">   
+          <strong>{{ number_format($row->total,2) }}</strong>
         </td>
       </tr>
       <tr>
-        <td colspan="4">
-          (...)
+        <td colspan="5" style="text-align:left;">
+          <strong>หมายเหตุ</strong> {{ $row->remark !="" ? $row->remark : "-" }}        
         </td>
       </tr>
     </table>
   </div>
 
-  <div style="text-align:center; margin-top:70px;">
-    <div class="inline" style="width:5%;"></div>
-    <div class="inline" style="width:33%;">
-      _______________________________________<br>
-      ผู้เสนอราคา<br>
-      วันที่ 21/06/2019
+  <div style="text-align:center; margin-top:100px;">
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      ผู้รับวางบิล<br>
+      วันที่ __/__/____
     </div>
-    <div class="inline" style="width:23%;"></div>
-    <div class="inline" style="width:33%;">
-      _______________________________________<br>
-      ผู้อนุมัติ<br>
-      วันที่ 21/06/2019
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      ผู้วางบิล<br>
+      วันที่ __/__/____
     </div>
-    <div class="inline" style="width:5%;"></div>
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      วันที่นัดรับเช็ค / โอนเงิน<br>
+       .
+    </div>
+    <div class="inline" style="width:24%;">
+      ___________________<br>
+      ผู้ตรวจสอบ<br>
+       .
+    </div>
   </div>
 
   <div class="" style="text-align : center; margin-top:30px;">
@@ -176,6 +187,109 @@
       {{ $row->doc_no }}
     </div>
   </div>
+  @php
+    $supplier = $row->supplier;
+  @endphp
+  
+  
+@php
+$checklist = $supplier->checklist;
+@endphp
+<div class="card  mt-4 bg-info">
+  <div class="card-body">
+    <h2>เครดิต</h2>
+    <div class="row">      
+
+      <div class="form-group col-lg-3">
+        <label >วิธีการขาย </label> {{isset($supplier)? $supplier->payment_method : ''}}
+        
+      </div>
+      <div class="form-group col-lg-3">
+        <label >วงเงินเครดิต</label> {{isset($supplier)? $supplier->max_credit : ''}}
+        
+      </div>
+      <div class="form-group col-lg-3">
+        <label >ระยะเวลาหนี้</label>  {{isset($supplier)? $supplier->debt_duration : ''}}
+          <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "   value="{{isset($supplier)? $supplier->debt_duration : ''}}"  >
+      </div>
+      <div class="form-group col-lg-3">
+        <label >วันที่ตัดรอบบิล  </label>  {{isset($supplier)? $supplier->billing_cycle_date : ''}}
+        
+      </div>
+    </div>
+
+
+
+    
+    
+  </div>
+</div>
+
+<div class="card  mt-4 bg-info">
+  <div class="card-body">    
+    <div class="row">      
+
+
+      <div class="form-group col-lg-3">
+        <label >เงื่อนไขวางบิล </label> {{isset($supplier)? $supplier->billing_duration : ''}}
+      </div>
+      <div class="form-group col-lg-3">
+        <label >ช่องทางการวางบิล {{isset($supplier)? $supplier->billing_method : ''}}</label>
+      </div>
+      
+      <div class="form-group col-lg-6">
+        <label >หมายเหตุการวางบิล {{isset($supplier)? $supplier->billing_remark : ''}}</label>
+      </div>
+    </div>
+    
+    <div class="row">      
+      <div class="form-group col-lg-3 {{ $errors->has('billing_invoice') ? 'has-error' : ''}}">
+          <label for="billing_invoice" class="control-label">
+            <input type="checkbox" {{ $checklist->billing_invoice === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_invoice').value = this.checked"> 
+            {{ 'ใบกำกับภาษี' }}
+          </label>          
+      </div>
+      <div class="form-group col-lg-3 {{ $errors->has('billing_po') ? 'has-error' : ''}}">
+          <label for="billing_po" class="control-label">
+            <input type="checkbox" {{ $checklist->billing_po === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_po').value = this.checked"> 
+            {{ 'P/O' }}
+          </label>
+          
+      </div>
+      <div class="form-group col-lg-3 {{ $errors->has('billing_receipt') ? 'has-error' : ''}}">
+          <label for="billing_receipt" class="control-label">
+            <input type="checkbox" {{ $checklist->billing_receipt === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_receipt').value = this.checked"> 
+            {{ 'ใบเสร็จรับเงิน' }}
+          </label>
+          
+      </div>
+      <div class="form-group col-lg-3 {{ $errors->has('billing_envelope') ? 'has-error' : ''}}">
+          <label for="billing_envelope" class="control-label">
+            <input type="checkbox" {{ $checklist->billing_envelope === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_envelope').value = this.checked"> 
+            {{ 'ซองจดหมายติดแสตมป์' }}
+          </label>
+          
+      </div>
+      <div class="form-group col-lg-3 {{ $errors->has('billing_delivery') ? 'has-error' : ''}}">
+          <label for="billing_delivery" class="control-label">
+            <input type="checkbox" {{ $checklist->billing_delivery === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_delivery').value = this.checked"> 
+            {{ 'ส่งของพร้อมวางบิล' }}
+          </label>
+          
+      </div>
+      <div class="form-group col-lg-3 {{ $errors->has('billing_reference') ? 'has-error' : ''}}">
+          <label for="billing_reference" class="control-label">
+            <input type="checkbox" {{ $checklist->billing_reference === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_reference').value = this.checked"> 
+            {{ 'พิมพ์เอกสารแนบใบรับวางบิล' }}
+          </label>
+          
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
 
 
 

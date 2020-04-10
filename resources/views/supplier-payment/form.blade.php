@@ -1,6 +1,6 @@
 <div class="form-group {{ $errors->has('doc_no') ? 'has-error' : ''}}">
     <label for="doc_no" class="control-label">{{ 'เลขที่เอกสาร' }}</label>
-    <input class="form-control form-control-sm" name="doc_no" type="text" id="doc_no" value="{{ isset($supplierpayment->doc_no) ? $supplierpayment->doc_no : ''}}" >
+    <input class="form-control form-control-sm" name="doc_no" type="text" id="doc_no" value="{{ isset($supplierpayment->doc_no) ? $supplierpayment->doc_no : ''}}" readonly>
     {!! $errors->first('doc_no', '<p class="help-block">:message</p>') !!}
 </div>
 @php
@@ -12,9 +12,12 @@
     
 @endphp
 <div class="form-group {{ $errors->has('supplier_id') ? 'has-error' : ''}}">
-    <label for="supplier_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> <a href="{{ url('/supplier') }}" class="btn btn-sm btn-light">เลือกลูกค้า</a>
+    <label for="supplier_id" class="control-label">{{ 'รหัสลูกค้า' }}</label> 
+        <a href="{{ url('/supplier') }}" class="btn btn-sm btn-light d-none">เลือกลูกค้า</a>        
+        @include('supplier-payment/supplier_modal')
     <input class="form-control form-control-sm d-none" name="supplier_id" type="number" id="supplier_id" value="{{ isset($supplierpayment->supplier_id) ? $supplierpayment->supplier_id : $supplier_id}}" >
     <input class="form-control form-control-sm"  value="{{ isset($supplierpayment->supplier_id) ? $supplierpayment->supplier_id : $supplier_name}}" disabled>
+    
     {!! $errors->first('supplier_id', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('role') ? 'has-error' : ''}}">
@@ -38,35 +41,26 @@
     <input class="form-control form-control-sm" value="{{ isset($supplierpayment->supplier_billing_id) ? $supplierpayment->supplier_billing_id : $supplier_billing_doc_no }}" disabled>
     {!! $errors->first('supplier_billing_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('discount') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('discount') ? 'has-error' : ''}}">
     <label for="discount" class="control-label">{{ 'ส่วนลด ณ รับชำระ' }}</label>
-    <input class="form-control form-control-sm" name="discount" type="number" id="discount" value="{{ isset($supplierpayment->discount) ? $supplierpayment->discount : ''}}" >
+    <input class="form-control form-control-sm" name="discount" type="number" id="discount" value="{{ isset($supplierpayment->discount) ? $supplierpayment->discount : ''}}" readonly>
     {!! $errors->first('discount', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('debt_total') ? 'has-error' : ''}}">
-    <label for="debt_total" class="control-label">{{ 'ยอดรวมหนี้' }}</label>
-    <input class="form-control form-control-sm" name="debt_total" type="number" id="debt_total" value="{{ isset($supplierpayment->debt_total) ? $supplierpayment->debt_total : $supplier_billing_total }}" >
-    {!! $errors->first('debt_total', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('cash') ? 'has-error' : ''}}">
+
+<div class="form-group d-none {{ $errors->has('cash') ? 'has-error' : ''}}">
     <label for="cash" class="control-label">{{ 'ยอดเงินสดรับ' }}</label>
-    <input class="form-control form-control-sm" name="cash" type="number" id="cash" value="{{ isset($supplierpayment->cash) ? $supplierpayment->cash : ''}}" >
+    <input class="form-control form-control-sm" name="cash" type="number" id="cash" value="{{ isset($supplierpayment->cash) ? $supplierpayment->cash : ''}}" readonly >
     {!! $errors->first('cash', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('credit') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('credit') ? 'has-error' : ''}}">
     <label for="credit" class="control-label">{{ 'ยอดเช็ครับ' }}</label>
-    <input class="form-control form-control-sm" name="credit" type="number" id="credit" value="{{ isset($supplierpayment->credit) ? $supplierpayment->credit : ''}}" >
+    <input class="form-control form-control-sm" name="credit" type="number" id="credit" value="{{ isset($supplierpayment->credit) ? $supplierpayment->credit : ''}}" readonly>
     {!! $errors->first('credit', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('tax') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('tax') ? 'has-error' : ''}}">
     <label for="tax" class="control-label">{{ 'ภาษี ณ  ที่จ่าย' }}</label>
     <input class="form-control form-control-sm" name="tax" type="number" id="tax" value="{{ isset($supplierpayment->tax) ? $supplierpayment->tax : ''}}" >
     {!! $errors->first('tax', '<p class="help-block">:message</p>') !!}
-</div>
-<div class="form-group {{ $errors->has('payment_total') ? 'has-error' : ''}}">
-    <label for="payment_total" class="control-label">{{ 'ยอดรวมรับชำระ' }}</label>
-    <input class="form-control form-control-sm" name="payment_total" type="number" id="payment_total" value="{{ isset($supplierpayment->payment_total) ? $supplierpayment->payment_total : ''}}" >
-    {!! $errors->first('payment_total', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
     <label for="user_id" class="control-label">{{ 'รหัสพนักงาน' }}</label>
@@ -106,6 +100,20 @@
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 </div>
 
+<div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
+    <div class="form-group col-lg-3 {{ $errors->has('debt_total') ? 'has-error' : ''}}">
+        <label for="debt_total" class="control-label">{{ 'ยอดรวมหนี้' }}</label>
+        <input class="form-control form-control-sm" name="debt_total" type="number" id="debt_total" value="{{ isset($supplierpayment->debt_total) ? $supplierpayment->debt_total : $supplier_billing_total }}" >
+        {!! $errors->first('debt_total', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="form-group col-lg-3 {{ $errors->has('payment_total') ? 'has-error' : ''}}">
+        <label for="payment_total" class="control-label">{{ 'ยอดรวมรับชำระ' }}</label>
+        <input class="form-control form-control-sm" name="payment_total" type="number" id="payment_total" value="{{ isset($supplierpayment->payment_total) ? $supplierpayment->payment_total : $supplier_billing_total}}" >
+        {!! $errors->first('payment_total', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
 
 <div class="form-group d-none">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">

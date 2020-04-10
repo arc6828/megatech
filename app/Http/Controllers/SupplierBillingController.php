@@ -6,10 +6,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Purchase\ReceiveModel;
+use App\Checklist;
 use App\SupplierBillingDetail;
 use App\SupplierModel;
 use App\SupplierBilling;
 use Illuminate\Http\Request;
+use App\Functions;
 use PDF;
 
 class SupplierBillingController extends Controller
@@ -52,12 +54,20 @@ class SupplierBillingController extends Controller
         $end_date = !empty( $request->get('end_date') ) ? request('end_date') : date('Y-m-d');
         $supplier_id = request('supplier_id',0);
         $supplier = SupplierModel::find($supplier_id);
+        $suppliers = SupplierModel::all();
+        if($supplier){
+            Checklist::firstOrCreate(
+                ['supplier_id' => $supplier->supplier_id],
+                ['type' => 'supplier']
+            );
+        }
+        
         $table_receive = ReceiveModel::where('supplier_id', $supplier_id)
             ->where('datetime','<=', $end_date )
             ->where('purchase_status_id','<',12) //purchase_status_id 12 : วางบิลแล้ว
             ->where('total_debt','>',0)
             ->get();
-        return view('supplier-billing.create', compact('table_receive','supplier') );
+        return view('supplier-billing.create', compact('table_receive','supplier','suppliers') );
     }
 
     /**
@@ -87,7 +97,7 @@ class SupplierBillingController extends Controller
             ->get();
         foreach($table_receive as $item){
             $supplier_billing_detail = new SupplierBillingDetail;
-            $supplier_billing_detail->doc_id = $item->receive_id;            
+            $supplier_billing_detail->doc_id = $item->purchase_receive_id;            
             $supplier_billing_detail->supplier_billing_id = $supplier_billing->id;
             $supplier_billing_detail->save();
 
@@ -125,11 +135,13 @@ class SupplierBillingController extends Controller
     }
     public function pdf($id)
     {
-        $supplierbilling = SupplierBilling::findOrFail($id);        
+        $supplierbilling = SupplierBilling::findOrFail($id);   
+        
+        $total_text = $supplierbilling->total > 0  ?  Functions::baht_text($supplierbilling->total) : "-";     
 
         //return view('supplier-billing.show', compact('supplierbilling'));
 
-        return  PDF::loadView('supplier-billing/pdf', compact('supplierbilling'))->stream('test.pdf');
+        return  PDF::loadView('supplier-billing/pdf', compact('supplierbilling','total_text'))->stream('test.pdf');
         
     }
 

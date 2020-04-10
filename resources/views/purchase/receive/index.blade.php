@@ -59,8 +59,8 @@
 						<td>{{ $row->datetime }}</td>
 						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ $row->total_debt?$row->total_debt:0 }}</td>
-						<td>{{ $row->total?$row->total:0 }}</td>
+						<td>{{ number_format( $row->total_debt?$row->total_debt:0 ,2)}}</td>
+						<td>{{ number_format( $row->total?$row->total:0 ,2)}}</td>
 						<td>{{ $row->short_name }}</td>
 						<td class="d-none">{{ $row->purchase_status_name }}</td>
 						<td class="d-none">

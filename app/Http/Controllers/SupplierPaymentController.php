@@ -87,8 +87,9 @@ class SupplierPaymentController extends Controller
 
             
         $bank_accounts = BankAccount::all();
+        $suppliers = SupplierModel::all();
 
-        return view('supplier-payment.create', compact('receives','supplier','bank_accounts') );
+        return view('supplier-payment.create', compact('receives','supplier','bank_accounts','suppliers') );
     }
 
     /**
@@ -103,12 +104,12 @@ class SupplierPaymentController extends Controller
         
         
         $requestData = $request->except(['transaction_code','date','bank_account_id','amount','remark']);
-        $requestData['doc_no'] = $this->getNewCode("BP");
+        $requestData['doc_no'] = $this->getNewCode("BR");
         
         SupplierPayment::create($requestData);
 
         //UPDATE RECEIVE 
-        if (is_array ($requestData['receive_payments'])){
+        if (is_array($requestData['receive_payments'])){
             for( $i=0; $i<count($requestData['receive_payments']); $i++ ){
                 $receive_payment = $requestData['receive_payments'][$i];
                 $receive_id = $requestData['receive_ids'][$i];
@@ -118,6 +119,7 @@ class SupplierPaymentController extends Controller
                     $receive->total_payment = $receive->total_payment + $receive_payment;
                     $receive->total_debt = $receive->total_debt - $receive_payment;
                     $receive->save();
+                    //echo "HELLO";
                 }
             }
         }
@@ -140,12 +142,23 @@ class SupplierPaymentController extends Controller
 
                     //INSERT CHEQUE IF EXIST
                     if( $requestData['transaction_code'][$i] == "deposite-cheque" ){
-                          /*                  
+                                            
                     
-                        Cheque::create([
+                        Cheque::create([                           
+                            
+                            'cheque_type_code' => 'cheque-in' ,
+                            //'doc_no' => '' , 
                             'cheque_date' => $requestData['date'][$i] ,
-                            'total' => $requestData['total_cheque'] ,
-                        ]);*/
+                            //'cheque_type' => '' , 
+                            'cheque_no' => $requestData['remark'][$i] ,
+                            'total' => $requestData['amount'][$i] ,
+                            //'bank_fee' => '' ,
+                            'bank_account_id' => $requestData['bank_account_id'][$i] , 
+                            //'passed_cheque_date' => '' , 
+                            //'reference' => '' , 
+                            'status' => 'pending' , 
+                            'user_id' => Auth::id()
+                        ]);
                     }
 
                 }                
@@ -225,7 +238,7 @@ class SupplierPaymentController extends Controller
         $supplierpayment = SupplierPayment::findOrFail($id);
         $supplierpayment->update($requestData);
 
-        return redirect('supplier-payment')->with('flash_message', 'SupplierPayment updated!');
+        return redirect('finance/supplier-payment')->with('flash_message', 'SupplierPayment updated!');
     }
 
     /**
@@ -239,6 +252,6 @@ class SupplierPaymentController extends Controller
     {
         SupplierPayment::destroy($id);
 
-        return redirect('supplier-payment')->with('flash_message', 'SupplierPayment deleted!');
+        return redirect('finance/supplier-payment')->with('flash_message', 'SupplierPayment deleted!');
     }
 }

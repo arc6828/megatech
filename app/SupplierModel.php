@@ -113,6 +113,16 @@ class SupplierModel extends Model
 	}
 	public function Receives_on_debt(){
 		return $this->hasMany('App\Purchase\ReceiveModel','supplier_id')->where('total_debt','>',0);
+	}	
+	public function Receives_by_month($month){
+        return $this->hasMany('App\Purchase\ReceiveModel','supplier_id')->whereMonth('datetime',$month);
+    }	
+	public function Receives_on_debt_last_cycle(){
+		return $this->hasMany('App\Purchase\ReceiveModel','supplier_id')->where('total_debt','>',0)->where('datetime','<=',date('Y-m-t', strtotime( '-1 month' ) ));
+	}
+	public function Receives_on_debt_billing(){
+		//purchase_status_id = 12 คือ วางบิลแล้ว
+		return $this->hasMany('App\Purchase\ReceiveModel','supplier_id')->where('total_debt','>',0)->where('purchase_status_id',12);
 	}
 	//user
 	public function User()

@@ -91,7 +91,9 @@ class OrderController extends Controller
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
-          'total' => $request->input('total',0),
+          //'vat' => $request->input('vat',0),
+          'total_before_vat' => $request->input('total_before_vat',0),
+          'total' => $request->input('total_after_vat',0),
       ];
       $id = OrderModel::insert($input);
 

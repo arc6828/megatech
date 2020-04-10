@@ -162,7 +162,7 @@
 					<label class="col-lg-6">หมายเหตุ</label>
 					<label class="col-lg-3">ยอดรวมก่อนภาษี</label>
 					<div class="col-lg-3">
-						<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly disabled>
+						<input type="number" name="total_before_vat" id="total_before_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly >
 					</div>
 				</div>
 				<div class="form-group form-inline">
@@ -180,7 +180,7 @@
 							style="width: 50px; margin: 10px;"> %
 					</label>
 					<div class="col-lg-3">
-						<input type="number" step="0.01" name="vat" id="vat" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-sm form-control-line  roundnum" readonly disabled >
+						<input type="number" step="0.01" name="vat" id="vat" onkeyup="onChange(this)" onChange="onChange(this)" class="form-control form-control-sm form-control-line  roundnum" readonly  >
 					</div>
 				</div>
 				<div class="form-group form-inline">
@@ -189,7 +189,7 @@
 					</label>
 					<label class="col-lg-3">ยอดสุทธิ</label>
 					<div class="col-lg-3">
-						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly disabled>
+						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly >
 					</div>
 				</div>
 			</div>

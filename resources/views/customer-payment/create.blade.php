@@ -33,7 +33,7 @@
                 }
                 //return false;
                 if(!valid) {
-                    alert('Please correct the errors in the form!');
+                    alert('คุณกรอกวิธีการชำระเงินไม่ตรงกับยอด');
                     return false;
                 }
                 else {
@@ -92,7 +92,7 @@
                                 <tbody>
                                     @foreach($invoices as $row)
                                     <tr>
-                                        <td>{{ $row->customer_billing_detail->customer_billing->doc_no }}</td>
+                                        <td>{{ isset($row->customer_billing_detail) ? $row->customer_billing_detail->customer_billing->doc_no : '' }}</td>
                                         <td>
                                             <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
                                                 {{ $row->invoice_code }}
