@@ -14,8 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/index',function(){
 	return redirect('/sales');
+});
+
+Route::get('/user-manual',function(){
+	return view('user-manual');
 });
 
 //LOGIN REQUIRED

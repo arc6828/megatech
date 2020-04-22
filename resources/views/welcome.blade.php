@@ -93,7 +93,8 @@
                 </div>
 
                 <div class="" style="margin-top:40px; ">
-                    <a class="btn btn-success" style="font-weight: bold;" href="{{ url('/') }}/index">Get Started</a>
+                    <a class="btn btn-outline-success" style="font-weight: bold;" href="{{ url('/user-manual') }}">คู่มือใช้งาน</a>
+                    <a class="btn btn-success" style="font-weight: bold;" href="{{ url('/') }}/index">เข้าเว็บไซต์</a>
                 </div>
             </div>
 

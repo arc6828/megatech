@@ -48,6 +48,15 @@
         display : none;
     }
     </style>
+    <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+    <style>
+        h1, h2, h3, h4, h5, h6, nav, .nav, .menu, button, .button, .btn, .price, ._heading, .wp-block-pullquote blockquote, blockquote, label, legend, a, .card-header, th {
+            font-family: "Prompt", "Open Sans script=all rev=1" !important;
+            font-weight: 700 !important;
+            
+        }
+
+    </style>
   @yield('head')
 </head>
 
