@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Brand -->
-    <a class="navbar-brand pt-0" href="{{ url('/') }}/argon-dashboard-v1.0.0/index.html">
+    <a class="navbar-brand pt-0" href="{{ url('/') }}">
       <img src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/img/brand/blue.png" class="navbar-brand-img d-none" alt="...">
       <img src="{{ url('/') }}/images/megatech-logo-small.jpg" alt="homepage" class="navbar-brand-img "  />
     </a>
@@ -120,8 +120,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url('/')}}/others">
+          <a class="nav-link" href="{{url('/others')}}">
             <i class="ni ni-settings-gear-65 text-yellow"></i> อื่นๆ
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url('/user-manual')}}">
+            <i class="ni ni-book-bookmark text-pink"></i> คู่มือการใช้งาน
           </a>
         </li>
         <li class="nav-item d-none">
