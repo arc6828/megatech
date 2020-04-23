@@ -23,12 +23,12 @@
 			</div>
 			<div class="mt--5 modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center table-sm" id="table-order-model"></table>
+					<table class="table table-hover text-center table-sm" id="table-order-model" style="width:100%"></table>
 				</div>
-        <hr />
-        <h5 class="modal-title" id="exampleModalLabel">รายละเอียดใบจอง</h5>
-        <div class="table-responsive">
-					<table class="table table-hover text-center table-sm" id="table-order-detail"></table>
+        		<hr />
+        		<h5 class="modal-title" id="exampleModalLabel">รายละเอียดใบจอง</h5>
+        		<div class="table-responsive">
+					<table class="table table-hover text-center table-sm" id="table-order-detail"  style="width:100%"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
