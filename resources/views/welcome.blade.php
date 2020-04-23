@@ -65,6 +65,18 @@
                 margin-bottom: 30px;
             }
         </style>
+        <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
+        <style>
+            h1, h2, h3, h4, h5, h6, nav, .nav, .menu, button, .button, .btn, .price, ._heading, .wp-block-pullquote blockquote, blockquote, label, legend, a, .card-header, th {
+                font-family: "Prompt", "Open Sans script=all rev=1" !important;
+                font-weight: 700 !important;
+                
+            }
+
+        </style>
+        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -93,8 +105,8 @@
                 </div>
 
                 <div class="" style="margin-top:40px; ">
-                    <a class="btn btn-outline-success" style="font-weight: bold;" href="{{ url('/user-manual') }}">คู่มือใช้งาน</a>
-                    <a class="btn btn-success" style="font-weight: bold;" href="{{ url('/') }}/index">เข้าเว็บไซต์</a>
+                    <a class="btn btn-outline-success" style="font-weight: bold;" href="{{ url('/user-manual') }}"><i class="fa fa-book"></i> คู่มือใช้งาน</a>
+                    <a class="btn btn-success" style="font-weight: bold;" href="{{ url('/') }}/index"><i class="fa fa-sign-in-alt"></i> เข้าเว็บไซต์</a>
                 </div>
             </div>
 

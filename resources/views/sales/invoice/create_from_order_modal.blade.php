@@ -12,7 +12,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-xl" role="document">
+	<div class="modal-dialog modal-xl" role="document" style="max-width:90% !important; width:90% !important">
 		<div class="modal-content">
 			<div class="modal-header">
 
@@ -37,6 +37,25 @@
 		</div>
 	</div>
 </div>
+<style>
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /*-webkit-appearance: none;
+    margin: 0;*/
+  }
+
+  /* Firefox */
+  input[type=number] {
+    /*-moz-appearance: textfield;*/
+  }
+
+  td,th{
+    padding-left : 0.25rem !important;
+    padding-right : 0.25rem !important;
+  }
+</style>
+
 
 <script>
 	document.addEventListener("DOMContentLoaded", function(event) {
@@ -44,120 +63,127 @@
 		//var detail = JSON.parse('@json($table_product)');
 		$('#orderModal').on('show.bs.modal', function (e) {
 
-      var customer_id = $("#btn-ref-order").attr("data-id");
-      var customer_code = $("#btn-ref-order").attr("customer_code");
-      console.log("customer_id  : ", customer_id);
+			var customer_id = $("#btn-ref-order").attr("data-id");
+			var customer_code = $("#btn-ref-order").attr("customer_code");
+			console.log("customer_id  : ", customer_id);
 
-      $.ajax({
-          url: "{{ url('/') }}/api/order?user_id={{Auth::id()}}",
-          type: "GET",
-          dataType : "json",
-      }).done(function(result){
-          //console.log(result);
-          var dataSet = [];
-          result.forEach(function(element,index) {
-            //console.log(element,index);
-            var id = element.order_id;
-            //var price = element.promotion_price? element.promotion_price : element.normal_price;
-            var row = [
-              element.order_code,
-              element.datetime,
-              element.total,
-              element.customer_code,
-              element.company_name,
-              element.short_name,
-              element.sales_status_name,
-              "<button type='button' class='btn btn-warning btn-create btn-sm' onclick='fillInvoice("+id+");'>" +
-                "<span class='fa fa-shopping-cart'></span>" +
-              "</button>",
-            ];
-            dataSet.push(row);
-          });
-          //console.log(dataSet);
-          var table = $('#table-order-model').DataTable({
-            "data": dataSet,
-            "columns": [
-              { title: "เลขที่เอกสาร" },
-              { title: "วันที่" },
-              { title: "ยอดรวม" },
-              { title: "รหัสลูกค้า" },
-              { title: "ชื่อบริษัท" },
-              { title: "รหัสพนักงาน" },
-              { title: "สถานะ" },
-              { title: "action" },
-            ],
-            "pageLength" : 3,
-          }).search(customer_code).draw();// END DATATABLE
-
-
-          $('#table-order-model').on( 'click', 'tr', function () {
-              var d = table.row( this ).data();
-              //console.log("ROW : ",d);
-
-              var key = d[0];
-              var table_detail = $('#table-order-detail').DataTable();
-              table_detail.search(key).draw();
-          } );
+			$.ajax({
+				url: "{{ url('/') }}/api/order?user_id={{Auth::id()}}",
+				type: "GET",
+				dataType : "json",
+			})
+			.done(function(result){
+				//console.log(result);
+				var dataSet = [];
+				result.forEach(function(element,index) {
+					//console.log(element,index);
+					var id = element.order_id;
+					//var price = element.promotion_price? element.promotion_price : element.normal_price;
+					var row = [
+						element.order_code,
+						element.datetime,
+						element.total,
+						element.customer_code,
+						element.company_name,
+						element.short_name,
+						element.sales_status_name,
+						"<button type='button' class='btn btn-warning btn-create btn-sm' onclick='fillInvoice("+id+");'>" +
+						"<span class='fa fa-shopping-cart'></span>" +
+						"</button>",
+					];
+					dataSet.push(row);
+				});
+				//console.log(dataSet);
+				var table;
+				if(  ! $.fn.DataTable.isDataTable('#table-order-model') ){
+					var table = $('#table-order-model').DataTable({
+						"data": dataSet,
+						"columns": [
+						{ title: "เลขที่เอกสาร" },
+						{ title: "วันที่" },
+						{ title: "ยอดรวม" },
+						{ title: "รหัสลูกค้า" },
+						{ title: "ชื่อบริษัท" },
+						{ title: "รหัสพนักงาน" },
+						{ title: "สถานะ" },
+						{ title: "action" },
+						],
+						"pageLength" : 3,
+					});
+				}else{
+					table = $('#table-order-model').DataTable();
+				}
+				table.search(customer_code).draw();// END DATATABLE
 
 
+				$('#table-order-model').on( 'click', 'tr', function () {
+					var d = table.row( this ).data();
+					//console.log("ROW : ",d);
+
+					var key = d[0];
+					var table_detail = $('#table-order-detail').DataTable();
+					table_detail.search(key).draw();
+				} );
+				
+			}); //END AJAX
 
 
+			//detail
+			//AJAX
+			$.ajax({
+				url: "{{ url('/') }}/api/order_detail/index2?order_detail_status_id=1",
+				type: "GET",
+				dataType : "json",
+			})
+			.done(function(result){
+				//console.log(result);
+				var dataSet = [];
+				result.forEach(function(element,index) {
+					//console.log(element,index);
+					var id = element.order_detail_id;
+					var row = [
+						element.order_code,
+						element.date,
+						//element.delivery_time,
+						element.company_name,
+						element.product_code,
+						element.product_name,
+						element.amount,
+						"<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:50px;' required>",
+						//0,
+						//0,
+						//0,
+					];
+					dataSet.push(row);
+				});
+				//console.log(dataSet);
+				var table_detail;
+				if(  ! $.fn.DataTable.isDataTable('#table-order-detail') ){
+					table_detail = $('#table-order-detail').DataTable({
+						data: dataSet,
+						columns: [
+								{ title: "เลขที่ OE" },
+								{ title: "วันที่ OE" },
+								//{ title: "วันที่ส่งของ" },
+								{ title: "ลูกค้า" },
+								{ title: "รหัสสินค้า" },
+								{ title: "ชื่อสินค้า" },
+								{ title: "จำนวน" },
+								{ title: "จำนวนที่อนุมัติ" },
+								//{ title: "ค้างรับ" },
+								//{ title: "ค้างส่ง" },
+								//{ title: "จำนวนคงคลัง" },
+						],
+						"pageLength" : 3,
+					}); //END DATATABLE
+				}else{
+					table_detail = $('#table-order-detail').DataTable();
+				}
+				$('#table-order-detail input').attr("readonly",true);
 
-        }); //END AJAX
-
-
-        //detail
-        //AJAX
-        $.ajax({
-            url: "{{ url('/') }}/api/order_detail/index2?order_detail_status_id=1",
-            type: "GET",
-            dataType : "json",
-        }).done(function(result){
-  					//console.log(result);
-  					var dataSet = [];
-  					result.forEach(function(element,index) {
-  						//console.log(element,index);
-              var id = element.order_detail_id;
-  						var row = [
-  							element.order_code,
-                element.date,
-  							//element.delivery_time,
-  							element.company_name,
-  							element.product_code,
-  							element.product_name,
-  							element.amount,
-  							"<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
-  							//0,
-  							//0,
-  							//0,
-  						];
-  						dataSet.push(row);
-  					});
-  					//console.log(dataSet);
-
-  					var table_detail = $('#table-order-detail').DataTable({
-  						data: dataSet,
-  						columns: [
-  								{ title: "เลขที่ OE" },
-  								{ title: "วันที่ OE" },
-  								//{ title: "วันที่ส่งของ" },
-  								{ title: "ลูกค้า" },
-  								{ title: "รหัสสินค้า" },
-  								{ title: "ชื่อสินค้า" },
-  								{ title: "จำนวน" },
-  								{ title: "จำนวนที่อนุมัติ" },
-  								//{ title: "ค้างรับ" },
-  								//{ title: "ค้างส่ง" },
-  								//{ title: "จำนวนคงคลัง" },
-  						],
-              "pageLength" : 3,
-  					}); //END DATATABLE
-            $('#table-order-detail input').attr("readonly",true);
-
-            table_detail.search("*").draw();
-  				});//END DONE AJAX
+				table_detail.search("*").draw();
+			});//END DONE AJAX
 		}); // END MODAL EVENT
-
 	}); //END ADD EVENT LISTENER
 
 	function fillInvoice(order_id){

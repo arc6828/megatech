@@ -28,25 +28,26 @@
 <script>
 	//onClick
 	function select_item(id,name,code) {
-			console.log(id);
-					$('#customer_id').val(id);
-					$('#contact_name').val(name);
-					$('#customer_code').val(code);
-					$('#customerModal').modal('hide');
-          $("#btn-ref-order").attr("customer_code", code);
-					onChangeCustomer(id);
+		console.log(id);
+		$('#customer_id').val(id);
+		$('#contact_name').val(name);
+		$('#customer_code').val(code);
+		$('#customerModal').modal('hide');		
+		$("#btn-ref-order").attr("data-id",id);
+		$("#btn-ref-order").attr("customer_code", code);
+		onChangeCustomer(id);
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		//console.log("555");
 		//AJAX
 		$('#customerModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
-        var user_id = "{{ Auth::id() }}";
+        		var user_id = "{{ Auth::id() }}";
 				$.ajax({
-	          url: "{{ url('/') }}/api/customer?user_id="+user_id,
-	          type: "GET",
-	          dataType : "json",
-	      }).done(function(result){
+					url: "{{ url('/') }}/api/customer?user_id="+user_id,
+					type: "GET",
+					dataType : "json",
+				}).done(function(result){
 						//console.log(result);
 						var dataSet = [];
 						result.forEach(function(element,index) {
@@ -75,7 +76,7 @@
 							]
 						});
 					}); //END AJAX
-			}
+			}//END IF
 		}); // END MODAL EVENT
 	});//END ADD EVENT LISTENER
 </script>

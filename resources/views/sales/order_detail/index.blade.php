@@ -147,7 +147,7 @@
               </option>
               @endforeach
           </select>
-          <button type="summit" id="form_summit_table" class="btn btn-primary">
+          <button type="summit" id="form_summit_table" class="btn btn-primary btn-sm">
     				submit
     			</button>
       </div>
@@ -156,6 +156,25 @@
 
 	</div>
 </div>
+
+<style>
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  td,th{
+    padding-left : 0.25rem !important;
+    padding-right : 0.25rem !important;
+  }
+</style>
 
 <div id="outer-form-container" style="display:none;">
 	<script>
@@ -249,7 +268,7 @@
               "<input type='hidden' name='order_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
 
-							`<a href="{{url('/sales/order')}}/`+element.order_id+`" target="_blank">`+element.order_code+"</a>",
+							`<a href2="{{url('/sales/order')}}/`+element.order_id+`" target="_blank">`+element.order_code+"</a>",
               element.date,
 							//element.delivery_time,
 							//element.company_name,
@@ -257,8 +276,8 @@
 							element.product_code,
 							//element.product_name + " " + element.quantity + " หน่วย/กล่อง",
               `<a href2="{{url('/product')}}/`+element.product_id+`/edit" target="_blank">`+element.product_name + " / " + element.grade+`</a>`,
-							element.amount,
-							"<input type='number' name='approve_amounts[]' value='0' class='approve_amount form-control form-control-sm "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:100px;'  required>",
+							
+							" <input type='number' name='approve_amounts[]' value='0' class='d-inline approve_amount form-control form-control-sm "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:50px;'  required> / <div class='d-inline-block' style='width:40px;'>"+element.amount+"</div>",
               element.quantity,
               0,
 							0,
@@ -280,12 +299,11 @@
 								{ title: "BARCODE" },
 								{ title: "รหัสสินค้า" },
 								{ title: "ชื่อสินค้า" },
-								{ title: "จำนวนที่จอง" },
-								{ title: "จำนวนที่อนุมัติ" },
-								{ title: "จำนวนต่อแพ็ค" },
+								{ title: "ที่อนุมัติ / ที่จอง" },
+								{ title: "ต่อแพ็ค" },
 								{ title: "ค้างรับ" },
 								{ title: "ค้างส่ง" },
-								{ title: "จำนวนคงคลัง" },
+								{ title: "คงคลัง" },
 								{ title: "Picking" },
 						]
 					}).order( [ 1, 'desc' ] ).draw(); //END DATATABLE
