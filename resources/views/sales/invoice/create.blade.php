@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<form class="" action="{{ url('/') }}/sales/invoice" method="POST">
+<form class="" action="{{ url('/') }}/sales/invoice" method="POST" onsubmit="return confirm('คุณต้องการสร้างใบขายใช่หรืไม่?');">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/invoice/form')
