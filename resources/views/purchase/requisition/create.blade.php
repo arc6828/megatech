@@ -5,7 +5,7 @@
 
 @section('content')
 
-<form class="" action="{{ url('/') }}/purchase/requisition" method="POST">
+<form class="" action="{{ url('/') }}/purchase/requisition" method="POST" onsubmit="return confirm('คุณต้องการสร้างใบเสนอซื้อใช่หรือไม่?');">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('purchase/requisition/form')
