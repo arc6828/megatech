@@ -166,9 +166,9 @@
           type: "GET",
           dataType : "json",
       }).done(function(result){
-					console.log(result);
-					var dataSet = [];
-					var product_codes = [];
+			console.log(result);
+			var dataSet = [];
+			var product_codes = [];
 					result.forEach(function(element,index) {
 						console.log(element,index);
 			
