@@ -89,8 +89,10 @@
 		</script>
 
     <div class="text-center">
-      <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
-      <a href="{{ url('/') }}/sales/quotation/create" class="btn btn-primary">
+      <a class="btn btn-outline-success" href="{{ url('/') }}/sales">
+	  	<i class="fa fa-arrow-left" aria-hidden="true"></i> back
+	  </a>
+      <a href="{{ url('/') }}/sales/quotation/create" class="btn btn-success">
       	<i class="fa fa-plus"></i> เพิ่มใบเสนอราคา
       </a>
     </div>

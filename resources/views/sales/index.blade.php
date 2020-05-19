@@ -68,16 +68,16 @@
 		</div>
 		<div class="row  text-center">
 			<div class="col-6 col-md-3 ">
-			<a class="btn btn-outline-secondary btn-menu  my-3" href="{{url('/')}}/user?q=sales">
-        <div class="vertical-center">
-  				<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
-  				<div  class="px-1">แฟ้มหลัก<br>พนักงานขาย</div>
+				<a class="btn btn-outline-dark btn-menu  my-3" href="{{url('/')}}/user?q=sales">
+					<div class="vertical-center">
+						<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
+						<div  class="px-1">แฟ้มหลัก<br>พนักงานขาย</div>
 
-  			</div>
-			</a>
+					</div>
+				</a>
 			</div>
 			<div class="col-6 col-md-3 ">
-			<a class="btn btn-outline-secondary btn-menu  my-3" href="{{url('/')}}/customer">
+			<a class="btn btn-outline-dark btn-menu  my-3" href="{{url('/')}}/customer">
         <div class="vertical-center">
   				<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
   				<div>แฟ้มหลัก<br>ลูกค้า</div>
@@ -86,7 +86,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-3 ">
-				<a class="btn btn-outline-secondary btn-menu  my-3" href="{{url('/')}}/product">
+				<a class="btn btn-outline-dark btn-menu  my-3" href="{{url('/')}}/product">
           <div class="vertical-center">
   					<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
   					<div>แฟ้มหลัก<br>สินค้า</div>

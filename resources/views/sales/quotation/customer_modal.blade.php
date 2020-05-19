@@ -67,9 +67,9 @@
 							var row = [
 								element.customer_code,
 								element.company_name,
-								element.contact_name,
+								//element.contact_name,
 								"<a "
-										+"class='btn btn-warning btn-sm'"
+										+"class='btn btn-success btn-sm'"
 										+"href='{{ url('/') }}/sales/quotation/create?customer_id="+element.customer_id+"'"
 										+">เลือก</a>"+
 								"<button type='button' "
@@ -88,7 +88,7 @@
 							columns: [
 									{ title: "รหัส" },
 									{ title: "บริษัท" },
-									{ title: "ผู้ติดต่อ" },
+									//{ title: "ผู้ติดต่อ" },
 									{ title: "#" },
 							]
 						}).search("{{ isset($customer)? $customer->customer_code : '' }}").draw();// END DATATABLE;

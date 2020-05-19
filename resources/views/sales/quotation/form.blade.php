@@ -51,7 +51,7 @@
           </div>
           <input class="form-control" name="company_name" id="company_name" readonly>
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button" id="btn-customer" data-toggle="modal" data-target="#customerModal">
+            <button class="btn btn-success" type="button" id="btn-customer" data-toggle="modal" data-target="#customerModal">
               <i class="fa fa-plus"></i> เลือกลูกหนี้
             </button>
           </div>
@@ -78,9 +78,9 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
+      <label class="col-lg-2  ">ระยะเวลาส่งของ (วัน)</label>
       <div class="col-lg-3">
-        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required >
+      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required >
       </div>
       <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
       <div class="col-lg-3">
@@ -107,27 +107,34 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
-      <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required >
-      </div>
-    </div>
 
-    <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสแผนก</label>
+      <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="department_id" id="department_id" class="form-control form-control-sm" required >
+        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required >
 
-          @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_role }}" >
-            {{	$row_department->department_name }}
+          @foreach($table_sales_status as $row_sales_status)
+          <option value="{{ $row_sales_status->sales_status_id }}"
+                {{ $row_sales_status->sales_status_id == "5" ? "disabled" : "" }} >
+            {{	$row_sales_status->sales_status_name }}
           </option>
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
-      <div class="col-lg-3">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
+      
+      
+      
+    </div>
+
+    <div class="form-group form-inline">
+    
+      <label class="col-lg-2 d-none">เงื่อนไขการชำระเงิน (วัน)</label>
+      <div class="col-lg-3 d-none">
+        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" disabled>
+      </div>
+      
+      <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
+      <div class="col-lg-3 d-none">
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm" disabled>
 
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >
@@ -150,19 +157,19 @@
           @endforeach
         </select>
       </div>
-
-      <label class="col-lg-2  offset-lg-1">สถานะ</label>
+      <label class="col-lg-2 offset-lg-1 ">รหัสแผนก</label>
       <div class="col-lg-3">
-        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required >
+        <select name="department_id" id="department_id" class="form-control form-control-sm" required >
 
-          @foreach($table_sales_status as $row_sales_status)
-          <option value="{{ $row_sales_status->sales_status_id }}"
-                {{ $row_sales_status->sales_status_id == "5" ? "disabled" : "" }} >
-            {{	$row_sales_status->sales_status_name }}
+          @foreach($table_department as $row_department)
+          <option value="{{ $row_department->department_role }}" >
+            {{	$row_department->department_name }}
           </option>
           @endforeach
         </select>
       </div>
+
+      
     </div>
   </div>
 </div>
