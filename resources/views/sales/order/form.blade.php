@@ -25,7 +25,7 @@
           </div>
           <input class="form-control" name="company_name" id="company_name" readonly>
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#customerModal">
+            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
               <i class="fa fa-plus"></i> เลือกลูกหนี้
             </button>
           </div>

@@ -71,7 +71,7 @@
 								element.company_name,
 								//element.contact_name,
 								"<button type='button' " +
-										"class='btn btn-warning btn-sm'" +
+										"class='btn btn-success btn-sm'" +
 										"id='btn-"+element.customer_code+"'" +
 										"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' " +
                     "data-dismiss='modal'"
