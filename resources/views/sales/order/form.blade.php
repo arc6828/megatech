@@ -1,9 +1,28 @@
 <div class="card">
   <div class="card-body">
-    <div class="mb-4">
-      <a href="{{ url('/sales/order') }}" title="Back" class="btn btn-warning btn-sm" >
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-      </a>
+    <div class="row mb-4">
+      <div class="col-lg-4">
+        <a href="{{ url('/sales/order') }}" title="Back" class="btn btn-warning btn-sm" >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a>
+      </div>
+      <div class="col-lg-4 text-center">
+        <div class="">
+        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->order_code, 'C128') }}" alt="barcode"   />
+        </div>
+        <div class="">
+        {{ $row->order_code }}
+        </div>        
+      </div>
+      <div class="col-lg-4 text-right">
+		  	<a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/pdf" target="_blank"  title="พิมพ์">
+		      <i class="fas fa-print"></i> พิมพ์
+		    </a>
+        <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit" title="แก้ไข" >
+		      <i class="fas fa-edit"></i>  แก้ไข
+		    </a>
+
+      </div>
     </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
@@ -51,10 +70,11 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
+      <label class="col-lg-2">ระยะเวลาส่งของ (วัน)</label>
       <div class="col-lg-3">
-        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required>
+        <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
       </div>
+      
       <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
       <div class="col-lg-3">
         <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
@@ -80,24 +100,9 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
-      <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
-      </div>
-    </div>
-
-    <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสแผนก</label>
-      <div class="col-lg-3">
-        <select name="department_id" id="department_id" class="form-control form-control-sm" required>
-
-          @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_role }}" >
-            {{	$row_department->department_name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
+      
+    
+      
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
         <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required>
@@ -123,13 +128,13 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
+      <label class="col-lg-2  offset-lg-1">รหัสแผนก</label>
       <div class="col-lg-3">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" required>
+        <select name="department_id" id="department_id" class="form-control form-control-sm" required>
 
-          @foreach($table_zone as $row_zone)
-          <option value="{{ $row_zone->zone_id }}" >
-            {{	$row_zone->zone_name }}
+          @foreach($table_department as $row_department)
+          <option value="{{ $row_department->department_role }}" >
+            {{	$row_department->department_name }}
           </option>
           @endforeach
         </select>
@@ -144,6 +149,25 @@
       <label class="col-lg-2 offset-lg-1">หนี้สะสม</label>
       <div class="col-lg-3">
         <input type="number" name="debt_balance"	id="debt_balance" class="form-control form-control-sm form-control-line" >      
+      </div>
+    </div>
+
+    <div class="form-group form-inline d-none">
+      <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
+      <div class="col-lg-3">
+        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" disabled>
+      </div>
+
+      <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
+      <div class="col-lg-3">
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm" disabled>
+
+          @foreach($table_zone as $row_zone)
+          <option value="{{ $row_zone->zone_id }}" >
+            {{	$row_zone->zone_name }}
+          </option>
+          @endforeach
+        </select>
       </div>
     </div>
 
@@ -200,6 +224,8 @@
 						<input type="number"  name="total_after_vat" id="total_after_vat"	class="form-control form-control-sm form-control-line roundnum"  readonly >
 					</div>
 				</div>
+
+        
 			</div>
 		</div>
 	</div>

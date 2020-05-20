@@ -102,8 +102,8 @@
 			</table>
 		</div>
 
-    <div class="text-center">
-      <a class="btn btn-outline-success " href="{{ url('/') }}/sales">back</a>
+    <div class="text-center mt-4">
+      <a class="btn btn-outline-success " href="{{ url('/') }}/sales"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</a>
       <a href="{{ url('/') }}/sales/order/create" class="btn btn-success">
       	<i class="fa fa-plus"></i> เพิ่มใบจอง
       </a>

@@ -18,22 +18,7 @@
 @section('content')
 
 	@forelse($table_order as $row)
-		<div class="text-center mb-4">
-			
-			<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit" title="แก้ไข" >
-		      <i class="fas fa-edit"></i>
-		    </a>
-		  	<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/pdf" target="_blank"  title="พิมพ์">
-		      <i class="fas fa-print"></i>
-		    </a>
-		  <div class="">
-		    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->order_code, "C128") }}" alt="barcode"   />
-		  </div>
-		  <div class="">
-		    {{ $row->order_code }}
-		  </div>
-
-		</div>
+		
 		<form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
