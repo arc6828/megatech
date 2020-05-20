@@ -53,8 +53,8 @@
 		</div>
 
     <div class="text-center mt-4">
-      <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
-      <a href="{{ url('/') }}/sales/invoice/create" class="btn btn-primary">
+      <a class="btn btn-outline-success" href="{{ url('/') }}/sales"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</a>
+      <a href="{{ url('/') }}/sales/invoice/create" class="btn btn-success">
       	<i class="fa fa-plus"></i> เพิ่มใบขาย
       </a>
     </div>

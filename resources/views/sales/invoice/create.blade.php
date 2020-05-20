@@ -27,8 +27,8 @@
     @include('sales/invoice/form')
 
     <div class="text-center mt-4">
-      <a class="btn btn-outline-primary" href="{{ url('/') }}/sales/invoice">back</a>
-      <button type="submit"  class="btn btn-primary">Save</button>
+      <a class="btn btn-outline-success" href="{{ url('/') }}/sales/invoice"> <i class="fa fa-arrow-left" aria-hidden="true"></i> back</a>
+      <button type="submit"  class="btn btn-success">Save</button>
     </div>
 </form>
 
