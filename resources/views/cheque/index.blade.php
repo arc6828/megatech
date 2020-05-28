@@ -39,7 +39,7 @@
                                         
                                         <th>Bank Account Id</th>
                                         <th>Status</th>
-                                        <th class="d-none">Actions</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -48,7 +48,8 @@
                                         <td class="d-none">{{ $item->cheque_type_code }}</td>                                 
                                         <td>{{ $item->cheque_date }}</td>
                                         <td>{{ $item->cheque_no }}</td>       
-                                        <td>{{ $item->total }}</td>
+                                        <td>{{ $item->total }}</td>   
+                                        <td>{{ $item->bank_account->name }}</td>
                                         <td>{{ $item->status }}</td>
 
                                         
