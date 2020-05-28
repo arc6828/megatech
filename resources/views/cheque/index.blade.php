@@ -55,13 +55,13 @@
                                         
                                         <td>
                                             @if($item->status =="pending")
-                                            <form method="POST" action="{{ url('/finance/cheque/' . $cheque->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" style="display:inline">
+                                            <form method="POST" action="{{ url('/finance/cheque/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" style="display:inline">
                                                 {{ method_field('PATCH') }}
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="status" value="success">
                                                 <button class="btn btn-success btn-sm">ผ่านเช็ค</button>
                                             </form>
-                                            <form method="POST" action="{{ url('/finance/cheque/' . $cheque->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" style="display:inline">
+                                            <form method="POST" action="{{ url('/finance/cheque/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" style="display:inline">
                                                 {{ method_field('PATCH') }}
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="status" value="success">
