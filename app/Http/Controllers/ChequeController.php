@@ -115,7 +115,7 @@ class ChequeController extends Controller
         $cheque = Cheque::findOrFail($id);
         $cheque->update($requestData);
 
-        return redirect('cheque')->with('flash_message', 'Cheque updated!');
+        return redirect("/finance/cheque?cheque_type_code=".request('cheque_type_code'))->with('flash_message', 'Cheque updated!');
     }
 
     /**
