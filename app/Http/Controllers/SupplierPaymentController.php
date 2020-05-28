@@ -141,12 +141,12 @@ class SupplierPaymentController extends Controller
                     ]);
 
                     //INSERT CHEQUE IF EXIST
-                    if( $requestData['transaction_code'][$i] == "deposite-cheque" ){
+                    if( $requestData['transaction_code'][$i] == "pay-cheque" ){
                                             
                     
                         Cheque::create([                           
                             
-                            'cheque_type_code' => 'cheque-in' ,
+                            'cheque_type_code' => 'cheque-out' ,
                             //'doc_no' => '' , 
                             'cheque_date' => $requestData['date'][$i] ,
                             //'cheque_type' => '' , 
