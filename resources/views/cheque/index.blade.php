@@ -49,7 +49,7 @@
                                         <td>{{ $item->cheque_date }}</td>
                                         <td>{{ $item->cheque_no }}</td>       
                                         <td>{{ $item->total }}</td>   
-                                        <td>{{ $item->bank_account->name }}</td>
+                                        <td>{{ $item->bank_account->name }} {{ $item->bank_account->branch }}</td>
                                         <td>{{ $item->status }}</td>
 
                                         
