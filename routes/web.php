@@ -19,12 +19,13 @@ Route::get('/index',function(){
 	return redirect('/sales');
 });
 
-Route::get('/user-manual',function(){
-	return view('user-manual');
-});
+
 
 //LOGIN REQUIRED
 Route::middleware(['auth'])->group(function () {
+  Route::get('/user-manual',function(){
+    return view('user-manual');
+  });
   //Main Menu
   Route::get('/sales',function(){
       return view('sales/index');
