@@ -59,16 +59,18 @@
                                                 {{ method_field('PATCH') }}
                                                 {{ csrf_field() }}
                                                 <input type="hidden" name="status" value="success">
+                                                <input type="hidden" name="cheque_type_code" value="{{ request('cheque_type_code') }}">
+                                                
                                                 <button class="btn btn-success btn-sm">ผ่านเช็ค</button>
                                             </form>
                                             <form method="POST" action="{{ url('/finance/cheque/' . $item->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" style="display:inline">
                                                 {{ method_field('PATCH') }}
                                                 {{ csrf_field() }}
-                                                <input type="hidden" name="status" value="success">
+                                                <input type="hidden" name="status" value="fail">
+                                                <input type="hidden" name="cheque_type_code" value="{{ request('cheque_type_code') }}">
                                                 <button class="btn btn-warning btn-sm">ยกเลิกเช็ค</button>
                                             </form>
-                                            @else                                            
-                                            {{ $item->status }}
+                                            
                                             @endif
                                         </td>
                                         
