@@ -113,7 +113,7 @@
 								element.company_name,
 								element.contact_name,
 								"<button type='button' " +
-										"class='btn btn-warning btn-sm'" +
+										"class='btn btn-success btn-sm'" +
 										"onClick='select_item("+element.customer_id+",`"+element.contact_name+"`,`"+element.customer_code+"`)' "
 										+">เลือก</button>",
 							];

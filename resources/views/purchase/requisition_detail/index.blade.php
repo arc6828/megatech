@@ -134,7 +134,7 @@
 				@endphp
               @endforeach
           </select>
-          <button type="summit" id="form_summit_table" class="btn btn-primary">
+          <button type="summit" id="form_summit_table" class="btn btn-success btn-sm">
     				submit
     			</button>
       </div>

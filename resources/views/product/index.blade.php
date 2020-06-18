@@ -80,8 +80,8 @@
             //"pageLength": 10,
 						"columns": [
 							{ title: "รหัสสินค้า" },
-							{ title: "ชื่อสินค้า" },
 							{ title: "barcode" },
+							{ title: "ชื่อสินค้า" },
 							{ title: "ราคาขาย" },
 							{ title: "#ในคลัง" },
 							{ title: "#ค้างส่ง" },
@@ -118,8 +118,8 @@
         var price = element.promotion_price? element.promotion_price : element.normal_price;
         var row = [
           "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
-          element.product_name+" / "+element.grade,
           element.BARCODE,
+          element.product_name+" / "+element.grade,
           price,
           element.amount_in_stock,
           element.pending_out,

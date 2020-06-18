@@ -13,8 +13,8 @@
 			@include('purchase/requisition/form')
 
 			<div class="mt-4 text-center">
-        <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/requisition">back</a>
-        <button type="submit" class="btn btn-primary" >Save</button>
+        <a class="btn btn-outline-success" href="{{ url('/') }}/purchase/requisition">back</a>
+        <button type="submit" class="btn btn-success" >Save</button>
 			</div>
 
 		</form>

@@ -84,7 +84,7 @@
 								element.company_name,
 								//element.contact_name,
 								"<button type='button' " +
-										"class='btn btn-warning btn-sm'" +
+										"class='btn btn-success btn-sm'" +
 										"onClick='select_item("+element.supplier_id+",`"+element.company_name+"`,`"+element.supplier_code+"`)' "
 										+">เลือก</button>",
 							];
@@ -134,7 +134,7 @@
                 element.datetime,
                 //element.delivery_time,
                 element.supplier_code,
-                element.company_name,
+                //element.company_name,
                 element.product_code,
                 element.product_name + " / " + element.grade,
                 element.amount,
@@ -173,7 +173,7 @@
                   { title: "วันที่ PR" },
                   //{ title: "วันที่ส่งของ" },
                   { title: "รหัสเจ้าหนี้" },
-                  { title: "เจ้าหนี้" },
+                  //{ title: "เจ้าหนี้" },
                   { title: "รหัสสินค้า" },
                   { title: "ชื่อสินค้า" },
                   { title: "จำนวน" },

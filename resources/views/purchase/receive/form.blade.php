@@ -10,7 +10,7 @@
       <div class="col-lg-3">
         <input name="purchase_receive_code"	id="purchase_receive_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">รหัสเอกสารเจ้าหนี้</label>
+      <label class="col-lg-2 offset-lg-1">เอกสาร IV เจ้าหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line"	required>
       </div>

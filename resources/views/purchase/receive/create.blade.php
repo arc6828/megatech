@@ -27,8 +27,8 @@
     @include('purchase/receive/form', ["mode"=>"create"])
     <div class="text-center mt-4">
 
-        <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase/receive">back</a>
-        <button type="submit" class="btn btn-primary  " id="form-submit">Save</button>
+        <a class="btn btn-outline-success " href="{{ url('/') }}/purchase/receive">back</a>
+        <button type="submit" class="btn btn-success  " id="form-submit">Save</button>
 
 
     </div>

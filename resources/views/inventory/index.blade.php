@@ -2,6 +2,8 @@
 
 @section('title','คงคลัง')
 
+@section('background-tag','bg-yellow')
+
 @section('breadcrumb-menu')
 <a href="{{ url('/') }}/activity/create" class="hide btn pull-right hidden-sm-down btn-success">
 	<i class="fa fa-plus"></i> New Activity
@@ -13,22 +15,22 @@
 	<div class="card-body">
 		<div class="row text-center">
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/">
-        <div class="vertical-center">
-          <div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
-          <div><br>โอนย้ายคลัง</div>
-        </div>
+				<a class="btn bg-yellow btn-menu my-3" href="{{url('/')}}/">
+					<div class="vertical-center text-dark">
+						<div class="px-4"><i class="round round-yellow my-2 ni ni-folder-17"></i></div>
+						<div><br>โอนย้ายคลัง</div>
+					</div>
 
-			</a>
+				</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-			<a class="btn btn-outline-primary btn-menu my-3" href="{{url('/')}}/">
-        <div class="vertical-center">
-          <div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
-          <div>ปรับปรุง<br>เพิ่ม/ลด</div>
-        </div>
+				<a class="btn  bg-yellow btn-menu my-3" href="{{url('/')}}/">
+					<div class="vertical-center text-dark">
+						<div class="px-4"><i class="round round-primary my-2 ni ni-folder-17"></i></div>
+						<div>ปรับปรุง<br>เพิ่ม/ลด</div>
+					</div>
 
-			</a>
+				</a>
 			</div>
 			<div class="col-6 col-md-4 d-none">
 			<a class="btn btn-outline-primary btn-menu my-3" href="#">
@@ -58,17 +60,17 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-success btn-menu  my-3" href="{{ url('/') }}/product">
+        <a class="btn btn-outline-dark btn-menu  my-3" href="{{ url('/') }}/product">
           <div class="vertical-center">
-  					<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
+  					<div class="px-4"><i class="round round-dark my-2 ni ni-folder-17"></i></div>
   					<div>แฟ้มหลัก<br>สินค้า</div>
     			</div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 ">
-				<a class="btn btn-outline-success btn-menu  my-3" href="{{url('/')}}/inventory_main">
+				<a class="btn btn-outline-dark btn-menu  my-3" href="#">
           <div class="vertical-center">
-  					<div class="px-4"><i class="round round-success my-2 ni ni-folder-17"></i></div>
+  					<div class="px-4"><i class="round round-dark my-2 ni ni-folder-17"></i></div>
   					<div>แฟ้มหลัก<br>คลังสินค้า</div>
     			</div>
 

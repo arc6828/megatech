@@ -88,7 +88,7 @@
 </div>
 
 <div class="mt-4 text-center">
-  <a href="{{ url('/') }}/purchase/receive/create" class="btn btn-primary">
+  <a href="{{ url('/') }}/purchase/receive/create" class="btn btn-success">
     <i class="fa fa-plus"></i> เพิ่มใบรับ/ซื้อสินค้า
   </a>
 <div>

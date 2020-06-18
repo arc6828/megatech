@@ -132,7 +132,7 @@
               </option>
               @endforeach
           </select>
-          <button type="summit" id="form_summit_table" class="btn btn-primary btn-sm">
+          <button type="summit" id="form_summit_table" class="btn btn-success btn-sm">
     				submit
     			</button>
       </div>

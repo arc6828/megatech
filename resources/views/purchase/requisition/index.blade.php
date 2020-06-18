@@ -39,8 +39,8 @@
 						<th class="text-center">วันที่</th>
 						<th class="text-center d-none">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center d-none">สถานะ</th>
-						<th class="text-center">action</th>
+						<th class="text-center">สถานะ</th>
+						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -70,6 +70,9 @@
 							
 						</td>
 						<td>
+							อนุมัติ / ไม่ / บางส่วน
+						</td>
+						<td  class="d-none">>
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_requisition_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>
 							</a>
@@ -94,8 +97,8 @@
 </div>
 
 <div class="mt-4 text-center">
-  <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
-  <a href="{{ url('/') }}/purchase/requisition/create" class="btn btn-primary">
+  <a class="btn btn-outline-success" href="{{ url('/') }}/purchase">back</a>
+  <a href="{{ url('/') }}/purchase/requisition/create" class="btn btn-success">
     <i class="fa fa-plus"></i> เพิ่มใบเสนอซื้อ
   </a>
 <div>

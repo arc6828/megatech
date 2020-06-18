@@ -101,12 +101,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url('/')}}/inventory">
-            <i class="ni ni-shop text-primary"></i> คงคลัง
+            <i class="ni ni-shop text-yellow"></i> คงคลัง
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url('/')}}/finance">
-            <i class="ni ni-credit-card text-danger"></i> การเงิน (*)
+            <i class="ni ni-credit-card text-info"></i> การเงิน (*)
           </a>
         </li>
         <li class="nav-item  d-none">
@@ -116,12 +116,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url('/')}}/report">
-            <i class="ni ni-money-coins text-info"></i> รายงาน
+            <i class="ni ni-money-coins text-danger"></i> รายงาน
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{url('/others')}}">
-            <i class="ni ni-settings-gear-65 text-yellow"></i> อื่นๆ
+            <i class="ni ni-settings-gear-65 text-primary"></i> อื่นๆ
           </a>
         </li>
         <li class="nav-item">

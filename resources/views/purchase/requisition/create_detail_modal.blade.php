@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModal">
 	<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
 </button>
 
@@ -92,7 +92,7 @@
         element.amount_in_stock,
         price,
         "<input class='input' name='amount_create' id='amount_create"+id+"'  value='1' >",
-        "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-sm btn-warning btn-create' onclick='addProduct(this);'>" +
+        "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-sm btn-success btn-create' onclick='addProduct(this);'>" +
           "<span class='fa fa-plus'></span>" +
         "</button>",
       ];

@@ -98,7 +98,7 @@
 
 <div class="mt-4 text-center">
   <a class="btn btn-outline-primary d-none " href="{{ url('/') }}/purchase">back</a>
-  <a href="{{ url('/') }}/purchase/order/create" class="btn btn-primary">
+  <a href="{{ url('/') }}/purchase/order/create" class="btn btn-success">
     <i class="fa fa-plus"></i> เพิ่มใบสั่งซื้อ
   </a>
 <div>
