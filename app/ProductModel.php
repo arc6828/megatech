@@ -9,7 +9,7 @@ class ProductModel extends Model
 {
     protected $table = "tb_product";
     protected $primaryKey = 'product_id';
-    protected $fillable = ['product_code', 'product_name', 'product_detail', 'brand', 'promotion_price', 'floor_price', 'max_discount_percent', 'amount_in_stock', 'product_unit', 'pending_in', 'pending_out', 'normal_price', 'BARCODE', 'purchase_price', 'purchase_ref', 'ISBN', 'quantity'];
+    protected $fillable = ['product_code', 'product_name', 'product_detail', 'brand', 'promotion_price', 'floor_price', 'max_discount_percent', 'amount_in_stock', 'product_unit', 'pending_in', 'pending_out', 'normal_price', 'BARCODE', 'purchase_price', 'purchase_ref', 'ISBN', 'quantity','stock'];
 
     public function gaurd_stock(){
         return $this->hasMany('App\GaurdStock','product_id');
