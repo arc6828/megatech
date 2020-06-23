@@ -116,10 +116,11 @@
         //console.log(element,index);
         var id = element.product_id;
         var price = element.promotion_price? element.promotion_price : element.normal_price;
+		var extension = "<span class='text-danger'>"+(element.stock?"("+element.stock+")":"")+"</span>";
         var row = [
           "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
           element.BARCODE,
-          element.product_name+" / "+element.grade,
+          element.product_name+" / "+element.grade + " " +extension,
           price,
           element.amount_in_stock,
           element.pending_out,
