@@ -38,7 +38,7 @@
 				<tbody>
 				@foreach($table_supplier as $row)
 				@php
-					$total_debt = $row->Receives_on_debt->sum('total_debt');
+					$total_debt = $row->Receives_on_debt->sum('total_debt') + $row->XP_on_debt->sum('total') ;
 				@endphp
 				<tr>
 					<td><a href="{{ url('/') }}/supplier/{{ $row->supplier_id }}/edit">{{ $row->supplier_code }}</a></td>

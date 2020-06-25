@@ -88,6 +88,9 @@ class SupplierModel extends Model
 	public function Invoice_on_debt(){
 		return $this->hasMany('App\Sales\InvoiceModel','supplier_id')->where('total_debt','>',0);
 	}
+	public function XP_on_debt(){
+		return $this->hasMany('App\SupplierDebt','supplier_id')->where('total','>',0);
+	}
 	public function Invoice_on_debt_last_cycle(){
 		return $this->hasMany('App\Sales\InvoiceModel','supplier_id')->where('total_debt','>',0)->where('datetime','<=',date('Y-m-t', strtotime( '-1 month' ) ));
 	}
