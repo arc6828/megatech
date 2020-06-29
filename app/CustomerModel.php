@@ -88,7 +88,7 @@ class CustomerModel extends Model
 	}
 	
 	public function XR_on_debt(){
-		return $this->hasMany('App\CustomerDebt','customer_id')->where('total','>',0);
+		return $this->hasMany('App\CustomerDebt','customer_id')->where('total_debt','>',0);
 	}
 	public function Invoice_on_debt_last_cycle(){
 		return $this->hasMany('App\Sales\InvoiceModel','customer_id')->where('total_debt','>',0)->where('datetime','<=',date('Y-m-t', strtotime( '-1 month' ) ));
