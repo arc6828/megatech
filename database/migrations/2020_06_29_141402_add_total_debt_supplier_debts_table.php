@@ -14,12 +14,7 @@ class AddTotalDebtSupplierDebtsTable extends Migration
     public function up()
     {
         Schema::table('supplier_debts', function (Blueprint $table) {
-            $table->float('total_debt',16,2)->nullable();
-            $table->float('discount',16,2)->nullable()->change();
-            $table->float('vat_percent',16,2)->nullable()->change();
-            $table->float('vat',16,2)->nullable()->change();
-            $table->float('total_before_vat',16,2)->nullable()->change();
-            $table->float('total',16,2)->nullable()->change();
+            $table->double('total_debt',16,2)->nullable();
         });
     }
 
