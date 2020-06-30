@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\SupplierPayment;
 use App\SupplierBilling;
 use App\SupplierModel;
+use App\SupplierDebt;
 use App\Purchase\ReceiveModel;
 use App\Cheque;
 use App\BankAccount;
@@ -68,13 +69,17 @@ class SupplierPaymentController extends Controller
         $supplier_id = request('supplier_id',0);
         $supplier = SupplierModel::find($supplier_id);
         $receives = null;
+        $debts = [];
         if( request('filter')=="billing-only"){
             //วางบิลแล้วเท่านั้น 12
             $receives = ReceiveModel::where('purchase_status_id',12)->where('supplier_id',$supplier_id)->get();
    
         }else{
             //ที่ยอดมีหนี้ทั้งหมด
-            $receives = ReceiveModel::where('total_debt','>',0)->where('supplier_id',$supplier_id)->get();
+            $receives = ReceiveModel::where('total_debt','>',0)->where('supplier_id',$supplier_id)->get();           
+                   
+            $debts = SupplierDebt::where('total_debt','>',0)->where('supplier_id',$supplier_id)->get();
+
                    
         }
             
@@ -89,7 +94,7 @@ class SupplierPaymentController extends Controller
         $bank_accounts = BankAccount::all();
         $suppliers = SupplierModel::all();
 
-        return view('supplier-payment.create', compact('receives','supplier','bank_accounts','suppliers') );
+        return view('supplier-payment.create', compact('receives','supplier','bank_accounts','suppliers','debts') );
     }
 
     /**
@@ -116,9 +121,25 @@ class SupplierPaymentController extends Controller
                 $receive = ReceiveModel::find($receive_id);
                 if($receive){
                     //ADD UP
-                    $receive->total_payment = $receive->total_payment + $receive_payment;
+                    //$receive->total_payment = $receive->total_payment + $receive_payment;
                     $receive->total_debt = $receive->total_debt - $receive_payment;
                     $receive->save();
+                    //echo "HELLO";
+                }
+            }
+        }
+
+        //UPDATE supplier debt 
+        if (is_array($requestData['supplier_debt_payments'])){
+            for( $i=0; $i<count($requestData['supplier_debt_payments']); $i++ ){
+                $supplier_debt_payment = $requestData['supplier_debt_payments'][$i];
+                $supplier_debt_id = $requestData['supplier_debt_ids'][$i];
+                $supplier_debt = SupplierDebt::find($supplier_debt_id);
+                if($supplier_debt){
+                    //ADD UP
+                    //$supplier_debt->total_payment = $supplier_debt->total_payment + $supplier_debt_payment;
+                    $supplier_debt->total_debt = $supplier_debt->total_debt - $supplier_debt_payment;
+                    $supplier_debt->save();
                     //echo "HELLO";
                 }
             }

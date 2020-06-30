@@ -51,7 +51,7 @@
                 <div class="card mb-4">
                     <div class="card-header">@yield('title')</div>
                     <div class="card-body">
-                        <a href="{{ url('/finance/customer-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/finance/customer-payment') }}" title="Back" class="btn btn-warning btn-sm"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back </a>
                         <br />
                         <br />
 
@@ -94,7 +94,7 @@
                                     <tr>
                                         <td>{{ isset($row->customer_billing_detail) ? $row->customer_billing_detail->customer_billing->doc_no : '' }}</td>
                                         <td>
-                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
+                                            <a href="#">
                                                 {{ $row->invoice_code }}
                                             </a>
                                         </td>
@@ -111,6 +111,28 @@
                                         <td>{{ $row->User->short_name }}</td>
                                     </tr>
                                     @endforeach
+                                    @foreach($debts as $row)
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <a href="#">
+                                                {{ $row->doc_no }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $row->date }}</td>
+                                        
+                                        <td> </td>
+                                        <td>{{ $row->total_debt }}</td>
+                                        <td>
+                                            <input style="width:100px;" name="customer_debt_payments[]" value="{{ $row->total_debt }}" class="invoice_payments">
+                                            
+                                            <input type="hidden" name="customer_debt_ids[]" value="{{ $row->id }}">
+                                        </td>
+                                        <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
+                                        <td>{{ isset($row->user_id) ? $row->User->short_name : '' }}</td>
+                                    </tr>
+                                    @endforeach
+                                    
                                 </tbody>
 
                             </table>

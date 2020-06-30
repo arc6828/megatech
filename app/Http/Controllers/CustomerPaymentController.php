@@ -9,6 +9,7 @@ use App\CustomerPayment;
 use App\CustomerBilling;
 use App\CustomerModel;
 use App\Sales\InvoiceModel;
+use App\CustomerDebt;
 use App\Cheque;
 use App\BankAccount;
 use App\BankTransaction;
@@ -68,13 +69,14 @@ class CustomerPaymentController extends Controller
         $customer_id = request('customer_id',0);
         $customer = CustomerModel::find($customer_id);
         $invoices = null;
+        $debts = [];
         if( request('filter')=="billing-only"){
             //วางบิลแล้วเท่านั้น 12
-            $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();
-   
+            $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();   
         }else{
             //ที่ยอดมีหนี้ทั้งหมด
             $invoices = InvoiceModel::where('total_debt','>',0)->where('customer_id',$customer_id)->get();
+            $debts = CustomerDebt::where('total_debt','>',0)->where('customer_id',$customer_id)->get();
                    
         }
             
@@ -89,7 +91,7 @@ class CustomerPaymentController extends Controller
         $bank_accounts = BankAccount::all();
         $customers = CustomerModel::all();
 
-        return view('customer-payment.create', compact('invoices','customer','bank_accounts','customers') );
+        return view('customer-payment.create', compact('invoices','customer','bank_accounts','customers','debts') );
     }
 
     /**
@@ -116,12 +118,27 @@ class CustomerPaymentController extends Controller
                 $invoice = InvoiceModel::find($invoice_id);
                 if($invoice){
                     //ADD UP
-                    $invoice->total_payment = $invoice->total_payment + $invoice_payment;
+                    //$invoice->total_payment = $invoice->total_payment + $invoice_payment;
                     $invoice->total_debt = $invoice->total_debt - $invoice_payment;
                     $invoice->save();
                 }
             }
         }
+        //UPDATE customer_debt หนี้คงค้าง
+        if (is_array ($requestData['customer_debt_payments'])){
+            for( $i=0; $i<count($requestData['customer_debt_payments']); $i++ ){
+                $customer_debt_payment = $requestData['customer_debt_payments'][$i];
+                $customer_debt_id = $requestData['customer_debt_ids'][$i];
+                $customer_debt = CustomerDebt::find($customer_debt_id);
+                if($customer_debt){
+                    //ADD UP
+                    //$customer_debt->total_payment = $customer_debt->total_payment + $customer_debt_payment;
+                    $customer_debt->total_debt = $customer_debt->total_debt - $customer_debt_payment;
+                    $customer_debt->save();
+                }
+            }
+        }
+        
 
         //INSERT BANK-ACCOUNT
         $requestData = $request->all();
@@ -139,7 +156,7 @@ class CustomerPaymentController extends Controller
                         'user_id' => Auth::id() ,
                     ]);
 
-                    //INSERT CHEQUE IF EXIST
+                    //INSERT CHEQUE IF EXISTสร
                     if( $requestData['transaction_code'][$i] == "deposite-cheque" ){
                                             
                     

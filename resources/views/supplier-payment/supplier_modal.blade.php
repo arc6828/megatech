@@ -31,7 +31,7 @@
 						<tbody>
 						@foreach($suppliers as $row)
 						@php
-							$total_debt = $row->Receives_on_debt->sum('total_debt');
+							$total_debt = $row->Receives_on_debt->sum('total_debt') + $row->xp_on_debt->sum('total_debt');
 							$total_debt_billing = $row->Receives_on_debt_billing->sum('total_debt');
 							
 						@endphp

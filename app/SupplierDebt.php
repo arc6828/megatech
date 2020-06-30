@@ -27,5 +27,7 @@ class SupplierDebt extends Model
      */
     protected $fillable = ['doc_no', 'date', 'supplier_id', 'discount', 'amount', 'vat_percent', 'vat', 'total_before_vat', 'total', 'tax_type_id', 'completed_at', 'tax_category', 'round', 'type_debt', 'debt_duration', 'user_id', 'role', 'reference', 'zone_id', 'cheque_id', 'payment_method'];
 
-    
+    public function User(){
+        return $this->belongsTo('App\User','user_id');
+    }
 }
