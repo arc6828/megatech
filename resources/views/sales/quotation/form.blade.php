@@ -125,7 +125,7 @@
       
     </div>
 
-    <div class="form-group form-inline">
+    <div class="form-group form-inline d-none">
     
       <label class="col-lg-2 d-none">เงื่อนไขการชำระเงิน (วัน)</label>
       <div class="col-lg-3 d-none">
@@ -134,7 +134,7 @@
       
       <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
       <div class="col-lg-3 d-none">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" disabled>
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm" >
 
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >

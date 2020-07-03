@@ -69,7 +69,7 @@ class CustomerPaymentController extends Controller
         $customer_id = request('customer_id',0);
         $customer = CustomerModel::find($customer_id);
         $invoices = null;
-        $debts = [];
+        $debts = null;
         if( request('filter')=="billing-only"){
             //วางบิลแล้วเท่านั้น 12
             $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();   
@@ -108,7 +108,7 @@ class CustomerPaymentController extends Controller
         $requestData = $request->except(['transaction_code','date','bank_account_id','amount','remark']);
         $requestData['doc_no'] = $this->getNewCode("BR");
         
-        CustomerPayment::create($requestData);
+        $customer_payment = CustomerPayment::create($requestData);
 
         //UPDATE INVOICE 
         if (is_array ($requestData['invoice_payments'])){
@@ -118,8 +118,9 @@ class CustomerPaymentController extends Controller
                 $invoice = InvoiceModel::find($invoice_id);
                 if($invoice){
                     //ADD UP
-                    //$invoice->total_payment = $invoice->total_payment + $invoice_payment;
+                    $invoice->total_payment = $invoice->total_payment + $invoice_payment;
                     $invoice->total_debt = $invoice->total_debt - $invoice_payment;
+                    $invoice->customer_payment_id = $customer_payment->id;
                     $invoice->save();
                 }
             }
@@ -132,8 +133,9 @@ class CustomerPaymentController extends Controller
                 $customer_debt = CustomerDebt::find($customer_debt_id);
                 if($customer_debt){
                     //ADD UP
-                    //$customer_debt->total_payment = $customer_debt->total_payment + $customer_debt_payment;
+                    $customer_debt->total_payment = $customer_debt->total_payment + $customer_debt_payment;
                     $customer_debt->total_debt = $customer_debt->total_debt - $customer_debt_payment;
+                    $customer_debt->customer_payment_id = $customer_payment->id;
                     $customer_debt->save();
                 }
             }

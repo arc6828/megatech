@@ -151,7 +151,7 @@
 
       <label class="col-lg-2 offset-lg-1">เขตการขาย</label>
       <div class="col-lg-3">
-        <select name="zone_id" id="zone_id" class="form-control form-control-sm" disabled>
+        <select name="zone_id" id="zone_id" class="form-control form-control-sm" >
 
           @foreach($table_zone as $row_zone)
           <option value="{{ $row_zone->zone_id }}" >

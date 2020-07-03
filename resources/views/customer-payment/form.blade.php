@@ -8,7 +8,7 @@
     $customer_name = $customer ? $customer->customer_code." ".$customer->company_name : '';
     $customer_billing_id = '';
     $customer_billing_doc_no = '';
-    $customer_billing_total = $invoices ? $invoices->sum('total_debt') : '';
+    $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( $debts ? $debts->sum('total_debt') : 0 );
     
 @endphp
 <div class="form-group {{ $errors->has('customer_id') ? 'has-error' : ''}}">

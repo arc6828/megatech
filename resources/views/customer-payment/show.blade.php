@@ -70,7 +70,7 @@
                                 <tbody>
                                     @foreach($customer_invoices as $row)
                                     <tr>
-                                        <td>{{ $row->customer_billing_detail->customer_billing->doc_no }}</td>
+                                        <td>{{ isset($row->customer_billing_detail->customer_billing) ? $row->customer_billing_detail->customer_billing->doc_no : ''}}</td>
                                         <td>
                                             <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
                                                 {{ $row->invoice_code }}
