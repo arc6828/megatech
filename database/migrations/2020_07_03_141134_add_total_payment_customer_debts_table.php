@@ -14,7 +14,7 @@ class AddTotalPaymentCustomerDebtsTable extends Migration
     public function up()
     {
         Schema::table('customer_debts', function (Blueprint $table) {
-            $table->double('total_payment',16,2)->nullable();
+            $table->double('total_payment',16,2)->nullable()->default(0);
             $table->integer('customer_payment_id')->nullable();
         });
     }

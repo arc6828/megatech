@@ -14,8 +14,8 @@ class AddTotalPaymentSupplierDebtsTable extends Migration
     public function up()
     {
         Schema::table('supplier_debts', function (Blueprint $table) {
-            $table->double('total_payment',16,2)->nullable();
-            $table->integer('customer_payment_id')->nullable();
+            $table->double('total_payment',16,2)->nullable()->default(0);
+            $table->integer('supplier_payment_id')->nullable();
             
         });
     }
