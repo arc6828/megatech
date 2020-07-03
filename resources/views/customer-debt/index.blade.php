@@ -45,9 +45,9 @@
                                     <tr>
                                         <td>{{ $item->doc_no }}</td>
                                         <td>{{ $item->date }}</td>
-                                        <td>{{ $item->customer_id }}</td>
-                                        <td>{{ $item->total }}</td>
-                                        <td>-</td>
+                                        <td>{{ isset($item->customer_id) ? $item->customer->company_name :'' }}</td>
+                                        <td>{{ number_format($item->total,2) }}</td>
+                                        <td>{{number_format($item->total,2)}}</td>
                                         <td>
                                             <a href="{{ url('/finance/customer-debt/' . $item->id) }}" title="View CustomerDebt"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/finance/customer-debt/' . $item->id . '/edit') }}" title="Edit CustomerDebt"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

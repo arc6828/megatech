@@ -30,4 +30,8 @@ class CustomerDebt extends Model
     public function User(){
         return $this->belongsTo('App\User','user_id');
     }
+
+    public function customer(){
+        return $this->belongsTo('App\CustomerModel','customer_id');
+    }
 }
