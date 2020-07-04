@@ -31,6 +31,10 @@ class BackuplogController extends Controller
 
         return view('backuplog.index', compact('backuplog'));
     }
+    
+    public function download($file_name)     {         
+        return response()->download(storage_path("app/backup/{$file_name}"));    
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -55,7 +59,7 @@ class BackuplogController extends Controller
         $requestData = $request->all();
                 if ($request->hasFile('filename')) {
             $requestData['filename'] = $request->file('filename')
-                ->store('uploads', 'public');
+                ->store('backup');
         }
 
         Backuplog::create($requestData);
@@ -105,7 +109,7 @@ class BackuplogController extends Controller
         $requestData = $request->all();
                 if ($request->hasFile('filename')) {
             $requestData['filename'] = $request->file('filename')
-                ->store('uploads', 'public');
+                ->store('backup');
         }
 
         $backuplog = Backuplog::findOrFail($id);

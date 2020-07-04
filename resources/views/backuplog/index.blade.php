@@ -39,7 +39,8 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->created_at }}</td>
-                                        <td>{{ $item->title }}</td><td>{{ $item->content }}</td><td>{{ $item->filename }}</td>
+                                        <td>{{ $item->title }}</td><td>{{ $item->content }}</td>
+                                        <td><a href="{{ url('backuplog/download/'.$item->filename ) }}">{{ $item->filename }}</a></td>
                                         <td>
                                             <a href="{{ url('/backuplog/' . $item->id) }}" title="View Backuplog"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/backuplog/' . $item->id . '/edit') }}" title="Edit Backuplog"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

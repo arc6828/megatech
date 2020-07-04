@@ -326,4 +326,6 @@ Route::middleware(['auth'])->group(function () {
 
 Auth::routes();
 Route::resource('comment', 'CommentController');
+Route::get('backuplog/download/{filename}','BackuplogController@download');
 Route::resource('backuplog', 'BackuplogController');
+
