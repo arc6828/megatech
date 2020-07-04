@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
         
         $filepath = storage_path()."/app/backup/".$filename;
 
-        $schedule->exec("mysqldump -u $user -p"."$pass $db > $filepath")
+        $schedule->exec("mysqldump \"--user $user\" \"--password=$pass\" $db > $filepath")
         //$schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$storage_path}\full_megatech.sql")
             ->daily()
             ->after(function () use($filename) {
