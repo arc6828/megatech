@@ -29,8 +29,8 @@ class Kernel extends ConsoleKernel
         $db     = \Config::get('database.connections.mysql.database');
         $user   = \Config::get('database.connections.mysql.username');
         $pass   = \Config::get('database.connections.mysql.password');
-        $storage_path = storage_path()."/app/backup";
-        $schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$storage_path}/`date +%F_%T`_full_megatech.sql")
+        $filepath = storage_path()."/app/backup/".date('Y-m-d-His')."_full_megatech.sql";
+        $schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$filepath}")
         //$schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$storage_path}\full_megatech.sql")
             ->everyMinute()
             ->runInBackground();
