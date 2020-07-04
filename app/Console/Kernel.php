@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Backuplog;
+
+use Illuminate\Support\Facades\Schema;
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -30,11 +33,13 @@ class Kernel extends ConsoleKernel
         $user   = \Config::get('database.connections.mysql.username');
         $pass   = \Config::get('database.connections.mysql.password');
         $filename = date('Y-m-d-His')."_full_megatech.sql";
-        /*Backuplog::create([
-            "title" => "DB Daily Backup",
-            "content" => "",
-            "filename" => $filename,
-        ]);*/
+        if (Schema::hasTable('backuplogs')) {
+            Backuplog::create([
+                "title" => "DB Daily Backup",
+                "content" => "",
+                "filename" => $filename,
+            ]);
+        }
         $filepath = storage_path()."/app/backup/".$filename;
 
         $schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$filepath}")
