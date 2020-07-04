@@ -46,9 +46,10 @@ class Kernel extends ConsoleKernel
             ->daily()
             ->after(function () use($filename) {
                 if (Schema::hasTable('backuplogs')) {
+                    $filesize = file_exists(storage_path('app/backup/'.$filename)) ? "" .(filesize(storage_path('app/backup/'.$filename)) / pow(1024, 2))." MB" : '';
                     Backuplog::create([
                         "title" => "DB Daily Backup",
-                        "content" => "",
+                        "content" => $filesize,
                         "filename" => $filename,
                     ]);
                 }
