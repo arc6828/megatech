@@ -39,7 +39,7 @@ class Kernel extends ConsoleKernel
         $schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$filepath}")
         //$schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$storage_path}\full_megatech.sql")
             ->daily()
-            ->after(function () {
+            ->after(function () use($filename) {
                 if (Schema::hasTable('backuplogs')) {
                     Backuplog::create([
                         "title" => "DB Daily Backup",
