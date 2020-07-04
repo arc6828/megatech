@@ -26,6 +26,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $db     = \Config::get('database.connections.mysql.database');
+        $user   = \Config::get('database.connections.mysql.username');
+        $pass   = \Config::get('database.connections.mysql.password');
+        $schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > `date +%F_%T`_full_megatech.sql")
+            ->everyTwoMinutes()
+            ->runInBackground();
     }
 
     /**
