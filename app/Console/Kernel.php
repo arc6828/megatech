@@ -29,15 +29,20 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $filename = date('Y-m-d-His')."_full_megatech.sql";
         $db     = \Config::get('database.connections.mysql.database');
         $user   = \Config::get('database.connections.mysql.username');
         $pass   = \Config::get('database.connections.mysql.password');
-        $filename = date('Y-m-d-His')."_full_megatech.sql";
         
-        $filepath = storage_path()."/app/backup/".$filename;
+        $cmd = sprintf(
+            'mysqldump -u %s -p%s %s > %s',
+            \Config::get('database.connections.mysql.username'),
+            \Config::get('database.connections.mysql.password'),
+            \Config::get('database.connections.mysql.database'),
+            storage_path('app/backup/'.$filename)
+        );
 
-        $schedule->exec("mysqldump \"--user $user\" \"--password=$pass\" $db > $filepath")
-        //$schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$storage_path}\full_megatech.sql")
+        $schedule->exec($cmd)
             ->daily()
             ->after(function () use($filename) {
                 if (Schema::hasTable('backuplogs')) {
@@ -48,7 +53,6 @@ class Kernel extends ConsoleKernel
                     ]);
                 }
             });
-            //->runInBackground();
     }
 
     /**
