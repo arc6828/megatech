@@ -326,3 +326,4 @@ Route::middleware(['auth'])->group(function () {
 
 Auth::routes();
 Route::resource('comment', 'CommentController');
+Route::resource('backuplog', 'BackuplogController');
