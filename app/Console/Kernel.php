@@ -33,19 +33,22 @@ class Kernel extends ConsoleKernel
         $user   = \Config::get('database.connections.mysql.username');
         $pass   = \Config::get('database.connections.mysql.password');
         $filename = date('Y-m-d-His')."_full_megatech.sql";
-        if (Schema::hasTable('backuplogs')) {
-            Backuplog::create([
-                "title" => "DB Daily Backup",
-                "content" => "",
-                "filename" => $filename,
-            ]);
-        }
+        
         $filepath = storage_path()."/app/backup/".$filename;
 
         $schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$filepath}")
         //$schedule->exec("mysqldump --user={$user} --password={$pass} {$db} > {$storage_path}\full_megatech.sql")
-            ->everyMinute()
-            ->runInBackground();
+            ->daily()
+            ->after(function () {
+                if (Schema::hasTable('backuplogs')) {
+                    Backuplog::create([
+                        "title" => "DB Daily Backup",
+                        "content" => "",
+                        "filename" => $filename,
+                    ]);
+                }
+            });
+            //->runInBackground();
     }
 
     /**
