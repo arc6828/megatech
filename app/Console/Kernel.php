@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
         $pass   = \Config::get('database.connections.mysql.password');
         
         $cmd = sprintf(
-            'mysqldump -u %s -p%s %s > %s',
+            'mysqldump -u %s -p%s %s > %s &&',
             \Config::get('database.connections.mysql.username'),
             \Config::get('database.connections.mysql.password'),
             \Config::get('database.connections.mysql.database'),
