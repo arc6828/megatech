@@ -17,10 +17,10 @@ class CustomerDebtController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
+        /*
         if (!empty($keyword)) {
+            
+            $keyword = $request->get('search');
             $customerdebt = CustomerDebt::where('doc_no', 'LIKE', "%$keyword%")
                 ->orWhere('date', 'LIKE', "%$keyword%")
                 ->orWhere('customer_id', 'LIKE', "%$keyword%")
@@ -46,6 +46,13 @@ class CustomerDebtController extends Controller
         } else {
             $customerdebt = CustomerDebt::latest()->paginate($perPage);
         }
+        */
+        
+        $perPage = 25;
+
+        $type_debt = $request->get('type_debt');
+
+        $customerdebt = CustomerDebt::where('type_debt',$type_debt)->latest()->paginate($perPage);
 
         return view('customer-debt.index', compact('customerdebt'));
     }

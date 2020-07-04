@@ -1,16 +1,16 @@
 @extends('layouts/argon-dashboard/theme')
-@section('title', request('debt_type') )
+@section('title', request('type_debt') )
 @section('content')
     <div class="container">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"> {{ request('debt_type') }} </div>
+                    <div class="card-header"> {{ request('type_debt') }} </div>
                     <div class="card-body">
                         <a href="{{ url('/finance') }}?tab=debtor-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                        
-                        <a href="{{ url('/finance/customer-debt/create') }}?debt_type={{ request('debt_type') }}" class="btn btn-success btn-sm" title="Add New CustomerDebt">
+                        <a href="{{ url('/finance/customer-debt/create') }}?type_debt={{ request('type_debt') }}" class="btn btn-success btn-sm" title="Add New CustomerDebt">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
@@ -34,21 +34,29 @@
                                         <th>เลขที่เอกสาร</th>
                                         <th>วันที่เอกสาร</th>
                                         <th>รหัสลูกค้า</th>
+                                        <th>ชื่อลูกค้า</th>
                                         <th>ยอดสุทธิ</th>
                                         <th>ยอดหนี้คงเหลือ</th>
                                         
-                                        <th>Actions</th>
+                                        <th class="d-none">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($customerdebt as $item)
                                     <tr>
-                                        <td>{{ $item->doc_no }}</td>
-                                        <td>{{ $item->date }}</td>
-                                        <td>{{ isset($item->customer_id) ? $item->customer->company_name :'' }}</td>
-                                        <td>{{ number_format($item->total,2) }}</td>
-                                        <td>{{number_format($item->total,2)}}</td>
                                         <td>
+                                            <a href="{{ url('/finance/customer-debt/' . $item->id) }}">{{ $item->doc_no }}</a>
+                                        </td>
+                                        <td>{{ $item->date }}</td>
+                                        <td>
+                                            {{ isset($item->customer_id) ? $item->customer->customer_code :'' }}
+                                        </td>
+                                        <td>
+                                            {{ isset($item->customer_id) ? $item->customer->company_name :'' }}
+                                        </td>
+                                        <td>{{ number_format($item->total,2) }}</td>
+                                        <td>{{number_format($item->total_debt,2)}}</td>
+                                        <td class="d-none">
                                             <a href="{{ url('/finance/customer-debt/' . $item->id) }}" title="View CustomerDebt"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/finance/customer-debt/' . $item->id . '/edit') }}" title="Edit CustomerDebt"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 

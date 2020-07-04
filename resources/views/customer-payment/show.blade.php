@@ -49,6 +49,7 @@
 
                 @php
                     $customer_invoices = $customerpayment->customer_invoices;
+                    $customer_debts = $customerpayment->customer_debts;
                 @endphp
                 <div class="card">
                     <div class="card-header">รายละเอียดใบรับชำระเงิน</div>
@@ -63,7 +64,7 @@
                                         <th class="text-center">วันที่</th>
                                         <th class="text-center">เอกสารอ้างอิง</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
-                                        <th class="text-center">ยอดรวม</th>
+                                        <th class="text-center">ยอดชำระรวม</th>
                                         <th class="text-center">รหัสพนักงาน</th>
                                     </tr>
                                 </thead>
@@ -72,7 +73,7 @@
                                     <tr>
                                         <td>{{ isset($row->customer_billing_detail->customer_billing) ? $row->customer_billing_detail->customer_billing->doc_no : ''}}</td>
                                         <td>
-                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
+                                            <a href="#">
                                                 {{ $row->invoice_code }}
                                             </a>
                                         </td>
@@ -80,13 +81,37 @@
                                         
                                         <td>{{ $row->external_reference_id }}</td>
                                         <td>{{ $row->total_debt }}</td>
-                                        <td>
+                                        <td>{{ $row->total_payment }}</td>
+                                        <td class="d-none">
                                             <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
                                             
                                             <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
                                         </td>
                                         <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
                                         <td>{{ $row->User->short_name }}</td>
+                                    </tr>
+                                    @endforeach
+
+                                    @foreach($customer_debts as $row)
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <a href="#">
+                                                {{ $row->doc_no }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $row->date }}</td>
+                                        
+                                        <td>{{ $row->external_reference_id }}</td>
+                                        <td>{{ $row->total_debt }}</td>
+                                        <td>{{ $row->total_payment }}</td>
+                                        <td class="d-none">
+                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
+                                            
+                                            <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
+                                        </td>
+                                        <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
+                                        <td>{{ isset($row->user_id) ? $row->User->short_name : '' }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

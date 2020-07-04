@@ -41,4 +41,9 @@ class CustomerPayment extends Model
     public function customer_invoices(){
         return $this->hasMany('App\Sales\InvoiceModel','customer_payment_id');
     }
+
+    
+    public function customer_debts(){
+        return $this->hasMany('App\CustomerDebt','customer_payment_id');
+    }
 }
