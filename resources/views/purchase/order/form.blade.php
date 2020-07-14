@@ -44,6 +44,7 @@
       <label class="col-lg-2 ">วันที่เวลา</label>
       <div class="col-lg-3">
         <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
+        @include('purchase/order/datetime_modal')
       </div>
     </div>
 

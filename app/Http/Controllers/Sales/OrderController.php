@@ -91,8 +91,15 @@ class OrderController extends Controller
     {
       //INSERT QUOTATION : VALIDATE OVERCREDIT
       $code = $this->getNewCode();
+      $datetime = date('Y-m-d H:i:s');
+      if(!empty($request->input('datetime_custom'))){
+        $datetime = $request->input('datetime_custom');
+        
+        $code = $this->getNewCodeCustom($datetime);
+      }
       $input = [
           'order_code' => $code,
+          'datetime' => $datetime,
           'external_reference_id' => $request->input('external_reference_id'),
           'customer_id' => $request->input('customer_id'),
           'debt_duration' => $request->input('debt_duration'),
@@ -178,6 +185,20 @@ class OrderController extends Controller
         $number = sprintf('%05d', $count);
         $order_code = "OE{$year}{$month}-{$number}";
         return $order_code;
+    }
+
+    public function getNewCodeCustom($dateString){
+      $number = OrderModel::select_count_by_current_month_custom($dateString);
+      $count =  $number + 1;
+      //$year = (date("Y") + 543) % 100;
+      $date=date_create($dateString);
+      //echo date_format($date,"Y/m/d H:i:s");
+
+      $year = date_format($date,"y");
+      $month = date_format($date,"m");
+      $number = sprintf('%05d', $count);
+      $order_code = "OE{$year}{$month}-{$number}";
+      return $order_code;
     }
 
     public function store2(Request $request,$code)

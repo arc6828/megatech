@@ -75,8 +75,16 @@ class OrderController extends Controller
     public function store(Request $request)
     {
       //INSERT QUOTATION
+      $code = $this->getNewCode();
+      $datetime = date('Y-m-d H:i:s');
+      if(!empty($request->input('datetime_custom'))){
+        $datetime = $request->input('datetime_custom');
+        
+        $code = $this->getNewCodeCustom($datetime);
+      }
       $input = [
-          'purchase_order_code' => $this->getNewCode(),
+          'purchase_order_code' => $code,
+          'datetime' => $datetime,
           'external_reference_doc' => $request->input('external_reference_doc'),
           'supplier_id' => $request->input('supplier_id'),
           'debt_duration' => $request->input('debt_duration'),
@@ -177,6 +185,20 @@ class OrderController extends Controller
         $number = sprintf('%05d', $count);
         $purchase_order_code = "PO{$year}{$month}-{$number}";
         return $purchase_order_code;
+    }
+
+    public function getNewCodeCustom($dateString){
+      $number = OrderModel::select_count_by_current_month_custom($dateString);
+      $count =  $number + 1;
+      //$year = (date("Y") + 543) % 100;
+      $date=date_create($dateString);
+      //echo date_format($date,"Y/m/d H:i:s");
+
+      $year = date_format($date,"y");
+      $month = date_format($date,"m");
+      $number = sprintf('%05d', $count);
+      $order_code = "PO{$year}{$month}-{$number}";
+      return $order_code;
     }
 
     /**

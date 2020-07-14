@@ -30,10 +30,12 @@
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
         <input name="order_code"	id="order_code" class="form-control form-control-sm"	disabled>
+        
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
         <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
+        @include('sales/order/datetime_modal')
       </div>
     </div>
     <div class="form-group form-inline">

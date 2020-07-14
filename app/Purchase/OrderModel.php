@@ -41,6 +41,13 @@ class OrderModel extends Model
         return DB::table('tb_purchase_order')
             ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
             ->count();
+  }
+  
+  public static function select_count_by_current_month_custom($date){
+    //SELECT count(*) FROM `tb_purchase_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
+    return DB::table('tb_purchase_order')
+        ->whereRaw("month(datetime) = month('".$date."') and year(datetime) = year('".$date."')", [])
+        ->count();
 	}
 
 	public static function select_by_id($id){
