@@ -17,6 +17,7 @@ use App\SalesStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use App\GaurdStock;
 
 use PDF;
 
@@ -85,7 +86,7 @@ class DeliveryTemporaryController extends Controller
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time'),
           'department_id' => $request->input('department_id'),
-          'sales_status_id' => $request->input('sales_status_id'),
+          'sales_status_id' => 10, //default is 10 สร้างใบส่งของชั่วคราว
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
@@ -111,6 +112,27 @@ class DeliveryTemporaryController extends Controller
         }
       }
       DeliveryTemporaryDetailModel::insert($list);
+
+      //GAURD STOCK      
+      foreach($list as $item){
+        $product = ProductModel::findOrFail($item['product_id']);
+        $gaurd_stock = GaurdStock::create([
+          "code" => $id,
+          "type" => "sales_dt_create",
+          "amount" => $item['amount'],
+          "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+          "pending_in" => $product->pending_in,
+          "pending_out" => $product->pending_out,
+          "product_id" => $product->product_id,
+        ]);
+        
+        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+        $product->pending_in = $gaurd_stock['pending_in'];
+        $product->pending_out = $gaurd_stock['pending_out'];
+        $product->save();
+
+      }
 
       return redirect("sales/delivery_temporary/{$id}/edit");
     }
@@ -159,6 +181,65 @@ class DeliveryTemporaryController extends Controller
       //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }
 
+    public function pdf($id)
+    {
+        //no show
+
+      $data = [
+          //QUOTATION
+          'table_delivery_temporary' => DeliveryTemporaryModel::select_by_id($id),
+          'table_customer' => CustomerModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_sales_status' => SalesStatusModel::select_by_category('delivery_temporary'),
+          //'table_sales_user' => UserModel::select_by_role('sales'),
+          'table_sales_user' => UserModel::select_all(),
+          'table_zone' => ZoneModel::select_all(),
+          'delivery_temporary_id'=> $id,
+          //QUOTATION Detail
+          'table_delivery_temporary_detail' => DeliveryTemporaryDetailModel::select_by_delivery_temporary_id($id),
+          'table_product' => ProductModel::select_all(),
+      ];
+      //return view('sales/delivery_temporary/edit',$data);
+
+      $pdf = PDF::loadView('sales/delivery_temporary/show',$data);
+      return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
+      //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
+    }
+
+    public function cancel($id)
+    {
+      //
+      $delivery_temporary = DeliveryTemporaryModel::findOrFail($id);
+      $delivery_temporary->sales_status_id = 11; //11 MEANS Cancelled
+      $delivery_temporary->save();      
+      $list = $delivery_temporary->delivery_temporary_details;
+      
+      //GAURD STOCK      
+      foreach($list as $item){
+        $product = ProductModel::findOrFail($item['product_id']);
+        $gaurd_stock = GaurdStock::create([
+          "code" => $id,
+          "type" => "sales_dt_cancel",
+          "amount" => $item['amount'],
+          "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+          "pending_in" => $product->pending_in,
+          "pending_out" => $product->pending_out,
+          "product_id" => $product->product_id,
+        ]);
+        
+        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+        $product->pending_in = $gaurd_stock['pending_in'];
+        $product->pending_out = $gaurd_stock['pending_out'];
+        $product->save();
+
+      }
+
+      return redirect("sales/delivery_temporary/{$id}/edit");
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -170,6 +251,7 @@ class DeliveryTemporaryController extends Controller
       $data = [
           //QUOTATION
           'table_delivery_temporary' => DeliveryTemporaryModel::select_by_id($id),
+          'delivery_temporary' => DeliveryTemporaryModel::findOrFail($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),

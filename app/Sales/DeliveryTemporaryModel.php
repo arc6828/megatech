@@ -12,6 +12,16 @@ class DeliveryTemporaryModel extends Model
   protected $primaryKey = 'delivery_temporary_id';
   protected $fillable = [];
 
+  public function sales_status()
+  {
+    return $this->belongsTo('App\SalesStatusModel','sales_status_id');
+  }
+
+  public function delivery_temporary_details()
+  {
+    return $this->hasMany('App\Sales\DeliveryTemporaryDetailModel','delivery_temporary_id');
+  }
+
   public static function select_all_by_user_id($user_id){
     return DB::table('tb_delivery_temporary')
         ->join('tb_customer', 'tb_delivery_temporary.customer_id', '=', 'tb_customer.customer_id')

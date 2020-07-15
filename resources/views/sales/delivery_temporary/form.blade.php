@@ -1,8 +1,36 @@
 <div class="card">
   <div class="card-body">
-    <a class="float-right btn-print d-none">
-      <i class="fas fa-print"></i>
-    </a>
+  <div class="row mb-4">
+      <div class="col-lg-4">
+        <a href="{{ url('/sales/delivery_temporary') }}" title="Back" class="btn btn-warning btn-sm" >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a>
+      </div>
+      @if(isset($table_delivery_temporary))
+      <div class="col-lg-4 text-center">
+        <div class="">
+        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->delivery_temporary_code, 'C128') }}" alt="barcode"   />
+        </div>
+        <div class="">
+        {{ $row->delivery_temporary_code }}
+        </div>        
+      </div>
+      <div class="col-lg-4 text-right">
+        @if($row->sales_status_id == 10)
+		  	<a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.querySelector('#form-submit').click(); console.log(5565);" title="ยกเลิก">
+		      <i class="fas fa-trash"></i> ยกเลิกใบส่งของชั่วคราว
+		    </a>
+        @endif
+		  	<a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/pdf" target="_blank"  title="พิมพ์">
+		      <i class="fas fa-print"></i> พิมพ์
+		    </a>
+        <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/edit" title="แก้ไข" >
+		      <i class="fas fa-edit"></i>  แก้ไข
+		    </a>
+
+      </div>
+      @endif
+    </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -126,14 +154,9 @@
 
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required >
+        <input type="text" name="sales_status_id"	id="sales_status_id"	 class="form-control form-control-sm form-control-line"   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status->sales_status_name  : ''  }}" readonly>
 
-          @foreach($table_sales_status as $row_sales_status)
-          <option value="{{ $row_sales_status->sales_status_id }}" >
-            {{	$row_sales_status->sales_status_name }}
-          </option>
-          @endforeach
-        </select>
+        
       </div>
     </div>
   </div>

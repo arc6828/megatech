@@ -8,17 +8,14 @@
 
 
 	@forelse($table_delivery_temporary as $row)
-		<div class="text-center mb-4">
-	      <div class="">
-	      	<a class="float-right btn-print" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}" target="_blank">
-		      <i class="fas fa-print"></i>
-		    </a>
-	        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->delivery_temporary_code, 'C128') }}" alt="barcode"   />
-	      </div>
-	      <div class="">
-	        {{ $row->delivery_temporary_code }}
-	      </div>
-	    </div>
+		<form class="d-none" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/cancel" id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to cancel?')">
+			{{ csrf_field() }}
+			{{ method_field('PATCH') }}
+
+			<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
+
+
+		</form>
 
 		<form class="" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}" id="form" method="POST">
 			{{ csrf_field() }}
@@ -52,7 +49,7 @@
 				document.querySelector("#tax_type_id").value = "{{ $row->tax_type_id }}";
 				document.querySelector("#delivery_time").value = "{{ $row->delivery_time }}";
 				document.querySelector("#department_id").value = "{{ $row->department_id }}";
-				document.querySelector("#sales_status_id").value = "{{ $row->sales_status_id }}";
+				//document.querySelector("#sales_status_id").value = "{{ $row->sales_status_id }}";
 				document.querySelector("#user_id").value = "{{ $row->user_id }}";
 				document.querySelector("#zone_id").value = "{{ $row->zone_id }}";
 				document.querySelector("#total").value = "{{ $row->total }}";
