@@ -147,8 +147,6 @@ class OrderController extends Controller
 
       OrderDetailModel::insert($list);
 
-      //PR
-      $this->store2($request,$code);
 
       //GAURD STOCK      
       foreach($list as $item){
@@ -170,6 +168,10 @@ class OrderController extends Controller
         $product->save();
 
       }
+
+      
+      //PR
+      $this->store2($request,$code);
 
 
 
