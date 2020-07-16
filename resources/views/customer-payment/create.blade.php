@@ -189,7 +189,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="amount[]" type="number" id="amount-{{$key}}" step="any" value="" >                            
+                                        <input class="form-control form-control-sm" name="amount[]" type="text" id="amount-{{$key}}" step="any" value="" >                            
                                     </td>
                                     <td>
                                         <input class="form-control form-control-sm" name="remark[]" type="text" id="remark" value="" >  

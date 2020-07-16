@@ -110,33 +110,41 @@ class CustomerPaymentController extends Controller
         
         $customer_payment = CustomerPayment::create($requestData);
 
-        //UPDATE INVOICE 
-        if (is_array ($requestData['invoice_payments'])){
-            for( $i=0; $i<count($requestData['invoice_payments']); $i++ ){
-                $invoice_payment = $requestData['invoice_payments'][$i];
-                $invoice_id = $requestData['invoice_ids'][$i];
-                $invoice = InvoiceModel::find($invoice_id);
-                if($invoice){
-                    //ADD UP
-                    $invoice->total_payment = $invoice->total_payment + $invoice_payment;
-                    $invoice->total_debt = $invoice->total_debt - $invoice_payment;
-                    $invoice->customer_payment_id = $customer_payment->id;
-                    $invoice->save();
+        
+        if(isset($requestData['invoice_payments']))
+        {
+            //UPDATE INVOICE 
+            if (is_array ($requestData['invoice_payments'])){
+                for( $i=0; $i<count($requestData['invoice_payments']); $i++ ){
+                    $invoice_payment = $requestData['invoice_payments'][$i];
+                    $invoice_id = $requestData['invoice_ids'][$i];
+                    $invoice = InvoiceModel::find($invoice_id);
+                    if($invoice){
+                        //ADD UP
+                        $invoice->total_payment = $invoice->total_payment + $invoice_payment;
+                        $invoice->total_debt = $invoice->total_debt - $invoice_payment;
+                        $invoice->customer_payment_id = $customer_payment->id;
+                        $invoice->save();
+                    }
                 }
             }
+
         }
-        //UPDATE customer_debt หนี้คงค้าง
-        if (is_array ($requestData['customer_debt_payments'])){
-            for( $i=0; $i<count($requestData['customer_debt_payments']); $i++ ){
-                $customer_debt_payment = $requestData['customer_debt_payments'][$i];
-                $customer_debt_id = $requestData['customer_debt_ids'][$i];
-                $customer_debt = CustomerDebt::find($customer_debt_id);
-                if($customer_debt){
-                    //ADD UP
-                    $customer_debt->total_payment = $customer_debt->total_payment + $customer_debt_payment;
-                    $customer_debt->total_debt = $customer_debt->total_debt - $customer_debt_payment;
-                    $customer_debt->customer_payment_id = $customer_payment->id;
-                    $customer_debt->save();
+        if(isset($requestData['customer_debt_payments']))
+        {
+            //UPDATE customer_debt หนี้คงค้าง
+            if (is_array ($requestData['customer_debt_payments'])){
+                for( $i=0; $i<count($requestData['customer_debt_payments']); $i++ ){
+                    $customer_debt_payment = $requestData['customer_debt_payments'][$i];
+                    $customer_debt_id = $requestData['customer_debt_ids'][$i];
+                    $customer_debt = CustomerDebt::find($customer_debt_id);
+                    if($customer_debt){
+                        //ADD UP
+                        $customer_debt->total_payment = $customer_debt->total_payment + $customer_debt_payment;
+                        $customer_debt->total_debt = $customer_debt->total_debt - $customer_debt_payment;
+                        $customer_debt->customer_payment_id = $customer_payment->id;
+                        $customer_debt->save();
+                    }
                 }
             }
         }
