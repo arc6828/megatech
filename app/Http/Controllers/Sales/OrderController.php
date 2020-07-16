@@ -249,8 +249,8 @@ class OrderController extends Controller
                           //100   -  (0 + 100) = 0 เงื่อนไข PR ก่อน OE
                           //0   -  (100 + 0) = -100 เงื่อนไข PR ก่อน OE
                           //100   -  (100 + 0) = 0 เงื่อนไข PR ก่อน OE
-          //$amount = $pending_sendig -
-          if( $hasX ){
+          $amount_order = $product->pending_out - ($product->amount_in_stock + $product->pending_in);
+          if( $hasX ||  $amount_order > 0){
             $list[] = [
                 "product_id" => $request->input('product_id_edit')[$i],
                 "amount" => $request->input('amount_edit')[$i],
