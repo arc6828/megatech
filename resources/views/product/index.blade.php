@@ -104,7 +104,7 @@
 					console.log(new Date(request.getResponseHeader('date')),request.getResponseHeader('date') );
 					$('#search_key').val(search_key);
 					var new_data = prepareDataSet(result1);
-					table.clear().draw();
+					table.clear();
 					table.rows.add(new_data); // Add new data
 					table.columns.adjust().draw(); // Redraw the DataTable
               	});
