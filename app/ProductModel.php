@@ -42,7 +42,7 @@ class ProductModel extends Model
             ->orWhere('item_code', 'like' , "%{$q}%" )
             ->orWhere('product_code', 'like' , "%{$q}%" )
             ->orderBy('updated_at','desc')
-            ->limit(20)
+            ->limit(10)
             ->get();
      }
     public static function select_by_id($id) {
