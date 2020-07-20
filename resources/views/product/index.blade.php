@@ -101,7 +101,7 @@
 				}).done(function(result1, textStatus, request){
 
 					//console.log(request.getAllResponseHeaders());
-					console.log(new Date(request.getResponseHeader('date')),request.getResponseHeader('date') );
+					//console.log(new Date(request.getResponseHeader('date')),request.getResponseHeader('date') );
 					$('#search_key').val(search_key);
 					var new_data = prepareDataSet(result1);
 					table.clear();
