@@ -26,6 +26,7 @@
 
 <div id="outer-form-container" style="display:none;">
     <script>
+      /*
         document.addEventListener('DOMContentLoaded', function(event) {
 
         $.ajax({
@@ -59,5 +60,6 @@
                 $('#exampleModal').modal('hide');
                 //console.log("element : ",element);
         };
+        */
     </script>
 </div>

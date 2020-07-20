@@ -26,8 +26,9 @@
 
 <div id="outer-form-container" style="display:none;">
     <script>
+        /*
         document.addEventListener('DOMContentLoaded', function(event) {
-
+        
         $.ajax({
                 url: "{{ url('/') }}/api/account",
                 type: "GET",
@@ -59,5 +60,6 @@
                 $('#exampleModal').modal('hide');
                 //console.log("element : ",element);
         };
+        /*
     </script>
 </div>

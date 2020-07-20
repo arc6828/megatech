@@ -44,14 +44,14 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        $table_account = AccountModel::select_all();
+        //$table_account = AccountModel::select_all();
         $table_user = UserModel::select_all();
         $table_zone = SupplierModel::select_zone();
         $table_delivery_type = SupplierModel::select_delivery_type();
         $table_location = SupplierModel::select_location_type();
         $table_supplier_type = SupplierModel::select_supplier_type();
         $data = [
-            'table_account'=> $table_account,
+            //'table_account'=> $table_account,
             'table_user' => $table_user,
             'table_zone' => $table_zone,
             'table_delivery_type' => $table_delivery_type,
@@ -135,7 +135,7 @@ class SupplierController extends Controller
      */
     public function edit($id)
     {
-        $table_account = AccountModel::select_all();
+        //$table_account = AccountModel::select_all();
         $table_user = UserModel::select_all();
         $table_zone = SupplierModel::select_zone();
         $table_delivery_type = SupplierModel::select_delivery_type();
@@ -146,7 +146,7 @@ class SupplierController extends Controller
         $data = [
             'table_supplier' => $table_supplier,
             'table_user' => $table_user,
-            'table_account' => $table_account,
+            //'table_account' => $table_account,
             'table_zone' => $table_zone,
             'table_supplier_type' => $table_supplier_type,
             'table_location' => $table_location,

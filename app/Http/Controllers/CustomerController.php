@@ -44,14 +44,14 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $table_account = AccountModel::select_all();
+        //$table_account = AccountModel::select_all();
         $table_user = UserModel::select_all();
         $table_zone = CustomerModel::select_zone();
         $table_delivery_type = CustomerModel::select_delivery_type();
         $table_location = CustomerModel::select_location_type();
         $table_customer_type = CustomerModel::select_customer_type();
         $data = [
-            'table_account'=> $table_account,
+            //'table_account'=> $table_account,
             'table_user' => $table_user,
             'table_zone' => $table_zone,
             'table_delivery_type' => $table_delivery_type,
@@ -135,7 +135,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $table_account = AccountModel::select_all();
+        //$table_account = AccountModel::select_all();
         $table_user = UserModel::select_all();
         $table_zone = CustomerModel::select_zone();
         $table_delivery_type = CustomerModel::select_delivery_type();
@@ -146,7 +146,7 @@ class CustomerController extends Controller
         $data = [
             'table_customer' => $table_customer,
             'table_user' => $table_user,
-            'table_account' => $table_account,
+            //'table_account' => $table_account,
             'table_zone' => $table_zone,
             'table_customer_type' => $table_customer_type,
             'table_location' => $table_location,
