@@ -93,19 +93,21 @@
           table.on( 'search.dt', function () {
             var search_key = table.search();
             if(search_key != $('#search_key').val() ){
-              console.log("Hello",table.search() );
-              $.ajax({
-        					url: "{{ url('/') }}/api/product?q="+search_key ,
-        					type: "GET",
-        					dataType : "json",
-        			}).done(function(result1){
-        					//console.log(dataSet);
-                  $('#search_key').val(search_key);
-                  var new_data = prepareDataSet(result1);
-                  table.clear().draw();
-                  table.rows.add(new_data); // Add new data
-                  table.columns.adjust().draw(); // Redraw the DataTable
-              });
+				console.log("Hello",table.search() );
+				$.ajax({
+					url: "{{ url('/') }}/api/product?q="+search_key ,
+					type: "GET",
+					dataType : "json",
+				}).done(function(result1, textStatus, request){
+
+					//console.log(request.getAllResponseHeaders());
+					console.log(new Date(request.getResponseHeader('date')),request.getResponseHeader('date') );
+					$('#search_key').val(search_key);
+					var new_data = prepareDataSet(result1);
+					table.clear().draw();
+					table.rows.add(new_data); // Add new data
+					table.columns.adjust().draw(); // Redraw the DataTable
+              	});
             }
           } ); //END SEARCH
 				}); //END AJAX
