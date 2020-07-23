@@ -32,7 +32,8 @@ class ProductModel extends Model
     }
     public static function select_all(){
         return DB::table('tb_product')
-            ->limit(20)
+            ->orderBy('amount_in_stock','desc')
+            ->limit(100)
             ->get();
 	}
 
