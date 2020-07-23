@@ -103,7 +103,7 @@
                                         <td>{{ $row->external_reference_id }}</td>
                                         <td>{{ $row->total_debt }}</td>
                                         <td>
-                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}" class="invoice_payments">
+                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
                                             
                                             <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
                                         </td>
@@ -124,7 +124,7 @@
                                         <td> </td>
                                         <td>{{ $row->total_debt }}</td>
                                         <td>
-                                            <input style="width:100px;" name="customer_debt_payments[]" value="{{ $row->total_debt }}" class="invoice_payments">
+                                            <input style="width:100px;" name="customer_debt_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
                                             
                                             <input type="hidden" name="customer_debt_ids[]" value="{{ $row->id }}">
                                         </td>
@@ -179,7 +179,7 @@
                                         <input class="form-control form-control-sm" name="" type="text" id="" value="{{ $value }}" readonly>  
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="date[]" type="date" id="date" value="">    
+                                        <input class="form-control form-control-sm payments-date" name="date[]" type="date" id="date-{{ $key }}" value="">    
                                     </td>
                                     <td>
                                         <select class="form-control form-control-sm" name="bank_account_id[]" id="bank_account_id" >
@@ -189,7 +189,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="form-control form-control-sm" name="amount[]" type="text" id="amount-{{$key}}" step="any" value="" >                            
+                                        <input class="form-control form-control-sm payments-amount" name="amount[]" type="text" id="amount-{{$key}}" step="any" value="" key="{{ $key }}">                            
                                     </td>
                                     <td>
                                         <input class="form-control form-control-sm" name="remark[]" type="text" id="remark" value="" >  
@@ -210,4 +210,50 @@
         
         </form>
     </div>
+
+    <script>
+    $(function(){
+        $(".payments").change(function(){
+            console.log("Payment Change !!!");
+            var sum = 0;
+            $('.payments').each(function() {
+                sum += Number($(this).val());
+            });
+            $("#payment_total").val(sum);
+        });
+        $(".payments-amount").change(function(){
+            //SET TODAY DATE IN THE SAME ROW IF AMOUNT EXIST
+            let amount = $(this).val();
+            let key = $(this).attr('key');
+            if( amount != ""){
+                $("#date-"+key).val(moment().format("YYYY-MM-DD"));
+            }else{
+                $("#date-"+key).val("");
+            }
+            
+            
+            //IF FEE CHANGED, SET REMAINING AMOUNT and DATE IN NEXT ROW
+            switch(key){
+                case "discount-fee" : 
+                
+                    let total_payment = $("#payment_total").val();
+                    let remaining_amount = Number(total_payment) - Number(amount);
+                    if( $("#amount-cash-transfer-in").val() == ""){
+                        $("#amount-cash-transfer-in").val(remaining_amount);                    
+                        $("#date-cash-transfer-in").val(moment().format("YYYY-MM-DD"));
+                    }
+
+                    break;
+                case "cash-transfer-in" : 
+                    break;
+                case "deposite-cheque" : 
+                    break;
+                case "credit" : 
+                    break;
+            }
+
+            
+        });
+    })
+    </script>
 @endsection

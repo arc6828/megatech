@@ -105,12 +105,12 @@
     <div class="col-lg-3"></div>
     <div class="form-group col-lg-3 {{ $errors->has('debt_total') ? 'has-error' : ''}}">
         <label for="debt_total" class="control-label">{{ 'ยอดรวมหนี้' }}</label>
-        <input class="form-control form-control-sm" name="debt_total" type="number" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}" >
+        <input class="form-control form-control-sm" name="debt_total" type="text" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}"  readonly>
         {!! $errors->first('debt_total', '<p class="help-block">:message</p>') !!}
     </div>
     <div class="form-group col-lg-3 {{ $errors->has('payment_total') ? 'has-error' : ''}}">
         <label for="payment_total" class="control-label">{{ 'ยอดรวมรับชำระ' }}</label>
-        <input class="form-control form-control-sm" name="payment_total" type="number" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" >
+        <input class="form-control form-control-sm" name="payment_total" type="text" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" readonly>
         {!! $errors->first('payment_total', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
