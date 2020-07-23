@@ -72,7 +72,8 @@ class CustomerPaymentController extends Controller
         $debts = null;
         if( request('filter')=="billing-only"){
             //วางบิลแล้วเท่านั้น 12
-            $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();   
+            $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();  
+            $debts = []; 
         }else{
             //ที่ยอดมีหนี้ทั้งหมด
             $invoices = InvoiceModel::where('total_debt','>',0)->where('customer_id',$customer_id)->get();
