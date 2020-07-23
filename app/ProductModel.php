@@ -41,7 +41,7 @@ class ProductModel extends Model
         ->where('product_name', 'like' , "%{$q}%" )
         ->orWhere('item_code', 'like' , "%{$q}%" )
         ->orWhere('product_code', 'like' , "%{$q}%" )
-        ->orderBy('updated_at','desc');
+        ->orderBy('amount_in_stock','desc');
         if($query->count() < 500){
             return $query
             ->get();
