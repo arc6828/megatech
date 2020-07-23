@@ -37,10 +37,8 @@
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
-						<th class="text-center d-none">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
 						<th class="text-center">สถานะ</th>
-						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -53,30 +51,13 @@
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td class="d-none">{{ number_format($row->total,2) }}</td>
 						<td>{{ $row->short_name }}</td>
 						
-						<td class="d-none">
-							
-							@foreach($row->RequisitionDetail as $rd)
-								{{ $rd->RequisitionDetailStatus->purchase_requisition_detail_status_name}} / 
-								
-
-
-							
-								
-							
-							@endforeach
-							
-						</td>
+						
 						<td>
 							อนุมัติ / ไม่ / บางส่วน
 						</td>
-						<td  class="d-none">>
-							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_requisition_id }} )" class="text-danger">
-								<span class="fa fa-trash"></span>
-							</a>
-						</td>
+						
 					</tr>
 					@endforeach
 				</tbody>
@@ -86,7 +67,10 @@
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				console.log("555");
-				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+				$('#table').DataTable({
+					"order": [[ 0, "desc" ]]
+				});
+				
 		});
 
 		</script>

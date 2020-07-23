@@ -275,7 +275,7 @@ class OrderController extends Controller
 
       //IF NO ITEM DELETE PR BY id
       if(count($list) == 0){
-        RequisitionDetailModel::destroy($id);
+        RequisitionModel::destroy($id);
       }
 
       //return redirect("purchase/purchase_requisition/{$id}/edit");
