@@ -37,13 +37,21 @@ class ProductModel extends Model
 	}
 
     public static function select_by_keyword($q){
-        return DB::table('tb_product')
-            ->where('product_name', 'like' , "%{$q}%" )
-            ->orWhere('item_code', 'like' , "%{$q}%" )
-            ->orWhere('product_code', 'like' , "%{$q}%" )
-            ->orderBy('updated_at','desc')
-            ->limit(10)
+        $query = DB::table('tb_product')
+        ->where('product_name', 'like' , "%{$q}%" )
+        ->orWhere('item_code', 'like' , "%{$q}%" )
+        ->orWhere('product_code', 'like' , "%{$q}%" )
+        ->orderBy('updated_at','desc');
+        if($query->count() < 500){
+            return $query
             ->get();
+        }else{
+            return $query
+            ->limit(500)
+            ->get();
+
+        }
+        
      }
     public static function select_by_id($id) {
         return DB::table('tb_product')

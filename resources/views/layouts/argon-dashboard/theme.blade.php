@@ -61,6 +61,9 @@
 </head>
 
 <body>
+  <!-- Core -->
+  <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Sidenav -->
   @include('layouts/argon-dashboard/sidebar')
 
@@ -171,9 +174,7 @@
     </div>
   </div>
   <!-- Argon Scripts -->
-  <!-- Core -->
-  <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  
   <!-- Optional JS -->
   <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/chart.js/dist/Chart.min.js"></script>
   <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/chart.js/dist/Chart.extension.js"></script>

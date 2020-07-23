@@ -88,6 +88,9 @@
 							{ title: "#ค้างรับ" },
 							//{ title: "action" },
 						],
+						"scrollY": "250px",
+						"scrollCollapse": true,
+						"paging":         false
 					}); // END DATATABLE
 
           table.on( 'search.dt', function () {
