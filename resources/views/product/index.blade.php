@@ -91,7 +91,7 @@
 						"scrollY": "250px",
 						"scrollCollapse": true,
 						"paging":         false,
-						"order": [[ 5, "desc" ]]
+						"order": [[ 4, "desc" ]]
 					}); // END DATATABLE
 
           table.on( 'search.dt', function () {
