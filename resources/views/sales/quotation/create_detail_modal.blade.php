@@ -61,6 +61,7 @@
 							{ title: "#คงเหลือ - ค้างส่ง" },
 							{ title: "action" },
 						],
+						"order": [[ 4, "desc" ]],
 					}); // END DATATABLE
           table.on( 'search.dt', function () {
             var search_key = table.search();

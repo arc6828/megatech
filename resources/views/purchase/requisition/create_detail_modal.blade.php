@@ -55,6 +55,7 @@
 							{ title: "จำนวน" },
 							{ title: "action" },
 						],
+						"order": [[ 2, "desc" ]],
 					}); // END DATATABLE
           table.on( 'search.dt', function () {
             var search_key = table.search();
