@@ -64,15 +64,16 @@ class Kernel extends ConsoleKernel
             try {
                 DB::connection()->getPdo();
                 echo "Database connected successfully!!!\n"; 
-                Backuplog::create([
+                /*Backuplog::create([
                     "title" => "Mysql still Active",
                     "content" => "",
                     "filename" => "",
-                ]);
+                ]);*/
             } catch (\Exception $e) {
                 echo "die\n";
                 //COMMAND TO RESTART
-                $result = shell_exec("service mysql restart");
+                $cmd = "sh ".storage_path('app/remysql.sh');
+                $result = shell_exec($cmd);
                 if($result == ""){
                     try {
                         DB::connection()->getPdo();
