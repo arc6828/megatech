@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Backuplog;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Schema;
 
@@ -32,8 +33,10 @@ class Kernel extends ConsoleKernel
         $filename = date('Y-m-d-His')."_full_megatech.sql";
         $db     = \Config::get('database.connections.mysql.database');
         $user   = \Config::get('database.connections.mysql.username');
-        $pass   = \Config::get('database.connections.mysql.password');
+        $pass   = \Config::get('database.connections.mysql.password');        
         
+
+        //DAILY BACKUP
         $cmd = sprintf(
             'mysqldump -u %s -p%s %s > %s &&',
             \Config::get('database.connections.mysql.username'),
@@ -41,7 +44,6 @@ class Kernel extends ConsoleKernel
             \Config::get('database.connections.mysql.database'),
             storage_path('app/backup/'.$filename)
         );
-
         $schedule->exec($cmd)
             ->daily()
             ->after(function () use($filename) {
@@ -54,6 +56,47 @@ class Kernel extends ConsoleKernel
                     ]);
                 }
             });
+
+        //RESTART MYSQL
+        $cmd = sprintf('service mysql restart');
+        $schedule->call(function (){
+            // Test database connection
+            try {
+                DB::connection()->getPdo();
+                echo "Database connected successfully!!!"; 
+            } catch (\Exception $e) {
+                echo "die";
+                //COMMAND TO RESTART
+                $schedule->exec("service mysql restart")
+                    ->daily()
+                    ->after(function () {
+                        try {
+                            DB::connection()->getPdo();
+                            echo "Database connected successfully!!!"; 
+                        } catch (\Exception $e) {
+                            echo "die again";                            
+                        }                        
+                    });
+
+
+                /*if (Schema::hasTable('backuplogs')) {                    
+                    Backuplog::create([
+                        "title" => "Mysql Restart",
+                        "content" => $filesize,
+                        "filename" => $filename,
+                    ]);
+                }*/
+            }
+
+                /*if (Schema::hasTable('backuplogs')) {                    
+                    Backuplog::create([
+                        "title" => "Mysql Restart",
+                        "content" => $filesize,
+                        "filename" => $filename,
+                    ]);
+                }*/
+        })
+        ->everyMinute();            
     }
 
     /**
