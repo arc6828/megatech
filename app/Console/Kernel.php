@@ -57,41 +57,7 @@ class Kernel extends ConsoleKernel
                 }
             });
 
-        //RESTART MYSQL
-        $cmd = sprintf('service mysql restart');
-        $schedule->call(function (){
-            // Test database connection
-            try {
-                DB::connection()->getPdo();
-                echo "Database connected successfully!!!\n"; 
-                /*Backuplog::create([
-                    "title" => "Mysql still Active",
-                    "content" => "",
-                    "filename" => "",
-                ]);*/
-            } catch (\Exception $e) {
-                echo "die\n";
-                //COMMAND TO RESTART
-                $cmd = "sh ".storage_path('app/remysql.sh');
-                $result = shell_exec($cmd);
-                if($result == ""){
-                    try {
-                        DB::connection()->getPdo();
-                        echo "Database connected successfully!!!\n"; 
-                        if (Schema::hasTable('backuplogs')) {                    
-                            Backuplog::create([
-                                "title" => "Mysql Restart",
-                                "content" => "",
-                                "filename" => "",
-                            ]);
-                        }
-                    } catch (\Exception $e) {
-                        echo "die again\n";                            
-                    } 
-                }
-            }
-        })
-        ->everyMinute();            
+        
     }
 
     /**
