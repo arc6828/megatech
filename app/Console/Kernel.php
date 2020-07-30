@@ -75,8 +75,8 @@ class Kernel extends ConsoleKernel
                         if (Schema::hasTable('backuplogs')) {                    
                             Backuplog::create([
                                 "title" => "Mysql Restart",
-                                "content" => $filesize,
-                                "filename" => $filename,
+                                "content" => "",
+                                "filename" => "",
                             ]);
                         }
                     } catch (\Exception $e) {
