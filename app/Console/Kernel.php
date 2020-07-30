@@ -63,20 +63,20 @@ class Kernel extends ConsoleKernel
             // Test database connection
             try {
                 DB::connection()->getPdo();
-                echo "Database connected successfully!!!"; 
+                echo "Database connected successfully!!!\n"; 
             } catch (\Exception $e) {
-                echo "die";
+                echo "die\n";
                 //COMMAND TO RESTART
-                $schedule->exec("service mysql restart")
-                    ->daily()
-                    ->after(function () {
-                        try {
-                            DB::connection()->getPdo();
-                            echo "Database connected successfully!!!"; 
-                        } catch (\Exception $e) {
-                            echo "die again";                            
-                        }                        
-                    });
+                $result = shell_exec("service mysql restart");
+                if($result == ""){
+                    try {
+                        DB::connection()->getPdo();
+                        echo "Database connected successfully!!!"; 
+                    } catch (\Exception $e) {
+                        echo "die again";                            
+                    } 
+                }
+                
 
 
                 /*if (Schema::hasTable('backuplogs')) {                    
