@@ -72,29 +72,18 @@ class Kernel extends ConsoleKernel
                     try {
                         DB::connection()->getPdo();
                         echo "Database connected successfully!!!\n"; 
+                        if (Schema::hasTable('backuplogs')) {                    
+                            Backuplog::create([
+                                "title" => "Mysql Restart",
+                                "content" => $filesize,
+                                "filename" => $filename,
+                            ]);
+                        }
                     } catch (\Exception $e) {
                         echo "die again\n";                            
                     } 
                 }
-                
-
-
-                /*if (Schema::hasTable('backuplogs')) {                    
-                    Backuplog::create([
-                        "title" => "Mysql Restart",
-                        "content" => $filesize,
-                        "filename" => $filename,
-                    ]);
-                }*/
             }
-
-                /*if (Schema::hasTable('backuplogs')) {                    
-                    Backuplog::create([
-                        "title" => "Mysql Restart",
-                        "content" => $filesize,
-                        "filename" => $filename,
-                    ]);
-                }*/
         })
         ->everyMinute();            
     }
