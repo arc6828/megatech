@@ -71,9 +71,9 @@ class Kernel extends ConsoleKernel
                 if($result == ""){
                     try {
                         DB::connection()->getPdo();
-                        echo "Database connected successfully!!!"; 
+                        echo "Database connected successfully!!!\n"; 
                     } catch (\Exception $e) {
-                        echo "die again";                            
+                        echo "die again\n";                            
                     } 
                 }
                 
