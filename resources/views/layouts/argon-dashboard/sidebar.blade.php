@@ -7,7 +7,7 @@
     <!-- Brand -->
     <a class="navbar-brand pt-0" href="{{ url('/') }}">
       <img src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/img/brand/blue.png" class="navbar-brand-img d-none" alt="...">
-      <img src="{{ url('/') }}/images/megatech-logo-small.jpg" alt="homepage" class="navbar-brand-img "  />
+      <img src="{{ url('/') }}/images/{{ config('app.name', 'Laravel') }}-logo-small.jpg" alt="homepage" class="navbar-brand-img "  />
     </a>
     <!-- User -->
     <ul class="nav align-items-center d-md-none">
