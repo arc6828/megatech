@@ -28,7 +28,7 @@
 					<tr>
 						<th class="text-center">รหัส</th>
 						<th class="text-center">ชื่อบริษัท</th>
-						<th class="text-center">อีเมล์</th>
+						<!--th class="text-center">อีเมล์</th-->
 						<th class="text-center">เบอร์โทรศัพท์</th>
 						<th class="text-center">ยอดหนึ้ขณะนี้</th>
 						<!--th class="text-center ">วางบิล</th>
@@ -43,7 +43,7 @@
 				<tr>
 					<td><a href="{{ url('/') }}/customer/{{ $row->customer_id }}/edit">{{ $row->customer_code }}</a></td>
 					<td>{{ $row->company_name }}</td>
-					<td>{{ $row->email }}</td>
+					<!--td>{{ $row->email }}</td-->
 					<td>{{ $row->telephone }}</td>
 					<td>{{ number_format($total_debt,2) }}</td>
 					<!--td class=" ">
