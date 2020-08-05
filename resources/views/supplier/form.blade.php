@@ -74,19 +74,23 @@
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <input name="province"  id="province" class="form-control form-control-sm" value="" onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly>
+        <select class="form-control form-control-sm" name="province"  id="province" onchange="showAmphoes('address')"></select>
+        
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
-        <input name="district"  id="district" class="form-control form-control-sm  "  onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly >
+        <select class="form-control form-control-sm"  name="district"  id="district"  onchange="showDistricts('address')"></select>
+        
       </div>
       <div class="form-group col-lg-2">
         <label>ตำบล</label>
-        <input name="sub_district"  id="sub_district" class="form-control form-control-sm  "  onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly >
+        <select class="form-control form-control-sm"  name="sub_district" id="sub_district" onchange="showZipcode('address')"></select>
+        
       </div>
       <div class="form-group col-lg-2">
         <label  >รหัสไปรษณีย์</label>
-        <input name="zipcode"  id="zipcode"   class="form-control form-control-sm  "  onfocus="$('#type_address').val(true); $('#btn-district').click();" readonly>
+        <input class="form-control form-control-sm"  name="zipcode"  id="zipcode" placeholder="รหัสไปรษณีย์" />
+        
       </div>
     </div>
 
@@ -119,22 +123,26 @@
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <input name="delivery_province" id="delivery_province"  class="form-control form-control-sm  "   onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
+        <select class="form-control form-control-sm" name="delivery_province"  id="delivery_province" onchange="showAmphoes('delivery_address')"></select>
+        
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
-        <input name="delivery_district" id="delivery_district"  class="form-control form-control-sm  "  onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
+        <select class="form-control form-control-sm"  name="delivery_district"  id="delivery_district"  onchange="showDistricts('delivery_address')"></select>
+        
       </div>
       <div class="form-group col-lg-2">
         <label>ตำบล</label>
-        <input name="delivery_sub_district" id="delivery_sub_district"  class="form-control form-control-sm  "  onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
+        <select class="form-control form-control-sm"  name="delivery_sub_district" id="delivery_sub_district" onchange="showZipcode('delivery_address')"></select>
+        
       </div>
       <div class="form-group col-lg-2">
         <label  >รหัสไปรษณีย์</label>
-        <input name="delivery_zipcode" id="delivery_zipcode"  class="form-control form-control-sm  "  onfocus="$('#type_address').val(false); $('#btn-district').click();" readonly>
+        <input class="form-control form-control-sm"  name="delivery_zipcode"  id="delivery_zipcode" placeholder="รหัสไปรษณีย์" />
+        
       </div>
     </div>
-    @include('supplier/district_modal')
+    @include('supplier/district_script')
 
     <div class="row">
       <div class="form-group col-lg-3  d-none">
@@ -193,10 +201,11 @@
 
 
     
-    
+    @if(isset($supplier))
     <div class="text-center">
       <a href="{{ url('full-calendar') }}?supplier_id={{$supplier->supplier_id}}" class="btn btn-warning btn-sm">ดูปฏิทินวางบิลและรับเช็ค</a>
     </div>
+    @endif
   </div>
 </div>
 
@@ -225,7 +234,7 @@
       </div>
       
     </div>
-    
+    @if(isset($checklist))
     <div class="row">      
       <div class="form-group col-lg-3 {{ $errors->has('billing_invoice') ? 'has-error' : ''}}">
           <label for="billing_invoice" class="control-label">
@@ -276,12 +285,13 @@
           {!! $errors->first('billing_reference', '<p class="help-block">:message</p>') !!}
       </div>
     </div>
+    @endif
 
-
-
+    @if(isset($supplier))
     <div class="text-center">
       <a href="{{ url('full-calendar') }}?supplier_id={{$supplier->supplier_id}}" class="btn btn-warning btn-sm">ดูปฏิทินวางบิลและรับเช็ค</a>
     </div>
+    @endif
 
   </div>
 </div>
@@ -300,6 +310,7 @@
         <input name="remark_cheque" id="remark_cheque" class="form-control form-control-sm  "  >
       </div>
     </div>
+    @if(isset($checklist))
     <div class="row">      
       <div class="form-group col-lg-3 {{ $errors->has('billing_invoice') ? 'has-error' : ''}}">
           <label for="cheque_billing" class="control-label">
@@ -330,11 +341,12 @@
       
       
     </div>
+    @endif
   </div>
 </div>
-
-@include('supplier/form-upload')
-
+@if(isset($supplier))
+  @include('supplier/form-upload')
+@endif
 
 <div>
   <div class="form-group col-lg-3 d-none">

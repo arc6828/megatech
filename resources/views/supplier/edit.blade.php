@@ -49,15 +49,15 @@
       $("#telephone").val("{{ $row->telephone }}");
       $("#fax").val("{{ $row->fax }}");
       $("#address").val("{{ $row->address }} {{ $row->address2 }}");
-      $("#province").val("{{ $row->province }}");
+      /*$("#province").val("{{ $row->province }}");
       $("#district").val("{{ $row->district }}");
       $("#sub_district").val("{{ $row->sub_district }}");
-      $("#zipcode").val("{{ $row->zipcode }}");
+      $("#zipcode").val("{{ $row->zipcode }}");*/
       $("#delivery_address").val("{{ $row->delivery_address }}  {{ $row->delivery_address2 }}");
-      $("#delivery_province").val("{{ $row->delivery_province }}");
+      /*$("#delivery_province").val("{{ $row->delivery_province }}");
       $("#delivery_district").val("{{ $row->delivery_district }}");
       $("#delivery_sub_district").val("{{ $row->delivery_sub_district }}");
-      $("#delivery_zipcode").val("{{ $row->delivery_zipcode }}");
+      $("#delivery_zipcode").val("{{ $row->delivery_zipcode }}");*/
       $("#zone_id").val("{{ $row->zone_id }}");
       $("#delivery_type_id").val("{{ $row->delivery_type_id }}");
       $("#remark").val("{{ $row->remark }}");
