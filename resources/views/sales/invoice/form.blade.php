@@ -41,8 +41,8 @@
     @if(isset($invoice))
     <div class="form-group form-inline">
 
-      <label class="col-lg-2 offset-lg-1 d-none">PO ลูกค้า</label>
-      <div class="col-lg-3 d-none">
+      <label class="col-lg-2 offset-lg-1">PO ลูกค้า</label>
+      <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	value="{{ isset($invoice) ? $invoice->order->external_reference_id :'' }}" required>
       </div>
     </div>
