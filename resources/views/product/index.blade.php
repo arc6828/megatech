@@ -79,8 +79,9 @@
 						"deferRender" : true,
             //"pageLength": 10,
 						"columns": [
+							{ title: "ลำดับ" },
 							{ title: "รหัสสินค้า" },
-							{ title: "barcode" },
+							//{ title: "barcode" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "ราคาขาย" },
 							{ title: "#ในคลัง" },
@@ -124,10 +125,11 @@
         var price = element.promotion_price? element.promotion_price : element.normal_price;
 		var extension = "<span class='text-danger'>"+(element.stock?"("+element.stock+")":"")+"</span>";
         var row = [
+			element.product_id,
           "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
-          element.BARCODE,
-          element.product_name+" / "+element.grade + " " +extension,
-          price,
+          //element.BARCODE,
+          element.product_name, //+" / "+element.grade + " " +extension,
+          number_format(price,2),
           element.amount_in_stock,
           element.pending_out,
           element.pending_in,

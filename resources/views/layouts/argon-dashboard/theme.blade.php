@@ -58,6 +58,11 @@
 
     </style>
   @yield('head')
+  <script>
+    function number_format(num,decimal) {
+      return Number(num).toFixed(decimal).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
+  </script>
 </head>
 
 <body>

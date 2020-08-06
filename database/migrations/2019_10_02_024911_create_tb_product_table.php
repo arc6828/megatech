@@ -27,7 +27,7 @@ class CreateTbProductTable extends Migration {
 			$table->string('product_unit', 10)->nullable()->default("pcs");
 			$table->integer('pending_in')->nullable()->default(0)->comment('ค้างรับ');
 			$table->integer('pending_out')->nullable()->default(0)->comment('ค้างส่ง');
-			$table->float('normal_price', 18, 4)->nullable()->default(0.0000);
+			$table->float('normal_price', 18, 2)->nullable()->default(0.00);
 			$table->string('BARCODE', 20)->nullable();
 			$table->string('item_code', 20)->nullable();
 			$table->float('purchase_price', 10, 0)->nullable()->default(0);
