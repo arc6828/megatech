@@ -42,15 +42,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $input = [
-            'product_code' => $request->input('product_code'),
-            'product_name' => $request->input('product_name'),
-            'brand' => $request->input('product_brand'),
-            'product_detail' => $request->input('product_detail'),
-            'product_unit' => $request->input('product_unit')
-        ];
+        $requestData = $request->all();
 
-        ProductModel::insert($input);
+        ProductModel::create($requestData);
         return redirect('product');
     }
 
