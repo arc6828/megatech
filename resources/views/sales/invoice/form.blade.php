@@ -38,7 +38,7 @@
         @include('sales/invoice/create_from_order_modal')
       </div>
     </div>
-    @if(isset($invoice))
+    
     <div class="form-group form-inline">
 
       <label class="col-lg-2 offset-lg-1">PO ลูกค้า</label>
@@ -46,7 +46,7 @@
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	value="{{ isset($invoice) ? $invoice->order->external_reference_id :'' }}" required>
       </div>
     </div>
-    @endif
+    
 
     <div class="form-group form-inline">
       <label class="col-lg-2">ระยะเวลาหนี้ (วัน)</label>

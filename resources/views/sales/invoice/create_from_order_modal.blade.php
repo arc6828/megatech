@@ -212,7 +212,7 @@
 
 		//document.querySelector("#invoice_code").value = element.invoice_code ;
 		document.querySelector("#internal_reference_id").value = element.order_code ;
-		document.querySelector("#external_reference_id").value = element.external_reference_id;
+		//document.querySelector("#external_reference_id").value = element.external_reference_id;
 		document.querySelector("#customer_id").value = element.customer_id;
 		document.querySelector("#customer_code").innerHTML = element.customer_code;
 		document.querySelector("#company_name").value = element.company_name;
