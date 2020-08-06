@@ -256,6 +256,7 @@ class InvoiceController extends Controller
     {
       $data = [
           //QUOTATION
+          'invoice' => InvoiceModel::findOrFail($id),
           'table_invoice' => InvoiceModel::select_by_id($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
