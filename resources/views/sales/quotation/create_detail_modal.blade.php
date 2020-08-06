@@ -5,7 +5,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document" style="max-width:1200px;">
+	<div class="modal-dialog modal-lg" role="document" style="max-width:1600px;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการสินค้า</h5>
@@ -61,6 +61,9 @@
 							{ title: "#คงเหลือ - ค้างส่ง" },
 							{ title: "action" },
 						],
+						/*"scrollY": "250px",
+						"scrollCollapse": true,
+						"paging":         false,*/
 						"order": [[ 4, "desc" ]],
 					}); // END DATATABLE
           table.on( 'search.dt', function () {

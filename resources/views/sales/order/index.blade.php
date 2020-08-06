@@ -33,7 +33,7 @@
 						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">พนักงาน</th>
 						<th class="text-center">สถานะ</th>
-						<th class="text-center">รายละเอียด</th>
+						<th class="text-center d-none">รายละเอียด</th>
 						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
@@ -74,7 +74,7 @@
 							@endif
 							
 						</td>
-						<td class="text-left">
+						<td class="text-left  d-none">
 							@foreach($row->order_details as $order_detail)
 								@switch($order_detail->order_detail_status_id)
 									@case(1)
