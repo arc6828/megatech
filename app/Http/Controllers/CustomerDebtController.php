@@ -48,7 +48,7 @@ class CustomerDebtController extends Controller
         }
         */
         
-        $perPage = 25;
+        $perPage = 2500;
 
         $type_debt = $request->get('type_debt');
 
