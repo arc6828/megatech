@@ -1,4 +1,4 @@
-@if(isset($tqable_product))
+@if(isset($table_product))
 <div class="form-group text-right">
   <a href="{{ url('/') }}/gaurd-stock?product_id={{ $table_product->product_id }}">ดู Gaurd Stock ของสินค้า</a>
 </div>
