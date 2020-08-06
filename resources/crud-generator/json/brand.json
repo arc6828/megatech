@@ -1,0 +1,32 @@
+{
+    "fields": [
+        {
+            "name": "title",
+            "type": "string"
+        },
+        {
+            "name": "content",
+            "type": "text"
+        },
+        {
+            "name": "begin_date",
+            "type": "date"
+        },
+        {
+            "name": "deadline",
+            "type": "date"
+        },
+        {
+            "name": "complete_date",
+            "type": "timestamp"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },
+        {
+            "name": "photo",
+            "type": "file"
+        }
+    ]
+}

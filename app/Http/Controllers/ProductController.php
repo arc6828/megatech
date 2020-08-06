@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ProductModel;
+use App\Brand;
+
 
 class ProductController extends Controller
 {
@@ -28,11 +30,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $table_product = ProductModel::select_all();
-        $data = [
-            'table_product' => $table_product
-        ];
-        return view('product/create',$data);
+        $brands = Brand::all();
+        return view('product/create',compact('brands'));
     }
 
     /**
@@ -74,11 +73,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $table_product = ProductModel::select_by_id($id);
-        $data = [
-            'table_product' => $table_product
-        ];
-        return view('product/edit',$data);
+        $brands = Brand::all();
+        $table_product = ProductModel::findOrFail($id);
+        return view('product/edit', compact('table_product','brands'));
     }
 
     /**

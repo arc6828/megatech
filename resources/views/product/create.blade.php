@@ -2,67 +2,38 @@
 
 @section('title','เพิ่มสินค้า')
 
-@section('breadcrumb-menu')
-
-@endsection
-
 
 @section('content')
+        <div class="row">
 
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header d-none">เพิ่มสินค้า</div>
+                    <div class="card-body">
+                        <a href="{{ url('/product') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <br />
+                        <br />
 
-<form class="" action="{{ url('/') }}/product" method="POST">
-    {{ csrf_field() }}
-    {{ method_field('POST') }}
+                        @if ($errors->any())
+                            <ul class="alert alert-danger">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
 
-<div class="card">
+                        <form method="POST" action="{{ url('/product') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                            {{ method_field('POST') }}
+                            {{ csrf_field() }}
 
-<div class="form-group form-inline">
-<label class="col-lg-2">รหัสสินค้า</label>
-        <div class="col-lg-3">
-            <input type="text" name="product_code"  class="form-control form-control-line"  >
-        </div>
-</div>
-<div class="form-group form-inline">
-<label class="col-lg-2">รายละเอียดสินค้า</label>
-        <div class="col-lg-3">
-            <input type="text" name="product_name"  class="form-control form-control-line" style="width: 100%" >
-        </div>
-</div>
-<div class="form-group form-inline">
-<label class="col-lg-2">ยี่ห้อ</label>
-        <div class="col-lg-3">
-            <input type="text" name="product_brand"  class="form-control form-control-line"  >
-        </div>
-</div>
+                            @include ('product.form', ['formMode' => 'create'])
 
+                        </form>
 
-<div class="form-group form-inline">
-<label class="col-lg-2">รายละเอียดเพิ่มเติม</label>
-        <div class="col-lg-3">
-           <textarea name="product_detail"cols="30" rows="5"  class="form-control form-control-line"></textarea>
-        </div>
-</div>
-
-<div class="form-group form-inline">
-<label class="col-lg-2">หน่วยนับ</label>
-        <div class="col-lg-3">
-            <input type="text" name="product_unit"  class="form-control form-control-line" value="ชิ้น" >
-        </div>
-</div>
-<div class="form-group">
-              <div class="col-lg-12">
-                <div class="text-center">
-                  <a class="btn btn-outline-primary" href="{{ url('/') }}/product">back</a>
-                  <button class="btn btn-success" type="submit" >Create</button>
+                    </div>
                 </div>
-              </div>
             </div>
-
-</form>
-
-@endsection
-
-
-@section('plugins-js')
+        </div>
 
 @endsection
+

@@ -334,3 +334,5 @@
 
 Auth::routes();
 
+
+Route::resource('brand', 'BrandController');

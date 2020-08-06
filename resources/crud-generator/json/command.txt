@@ -23,3 +23,5 @@ php artisan crud:generate FullCalendar --fields_from_file="resources/crud-genera
 php artisan crud:generate Checklist --fields_from_file="resources/crud-generator/json/checklist.json"
 
 php artisan crud:generate Backuplog --fields_from_file="resources/crud-generator/json/backuplog.json"
+
+php artisan crud:generate Brand --fields_from_file="resources/crud-generator/json/brand.json"

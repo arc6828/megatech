@@ -1,0 +1,7 @@
+เช็คว่าไม่มี grade อยู่ใน product_name
+    SELECT * FROM `tb_product` WHERE grade is not NULL  and grade != "" and product_name not like concat("%",grade,"%")
+    ORDER BY `tb_product`.`grade`  ASC
+
+เช็คว่าไม่มี grade อยู่ใน product_name แล้วอัพเดท
+    UPDATE `tb_product` SET `product_name` = concat(`product_name`,"        ",`grade`) 
+    WHERE grade is not NULL  and grade != "" and product_name not like concat("%",grade,"%")
