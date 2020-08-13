@@ -112,7 +112,7 @@
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
 				$('#table').DataTable({
-					"scrollY": "400px",
+					"scrollY": "250px",
 					"scrollCollapse": true,
 					"paging":         false,
 				}).order( [ 0, 'desc' ] ).draw();
