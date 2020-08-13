@@ -62,6 +62,18 @@
       <div class="col-lg-3 d-none">
         <input name="contact_name" id="contact_name" class="form-control form-control-sm"	>
       </div>
+
+      <label class="col-lg-2">ขนส่งโดย</label>
+      <div class="col-lg-3">
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required >
+
+          @foreach($table_delivery_type as $row_delivery_type)
+          <option value="{{ $row_delivery_type->delivery_type_id }}" >
+            {{	$row_delivery_type->delivery_type_name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
     </div>
 
 
@@ -77,22 +89,12 @@
       </div>
     </div>
 
-    <div class="form-group form-inline">
-      <label class="col-lg-2  ">ระยะเวลาส่งของ (วัน)</label>
-      <div class="col-lg-3">
+    <div class="form-group form-inline d-none">
+      <label class="col-lg-2  d-none">ระยะเวลาส่งของ (วัน)</label>
+      <div class="col-lg-3   d-none">
       <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required >
       </div>
-      <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
-      <div class="col-lg-3">
-        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required >
-
-          @foreach($table_delivery_type as $row_delivery_type)
-          <option value="{{ $row_delivery_type->delivery_type_id }}" >
-            {{	$row_delivery_type->delivery_type_name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
+      
     </div>
 
     <div class="form-group form-inline">

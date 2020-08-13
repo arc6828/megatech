@@ -42,7 +42,7 @@
 		document.querySelector("#payment_condition").value = obj.payment_condition;
 		document.querySelector("#delivery_type_id").value = obj.delivery_type_id;
 		document.querySelector("#tax_type_id").value = obj.tax_type_id;
-		document.querySelector("#delivery_time").value = "";
+		document.querySelector("#delivery_time").value = "3";
 		document.querySelector("#contact_name").value = obj.contact_name;
 		document.querySelector("#zone_id").value = obj.zone_id;
 
