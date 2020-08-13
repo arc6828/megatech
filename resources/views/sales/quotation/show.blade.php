@@ -143,7 +143,7 @@
             <th>ลำดับ</th>
             <th>รหัสสินค้า</th>
             <th>รายละเอียด</th>
-            <td>วันที่ส่งของ</td>
+            <td>วันที่ส่งของ (วัน)</td>
             <th>จำนวน</th>
             <th>หน่วยละ</th>
             <th>จำนวนเงิน</th>
@@ -158,7 +158,7 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $row_detail->product_code }} </td>
               <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
-              <td>3 - 5 วัน</td>
+              <td>3 - 5</td>
               <td>{{ number_format($row_detail->amount) }}</td>
               <td>{{ number_format($row_detail->discount_price,2) }}</td>
               <td>{{ number_format($row_detail->amount * $row_detail->discount_price,2) }}</td>
