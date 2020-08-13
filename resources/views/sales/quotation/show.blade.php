@@ -119,13 +119,11 @@
           <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
             <tr>
               <th>กำหนดยืนราคา</th>
-              <th>วันที่ส่งของ</th>
               <th>ระยะเวลาหนี้</th>
               <th>พนักงานขาย</th>
             </tr>
             <tr>
               <td>{{ $row->billing_duration }} วัน</td>
-              <td>{{ $row->delivery_time }} วัน หลังจากได้รับ P/O</td>
               <td>{{ $row->debt_duration }} วัน</td>
               <td>{{ $row->name }}</td>
             </tr>
@@ -143,6 +141,7 @@
         <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
           <tr >
             <th>ลำดับ</th>
+            <td>วันที่ส่งของ</td>
             <th>รหัสสินค้า</th>
             <th>รายละเอียด</th>
             <th>จำนวน</th>
@@ -157,6 +156,7 @@
             @if( $loop->index >= $start_iteration && $loop->index < $end_iteration )
             <tr>
               <td>{{ $loop->iteration }}</td>
+              <td>A</td>
               <td>{{ $row_detail->product_code }} </td>
               <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
               <td>{{ number_format($row_detail->amount) }}</td>
@@ -187,11 +187,13 @@
               @else
               <div style="text-align:center;">-</div>
               @endif
-              <span style="font-size : 10px">A ภายใน 5 วัน /               
+              <span style="font-size : 12px">
+              วันที่ส่งของ : 
+              A ภายใน 5 วัน /               
               B ภายใน 10 วัน / 
               C ภายใน 15 วัน / 
               D ภายใน 30 วัน / 
-              E มากกว่า 30 วัน 
+              E มากกว่า 30 วัน หลังจากได้รับ P/O
               <span>
             </td>
             <td rowspan="2" colspan="3" style="text-align:right;">
