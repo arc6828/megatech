@@ -188,14 +188,6 @@
               @else
               <div style="text-align:center;">-</div>
               @endif
-              <span style="font-size : 12px">
-              วันที่ส่งของ : 
-              A ภายใน 5 วัน /               
-              B ภายใน 10 วัน / 
-              C ภายใน 15 วัน / 
-              D ภายใน 30 วัน / 
-              E มากกว่า 30 วัน หลังจากได้รับ P/O
-              <span>
             </td>
             <td rowspan="2" colspan="3" style="text-align:right;">
               @if($page == $num_page - 1)
