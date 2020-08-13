@@ -156,7 +156,7 @@
             @if( $loop->index >= $start_iteration && $loop->index < $end_iteration )
             <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>A</td>
+              <td>3 - 5 วัน</td>
               <td>{{ $row_detail->product_code }} </td>
               <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
               <td>{{ number_format($row_detail->amount) }}</td>
