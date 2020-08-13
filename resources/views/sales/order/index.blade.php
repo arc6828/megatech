@@ -111,7 +111,11 @@
     </div>
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
-				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+				$('#table').DataTable({
+					"scrollY": "500px",
+					"scrollCollapse": true,
+					"paging":         false,
+				}).order( [ 0, 'desc' ] ).draw();
 		});
 
 		</script>
