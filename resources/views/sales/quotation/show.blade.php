@@ -141,9 +141,9 @@
         <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
           <tr >
             <th>ลำดับ</th>
-            <td>วันที่ส่งของ</td>
             <th>รหัสสินค้า</th>
             <th>รายละเอียด</th>
+            <td>วันที่ส่งของ</td>
             <th>จำนวน</th>
             <th>หน่วยละ</th>
             <th>จำนวนเงิน</th>
@@ -156,9 +156,9 @@
             @if( $loop->index >= $start_iteration && $loop->index < $end_iteration )
             <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>3 - 5 วัน</td>
               <td>{{ $row_detail->product_code }} </td>
               <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
+              <td>3 - 5 วัน</td>
               <td>{{ number_format($row_detail->amount) }}</td>
               <td>{{ number_format($row_detail->discount_price,2) }}</td>
               <td>{{ number_format($row_detail->amount * $row_detail->discount_price,2) }}</td>
