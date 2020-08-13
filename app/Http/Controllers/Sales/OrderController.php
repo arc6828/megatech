@@ -28,6 +28,7 @@ use App\Functions;
 use App\GaurdStock;
 
 use PDF;
+use Storage;
 
 class OrderController extends Controller
 {
@@ -120,6 +121,16 @@ class OrderController extends Controller
       ];
       
       $id = OrderModel::insert($input);
+
+      //UPLOAD FILE P/O
+      if ($request->hasFile('po_file')) {
+        $folder = "customer/po";
+        
+        $requestData['po_file'] = $request->file('po_file')->store($folder, 'public');
+        //$requestData['po_file'] = "sss.jpg";
+        $order = OrderModel::findOrFail($id);
+        $order->update($requestData);
+      }
 
       //INSERT ALL NEW QUOTATION DETAIL
       $list = [];
@@ -304,6 +315,7 @@ class OrderController extends Controller
       $data = [
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
+          'order' => OrderModel::findOrFail($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
@@ -349,6 +361,7 @@ class OrderController extends Controller
       $data = [
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
+          'order' => OrderModel::findOrFail($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
@@ -397,6 +410,16 @@ class OrderController extends Controller
         'total' => $request->input('total_after_vat',0),
       ];
       OrderModel::update_by_id($input,$id);
+
+      //UPLOAD FILE P/O
+      if ($request->hasFile('po_file')) {
+        $folder = "customer/po";
+        
+        $requestData['po_file'] = $request->file('po_file')->store($folder, 'public');
+        //$requestData['po_file'] = "sss.jpg";
+        $order = OrderModel::findOrFail($id);
+        $order->update($requestData);
+      }
 
       //2.INSERT UPDATE DELETE ORDER DETAIL
       if (is_array ($request->input('product_id_edit'))){

@@ -19,17 +19,18 @@ class OrderModel extends Model
                           'delivery_type_id',
                           'tax_type_id',
                           'delivery_time',
-                          '	department_id',
+                          'department_id',
                           'sales_status_id',
                           'user_id',
                           'zone_id',
                           'remark',
                           'vat_percent',
                           'vat',
-                          '	total_before_vat',
+                          'total_before_vat',
                           'internal_reference_id',
                           'external_reference_id',
-                          '	total'
+                          'total',
+                          'po_file'
                           
 
   ];

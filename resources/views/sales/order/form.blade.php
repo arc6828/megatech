@@ -55,10 +55,28 @@
         </div>
       </div>
       @include('sales/order/customer_modal')
+
+      <label class="col-lg-2">วันที่ส่งของ</label>
+      <div class="col-lg-3">
+        <input type="date" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
+      </div>
+
+      
+    </div>
+
+    <div class="form-group form-inline">
       <label class="col-lg-2">P/O ลูกหนี้</label>
       <div class="col-lg-3">
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line" onchange="validate_po()" data="" placeholder="ใส่ '-' ถ้าไม่มี po"	required>
+        
+      </div>
 
+      <label class="col-lg-2  offset-lg-1">ไฟล์ P/O ลูกหนี้</label>
+      <div class="col-lg-3">
+        @if(isset($order))
+        <a href="{{ url('storage/'.$order->po_file ) }}">เปิดดูไฟล์</a>
+        @endif
+        <input type="file" class="" id="po_file" name="po_file">
       </div>
     </div>
 
@@ -74,25 +92,6 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">ระยะเวลาส่งของ (วัน)</label>
-      <div class="col-lg-3">
-        <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
-      </div>
-      
-      <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
-      <div class="col-lg-3">
-        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
-
-          @foreach($table_delivery_type as $row_delivery_type)
-          <option value="{{ $row_delivery_type->delivery_type_id }}" >
-            {{	$row_delivery_type->delivery_type_name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group form-inline">
       <label class="col-lg-2">ชนิดภาษี</label>
       <div class="col-lg-3">
         <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required>
@@ -104,11 +103,23 @@
           @endforeach
         </select>
       </div>
+
+      <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
+      <div class="col-lg-3">
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
+
+          @foreach($table_delivery_type as $row_delivery_type)
+          <option value="{{ $row_delivery_type->delivery_type_id }}" >
+            {{	$row_delivery_type->delivery_type_name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
       
     
       
-      <label class="col-lg-2 offset-lg-1">สถานะ</label>
-      <div class="col-lg-3">
+      <label class="col-lg-2 offset-lg-1 d-none">สถานะ</label>
+      <div class="col-lg-3 d-none">
         <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required>
 
           @foreach($table_sales_status as $row_sales_status)

@@ -1,6 +1,6 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','แก้ไขรายละเอียดใบจอง')
+@section('title','รายละเอียดใบจอง')
 
 @section('background-tag','bg-warning')
 
@@ -19,7 +19,7 @@
 
 	@forelse($table_order as $row)
 		
-		<form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}" id="form" method="POST">
+		<form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}" id="form" method="POST" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 

@@ -200,6 +200,7 @@ class InvoiceController extends Controller
       $data = [
           //QUOTATION
           'table_invoice' => InvoiceModel::select_by_id($id),
+          'invoice' => InvoiceModel::findOrFail($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),

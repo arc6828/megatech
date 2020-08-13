@@ -32,6 +32,7 @@
 					"columns": [
 							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
+							{ title: "พร้อมส่ง" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน (pcs)" },
 							{ title: "ราคาตั้ง" },
@@ -66,6 +67,7 @@
           element.product_code +
             "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
+          "<select><option>A</option><option>B</option><option>C</option></select>",
           element.product_name + " / "+ element.grade,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 

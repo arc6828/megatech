@@ -42,7 +42,7 @@
 		document.querySelector("#payment_condition").value = obj.payment_condition;
 		document.querySelector("#delivery_type_id").value = obj.delivery_type_id;
 		document.querySelector("#tax_type_id").value = obj.tax_type_id;
-		document.querySelector("#delivery_time").value = obj.delivery_time;
+		document.querySelector("#delivery_time").value = "";
 		document.querySelector("#contact_name").value = obj.contact_name;
 		document.querySelector("#zone_id").value = obj.zone_id;
 
@@ -56,54 +56,54 @@
 		$('#customerModal').on('shown.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
 				$.ajax({
-	          url: "{{ url('/') }}/api/customer?user_id={{ Auth::id() }}",
-	          type: "GET",
-	          dataType : "json",
-	      }).done(function(result){
-						//console.log(result);
-						var dataSet = [];
-						result.forEach(function(element,index) {
-							//console.log(element,index);
-							var row = [
-								element.customer_code,
-								element.company_name,
-								//element.contact_name,
-								"<a "
-										+"class='btn btn-success btn-sm'"
-										+"href='{{ url('/') }}/sales/quotation/create?customer_id="+element.customer_id+"'"
-										+">เลือก</a>"+
-								"<button type='button' "
-										+"class='btn btn-warning btn-sm d-none'"
-										+"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
-										+">เลือก</button>"
-                    +"<textarea class='d-none' id='text-"+element.customer_id+"'>"+JSON.stringify(element)+"</textarea>",
-							];
-							dataSet.push(row);
-						});
-						//console.log(dataSet);
+					url: "{{ url('/') }}/api/customer?user_id={{ Auth::id() }}",
+					type: "GET",
+					dataType : "json",
+				}).done(function(result){
+					//console.log(result);
+					var dataSet = [];
+					result.forEach(function(element,index) {
+						//console.log(element,index);
+						var row = [
+							element.customer_code,
+							element.company_name,
+							//element.contact_name,
+							"<a "
+									+"class='btn btn-success btn-sm'"
+									+"href='{{ url('/') }}/sales/quotation/create?customer_id="+element.customer_id+"'"
+									+">เลือก</a>"
+									+"<button type='button' "
+									+"class='btn btn-warning btn-sm d-none'"
+									+"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
+									+">เลือก</button>"
+									+"<textarea class='d-none' id='text-"+element.customer_id+"'>"+JSON.stringify(element)+"</textarea>",
+						];
+						dataSet.push(row);
+					});
+					//console.log(dataSet);
 
-						$('#table-customer-modal').DataTable({
-							data: dataSet,
-  							deferRender : true,
-							columns: [
-									{ title: "รหัส" },
-									{ title: "บริษัท" },
-									//{ title: "ผู้ติดต่อ" },
-									{ title: "#" },
-							]
-						}).search("{{ isset($customer)? $customer->customer_code : '' }}").draw();// END DATATABLE;
-						@if( !empty(request('customer_id')) )
-							//$("#btn-customer").click();
-							
-							//$("#text-{{ $customer->customer_id }}").text( @json($customer) );
+					$('#table-customer-modal').DataTable({
+						data: dataSet,
+						deferRender : true,
+						columns: [
+								{ title: "รหัส" },
+								{ title: "บริษัท" },
+								//{ title: "ผู้ติดต่อ" },
+								{ title: "#" },
+						]
+					}).search("{{ isset($customer)? $customer->customer_code : '' }}").draw();// END DATATABLE;
+					@if( !empty(request('customer_id')) )
+						//$("#btn-customer").click();
+						
+						//$("#text-{{ $customer->customer_id }}").text( @json($customer) );
 
-							console.log("BTN : ",  $("#text-{{ $customer->customer_id }}"),  $("#text-{{ $customer->customer_id }}").prev());
-							$("#text-{{ $customer->customer_id }}").prev().click();
-							//select_item(395,`บริษัท อะมะดะ แมชชีน ทูลส์ (ประเทศไทย) จำกัด`,`A0001`);
-							//$('#customerModal').modal('hide');
+						console.log("BTN : ",  $("#text-{{ $customer->customer_id }}"),  $("#text-{{ $customer->customer_id }}").prev());
+						$("#text-{{ $customer->customer_id }}").prev().click();
+						//select_item(395,`บริษัท อะมะดะ แมชชีน ทูลส์ (ประเทศไทย) จำกัด`,`A0001`);
+						//$('#customerModal').modal('hide');
 
-						@endif
-					}); //END AJAX
+					@endif
+				}); //END AJAX
 			}
 		}); // END MODAL EVENT
 

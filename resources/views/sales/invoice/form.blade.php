@@ -41,9 +41,18 @@
     
     <div class="form-group form-inline">
 
-      <label class="col-lg-2 offset-lg-1">PO ลูกค้า</label>
+      <label class="col-lg-2">PO ลูกค้า</label>
       <div class="col-lg-3">
-        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	value="{{ isset($invoice) ? $invoice->order->external_reference_id :'' }}" required>
+        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	value="{{ isset($invoice->order) ? $invoice->order->external_reference_id :'' }}" required readonly>
+        @if(isset($invoice->order))        
+          @if(!empty($invoice->order->po_file) )
+          <a href="{{ url('storage/'.$invoice->order->po_file) }}" target="_blank">ดูไฟล์ P/O</a>
+          @endif
+        @endif
+      </div>
+      <label class="col-lg-2 offset-lg-1">วันที่ส่งของ</label>
+      <div class="col-lg-3">
+      <input type="date" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
       </div>
     </div>
     
@@ -71,25 +80,6 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">ระยะเวลาส่งของ (วัน)</label>
-      <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
-      </div>
-      
-      <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
-      <div class="col-lg-3">
-        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
-
-          @foreach($table_delivery_type as $row_delivery_type)
-          <option value="{{ $row_delivery_type->delivery_type_id }}" >
-            {{	$row_delivery_type->delivery_type_name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group form-inline">
       <label class="col-lg-2">ชนิดภาษี</label>
       <div class="col-lg-3">
         <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required>
@@ -97,6 +87,17 @@
           @foreach($table_tax_type as $row_tax_type)
           <option value="{{ $row_tax_type->tax_type_id }}" >
             {{	$row_tax_type->tax_type_name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
+      <div class="col-lg-3">
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
+
+          @foreach($table_delivery_type as $row_delivery_type)
+          <option value="{{ $row_delivery_type->delivery_type_id }}" >
+            {{	$row_delivery_type->delivery_type_name }}
           </option>
           @endforeach
         </select>

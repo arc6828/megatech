@@ -35,7 +35,7 @@
 								{{ $row->quotation_code }}
 							</a>
 						</td>
-						<td>{{ $row->datetime }}</td>
+						<td title="{{ $row->datetime }}">{{ explode(" " , $row->datetime)[0] }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>
 							<a href2="{{ url('/customer') }}/{{ $row->Customer->customer_id }}/edit" target="_blank">

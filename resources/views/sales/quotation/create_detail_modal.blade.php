@@ -5,7 +5,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document" style="max-width:1600px;">
+	<div class="modal-dialog modal-lg" role="document" style="max-width:1200px;">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการสินค้า</h5>
@@ -15,8 +15,8 @@
 			</div>
 			<div class="modal-body">
         <input hidden id="search_key" value="">
-				<div class="table-responsive">
-					<table class="table table-hover text-center table-sm" id="table-product-model"></table>
+				<div class="table-responsives" id="table-container" >
+					<table class="table table-hover text-center table-sm" id="table-product-model"  ></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -30,7 +30,7 @@
 	document.addEventListener("DOMContentLoaded", function(event) {
 
 		//var detail = JSON.parse('@json($table_product)');
-		$('#exampleModal').on('show.bs.modal', function (e) {
+		$('#exampleModal').on('shown.bs.modal', function (e) {
 			showProduct();
 		}); // END MODAL EVENT
 
@@ -44,50 +44,67 @@
 					type: "GET",
 					dataType : "json",
 			}).done(function(result){
-					//console.log(dataSet);
+				//console.log(dataSet);
 
-					var table = $('#table-product-model').DataTable({
-						"data": prepareDataSet(result),
-						"deferRender" : true,
-						"columns": [
-							{ title: "รหัสสินค้า" },
-							//{ title: "Barcode" },
-							{ title: "ชื่อสินค้า" },
-							{ title: "ราคาขาย" },
-							{ title: "จำนวน" },
-							{ title: "#คงเหลือ" },
-							{ title: "#ค้างส่ง" },
-							{ title: "#ค้างรับ" },
-							{ title: "#คงเหลือ - ค้างส่ง" },
-							{ title: "action" },
-						],
-						/*"scrollY": "250px",
-						"scrollCollapse": true,
-						"paging":         false,*/
-						"order": [[ 4, "desc" ]],
-					}); // END DATATABLE
-          table.on( 'search.dt', function () {
-            var search_key = table.search();
-            if(search_key != $('#search_key').val()){
-              console.log("Hello",table.search() );
-              $.ajax({
-        					url: "{{ url('/') }}/api/product?q="+search_key ,
-        					type: "GET",
-        					dataType : "json",
-        			}).done(function(result1){
-        					//console.log(dataSet);
-                  $('#search_key').val(search_key);
-                  var new_data = prepareDataSet(result1);
-                  table.clear();
-                  table.rows.add(new_data); // Add new data
-                  table.columns.adjust().draw(); // Redraw the DataTable
-              });
-            }
-          } );
+				var table = $('#table-product-model').DataTable({
+					"data": prepareDataSet(result),
+					"deferRender" : true,
+					"columns": [
+						{ title: "รหัสสินค้า" },
+						//{ title: "Barcode" },
+						{ title: "ชื่อสินค้า" },
+						{ title: "ราคาขาย" },
+						{ title: "จำนวน" },
+						{ title: "#คงเหลือ" },
+						{ title: "#ค้างส่ง" },
+						{ title: "#ค้างรับ" },
+						{ title: "#คงเหลือ - ค้างส่ง" },
+						{ title: "action" },
+					],
+					/*"scrollY": "250px",
+					"scrollCollapse": true,*/
+					"paging":         false,
+					"order": [[ 4, "desc" ]],
+				}); // END DATATABLE
+
+				
+				table.columns.adjust().draw();
+				var tableCont = document.querySelector('#table-product-model');
+				tableCont.parentNode.style.overflow = 'auto';
+				tableCont.parentNode.style.height = '500px';
+				tableCont.parentNode.addEventListener('scroll',function (e){
+					var scrollTop = this.scrollTop-10;
+					this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+					this.querySelector('thead').style.background = "white";
+					this.querySelector('thead').style.zIndex = "3000";
+					this.querySelector('thead').style.marginBottom = "100px";
+					console.log(scrollTop);
+				})
+
+
+		
+				table.on( 'search.dt', function () {
+					var search_key = table.search();
+					if(search_key != $('#search_key').val()){
+					console.log("Hello",table.search() );
+					$.ajax({
+									url: "{{ url('/') }}/api/product?q="+search_key ,
+									type: "GET",
+									dataType : "json",
+							}).done(function(result1){
+									//console.log(dataSet);
+						$('#search_key').val(search_key);
+						var new_data = prepareDataSet(result1);
+						table.clear();
+						table.rows.add(new_data); // Add new data
+						table.columns.adjust().draw(); // Redraw the DataTable
+					});
+					}
+				} );
 					//setPreLoader(false);
 
 
-				}); //END AJAX
+			}); //END AJAX
 		}
 	}
 
@@ -100,14 +117,14 @@
       var row = [
         element.product_code,
         //element.BARCODE,
-        element.product_name + " / "+ element.grade,
+        element.product_name ,
         price,
         "<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",
 		element.amount_in_stock,
 		element.pending_in,
 		element.pending_out,
 		element.amount_in_stock - element.pending_out,
-        "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);'>" +
+        "<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);' style='position:static; will-change:unset;'>" +
           "<span class='fa fa-plus'></span>" +
         "</button>",
       ];

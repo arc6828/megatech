@@ -55,7 +55,7 @@
 			document.addEventListener("DOMContentLoaded", function(event) {
 				//INITIALIZE
 				document.querySelector("#invoice_code").value = "{{ $row->invoice_code }}";
-				//document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
+				document.querySelector("#external_reference_id").value = "{{ $row->external_reference_id }}";
 				document.querySelector("#internal_reference_id").value = "{{ $row->internal_reference_id }}";
 				document.querySelector("#customer_id").value = "{{ $row->customer_id }}";
 				document.querySelector("#customer_code").innerHTML = "{{ $row->customer_code }}";

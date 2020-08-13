@@ -213,6 +213,14 @@
 		//document.querySelector("#invoice_code").value = element.invoice_code ;
 		document.querySelector("#internal_reference_id").value = element.order_code ;
 		document.querySelector("#external_reference_id").value = element.external_reference_id;
+		let url = "{{ url('storage') }}"+"/"+element.po_file;
+		let a = document.createElement('a');
+    	a.href = url;
+		a.target = "_blank";
+		a.innerHTML = "ดูไฟล์ P/O";
+		document.querySelector("#external_reference_id").parentNode.append(a);
+
+
 		document.querySelector("#customer_id").value = element.customer_id;
 		document.querySelector("#customer_code").innerHTML = element.customer_code;
 		document.querySelector("#company_name").value = element.company_name;
