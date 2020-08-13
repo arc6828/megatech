@@ -176,11 +176,12 @@
               <td><br></td>
               <td><br></td>
               <td><br></td>
+              <td><br></td>
             </tr>
             @endfor
           @endif
           <tr>
-            <td colspan="3" >
+            <td colspan="4" >
               <div style="text-align:left;"><strong>หมายเหตุ</strong></div>
               @if($page == $num_page - 1)
               <div> {{ $row->remark !="" ? $row->remark : "-" }}</div>
@@ -199,17 +200,17 @@
             <td rowspan="2" colspan="3" style="text-align:right;">
               @if($page == $num_page - 1)
               <div>
-                <div class="inline" style="width:130px;"><strong>รวมเป็นเงิน</strong></div>
+                <div class="inline" style="width:100px;"><strong>รวมเป็นเงิน</strong></div>
                 <div class="inline" style="width:70px; ">{{ number_format($row->total_before_vat,2) }}</div>
                 <div class="inline" style="width:50px;">บาท</div>
               </div>
               <div>
-                <div class="inline" style="width:130px; "><strong>ภาษีมูลค่าเพิ่ม 7%</strong></div>
+                <div class="inline" style="width:100px; "><strong>ภาษีมูลค่าเพิ่ม 7%</strong></div>
                 <div class="inline" style="width:70px;">{{ number_format($row->vat,2) }}</div>
                 <div class="inline" style="width:50px;">บาท</div>
               </div>
               <div>
-                <div class="inline" style="width:130px; "><strong>รวมทั้งสิ้น</strong></div>
+                <div class="inline" style="width:100px; "><strong>รวมทั้งสิ้น</strong></div>
                 <div class="inline" style="width:70px; " id="total">{{ number_format($row->total,2) }}</div>
                 <div class="inline" style="width:50px;">บาท</div>
               </div>
@@ -219,7 +220,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan="3">
+            <td colspan="4">
               @if($page == $num_page - 1)
               <div id="total_text">({{ $total_text }})</div>
               @else
