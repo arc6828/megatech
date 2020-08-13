@@ -33,7 +33,7 @@
 							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
-							{ title: "วันที่ส่งของ" },
+							{ title: "วันที่ส่งของ(วัน)" },
 							{ title: "จำนวน (pcs)" },
 							{ title: "ราคาตั้ง" },
 							{ title: "ส่วนลด %" },
@@ -68,7 +68,7 @@
             "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_name + " / "+ element.grade,
-          "<select><option>โปรดระบุ</option><option>3 - 5 วัน</option><option>7 - 10 วัน</option><option>15-30 วัน</option><option>มากกว่า 30 วัน</option></select>",
+          "<select><option>โปรดระบุ</option><option>3 - 5</option><option>7 - 10</option><option>15 - 30</option><option>30 - 60</option></select>",
           
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
