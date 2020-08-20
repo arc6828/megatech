@@ -304,7 +304,7 @@
 
 <div class="card  mt-4">
   <div class="card-body">
-    <h2>รับเช็ค</h2>
+    <h2>เงื่อนไขการจ่ายชำระ</h2>
     <div class="row">            
       <div class="form-group col-lg-3">
         <label  >เงื่อนไขรับเช็ค </label>
