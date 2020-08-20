@@ -304,8 +304,16 @@
 
 <div class="card  mt-4">
   <div class="card-body">
-    <h2>เงื่อนไขการจ่ายชำระ</h2>
+    <h2>การจ่ายชำระ</h2>
     <div class="row">            
+      <div class="form-group col-lg-3">
+        <label  >ช่องทางการชำระเงิน </label>
+        <select class="form-control form-control-sm  ">
+          <option>รับเช็ค (พร้อมใบเสร็จรับเงิน)</option>
+          <option>โอน (พร้อมใบเสร็จรับเงิน)</option>
+        </select>
+        
+      </div>
       <div class="form-group col-lg-3">
         <label  >เงื่อนไขรับเช็ค </label>
         <input name="cheqe_condition"  id="cheqe_condition"  class="form-control form-control-sm  "  >
@@ -316,7 +324,7 @@
       </div>
     </div>
     @if(isset($checklist))
-    <div class="row">      
+    <div class="row d-none">      
       <div class="form-group col-lg-3 {{ $errors->has('billing_invoice') ? 'has-error' : ''}}">
           <label for="cheque_billing" class="control-label">
             <input type="checkbox" {{ $checklist->cheque_billing === "true" ? 'checked' : ''}} onclick="document.querySelector('#cheque_billing').value = this.checked"> 
