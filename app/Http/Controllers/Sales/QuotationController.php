@@ -267,6 +267,7 @@ class QuotationController extends Controller
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "quotation_id" => $id,
+              "delivery_duration" => $request->input('delivery_duration')[$i],
           ];
           switch($id_edit){
             case "+" :

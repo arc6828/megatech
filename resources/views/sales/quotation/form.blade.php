@@ -36,9 +36,11 @@
         }
       </script>
       <div class="col-lg-4 text-right">
+        @if($row->sales_status_id == 0)
         <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="approved()">
           <i class="fas fa-check"></i> อนุมัติ QT
         </a>
+        @endif
         <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
           <i class="fas fa-print"></i> พิมพ์
         </a>
