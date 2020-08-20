@@ -1,6 +1,10 @@
 function checkID(input) {
+    
+    if(input == "-") {return true;}
+
     if(input.length != 13) {
         alert('รหัส 13 หลักไม่ถูกต้อง'); console.log("wrong");return false;}
+
     for(i=0, sum=0; i < 12; i++){
         sum += parseFloat(input.charAt(i))*(13-i);
     }
