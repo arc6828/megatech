@@ -100,7 +100,9 @@
         <div style="margin-top:10px;">
           <table border="1" style="border-collapse: collapse; width:100%;">
             <tr><td>
-              <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
+              <strong>ลูกค้า :</strong> {{ $row->company_name }} 
+              <strong  style="color:red; margin-left:100px;">หมายเหตุ</strong> 
+              <strong style="color:red; font-size:30px;"> {{ $order->customer->remark }}</strong><br/>
               <strong>ที่อยู่ :</strong> {{ $row->address }} <br>
               <div class="inline" style="width:25px;"></div>
               {{ $row->address2 }}
@@ -181,7 +183,7 @@
           <tr>
             <td colspan="3" >
               <div style="text-align:left;"><strong>หมายเหตุ</strong></div>
-              <div style="color:red; font-size:20px;"> {{ $order->customer->remark }}</div>
+              
               @if($page == $num_page - 1)
               <div> {{ $row->remark !="" ? $row->remark : "-" }}</div>
               @else
