@@ -241,7 +241,7 @@
     </div>
     @if(isset($checklist))
     <div class="row">      
-      <div class="form-group col-lg-3 {{ $errors->has('billing_invoice') ? 'has-error' : ''}}">
+      <div class="form-group col-lg-3 {{ $errors->has('billing_invoice') ? 'has-error' : ''}} d-none">
           <label for="billing_invoice" class="control-label">
             <input type="checkbox" {{ $checklist->billing_invoice === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_invoice').value = this.checked"> 
             {{ 'ใบกำกับภาษี' }}
@@ -249,7 +249,7 @@
           <input class="form-control form-control-sm checklist" name="billing_invoice" type="text" id="billing_invoice" value="{{ isset($checklist->billing_invoice) ? $checklist->billing_invoice : ''}}" >
           {!! $errors->first('billing_invoice', '<p class="help-block">:message</p>') !!}
       </div>
-      <div class="form-group col-lg-3 {{ $errors->has('billing_po') ? 'has-error' : ''}}">
+      <div class="form-group col-lg-3 {{ $errors->has('billing_po') ? 'has-error' : ''}} d-none">
           <label for="billing_po" class="control-label">
             <input type="checkbox" {{ $checklist->billing_po === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_po').value = this.checked"> 
             {{ 'P/O' }}
