@@ -74,9 +74,9 @@
       <label class="col-lg-2  offset-lg-1">ไฟล์ P/O ลูกหนี้</label>
       <div class="col-lg-3">
         @if(isset($order))
-        <a href="{{ url('storage/'.$order->po_file ) }}">เปิดดูไฟล์</a>
+        <a href="{{ url('storage/'.$order->po_file ) }}" target="_blank">เปิดดูไฟล์</a>
         @endif
-        <input type="file" class="" id="po_file" name="po_file">
+        <input type="file" class="" id="po_file" name="po_file" value="......">
       </div>
     </div>
 
