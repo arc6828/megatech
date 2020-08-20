@@ -67,7 +67,7 @@
 
 
 
-    <div class="form-group form-inline">
+    <div class="form-group form-inline d-none">
       <label class="col-lg-2">ระยะเวลาหนี้ (วัน)</label>
       <div class="col-lg-3">
         <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required readonly>
@@ -78,22 +78,17 @@
       </div>
     </div>
 
-    <div class="form-group form-inline">
+    <div class="form-group form-inline d-none">
       <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
       <div class="col-lg-3">
         <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required readonly>
       </div>
-      <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
+      
+      <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
       <div class="col-lg-3">
-        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required readonly>
-
-          @foreach($table_delivery_type as $row_delivery_type)
-          <option value="{{ $row_delivery_type->delivery_type_id }}" >
-            {{	$row_delivery_type->delivery_type_name }}
-          </option>
-          @endforeach
-        </select>
+      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required readonly>
       </div>
+      
     </div>
 
     <div class="form-group form-inline">
@@ -108,9 +103,16 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
+      <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
       <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required readonly>
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required readonly>
+
+          @foreach($table_delivery_type as $row_delivery_type)
+          <option value="{{ $row_delivery_type->delivery_type_id }}" >
+            {{	$row_delivery_type->delivery_type_name }}
+          </option>
+          @endforeach
+        </select>
       </div>
     </div>
 

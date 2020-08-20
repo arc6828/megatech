@@ -143,6 +143,7 @@
           </option>
           @endforeach
         </select>
+        <input name="reason" value="">
       </div>
       
       
