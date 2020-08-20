@@ -3,7 +3,7 @@
 @section('title','สร้างใบเสนอราคา')
 
 @section('background-tag','bg-warning')
-
+<button type="submit" class="btn btn-success " id="form-submit" style="width:150px;">Save</button>
 @section('content')
 <form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to save?')" >
     {{ csrf_field() }}
@@ -36,7 +36,7 @@
 
     //END
     document.querySelector("#department_id").value = "{{ Auth::user()->role}}";
-    document.querySelector("#sales_status_id").value = "1"; //ส่งใบเสนอราคา
+    document.querySelector("#sales_status_id").value = "0"; //draft
     document.querySelector("#user_id").value = "{{ Auth::id() }}";
 
     document.querySelector("#total").value = "";

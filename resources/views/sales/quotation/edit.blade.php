@@ -8,10 +8,15 @@
   
 
 	@forelse($table_quotation as $row)
+  <form class="d-none" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/approve" id="form-approve" method="POST" onsubmit="return confirm('Do you confirm to save?')">
+    {{ csrf_field() }}
+    {{ method_field('PUT') }}
+    <button type="submit" class="btn btn-success " id="form-approve-submit" style="width:150px;">Save</button>
+  </form>
       
       
 
-		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST" onsubmit="validateForm(event);">
+		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST" onsubmit="return confirm('Do you confirm to save?')">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 

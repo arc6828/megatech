@@ -102,6 +102,13 @@ class QuotationController extends Controller
           'total_before_vat' => $request->input('total_before_vat',0),
           'total' => $request->input('total_after_vat',0),
       ];
+      if($input['sales_status_id'] == 0 )
+      {
+        //0 means DRART -> do not set quotation_code / date
+        $input['quotation_code'] = "QTDRAFT";
+        $input['datetime'] = "";
+
+      }
       $id = QuotationModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL
@@ -116,7 +123,8 @@ class QuotationController extends Controller
               "product_id" => $request->input('product_id_edit')[$i],
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
-              "quotation_id" => $id,
+              "quotation_id" => $id,              
+              "delivery_duration" => $request->input('delivery_duration')[$i],
           ];
         }
       }
@@ -276,6 +284,23 @@ class QuotationController extends Controller
           }
         }
       }
+
+      //3.REDIRECT
+      return redirect("sales/quotation/{$id}");
+    }
+
+    public function approve(Request $request, $id)
+    {
+
+      //รหัสเอกสาร
+      //วันที่และเวลา
+      //สถานะ
+      $input = [
+        'quotation_code' => $this->getNewCode(),
+        'datetime' => date('Y-m-d H:i:s'),
+        'sales_status_id' => 1, 
+      ];
+      QuotationModel::update_by_id($input,$id);
 
       //3.REDIRECT
       return redirect("sales/quotation/{$id}");

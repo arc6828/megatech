@@ -15,9 +15,29 @@
           {{ $row->quotation_code }}
         </div>        
       </div>
+      <script>
+        function approved(){
+          //document.querySelector("#sales_status_id").removeAttribute("disabled");
+          //document.querySelector("#sales_status_id").setAttribute("readonly","");
+          //document.querySelector("#sales_status_id").value=1;
+          //document.querySelector("#form-submit").removeAttribute("disabled");
+          //document.querySelector("#form-submit").removeAttribute("disabled");
+          //document.querySelector("#form-approve-submit").removeAttribute("disabled");
+          
+          let elements = document.querySelector("#form-approve").children;
+
+          console.log("want to approved", elements);
+          for(var item of elements){
+            item.removeAttribute("disabled");
+          };
+
+          document.querySelector("#form-approve-submit").click();
+          
+        }
+      </script>
       <div class="col-lg-4 text-right">
-        <a class="px-2 btn btn-sm btn-primary d-none" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
-          <i class="fas fa-redo"></i> เปลี่ยนสถานะ
+        <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="approved()">
+          <i class="fas fa-check"></i> อนุมัติ QT
         </a>
         <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
           <i class="fas fa-print"></i> พิมพ์

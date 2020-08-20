@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddReferenceDetailToBuyAndSellTable extends Migration
+class AddDeliveryDurationToTbQuotationDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddReferenceDetailToBuyAndSellTable extends Migration
      */
     public function up()
     {
-        Schema::table('tb_quotation', function (Blueprint $table) {
-            //
+        Schema::table('tb_quotation_detail', function (Blueprint $table) {
+            $table->string('delivery_duration')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ class AddReferenceDetailToBuyAndSellTable extends Migration
      */
     public function down()
     {
-        Schema::table('tb_quotation', function (Blueprint $table) {
+        Schema::table('tb_quotation_detail', function (Blueprint $table) {
             //
         });
     }
