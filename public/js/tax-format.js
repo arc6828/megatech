@@ -15,8 +15,8 @@ function onChangeCitizenID(obj) {
     var input = obj.value;
 	console.log("INPUT : ",input);
     if(!checkID(input)){
-      //alert('รหัส 13 หลักไม่ถูกต้อง');
-      $(".tax-format").val("");
+      alert('รหัส 13 หลักไม่ถูกต้อง');
+      $(".tax-format")[0].focus();
     }
 }
 

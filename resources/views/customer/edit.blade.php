@@ -5,7 +5,7 @@
 @section('content')
 @forelse ($table_customer as $row)
 
-<form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data" class="mt-4">
+<form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data" class="mt-4" onsubmit="checkID(doucument.querySelector('#tax_number').value)">
   {{ csrf_field() }}
   {{ method_field('PUT') }}
 
