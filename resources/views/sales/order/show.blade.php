@@ -181,6 +181,7 @@
           <tr>
             <td colspan="3" >
               <div style="text-align:left;"><strong>หมายเหตุ</strong></div>
+              <div style="color:red; font-size:20px;"> {{ $order->customer->remark }}</div>
               @if($page == $num_page - 1)
               <div> {{ $row->remark !="" ? $row->remark : "-" }}</div>
               @else

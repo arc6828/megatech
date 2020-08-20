@@ -108,6 +108,10 @@
         <input name="fax" id="fax"  class="form-control form-control-sm  "   >
       </div>
     </div>
+    <div class="form-group col-lg-3">
+      <label >หมายเหตุ</label>
+      <input name="remark" id="remark"  class="form-control form-control-sm  "   >
+    </div>
     
   </div>
 </div>
