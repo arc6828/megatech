@@ -1,13 +1,22 @@
 function checkID(input) {
-    if(input.length != 13) return false;
+    if(input.length != 13) {
+        alert('รหัส 13 หลักไม่ถูกต้อง'); console.log("wrong");return false;}
     for(i=0, sum=0; i < 12; i++){
         sum += parseFloat(input.charAt(i))*(13-i);
     }
+    
     //console.log("CHECKED : ", (11-sum%11)%10 , parseFloat(input.charAt(12)));
-    if((11-sum%11)%10!=parseFloat(input.charAt(12))){        
+    if((11-sum%11)%10!=parseFloat(input.charAt(12))){     
+        //wrong   
+        console.log("wrong");
+        
+        alert('รหัส 13 หลักไม่ถูกต้อง');
         return false;
 
     }
+    
+        //right
+        console.log("right");
     return true;
 }
 function onChangeCitizenID(obj) {
@@ -15,7 +24,6 @@ function onChangeCitizenID(obj) {
     var input = obj.value;
 	console.log("INPUT : ",input);
     if(!checkID(input)){
-      alert('รหัส 13 หลักไม่ถูกต้อง');
       $(".tax-format")[0].focus();
     }
 }

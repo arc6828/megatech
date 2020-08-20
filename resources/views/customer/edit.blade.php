@@ -5,7 +5,8 @@
 @section('content')
 @forelse ($table_customer as $row)
 
-<form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data" class="mt-4" onsubmit="checkID(doucument.querySelector('#tax_number').value)">
+<form action="{{url('/')}}/customer/{{$row->customer_id}}" method="POST" id="form" enctype="multipart/form-data" class="mt-4" 
+onsubmit="return (checkID(document.querySelector('#tax_number').value)) || document.querySelector('#tax_number').value=='-' " >
   {{ csrf_field() }}
   {{ method_field('PUT') }}
 
@@ -88,6 +89,7 @@
       $("#account_id").val("{{ $row->account_id }}");
       $("#account_id").val("{{ $row->account_id }}");
       $("#account_id").val("{{ $row->account_id }}");*/
+      
 
     @empty
 
