@@ -310,7 +310,7 @@
         <label  >ช่องทางการชำระเงิน </label>
         <select class="form-control form-control-sm  ">
           <option>รับเช็ค (พร้อมใบเสร็จรับเงิน)</option>
-          <option>โอน (พร้อมใบเสร็จรับเงิน)</option>
+          <option>โอน</option>
         </select>
         
       </div>
