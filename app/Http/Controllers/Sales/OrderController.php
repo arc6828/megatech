@@ -339,8 +339,6 @@ class OrderController extends Controller
       $data = [
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
-          
-          'order' => OrderModel::findOrFail($id),
           //QUOTATION Detail
           'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
           'total_text' => count(OrderModel::select_by_id($id))>0 ?  Functions::baht_text(OrderModel::select_by_id($id)[0]->total) : "-",

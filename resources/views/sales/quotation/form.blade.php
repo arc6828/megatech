@@ -134,7 +134,7 @@
 
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required onchange="" >
+        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required onchange="document.querySelector('')" >
 
           @foreach($table_sales_status as $row_sales_status)
           <option value="{{ $row_sales_status->sales_status_id }}"
@@ -144,15 +144,6 @@
           @endforeach
         </select>
         <input name="reason" id="reason" class="d-none" value="">
-        <script>
-          function changeReason(){
-            let choice = document.querySelector('#reason').value;
-            /*switch(choice){
-              case "2" : 
-
-            }*/
-          }
-        </script>
       </div>
       
       
