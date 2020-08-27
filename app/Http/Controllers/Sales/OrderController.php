@@ -145,6 +145,7 @@ class OrderController extends Controller
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "order_id" => $id,
+              "delivery_duration" => $request->input('delivery_duration')[$i],
           ];
 
           //UPDATE QUOTATION sales_status_id = 5 which mean complete
@@ -431,6 +432,7 @@ class OrderController extends Controller
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "order_id" => $id,
+              "delivery_duration" => $request->input('delivery_duration')[$i],
           ];
           switch($id_edit){
             case "+" :

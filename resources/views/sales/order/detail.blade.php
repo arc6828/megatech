@@ -31,6 +31,7 @@
 							{ title: "รหัสสินค้า" },
 							//{ title: "QT" },
 							{ title: "ชื่อสินค้า" },
+							{ title: "วันที่ส่งของ(วัน)" },
 							{ title: "จำนวน" },
 							{ title: "ราคาตั้ง" },
 							{ title: "ส่วนลด %" },
@@ -58,6 +59,33 @@
       function createRow(id,element){
         var discount_percent_edit = 100 - element.discount_price / element.normal_price * 100;
         var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
+
+        //ELEMENT DELIVERY DURATION
+        let wrap = document.createElement("div");
+        let select = document.createElement("select");
+        select.name="delivery_duration[]";
+        select.required = "true";
+        //console.log("element.delivery_duration : ", element.delivery_duration);
+        wrap.append(select);
+
+        ["โปรดระบุ","3 - 5","7 - 10","15 - 30","30 - 60"].forEach(function(item, index){
+          let option = document.createElement("option");
+          option.value = index==0?"":item;
+          option.innerHTML = item;
+          if(element.delivery_duration == item){
+            
+            //console.log("element.delivery_duration 2 : ", element.delivery_duration);
+            option.setAttribute("selected", "true")
+            console.log(option);
+          }
+          select.append(option);
+
+        });
+        select = wrap.innerHTML;
+
+        //select.value = element.delivery_duration;
+        console.log(select, wrap);
+  
         return [
 
           element.product_code +
@@ -66,6 +94,7 @@
             "<input type='hidden' class='quotation_code_edit' name='quotation_code_edit[]'  value='"+element.quotation_code+"' >",
 
           element.product_name + " / "+ element.grade,
+          ""+select,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",

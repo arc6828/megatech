@@ -30,7 +30,8 @@ class OrderModel extends Model
                           'internal_reference_id',
                           'external_reference_id',
                           'total',
-                          'po_file'
+                          'po_file',
+                          
                           
 
   ];

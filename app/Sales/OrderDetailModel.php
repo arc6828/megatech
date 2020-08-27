@@ -20,7 +20,8 @@ class OrderDetailModel extends Model
     'danger_price',
     'picking_code',
     'sale_status_id',
-    'quotation_code'
+    'quotation_code',
+    'delivery_duration',
   ];
   public function Quotation(){
     return $this->belongsTo('App\Sales\QuotationModel','quotation_id');

@@ -16,7 +16,8 @@ class QuotationDetailModel extends Model
     'quotation_id',
     'quotation_detail_remark	',
     'danger_price',
-    'sale_status_id'
+    'sale_status_id',
+    'delivery_duration',
   ];
   
   public function Quotation(){
