@@ -45,7 +45,8 @@
 					"fnCreatedRow" : function( nRow, aData, iDataIndex ) {
 						//console.log("aData : ", aData, iDataIndex);
 			      $(nRow).attr('id', "row-"+aData[0]);
-			    },
+			    },          
+					"paging":         false,
 				}); //END DataTable
 
 

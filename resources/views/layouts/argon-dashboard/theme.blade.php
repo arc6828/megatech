@@ -55,6 +55,10 @@
             font-weight: 700 !important;
             
         }
+        .btn{
+          /*position:static; 
+          will-change:unset;*/
+        }
 
     </style>
   @yield('head')

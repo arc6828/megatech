@@ -3,7 +3,6 @@
 @section('title','สร้างใบเสนอราคา')
 
 @section('background-tag','bg-warning')
-<button type="submit" class="btn btn-success " id="form-submit" style="width:150px;">Save</button>
 @section('content')
 <form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to save?')" >
     {{ csrf_field() }}

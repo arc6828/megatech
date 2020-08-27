@@ -14,8 +14,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-        <input hidden id="search_key" value="">
-				<div class="table-responsives" id="table-container" >
+        		<input hidden id="search_key" value="">
+				<div class="table-responsive" id="table-container" >
 					<table class="table table-hover text-center table-sm" id="table-product-model"  ></table>
 				</div>
 			</div>
@@ -69,6 +69,8 @@
 
 				
 				table.columns.adjust().draw();
+
+				//DATA TABLE SCROLL
 				var tableCont = document.querySelector('#table-product-model');
 				tableCont.parentNode.style.overflow = 'auto';
 				tableCont.parentNode.style.height = '500px';
@@ -80,6 +82,7 @@
 					this.querySelector('thead').style.marginBottom = "100px";
 					console.log(scrollTop);
 				})
+				//END DATA TABLE SCROLL
 
 
 		

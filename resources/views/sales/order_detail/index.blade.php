@@ -19,13 +19,14 @@
 
 <div class="card">
 	<div class="card-body">
-    <div class="mb-4">
-      <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-      </a>
-    </div>
+   
     <form method="get" action="">
   		<div class="form-group form-inline">
+        <div class="col-lg-4">
+          <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+          </a>
+        </div>
   			<label class="col-lg-2 ">สถานะ</label>
   			<div class="col-lg-2">
   					<select name="order_detail_status_id" id="order_detail_status_id" class="form-control form-control-sm"
@@ -124,7 +125,7 @@
 	<div class="card-body">
     <div class="row mb-4">
       <div class="col-lg-12">
-          <input class="form-control" id="isbn" placeholder="barcode ..." onkeypress="onKeyPressEnter(event);">
+          <input class="form-control form-control-sm" id="isbn" placeholder="barcode ..." onkeypress="onKeyPressEnter(event);">
           <button class="d-none" id="btn-isbn"></button>
       </div>
     </div>
@@ -277,7 +278,7 @@
 							//element.product_name + " " + element.quantity + " หน่วย/กล่อง",
               `<a href2="{{url('/product')}}/`+element.product_id+`/edit" target="_blank">`+element.product_name + " / " + element.grade+`</a>`,
 							
-							" <input type='number' name='approve_amounts[]' value='0' class='d-inline approve_amount form-control form-control-sm "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:50px;'  required> / <div class='d-inline-block' style='width:40px;'>"+element.amount+"</div>",
+							" <input type='number' name='approve_amounts[]' value='0' class='d-inline approve_amount "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:50px;'  required> / <div class='d-inline-block' style='width:40px;'>"+element.amount+"</div>",
               element.quantity,
               0,
 							0,
@@ -289,7 +290,9 @@
 					console.log(dataSet);
 
 					$('#table-order-detail').DataTable({
-						data: dataSet,
+            data: dataSet,
+            paging : false,
+            searching : false,
 						columns: [
 								{ title: "#" },
 								{ title: "เลขที่ OE" },
@@ -306,7 +309,22 @@
 								{ title: "คงคลัง" },
 								{ title: "Picking" },
 						]
-					}).order( [ 1, 'desc' ] ).draw(); //END DATATABLE
+          }).order( [ 1, 'desc' ] ).draw(); //END DATATABLE
+          
+          //DATA TABLE SCROLL
+          var tableCont = document.querySelector('#table-order-detail');
+          tableCont.parentNode.style.overflow = 'auto';
+          tableCont.parentNode.style.maxHeight = '250px';
+          tableCont.parentNode.addEventListener('scroll',function (e){
+            var scrollTop = this.scrollTop-1;
+            this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 1000 + 'px)';
+            this.querySelector('thead').style.background = "white";
+            this.querySelector('thead').style.zIndex = "3000";
+            //this.querySelector('thead').style.marginBottom = "200px";
+            //console.log(scrollTop);
+          })
+          //END DATA TABLE SCROLL
+
           var key = "{{ $filter->order_id }}";
           var table_detail = $('#table-order-detail').DataTable();
           table_detail.search(key).draw();

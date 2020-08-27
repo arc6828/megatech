@@ -90,8 +90,24 @@
 								{ title: "บริษัท" },
 								//{ title: "ผู้ติดต่อ" },
 								{ title: "#" },
-						]
-					}).search("{{ isset($customer)? $customer->customer_code : '' }}").draw();// END DATATABLE;
+						],
+						"paging":         false,
+					})
+					.search("{{ isset($customer)? $customer->customer_code : '' }}")
+					.columns.adjust()
+					.draw();// END DATATABLE;
+					//TABLE SCROLL
+					var tableCont = document.querySelector('#table-customer-modal');
+					tableCont.parentNode.style.overflow = 'auto';
+					tableCont.parentNode.style.height = '500px';
+					tableCont.parentNode.addEventListener('scroll',function (e){
+						var scrollTop = this.scrollTop-10;
+						this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+						this.querySelector('thead').style.background = "white";
+						this.querySelector('thead').style.zIndex = "3000";
+						this.querySelector('thead').style.marginBottom = "100px";
+						console.log(scrollTop);
+					});
 					@if( !empty(request('customer_id')) )
 						//$("#btn-customer").click();
 						
