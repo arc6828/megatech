@@ -134,7 +134,7 @@
 
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required onchange="document.querySelector('')" >
+        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required onchange="document.querySelector('#sales_status_id').value > 1 ? $('#reason').removeClass('d-none') : $('#reason').addClass('d-none') " >
 
           @foreach($table_sales_status as $row_sales_status)
           <option value="{{ $row_sales_status->sales_status_id }}"
