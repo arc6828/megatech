@@ -49,6 +49,7 @@ class QuotationModel extends Model
       //SELECT count(*) FROM `tb_quotation` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
       return DB::table('tb_quotation')
           ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+          ->where('sales_status_id','!=','-1')
           ->count();
 	}
 
