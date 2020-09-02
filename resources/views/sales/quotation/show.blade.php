@@ -100,7 +100,7 @@
         <div style="margin-top:10px;">
           <table border="1" style="border-collapse: collapse; width:100%;">
             <tr><td>
-              <strong>ผู้ติดต่อ :</strong> {{ $row->contact_name }} <br>
+              <strong>ผู้ติดต่อ :</strong>แผนกจัดซื้อ {{ $row->contact_name }} <br>
               <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
               <strong>ที่อยู่ :</strong> {{ $row->address }} <br>
               <div class="inline" style="width:25px;"></div>
