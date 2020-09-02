@@ -11,7 +11,7 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th>#</th><th>Name</th><th>Department</th><th>Email</th><th>Phone</th><th>อ้างอิงเมื่อ</th>
+                        <th>#</th><th>Name</th><th>Department</th><th>Email</th><th>Phone</th><th>อ้างอิงเมื่อ</th><th>พิมพ์</th>
                         <th class="d-none">Contact Type</th>
                     </tr>
                 </thead>
@@ -67,6 +67,9 @@
                                     {{ $item->supplier_id }}
                                     @break
                             @endswitch
+                        </td>
+                        <td>
+                            <a href="#"><i class="fa fa-print"></i></a>
                         </td>
                         
                     </tr>
