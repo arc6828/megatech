@@ -50,14 +50,15 @@ onsubmit="return (checkID(document.querySelector('#tax_number').value)) || docum
       $("#contact_name").val("{{ $row->contact_name }}");
       $("#telephone").val("{{ $row->telephone }}");
       $("#fax").val("{{ $row->fax }}");
-      $("#address").val("{{ $row->address }} {{ $row->address2 }}");
+
+      $("#address").val("{{ isset($row->sub_district) ? $row->address : $row->address.' '. $row->address2 }}");
       /*
       $("#province").val("{{ $row->province }}");
       $("#district").val("{{ $row->district }}");
       $("#sub_district").val("{{ $row->sub_district }}");
       $("#zipcode").val("{{ $row->zipcode }}");
       */
-      $("#delivery_address").val("{{ $row->delivery_address }}  {{ $row->delivery_address2 }}");
+      $("#delivery_address").val("{{ isset($row->delivery_sub_district) ? $row->delivery_address : $row->delivery_address.' '. $row->delivery_address2  }}   ");
       /*
       $("#delivery_province").val("{{ $row->delivery_province }}");
       $("#delivery_district").val("{{ $row->delivery_district }}");
