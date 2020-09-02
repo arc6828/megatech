@@ -70,6 +70,22 @@
         });
           
       });
+
+      //UPDATE CC
+		  fetch("{{ url('api/contact/customer') }}/{{ $row->customer_id }}")
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				let contact_name = document.querySelector("#contact_name");
+				data.forEach(function(item){
+					var node = document.createElement("option");                 // Create a <li> node
+					node.innerHTML = item.name;
+					node.value = item.name;
+					contact_name.appendChild(node);
+				});
+        document.querySelector("#contact_name").value = "{{ $row->contact_name }}";
+
+			});
       
 
     </script>
