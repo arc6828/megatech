@@ -13,6 +13,35 @@
     {!! $errors->first('department', '<p class="help-block">:message</p>') !!}
     
 </div>
+<div class="row">
+    <div class="form-group col-lg-4">
+    <label >สถานที่</label>
+    <input type="text" name="delivery_address" id="delivery_address" class="form-control form-control-sm  " >
+    </div>
+    <div class="form-group col-lg-2">
+    <label >จังหวัด</label>
+    <select class="form-control form-control-sm" name="delivery_province"  id="delivery_province" onchange="showAmphoes('delivery_address')"></select>
+    
+    </div>
+    <div class="form-group col-lg-2">
+    <label >อำเภอ</label>
+    <select class="form-control form-control-sm"  name="delivery_district"  id="delivery_district"  onchange="showDistricts('delivery_address')"></select>
+    
+    </div>
+    <div class="form-group col-lg-2">
+    <label>ตำบล</label>
+    <select class="form-control form-control-sm"  name="delivery_sub_district" id="delivery_sub_district" onchange="showZipcode('delivery_address')"></select>
+    
+    </div>
+    <div class="form-group col-lg-2">
+    <label  >รหัสไปรษณีย์</label>
+    <input class="form-control form-control-sm"  name="delivery_zipcode"  id="delivery_zipcode" placeholder="รหัสไปรษณีย์" />
+    
+    </div>
+    @include('customer/district_script')
+</div>
+
+
 <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
     <label for="email" class="control-label">{{ 'Email' }}</label>
     <input class="form-control form-control-sm" name="email" type="text" id="email" value="{{ isset($contact->email) ? $contact->email : ''}}" >
@@ -59,6 +88,8 @@
     
     
 </div>
+
+
 <div class="form-group {{ $errors->has('contact_type') ? 'has-error' : ''}}">
     <label for="contact_type" class="control-label">{{ 'Contact Type' }}</label>
     
