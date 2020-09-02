@@ -81,12 +81,12 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน) (deplicated)</label>
       <div class="col-lg-3">
-        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required readonly>
+        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required >
       </div>
       
       <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)(deplicated)</label>
       <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required readonly>
+      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required >
       </div>
       
     </div>
