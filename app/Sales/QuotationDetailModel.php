@@ -50,6 +50,7 @@ class QuotationDetailModel extends Model
 	}
 
   public static function select_by_user_id($customer_id,$user_id){
+    //IF ADMIN no need to where user_id
     return DB::table('tb_quotation_detail')
         ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
         ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')

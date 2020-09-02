@@ -60,6 +60,8 @@
 				document.querySelector("#total").value = "{{ $row->total }}";
 				document.querySelector("#remark").value = "{{ $row->remark }}";
 				document.querySelector("#vat_percent").value = "{{ $row->vat_percent }}";
+				document.querySelector("#max_credit").value = "{{ $row->max_credit }}";
+				document.querySelector("#total_debt").value = "{{ $row->total_debt }}";
 
 				onChange(document.querySelector("#vat_percent"));
 				$('form input').keydown(function (e) {

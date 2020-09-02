@@ -118,6 +118,8 @@ class OrderController extends Controller
           'vat' => $request->input('vat',0),
           'total_before_vat' => $request->input('total_before_vat',0),
           'total' => $request->input('total_after_vat',0),
+          'max_credit' => $request->input('max_credit'),
+          'total_debt' => $request->input('total_debt'),
       ];
       
       $id = OrderModel::insert($input);
@@ -410,6 +412,8 @@ class OrderController extends Controller
         'total_before_vat' => $request->input('total_before_vat',0),
         'vat_percent' => $request->input('vat_percent',7),
         'total' => $request->input('total_after_vat',0),
+        'max_credit' => $request->input('max_credit'),
+        'total_debt' => $request->input('total_debt'),
       ];
       OrderModel::update_by_id($input,$id);
 

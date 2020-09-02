@@ -56,8 +56,8 @@
       </div>
       @include('sales/order/customer_modal')
 
-      <label class="col-lg-2">วันที่ส่งของ</label>
-      <div class="col-lg-3">
+      <label class="col-lg-2 d-none">วันที่ส่งของ</label>
+      <div class="col-lg-3 d-none">
         <input type="date" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
       </div>
 
@@ -161,9 +161,9 @@
       <div class="col-lg-3">
         <input type="number" name="max_credit"	id="max_credit" class="form-control form-control-sm form-control-line" >      
       </div>
-      <label class="col-lg-2 offset-lg-1">หนี้สะสม</label>
-      <div class="col-lg-3">
-        <input type="number" name="debt_balance"	id="debt_balance" class="form-control form-control-sm form-control-line" >      
+      <label class="col-lg-2 offset-lg-1 d-none">หนี้สะสม</label>
+      <div class="col-lg-3 d-none">
+        <input type="number" name="total_debt"	id="total_debt" class="form-control form-control-sm form-control-line" >      
       </div>
     </div>
 

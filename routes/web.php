@@ -63,6 +63,8 @@
             //1 Sales
             Route::get('/quotation/{id}/pdf', 'Sales\QuotationController@pdf');
             Route::put('/quotation/{id}/approve', 'Sales\QuotationController@approve');
+            
+            //Route::delete('/quotation/{id}', 'Sales\QuotationController@destroy');
             Route::resource('/quotation', 'Sales\QuotationController');
             //Route::resource('/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
             //Route::resource('/quotation', 'Sales\QuotationController');
