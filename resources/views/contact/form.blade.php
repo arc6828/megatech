@@ -14,6 +14,45 @@
     
 </div>
 <div class="row">
+    <div class="form-group col-lg-12">
+        <script>
+            function selectAddress(){
+                // call api university
+                var id = document.getElementById("group_address").value;
+                //var school = document.getElementById("school");
+                var url = "{{ url('api/customer/') }}"+"/"+id;
+                console.log(url);
+                var datajson = fetch(url).then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    //console.log(data.university);
+                    switch(id){
+                        case "1" : 
+                            document.getElementById("address").value = data.address;
+                            document.getElementById("province").value = data.province;
+                            document.getElementById("district").value = data.district;
+                            document.getElementById("tambon").value = data.tambon;
+                            document.getElementById("zipcode").value = data.zipcode;
+                            break;
+                        case "2" : 
+                            document.getElementById("address").value = data.address;
+                            document.getElementById("province").value = data.province;
+                            document.getElementById("district").value = data.district;
+                            document.getElementById("tambon").value = data.tambon;
+                            document.getElementById("zipcode").value = data.zipcode;
+                            break;                        
+                    }
+                    //console.log(school);
+                    
+                });
+                }
+        </script>
+        <select class="form-control form-control-sm" name="group_address" id="group_address" onchange="selectAddress()" >
+            <option value="1">ใช้ที่อยู่หลักของบริษัท</option>
+            <option value="2">ใช้ที่อยู่ขนส่ง</option>
+            <option value="3">กำหนดที่อยู่เอง</option>
+        </select>
+    </div>
     <div class="form-group col-lg-4">
     <label >สถานที่</label>
     <input type="text" name="delivery_address" id="delivery_address" class="form-control form-control-sm  " >

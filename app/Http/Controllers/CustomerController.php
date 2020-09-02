@@ -89,6 +89,8 @@ class CustomerController extends Controller
           $folder = "customer/{$request->input('customer_code')}/file_cheque";
             $requestData['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
         }
+        //CHANGE LATER
+        $requestData['max_credit'] = -1;
         //UPDATE CUSTOMER
         CustomerModel::create($requestData);
         return redirect('customer');
