@@ -26,7 +26,7 @@
 
     //CUSTOMER DATA
     document.querySelector("#debt_duration").value = "";
-    document.querySelector("#billing_duration").value = "";
+    document.querySelector("#billing_duration").value = "30";
     document.querySelector("#payment_condition").value = "";
     document.querySelector("#delivery_type_id").value = "";
     document.querySelector("#tax_type_id").value = "";
