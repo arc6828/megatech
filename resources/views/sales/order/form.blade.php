@@ -58,7 +58,7 @@
 
       <label class="col-lg-2 d-none">วันที่ส่งของ</label>
       <div class="col-lg-3 d-none">
-        <input type="date" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
+        <input type="date" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line">
       </div>
 
       
@@ -85,8 +85,8 @@
       <div class="col-lg-3">
         <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
       </div>
-      <label class="col-lg-2 offset-lg-1 d-none">กำหนดยื่นราคา (วัน)</label>
-      <div class="col-lg-3 d-none">
+      <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา (วัน)</label>
+      <div class="col-lg-3 ">
         <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line" value="0">
       </div>
     </div>
