@@ -104,8 +104,7 @@
               <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
               <strong>ที่อยู่ :</strong> {{ $row->address }} <br>
               <div class="inline" style="width:25px;"></div>
-              {{ $row->address2 }}
-              {{ $row->sub_district? "ต.".$row->sub_district : ""}}
+              {{ $row->sub_district? "ต.".$row->sub_district : $row->address2}}
               {{ $row->district? "อ.".$row->district : ""}}
               {{ $row->province? "จ.".$row->province  : ""}}
               {{  $row->zipcode  }}  <br>
