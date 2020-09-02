@@ -104,9 +104,17 @@
               <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
               <strong>ที่อยู่ :</strong> {{ $row->address }} <br>
               <div class="inline" style="width:25px;"></div>
-              {{ $row->sub_district? "ต.".$row->sub_district : $row->address2}}
-              {{ $row->district? "อ.".$row->district : ""}}
-              {{ $row->province? "จ.".$row->province  : ""}}
+              @php
+              $prefix = ["ต.","อ.","จ."];
+              @endphp
+              @if(isset($row->province))
+                @if($row->province == "กรุงเทพมหานคร")
+                  $prefix = ["แขวง","เขต",""];
+                @endif
+              @endif
+              {{ $row->sub_district? $prefix[0].$row->sub_district : $row->address2}}
+              {{ $row->district? $prefix[1].$row->district : ""}}
+              {{ $row->province? $prefix[2].$row->province  : ""}}
               {{  $row->zipcode  }}  <br>
               <strong>โทร :</strong> {{ $row->telephone }}
               <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> {{ $row->fax}}
