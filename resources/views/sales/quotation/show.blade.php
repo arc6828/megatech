@@ -109,7 +109,9 @@
               @endphp
               @if(isset($row->province))
                 @if($row->province == "กรุงเทพมหานคร")
-                  $prefix = ["แขวง","เขต",""];
+                @php
+                $prefix = ["แขวง","เขต",""];
+                @endphp
                 @endif
               @endif
               {{ $row->sub_district? $prefix[0].$row->sub_district : $row->address2}}
