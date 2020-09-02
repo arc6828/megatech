@@ -41,12 +41,18 @@
           <i class="fas fa-check"></i> อนุมัติ QT
         </a>
         @endif
+        @if($row->sales_status_id != -1)
         <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
           <i class="fas fa-print"></i> พิมพ์
         </a>
         <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
           <i class="fas fa-edit"></i> แก้ไข
         </a>
+        @else
+        <a class="px-2 btn btn-sm btn-danger" href="#">
+          <i class="fas fa-ban"></i> void
+        </a>
+        @endif
       
       </div>
       @endif
@@ -55,7 +61,8 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="quotation_code"	id="quotation_code" class="form-control form-control-sm"	readonly>
+        <input name="quotation_code"	id="quotation_code" class="form-control form-control-sm"	readonly> {{ isset($row->revision) ? "R".$row->revision : ""  }}
+
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
