@@ -16,9 +16,8 @@
       
       
 
-		<form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" id="form" method="POST" onsubmit="return confirm('Do you confirm to save?')">
+		<form class="" action="{{ url('/') }}/sales/quotation" id="form" method="POST" onsubmit="return confirm('Do you confirm to save?')">
 			{{ csrf_field() }}
-			{{ method_field('PUT') }}
 
 			@include('sales/quotation/form')
 

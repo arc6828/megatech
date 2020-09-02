@@ -30,9 +30,13 @@
 				<tbody>
 					@foreach($table_quotation as $row)
 					<tr>
-						<td>
+						<td class="text-left">
 							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}">
-								{{ $row->quotation_code }}
+								@if($row->revision == 0)
+									{{ $row->quotation_code }}
+								@else
+									{{ $row->quotation_code }}-R{{ $row->revision }}
+								@endif
 							</a>
 						</td>
 						<td title="{{ $row->datetime }}">{{ explode(" " , $row->datetime)[0] }}</td>
@@ -58,6 +62,9 @@
 								<span class="badge badge-pill badge-danger">{{ $row->sales_status_name }}</span>							
 							@elseif( $row->sales_status_id == 5    )
 								<span class="badge badge-pill badge-success">{{ $row->sales_status_name }}</span>
+							@elseif( $row->sales_status_id == -1    )
+								<span class="badge badge-pill badge-secondary">{{ $row->sales_status_name }}</span>
+								
 							@else
 								<span class="badge badge-pill badge-warning">{{ $row->sales_status_name }}</span>
 								
