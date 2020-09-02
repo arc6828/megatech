@@ -61,7 +61,7 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="quotation_code"	id="quotation_code" class="form-control form-control-sm"	readonly> {{ isset($row->revision) ? "R".$row->revision : ""  }}
+        <input name="quotation_code"	id="quotation_code" class="form-control form-control-sm"	readonly> 
 
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>

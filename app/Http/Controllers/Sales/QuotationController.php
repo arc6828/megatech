@@ -81,6 +81,7 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
+      
       //INSERT QUOTATION
       $input = [
           'quotation_code' => $this->getNewCode(),
@@ -103,15 +104,20 @@ class QuotationController extends Controller
           'total_before_vat' => $request->input('total_before_vat',0),
           'total' => $request->input('total_after_vat',0),
       ];
+      //VOID IF HAS CODE
       if( !empty($request->input('quotation_code') ) ){
 
-        $input['quotation_code'] = $request->input('quotation_code');
         $q = QuotationModel::where('quotation_code',$request->input('quotation_code') )
           ->orderBy('datetime','desc')->first();
         $input['revision'] = $q->revision +1 ;
         $q->sales_status_id = -1; //-1 means void
         $q->save();
+        
+        $segments = explode("-",$request->input('quotation_code'));
+        $input['quotation_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+        
       }
+      
       if($input['sales_status_id'] == 0 )
       {
         //0 means DRART -> do not set quotation_code / date
@@ -151,6 +157,7 @@ class QuotationController extends Controller
         $month = date("m");
         $number = sprintf('%05d', $count);
         $quotation_code = "QT{$year}{$month}-{$number}";
+        
         return $quotation_code;
     }
 

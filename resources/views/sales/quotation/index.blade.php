@@ -32,11 +32,7 @@
 					<tr>
 						<td class="text-left">
 							<a href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}">
-								@if($row->revision == 0)
-									{{ $row->quotation_code }}
-								@else
-									{{ $row->quotation_code }}-R{{ $row->revision }}
-								@endif
+								{{ $row->quotation_code }}
 							</a>
 						</td>
 						<td title="{{ $row->datetime }}">{{ explode(" " , $row->datetime)[0] }}</td>
