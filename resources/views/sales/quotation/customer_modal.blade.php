@@ -49,6 +49,20 @@
 
 		$('#customerModal').modal('hide');
 		onChangeCustomer();
+
+		//UPDATE CC
+		fetch("{{ url('api/contact/customer') }}/"+id)
+			.then(response => response.json())
+			.then(data => {
+				console.log(data);
+				let contact_name = document.querySelector("#contact_name");
+				data.forEach(function(item){
+					var node = document.createElement("option");                 // Create a <li> node
+					node.innerHTML = item.name;
+					node.value = item.name;
+					contact_name.appendChild(node);
+				});
+			});
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		//console.log("555");
