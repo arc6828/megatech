@@ -80,10 +80,20 @@
         </div>
       </div>
       @include('sales/quotation/customer_modal')
-      <label class="col-lg-2 d-none">ผู้ติดต่อ</label>
-      <div class="col-lg-3 d-none">
-        <input name="contact_name" id="contact_name" class="form-control form-control-sm"	>
+
+      <label class="col-lg-2">CC</label>
+      <div class="col-lg-3">
+        <select name="contact_name" id="contact_name" class="form-control form-control-sm"	>
+          <option>ระบุผู้ติดต่อถ้ามี...</option>
+        </select>
       </div>
+
+    </div>
+
+
+
+    <div class="form-group form-inline">
+    
 
       <label class="col-lg-2">ขนส่งโดย</label>
       <div class="col-lg-3">

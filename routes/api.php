@@ -36,6 +36,7 @@ Route::get('/province/{province_code}/amphoe/{amphoe_code}/district/{district_co
 
 //API
 Route::apiResource('/customer', 'API\CustomerController');
+Route::get('/contact/{mode}/{id}', 'API\ContactController@index');
 Route::apiResource('/supplier', 'API\SupplierController');
 Route::apiResource('/product', 'API\ProductController');
 //Route::apiResource('/order', 'API\OrderController');
