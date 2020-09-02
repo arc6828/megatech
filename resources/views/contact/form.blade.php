@@ -20,37 +20,45 @@
                 // call api university
                 var id = document.getElementById("group_address").value;
                 //var school = document.getElementById("school");
-                var url = "{{ url('api/customer/') }}"+"/"+id;
+                var url = "{{ url('api/customer/') }}"+"/{{ $contact->customer_id }}";
                 console.log(url);
                 var datajson = fetch(url).then(response => response.json())
                 .then(data => {
                     console.log(data);
+                    data = data[0];
                     //console.log(data.university);
                     switch(id){
                         case "1" : 
                             document.getElementById("address").value = data.address;
-                            document.getElementById("province").value = data.province;
-                            document.getElementById("district").value = data.district;
-                            document.getElementById("tambon").value = data.sub_district;
-                            document.getElementById("zipcode").value = data.zipcode;
+                            var customer_address = {
+                                "province" : data.province,
+                                "district" : data.district,
+                                "sub_district" : data.sub_district,
+                                "zipcode" : data.zipcode,
+                            };                                
+                            showProvinces("address", customer_address);
                             break;
                         case "2" : 
                             document.getElementById("address").value = data.delivery_address;
-                            document.getElementById("province").value = data.delivery_province;
-                            document.getElementById("district").value = data.delivery_district;
-                            document.getElementById("tambon").value = data.delivery_sub_district;
-                            document.getElementById("zipcode").value = data.delivery_zipcode;
+                            var customer_delivery_address = {
+                                "province" : data.delivery_province,
+                                "district" : data.delivery_district,
+                                "sub_district" : data.delivery_sub_district,
+                                "zipcode" : data.delivery_zipcode,
+                            };                                
+                            showProvinces("delivery_address", customer_delivery_address);
                             break;                        
                     }
+
                     //console.log(school);
                     
                 });
                 }
         </script>
-        <select class="form-control form-control-sm" name="group_address" id="group_address" onchange="selectAddress()" >
+        <select class="form-control form-control-sm" name="group_address" id="group_address" onchange="selectAddress()" >        
+            <option value="3">กำหนดที่อยู่เอง</option>
             <option value="1">ใช้ที่อยู่หลักของบริษัท</option>
             <option value="2">ใช้ที่อยู่ขนส่ง</option>
-            <option value="3">กำหนดที่อยู่เอง</option>
         </select>
     </div>
     <div class="form-group col-lg-4">

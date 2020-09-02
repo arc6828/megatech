@@ -41,9 +41,10 @@ class ContactController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
         $contact = new Contact;
+        $contact->customer_id = request("customer_id");
         return view('contact.create',compact('contact'));
     }
 
