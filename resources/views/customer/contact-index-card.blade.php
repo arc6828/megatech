@@ -20,7 +20,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>
-                        <a href="{{ url('/contact/' . $item->id) }}" title="View Contact">
+                        <a href="{{ url('/contact/' . $item->id.'/edit') }}" title="View Contact">
                             {{ $item->name }}
                         </a>
                         </td>

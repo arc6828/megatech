@@ -31,15 +31,15 @@
                             document.getElementById("address").value = data.address;
                             document.getElementById("province").value = data.province;
                             document.getElementById("district").value = data.district;
-                            document.getElementById("tambon").value = data.tambon;
+                            document.getElementById("tambon").value = data.sub_district;
                             document.getElementById("zipcode").value = data.zipcode;
                             break;
                         case "2" : 
-                            document.getElementById("address").value = data.address;
-                            document.getElementById("province").value = data.province;
-                            document.getElementById("district").value = data.district;
-                            document.getElementById("tambon").value = data.tambon;
-                            document.getElementById("zipcode").value = data.zipcode;
+                            document.getElementById("address").value = data.delivery_address;
+                            document.getElementById("province").value = data.delivery_province;
+                            document.getElementById("district").value = data.delivery_district;
+                            document.getElementById("tambon").value = data.delivery_sub_district;
+                            document.getElementById("zipcode").value = data.delivery_zipcode;
                             break;                        
                     }
                     //console.log(school);
@@ -55,26 +55,26 @@
     </div>
     <div class="form-group col-lg-4">
     <label >สถานที่</label>
-    <input type="text" name="delivery_address" id="delivery_address" class="form-control form-control-sm  " >
+    <input type="text" name="address" id="address" class="form-control form-control-sm  " >
     </div>
     <div class="form-group col-lg-2">
     <label >จังหวัด</label>
-    <select class="form-control form-control-sm" name="delivery_province"  id="delivery_province" onchange="showAmphoes('delivery_address')"></select>
+    <select class="form-control form-control-sm" name="province"  id="province" onchange="showAmphoes('delivery_address')"></select>
     
     </div>
     <div class="form-group col-lg-2">
     <label >อำเภอ</label>
-    <select class="form-control form-control-sm"  name="delivery_district"  id="delivery_district"  onchange="showDistricts('delivery_address')"></select>
+    <select class="form-control form-control-sm"  name="district"  id="district"  onchange="showDistricts('delivery_address')"></select>
     
     </div>
     <div class="form-group col-lg-2">
     <label>ตำบล</label>
-    <select class="form-control form-control-sm"  name="delivery_sub_district" id="delivery_sub_district" onchange="showZipcode('delivery_address')"></select>
+    <select class="form-control form-control-sm"  name="sub_district" id="sub_district" onchange="showZipcode('delivery_address')"></select>
     
     </div>
     <div class="form-group col-lg-2">
     <label  >รหัสไปรษณีย์</label>
-    <input class="form-control form-control-sm"  name="delivery_zipcode"  id="delivery_zipcode" placeholder="รหัสไปรษณีย์" />
+    <input class="form-control form-control-sm"  name="zipcode"  id="zipcode" placeholder="รหัสไปรษณีย์" />
     
     </div>
     @include('customer/district_script')

@@ -187,7 +187,7 @@
       <div class="form-group col-lg-3">
         <label >วงเงินเครดิต</label>
         @if( Auth()->user()->role == "admin" )
-        <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  "   >
+        <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  " value="{{ isset($customer) ? number_format($customer->max_credit) : '-1'  }}"   >
         @else
         <div>{{ isset($customer) ? number_format($customer->max_credit) : "-1"  }} </div>
         @endif
