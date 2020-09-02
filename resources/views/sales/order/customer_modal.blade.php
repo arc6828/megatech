@@ -39,7 +39,7 @@
           console.log("Customer", obj, obj.billing_duration);
 
           document.querySelector("#debt_duration").value = obj.debt_duration;
-          document.querySelector("#billing_duration").value = obj.billing_duration;
+          document.querySelector("#billing_duration").value = "0";
           document.querySelector("#payment_condition").value = obj.payment_condition;
           document.querySelector("#delivery_type_id").value = obj.delivery_type_id;
           document.querySelector("#tax_type_id").value = obj.tax_type_id;
