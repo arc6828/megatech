@@ -87,7 +87,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1 d-none">กำหนดยื่นราคา (วัน)</label>
       <div class="col-lg-3 d-none">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line" value="-">
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line" value="0">
       </div>
     </div>
 
