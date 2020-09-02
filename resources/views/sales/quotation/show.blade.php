@@ -82,7 +82,7 @@
             <table class="no-padding-cell" border="1" style="border-collapse: collapse; width:100%; text-align:center;">
               <tr>
                 <th>เลขที่</th>
-                <td>{{ $row->quotation_code }}-{{ $row->quotation_code }}</td>
+                <td>{{ $row->quotation_code }}-{{ $row->revision }}</td>
               </tr>
               <tr>
                 <th>วันที่</th>
