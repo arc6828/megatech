@@ -93,7 +93,7 @@
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +
             "<input type='hidden' class='quotation_code_edit' name='quotation_code_edit[]'  value='"+element.quotation_code+"' >",
 
-          element.product_name + " / "+ element.grade,
+          element.product_name ,
           ""+select,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 

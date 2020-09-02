@@ -78,13 +78,13 @@
       </div>
     </div>
 
-    <div class="form-group form-inline d-none">
-      <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน)</label>
+    <div class="form-group form-inline">
+      <label class="col-lg-2">เงื่อนไขการชำระเงิน (วัน) (deplicated)</label>
       <div class="col-lg-3">
         <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required readonly>
       </div>
       
-      <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
+      <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)(deplicated)</label>
       <div class="col-lg-3">
       <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required readonly>
       </div>
