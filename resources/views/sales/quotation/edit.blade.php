@@ -8,11 +8,18 @@
   
 
 	@forelse($table_quotation as $row)
-  <form class="d-none" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/approve" id="form-approve" method="POST" onsubmit="return confirm('Do you confirm to save?')">
-    {{ csrf_field() }}
-    {{ method_field('PUT') }}
-    <button type="submit" class="btn btn-success " id="form-approve-submit" style="width:150px;">Save</button>
-  </form>
+    <form class="d-none"  action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" method="POST" id="form_delete" >
+      {{ csrf_field() }}
+      {{ method_field('DELETE') }}
+      <button type="submit">Delete</button>
+    </form>
+    
+
+    <form class="d-none" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/approve" id="form-approve" method="POST" onsubmit="return confirm('Do you confirm to save?')">
+      {{ csrf_field() }}
+      {{ method_field('PUT') }}
+      <button type="submit" class="btn btn-success " id="form-approve-submit" style="width:150px;">Save</button>
+    </form>
       
       
 
@@ -89,31 +96,7 @@
 
     </script>
 
-    <div id="outer-form-container" style="display:none;">
-      <form action="{{ url('/sales/quotation/'.$row->quotation_id) }}" method="POST" id="form_delete" >
-        {{ csrf_field() }}
-        {{ method_field('DELETE') }}
-        <button type="submit">Delete</button>
-      </form>
-    </div>
     
-    <script>
-
-      
-      function onDelete(id){
-        //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-        //GET FORM BY ID
-        var form = document.getElementById("form_delete");
-        //CHANGE ACTION TO SPECIFY ID
-        //form.action = "{{ url('/') }}/sales/quotation/"+id;
-        //SUBMIT
-        var want_to_delete = confirm('Are you sure to delete this quotation ?');
-        if(want_to_delete){
-          form.submit();
-        }
-      }
-    </script>
 
 
 

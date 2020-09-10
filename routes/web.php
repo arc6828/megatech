@@ -21,8 +21,8 @@
 
 
 
-    //LOGIN REQUIRED
-    Route::middleware(['auth'])->group(function () {
+//LOGIN REQUIRED
+Route::middleware(['auth'])->group(function () {
     Route::get('/user-manual',function(){
         return view('user-manual');
     });

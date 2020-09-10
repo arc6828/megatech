@@ -106,15 +106,23 @@ class QuotationController extends Controller
       ];
       //VOID IF HAS CODE
       if( !empty($request->input('quotation_code') ) ){
-
-        $q = QuotationModel::where('quotation_code',$request->input('quotation_code') )
-          ->orderBy('datetime','desc')->first();
-        $input['revision'] = $q->revision +1 ;
-        $q->sales_status_id = -1; //-1 means void
-        $q->save();
+        switch($request->input('quotation_code')){
+          case "QTDRAFT" : 
+            $id =   $request->input('quotation_id');
+            QuotationModel::destroy($id);
+            QuotationDetailModel::where('quotation_id',$id)->delete();
+            break;
+          default :
+            $q = QuotationModel::where('quotation_code',$request->input('quotation_code') )
+              ->orderBy('datetime','desc')->first();
+            $input['revision'] = $q->revision +1 ;
+            $q->sales_status_id = -1; //-1 means void
+            $q->save();
+            
+            $segments = explode("-",$request->input('quotation_code'));
+            $input['quotation_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+        }
         
-        $segments = explode("-",$request->input('quotation_code'));
-        $input['quotation_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
         
       }
       
@@ -172,6 +180,7 @@ class QuotationController extends Controller
       QuotationModel::findOrFail($id);
       $data = [
           //QUOTATION
+          'quotation' => QuotationModel::findOrFail($id),
           'table_quotation' => QuotationModel::select_by_id($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
@@ -226,6 +235,7 @@ class QuotationController extends Controller
       QuotationModel::findOrFail($id);
       $data = [
           //QUOTATION
+          'quotation' => QuotationModel::findOrFail($id),
           'table_quotation' => QuotationModel::select_by_id($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),

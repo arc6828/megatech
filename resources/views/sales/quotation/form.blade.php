@@ -34,6 +34,25 @@
           document.querySelector("#form-approve-submit").click();
           
         }
+
+        function onDelete(id){
+          //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+          //GET FORM BY ID
+          var form = document.getElementById("form_delete");
+          let elements = form.children;
+          console.log("want to delete", elements);
+          for(var item of elements){
+            item.removeAttribute("disabled");
+          };
+          //CHANGE ACTION TO SPECIFY ID
+          //form.action = "{{ url('/') }}/sales/quotation/"+id;
+          //SUBMIT
+          var want_to_delete = confirm('Are you sure to delete this quotation ?');
+          if(want_to_delete){
+            form.submit();
+          }
+        }
       </script>
       <div class="col-lg-4 text-right">
         @if($row->sales_status_id == 0)
@@ -62,6 +81,7 @@
       </div>
       @endif
     </div>
+    <input type="hidden" name="quotation_id" value="{{ isset($quotation->quotation_id)? $quotation->quotation_id : '' }}" />
 
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
