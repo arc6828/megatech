@@ -22,7 +22,7 @@ class GaurdStockController extends Controller
 
         if (!empty($keyword)) {
             $gaurdstock = GaurdStock::where('product_id',  $keyword)
-                ->where('stock','!=','0')
+                ->where('amount_in_stock','!=','0')
                 ->latest()->paginate($perPage);
         } else {
             $gaurdstock = GaurdStock::latest()->paginate($perPage);
