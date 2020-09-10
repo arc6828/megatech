@@ -48,7 +48,7 @@
                                                     <a href="{{ url('/') }}/sales/order/{{ $item->sales_order->order_id }}/edit">{{ $item->sales_order->order_code }}</a>
                                                     @break
                                                 @case("sales_invoice")
-                                                    <a href="{{ url('/') }}/sales/order/{{ $item->sales_order->order_id }}/edit">{{ $item->sales_order->order_code }}</a>                                                    
+                                                    <a href="{{ url('/') }}/sales/invoice/{{ $item->sales_invoice->invoice_id }}/edit">{{ $item->sales_invoice->invoice_code }}</a>                                                    
                                                      @break
                                                 @case("sales_dt_create")
                                                 @case("sales_dt_cancel")
