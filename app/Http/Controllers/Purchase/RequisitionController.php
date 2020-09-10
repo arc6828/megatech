@@ -30,7 +30,8 @@ class RequisitionController extends Controller
       //$table_purchase_requisition = RequisitionModel::select_by_keyword($q);
       $data = [
         //QUOTATION
-        'table_purchase_requisition' => RequisitionModel::select_all(),
+        //'table_purchase_requisition' => RequisitionModel::select_all(),
+        'table_purchase_requisition' => RequisitionModel::all(),
         'q' => $request->input('q')
       ];
       return view('purchase/requisition/index',$data);
@@ -87,6 +88,20 @@ class RequisitionController extends Controller
           'vat_percent' => $request->input('vat_percent',7),
           'total' => $request->input('total',0),
       ];
+
+      //VOID IF HAS CODE (Revision)
+      if( !empty($request->input('purchase_requisition_code') ) ){          
+        $q = RequisitionModel::where('purchase_requisition_code',$request->input('purchase_requisition_code') )
+          ->orderBy('datetime','desc')->first();
+        $input['revision'] = $q->revision +1 ;
+        $q->purchase_status_id = -1; //-1 means void
+        $q->save();
+        
+        $segments = explode("-",$request->input('purchase_requisition_code'));
+        $input['purchase_requisition_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+        
+      }
+
       $id = RequisitionModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL

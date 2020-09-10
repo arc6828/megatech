@@ -104,7 +104,7 @@ class QuotationController extends Controller
           'total_before_vat' => $request->input('total_before_vat',0),
           'total' => $request->input('total_after_vat',0),
       ];
-      //VOID IF HAS CODE
+      //VOID IF HAS CODE (Revision)
       if( !empty($request->input('quotation_code') ) ){
         switch($request->input('quotation_code')){
           case "QTDRAFT" : 
@@ -126,6 +126,7 @@ class QuotationController extends Controller
         
       }
       
+      //DRAFT
       if($input['sales_status_id'] == 0 )
       {
         //0 means DRART -> do not set quotation_code / date

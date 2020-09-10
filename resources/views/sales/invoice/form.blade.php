@@ -57,14 +57,14 @@
     </div>
     
 
-    <div class="form-group form-inline">
-      <label class="col-lg-2">ระยะเวลาหนี้ (วัน)</label>
+    <div class="form-group form-inline d-none">
+      <label class="col-lg-2">ระยะเวลาหนี้ (วัน) (deplicated)</label>
       <div class="col-lg-3">
-        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
+        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line" disabled	>
       </div>
-      <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา (วัน)</label>
+      <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา (วัน) (deplicated)</label>
       <div class="col-lg-3">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required>
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  disabled>
       </div>
     </div>
 
@@ -75,7 +75,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1">วงเงินเครดิต</label>
       <div class="col-lg-3">
-        <input type="number" name="max_credit"	id="max_credit"	 class="form-control form-control-sm form-control-line" readonly  required>
+        <input type="number" name="max_credit"	id="max_credit"	 class="form-control form-control-sm form-control-line"   value="100" readonly required>
       </div>
     </div>
 

@@ -3,7 +3,7 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="purchase_requisition_code"	id="purchase_requisition_code" class="form-control form-control-sm"	disabled>
+        <input name="purchase_requisition_code"	id="purchase_requisition_code" class="form-control form-control-sm"	>
       </div>
       <label class="col-lg-2 offset-lg-1">เอกสารอ้างอิง</label>
       <div class="col-lg-3">

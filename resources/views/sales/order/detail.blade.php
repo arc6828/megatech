@@ -173,8 +173,8 @@
           $(this).parents('tr').hide();
           var table = $('#table-order-detail').DataTable();
 					table
-						//.row( $(this).parents('tr') )
-						//.remove()
+						.row( $(this).parents('tr') )
+						.remove()
 						.draw();
 					onChange(document.getElementById("vat_percent"));
 				}

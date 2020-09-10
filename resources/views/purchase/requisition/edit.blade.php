@@ -6,15 +6,15 @@
 @section('content')
 
 	@forelse($table_purchase_requisition as $row)
-		<form class="" action="{{ url('/') }}/purchase/requisition/{{ $row->purchase_requisition_id }}" id="form" method="POST">
+		<form class="" action="{{ url('/') }}/purchase/requisition" id="form" method="POST">
 			{{ csrf_field() }}
-			{{ method_field('PUT') }}
+			{{ method_field('POST') }}
 
 			@include('purchase/requisition/form')
 
 			<div class="mt-4 text-center">
-        <a class="btn btn-outline-success" href="{{ url('/') }}/purchase/requisition">back</a>
-        <button type="submit" class="btn btn-success" >Save</button>
+				<a class="btn btn-outline-success" href="{{ url('/') }}/purchase/requisition">back</a>
+				<button type="submit" class="btn btn-success" >Save</button>
 			</div>
 
 		</form>

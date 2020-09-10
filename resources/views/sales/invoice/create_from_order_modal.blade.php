@@ -225,7 +225,7 @@
 		document.querySelector("#customer_code").innerHTML = element.customer_code;
 		document.querySelector("#company_name").value = element.company_name;
 		document.querySelector("#payment_method").value = element.payment_method;
-		document.querySelector("#max_credit").value = element.max_credit;
+		document.querySelector("#max_credit").value = element.max_credit ? element.max_credit : "0";
 
 
 		//document.querySelector("#contact_name").value = element.contact_name;

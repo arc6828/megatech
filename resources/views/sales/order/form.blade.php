@@ -71,12 +71,16 @@
         
       </div>
 
-      <label class="col-lg-2  offset-lg-1">ไฟล์ P/O ลูกหนี้</label>
+      <label class="col-lg-2  offset-lg-1" for="po_file" id="label_po_file"><a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="$('#label_po_file').click();">อัพโหลด P/O ลูกหนี้</a></label>
       <div class="col-lg-3">
         @if(isset($order))
-        <a href="{{ url('storage/'.$order->po_file ) }}" target="_blank">เปิดดูไฟล์</a>
-        @endif
-        <input type="file" class="" id="po_file" name="po_file" value="......">
+          <a href="{{ url('storage/'.$order->po_file ) }}" target="_blank" id="po_file_name">
+            {{ (!empty($order->po_file)) ? $order->po_file : ''}}
+          </a>
+        @else        
+          <a href="#" id="po_file_name"></a>
+          @endif
+          <input type="file" class="d-none" id="po_file" name="po_file" value="......" onchange="document.querySelector('#po_file_name').innerHTML = this.value">
       </div>
     </div>
 

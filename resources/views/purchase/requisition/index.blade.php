@@ -51,11 +51,18 @@
 							</a>
 						</td>
 						<td>{{ $row->datetime }}</td>
-						<td>{{ $row->short_name }}</td>
+						<td>{{ $row->User->short_name }}</td>
 						
 						
 						<td>
-							อนุมัติ / ไม่ / บางส่วน
+							@switch($row->purchase_status_id)
+								@case("-1") 
+									<span class="badge badge-pill badge-secondary">Void</span>
+									@break
+								@default								
+									<span class="badge badge-pill badge-primary">อนุมัติทั้งหมด / บางส่วน / รอการอนุมัติ</span>
+									
+							@endswitch
 						</td>
 						
 					</tr>

@@ -171,9 +171,9 @@
           $(this).parents('tr').hide();
           var table = $('#table-quotation-detail').DataTable();
           table
-						//.row( $(this).parents('tr') )
+						.row( $(this).parents('tr') )
             //.hide()
-						//.remove()
+						.remove()
 						.draw();
 					onChange(document.getElementById("vat_percent"));
 				}

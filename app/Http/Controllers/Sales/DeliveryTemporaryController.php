@@ -79,20 +79,22 @@ class DeliveryTemporaryController extends Controller
       $input = [
           'delivery_temporary_code' => $this->getNewCode(),
           'customer_id' => $request->input('customer_id'),
-          'debt_duration' => $request->input('debt_duration'),
-          'billing_duration' => $request->input('billing_duration'),
+          'debt_duration' => $request->input('debt_duration',"0"),
+          'billing_duration' => $request->input('billing_duration',"0"),
           'payment_condition' => $request->input('payment_condition',""),
           'delivery_type_id' => $request->input('delivery_type_id'),
           'tax_type_id' => $request->input('tax_type_id'),
-          'delivery_time' => $request->input('delivery_time'),
+          'delivery_time' => $request->input('delivery_time',"0"),
           'department_id' => $request->input('department_id'),
           'sales_status_id' => 10, //default is 10 สร้างใบส่งของชั่วคราว
           'user_id' => $request->input('user_id'),
-          'zone_id' => $request->input('zone_id'),
+          'zone_id' => $request->input('zone_id','0'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),
           'total' => $request->input('total_after_vat',0),
       ];
+      //print_r($input);
+      //exit();
       $id = DeliveryTemporaryModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL
