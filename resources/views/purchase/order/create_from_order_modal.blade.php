@@ -107,7 +107,7 @@
 		var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 		document.querySelector("#debt_duration").value = element.debt_duration;
 		document.querySelector("#billing_duration").value = element.billing_duration ;
-		document.querySelector("#payment_condition").value = element.payment_condition ;
+		//document.querySelector("#payment_condition").value = element.payment_condition ;
 		document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
 		document.querySelector("#tax_type_id").value = element.tax_type_id ;
 		document.querySelector("#delivery_time").value = element.delivery_time;

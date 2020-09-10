@@ -53,17 +53,6 @@
       <div class="col-lg-3">
         <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
       </div>
-      <label class="col-lg-2 offset-lg-1 d-none">กำหนดยื่นราคา</label>
-      <div class="col-lg-3 d-none">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  disabled>
-      </div>
-    </div>
-
-    <div class="form-group form-inline">
-      <label class="col-lg-2">เงื่อนไขการชำระเงิน</label>
-      <div class="col-lg-3">
-        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" required>
-      </div>
       <label class="col-lg-2 offset-lg-1">ขนส่งโดย</label>
       <div class="col-lg-3">
         <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm" required>
@@ -74,6 +63,18 @@
           </option>
           @endforeach
         </select>
+      </div>
+      
+    </div>
+
+    <div class="form-group form-inline d-none">
+      <label class="col-lg-2 d-none">เงื่อนไขการชำระเงิน (deplicated)</label>
+      <div class="col-lg-3 d-none">
+        <input name="payment_condition"	id="payment_condition"	class="form-control form-control-sm form-control-line" disabled>
+      </div>
+      <label class="col-lg-2 offset-lg-1 d-none">กำหนดยื่นราคา (deplicated)</label>
+      <div class="col-lg-3 d-none">
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  disabled>
       </div>
     </div>
 
@@ -89,7 +90,7 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1 d-none">ระยะเวลาส่งของ (วัน)</label>
+      <label class="col-lg-2 offset-lg-1 d-none">ระยะเวลาส่งของ (วัน) (deplicated)</label>
       <div class="col-lg-3 d-none">
       <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" disabled>
       </div>
