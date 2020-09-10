@@ -88,11 +88,11 @@ class OrderController extends Controller
           'external_reference_doc' => $request->input('external_reference_doc'),
           'supplier_id' => $request->input('supplier_id'),
           'debt_duration' => $request->input('debt_duration'),
-          'billing_duration' => $request->input('billing_duration'),
+          'billing_duration' => $request->input('billing_duration',"0"),
           'payment_condition' => $request->input('payment_condition',""),
           'delivery_type_id' => $request->input('delivery_type_id'),
           'tax_type_id' => $request->input('tax_type_id'),
-          'delivery_time' => $request->input('delivery_time'),
+          'delivery_time' => $request->input('delivery_time',"0"),
           'department_id' => $request->input('department_id'),
           'purchase_status_id' => 3, //3 MEANS นัดวันรับสินค้า ออก PO
           'user_id' => $request->input('user_id'),

@@ -54,8 +54,8 @@
         <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
       </div>
       <label class="col-lg-2 offset-lg-1 d-none">กำหนดยื่นราคา</label>
-      <div class="col-lg-3  d-none">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required>
+      <div class="col-lg-3 d-none">
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  disabled>
       </div>
     </div>
 
@@ -89,9 +89,9 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1">ระยะเวลาส่งของ (วัน)</label>
-      <div class="col-lg-3">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
+      <label class="col-lg-2 offset-lg-1 d-none">ระยะเวลาส่งของ (วัน)</label>
+      <div class="col-lg-3 d-none">
+      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" disabled>
       </div>
     </div>
 
