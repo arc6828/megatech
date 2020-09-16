@@ -35,6 +35,7 @@
 							//{ title: "ส่วนลด %" },
 							//{ title: "ราคาขาย" },
 							//{ title: "ราคาขายรวม" },
+							{ title: "สถานะ" },
 							{ title: "action" },
 					],
 					"fnCreatedRow" : function( nRow, aData, iDataIndex ) {
@@ -54,6 +55,17 @@
 
       //EVENT HANDLER
       function createRow(id,element){
+		let status = element.purchase_requisition_detail_status_id;
+		switch(status){
+			case "1" : status="อนุมัติ"; break;
+			case "2" : status="ไม่อนุมัติ"; break;
+			case "3" : status="รออนุมัติ"; break;
+			case "4" : status="กำหนดเจ้าซื้อแล้ว"; break;
+			case "5" : status="ออก PO แล้ว"; break;
+			case "6" : status="รับสินค้าแล้ว"; break;
+			default : status="อื่นๆ"; break;
+				
+		}
         return [
           "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >"+
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
@@ -64,7 +76,8 @@
 		//			"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
           //"<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
           //"<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
-          "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+          ""+status,
+		  "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",
         ];

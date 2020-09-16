@@ -11,6 +11,10 @@ class RequisitionModel extends Model
     protected $primaryKey = 'purchase_requisition_id';
     protected $fillable = [];
 
+    public function requisition_details()
+    {
+        return $this->hasMany('App\Purchase\RequisitionDetailModel','purchase_requisition_id');
+    }
     public function RequisitionDetail()
     {
         return $this->hasMany('App\Purchase\RequisitionDetailModel','purchase_requisition_id');
