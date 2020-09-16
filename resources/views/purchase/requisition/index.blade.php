@@ -66,7 +66,7 @@
 									@if($row->requisition_details->sum("purchase_requisition_detail_status_id") == $row->requisition_details->count("purchase_requisition_detail_status_id")  )
 									<span class="badge badge-pill badge-success">อนุมัติ</span>
 									@elseif( $row->requisition_details->sum("purchase_requisition_detail_status_id") == $row->requisition_details->count("purchase_requisition_detail_status_id")*3 )
-									<span class="badge badge-pill badge-danger">รอการอนุมัติ</span>
+									<span class="badge badge-pill badge-info">รอการอนุมัติ</span>
 									@else
 									<span class="badge badge-pill badge-warning">อนุมัติบางส่วน</span>
 									@endif
