@@ -194,9 +194,19 @@ class OrderController extends Controller
           //QuotationModel::update_by_id(["sales_status_id"=>5] , $request->input('discount_price_edit')[$i]);
         }
       }
+
+      //OE DETAIL
       OrderDetail2Model::insert($list);
 
-      OrderDetailModel::insert($list);
+      //PICKING
+      if( empty($request->input('order_code') )){
+        //CASE CREATE
+        OrderDetailModel::insert($list);
+      }else{
+        //CASE REVISION
+        
+      }
+      
 
 
       //GAURD STOCK      
@@ -221,8 +231,10 @@ class OrderController extends Controller
       }
 
       
-      //PR
-      $this->store2($request,$code);
+      //PR IF NOT REVISION
+      if( empty( $request->input('order_code') ) ){
+        $this->store2($request,$code);
+      }
 
 
 

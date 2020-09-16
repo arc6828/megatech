@@ -212,8 +212,9 @@
 
 		<div class="text-center">
 			@include('sales/order/create_detail_from_quotation_modal')
+      @if( !isset($order->order_code) )
 			@include('sales/order/create_detail_modal')
-
+      @endif
 		</div>
 	</div>
 </div>
