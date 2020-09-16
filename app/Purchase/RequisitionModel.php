@@ -38,6 +38,7 @@ class RequisitionModel extends Model
         //SELECT count(*) FROM `tb_purchase_requisition` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
         return DB::table('tb_purchase_requisition')
             ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+            ->where('purchase_status_id','!=','-1')
             ->count();
 	}
 

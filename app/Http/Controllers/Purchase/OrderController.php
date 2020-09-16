@@ -103,6 +103,46 @@ class OrderController extends Controller
           'total_before_vat' => $request->input('total_before_vat',0),
           'total' => $request->input('total_after_vat',0),
       ];
+
+      //VOID IF HAS CODE (Revision)
+      if( !empty($request->input('purchase_order_code') ) ){   
+        //REVISION + VOID THE OLD ONE       
+        $q = OrderModel::where('purchase_order_code',$request->input('purchase_order_code') )
+          ->orderBy('datetime','desc')->first();
+        $input['revision'] = $q->revision +1 ;
+        $q->purchase_status_id = -1; //-1 means void
+        $q->save();
+        //NEW CODE WITH Rx
+        $segments = explode("-",$request->input('purchase_order_code'));
+        $input['purchase_order_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+        
+        //ROLLBACK STOCK STATS IN PRODUCT AND GAURD STOCK
+        //CREATE GAURD STOCK + UPDATE PRODUCT      
+        foreach($q->order_details as $item){
+          $product = ProductModel::findOrFail($item['product_id']);
+          $gaurd_stock = GaurdStock::create([
+            "code" => $item['purchase_order_id'],
+            "type" => "purchase_order",
+            "amount" => $item['amount'],
+            "amount_in_stock" => ($product->amount_in_stock),
+            "pending_in" => ($product->pending_in - $item['amount'] ),
+            "pending_out" => ($product->pending_out),
+            "product_id" => $product->product_id,
+          ]);
+          
+          //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+          $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+          $product->pending_in = $gaurd_stock['pending_in'];
+          $product->pending_out = $gaurd_stock['pending_out'];
+          $product->save();
+
+          //DIVIDED REQUISITION DETAIL INTO 2 PARTS
+
+
+        }   
+      }
+      
+      //CREATED
       $id = OrderModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL
@@ -150,7 +190,9 @@ class OrderController extends Controller
         }
       }
 
-      //GAURD STOCK      
+      //CREATE GAURD STOCK + UPDATE PRODUCT  
+      
+      sleep(1);  
       foreach($list as $item){
         $product = ProductModel::findOrFail($item['product_id']);
         $gaurd_stock = GaurdStock::create([

@@ -19,9 +19,9 @@
 
 	@forelse($table_order as $row)
 		
-		<form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}" id="form" method="POST" enctype="multipart/form-data">
+		<form class="" action="{{ url('/') }}/sales/order" id="form" method="POST" enctype="multipart/form-data">
 			{{ csrf_field() }}
-			{{ method_field('PUT') }}
+			{{ method_field('POST') }}
 
 			@include('sales/order/form')
 

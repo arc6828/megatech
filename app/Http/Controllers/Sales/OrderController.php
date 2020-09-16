@@ -121,7 +121,44 @@ class OrderController extends Controller
           'max_credit' => $request->input('max_credit'),
           'total_debt' => $request->input('total_debt'),
       ];
-      
+      //VOID IF HAS CODE (Revision)
+      if( !empty($request->input('order_code') ) ){   
+        //REVISION + VOID THE OLD ONE       
+        $q = OrderModel::where('order_code',$request->input('order_code') )
+          ->orderBy('datetime','desc')->first();
+        $input['revision'] = $q->revision +1 ;
+        $q->sales_status_id = -1; //-1 means void
+        $q->save();
+        //NEW CODE WITH Rx
+        $segments = explode("-",$request->input('order_code'));
+        $input['order_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+        
+        //ROLLBACK STOCK STATS IN PRODUCT AND GAURD STOCK
+        //CREATE GAURD STOCK + UPDATE PRODUCT      
+        foreach($q->order_details as $item){
+          $product = ProductModel::findOrFail($item['product_id']);
+          $gaurd_stock = GaurdStock::create([
+            "code" => $item['order_id'],
+            "type" => "sales_order",
+            "amount" => $item['amount'],
+            "amount_in_stock" => ($product->amount_in_stock),
+            "pending_in" => ($product->pending_in  ),
+            "pending_out" => ($product->pending_out - $item['amount']),
+            "product_id" => $product->product_id,
+          ]);
+          
+          //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+          $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+          $product->pending_in = $gaurd_stock['pending_in'];
+          $product->pending_out = $gaurd_stock['pending_out'];
+          $product->save();
+
+          //DIVIDED REQUISITION DETAIL INTO 2 PARTS
+
+
+        }   
+      }
+      //CREATE
       $id = OrderModel::insert($input);
 
       //UPLOAD FILE P/O

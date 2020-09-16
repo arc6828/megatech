@@ -20,9 +20,9 @@
       </div>
 
     </div>
-		<form class="" action="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}" id="form" method="POST">
+		<form class="" action="{{ url('/') }}/purchase/order" id="form" method="POST">
 			{{ csrf_field() }}
-			{{ method_field('PUT') }}
+			{{ method_field('POST') }}
 
 			@include('purchase/order/form' , ["method"=>"edit"] )
 

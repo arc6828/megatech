@@ -55,7 +55,7 @@
                                                     DT
                                                     @break
                                                 @case("purchase_order")
-                                                    PO
+                                                <a href="{{ url('/') }}/purchase/order/{{ $item->purchase_order->purchase_order_id }}/edit">{{ $item->purchase_order->purchase_order_code }}</a>
                                                      @break
                                                 @case("purchase_recieve")
                                                     PR

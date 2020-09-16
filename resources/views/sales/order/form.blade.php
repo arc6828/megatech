@@ -29,7 +29,7 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="order_code"	id="order_code" class="form-control form-control-sm"	disabled>
+        <input name="order_code"	id="order_code" class="form-control form-control-sm"	readonly>
         
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>

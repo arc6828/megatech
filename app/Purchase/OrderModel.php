@@ -15,6 +15,9 @@ class OrderModel extends Model
       public function OrderDetail(){
         return $this->hasMany('App\Purchase\OrderDetailModel','purchase_order_id');
       }
+      public function order_details(){
+        return $this->hasMany('App\Purchase\OrderDetailModel','purchase_order_id');
+      }
       public function User()
       {
           return $this->belongsTo('App\User','user_id');

@@ -18,12 +18,20 @@ class GaurdStockController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->get('product_id');
+        $hidden = $request->get('hidden');
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $gaurdstock = GaurdStock::where('product_id',  $keyword)
-                ->where('amount_in_stock','!=','0')
+            if(empty($hidden)){
+                $gaurdstock = GaurdStock::where('product_id',  $keyword)
+                ->whereIn('type',['sales_invocie','purchase_receive'])
                 ->latest()->paginate($perPage);
+            }else{
+                $gaurdstock = GaurdStock::where('product_id',  $keyword)
+                //->whereIn('type',['sales_invocie','purchase_receive'])
+                ->latest()->paginate($perPage);
+            }
+            
         } else {
             $gaurdstock = GaurdStock::latest()->paginate($perPage);
         }
