@@ -213,7 +213,7 @@ class OrderController extends Controller
         $q = OrderModel::where('order_code',$request->input('order_code') )
           ->orderBy('datetime','desc')->first();
         //UPDATE DEATAIL
-        $q->picking_order_details()->update(["order_id"=>$id ]);
+        $q->pickings()->update(["order_id"=>$id ]);
 
         $order = OrderModel::find($id);
         //UPDATE INVOICE REFERENCE order_code
@@ -224,26 +224,30 @@ class OrderController extends Controller
         
         //OE ล่าสุด
         $current_oe = OrderModel::find($id);
-        $currnet_oe_details = $current_oe->order_details;
+        $current_oe_details = $current_oe->order_details;
 
         //OE ก่อนหน้า
         $previous_oe = OrderModel::where('order_code',$request->input('order_code') )->first();
         $previous_oe_details = $previous_oe->order_details;
         //DIFFs
         $diffs = [];
-        for($i=0; $i<count($currnet_oe_details); $i++)
+        for($i=0; $i<count($current_oe_details); $i++)
         {
-          $diffs[$currnet_oe_details[$i]->product->product_code] = ($currnet_oe_details[$i]->amount - $previous_oe_details[i]->amount);
+          $diffs[$current_oe_details[$i]->product->product_code] = ($current_oe_details[$i]->amount - $previous_oe_details[$i]->amount);
         }
-        print_r($diffs);
-        print_r($currnet_oe_details);
-        print_r($currnet_oe_details);
-        exit();
-        $currnet_picking_oe_details = $current_oe->picking_order_details()->whereIn('order_detail_status_id',[1,3])->get();
-        foreach($currnet_picking_oe_details as $item){
-          $new_amount = $item->amount+$diffs[$item->product->product_code];
-          $item->update(['amount',$new_amount]);
-
+        //ขออนุญาติใหม่อีกครั้ง??
+        //$current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->update([order_detail_status_id""=>1]);
+        $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->get();
+        foreach($current_pickings as $item){
+          if($item->amount+$diffs[$item->product->product_code] >=0 ){
+            $new_amount = $item->amount+$diffs[$item->product->product_code];
+            $item->update(['amount'=>$new_amount]);
+            $diffs[$item->product->product_code] += $item->amount;
+          }else{
+            $new_amount = $item->amount+$diffs[$item->product->product_code];
+            $item->update(['amount'=>0]);
+            $diffs[$item->product->product_code] += $item->amount;
+          }
         }
 
       }
@@ -278,7 +282,7 @@ class OrderController extends Controller
       }
 
 
-
+      exit();
       return redirect("sales/order/{$id}");
     }
 

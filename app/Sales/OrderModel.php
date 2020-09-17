@@ -40,10 +40,10 @@ class OrderModel extends Model
     return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
   }
   public function order_details(){
-    return $this->hasMany('App\Sales\OrderDetailModel','order_id');
-  }
-  public function picking_order_details(){
     return $this->hasMany('App\Sales\OrderDetail2Model','order_id');
+  }
+  public function pickings(){
+    return $this->hasMany('App\Sales\OrderDetailModel','order_id');
   }
   public function User(){
     return $this->belongsTo('App\User','user_id');

@@ -14,6 +14,7 @@ class OrderDetail2Model extends Model
   public function product(){
     return $this->belongsTo('App\ProductModel','product_id');
   }
+  
 
   public static function select_all(){
 		return DB::table('tb_order_detail2')
