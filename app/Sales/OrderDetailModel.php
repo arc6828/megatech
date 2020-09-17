@@ -26,10 +26,10 @@ class OrderDetailModel extends Model
   public function Quotation(){
     return $this->belongsTo('App\Sales\QuotationModel','quotation_id');
   }
-  public function Product(){
+  
+  public function product(){
     return $this->belongsTo('App\ProductModel','product_id');
   }
-
   
 
   public static function select_all(){

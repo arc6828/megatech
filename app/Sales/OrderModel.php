@@ -42,6 +42,9 @@ class OrderModel extends Model
   public function order_details(){
     return $this->hasMany('App\Sales\OrderDetailModel','order_id');
   }
+  public function picking_order_details(){
+    return $this->hasMany('App\Sales\OrderDetail2Model','order_id');
+  }
   public function User(){
     return $this->belongsTo('App\User','user_id');
   }
@@ -71,6 +74,7 @@ class OrderModel extends Model
     //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
     return DB::table('tb_order')
         ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+        ->where('sales_status_id','!=','-1')
         ->count();
   }
   
@@ -78,6 +82,7 @@ class OrderModel extends Model
     //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
     return DB::table('tb_order')
         ->whereRaw("month(datetime) = month('".$date."') and year(datetime) = year('".$date."')", [])
+        ->where('sales_status_id','!=','-1')
         ->count();
 	}
 

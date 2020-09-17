@@ -11,6 +11,10 @@ class OrderDetail2Model extends Model
   protected $primaryKey = 'order_detail2_id';
   protected $fillable = ['delivery_duration',];
 
+  public function product(){
+    return $this->belongsTo('App\ProductModel','product_id');
+  }
+
   public static function select_all(){
 		return DB::table('tb_order_detail2')
       ->join('tb_product','tb_order_detail2.product_id','=','tb_product.product_id')

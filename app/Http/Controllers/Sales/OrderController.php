@@ -11,6 +11,7 @@ use App\Sales\OrderDetail2Model;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderDetailStatusModel;
 use App\Sales\QuotationModel;
+use App\Sales\InvoiceModel;
 
 use App\Purchase\RequisitionModel;
 use App\Purchase\RequisitionDetailModel;
@@ -153,7 +154,10 @@ class OrderController extends Controller
           $product->pending_out = $gaurd_stock['pending_out'];
           $product->save();
 
-          //DIVIDED REQUISITION DETAIL INTO 2 PARTS
+          
+
+          
+
 
 
         }   
@@ -203,8 +207,45 @@ class OrderController extends Controller
         //CASE CREATE
         OrderDetailModel::insert($list);
       }else{
+        //OE ต้องน้อยกว่าเดิม + ต้องไม่น้อยกว่า IV + ห้ามเพิ่มรายการ
         //CASE REVISION
+        //QUERY order from order_code
+        $q = OrderModel::where('order_code',$request->input('order_code') )
+          ->orderBy('datetime','desc')->first();
+        //UPDATE DEATAIL
+        $q->picking_order_details()->update(["order_id"=>$id ]);
+
+        $order = OrderModel::find($id);
+        //UPDATE INVOICE REFERENCE order_code
+        $invoices = InvoiceModel::where('internal_reference_id',$request->input('order_code') )
+          ->update(["internal_reference_id"=>$order->order_code]);
+
+        //UPDATE OrderDetail order_id
         
+        //OE ล่าสุด
+        $current_oe = OrderModel::find($id);
+        $currnet_oe_details = $current_oe->order_details;
+
+        //OE ก่อนหน้า
+        $previous_oe = OrderModel::where('order_code',$request->input('order_code') )->first();
+        $previous_oe_details = $previous_oe->order_details;
+        //DIFFs
+        $diffs = [];
+        for($i=0; $i<count($currnet_oe_details); $i++)
+        {
+          $diffs[$currnet_oe_details[$i]->product->product_code] = ($currnet_oe_details[$i]->amount - $previous_oe_details[i]->amount);
+        }
+        print_r($diffs);
+        print_r($currnet_oe_details);
+        print_r($currnet_oe_details);
+        exit();
+        $currnet_picking_oe_details = $current_oe->picking_order_details()->whereIn('order_detail_status_id',[1,3])->get();
+        foreach($currnet_picking_oe_details as $item){
+          $new_amount = $item->amount+$diffs[$item->product->product_code];
+          $item->update(['amount',$new_amount]);
+
+        }
+
       }
       
 
