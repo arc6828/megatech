@@ -31,12 +31,12 @@
 							{ title: "รหัสสินค้า" },
 							//{ title: "QT" },
 							{ title: "ชื่อสินค้า" },
-							{ title: "วันที่ส่งของ(วัน)" },
+							{ title: "วันที่ส่งของ <br>(วัน)" },
 							{ title: "จำนวน" },
 							{ title: "ราคาตั้ง" },
 							{ title: "ส่วนลด %" },
 							{ title: "ราคาขาย" },
-							{ title: "ส่วนลด > 40%" },
+							{ title: "ส่วนลด <br/> > 40%" },
 							{ title: "ราคาขายรวม" },
 							{ title: "action" },
 					],
@@ -85,6 +85,22 @@
 
         //select.value = element.delivery_duration;
         console.log(select, wrap);
+
+        //CHECK IF EDIT
+        let max_amount = "";        
+        //CHECK INVOICE OR NOT OVER SAME NUMBER
+        @if( isset($order->order_code) )
+          //EDIT MODE
+          max_amount =  element.amount;          
+        @endif
+        let min_amount = "0";  
+        @if( isset($order->order_code) )        
+          let changable_items = @json($changable_items);
+          //IF SOME ITEMS HAVE BEEN INVOICE
+          min_amount = (changable_items[element.product_code]) ? 
+              changable_items[element.product_code] :
+              0;
+        @endif
   
         return [
 
@@ -95,7 +111,7 @@
 
           element.product_name ,
           ""+select,
-          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' min='"+min_amount+"' max='"+max_amount+"' title='["+min_amount+","+max_amount+"]' style='min-width:60px;'>",
 
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
 					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",

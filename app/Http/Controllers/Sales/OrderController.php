@@ -235,18 +235,30 @@ class OrderController extends Controller
         {
           $diffs[$current_oe_details[$i]->product->product_code] = ($current_oe_details[$i]->amount - $previous_oe_details[$i]->amount);
         }
+        print_r($diffs);
         //ขออนุญาติใหม่อีกครั้ง??
         //$current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->update([order_detail_status_id""=>1]);
-        $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->get();
+        $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->orderBy('order_detail_status_id','desc')->get();
         foreach($current_pickings as $item){
           if($item->amount+$diffs[$item->product->product_code] >=0 ){
+            //FINISH IN ONE ORDER
             $new_amount = $item->amount+$diffs[$item->product->product_code];
+            $diffs[$item->product->product_code] += $item->amount;
             $item->update(['amount'=>$new_amount]);
-            $diffs[$item->product->product_code] += $item->amount;
+            //UPDATE DIFF, WHERE DIFF NEVER MORE THAN 0 (CLEAR DIFF)
+            echo "<br>Before if ".$diffs[$item->product->product_code];
+            if($diffs[$item->product->product_code] > 0){
+              $diffs[$item->product->product_code] = 0;
+            }
+            
+            echo "<br>After if ".$diffs[$item->product->product_code];
           }else{
-            $new_amount = $item->amount+$diffs[$item->product->product_code];
-            $item->update(['amount'=>0]);
-            $diffs[$item->product->product_code] += $item->amount;
+            //FINISH WITH SERVERAL ORDERS
+            $new_amount = $item->amount-$item->amount;
+            $diffs[$item->product->product_code] += $item->amount; 
+            $item->update(['amount'=>$new_amount]);
+            
+            echo "<br>Else : ".$diffs[$item->product->product_code];
           }
         }
 
@@ -408,11 +420,25 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+      //CREATE DICT OF CHANGABLE ITEMS
+      $current_oe = OrderModel::findOrFail($id);
+      $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->orderBy('order_detail_status_id','desc')->get();
+      $changable_items = [];
+      for($i=0; $i<count($current_pickings); $i++)
+      {
+        if(isset($changable_items[$current_pickings[$i]->product->product_code])){
+          $changable_items[$current_pickings[$i]->product->product_code] += $current_pickings[$i]->amount;
+        }else{
+          $changable_items[$current_pickings[$i]->product->product_code] = $current_pickings[$i]->amount;        
+        }
+        
+      }
 
       $data = [
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
           'order' => OrderModel::findOrFail($id),
+          'changable_items' => $changable_items,
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
@@ -456,10 +482,25 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+      //CREATE DICT OF CHANGABLE ITEMS
+      $current_oe = OrderModel::findOrFail($id);
+      $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->orderBy('order_detail_status_id','desc')->get();
+      $changable_items = [];
+      for($i=0; $i<count($current_pickings); $i++)
+      {
+        if(isset($changable_items[$current_pickings[$i]->product->product_code])){
+          $changable_items[$current_pickings[$i]->product->product_code] += $current_pickings[$i]->amount;
+        }else{
+          $changable_items[$current_pickings[$i]->product->product_code] = $current_pickings[$i]->amount;        
+        }
+        
+      }
+
       $data = [
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
-          'order' => OrderModel::findOrFail($id),
+          'order' => $current_oe,
+          'changable_items' => $changable_items,
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
