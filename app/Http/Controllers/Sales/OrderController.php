@@ -294,7 +294,7 @@ class OrderController extends Controller
       }
 
 
-      exit();
+      //exit();
       return redirect("sales/order/{$id}");
     }
 
