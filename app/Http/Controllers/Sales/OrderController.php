@@ -422,7 +422,7 @@ class OrderController extends Controller
     {
       //CREATE DICT OF CHANGABLE ITEMS
       $current_oe = OrderModel::findOrFail($id);
-      $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->orderBy('order_detail_status_id','desc')->get();
+      $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[4])->orderBy('order_detail_status_id','desc')->get();
       $changable_items = [];
       for($i=0; $i<count($current_pickings); $i++)
       {
@@ -484,7 +484,7 @@ class OrderController extends Controller
     {
       //CREATE DICT OF CHANGABLE ITEMS
       $current_oe = OrderModel::findOrFail($id);
-      $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->orderBy('order_detail_status_id','desc')->get();
+      $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[4])->orderBy('order_detail_status_id','desc')->get();
       $changable_items = [];
       for($i=0; $i<count($current_pickings); $i++)
       {

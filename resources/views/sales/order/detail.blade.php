@@ -94,12 +94,13 @@
           max_amount =  element.amount;          
         @endif
         let min_amount = "0";  
-        @if( isset($order->order_code) )        
+        @if( isset($order->order_code) )  
+              
           let changable_items = @json($changable_items);
           //IF SOME ITEMS HAVE BEEN INVOICE
           min_amount = (changable_items[element.product_code]) ? 
               changable_items[element.product_code] :
-              0;
+              element.amount;
         @endif
   
         return [
