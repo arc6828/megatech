@@ -56,7 +56,9 @@ class QuotationDetailModel extends Model
         ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
         ->where('user_id', '=' , $user_id )
         ->where('customer_id', '=' , $customer_id )
-        ->where('tb_quotation.sales_status_id','!=','-1')
+        ->where('tb_quotation.sales_status_id','!=','-1') //NOT VOID
+        ->where('tb_quotation.sales_status_id','!=','0')  //NOT DRAFT
+        ->where('tb_quotation.sales_status_id','!=','5')  //NOT COMPLETED
         ->get();
 	}
 

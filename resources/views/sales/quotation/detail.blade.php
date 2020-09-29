@@ -26,7 +26,8 @@
 				});
 				//console.log(dataSet);
 
-				var table = $('#table-quotation-detail').DataTable({
+				var table = $('#table-quotation-detail').DataTable({          
+					"ordering": false,
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [

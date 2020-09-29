@@ -16,12 +16,15 @@
         </div>        
       </div>
       <div class="col-lg-4 text-right">
+      
+        @if($row->sales_status_id != -1)
 		  	<a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/pdf" target="_blank"  title="พิมพ์">
 		      <i class="fas fa-print"></i> พิมพ์
 		    </a>
         <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit" title="แก้ไข" >
 		      <i class="fas fa-edit"></i>  แก้ไข
 		    </a>
+        @endif
 
       </div>
       @endif
@@ -75,7 +78,7 @@
       <div class="col-lg-3">
         @if(isset($order))
           <a href="{{ url('storage/'.$order->po_file ) }}" target="_blank" id="po_file_name">
-            {{ (!empty($order->po_file)) ? $order->po_file : ''}}
+            {{ (!empty($order->po_file)) ? substr($order->po_file,-12) : ''}}
           </a>
         @else        
           <a href="#" id="po_file_name"></a>
@@ -147,6 +150,7 @@
           @endforeach
         </select>
       </div>
+      
       <label class="col-lg-2  offset-lg-1">รหัสแผนก</label>
       <div class="col-lg-3">
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
@@ -164,6 +168,23 @@
       <label class="col-lg-2">วงเงินเครดิต</label>
       <div class="col-lg-3">
         <input type="number" name="max_credit"	id="max_credit" class="form-control form-control-sm form-control-line" >      
+      </div>
+      <label class="col-lg-2  offset-lg-1">สถานะ</label>
+      <div class="col-lg-3">
+        @switch($row->sales_status_id)
+          @case(7)
+            <span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
+            @break
+          @case(8)							
+            <span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
+            @break
+          @case(-1)
+            <span class="badge badge-pill badge-secondary">Void</span>
+            @break
+          @default
+            <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
+            @break
+        @endswitch
       </div>
       <label class="col-lg-2 offset-lg-1 d-none">หนี้สะสม</label>
       <div class="col-lg-3 d-none">

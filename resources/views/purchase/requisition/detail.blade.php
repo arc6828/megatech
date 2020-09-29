@@ -24,6 +24,7 @@
 				//console.log(dataSet);
 
 				$('#table-purchase_requisition-detail').DataTable({
+					"ordering": false,
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [

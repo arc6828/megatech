@@ -69,9 +69,11 @@
             <i class="fas fa-print"></i> พิมพ์
           </a>
           @endif
-        <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
-          <i class="fas fa-edit"></i> แก้ไข
-        </a>
+          @if($row->sales_status_id != 5)
+          <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
+            <i class="fas fa-edit"></i> แก้ไข
+          </a>
+          @endif
         @else
         <a class="px-2 btn btn-sm btn-danger" href="#">
           <i class="fas fa-ban"></i> void

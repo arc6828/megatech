@@ -128,6 +128,7 @@ class OrderController extends Controller
         $q = OrderModel::where('order_code',$request->input('order_code') )
           ->orderBy('datetime','desc')->first();
         $input['revision'] = $q->revision +1 ;
+        $input['po_file'] = $q->po_file ;
         $q->sales_status_id = -1; //-1 means void
         $q->save();
         //NEW CODE WITH Rx
@@ -374,6 +375,8 @@ class OrderController extends Controller
           //$amount_order = $product->pending_out - ($product->amount_in_stock + $product->pending_in);
           //ค้างส่งของ OE นี้เท่านั้น
           $amount_order = $request->input('amount_edit')[$i] - ($product->amount_in_stock + $product->pending_in);
+          //ALWAYS PR
+          $hasX = true;
           if( $hasX ){
             $list[] = [
                 "product_id" => $request->input('product_id_edit')[$i],
@@ -425,13 +428,13 @@ class OrderController extends Controller
       //CREATE DICT OF CHANGABLE ITEMS
       $current_oe = OrderModel::findOrFail($id);
       $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[4])->orderBy('order_detail_status_id','desc')->get();
-      $changable_items = [];
+      $unchangable_items = [];
       for($i=0; $i<count($current_pickings); $i++)
       {
-        if(isset($changable_items[$current_pickings[$i]->product->product_code])){
-          $changable_items[$current_pickings[$i]->product->product_code] += $current_pickings[$i]->amount;
+        if(isset($unchangable_items[$current_pickings[$i]->product->product_code])){
+          $unchangable_items[$current_pickings[$i]->product->product_code] += $current_pickings[$i]->amount;
         }else{
-          $changable_items[$current_pickings[$i]->product->product_code] = $current_pickings[$i]->amount;        
+          $unchangable_items[$current_pickings[$i]->product->product_code] = $current_pickings[$i]->amount;        
         }
         
       }
@@ -440,7 +443,7 @@ class OrderController extends Controller
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
           'order' => OrderModel::findOrFail($id),
-          'changable_items' => $changable_items,
+          'unchangable_items' => $unchangable_items,
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
@@ -487,13 +490,13 @@ class OrderController extends Controller
       //CREATE DICT OF CHANGABLE ITEMS
       $current_oe = OrderModel::findOrFail($id);
       $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id',[4])->orderBy('order_detail_status_id','desc')->get();
-      $changable_items = [];
+      $unchangable_items = [];
       for($i=0; $i<count($current_pickings); $i++)
       {
-        if(isset($changable_items[$current_pickings[$i]->product->product_code])){
-          $changable_items[$current_pickings[$i]->product->product_code] += $current_pickings[$i]->amount;
+        if(isset($unchangable_items[$current_pickings[$i]->product->product_code])){
+          $unchangable_items[$current_pickings[$i]->product->product_code] += $current_pickings[$i]->amount;
         }else{
-          $changable_items[$current_pickings[$i]->product->product_code] = $current_pickings[$i]->amount;        
+          $unchangable_items[$current_pickings[$i]->product->product_code] = $current_pickings[$i]->amount;        
         }
         
       }
@@ -502,7 +505,7 @@ class OrderController extends Controller
           //QUOTATION
           'table_order' => OrderModel::select_by_id($id),
           'order' => $current_oe,
-          'changable_items' => $changable_items,
+          'unchangable_items' => $unchangable_items,
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),

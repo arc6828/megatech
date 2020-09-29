@@ -77,7 +77,7 @@
 								<span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
 								@break
 								{{-- $row->sales_status_name --}}
-							@endswitch
+						@endswitch
 							
 						</td>
 						<td class="text-left  d-none">

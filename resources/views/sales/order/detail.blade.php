@@ -24,6 +24,7 @@
 				//console.log(dataSet);
 
 				$('#table-order-detail').DataTable({
+          "ordering": false,
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
@@ -96,11 +97,11 @@
         let min_amount = "0";  
         @if( isset($order->order_code) )  
               
-          let changable_items = @json($changable_items);
+          let unchangable_items = @json($unchangable_items);
           //IF SOME ITEMS HAVE BEEN INVOICE
-          min_amount = (changable_items[element.product_code]) ? 
-              changable_items[element.product_code] :
-              element.amount;
+          min_amount = (unchangable_items[element.product_code]) ? 
+              unchangable_items[element.product_code] :
+              0;
         @endif
   
         return [
@@ -119,9 +120,13 @@
           "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"'>",
           "<input type='checkbox' class='danger_price_edit' name='danger_price_edit[]' onclick='onChangeDangerPrice(this);' "+checked+" >",
           "<input class='input  roundnum total_edit total_edit_row' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
+          @if( isset($order->order_code) ) 
+          "",
+          @else
           "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
               "<span class='fa fa-trash'></span>" +
           "</a> ",
+          @endif
         ];
       }
 
