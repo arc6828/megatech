@@ -22,6 +22,7 @@ class ReceiveDetailModel extends Model
   }
   
   
+  
 
   public static function select_all(){
 		return DB::table('tb_purchase_receive_detail')

@@ -17,6 +17,8 @@ use App\PurchaseStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
+use App\Purchase\ReceiveModel;
+
 
 
 use App\GaurdStock;
@@ -115,6 +117,10 @@ class OrderController extends Controller
         //NEW CODE WITH Rx
         $segments = explode("-",$request->input('purchase_order_code'));
         $input['purchase_order_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+
+        //UPDATE INVOICE REFERENCE order_code
+        ReceiveModel::where('internal_reference_doc',$request->input('purchase_order_code') )
+          ->update(["internal_reference_doc"=>$input['purchase_order_code'] ]);
         
         //ROLLBACK STOCK STATS IN PRODUCT AND GAURD STOCK
         //CREATE GAURD STOCK + UPDATE PRODUCT      
@@ -283,9 +289,32 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
+
+      //CREATE DICT OF UNCHANGABLE ITEMS
+      $current_oe = OrderModel::findOrFail($id);
+      $receives = $current_oe->receives()->where('purchase_status_id','>','0')->get();
+      //
+      $unchangable_items = [];
+      foreach($receives as $item){
+        $current_pickings = $item->receive_details;
+        for($i=0; $i<count($current_pickings); $i++)
+        {
+          if(isset($unchangable_items[$current_pickings[$i]->Product->product_code])){
+            $unchangable_items[$current_pickings[$i]->Product->product_code] += $current_pickings[$i]->amount;
+          }else{
+            $unchangable_items[$current_pickings[$i]->Product->product_code] = $current_pickings[$i]->amount;        
+          }
+          
+        }
+      }
+      //print_r($unchangable_items);
+
+      
       $data = [
           //QUOTATION
           'table_purchase_order' => OrderModel::select_by_id($id),
+          'order' => $current_oe,
+          'unchangable_items' => $unchangable_items,
           'table_supplier' => SupplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),

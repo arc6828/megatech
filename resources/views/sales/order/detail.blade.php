@@ -68,7 +68,6 @@
         select.required = "true";
         //console.log("element.delivery_duration : ", element.delivery_duration);
         wrap.append(select);
-
         ["โปรดระบุ","3 - 5","7 - 10","15 - 30","30 - 60"].forEach(function(item, index){
           let option = document.createElement("option");
           option.value = index==0?"":item;

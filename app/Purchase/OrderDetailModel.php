@@ -31,7 +31,10 @@ class OrderDetailModel extends Model
 	public static function select_by_purchase_order_id($purchase_order_id){
     return DB::table('tb_purchase_order_detail')
         ->join('tb_product','tb_purchase_order_detail.product_id','=','tb_product.product_id')
+        ->join('tb_purchase_requisition_detail','tb_purchase_order_detail.requisition_detail_id','=','tb_purchase_requisition_detail.purchase_requisition_detail_id')
+        ->join('tb_purchase_requisition','tb_purchase_requisition.purchase_requisition_id','=','tb_purchase_requisition_detail.purchase_requisition_id')
         ->where('purchase_order_id', '=' , $purchase_order_id )
+        ->select('tb_purchase_order_detail.*', 'tb_product.*', 'tb_purchase_requisition.purchase_requisition_code')
         ->get();
 	}
 

@@ -18,7 +18,7 @@
 				detail.forEach(function(element,index) {
 					//console.log(element,index);
 					var id = element.purchase_order_detail_id;
-					var row = createRow(id, element);
+					var row = createRow(id, element, element.requisition_detail_id);
 					dataSet.push(row);
 				});
 				//console.log(dataSet);
@@ -27,9 +27,11 @@
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
-							{ title: "#" },
-							{ title: "รหัสสินค้า" },
+							//{ title: "#" },						
+							{ title: "เลขที่ PR" },
+							{ title: "รหัสสินค้า" },	
 							{ title: "ชื่อสินค้า" },
+							{ title: "วันที่ส่งของ <br>(วัน)" },
 							{ title: "จำนวน" },
 							//{ title: "ราคาตั้ง" },
 							//{ title: "ส่วนลด %" },
@@ -62,21 +64,69 @@
         var checked = true;
         var discount_price = ("{{$method}}"=="edit")?element.discount_price:0;
         //discount_price = 0;
+
+		//ELEMENT DELIVERY DURATION
+        let wrap = document.createElement("div");
+        let select = document.createElement("select");
+        select.name="delivery_duration[]";
+        select.required = "true";
+        //console.log("element.delivery_duration : ", element.delivery_duration);
+        wrap.append(select);
+        ["โปรดระบุ","3 - 5","7 - 10","15 - 30","30 - 60"].forEach(function(item, index){
+          let option = document.createElement("option");
+          option.value = index==0?"":item;
+          option.innerHTML = item;
+          if(element.delivery_duration == item){
+            
+            //console.log("element.delivery_duration 2 : ", element.delivery_duration);
+            option.setAttribute("selected", "true")
+            console.log(option);
+          }
+          select.append(option);
+
+        });
+        select = wrap.innerHTML;
+
+        //select.value = element.delivery_duration;
+        console.log(select, wrap);
+
+        //CHECK IF EDIT
+        let max_amount = "";        
+        //CHECK INVOICE OR NOT OVER SAME NUMBER
+        @if( isset($order->purchase_order_code) )
+          //EDIT MODE
+          max_amount =  element.amount;          
+        @endif
+        let min_amount = "0";  
+        @if( isset($order->purchase_order_code) )  
+              
+          let unchangable_items = @json($unchangable_items);
+          //IF SOME ITEMS HAVE BEEN INVOICE
+          min_amount = (unchangable_items[element.product_code]) ? 
+              unchangable_items[element.product_code] :
+              0;
+        @endif
+
         return [
-          id+
+          element.purchase_requisition_code +
           "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +
           "<input type='hidden' class='requisition_detail_id_edit' name='requisition_detail_id_edit[]'  value='"+requisition_detail_id+"' >",
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
-          element.product_name + " / " + element.grade,
-          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >"
+          element.product_name,		  
+          ""+select,
+          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' min='"+min_amount+"' max='"+max_amount+"' title='["+min_amount+","+max_amount+"]' style='min-width:60px;'>"
 
           +"<input class='d-none input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>"
           +"<input type='number' step='any' class='d-none input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+(checked?parseFloat(element.max_discount_percent)+100:element.max_discount_percent)+"  value='"+(parseFloat(discount_percent_edit).toFixed(2))+"'>",
           "<input class='input roundnum discount_price_edit' name='discount_price_edit[]'  value='"+parseFloat(discount_price).toFixed(2)+"'>",
           "<input class='input  roundnum total_edit' name='total_edit[]'  value='"+(discount_price *  element.amount)+"' disabled>",
-          "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+          @if( isset($order->purchase_order_code) ) 
+          "",
+          @else
+		  "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",
+		  @endif
         ];
       }
 

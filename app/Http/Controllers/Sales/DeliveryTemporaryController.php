@@ -95,6 +95,35 @@ class DeliveryTemporaryController extends Controller
       ];
       //print_r($input);
       //exit();
+      //VOID IF HAS CODE (Revision)
+      if( !empty($request->input('delivery_temporary_code') ) ){
+        switch($request->input('delivery_temporary_code')){
+          case "DTDRAFT" : 
+            $id =   $request->input('delivery_temporary_id');
+            DeliveryTemporaryModel::destroy($id);
+            DeliveryTemporaryDetailModel::where('delivery_temporary_id',$id)->delete();
+            break;
+          default :
+            $q = DeliveryTemporaryModel::where('delivery_temporary_code',$request->input('delivery_temporary_code') )
+              ->orderBy('datetime','desc')->first();
+            $input['revision'] = $q->revision +1 ;
+            $q->sales_status_id = -1; //-1 means void
+            $q->save();
+            
+            $segments = explode("-",$request->input('delivery_temporary_code'));
+            $input['delivery_temporary_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+        }
+        
+        
+      }
+      //DRAFT
+      if($input['sales_status_id'] == 0 )
+      {
+        //0 means DRART -> do not set quotation_code / date
+        $input['delivery_temporary_code'] = "DTDRAFT";
+        $input['datetime'] = "";
+
+      }
       $id = DeliveryTemporaryModel::insert($input);
 
       //INSERT ALL NEW QUOTATION DETAIL

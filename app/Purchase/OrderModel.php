@@ -18,6 +18,10 @@ class OrderModel extends Model
       public function order_details(){
         return $this->hasMany('App\Purchase\OrderDetailModel','purchase_order_id');
       }
+      public function receives()
+      {   
+        return $this->hasMany('App\Purchase\ReceiveModel','internal_reference_doc','purchase_order_code');
+      }
       public function User()
       {
           return $this->belongsTo('App\User','user_id');

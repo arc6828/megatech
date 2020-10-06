@@ -38,6 +38,16 @@ class ReceiveModel extends Model
         return $this->hasMany('App\Purchase\ReceiveDetailModel','purchase_receive_id');
     }
 
+    public function receive_details()
+    {   
+        return $this->hasMany('App\Purchase\ReceiveDetailModel','purchase_receive_id');
+    }
+
+    public function purchase_order()
+    {   
+        return $this->belongsTo('App\Purchase\OrderModel','internal_reference_doc','purchase_order_code');
+    }
+
     public function supplier_billing_detail(){
         return $this->hasOne('App\SupplierBillingDetail','doc_id');
     }
