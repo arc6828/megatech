@@ -171,6 +171,7 @@
       </div>
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
+      @if(isset($row))
         @switch($row->sales_status_id)
           @case(7)
             <span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
@@ -185,6 +186,7 @@
             <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
             @break
         @endswitch
+      @endif
       </div>
       <label class="col-lg-2 offset-lg-1 d-none">หนี้สะสม</label>
       <div class="col-lg-3 d-none">
