@@ -144,7 +144,10 @@ class RequisitionDetailModel extends Model
       SELECT product_id,{$new_amount},discount_price,purchase_requisition_id,purchase_requisition_detail_status_id
       FROM tb_purchase_requisition_detail
       WHERE purchase_requisition_detail_id = {$id}";
-    return DB::insert($sql);
+    DB::insert($sql);
+    $item = DB::table('tb_purchase_requisition_detail')->orderBy('purchase_requisition_detail_id','desc')->first();
+        
+    return $item->purchase_requisition_detail_id;
   }
 
   public static function update_purchase_requisition_detail_status_id_by_ids($action, $ids){

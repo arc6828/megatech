@@ -1,9 +1,43 @@
 <div class="card ">
   <div class="card-body">
-    <div class="mb-4">
-      <a href="{{ url('/sales/invoice') }}" title="Back" class="btn btn-warning btn-sm" >
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-      </a>
+    <div class="row mb-4">
+      <div class="col-lg-4">
+        <a href="{{ url('/sales/invoice') }}" title="Back" class="btn btn-warning btn-sm" >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a>
+      </div>
+      <div class="col-lg-4">
+        ...
+      </div>
+      <div class="col-lg-4  text-right">
+        <script>
+          
+          function onCancel(id){
+            //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+            //GET FORM BY ID
+            var form = document.getElementById("form_cancel");
+            let elements = form.children;
+            console.log("want to delete", elements);
+            for(var item of elements){
+              item.removeAttribute("disabled");
+            };
+            //CHANGE ACTION TO SPECIFY ID
+            //form.action = "{{ url('/') }}/sales/quotation/"+id;
+            //SUBMIT
+            var want_to_delete = confirm('Are you sure to delete this quotation ?');
+            if(want_to_delete){
+              form.submit();
+            }
+          }
+        </script>
+        @if(isset($row->sales_status_id) > 0)
+        <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
+          <span class="fa fa-trash"> ยกเลิก Invoice</span>
+        </a>
+        @endif
+      </div>
+
     </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>

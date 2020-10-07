@@ -77,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
             //Route::resource('/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
             
             Route::get('/invoice/{id}/pdf', 'Sales\InvoiceController@pdf');
+            Route::patch('/delivery_temporary/{id}/cancel', 'Sales\InvoiceController@cancel');
             Route::resource('/invoice', 'Sales\InvoiceController');
             
             Route::get('/delivery_temporary/{id}/pdf', 'Sales\DeliveryTemporaryController@pdf');

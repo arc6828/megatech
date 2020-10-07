@@ -35,6 +35,11 @@
 			
 
 		</div>
+		<form class="d-none" action="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/cancel" id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to void?')">
+			{{ csrf_field() }}
+			{{ method_field('PATCH') }}
+			<button type="submit" class="btn btn-success " id="form-cancel-submit" style="width:150px;">Save</button>
+		</form>
 		<form class="" action="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}

@@ -189,6 +189,47 @@ class InvoiceController extends Controller
         return $invoice_code;
     }
 
+    public function cancel($id)
+    {
+      //
+      $invoice = InvoiceModel::findOrFail($id);
+      //VOID
+      $invoice->sales_status_id = -1; //-1 MEANS Void    
+      $invoice->save();     
+      
+      //FIND OE
+      $order = OrderModel::where('order_code',$invoice->internal_reference_id)->firstOrFail();
+      //RE STATUS OE 
+
+      //RE STATUS OE DETAIL
+
+
+      $list = $invoice->invoice_details;
+      
+      //GAURD STOCK      
+      foreach($list as $item){
+        $product = ProductModel::findOrFail($item['product_id']);
+        $gaurd_stock = GaurdStock::create([
+          "code" => $id,
+          "type" => "sales_invoice_cancel",
+          "amount" => $item['amount'],
+          "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+          "pending_in" => $product->pending_in,
+          "pending_out" => ($product->pending_out +  $item['amount'] ),
+          "product_id" => $product->product_id,
+        ]);
+        
+        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+        $product->pending_in = $gaurd_stock['pending_in'];
+        $product->pending_out = $gaurd_stock['pending_out'];
+        $product->save();
+
+      }
+
+      return redirect("sales/delivery_temporary/{$id}/edit");
+    }
+
     /**
      * Display the specified resource.
      *
