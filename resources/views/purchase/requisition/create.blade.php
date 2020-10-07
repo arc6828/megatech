@@ -4,6 +4,22 @@
 @section('background-tag','bg-success')
 
 @section('content')
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <form action="" method="GET">
+          <input class="form-control"
+            name="order_code" id="order_code"
+            placeholder="Enter OE Code ..."
+            value="{{ request('order_code') }}"
+            />
+          <button class="d-none" id="btn-isbn">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <form class="" action="{{ url('/') }}/purchase/requisition" method="POST" onsubmit="return confirm('คุณต้องการสร้างใบเสนอซื้อใช่หรือไม่?');">
     {{ csrf_field() }}
