@@ -120,7 +120,7 @@
 	  			@php
 	  				$index = 0;
 				@endphp
-              	@foreach($table_purchase_requisition_detail_status as $row_purchase_requisition_detail_status)
+              	@foreach($table_purchase_requisition_detail_status->where('purchase_requisition_detail_status_id','1') as $row_purchase_requisition_detail_status)
 
 				<option
 					value="{{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id }}" >

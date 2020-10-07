@@ -44,9 +44,11 @@ class RequisitionDetailController extends Controller
           //insert new purchase_requisition detail for ไม่อนุมุติ
           $new_amount = $amounts[$i] - $approve_amounts[$i];
           $id = RequisitionDetailModel::duplicate_by_id($new_amount, $purchase_requisition_detail_ids[$i]);
+          //IF NOT
           $r = RequisitionDetailModel::findOrFail($id);
           $r->purchase_requisition_detail_status_id = 2; //2 means ไม่อนุมัติ
           $r->save();
+
           //update by approve amount อนุมัติ
           RequisitionDetailModel::update_by_id(["amount"=>$approve_amounts[$i]] , $purchase_requisition_detail_ids[$i]);
         }
