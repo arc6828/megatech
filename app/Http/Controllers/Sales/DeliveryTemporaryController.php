@@ -87,7 +87,7 @@ class DeliveryTemporaryController extends Controller
           'delivery_time' => $request->input('delivery_time',"0"),
           'department_id' => $request->input('department_id'),
           //'sales_status_id' => 10, //default is 10 สร้างใบส่งของชั่วคราว          
-          'sales_status_id' => 0, //default is 0 DRAFTss
+          'sales_status_id' => $request->input('sales_status_id'), //default is 0 DRAFT
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id','0'),
           'remark' => $request->input('remark'),
@@ -113,17 +113,39 @@ class DeliveryTemporaryController extends Controller
             
             $segments = explode("-",$request->input('delivery_temporary_code'));
             $input['delivery_temporary_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+
+            //ROLLBACK STOCK STATS IN PRODUCT AND GAURD STOCK
+            //CREATE GAURD STOCK + UPDATE PRODUCT      
+            foreach($q->delivery_temporary_details as $item){
+              $product = ProductModel::findOrFail($item['product_id']);
+              $gaurd_stock = GaurdStock::create([
+                "code" => $item['delivery_temporary_id'],
+                "type" => "sales_delivery_temporary",
+                "amount" => $item['amount'],
+                "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+                "pending_in" => ($product->pending_in  ),
+                "pending_out" => ($product->pending_out),
+                "product_id" => $product->product_id,
+              ]);
+              
+              //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+              $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+              $product->pending_in = $gaurd_stock['pending_in'];
+              $product->pending_out = $gaurd_stock['pending_out'];
+              $product->save();
+
+            }  
         }
+        
         
         
       }
       //DRAFT
       if($input['sales_status_id'] == 0 )
       {
-        //0 means DRART -> do not set quotation_code / date
+        //0 means DRAFT -> do not set quotation_code / date
         $input['delivery_temporary_code'] = "DTDRAFT";
         $input['datetime'] = "";
-
       }
       $id = DeliveryTemporaryModel::insert($input);
 
@@ -146,25 +168,29 @@ class DeliveryTemporaryController extends Controller
       }
       DeliveryTemporaryDetailModel::insert($list);
 
-      //GAURD STOCK      
-      foreach($list as $item){
-        $product = ProductModel::findOrFail($item['product_id']);
-        $gaurd_stock = GaurdStock::create([
-          "code" => $id,
-          "type" => "sales_dt_create",
-          "amount" => $item['amount'],
-          "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-          "pending_in" => $product->pending_in,
-          "pending_out" => $product->pending_out,
-          "product_id" => $product->product_id,
-        ]);
-        
-        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-        $product->pending_in = $gaurd_stock['pending_in'];
-        $product->pending_out = $gaurd_stock['pending_out'];
-        $product->save();
+      //IF NOT DRAFT
+      if($input['sales_status_id'] > 0 )
+      {
+        //GAURD STOCK      
+        foreach($list as $item){
+          $product = ProductModel::findOrFail($item['product_id']);
+          $gaurd_stock = GaurdStock::create([
+            "code" => $id,
+            "type" => "sales_dt_create",
+            "amount" => $item['amount'],
+            "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+            "pending_in" => $product->pending_in,
+            "pending_out" => $product->pending_out,
+            "product_id" => $product->product_id,
+          ]);
+          
+          //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+          $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+          $product->pending_in = $gaurd_stock['pending_in'];
+          $product->pending_out = $gaurd_stock['pending_out'];
+          $product->save();
 
+        }
       }
 
       return redirect("sales/delivery_temporary/{$id}/edit");

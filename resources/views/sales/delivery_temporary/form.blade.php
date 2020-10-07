@@ -16,17 +16,24 @@
         </div>        
       </div>
       <div class="col-lg-4 text-right">
+        @if($row->sales_status_id == 0)
+		  	<a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="document.querySelector('#sales_status_id').value='10'; document.querySelector('#delivery_temporary_code').value='';  document.querySelector('#form-submit').click(); console.log(5565);" title="สร้าง">
+		      <i class="fas fa-trash"></i> สร้างใบส่งของชั่วคราว
+		    </a>
+        @endif
         @if($row->sales_status_id == 10)
-		  	<a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.querySelector('#form-submit').click(); console.log(5565);" title="ยกเลิก">
+		  	<a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); console.log(5565);" title="ยกเลิก">
 		      <i class="fas fa-trash"></i> ยกเลิกใบส่งของชั่วคราว
 		    </a>
         @endif
 		  	<a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/pdf" target="_blank"  title="พิมพ์">
 		      <i class="fas fa-print"></i> พิมพ์
 		    </a>
+        @if($row->sales_status_id != 11)
         <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/edit" title="แก้ไข" >
 		      <i class="fas fa-edit"></i>  แก้ไข
 		    </a>
+        @endif
 
       </div>
       @endif
@@ -34,7 +41,8 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
-        <input name="delivery_temporary_code"	id="delivery_temporary_code" class="form-control form-control-sm"	disabled>
+      <input type="hidden" name="delivery_temporary_id" value="{{ isset($delivery_temporary->delivery_temporary_id)? $delivery_temporary->delivery_temporary_id : '' }}" />
+        <input name="delivery_temporary_code"	id="delivery_temporary_code" class="form-control form-control-sm"	readonly>
       </div>
       <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
@@ -156,7 +164,8 @@
 
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <input type="text" name="sales_status_id"	id="sales_status_id"	 class="form-control form-control-sm form-control-line"   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status->sales_status_name  : ''  }}" readonly>
+        <input type="text" name="sales_status_id"	id="sales_status_id"	 class="d-none form-control form-control-sm form-control-line"   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status_id  : '0'  }}" readonly>
+        <input type="text" name=""	id=""	 class="form-control form-control-sm form-control-line"   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status->sales_status_name  : '0'  }}" readonly>
 
         
       </div>

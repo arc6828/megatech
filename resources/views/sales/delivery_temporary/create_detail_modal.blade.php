@@ -15,7 +15,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center table-sm" id="table-product-model"></table>
+					<table class="table table-hover text-center table-sm" id="table-product-model" width="100%"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">

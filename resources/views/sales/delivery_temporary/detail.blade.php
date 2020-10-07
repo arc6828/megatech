@@ -25,8 +25,11 @@
 
 				$('#table-delivery_temporary-detail').DataTable({
 					"ordering": false,
-					"pageLength": 50,
+					//"pageLength": 50,
+					paging : false,
+					searching : false,
 					"data": dataSet,
+					"info": false,
 					"columns": [
 							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
@@ -55,11 +58,19 @@
 
       //EVENT HANDLER
       function createRow(id,element){
+		//CHECK IF EDIT
+		let max_amount = "";        
+        //CHECK INVOICE OR NOT OVER SAME NUMBER
+        @if( isset($delivery_temporary->delivery_temporary_code) )
+          //EDIT MODE
+          max_amount =  element.amount;          
+		@endif
+		let min_amount = "0";  
         return [
 
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"+"<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
           element.product_name + " / " + element.grade ,
-          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+          "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' min='"+min_amount+"' max='"+max_amount+"' title='["+min_amount+","+max_amount+"]' style='min-width:60px;'>",
 
           "<input class='input roundnum normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
 					"<input type='number' step='any' class='input roundnum discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",

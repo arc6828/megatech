@@ -11,23 +11,21 @@
 		<form class="d-none" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/cancel" id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to cancel?')">
 			{{ csrf_field() }}
 			{{ method_field('PATCH') }}
-
-			<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
-
+			<button type="submit" class="btn btn-primary " id="form-cancel-submit" style="width:150px;">Save</button>
+			
 
 		</form>
 
-		<form class="" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}" id="form" method="POST">
+		<form class="" action="{{ url('/') }}/sales/delivery_temporary" id="form" method="POST">
 			{{ csrf_field() }}
-			{{ method_field('PUT') }}
 
 			@include('sales/delivery_temporary/form')
-
+			@if($row->sales_status_id != 11)
 			<div class="text-center mt-4">
 				<a href="{{ url('/') }}/sales/delivery_temporary" class="btn btn-outline-primary" style="width:150px;">back</a>
 				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
 			</div>
-
+			@endif
 		</form>
 
 		<script >
