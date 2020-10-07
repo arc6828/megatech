@@ -26,7 +26,7 @@ class AddDeliveryDurationToPurchaseOrderDetailTable extends Migration
     public function down()
     {
         Schema::table('tb_purchase_order_detail', function (Blueprint $table) {
-            //
+            $table->string('delivery_duration')->nullable();
         });
     }
 }

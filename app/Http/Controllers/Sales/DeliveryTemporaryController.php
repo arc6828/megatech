@@ -86,7 +86,8 @@ class DeliveryTemporaryController extends Controller
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time',"0"),
           'department_id' => $request->input('department_id'),
-          'sales_status_id' => 10, //default is 10 สร้างใบส่งของชั่วคราว
+          //'sales_status_id' => 10, //default is 10 สร้างใบส่งของชั่วคราว          
+          'sales_status_id' => 0, //default is 0 DRAFTss
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id','0'),
           'remark' => $request->input('remark'),
@@ -139,6 +140,7 @@ class DeliveryTemporaryController extends Controller
               "amount" => $request->input('amount_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "delivery_temporary_id" => $id,
+              "delivery_duration" => "-",
           ];
         }
       }
@@ -346,7 +348,7 @@ class DeliveryTemporaryController extends Controller
               "delivery_temporary_id" => $id,
           ];
           if( is_numeric($request->input('id_edit')[$i]) ){
-            $a["delivery_temporary_detail_id"] = $request->input('id_edit')[$i];
+            //$a["delivery_temporary_detail_id"] = $request->input('id_edit')[$i];
           }
           $list[] = $a;
         }
