@@ -62,8 +62,10 @@
 		let max_amount = "";        
         //CHECK INVOICE OR NOT OVER SAME NUMBER
         @if( isset($delivery_temporary->delivery_temporary_code) )
-          //EDIT MODE
-          max_amount =  element.amount;          
+		  //EDIT MODE
+		  @if($delivery_temporary->delivery_temporary_code != "DTDRAFT")
+		  max_amount =  element.amount;          
+		  @endif
 		@endif
 		let min_amount = "0";  
         return [
