@@ -27,6 +27,7 @@ use App\ProductModel;
 use App\Functions;
 
 use App\GaurdStock;
+use App\Sales\DeliveryTemporaryModel;
 
 use PDF;
 use Storage;
@@ -438,6 +439,10 @@ class OrderController extends Controller
         }
         
       }
+
+      //QUERY DT OF THIS CUSTOMER
+      // $customer_id = $current_oe->customer_id;
+      // $dts = DeliveryTemporaryModel::where('customer_id',$customer_id)->get();
 
       $data = [
           //QUOTATION

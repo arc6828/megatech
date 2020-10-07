@@ -16,7 +16,6 @@
 @endsection
 
 @section('content')
-
 	@forelse($table_order as $row)
 		
 		<form class="" action="{{ url('/') }}/sales/order" id="form" method="POST" enctype="multipart/form-data">
