@@ -210,28 +210,35 @@ class ReceiveController extends Controller
       //RE STATUS OE DETAIL IN PICKING
       //$pickings = $order->pickings()->get();
       foreach($list as $p){
+        //UPDATE AMOUNT_PENDING_IN
+        $order->order_details()
+        ->where('product_id',$p->product_id)
+        ->where('requisition_detail_id',$p->requisition_detail_id)
+        ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
+        ->increment('amount_pending_in', $p->amount);
+
         //UPDATE STATUS
         $order->order_details()
           ->where('product_id',$p->product_id)
           ->where('requisition_detail_id',$p->requisition_detail_id)
           ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
           ->update(["purchase_order_detail_status_id" => "5"]); //6 รับสินค้าแล้ว -> 5 ออก PO แล้ว
-        //UPDATE AMOUNT_PENDING_IN
+          
       }
 
 
         
       
-      //GAURD STOCK      
+      //GAURD STOCK     - CHECK 
       foreach($list as $item){
         $product = ProductModel::findOrFail($item['product_id']);
         $gaurd_stock = GaurdStock::create([
           "code" => $id,
           "type" => "sales_invoice_cancel",
           "amount" => $item['amount'],
-          "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-          "pending_in" => $product->pending_in,
-          "pending_out" => ($product->pending_out +  $item['amount'] ),
+          "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+          "pending_in" => ($product->pending_in +  $item['amount'] ),
+          "pending_out" => ($product->pending_out ),
           "product_id" => $product->product_id,
         ]);
         
@@ -243,7 +250,7 @@ class ReceiveController extends Controller
 
       }
 
-      return redirect("sales/invoice/{$id}/edit");
+      return redirect("purchase/receive/{$id}/edit");
     }
 
     /**

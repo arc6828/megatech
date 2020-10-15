@@ -38,7 +38,7 @@ class ReceiveModel extends Model
         return $this->hasMany('App\Purchase\ReceiveDetailModel','purchase_receive_id');
     }
 
-    public function receive_details()
+    public function purchase_receive_details()
     {   
         return $this->hasMany('App\Purchase\ReceiveDetailModel','purchase_receive_id');
     }

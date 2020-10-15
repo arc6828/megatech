@@ -20,7 +20,7 @@
 	      </div>
 
 	    </div>
-		<form class="d-none" action="{{ url('/') }}/sales/receive/{{ $row->purchase_receive_id }}/cancel" id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to void?')">
+		<form class="d-none" action="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/cancel" id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to void?')">
 			{{ csrf_field() }}
 			{{ method_field('PATCH') }}
 			<button type="submit" class="btn btn-success " id="form-cancel-submit" style="width:150px;">Save</button>
