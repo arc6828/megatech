@@ -14,6 +14,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
+				<input hidden="" id="search_key" value="">
 				<div class="table-responsive">
 					<table width="100%" class="table table-hover text-center table-sm" id="table-product-model"></table>
 				</div>
