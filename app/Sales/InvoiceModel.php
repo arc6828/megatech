@@ -37,6 +37,9 @@ class InvoiceModel extends Model
   public function InvoiceDetail(){
     return $this->hasMany('App\Sales\InvoiceDetailModel','invoice_id');
   }
+  public function invoice_details(){
+    return $this->hasMany('App\Sales\InvoiceDetailModel','invoice_id');
+  }
   public function Order(){
     return $this->belongsTo('App\Sales\OrderModel','internal_reference_id','order_code');
   }

@@ -200,11 +200,26 @@ class InvoiceController extends Controller
       //FIND OE
       $order = OrderModel::where('order_code',$invoice->internal_reference_id)->firstOrFail();
       //RE STATUS OE 
+      if($order->sales_status_id == 9){ //ออก Invoice ครบ
+        $order->update(["sales_status_id"=>"8"]); //อนุมัติครบ
+      }
 
-      //RE STATUS OE DETAIL
+      
+
+      $list = $invoice->invoice_details()->get();
+
+      //RE STATUS OE DETAIL IN PICKING
+      //$pickings = $order->pickings()->get();
+      foreach($list as $p){
+        $order->pickings()
+        ->where('product_id',$p->product_id)
+        ->where('amount',$p->amount)
+        ->where('order_detail_status_id','4') //4 means ออก IV แล้ว
+        ->update(["order_detail_status_id" => "1"]); //ออก IV แล้ว -> อนุมัติ (1)
+      }
 
 
-      $list = $invoice->invoice_details;
+        
       
       //GAURD STOCK      
       foreach($list as $item){
@@ -227,7 +242,7 @@ class InvoiceController extends Controller
 
       }
 
-      return redirect("sales/delivery_temporary/{$id}/edit");
+      return redirect("sales/invoice/{$id}/edit");
     }
 
     /**

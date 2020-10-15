@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
             //Route::resource('/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
             
             Route::get('/invoice/{id}/pdf', 'Sales\InvoiceController@pdf');
-            Route::patch('/delivery_temporary/{id}/cancel', 'Sales\InvoiceController@cancel');
+            Route::patch('/invoice/{id}/cancel', 'Sales\InvoiceController@cancel');
             Route::resource('/invoice', 'Sales\InvoiceController');
             
             Route::get('/delivery_temporary/{id}/pdf', 'Sales\DeliveryTemporaryController@pdf');
@@ -99,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
             //Route::resource('/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
 
+            Route::patch('/receive/{id}/cancel', 'Purchase\ReceiveController@cancel');
             Route::resource('/receive', 'Purchase\ReceiveController');
             //Route::resource('/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
 

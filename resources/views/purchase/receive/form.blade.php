@@ -1,9 +1,24 @@
 <div class="card">
   <div class="card-body">
-    <div class="mb-4">
-      <a href="{{ url('/') }}/purchase/receive" title="Back" class="btn btn-warning btn-sm">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-      </a>
+    <div class="row mb-4">
+      <div class="col-lg-4">
+        <a href="{{ url('/') }}/purchase/receive" title="Back" class="btn btn-warning btn-sm">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a>
+      </div>
+      <div class="col-lg-4">
+        
+      </div>
+      <div class="col-lg-4  text-right">
+        
+        @if(isset($row->purchase_status_id))
+          @if($row->purchase_status_id > 0)
+          <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
+            <span class="fa fa-trash"> ยกเลิก รับ/ซื้อสินค้า</span>
+          </a>
+          @endif
+        @endif
+      </div>
     </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>

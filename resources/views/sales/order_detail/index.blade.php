@@ -292,7 +292,7 @@
 					$('#table-order-detail').DataTable({
             data: dataSet,
             paging : false,
-            searching : false,
+            //searching : false,
 						columns: [
 								{ title: "#" },
 								{ title: "เลขที่ OE" },

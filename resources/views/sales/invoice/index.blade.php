@@ -29,6 +29,8 @@
 						<th class="text-center">ยอดหนี้คงค้าง</th>
 						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
+						<th class="text-center">สถานะ</th>
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -45,6 +47,18 @@
 						<td>{{ number_format($row->total_debt,2)  }}</td>
 						<td>{{ number_format($row->total?$row->total:0,2) }}</td>
 						<td>{{ $row->short_name }}</td>
+						<td>
+						@switch($row->sales_status_id)							
+							@case(-1)
+								<span class="badge badge-pill badge-secondary">Void</span>
+								@break
+							@default
+								<span class="badge badge-pill badge-success">Yes</span>
+								@break
+								{{-- $row->sales_status_name --}}
+						@endswitch
+							
+						</td>
 					</tr>
 					@endforeach
 				</tbody>

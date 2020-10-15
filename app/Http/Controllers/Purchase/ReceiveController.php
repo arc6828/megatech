@@ -188,6 +188,64 @@ class ReceiveController extends Controller
         return $purchase_receive_code;
     }
 
+    public function cancel($id)
+    {
+      //
+      $purchase_receive = ReceiveModel::findOrFail($id);
+      //VOID
+      $purchase_receive->purchase_status_id = -1; //-1 MEANS Void    
+      $purchase_receive->save();     
+      
+      //FIND OE
+      $order = OrderModel::where('purchase_order_code',$purchase_receive->internal_reference_doc)->firstOrFail();
+      //RE STATUS OE 
+      if($order->purchase_status_id == 4){ //4 : ปิดการซื้อเรียบร้อย
+        $order->update(["purchase_status_id"=>"3"]); //3 : รอรับสินค้า
+      }
+
+      
+
+      $list = $purchase_receive->purchase_receive_details()->get();
+
+      //RE STATUS OE DETAIL IN PICKING
+      //$pickings = $order->pickings()->get();
+      foreach($list as $p){
+        //UPDATE STATUS
+        $order->order_details()
+          ->where('product_id',$p->product_id)
+          ->where('requisition_detail_id',$p->requisition_detail_id)
+          ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
+          ->update(["purchase_order_detail_status_id" => "5"]); //6 รับสินค้าแล้ว -> 5 ออก PO แล้ว
+        //UPDATE AMOUNT_PENDING_IN
+      }
+
+
+        
+      
+      //GAURD STOCK      
+      foreach($list as $item){
+        $product = ProductModel::findOrFail($item['product_id']);
+        $gaurd_stock = GaurdStock::create([
+          "code" => $id,
+          "type" => "sales_invoice_cancel",
+          "amount" => $item['amount'],
+          "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+          "pending_in" => $product->pending_in,
+          "pending_out" => ($product->pending_out +  $item['amount'] ),
+          "product_id" => $product->product_id,
+        ]);
+        
+        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+        $product->pending_in = $gaurd_stock['pending_in'];
+        $product->pending_out = $gaurd_stock['pending_out'];
+        $product->save();
+
+      }
+
+      return redirect("sales/invoice/{$id}/edit");
+    }
+
     /**
      * Display the specified resource.
      *
