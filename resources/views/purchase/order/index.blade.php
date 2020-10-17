@@ -62,16 +62,16 @@
 						<td>{{ number_format($row->total?$row->total:0, 2) }}</td>
 						<td>{{ $row->short_name }}</td>
 						<td>
-              @if( $row->purchase_status_id == 3 )
-              <a
-                class="btn btn-sm btn-warning"
-                href2="{{ url('/') }}/purchase/receive/create?purchase_order_code={{ $row->purchase_order_code }}">
-                {{ $row->purchase_status_name }}
-              </a>
-              @else
-                {{ $row->purchase_status_name }}
-              @endif
-            </td>
+						@if( $row->purchase_status_id == 3 )
+						<a
+							class="btn btn-sm btn-warning"
+							href2="{{ url('/') }}/purchase/receive/create?purchase_order_code={{ $row->purchase_order_code }}">
+							{{ $row->purchase_status_name }}
+						</a>
+						@else
+							{{ $row->purchase_status_name }}
+						@endif
+						</td>
 						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_order_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

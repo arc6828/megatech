@@ -166,7 +166,8 @@ class OrderController extends Controller
               "discount_price" => $request->input('discount_price_edit')[$i],
               "purchase_order_id" => $id,
               "purchase_order_detail_status_id" => 5, //5 : ออก PO แล้ว
-              "requisition_detail_id" =>  $request->input('requisition_detail_id_edit')[$i],
+              "requisition_detail_id" =>  $request->input('requisition_detail_id_edit')[$i],              
+              "delivery_duration" => $request->input('delivery_duration')[$i],
           ];
           if( is_numeric($request->input('id_edit')[$i]) ){
             //$a["purchase_order_detail_id"] = $request->input('id_edit')[$i];

@@ -40,7 +40,7 @@
 						<th class="text-center">ยอดหนี้คงค้าง</th>
 						<th class="text-center">ยอดรวม</th>
 						<th class="text-center">รหัสพนักงาน</th>
-						<th class="text-center d-none">สถานะ</th>
+						<th class="text-center">สถานะ</th>
 						<th class="text-center d-none">action</th>
 					</tr>
 				</thead>
@@ -62,7 +62,18 @@
 						<td>{{ number_format( $row->total_debt?$row->total_debt:0 ,2)}}</td>
 						<td>{{ number_format( $row->total?$row->total:0 ,2)}}</td>
 						<td>{{ $row->short_name }}</td>
-						<td class="d-none">{{ $row->purchase_status_name }}</td>
+						<td>
+							@switch($row->purchase_status_id)							
+								@case(-1)
+									<span class="badge badge-pill badge-secondary">Void</span>
+									@break
+								@default
+									<span class="badge badge-pill badge-success">Yes</span>
+									@break
+									{{-- $row->purchase_status_name --}}
+							@endswitch
+							
+						</td>
 						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->purchase_receive_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

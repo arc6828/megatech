@@ -86,7 +86,8 @@ class ReceiveController extends Controller
           'tax_type_id' => $request->input('tax_type_id'),
           'delivery_time' => $request->input('delivery_time'),
           'department_id' => $request->input('department_id'),
-          'purchase_status_id' => $request->input('purchase_status_id'),
+          //'purchase_status_id' => $request->input('purchase_status_id'),
+          'purchase_status_id' => 4, //4 means ปิดการซื้อเรียบร้อย
           'user_id' => $request->input('user_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
@@ -112,6 +113,7 @@ class ReceiveController extends Controller
               "amount" => $request->input('amount_receive_edit')[$i],
               "discount_price" => $request->input('discount_price_edit')[$i],
               "purchase_receive_id" => $id,
+              "purchase_order_detail_id" =>  $request->input('purchase_order_detail_id_edit')[$i],
           ];
           if( is_numeric($request->input('id_edit')[$i]) ){
             //$a["purchase_receive_detail_id"] = $request->input('id_edit')[$i];
@@ -211,18 +213,18 @@ class ReceiveController extends Controller
       //$pickings = $order->pickings()->get();
       foreach($list as $p){
         //UPDATE AMOUNT_PENDING_IN
-        $order->order_details()
-        ->where('product_id',$p->product_id)
-        ->where('requisition_detail_id',$p->requisition_detail_id)
-        ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
-        ->increment('amount_pending_in', $p->amount);
+        $order_detail = OrderDetailModel::findOrFail($p->purchase_order_detail_id);
+        //->where('product_id',$p->product_id)
+        // ->where('purchase_order_detail_id',$p->purchase_order_detail_id)
+        // ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
+        // ;
+        // print_r($order->order_details()->get());
+        // print_r($p);
+
+        $order_detail->increment('amount_pending_in', $p->amount);
 
         //UPDATE STATUS
-        $order->order_details()
-          ->where('product_id',$p->product_id)
-          ->where('requisition_detail_id',$p->requisition_detail_id)
-          ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
-          ->update(["purchase_order_detail_status_id" => "5"]); //6 รับสินค้าแล้ว -> 5 ออก PO แล้ว
+        $order_detail->update(["purchase_order_detail_status_id" => "5"]); //6 รับสินค้าแล้ว -> 5 ออก PO แล้ว
           
       }
 

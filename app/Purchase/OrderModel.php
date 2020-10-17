@@ -9,7 +9,7 @@ class OrderModel extends Model
 {
     protected $table = "tb_purchase_order";
     protected $primaryKey = 'purchase_order_id';
-    protected $fillable = [];
+    protected $fillable = ['purchase_status_id'];
 
     
       public function OrderDetail(){
