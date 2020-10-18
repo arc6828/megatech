@@ -232,11 +232,15 @@
 		var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
 		var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 		document.querySelector("#debt_duration").value = element.debt_duration;
-		document.querySelector("#billing_duration").value = element.billing_duration ;
+		//SET BILLING DURATION
+		var date = new Date(element.datetime); // Now
+		date.setDate(date.getDate() + Number(element.debt_duration)); // Set now + 30 days as the new date
+		//console.log(date);
+		document.querySelector("#billing_duration").value = date.toISOString().substr(0, 10);
 		document.querySelector("#payment_condition").value = element.payment_condition ;
 		document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
 		document.querySelector("#tax_type_id").value = element.tax_type_id ;
-		document.querySelector("#delivery_time").value = element.delivery_time;
+		//document.querySelector("#delivery_time").value = element.delivery_time;
 		document.querySelector("#department_id").value = element.department_id ;
 		document.querySelector("#sales_status_id").value = element.sales_status_id ;
 		document.querySelector("#user_id").value = element.user_id ;

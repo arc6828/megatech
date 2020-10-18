@@ -76,13 +76,19 @@
   <div style="margin-top:10px;">
     <table border="1" style="border-collapse: collapse; width:100%;">
       <tr><td>
-        <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
+        <strong>ลูกค้า :</strong> {{ $row->company_name }} {{ $row->tax_number }}<br>
         <strong>ที่อยู่ :</strong> {{ $row->address }} <br>
         <div class="inline" style="width:25px;"></div>
         {{ $row->address2 }}
+        @if($row->province == "กรุงเทพมหานคร")
+        {{ $row->sub_district? "แขวง".$row->sub_district : ""}}
+        {{ $row->district? "เขต".$row->district : ""}}
+        {{ $row->province? "".$row->province  : ""}}
+        @else
         {{ $row->sub_district? "ต.".$row->sub_district : ""}}
         {{ $row->district? "อ.".$row->district : ""}}
         {{ $row->province? "จ.".$row->province  : ""}}
+        @endif
         {{  $row->zipcode  }}  <br>
         <strong>โทร :</strong> {{ $row->telephone }}
         <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> {{ $row->fax}}
@@ -93,15 +99,18 @@
   <div style="margin-top:10px;">
     <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
       <tr>
-        <th>กำหนดยืนราคา</th>
         <th>วันที่ส่งของ</th>
         <th>ระยะเวลาหนี้</th>
+        <th>วันที่ชำระเงิน</th>
         <th>พนักงานขาย</th>
       </tr>
       <tr>
-        <td>30 วัน</td>
-        <td>{{ $row->delivery_time }} วัน หลังจากได้รับ P/O</td>
+        <td>{{ date("d/m/Y", strtotime($row->delivery_time))  }} </td>
         <td>{{ $row->debt_duration }} วัน</td>
+        @php
+          $due_of_payment = date('Y-m-d',strtotime('+'.$row->debt_duration.' days',strtotime($row->datetime)));
+        @endphp
+        <td>{{ date("d/m/Y", strtotime($due_of_payment)) }} </td>
         <td>{{ $row->User->name }}</td>
       </tr>
     </table>
@@ -132,7 +141,7 @@
           <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $row_detail->product_code }}</td>
-            <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
+            <td>{{ $row_detail->product_name }} </td>
             <td>{{ $row_detail->amount }}</td>
             <td>{{ number_format($row_detail->discount_price,2) }}</td>
             <td>{{ number_format($row_detail->amount * $row_detail->discount_price,2) }}</td>
@@ -201,13 +210,13 @@
       <div class="inline" style="width:33%;">
         _______________________________________<br>
         ผู้ขาย<br>
-        วันที่ 21/06/2019
+        วันที่ {{ date("d/m/Y", strtotime($row->datetime)) }}
       </div>
       <div class="inline" style="width:23%;"></div>
       <div class="inline" style="width:33%;">
         _______________________________________<br>
         ผู้อนุมัติ<br>
-        วันที่ 21/06/2019
+        วันที่ {{ date("d/m/Y", strtotime($row->datetime)) }}
       </div>
       <div class="inline" style="width:5%;"></div>
     </div>

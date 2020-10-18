@@ -73,14 +73,14 @@
     </div>
     
 
-    <div class="form-group form-inline d-none">
-      <label class="col-lg-2">ระยะเวลาหนี้ (วัน) (deplicated)</label>
+    <div class="form-group form-inline">
+      <label class="col-lg-2">ระยะเวลาหนี้ (วัน)</label>
       <div class="col-lg-3">
-        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line" disabled	>
+        <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line" 	>
       </div>
-      <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา (วัน) (deplicated)</label>
+      <label class="col-lg-2 offset-lg-1">วันที่ชำระเงิน</label>
       <div class="col-lg-3">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  disabled>
+        <input type="date" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  >
       </div>
     </div>
 

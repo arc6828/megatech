@@ -70,7 +70,8 @@
 			  	var str_time = moment("{{ $row->datetime }}").format('DD MMM YYYY - HH:mm:ss');  //console.log(str_time);
 				var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";
-				document.querySelector("#billing_duration").value = "{{ $row->billing_duration }}";
+
+				document.querySelector("#billing_duration").value = "{{ date('Y-m-d',strtotime('+'.$row->debt_duration.' days',strtotime($row->datetime)))  }}";
 				document.querySelector("#payment_condition").value = "{{ $row->payment_condition }}";
 				document.querySelector("#payment_method").value = "{{ $row->payment_method }}";
 				document.querySelector("#max_credit").value = "{{ $row->max_credit }}";

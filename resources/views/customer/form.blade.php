@@ -185,7 +185,7 @@
         </select>
       </div>
       <div class="form-group col-lg-3">
-        <label >วงเงินเครดิต</label>
+        <label >วงเงินเครดิต (บาท)</label>
         @if( Auth()->user()->role == "admin" )
         <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  " value="{{ isset($customer) ? number_format($customer->max_credit) : '-1'  }}"   >
         @else
@@ -193,7 +193,7 @@
         @endif
       </div>
       <div class="form-group col-lg-3">
-        <label >ระยะเวลาหนี้</label>
+        <label >ระยะเวลาหนี้ (วัน)</label>
           <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "    >
       </div>
       <div class="form-group col-lg-3">
