@@ -15,7 +15,33 @@
 			 	var detail = JSON.parse('@json($table_purchase_requisition_detail)');
 				//console.log("DETAIL : ",detail);
 				var dataSet = [];
+				detail_dict = {};
 				detail.forEach(function(element,index) {
+					
+					if(detail_dict[""+element.product_id] ){
+						detail_dict[""+element.product_id].amount += Number(element.amount);
+					}else{						
+						detail_dict[""+element.product_id] = element;
+						detail_dict[""+element.product_id].amount = Number(element.amount);
+						detail_dict[""+element.product_id].amount_wait = 0;
+						detail_dict[""+element.product_id].amount_no = 0;
+						detail_dict[""+element.product_id].amount_yes = 0;
+					}
+					let status = element.purchase_requisition_detail_status_id;
+					switch(status){
+						case "1" : status="อนุมัติ"; detail_dict[""+element.product_id].amount_yes += Number(element.amount); break;
+						case "2" : status="ไม่อนุมัติ"; detail_dict[""+element.product_id].amount_no = Number(element.amount); break;
+						case "3" : status="รออนุมัติ"; detail_dict[""+element.product_id].amount_wait = Number(element.amount); break;
+						case "4" : status="กำหนดเจ้าซื้อแล้ว"; detail_dict[""+element.product_id].amount_yes += Number(element.amount); break;
+						case "5" : status="ออก PO แล้ว"; detail_dict[""+element.product_id].amount_yes += Number(element.amount); break;
+						case "6" : status="รับสินค้าแล้ว"; break;
+							
+					}
+				});
+				console.log("detail_dict : ", detail_dict);
+				detail = Object.values(detail_dict);
+
+				detail.forEach(function(element,index) {			
 					//console.log(element,index);
 					var id = element.purchase_requisition_detail_id;
 					var row = createRow(id, element);
@@ -30,13 +56,16 @@
 					"columns": [
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
-							{ title: "จำนวน" },
+							{ title: "สั่งซื้อ" },
+							{ title: "รออนุมัติ" },
+							{ title: "ไม่อนุมัติ" },
+							{ title: "อนุมัติ" },
 							//{ title: "หน่วย" },
 							//{ title: "ราคาตั้ง" },
 							//{ title: "ส่วนลด %" },
 							//{ title: "ราคาขาย" },
 							//{ title: "ราคาขายรวม" },
-							{ title: "สถานะ" },
+							//{ title: "สถานะ" },
 							{ title: "action" },
 					],
 					"fnCreatedRow" : function( nRow, aData, iDataIndex ) {
@@ -64,20 +93,23 @@
 			case "4" : status="กำหนดเจ้าซื้อแล้ว"; break;
 			case "5" : status="ออก PO แล้ว"; break;
 			case "6" : status="รับสินค้าแล้ว"; break;
-			default : status="อื่นๆ"; break;
+			default : status="รออนุมัติ"; element.purchase_requisition_detail_status_id=3;  break;
 				
 		}
         return [
           "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >"+
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
-          element.product_name+" / "+element.grade,
+          element.product_name,
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+		  ""+(element.amount_wait?element.amount_wait:0)+"",
+		  ""+(element.amount_no?element.amount_no:0)+"",
+		  ""+(element.amount_yes?element.amount_yes:0)+"",
           //element.product_unit,
           //"<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
 		//			"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"'>",
           //"<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
           //"<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
-          ""+status,
+          //""+status +"<input type='hidden' name='purchase_requisition_detail_status_id_edit[]'  value='"+element.purchase_requisition_detail_status_id+"' >",
 		  "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",

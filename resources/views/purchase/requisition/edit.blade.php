@@ -11,11 +11,13 @@
 			{{ method_field('POST') }}
 
 			@include('purchase/requisition/form')
-
+			
+			@if(false)
 			<div class="mt-4 text-center">
 				<a class="btn btn-outline-success" href="{{ url('/') }}/purchase/requisition">back</a>
 				<button type="submit" class="btn btn-success" >Save</button>
 			</div>
+			@endif
 
 		</form>
 
