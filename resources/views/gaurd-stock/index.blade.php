@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-header">Gaurdstock</div>
                     <div class="card-body">
-                        <a href="{{ url('/gaurd-stock/create') }}" class="btn btn-success btn-sm" title="Add New GaurdStock">
+                        <a href="{{ url('/gaurd-stock/create') }}" class="btn btn-success btn-sm d-none" title="Add New GaurdStock">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
@@ -32,7 +32,12 @@
                                         <th>#</th>
                                         <th>Date</th>
                                         <th>Product Id</th>
-                                        <th>Code</th><th>Amount</th><th>Stock</th><th>ค้างรับ</th><th>ค้างส่ง</th><th>Remark</th><th>Actions</th>
+                                        <th>Code</th>
+                                        <th>Amount</th>
+                                        <th>ค้างรับ</th><th>ค้างส่ง</th>
+                                        <th>Stock</th>
+                                        <!-- <th>Remark</th> -->
+                                        <th class=" d-none">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -63,8 +68,12 @@
                                                     @break
                                             @endswitch
                                         </td>
-                                        <td>{{ $item->amount }}</td><td>{{ $item->amount_in_stock }}</td><td>{{ $item->pending_in }}</td><td>{{ $item->pending_out }}</td><td>{{ $item->remark }}</td>
-                                        <td>
+                                        <td>{{ $item->amount }}</td>
+                                        <td>{{ $item->pending_in }}</td>
+                                        <td>{{ $item->pending_out }}</td>
+                                        <td>{{ $item->amount_in_stock }}</td>
+                                        <!-- <td>{{ $item->remark }}</td> -->
+                                        <td class=" d-none">
                                             <a href="{{ url('/gaurd-stock/' . $item->id) }}" title="View GaurdStock"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/gaurd-stock/' . $item->id . '/edit') }}" title="Edit GaurdStock"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
