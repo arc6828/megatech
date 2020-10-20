@@ -64,13 +64,13 @@
 									@break
 								@default
 									@if($row->requisition_details->sum("purchase_requisition_detail_status_id") == $row->requisition_details->count("purchase_requisition_detail_status_id")  )
-									<span class="badge badge-pill badge-success">อนุมัติ</span>
+									<span class="badge badge-pill badge-success">อนุมัติทั้งหมด</span>
 									@elseif( $row->requisition_details->sum("purchase_requisition_detail_status_id") == $row->requisition_details->count("purchase_requisition_detail_status_id")*3 )
 									<span class="badge badge-pill badge-info">รอการอนุมัติ</span>
 									@elseif( $row->requisition_details->sum("purchase_requisition_detail_status_id") == $row->requisition_details->count("purchase_requisition_detail_status_id")*2 )
 									<span class="badge badge-pill badge-danger">ไม่อนุมัติ</span>
 									@else
-									<span class="badge badge-pill badge-warning">อนุมัติบางส่วน</span>
+									<span class="badge badge-pill badge-primary">อนุมัติบางส่วน</span>
 									@endif
 							@endswitch
 						</td>
