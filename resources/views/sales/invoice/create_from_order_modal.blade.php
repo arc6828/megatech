@@ -83,9 +83,9 @@
 						element.order_code,
 						element.datetime,
 						element.total,
-						element.customer_code,
-						element.company_name,
-						element.short_name,
+						//element.customer_code,
+						//element.company_name,
+						//element.short_name,
 						element.sales_status_name,
 						"<button type='button' class='btn btn-success btn-create btn-sm' onclick='fillInvoice("+id+");'>" +
 						"<span class='fa fa-shopping-cart'></span>" +
@@ -104,9 +104,9 @@
 						{ title: "เลขที่เอกสาร" },
 						{ title: "วันที่" },
 						{ title: "ยอดรวม" },
-						{ title: "รหัสลูกค้า" },
-						{ title: "ชื่อบริษัท" },
-						{ title: "รหัสพนักงาน" },
+						//{ title: "รหัสลูกค้า" },
+						//{ title: "ชื่อบริษัท" },
+						//{ title: "รหัสพนักงาน" },
 						{ title: "สถานะ" },
 						{ title: "action" },
 						],
@@ -144,10 +144,10 @@
 					//console.log(element,index);
 					var id = element.order_detail_id;
 					var row = [
-						element.order_code,
-						element.date,
-						element.delivery_time,
-						element.company_name,
+						//element.order_code,
+						//element.date,
+						//element.delivery_time,
+						//element.company_name,
 						element.product_code,
 						element.product_name,
 						element.amount,
@@ -164,10 +164,10 @@
 					table_detail = $('#table-order-detail').DataTable({
 						data: dataSet,
 						columns: [
-								{ title: "เลขที่ OE" },
-								{ title: "วันที่ OE" },
-								{ title: "วันที่ส่งของ" },
-								{ title: "ลูกค้า" },
+								// { title: "เลขที่ OE" },
+								// { title: "วันที่ OE" },
+								// { title: "วันที่ส่งของ" },
+								// { title: "ลูกค้า" },
 								{ title: "รหัสสินค้า" },
 								{ title: "ชื่อสินค้า" },
 								{ title: "จำนวน" },
