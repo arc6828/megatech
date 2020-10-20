@@ -23,8 +23,8 @@ class GaurdStockController extends Controller
 
         if (!empty($keyword)) {
             if(empty($hidden)){
-                $gaurdstock = GaurdStock::where('product_id',  $keyword)
-                ->whereIn('type',['sales_invoice','purchase_receive'])
+                $gaurdstock = GaurdStock::where('product_id',  $keyword)                
+                ->whereIn('type',['sales_invoice','purchase_receive','sales_dt_create','sales_dt_cancel','sales_dt_void']) //"type" => "",
                 ->latest()->paginate($perPage);
             }else{
                 $gaurdstock = GaurdStock::where('product_id',  $keyword)

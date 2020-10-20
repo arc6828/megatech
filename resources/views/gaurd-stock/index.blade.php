@@ -52,7 +52,8 @@
                                                      @break
                                                 @case("sales_dt_create")
                                                 @case("sales_dt_cancel")
-                                                    DT
+                                                @case("sales_dt_void")
+                                                    {{ $item->delivery_temporary->delivery_temporary_code }}
                                                     @break
                                                 @case("purchase_order")
                                                 <a href="{{ url('/') }}/purchase/order/{{ $item->purchase_order->purchase_order_id }}/edit">{{ $item->purchase_order->purchase_order_code }}</a>

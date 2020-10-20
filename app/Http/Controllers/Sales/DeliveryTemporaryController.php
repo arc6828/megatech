@@ -120,7 +120,7 @@ class DeliveryTemporaryController extends Controller
               $product = ProductModel::findOrFail($item['product_id']);
               $gaurd_stock = GaurdStock::create([
                 "code" => $item['delivery_temporary_id'],
-                "type" => "sales_delivery_temporary",
+                "type" => "sales_dt_void",
                 "amount" => $item['amount'],
                 "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
                 "pending_in" => ($product->pending_in  ),
