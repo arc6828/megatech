@@ -86,7 +86,7 @@
 						//element.customer_code,
 						//element.company_name,
 						//element.short_name,
-						element.sales_status_name,
+						//element.order_detail_status_id,
 						"<button type='button' class='btn btn-success btn-create btn-sm' onclick='fillInvoice("+id+");'>" +
 						"<span class='fa fa-shopping-cart'></span>" +
 						"</button>",
@@ -107,7 +107,7 @@
 						//{ title: "รหัสลูกค้า" },
 						//{ title: "ชื่อบริษัท" },
 						//{ title: "รหัสพนักงาน" },
-						{ title: "สถานะ" },
+						//{ title: "สถานะ" },
 						{ title: "action" },
 						],
 						"pageLength" : 3,
