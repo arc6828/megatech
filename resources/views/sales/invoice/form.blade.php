@@ -66,10 +66,10 @@
           @endif
         @endif
       </div>
-      <label class="col-lg-2 offset-lg-1">วันที่ส่งของ</label>
+      <!-- <label class="col-lg-2 offset-lg-1">วันที่ส่งของ</label>
       <div class="col-lg-3">
-      <input type="date" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" required>
-      </div>
+      <input type="date" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" >
+      </div> -->
     </div>
     
 

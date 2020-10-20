@@ -120,13 +120,11 @@
           <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
             <tr>
               <th>กำหนดยืนราคา</th>
-              <th>วันที่ส่งของ</th>
               <th>ระยะเวลาหนี้</th>
               <th>พนักงานขาย</th>
             </tr>
             <tr>
               <td>{{ $row->billing_duration }} วัน</td>
-              <td>{{ $row->delivery_time }} วัน หลังจากได้รับ P/O</td>
               <td>{{ $row->debt_duration }} วัน</td>
               <td>{{ $row->name }}</td>
             </tr>
@@ -146,6 +144,7 @@
             <th>ลำดับ</th>
             <th>รหัสสินค้า</th>
             <th>รายละเอียด</th>
+            <th>วันที่ส่งของ (วัน)</th>
             <th>จำนวน</th>
             <th>หน่วยละ</th>
             <th>จำนวนเงิน</th>
@@ -159,7 +158,8 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $row_detail->product_code }} </td>
-              <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
+              <td>{{ $row_detail->product_name }}</td>
+              <td>{{ $row_detail->delivery_duration }}</td>
               <td>{{ $row_detail->amount }}</td>
               <td>{{ number_format($row_detail->discount_price,2) }}</td>
               <td>{{ number_format($row_detail->amount * $row_detail->discount_price,2) }}</td>
@@ -171,6 +171,7 @@
           @if($page == $num_page - 1)
             @for($i=0; $i<($item_per_page-count($table_order_detail)%$item_per_page); $i++)
             <tr>
+              <td><br></td>
               <td><br></td>
               <td><br></td>
               <td><br></td>
@@ -190,7 +191,7 @@
               <div style="text-align:center;">-</div>
               @endif
             </td>
-            <td rowspan="2" colspan="3" style="text-align:right;">
+            <td rowspan="2" colspan="4" style="text-align:right;">
               @if($page == $num_page - 1)
               <div>
                 <div class="inline" style="width:130px;"><strong>รวมเป็นเงิน</strong></div>
