@@ -46,14 +46,14 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->created_at }}</td>
                                         
-                                        <td><a href="{{ url('/') }}/product/{{ $item->product_id }}/edit">{{ $item->product->product_code }}</a></td>
+                                        <td>{{ $item->product->product_code }}</td>
                                         <td>
                                             @switch($item->type)
                                                 @case("sales_order")
-                                                    <a href="{{ url('/') }}/sales/order/{{ $item->sales_order->order_id }}/edit">{{ $item->sales_order->order_code }}</a>
+                                                    {{ $item->sales_order->order_code }}
                                                     @break
                                                 @case("sales_invoice")
-                                                    <a href="{{ url('/') }}/sales/invoice/{{ $item->sales_invoice->invoice_id }}/edit">{{ $item->sales_invoice->invoice_code }}</a>                                                    
+                                                    {{ $item->sales_invoice->invoice_code }}                                                   
                                                      @break
                                                 @case("sales_dt_create")
                                                 @case("sales_dt_cancel")
