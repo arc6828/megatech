@@ -146,6 +146,7 @@
                 value="{{ $row_order_detail_status->order_detail_status_id }}" >
                   {{  $row_order_detail_status->order_detail_status_name }}
               </option>
+              @break
               @endforeach
           </select>
           <button type="summit" id="form_summit_table" class="btn btn-success btn-sm">
