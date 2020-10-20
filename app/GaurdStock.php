@@ -40,7 +40,7 @@ class GaurdStock extends Model
     }
 
     public function delivery_temporary(){
-        return $this->belongsTo('App\Sales\DeliveryTempoparyModel','code');
+        return $this->belongsTo('App\Sales\DeliveryTemporaryModel','code');
     }
 
     public function purchase_order(){
