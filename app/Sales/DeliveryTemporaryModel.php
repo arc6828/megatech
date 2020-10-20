@@ -46,6 +46,7 @@ class DeliveryTemporaryModel extends Model
       //SELECT count(*) FROM `tb_delivery_temporary` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
       return DB::table('tb_delivery_temporary')
           ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+          ->where('sales_status_id','!=','-1')
           ->count();
 	}
 
