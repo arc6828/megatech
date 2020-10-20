@@ -33,9 +33,10 @@
                                         <th>Date</th>
                                         <th>Product Id</th>
                                         <th>Code</th>
-                                        <th>Amount</th>
-                                        <th>ค้างรับ</th><th>ค้างส่ง</th>
-                                        <th>Stock</th>
+                                        <!-- <th>Amount</th> -->
+                                        <th>รับเข้า</th>
+                                        <th>ส่งออก</th>
+                                        <th>สุทธิ</th>
                                         <!-- <th>Remark</th> -->
                                         <th class=" d-none">Actions</th>
                                     </tr>
@@ -47,30 +48,58 @@
                                         <td>{{ $item->created_at }}</td>
                                         
                                         <td>{{ $item->product->product_code }}</td>
+                                        @php 
+                                            $positive = true;
+                                        @endphp
                                         <td>
                                             @switch($item->type)
                                                 @case("sales_order")
                                                     {{ $item->sales_order->order_code }}
                                                     @break
                                                 @case("sales_invoice")
-                                                    {{ $item->sales_invoice->invoice_code }}                                                   
-                                                     @break
+                                                    {{ $item->sales_invoice->invoice_code }}      
+                                                    @php 
+                                                        $positive = false;
+                                                    @endphp                                             
+                                                    @break
                                                 @case("sales_dt_create")
+                                                    @php 
+                                                        $positive = false;
+                                                    @endphp  
+                                                    {{ isset($item->delivery_temporary)? $item->delivery_temporary->delivery_temporary_code : "DT".$item->code }}
+                                                    @break
                                                 @case("sales_dt_cancel")
+                                                    @php 
+                                                        $positive = true;
+                                                    @endphp  
+                                                    {{ isset($item->delivery_temporary)? $item->delivery_temporary->delivery_temporary_code : "DT".$item->code }}
+                                                    @break
                                                 @case("sales_dt_void")
+                                                    @php 
+                                                        $positive = true;
+                                                    @endphp  
                                                     {{ isset($item->delivery_temporary)? $item->delivery_temporary->delivery_temporary_code : "DT".$item->code }}
                                                     @break
                                                 @case("purchase_order")
                                                 <a href="{{ url('/') }}/purchase/order/{{ $item->purchase_order->purchase_order_id }}/edit">{{ $item->purchase_order->purchase_order_code }}</a>
                                                      @break
                                                 @case("purchase_recieve")
-                                                    PR
+                                                    PR                                                    
+                                                    @php 
+                                                        $positive = true;
+                                                    @endphp           
                                                     @break
                                             @endswitch
                                         </td>
+                                        @if( $positive )
                                         <td>{{ $item->amount }}</td>
-                                        <td>{{ $item->pending_in }}</td>
-                                        <td>{{ $item->pending_out }}</td>
+                                        <td>-</td>
+                                        @else
+                                        <td>-</td>
+                                        <td>{{ $item->amount }}</td>
+                                        @endif
+                                        <!-- <td>{{ $item->pending_in }}</td>
+                                        <td>{{ $item->pending_out }}</td> -->
                                         <td>{{ $item->amount_in_stock }}</td>
                                         <!-- <td>{{ $item->remark }}</td> -->
                                         <td class=" d-none">
