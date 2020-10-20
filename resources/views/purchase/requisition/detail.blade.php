@@ -66,7 +66,7 @@
 							//{ title: "ราคาขาย" },
 							//{ title: "ราคาขายรวม" },
 							//{ title: "สถานะ" },
-							{ title: "action" },
+							// { title: "action" },
 					],
 					"fnCreatedRow" : function( nRow, aData, iDataIndex ) {
 						//console.log("aData : ", aData, iDataIndex);
@@ -110,9 +110,9 @@
           //"<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"'>",
           //"<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
           //""+status +"<input type='hidden' name='purchase_requisition_detail_status_id_edit[]'  value='"+element.purchase_requisition_detail_status_id+"' >",
-		  "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
-            "<span class='fa fa-trash'></span>" +
-          "</a>",
+		//   "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+        //     "<span class='fa fa-trash'></span>" +
+        //   "</a>",
         ];
       }
 

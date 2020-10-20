@@ -94,7 +94,7 @@
       element.quotation_code ,
 
 			element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit2[]'  value='"+element.product_id+"' >",
-			element.product_name + " (" + element.sales_status_id+ ")",
+			element.product_name ,
 			"<input class='input amount_edit' name='amount_edit2[]' id='amount_edit2'  value='"+element.amount+"' disabled>",
 			"<input class='input normal_price_edit' name='normal_price_edit2[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
 			"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit2[]' max='"+element.max_discount_percent+"'  value='"+(100 - element.discount_price / element.normal_price * 100)+"' disabled>",
