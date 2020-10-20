@@ -86,7 +86,7 @@
 						//element.customer_code,
 						//element.company_name,
 						//element.short_name,
-						element.order_detail_status_id,
+						//element.order_detail_status_id,
 						"<button type='button' class='btn btn-success btn-create btn-sm' onclick='fillInvoice("+id+");'>" +
 						"<span class='fa fa-shopping-cart'></span>" +
 						"</button>",
