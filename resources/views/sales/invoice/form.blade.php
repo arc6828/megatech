@@ -87,7 +87,8 @@
     <div class="form-group form-inline">
       <label class="col-lg-2">วิธีการชำระเงิน</label>
       <div class="col-lg-3">
-        <input name="payment_method"	id="payment_method"	class="form-control form-control-sm form-control-line" readonly 	required>
+        <input type="hidden" name="payment_method"	id="payment_method"	class="form-control form-control-sm form-control-line" readonly 	required>
+        <input id="payment_method_th"	 class="form-control form-control-sm form-control-line" value="" readonly 	>
       </div>
       <label class="col-lg-2 offset-lg-1">วงเงินเครดิต</label>
       <div class="col-lg-3">

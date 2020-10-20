@@ -225,6 +225,7 @@
 		document.querySelector("#customer_code").innerHTML = element.customer_code;
 		document.querySelector("#company_name").value = element.company_name;
 		document.querySelector("#payment_method").value = element.payment_method;
+		document.querySelector("#payment_method_th").value = (element.payment_method == 'credit' ?'ขายเชื่อ':'ขายสด') ;
 		document.querySelector("#max_credit").value = element.max_credit ? element.max_credit : "0";
 
 

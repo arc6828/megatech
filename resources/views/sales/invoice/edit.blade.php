@@ -74,6 +74,7 @@
 				document.querySelector("#billing_duration").value = "{{ date('Y-m-d',strtotime('+'.$row->debt_duration.' days',strtotime($row->datetime)))  }}";
 				document.querySelector("#payment_condition").value = "{{ $row->payment_condition }}";
 				document.querySelector("#payment_method").value = "{{ $row->payment_method }}";
+				document.querySelector("#payment_method_th").value = "{{ $row->payment_method == 'credit' ?'ขายเชื่อ':'ขายสด' }}";
 				document.querySelector("#max_credit").value = "{{ $row->max_credit }}";
 				document.querySelector("#delivery_type_id").value = "{{ $row->delivery_type_id }}";
 				document.querySelector("#tax_type_id").value = "{{ $row->tax_type_id }}";
