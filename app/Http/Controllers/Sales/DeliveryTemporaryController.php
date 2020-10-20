@@ -139,6 +139,10 @@ class DeliveryTemporaryController extends Controller
         
         
         
+      }else{
+        $id =   $request->input('delivery_temporary_id');
+        DeliveryTemporaryModel::destroy($id);
+        DeliveryTemporaryDetailModel::where('delivery_temporary_id',$id)->delete();
       }
       //DRAFT
       if($input['sales_status_id'] == 0 )
