@@ -1,6 +1,6 @@
 @if(isset($table_product))
 <div class="form-group text-right">
-  <a href="{{ url('/') }}/gaurd-stock?product_id={{ $table_product->product_id }}">ดู Gaurd Stock ของสินค้า</a>
+  <a href="{{ url('/') }}/gaurd-stock?product_id={{ $table_product->product_id }}" target="_blank">ดู Gaurd Stock ของสินค้า</a>
 </div>
 @endif
 <div class="form-group ">
@@ -89,11 +89,7 @@
 
 <div class="form-group ">
   <div class="form-row ">
-    <div class="col-lg-4 {{ $errors->has('amount_in_stock') ? 'has-error' : ''}}">
-        <label for="amount_in_stock" class="control-label">{{ 'จำนวนสินค้าในคลัง' }}</label>
-        <input class="form-control form-control-sm" name="amount_in_stock" type="number" id="amount_in_stock" value="{{ isset($table_product->amount_in_stock) ? $table_product->amount_in_stock : '0'}}" readonly>
-        {!! $errors->first('amount_in_stock', '<p class="help-block">:message</p>') !!}
-    </div>
+    
     <div class="col-lg-4 {{ $errors->has('pending_in') ? 'has-error' : ''}}">
         <label for="pending_in" class="control-label">{{ 'จำนวนค้างรับ' }}</label>
         <input class="form-control form-control-sm" name="pending_in" type="number" id="pending_in" value="{{ isset($table_product->pending_in) ? $table_product->pending_in : '0'}}" readonly>
@@ -103,6 +99,11 @@
         <label for="pending_out" class="control-label">{{ 'จำนวนค้างส่ง' }}</label>
         <input class="form-control form-control-sm" name="pending_out" type="number" id="pending_out" value="{{ isset($table_product->pending_out) ? $table_product->pending_out : '0'}}"  readonly>
         {!! $errors->first('pending_out', '<p class="help-block">:message</p>') !!}
+    </div>
+    <div class="col-lg-4 {{ $errors->has('amount_in_stock') ? 'has-error' : ''}}">
+        <label for="amount_in_stock" class="control-label">{{ 'จำนวนสินค้าในคลัง' }}</label>
+        <input class="form-control form-control-sm" name="amount_in_stock" type="number" id="amount_in_stock" value="{{ isset($table_product->amount_in_stock) ? $table_product->amount_in_stock : '0'}}" readonly>
+        {!! $errors->first('amount_in_stock', '<p class="help-block">:message</p>') !!}
     </div>
   </div>
 </div>
