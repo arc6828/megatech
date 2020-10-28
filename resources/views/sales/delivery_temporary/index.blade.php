@@ -10,7 +10,7 @@
 	<div class="card-body">
 
     <div class="table-responsive">
-			<table class="table table-sm table-hover text-center table-bordered table-striped" id="table">
+			<table class="table table-sm table-hover text-center table-bordered table-striped" id="table" style="width:100%; margin-top:-1px !important;">
 				<thead>
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
@@ -52,12 +52,28 @@
 
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
-				console.log("555");
-        $('.number').each(function(index){
-          var number = Number($(this).text()).toLocaleString("en",{minimumFractionDigits: 2});
-          $(this).text(number);
-        });
-				$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+			console.log("555");
+			$('.number').each(function(index){
+				var number = Number($(this).text()).toLocaleString("en",{minimumFractionDigits: 2});
+				$(this).text(number);
+			});
+			$('#table').DataTable({
+				paging : false,
+				info : false,
+			}).order( [ 0, 'desc' ] ).draw();
+			//DATA TABLE SCROLL
+			var tableCont = document.querySelector('#table');
+			tableCont.parentNode.style.overflow = 'auto';
+			tableCont.parentNode.style.maxHeight = '400px';
+			tableCont.parentNode.addEventListener('scroll',function (e){
+				var scrollTop = this.scrollTop;
+				this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+				this.querySelector('thead').style.background = "white";
+				this.querySelector('thead').style.zIndex = "3000";
+				this.querySelector('thead').style.marginBottom = "100px";
+				console.log(scrollTop);
+			})
+			//END DATA TABLE SCROLL
 		});
 
 		</script>

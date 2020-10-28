@@ -23,9 +23,9 @@
     </div>
 
 		<div class="table-responsive">
-			<table class="table table-sm table-hover text-center  table-bordered" id="table">
-				<thead>
-					<tr>
+			<table class="table table-sm table-hover text-center  table-bordered" id="table" style="width:100%; margin-top:-1px !important;">
+				<thead >
+					<tr >
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
 						<th class="text-center">รหัสลูกค้า</th>
@@ -125,13 +125,14 @@
 			tableCont.parentNode.style.overflow = 'auto';
 			tableCont.parentNode.style.maxHeight = '400px';
 			tableCont.parentNode.addEventListener('scroll',function (e){
-				var scrollTop = this.scrollTop-1;
+				var scrollTop = this.scrollTop;
 				this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 1000 + 'px)';
 				this.querySelector('thead').style.background = "white";
 				this.querySelector('thead').style.zIndex = "3000";
 				//this.querySelector('thead').style.marginBottom = "200px";
-				//console.log(scrollTop);
+				console.log(scrollTop);
 			})
+			//tableCont.parentNode.dispatchEvent(new Event('scroll'));
 			//END DATA TABLE SCROLL
 		});
 

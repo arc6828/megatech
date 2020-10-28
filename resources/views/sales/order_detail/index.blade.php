@@ -134,7 +134,7 @@
     	{{ method_field('PUT') }}
 
   		<div class="table-responsive">
-  			<table class="table table-hover table-sm text-center  table-bordered" id="table-order-detail" style="width:100%">
+  			<table class="table table-hover table-sm text-center  table-bordered" id="table-order-detail" style="width:100%; margin-top:-1px !important;">
 
   			</table>
   		</div>
@@ -317,13 +317,16 @@
           tableCont.parentNode.style.overflow = 'auto';
           tableCont.parentNode.style.maxHeight = '250px';
           tableCont.parentNode.addEventListener('scroll',function (e){
-            var scrollTop = this.scrollTop-1;
+            //tableCont.style.marginTop = '0px !important';
+            var scrollTop = this.scrollTop;
             this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 1000 + 'px)';
             this.querySelector('thead').style.background = "white";
             this.querySelector('thead').style.zIndex = "3000";
             //this.querySelector('thead').style.marginBottom = "200px";
             //console.log(scrollTop);
           })
+          
+			    //tableCont.parentNode.dispatchEvent(new Event('scroll'));
           //END DATA TABLE SCROLL
 
           var key = "{{ $filter->order_id }}";
