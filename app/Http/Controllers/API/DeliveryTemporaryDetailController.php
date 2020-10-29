@@ -43,6 +43,7 @@ class DeliveryTemporaryDetailController extends Controller
       $table_order_detail = DeliveryTemporaryDetailModel::join('tb_delivery_temporary','tb_delivery_temporary_detail.delivery_temporary_id','=','tb_delivery_temporary.delivery_temporary_id')
         ->join('tb_product','tb_product.product_id','=','tb_delivery_temporary_detail.product_id')
         ->whereIn('tb_delivery_temporary.sales_status_id',[0,10])
+        ->where('customer_id',$customer_id)
         ->get();
 
       return response()->json($table_order_detail);
