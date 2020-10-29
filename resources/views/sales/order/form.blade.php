@@ -351,7 +351,26 @@ function onChange(obj){
 }
 
 function onChangeCustomer(){
-  $("#btn-ref-quotation").click();
+  let customer_id = document.querySelector("#customer_id").value;
+  //FETCH 			
+  let url = "{{ url('/') }}/api/delivery_temporary_detail/customer/"+customer_id;
+  console.log(url);
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if(data.length > 0){
+        // alert("");
+        
+        document.querySelector("#btn-ref-dt").click();
+        
+        //setTimeout(function(){ displayDT(); }, 3000);
+        
+      }else{
+        $("#btn-ref-quotation").click();
+      }
+    });
+
+  //
 }
 
 function validate_po(){
