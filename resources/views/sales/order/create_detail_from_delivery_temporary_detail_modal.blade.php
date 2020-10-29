@@ -77,7 +77,18 @@
 		
 
 		$('#dtModal').on('hidden.bs.modal', function (e) {
-			$("#btn-ref-quotation").click();
+			let customer_id = document.querySelector("#customer_id").value;
+			let user_id = "{{ Auth::user()->id }}";
+			//FETCH 			
+			let url = "{{ url('/') }}/api/quotation_detail/customer/"+customer_id+"/user/"+user_id;
+			console.log(url);
+			fetch(url)
+			.then(response => response.json())
+			.then(data => {
+				if(data.length > 0){              
+				$("#btn-ref-quotation").click();  
+				}
+			});
 		})
 
 
