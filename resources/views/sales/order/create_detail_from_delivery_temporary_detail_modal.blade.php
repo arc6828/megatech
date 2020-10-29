@@ -56,10 +56,10 @@
 									{ title: "ชื่อสินค้า" },
 									{ title: "จำนวน" },
 									//{ title: "หน่วย" },
-									{ title: "ราคาตั้ง" },
-									{ title: "ส่วนลด %" },
-									{ title: "ราคาขาย" },
-									{ title: "ราคาขายรวม" },
+									// { title: "ราคาตั้ง" },
+									// { title: "ส่วนลด %" },
+									// { title: "ราคาขาย" },
+									// { title: "ราคาขายรวม" },
 									//{ title: "action" },
 							],
 						}).order( [ 0, 'desc' ] ).draw(); // END DATATABLE
@@ -93,10 +93,10 @@
 			element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit2[]'  value='"+element.product_id+"' >",
 			element.product_name ,
 			"<input class='input amount_edit' name='amount_edit2[]' id='amount_edit2'  value='"+element.amount+"' disabled>",
-			"<input class='input normal_price_edit' name='normal_price_edit2[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
-			"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit2[]' max='"+element.max_discount_percent+"'  value='"+(100 - element.discount_price / element.normal_price * 100)+"' disabled>",
-			"<input class='input discount_price_edit' name='discount_price_edit2[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"' disabled>",
-			"<input class='input total_edit' name='total_edit2[]'  value='"+(element.discount_price *  element.amount)+"' disabled>"
+			// "<input class='input normal_price_edit' name='normal_price_edit2[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",
+			// "<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit2[]' max='"+element.max_discount_percent+"'  value='"+(100 - element.discount_price / element.normal_price * 100)+"' disabled>",
+			// "<input class='input discount_price_edit' name='discount_price_edit2[]'  value='"+parseFloat(element.discount_price).toFixed(2)+"' disabled>",
+			// "<input class='input total_edit' name='total_edit2[]'  value='"+(element.discount_price *  element.amount)+"' disabled>"
 			// "<button type='button' id='btn-add-"+id+"' json='"+JSON.stringify(element)+"' class='btn btn-warning btn-create btn-sm class d-none' onclick='addProduct2(this);'>" +
 			// 	"<span class='fa fa-shopping-cart'></span>" +
 			// "</button>",
