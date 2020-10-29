@@ -27,6 +27,10 @@ Route::apiResource('/quotation_detail', 'API\QuotationDetailController');
 Route::get('/order/validate_po', 'API\OrderController@validate_po');
 Route::apiResource('/order', 'API\OrderController');
 
+//DELIVERY TEMPOPARY
+Route::get('/delivery_temporary_detail/customer/{customer_id}', 'API\DeliveryTemporaryDetailController@index_by_customer');
+
+
 //Province + District
 Route::get('/province','API\DistrictController@provinces');
 Route::get('/province/{province_code}/amphoe','API\DistrictController@amphoes');

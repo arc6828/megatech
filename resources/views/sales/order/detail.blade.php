@@ -233,6 +233,8 @@
 
 		<div class="text-center">
 			@include('sales/order/create_detail_from_quotation_modal')
+      
+      @include('sales/order/create_detail_from_delivery_temporary_detail_modal')
       @if( !isset($order->order_code) )
 			@include('sales/order/create_detail_modal')
       @endif

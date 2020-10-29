@@ -83,6 +83,27 @@
 			}
 		}); // END MODAL EVENT
 
+		$('#quotationModal').on('hidden.bs.modal', function (e) {
+			// do something...
+			//GET CUSTOMER ID
+			let customer_id = document.querySelector("#customer_id").value;
+			//FETCH 			
+			let url = 'http://localhost/megatech/public/api/delivery_temporary_detail/customer/'+customer_id;
+			console.log(url);
+			fetch(url)
+				.then(response => response.json())
+				.then(data => {
+					if(data.length > 0){
+						alert("ค้างใบยืม โปรดตรวจสอบใบยืม");
+						
+						document.querySelector("#btn-ref-dt").click();
+						
+						//setTimeout(function(){ displayDT(); }, 3000);
+						
+					}
+				});
+		})
+
 	}); //END ADD EVENT LISTENER
 
 
@@ -152,4 +173,7 @@
     document.querySelector("#btn-close-quotation").click();
 
   }
+
+
+
 </script>
