@@ -58,6 +58,8 @@ class OrderModel extends Model
         ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
         ->join('users', 'tb_order.user_id', '=', 'users.id')
         ->where('tb_order.user_id', '=', $user_id)
+        
+        ->whereNotIn('tb_order.sales_status_id', [-1,9])
         ->get();
 	}
 
