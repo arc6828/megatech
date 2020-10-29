@@ -32,7 +32,7 @@
   					<select name="purchase_requisition_detail_status_id" id="purchase_requisition_detail_status_id" class="form-control form-control-sm"
               onchange="onSubmit(this);" required>
   							
-  							@foreach($table_purchase_requisition_detail_status->where('purchase_requisition_detail_status_id','1') as $row_purchase_requisition_detail_status)
+  							@foreach($table_purchase_requisition_detail_status as $row_purchase_requisition_detail_status)
   							<option class="{{ ( in_array($row_purchase_requisition_detail_status->purchase_requisition_detail_status_name, ['อนุมัติ','ไม่อนุมัติ'] ) )?'' : 'd-none'}}"
                   value="{{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id }}"
                   {{ $row_purchase_requisition_detail_status->purchase_requisition_detail_status_id == $filter->purchase_requisition_detail_status_id ? "selected" : "" }} >
@@ -178,7 +178,7 @@
 							//element.delivery_time,
 							//element.purchase_requisition_detail_status_name,
 							element.product_code,
-							element.product_name + " / " + element.grade  ,
+							element.product_name ,
 							element.amount,
 							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:100px;'  required>",
 							0,

@@ -192,7 +192,7 @@
 							//element.delivery_time,
 							//element.purchase_requisition_detail_status_name,
 							element.product_code,
-							element.product_name + " / " + element.grade ,
+							element.product_name  ,
 							element.amount,
 							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='width:100px;' required>",
 							//จำนวนที่ต้องสั่ง = ค้างส่ง - (สต๊อก + ค้างรับ)

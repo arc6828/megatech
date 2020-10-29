@@ -277,7 +277,7 @@
 							element.BARCODE,
 							element.product_code,
 							//element.product_name + " " + element.quantity + " หน่วย/กล่อง",
-              `<a href2="{{url('/product')}}/`+element.product_id+`/edit" target="_blank">`+element.product_name + " / " + element.grade+`</a>`,
+              `<a href2="{{url('/product')}}/`+element.product_id+`/edit" target="_blank">`+element.product_name + `</a>`,
 							
               filter.order_detail_status_id == "3" ? 
                 " <input type='number' name='approve_amounts[]' value='0' class='d-inline approve_amount "+amount_class+"' data-limit='"+element.amount+"' data-quantity='"+element.quantity+"' style='max-width:50px;'  required> / <div class='d-inline-block' style='width:40px;'>"+element.amount+"</div>" :
