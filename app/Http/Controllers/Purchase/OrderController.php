@@ -295,11 +295,11 @@ class OrderController extends Controller
       $current_oe = OrderModel::findOrFail($id);
       $receives = $current_oe->receives()->where('purchase_status_id','>','0')->get();
       //
-      print_r($receives);
-      exit();
+      // print_r($receives);
+      // exit();
       $unchangable_items = [];
       foreach($receives as $item){
-        $current_pickings = $item->receive_details;
+        $current_pickings = $item->purchase_receive_details;
         for($i=0; $i<count($current_pickings); $i++)
         {
           if(isset($unchangable_items[$current_pickings[$i]->Product->product_code])){
