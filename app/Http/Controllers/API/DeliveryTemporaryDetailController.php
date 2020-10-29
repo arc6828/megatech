@@ -41,6 +41,7 @@ class DeliveryTemporaryDetailController extends Controller
     {
       // $order_detail_status_id = $request->input("order_detail_status_id",3);
       $table_order_detail = DeliveryTemporaryDetailModel::join('tb_delivery_temporary','tb_delivery_temporary_detail.delivery_temporary_id','=','tb_delivery_temporary.delivery_temporary_id')
+        ->join('tb_product','tb_product.product_id','=','tb_delivery_temporary_detail.product_id')
         ->whereIn('tb_delivery_temporary.sales_status_id',[0,10])
         ->get();
 
