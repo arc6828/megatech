@@ -366,6 +366,7 @@ function onChangeCustomer(){
         //setTimeout(function(){ displayDT(); }, 3000);
         
       }else{
+        
         $("#btn-ref-quotation").click();
       }
     });

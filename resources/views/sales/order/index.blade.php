@@ -52,8 +52,32 @@
 						<td class="text-right">{{ number_format($row->total,2) }}</td>
 						<td><a href2="{{ url('user') }}/{{ $row->user_id }}" target="_blank">{{ $row->short_name }}</a></td>
 						<td>
-						@switch($row->sales_status_id)
+						@switch($row->sales_status_id)							
 							@case(7)
+							@case(8)	
+								@php
+								$a = [];
+								$sum = 0;
+								$count = 0;
+								$is_picking = false;
+								foreach($row->pickings as $p){
+									if($p->amount > 0){
+										$a[] = $p->order_detail_status_id;
+										$sum += $p->order_detail_status_id;
+										$count++;
+										if($p->order_detail_status_id == 3){ //PICKING
+											$is_picking = true;
+										}
+									}																		
+								}
+								@endphp
+								@if( $is_picking )
+								<span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
+								@elseif($count == 0)
+								<span class="badge badge-pill badge-secondary">Void</span>							
+								@elseif( $sum/$count == 4 )
+								<span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
+								@else
 								<span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
 								<a class="btn btn-sm btn-warning d-none"
 								
@@ -61,14 +85,8 @@
 									href2="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
 									รอการเบิกสินค้า
 								</a>
-								@break
-							@case(8)							
-								<span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
-								<a class="btn btn-sm btn-success d-none"
-									href="#"
-									href2="{{ url('/') }}/sales/invoice/create?order_code={{ $row->order_code }}" >
-									เปิด Invoice ใหม่
-								</a>
+								@endif						
+								
 								@break
 							@case(-1)
 								<span class="badge badge-pill badge-secondary">Void</span>
