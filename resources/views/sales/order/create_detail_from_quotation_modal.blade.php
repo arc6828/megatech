@@ -88,7 +88,7 @@
 			//GET CUSTOMER ID
 			let customer_id = document.querySelector("#customer_id").value;
 			//FETCH 			
-			let url = 'http://localhost/megatech/public/api/delivery_temporary_detail/customer/'+customer_id;
+			let url = "{{ url('/') }}/api/delivery_temporary_detail/customer/"+customer_id;
 			console.log(url);
 			fetch(url)
 				.then(response => response.json())
