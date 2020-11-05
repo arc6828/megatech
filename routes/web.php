@@ -84,6 +84,9 @@ Route::middleware(['auth'])->group(function () {
             Route::patch('/delivery_temporary/{id}/cancel', 'Sales\DeliveryTemporaryController@cancel');
             Route::resource('/delivery_temporary', 'Sales\DeliveryTemporaryController');
             //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
+            
+            Route::resource('return-invoice', 'Sales\ReturnInvoiceController');
+            Route::resource('return-invoice-detail', 'Sales\ReturnInvoiceDetailController');
         });
     });
 

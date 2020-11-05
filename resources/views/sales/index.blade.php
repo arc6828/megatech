@@ -50,7 +50,7 @@
 			</a>
 			</div>
 			<div class="col-6 col-md-3 ">
-				<a class="btn btn-outline-warning btn-menu  my-3" href="{{url('/')}}/">
+				<a class="btn btn-outline-warning btn-menu  my-3" href="{{ url('/sales/return-invoice') }}">
           <div class="vertical-center">
   					<div class="px-4"><span class="round round-primary my-2"><i class="ni ni-single-copy-04"></i></span></div>
   					<div>รับคืนสินค้า</div>

@@ -2,7 +2,7 @@
     "fields": [
         {
             "name": "code",
-            "type": "integer"
+            "type": "string"
         },
         {
             "name": "customer_id",

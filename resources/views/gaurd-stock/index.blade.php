@@ -81,13 +81,19 @@
                                                     {{ isset($item->delivery_temporary)? $item->delivery_temporary->delivery_temporary_code : "DT".$item->code }}
                                                     @break
                                                 @case("purchase_order")
-                                                <a href="{{ url('/') }}/purchase/order/{{ $item->purchase_order->purchase_order_id }}/edit">{{ $item->purchase_order->purchase_order_code }}</a>
-                                                     @break
+                                                    <a href="{{ url('/') }}/purchase/order/{{ $item->purchase_order->purchase_order_id }}/edit">{{ $item->purchase_order->purchase_order_code }}</a>
+                                                    @break
                                                 @case("purchase_recieve")
                                                     PR                                                    
                                                     @php 
                                                         $positive = true;
                                                     @endphp           
+                                                    @break
+                                                @case("sales_return_invoice")                                                    
+                                                    @php 
+                                                        $positive = true;
+                                                    @endphp  
+                                                    {{ $item->code }}         
                                                     @break
                                             @endswitch
                                         </td>
