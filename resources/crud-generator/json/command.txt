@@ -25,3 +25,5 @@ php artisan crud:generate Checklist --fields_from_file="resources/crud-generator
 php artisan crud:generate Backuplog --fields_from_file="resources/crud-generator/json/backuplog.json"
 
 php artisan crud:generate Brand --fields_from_file="resources/crud-generator/json/brand.json"
+
+php artisan crud:generate ReturnInvoice --fields_from_file="resources/crud-generator/json/ReturnInvoice.json" --view-path=sales --controller-namespace=App\\Http\\Controllers\\Sales --route-group=sales

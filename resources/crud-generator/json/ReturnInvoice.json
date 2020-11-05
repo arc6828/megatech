@@ -1,0 +1,52 @@
+{
+    "fields": [
+        {
+            "name": "code",
+            "type": "integer"
+        },
+        {
+            "name": "customer_id",
+            "type": "integer"
+        },
+        {
+            "name": "invoice_code",
+            "type": "string"
+        },
+        {
+            "name": "tax_type_id",
+            "type": "integer"
+        },
+        {
+            "name": "sales_status_id",
+            "type": "integer"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },
+        {
+            "name": "total_before_vat",
+            "type": "float"
+        },
+        {
+            "name": "vat",
+            "type": "float"
+        },
+        {
+            "name": "vat_percent",
+            "type": "float"
+        },
+        {
+            "name": "total_after_vat",
+            "type": "float"
+        },
+        {
+            "name": "revision",
+            "type": "integer"
+        }
+    ]
+}
