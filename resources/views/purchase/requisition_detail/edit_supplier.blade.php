@@ -176,7 +176,7 @@
 							"<input type='checkbox' "+displayCheckbox+" name='selected_purchase_requisition_detail_ids[]'  value='"+id+"' >"+
               "<input type='hidden' name='purchase_requisition_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >"+
-              "<span>"+(element.supplier_id?element.supplier_code:"")+"</span>",
+              "<span class='text-danger' title='"+element.company_name+"'>"+(element.supplier_id?element.supplier_code:"")+"</span>",
 							element.date,
 							element.purchase_requisition_code,
 							//element.delivery_time,
