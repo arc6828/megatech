@@ -287,6 +287,7 @@
 							0,
 							0,
 							element.picking_code,
+              element.customer_code,
 						];
 						dataSet.push(row);
 					});
@@ -311,6 +312,8 @@
 								{ title: "ค้างส่ง" },
 								{ title: "คงคลัง" },
 								{ title: "Picking" },
+								{ title: "ลูกค้า" },
+						
 						]
           }).order( [ 1, 'desc' ] ).draw(); //END DATATABLE
           
