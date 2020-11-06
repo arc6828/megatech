@@ -15,6 +15,7 @@
         <tbody>
         @php 
             $returnorderdetail = isset($returnorderdetail)? $returnorderdetail : [];
+                    
         @endphp
         @foreach($returnorderdetail as $item)
             <tr>
