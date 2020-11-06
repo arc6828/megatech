@@ -97,12 +97,17 @@ class RequisitionDetailModel extends Model
     //echo "s".$date_begin;
     //echo "s".$date_end;
     //echo $tail;
+    $whitelist = [ $purchase_requisition_detail_status_id ];
+    if( $purchase_requisition_detail_status_id == 1 ){
+      $whitelist[] = 4;
+    }
     return DB::table('tb_purchase_requisition_detail')
         ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
         ->join('tb_purchase_requisition','tb_purchase_requisition.purchase_requisition_id','=','tb_purchase_requisition_detail.purchase_requisition_id')
         ->join('tb_customer', 'tb_purchase_requisition.customer_id', '=', 'tb_customer.customer_id')
         ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
-        ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
+        ->whereIn("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $whitelist)
+        // ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
         //->whereBetween("datetime",">=",[$date_begin,$date_end])
         ->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
         ->select( DB::raw('*,DATE(datetime) as date'))
