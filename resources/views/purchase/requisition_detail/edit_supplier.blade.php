@@ -169,7 +169,7 @@
 					result.forEach(function(element,index) {
             var id = element.purchase_requisition_detail_id;
             //ถ้าอนุมัติแล้วให้ ซ่อน checkbox
-            let displayCheckbox = (purchase_requisition_detail_status_id=='4')?"class='d-none'":"";
+            let displayCheckbox = (element.purchase_requisition_detail_status_id=='4')?"class='d-none'":"";
 						console.log(element,index,displayCheckbox);
             
 						var row = [
