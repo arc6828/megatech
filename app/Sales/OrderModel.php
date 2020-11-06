@@ -51,6 +51,8 @@ class OrderModel extends Model
   public function Customer(){
     return $this->belongsTo('App\CustomerModel','customer_id');
   }
+  
+  //ที่อนุมัติแล้ว แต่ยังไม่ได้เปิด invoice
   public static function select_all_by_user_id($user_id){
     return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
         ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
@@ -61,6 +63,7 @@ class OrderModel extends Model
         ->where('tb_order.user_id', '=', $user_id)        
         ->whereNotIn('tb_order.sales_status_id', [-1,9])        
         ->whereNotNull('picking_code')
+        ->whereIn('tb_order_detail.order_detail_status_id', [1])   
         ->groupBy('order_id')
         ->havingRaw('COUNT(order_detail_id) > ?', [0])        
 			  ->select( DB::raw('tb_order.*,tb_customer.*,tb_sales_status.*'))
