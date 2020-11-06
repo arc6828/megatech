@@ -57,9 +57,13 @@ class OrderModel extends Model
         ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
         ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
         ->join('users', 'tb_order.user_id', '=', 'users.id')
-        ->where('tb_order.user_id', '=', $user_id)
-        
-        ->whereNotIn('tb_order.sales_status_id', [-1,9])
+        ->join('tb_order_detail','tb_order.order_id','=','tb_order_detail.order_id')
+        ->where('tb_order.user_id', '=', $user_id)        
+        ->whereNotIn('tb_order.sales_status_id', [-1,9])        
+        ->whereNotNull('picking_code')
+        ->groupBy('order_id')
+        ->havingRaw('COUNT(order_detail_id) > ?', [0])        
+			  ->select( DB::raw('tb_order.*,tb_customer.*,tb_sales_status.*'))
         ->get();
 	}
 
