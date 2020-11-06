@@ -103,9 +103,9 @@ class RequisitionDetailModel extends Model
     }
     return DB::table('tb_purchase_requisition_detail')
         ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
-        ->join('tb_purchase_requisition','tb_purchase_requisition.purchase_requisition_id','=','tb_purchase_requisition_detail.purchase_requisition_id')
-        ->join('tb_customer', 'tb_purchase_requisition.customer_id', '=', 'tb_customer.customer_id')
+        ->join('tb_purchase_requisition','tb_purchase_requisition.purchase_requisition_id','=','tb_purchase_requisition_detail.purchase_requisition_id')        
         ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
+        ->leftJoin('tb_customer', 'tb_purchase_requisition.supplier_id', '=', 'tb_supplier.supplier_id')
         ->whereIn("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $whitelist)
         // ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
         //->whereBetween("datetime",">=",[$date_begin,$date_end])
