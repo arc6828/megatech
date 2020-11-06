@@ -184,7 +184,7 @@
 							element.product_code,
 							element.product_name ,
 							element.amount,
-							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:100px;'  required>",
+							"<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:100px;' "+(element.supplier_id?"readonly":"")+"  required>",
 							0,
 							0,
 							0,

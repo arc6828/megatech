@@ -61,6 +61,12 @@
         }
 
     </style>
+    <style>
+        input:read-only, textarea:read-only {
+            background-color: #e9ecef;
+            border: 1px solid #cad1d7;
+        }
+    </style>
   @yield('head')
   <script>
     function number_format(num,decimal) {
