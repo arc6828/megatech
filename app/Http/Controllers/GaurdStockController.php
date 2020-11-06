@@ -23,8 +23,17 @@ class GaurdStockController extends Controller
 
         if (!empty($keyword)) {
             if(empty($hidden)){
+                $whitelist = [
+                    'sales_invoice',
+                    'purchase_receive',
+                    'sales_dt_create',
+                    'sales_dt_cancel',
+                    'sales_dt_void',
+                    'sales_return_invoice',
+                    'purchase_return_order',
+                ];
                 $gaurdstock = GaurdStock::where('product_id',  $keyword)                
-                ->whereIn('type',['sales_invoice','purchase_receive','sales_dt_create','sales_dt_cancel','sales_dt_void']) //"type" => "",
+                ->whereIn('type', $whitelist) //"type" => "",
                 ->latest()->paginate($perPage);
             }else{
                 $gaurdstock = GaurdStock::where('product_id',  $keyword)
