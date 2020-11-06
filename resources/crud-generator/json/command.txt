@@ -29,3 +29,7 @@ php artisan crud:generate Brand --fields_from_file="resources/crud-generator/jso
 php artisan crud:generate ReturnInvoice --fields_from_file="resources/crud-generator/json/ReturnInvoice.json" --view-path=sales --controller-namespace=App\Http\Controllers\Sales --model-namespace=App\Sales --route-group=sales
 
 php artisan crud:generate ReturnInvoiceDetail --fields_from_file="resources/crud-generator/json/ReturnInvoiceDetail.json" --view-path=sales --controller-namespace=App\Http\Controllers\Sales --model-namespace=App\Sales --route-group=sales
+
+php artisan crud:generate ReturnOrder --fields_from_file="resources/crud-generator/json/ReturnOrder.json" --view-path=purchase --controller-namespace=App\Http\Controllers\Purchase --model-namespace=Purchase --route-group=purchase
+
+php artisan crud:generate ReturnOrderDetail --fields_from_file="resources/crud-generator/json/ReturnOrderDetail.json" --view-path=purchase --controller-namespace=App\Http\Controllers\Purchase --model-namespace=Purchase --route-group=purchase

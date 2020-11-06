@@ -112,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/order_detail', 'Purchase\OrderDetailController@index');
             Route::put('/order_detail/approve', 'Purchase\OrderDetailController@approve');
 
+            Route::resource('return-order', 'Purchase\ReturnOrderController');
+            Route::resource('return-order-detail', 'Purchase\ReturnOrderDetailController');
+
         });
 
     });
@@ -344,3 +347,4 @@ Auth::routes();
 
 
 Route::resource('brand', 'BrandController');
+
