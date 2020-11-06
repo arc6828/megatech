@@ -167,10 +167,10 @@
 					console.log(result);
 					var dataSet = [];
 					result.forEach(function(element,index) {
-						console.log(element,index);
             var id = element.purchase_requisition_detail_id;
             //ถ้าอนุมัติแล้วให้ ซ่อน checkbox
-            let displayCheckbox = (purchase_requisition_detail_status_id==4)?"class='d-none'":"";
+            let displayCheckbox = (purchase_requisition_detail_status_id=='4')?"class='d-none'":"";
+						console.log(element,index);
             
 						var row = [
 							"<input type='checkbox' "+displayCheckbox+" name='selected_purchase_requisition_detail_ids[]'  value='"+id+"' >"+
