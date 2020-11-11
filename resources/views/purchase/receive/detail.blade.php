@@ -85,7 +85,7 @@
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' readonly>",
           @if($mode == "create")
           "<input class='input amount_pending_edit' name='amount_pending_edit[]'  value='"+element.amount_pending_in+"' readonly>",
-          "<input class='input amount_receive_edit "+amount_class+"' name='amount_receive_edit[]'  value='"+element.amount_pending_in+"' type='number' data-limit='"+element.amount_pending_in+"' data-quantity='"+element.quantity+"'>",
+          "<input class='input amount_receive_edit "+amount_class+"' name='amount_receive_edit[]'  value='0' type='number' data-limit='"+element.amount_pending_in+"' data-quantity='"+element.quantity+"'>",
           @endif
           //element.product_unit,
           "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",

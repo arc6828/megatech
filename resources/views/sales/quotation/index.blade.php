@@ -1,5 +1,8 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('pre-title-url', url('sales'))
+@section('pre-title','การขาย')
+
 @section('title','ใบเสนอราคา')
 
 @section('background-tag','bg-warning')
@@ -8,7 +11,7 @@
 
 <div class="card">
 	<div class="card-body">
-    <div class="mb-4">
+    <div class="mb-4 d-none">
       <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
           <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
       </a>

@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="row mb-4">
       <div class="col-lg-4">
-        <a href="{{ url('/sales/quotation') }}" title="Back" class="btn btn-warning btn-sm" >
+        <a href="{{ url('/sales/quotation') }}" title="Back" class="btn btn-warning btn-sm d-none" >
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         </a>
       </div>

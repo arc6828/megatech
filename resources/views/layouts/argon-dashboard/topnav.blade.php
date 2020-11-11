@@ -1,7 +1,19 @@
 <nav class="navbar navbar-top navbar-expand-md navbar-dark @yield('background-tag')" id="navbar-main">
   <div class="container-fluid">
     <!-- Brand -->
-    <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">@yield('title')</a>
+    <!-- <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">@yield('title')</a> -->
+    <ol class="breadcrumb" style="background-color: unset; margin-bottom: 0;">
+      @if (trim($__env->yieldContent('pre-title')))
+      <li class="breadcrumb-item">
+        <a class="text-light text-uppercase px-2" href="@yield('pre-title-url')">@yield('pre-title')</a>
+      </li>
+      @endif
+      <li class="breadcrumb-item">
+        <a class="text-white text-uppercase" href="#">@yield('title')</a>
+      </li>
+    </ol>
+    
+    
     <!-- Form -->
     <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
       <div class="form-group mb-0">
