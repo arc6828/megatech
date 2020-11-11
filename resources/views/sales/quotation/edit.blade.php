@@ -7,12 +7,12 @@
 @section('level-1-url', url('sales/quotation'))
 @section('level-1','ใบเสนอราคา')
 
-@if(!isset($mode))
+@if($mode == "edit")
   @section('level-2-url', url('sales/quotation/'.$quotation->quotation_id ))
   @section('level-2','รายละเอียด')
 @endif
 
-@section('title', isset($mode)?'รายละเอียด':'แก้ไข')
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
 
 @section('background-tag','bg-warning')
 <!-- end nav -->

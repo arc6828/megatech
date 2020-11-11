@@ -1,6 +1,13 @@
 @extends('layouts/argon-dashboard/theme')
+<!-- start nav -->
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
 
-@section('title','สร้างใบจอง')
+@section('level-1-url', url('sales/order'))
+@section('level-1','ใบจอง')
+
+
+@section('title','สร้าง')
 
 @section('background-tag','bg-warning')
 

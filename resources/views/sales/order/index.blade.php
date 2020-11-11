@@ -1,22 +1,23 @@
 @extends('layouts/argon-dashboard/theme')
+<!-- start nav -->
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
 
 @section('title','ใบจอง')
 
 @section('background-tag','bg-warning')
 
-@section('navbar-menu')
+@section('navbar-menu','')
 
-@endsection
 
-@section('breadcrumb-menu')
+@section('breadcrumb-menu','')
 
-@endsection
 
 @section('content')
 
 <div class="card">
 	<div class="card-body">
-    <div class="mb-4">
+    <div class="mb-4  d-none">
       <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
           <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
       </a>
@@ -55,6 +56,7 @@
 						@switch($row->sales_status_id)							
 							@case(7)
 							@case(8)	
+							@case(9)
 								@php
 								$a = [];
 								$sum = 0;
@@ -70,6 +72,7 @@
 										}
 									}																		
 								}
+								//echo $count;
 								@endphp
 								@if( $is_picking )
 								<span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
@@ -137,6 +140,7 @@
 		document.addEventListener("DOMContentLoaded", function(event) {
 			$('#table').DataTable({
 				"paging":         false,
+				"info":         false,
 			}).order( [ 0, 'desc' ] ).draw();
 			//DATA TABLE SCROLL
 			var tableCont = document.querySelector('#table');

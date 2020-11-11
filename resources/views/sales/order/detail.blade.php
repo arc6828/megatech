@@ -25,7 +25,10 @@
 
 				$('#table-order-detail').DataTable({
           "ordering": false,
-					"pageLength": 50,
+          "info": false,
+          "searching": false,
+          "paging": false,
+					// "pageLength": 50,
 					"data": dataSet,
 					"columns": [
 							//{ title: "#" },

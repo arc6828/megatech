@@ -171,50 +171,52 @@
       </div>
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-      @switch($row->sales_status_id)							
-        @case(7)
-        @case(8)	
-          @php
-          $a = [];
-          $sum = 0;
-          $count = 0;
-          $is_picking = false;
-          foreach($order->pickings as $p){
-            if($p->amount > 0){
-              $a[] = $p->order_detail_status_id;
-              $sum += $p->order_detail_status_id;
-              $count++;
-              if($p->order_detail_status_id == 3){ //PICKING
-                $is_picking = true;
-              }
-            }																		
-          }
-          @endphp
-          @if( $is_picking )
-          <span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
-          @elseif($count == 0)
-          <span class="badge badge-pill badge-secondary">Void</span>							
-          @elseif( $sum/$count == 4 )
-          <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
-          @else
-          <span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
-          <a class="btn btn-sm btn-warning d-none"
-          
-            href="#"
-            href2="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
-            รอการเบิกสินค้า
-          </a>
-          @endif						
-          
-          @break
-        @case(-1)
-          <span class="badge badge-pill badge-secondary">Void</span>
-          @break
-        @default
-          <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
-          @break
-          {{-- $row->sales_status_name --}}
-      @endswitch
+      @if(isset($order))
+        @switch($row->sales_status_id)							
+          @case(7)
+          @case(8)	
+            @php
+            $a = [];
+            $sum = 0;
+            $count = 0;
+            $is_picking = false;
+            foreach($order->pickings as $p){
+              if($p->amount > 0){
+                $a[] = $p->order_detail_status_id;
+                $sum += $p->order_detail_status_id;
+                $count++;
+                if($p->order_detail_status_id == 3){ //PICKING
+                  $is_picking = true;
+                }
+              }																		
+            }
+            @endphp
+            @if( $is_picking )
+            <span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
+            @elseif($count == 0)
+            <span class="badge badge-pill badge-secondary">Void</span>							
+            @elseif( $sum/$count == 4 )
+            <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
+            @else
+            <span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
+            <a class="btn btn-sm btn-warning d-none"
+            
+              href="#"
+              href2="{{ url('/') }}/sales/order_detail?order_id={{ $row->order_code }}">
+              รอการเบิกสินค้า
+            </a>
+            @endif						
+            
+            @break
+          @case(-1)
+            <span class="badge badge-pill badge-secondary">Void</span>
+            @break
+          @default
+            <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
+            @break
+            {{-- $row->sales_status_name --}}
+        @endswitch
+      @endif
       </div>
       <div class="col-lg-3 d-none">
       @if(isset($row))

@@ -277,6 +277,7 @@ class QuotationController extends Controller
           //QUOTATION Detail
           'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
           'table_product' => ProductModel::select_all(),
+          'mode' => 'edit',
       ];
       return view('sales/quotation/edit',$data);
     }
