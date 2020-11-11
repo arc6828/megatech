@@ -170,6 +170,33 @@ class QuotationController extends Controller
         return $quotation_code;
     }
 
+    public function duplicate($id)
+    {
+      // echo "hello";
+      // exit();
+      //Query
+      $quotaion = QuotationModel::findOrFail($id);
+      $quotaion_details = $quotaion->details()->get();
+
+      //Clone
+      $new_quotaion = $quotaion->replicate()->fill([
+        'quotation_code' => "QTDRAFT",
+        'datetime' => "QTDRAFT",
+        'revision' => "0",
+        'sales_status_id' => "0",
+      ]);
+      $new_quotaion->save();
+
+      //Clone Detail
+      foreach($quotaion_details as $item){
+        $new_item = $item->replicate()->fill([
+          'quotation_id' => $new_quotaion->quotation_id,
+        ]);
+        $new_item->save();
+      }
+      return redirect("sales/quotation/{$new_quotaion->quotation_id}")->with('flash_message', 'popup');
+    }
+
     /**
      * Display the specified resource.
      *

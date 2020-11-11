@@ -27,7 +27,9 @@
 				//console.log(dataSet);
 
 				var table = $('#table-quotation-detail').DataTable({          
-					"ordering": false,
+					"ordering": false,          
+					"info": false,          
+					"searching": false,
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [

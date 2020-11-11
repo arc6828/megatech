@@ -1,7 +1,7 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('pre-title-url', url('sales'))
-@section('pre-title','การขาย')
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
 
 @section('title','ใบเสนอราคา')
 
@@ -91,6 +91,7 @@
 			});
 			$('#table').DataTable({
 				"paging" : false ,
+				"info" : false,
 			}).order( [ 0, 'desc' ] ).draw();
 			//DATA TABLE SCROLL
 			var tableCont = document.querySelector('#table');
@@ -109,8 +110,8 @@
 
 		</script>
 
-    <div class="text-center">
-      <a class="btn btn-outline-success" href="{{ url('/') }}/sales">
+    <div class="text-center mt-4">
+      <a class="btn btn-outline-success d-none" href="{{ url('/') }}/sales">
 	  	<i class="fa fa-arrow-left" aria-hidden="true"></i> back
 	  </a>
       <a href="{{ url('/') }}/sales/quotation/create" class="btn btn-success">

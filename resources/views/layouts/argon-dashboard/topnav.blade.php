@@ -2,10 +2,20 @@
   <div class="container-fluid">
     <!-- Brand -->
     <!-- <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="#">@yield('title')</a> -->
-    <ol class="breadcrumb" style="background-color: unset; margin-bottom: 0;">
-      @if (trim($__env->yieldContent('pre-title')))
+    <ol class="breadcrumb" style="background-color: unset; margin-bottom: 0; padding: 0;">
+      @if(View::hasSection('level-0'))
       <li class="breadcrumb-item">
-        <a class="text-light text-uppercase px-2" href="@yield('pre-title-url')">@yield('pre-title')</a>
+        <a class="text-light text-uppercase px-2" href="@yield('level-0-url')">@yield('level-0')</a>
+      </li>
+      @endif
+      @if(View::hasSection('level-1'))
+      <li class="breadcrumb-item">
+        <a class="text-light text-uppercase px-2" href="@yield('level-1-url')">@yield('level-1')</a>
+      </li>
+      @endif
+      @if(View::hasSection('level-2'))
+      <li class="breadcrumb-item">
+        <a class="text-light text-uppercase px-2" href="@yield('level-2-url')">@yield('level-2')</a>
       </li>
       @endif
       <li class="breadcrumb-item">

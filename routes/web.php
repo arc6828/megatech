@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('sales')->group(function () {
 
             //1 Sales
+            Route::post('/quotation/{id}/duplicate', 'Sales\QuotationController@duplicate');
             Route::get('/quotation/{id}/pdf', 'Sales\QuotationController@pdf');
             Route::put('/quotation/{id}/approve', 'Sales\QuotationController@approve');
             

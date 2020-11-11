@@ -16,6 +16,16 @@
         </div>        
       </div>
       <script>
+        function duplicate(){
+          //alert('hey'); 
+          let elements = document.querySelector("#form-duplicate").children;
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.removeAttribute("disabled");
+          };
+          //click
+          document.querySelector('#btn-duplicate').click();          
+        }
         function approved(){
           //document.querySelector("#sales_status_id").removeAttribute("disabled");
           //document.querySelector("#sales_status_id").setAttribute("readonly","");
@@ -65,6 +75,9 @@
         @endif
         @if($row->sales_status_id != -1)
           @if($row->sales_status_id != 0)
+          <a href="javascript:void(0)" onclick="duplicate();" class="px-2 btn btn-sm btn-warning">              
+            <i class="fas fa-copy"></i> copy QT
+          </a>
           <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
             <i class="fas fa-print"></i> พิมพ์
           </a>

@@ -18,6 +18,9 @@ class QuotationModel extends Model
   public function QuotationDetail(){
     return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
   }
+  public function details(){
+    return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
+  }
   public function User(){
     return $this->belongsTo('App\User','user_id');
   }

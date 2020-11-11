@@ -1,16 +1,32 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('pre-title-url', url('sales'))
-@section('pre-title','การขาย')
+<!-- start nav -->
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
 
-@section('title','รายละเอียดใบเสนอราคา')
+@section('level-1-url', url('sales/quotation'))
+@section('level-1','ใบเสนอราคา')
+
+@if(!isset($mode))
+  @section('level-2-url', url('sales/quotation/'.$quotation->quotation_id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', isset($mode)?'รายละเอียด':'แก้ไข')
 
 @section('background-tag','bg-warning')
+<!-- end nav -->
 
 @section('content')
   
 
 	@forelse($table_quotation as $row)
+    <form class="d-none"  action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/duplicate" method="POST" id="form-duplicate" onsubmit="return confirm('Do you confirm to duplicate?')" >
+      {{ csrf_field() }}
+      {{ method_field('POST') }}
+      <button type="submit" id="btn-duplicate">Duplicate</button>
+    </form>
+
     <form class="d-none"  action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}" method="POST" id="form_delete" >
       {{ csrf_field() }}
       {{ method_field('DELETE') }}

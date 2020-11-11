@@ -1,9 +1,12 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('pre-title-url', url('sales'))
-@section('pre-title','การขาย')
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
 
-@section('title','สร้างใบเสนอราคา')
+@section('level-1-url', url('sales/quotation'))
+@section('level-1','ใบเสนอราคา')
+
+@section('title','สร้าง')
 
 @section('background-tag','bg-warning')
 @section('content')
