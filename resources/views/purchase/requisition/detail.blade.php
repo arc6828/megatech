@@ -51,6 +51,9 @@
 
 				$('#table-purchase_requisition-detail').DataTable({
 					"ordering": false,
+					"searching": false,
+					"info": false,
+					"paging": false,
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
