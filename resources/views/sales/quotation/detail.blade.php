@@ -95,7 +95,7 @@
           element.product_code +
             "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_name + " / "+ element.grade,
+          element.product_name ,
           ""+select,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
