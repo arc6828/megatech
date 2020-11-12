@@ -67,7 +67,7 @@
 										$a[] = $p->order_detail_status_id;
 										$sum += $p->order_detail_status_id;
 										$count++;
-										if($p->order_detail_status_id == 3){ //PICKING
+										if($p->order_detail_status_id == 1){ //PICKING
 											$is_picking = true;
 										}
 									}																		
