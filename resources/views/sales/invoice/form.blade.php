@@ -1,15 +1,27 @@
 <div class="card ">
   <div class="card-body">
-    <div class="row mb-4">
+    <div class="row my-4">
       <div class="col-lg-4">
         <a href="{{ url('/sales/invoice') }}" title="Back" class="btn btn-warning btn-sm" >
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         </a>
       </div>
       <div class="col-lg-4">
-        ...
+        @if(isset($invoice))
+          @if($mode == "show")
+          <div><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, "C128") }}" alt="barcode"   /></div>
+				  <div class="text-center">{{ $row->invoice_code }}</div>
+          @endif        
+        @endif
       </div>
       <div class="col-lg-4  text-right">
+        @if(isset($invoice))
+          @if($mode == "show")
+          <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/pdf" target="_blank"  title="พิมพ์">
+            <i class="fas fa-print"></i> พิมพ์
+          </a>
+          @endif        
+        @endif
         
         @if(isset($row->sales_status_id))
           @if($row->sales_status_id > 0)

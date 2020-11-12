@@ -30,23 +30,7 @@
 @section('content')
 
 	@forelse($table_invoice as $row)
-		<div class="text-center mb-4">
-
-			@if(Auth::user()->role == "admin" )
-			<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit" title="แก้ไข">
-				<i class="fas fa-edit"></i>
-			</a>
-			@endif
-			<a class="float-right btn-print mr-4" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/pdf" target="_blank"  title="พิมพ์">
-				<i class="fas fa-print"></i>
-			</a>
-			<div class="" style="width:90%;">
-				<div><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, "C128") }}" alt="barcode"   /></div>
-				<div>{{ $row->invoice_code }}</div>
-			</div>
-			
-
-		</div>
+		
 		<form class="d-none" action="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/cancel" id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to void?')">
 			{{ csrf_field() }}
 			{{ method_field('PATCH') }}

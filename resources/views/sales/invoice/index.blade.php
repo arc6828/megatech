@@ -22,7 +22,7 @@
       </a>
     </div> -->
 		<div class="table-responsive table-binvoiceed">
-			<table width="100%" class="table table-hover text-center table-sm" id="table">
+			<table  class="table table-hover text-center table-sm" id="table" style="width:100%; margin-top:-1px !important;">
 				<thead>
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
