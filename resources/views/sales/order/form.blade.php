@@ -74,7 +74,7 @@
         
       </div>
 
-      <label class="col-lg-2  offset-lg-1" for="po_file" id="label_po_file"><a href="javascript:void(0)" class="btn btn-warning btn-sm" onclick="$('#label_po_file').click();">อัพโหลด P/O ลูกหนี้</a></label>
+      <label class="col-lg-2  offset-lg-1" for="po_file" id="label_po_file"><a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="$('#label_po_file').click();">อัพโหลด P/O ลูกหนี้</a></label>
       <div class="col-lg-3">
         @if(isset($order))
           <a href="{{ url('storage/'.$order->po_file ) }}" target="_blank" id="po_file_name">
@@ -470,3 +470,28 @@ function validate_po(){
 }
 
 </script>
+
+
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <!-- <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div> -->
+    @elseif( $mode == "show" )
+    <script>
+      setTimeout(function(){ 
+          let elements = document.querySelectorAll("input, button.btn-success, select");
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.setAttribute("disabled","");
+          };
+
+        }, 3000);
+        
+    </script>
+    @endif
+@else 
+    <!-- <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div>  -->
+@endif

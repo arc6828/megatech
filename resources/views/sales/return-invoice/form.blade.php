@@ -145,9 +145,9 @@
     <div class="form-group text-center">
         <input class="btn btn-success" type="submit" value="Save">
     </div>
-    @else
+    @elseif( $mode == "show" )
     <script>
-        let elements = document.querySelectorAll("input");
+        let elements = document.querySelectorAll("input, button.btn-success");
         // console.log("want to approved", elements);
         for(var item of elements){
         item.setAttribute("disabled","");

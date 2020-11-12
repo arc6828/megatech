@@ -329,3 +329,28 @@ function onChange(obj){
 function showProduct(){}
 
 </script>
+
+
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <!-- <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div> -->
+    @elseif( $mode == "show" )
+    <script>
+      setTimeout(function(){ 
+          let elements = document.querySelectorAll("input, button.btn-success, select");
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.setAttribute("disabled","");
+          };
+
+        }, 3000);
+        
+    </script>
+    @endif
+@else 
+    <!-- <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div>  -->
+@endif
