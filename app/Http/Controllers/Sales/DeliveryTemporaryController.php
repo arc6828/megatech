@@ -219,11 +219,10 @@ class DeliveryTemporaryController extends Controller
      */
     public function show($id)
     {
-        //no show
-
       $data = [
           //QUOTATION
           'table_delivery_temporary' => DeliveryTemporaryModel::select_by_id($id),
+          'delivery_temporary' => DeliveryTemporaryModel::findOrFail($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
@@ -236,12 +235,9 @@ class DeliveryTemporaryController extends Controller
           //QUOTATION Detail
           'table_delivery_temporary_detail' => DeliveryTemporaryDetailModel::select_by_delivery_temporary_id($id),
           'table_product' => ProductModel::select_all(),
+          'mode'=>'show',
       ];
-      //return view('sales/delivery_temporary/edit',$data);
-
-      $pdf = PDF::loadView('sales/delivery_temporary/show',$data);
-      return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
-      //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
+      return view('sales/delivery_temporary/edit',$data);
     }
 
     public function pdf($id)
@@ -327,6 +323,7 @@ class DeliveryTemporaryController extends Controller
           //QUOTATION Detail
           'table_delivery_temporary_detail' => DeliveryTemporaryDetailModel::select_by_delivery_temporary_id($id),
           'table_product' => ProductModel::select_all(),
+          'mode'=>'edit',
       ];
       return view('sales/delivery_temporary/edit',$data);
     }

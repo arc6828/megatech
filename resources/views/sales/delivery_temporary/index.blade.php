@@ -1,5 +1,8 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
+
 @section('title','ใบส่งของชั่วคราว')
 
 @section('background-tag','bg-warning')

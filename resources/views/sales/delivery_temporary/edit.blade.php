@@ -1,6 +1,21 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','แก้ไขรายละเอียดใบส่งของชั่วคราว')
+
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
+
+@section('level-1-url', url('sales/delivery_temporary'))
+@section('level-1','ใบส่งของชั่วคราว')
+
+@if( isset($mode) )
+@if( $mode == "edit" )
+  @section('level-2-url', url('sales/delivery_temporary/'.$delivery_temporary->delivery_temporary_id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+@endif
+
 
 @section('background-tag','bg-warning')
 

@@ -1,6 +1,12 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','สร้างใบส่งของชั่วคราว')
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
+
+@section('level-1-url', url('sales/delivery_temporary'))
+@section('level-1','ใบส่งของชั่วคราว')
+
+@section('title','สร้าง')
 
 @section('background-tag','bg-warning')
 
