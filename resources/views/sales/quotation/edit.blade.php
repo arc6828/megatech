@@ -46,11 +46,12 @@
 			{{ csrf_field() }}
 
 			@include('sales/quotation/form')
-
+      @if($mode == "edit")
 			<div class="text-center mt-4">
 				<a href="{{ url('/') }}/sales/quotation" class="btn btn-outline-success" style="width:150px;">back</a>
 				<button type="submit" class="btn btn-success " id="form-submit" style="width:150px;">Save</button>
 			</div>
+      @endif
 
 		</form>
 
