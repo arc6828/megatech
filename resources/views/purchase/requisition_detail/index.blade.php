@@ -43,7 +43,7 @@
   			</div>
   			<label class="col-lg-2">วันที่อนุมัติ</label>
   			<div class="col-lg-3">
-  				<input type="date" name="approve_date" class="form-control form-control-sm"	value="{{ date('Y-m-d') }}" disabled readonly>
+  				<input type="text" name="approve_date" class="form-control form-control-sm"	value="{{ date('d-m-Y') }}" disabled readonly>
   			</div>
   		</div>
 
@@ -54,11 +54,11 @@
               onchange="onSubmit(this);"  style="max-width:150px;">
                 <option value="">None</option>
 
-                @for($i = 1; $i <= 12; $i++)
+                @for($i = 0; $i <= 12; $i++) 
                 <option
-                  value="{{ date("Y") }}-{{ sprintf("%02d",$i) }}-01"
-                  {{ $filter->m_date ===  sprintf("%d-%02d-01",date("Y"), $i) ? "selected" : "" }}>
-                  {{ date("Y") }}-{{ sprintf("%02d",$i) }}
+                  value="{{ date("Y-m-01", strtotime( date( 'Y-m-01' )." -$i months")) }}"
+                  {{ $filter->m_date ===  date("Y-m-01", strtotime( date( 'Y-m-01' )." -$i months")) ? "selected" : "" }}>
+                  {{ date("Y-m", strtotime( date( 'Y-m-01' )." -$i months")) }}
                 </option>
                 @endfor
   					</select>
@@ -187,7 +187,7 @@
 							"<input type='checkbox' name='selected_purchase_requisition_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='purchase_requisition_detail_ids[]' value='"+id+"' >"+
               "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
-							element.date,
+							moment(element.date).format('DD-MM-YYYY'),
 							element.purchase_requisition_code,
 							//element.delivery_time,
 							//element.purchase_requisition_detail_status_name,
