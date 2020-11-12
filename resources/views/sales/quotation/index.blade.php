@@ -38,7 +38,9 @@
 								{{ $row->quotation_code }}
 							</a>
 						</td>
-						<td title="{{ $row->datetime }}">{{ explode(" " , $row->datetime)[0] }}</td>
+						<td title="{{ $row->datetime }}">
+							{{ $row->quotation_code != "QTDRAFT" ?date_format(date_create(explode(" " , $row->datetime)[0]),"d-m-Y") : "" }}
+						</td>
 						<td>{{ $row->customer_code }}</td>
 						<td>
 							<a href2="{{ url('/customer') }}/{{ $row->Customer->customer_id }}/edit" target="_blank">
