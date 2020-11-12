@@ -1,5 +1,8 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
+
 @section('title','ใบขาย')
 
 @section('background-tag','bg-warning')
@@ -13,11 +16,11 @@
 
 <div class="card">
 	<div class="card-body">
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
           <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
       </a>
-    </div>
+    </div> -->
 		<div class="table-responsive table-binvoiceed">
 			<table width="100%" class="table table-hover text-center table-sm" id="table">
 				<thead>
