@@ -5,7 +5,7 @@
 @section('level-0','การขาย')
 
 @section('level-1-url', url('sales/return-invoice'))
-@section('level-1','ใบรับคืน')
+@section('level-1','ใบรับคืนสินค้า')
 
 
 @section('title', 'สร้าง')

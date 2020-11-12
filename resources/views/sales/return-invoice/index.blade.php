@@ -3,7 +3,7 @@
 @section('level-0-url', url('sales'))
 @section('level-0','การขาย')
 
-@section('title','ใบรับคืน')
+@section('title','ใบรับคืนสินค้า')
 
 @section('background-tag','bg-warning')
 
