@@ -3,7 +3,7 @@
 @section('level-0-url', url('purchase'))
 @section('level-0','การซื้อ')
 
-@section('title','ส่งคืนสินค้า')
+@section('title','ใบส่งคืนสินค้า')
 
 @section('background-tag','bg-success')
 
@@ -59,7 +59,7 @@
                                     <tr>
                                         <!-- <td>{{ $loop->iteration }}</td> -->
                                         <td>
-                                            <a href="{{ url('/purchase/return-order/' . $item->id) }}" class="">                                            
+                                            <a href="{{ url('/purchase/return-order/' . $item->id).'/edit' }}" class="">                                            
                                                 {{ $item->code }}
                                             </a>
                                             

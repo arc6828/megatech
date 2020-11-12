@@ -167,9 +167,10 @@ class ReturnOrderController extends Controller
     {
         $returnorder = ReturnOrder::findOrFail($id);
         $returnorderdetail = $returnorder->return_order_details()->get();
+        $mode = "edit";
         
 
-        return view('purchase.return-order.edit', compact('returnorder','returnorderdetail'));
+        return view('purchase.return-order.edit', compact('returnorder','returnorderdetail','mode'));
     }
 
     /**

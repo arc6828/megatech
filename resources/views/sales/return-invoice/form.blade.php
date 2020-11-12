@@ -1,53 +1,47 @@
 <div class="card mb-4">
-    <div class="card-body">
-        <div class="form-row">
+    <div class="card-body text-center pr-5 pl-1">
+        <!-- <div class="form-row">
             <div class="form-group col-lg-3">
                 <a href="{{ url('/sales/return-invoice') }}" title="Back"><button type="button" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>                        
             </div>
+        </div> -->
+        <div class="form-group form-row">
+            <label for="code" class="control-label  col-lg-3">{{ 'รหัสเอกสาร' }}</label>
+            <input class="form-control form-control-sm  col-lg-3" name="code" type="text" id="code" value="{{ isset($returninvoice->code) ? $returninvoice->code : ''}}" readonly>
+            <label for="customer_id" class="control-label  col-lg-3">{{ 'วันที่เวลา' }}</label>
+            <input class="form-control form-control-sm  col-lg-3" name="" type="" id="" value="{{ isset($returninvoice->created_at) ? $returninvoice->created_at : ''}}" readonly>            
+        </div>    
+        <div class="form-group form-row">            
+            <label for="customer_id" class="control-label  col-lg-3">{{ 'รหัสลูกหนี้' }}</label>
+            <input class="form-control form-control-sm  col-lg-3" name="customer_id" type="number" id="customer_id" value="{{ isset($returninvoice->customer_id) ? $returninvoice->customer_id : ''}}" >
+            <label for="invoice_code" class="control-label  col-lg-3">{{ 'รหัสเอกสาร Invoice' }}</label>
+            <input class="form-control form-control-sm  col-lg-3" name="invoice_code" type="text" id="invoice_code" value="{{ isset($returninvoice->invoice_code) ? $returninvoice->invoice_code : ''}}" >
         </div>
-        <div class="form-row">
-            <div class="form-group {{ $errors->has('code') ? 'has-error' : ''}} col-lg-3">
-                <label for="code" class="control-label">{{ 'รหัสเอกสาร' }}</label>
-                <input class="form-control form-control-sm" name="code" type="text" id="code" value="{{ isset($returninvoice->code) ? $returninvoice->code : ''}}" readonly>
-                {!! $errors->first('code', '<p class="help-block">:message</p>') !!}
-            </div>
-            <div class="form-group {{ $errors->has('customer_id') ? 'has-error' : ''}} col-lg-6 ">
-                <label for="customer_id" class="control-label">{{ 'รหัสลูกหนี้' }}</label>
-                <input class="form-control form-control-sm" name="customer_id" type="number" id="customer_id" value="{{ isset($returninvoice->customer_id) ? $returninvoice->customer_id : ''}}" >
-                {!! $errors->first('customer_id', '<p class="help-block">:message</p>') !!}
-            </div>    
-            <div class="form-group {{ $errors->has('created_at') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="customer_id" class="control-label">{{ 'วันที่เวลา' }}</label>
-                <input class="form-control form-control-sm" name="" type="" id="" value="{{ isset($returninvoice->created_at) ? $returninvoice->created_at : ''}}" readonly>
-                {!! $errors->first('created_at', '<p class="help-block">:message</p>') !!}
+        <div class="form-group  form-row">
+            <label for="tax_type_id" class="control-label   col-lg-3">{{ 'ชนิดภาษี' }}</label>
+            <input class="form-control form-control-sm   col-lg-3" name="tax_type_id" type="number" id="tax_type_id" value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type_id : ''}}" > 
+             
+            <label for="sales_status_id" class="control-label   col-lg-3">{{ 'สถานะ' }}</label>
+            <input class="form-control form-control-sm   col-lg-3" name="sales_status_id" type="hidden" id="sales_status_id" value="{{ isset($returninvoice->sales_status_id) ? $returninvoice->sales_status_id : ''}}" > 
+            <div class="col-lg-3">
+                @if(isset($returninvoice->sales_status_id))
+                    @switch($returninvoice->sales_status_id)
+                        @case("-1")
+                            <span class="badge badge-pill badge-secondary">Void</span>
+                            @break
+                        @default
+                            <span class="badge badge-pill badge-success">Normal</span>		
+                            @break
+                    @endswitch
+                
+                @endif
             </div>
         </div>
-        <div class="form-row">
-
-            <div class="form-group {{ $errors->has('invoice_code') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="invoice_code" class="control-label">{{ 'รหัสเอกสาร Invoice' }}</label>
-                <input class="form-control form-control-sm" name="invoice_code" type="text" id="invoice_code" value="{{ isset($returninvoice->invoice_code) ? $returninvoice->invoice_code : ''}}" >
-                {!! $errors->first('invoice_code', '<p class="help-block">:message</p>') !!}
-            </div>
-            <div class="form-group {{ $errors->has('tax_type_id') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="tax_type_id" class="control-label">{{ 'ชนิดภาษี' }}</label>
-                <input class="form-control form-control-sm" name="tax_type_id" type="number" id="tax_type_id" value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type_id : ''}}" >
-                {!! $errors->first('tax_type_id', '<p class="help-block">:message</p>') !!}
-            </div>
-            
-            <div class="form-group {{ $errors->has('sales_status_id') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="sales_status_id" class="control-label">{{ 'สถานะ' }}</label>
-                <input class="form-control form-control-sm" name="sales_status_id" type="number" id="sales_status_id" value="{{ isset($returninvoice->sales_status_id) ? $returninvoice->sales_status_id : ''}}" >
-                {!! $errors->first('sales_status_id', '<p class="help-block">:message</p>') !!}
-            </div>
-
-            <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="user_id" class="control-label">{{ 'พนักงาน' }}</label>
-                <input class="form-control form-control-sm" name="user_id" type="number" id="user_id" value="{{ isset($returninvoice->user_id) ? $returninvoice->user_id : ''}}" >        
-                {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
-            </div>
-
-            
+        <div class="form-group  form-row">
+                <label for="user_id" class="control-label   col-lg-3">{{ 'พนักงาน' }}</label>
+                <input class="form-control form-control-sm   col-lg-3" name="user_id" type="hidden" id="user_id" value="{{ isset($returninvoice->user_id) ? $returninvoice->user_id : ''}}" >         
+                
+                <input class="form-control form-control-sm   col-lg-3"  type="text"  value="{{ isset($returninvoice->user_id) ? $returninvoice->user->name : ''}}" readonly>         
         </div>
     </div>
 </div>

@@ -1,5 +1,16 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('purchase'))
+@section('level-0','การซื้อ')
+
+@section('level-1-url', url('purchase/return-order'))
+@section('level-1','ใบส่งคืนสินค้า')
+
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+
+@section('background-tag','bg-success')
+
 @section('title','Edit ReturnOrder #'.$returnorder->id)
 
 @section('content')
