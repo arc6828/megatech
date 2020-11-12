@@ -16,7 +16,7 @@
 			<div class="modal-body">
         		<input hidden id="search_key" value="">
 				<div class="table-responsive" id="table-container" >
-					<table class="table table-hover text-center table-sm" id="table-product-model"  ></table>
+					<table class="table table-hover text-center table-sm" id="table-product-model" style="width:100%; margin-top:-1px !important"  ></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -75,7 +75,7 @@
 				tableCont.parentNode.style.overflow = 'auto';
 				tableCont.parentNode.style.height = '500px';
 				tableCont.parentNode.addEventListener('scroll',function (e){
-					var scrollTop = this.scrollTop-10;
+					var scrollTop = this.scrollTop;
 					this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
 					this.querySelector('thead').style.background = "white";
 					this.querySelector('thead').style.zIndex = "3000";

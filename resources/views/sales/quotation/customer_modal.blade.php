@@ -15,7 +15,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover text-center table-sm" id="table-customer-modal" style="width:100%"></table>
+					<table class="table table-hover text-center table-sm" id="table-customer-modal" style="width:100%; margin-top:-1px !important;"></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -83,11 +83,13 @@
 							element.company_name,
 							//element.contact_name,
 							"<a "
+									+"style='position:static; will-change:unset;' "
 									+"class='btn btn-success btn-sm'"
 									+"href='{{ url('/') }}/sales/quotation/create?customer_id="+element.customer_id+"'"
 									+">เลือก</a>"
 									+"<button type='button' "
 									+"class='btn btn-warning btn-sm d-none'"
+									+"style='position:static; will-change:unset;' "
 									+"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
 									+">เลือก</button>"
 									+"<textarea class='d-none' id='text-"+element.customer_id+"'>"+JSON.stringify(element)+"</textarea>",
@@ -105,23 +107,27 @@
 								//{ title: "ผู้ติดต่อ" },
 								{ title: "#" },
 						],
-						"paging":         false,
+						paging :         false,
+						info :         false,
+						
+
 					})
 					.search("{{ isset($customer)? $customer->customer_code : '' }}")
 					.columns.adjust()
 					.draw();// END DATATABLE;
-					//TABLE SCROLL
+					//DATA TABLE SCROLL
 					var tableCont = document.querySelector('#table-customer-modal');
 					tableCont.parentNode.style.overflow = 'auto';
-					tableCont.parentNode.style.height = '500px';
+					tableCont.parentNode.style.maxHeight = '400px';
 					tableCont.parentNode.addEventListener('scroll',function (e){
-						var scrollTop = this.scrollTop-10;
+						var scrollTop = this.scrollTop;
 						this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
 						this.querySelector('thead').style.background = "white";
 						this.querySelector('thead').style.zIndex = "3000";
 						this.querySelector('thead').style.marginBottom = "100px";
 						console.log(scrollTop);
-					});
+					})
+					//END DATA TABLE SCROLL
 					@if( !empty(request('customer_id')) )
 						//$("#btn-customer").click();
 						

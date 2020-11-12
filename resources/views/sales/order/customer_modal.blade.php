@@ -85,6 +85,7 @@
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,
+							deferRender : true,
 							columns: [
 									{ title: "รหัส" },
 									{ title: "บริษัท" },
