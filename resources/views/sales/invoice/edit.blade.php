@@ -1,6 +1,18 @@
 @extends('layouts/argon-dashboard/theme')
+<!-- start nav -->
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
 
-@section('title','แก้ไขรายละเอียดใบขาย')
+@section('level-1-url', url('sales/order'))
+@section('level-1','ใบขาย')
+
+@if( $mode == "edit" )
+  @section('level-2-url', url('sales/order/'.$order->order_id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+
 
 @section('background-tag','bg-warning')
 
