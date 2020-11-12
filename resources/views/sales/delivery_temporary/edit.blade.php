@@ -36,10 +36,12 @@
 
 			@include('sales/delivery_temporary/form')
 			@if($row->sales_status_id != 11)
+			@if($mode == "edit")
 			<div class="text-center mt-4">
 				<a href="{{ url('/') }}/sales/delivery_temporary" class="btn btn-outline-primary" style="width:150px;">back</a>
 				<button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
 			</div>
+			@endif
 			@endif
 		</form>
 
