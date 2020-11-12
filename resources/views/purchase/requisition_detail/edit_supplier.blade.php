@@ -43,7 +43,7 @@
   			</div>
   			<label class="col-lg-2">วันที่อนุมัติ</label>
   			<div class="col-lg-3">
-  				<input type="date" name="approve_date" class="form-control form-control-sm"	value="{{ date('d-m-Y') }}" disabled readonly>
+  				<input type="text" name="approve_date" class="form-control form-control-sm"	value="{{ date('d-m-Y') }}" disabled readonly>
   			</div>
   		</div>
 
