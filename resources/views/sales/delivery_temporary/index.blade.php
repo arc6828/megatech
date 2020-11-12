@@ -30,7 +30,7 @@
 					@foreach($table_delivery_temporary as $row)
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/edit">
+							<a href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}">
 								{{ $row->delivery_temporary_code }}
 							</a>
 						</td>
