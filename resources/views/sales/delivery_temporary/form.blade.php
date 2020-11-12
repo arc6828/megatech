@@ -315,14 +315,11 @@ function onChangeCustomer(){
     </div> -->
     @elseif( $mode == "show" )
     <script>
-      setTimeout(function(){ 
-          let elements = document.querySelectorAll("input, button.btn-success, select");
-          // console.log("want to approved", elements);
-          for(var item of elements){
-            item.setAttribute("disabled","");
-          };
-
-        }, 3000);
+      let elements = document.querySelectorAll("input, button.btn-success, select");
+      // console.log("want to approved", elements);
+      for(var item of elements){
+        item.setAttribute("disabled","");
+      };
         
     </script>
     @endif
