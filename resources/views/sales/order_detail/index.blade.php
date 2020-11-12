@@ -274,7 +274,7 @@
               "<input type='hidden' name='amounts[]' value='"+element.amount+"'  >",
 
 							`<a href2="{{url('/sales/order')}}/`+element.order_id+`" target="_blank">`+element.order_code+"</a>",
-              element.date,
+              moment(element.date).format('DD-MM-YYYY'),
 							//element.delivery_time,
 							//element.company_name,
 							element.BARCODE,
