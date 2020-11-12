@@ -106,7 +106,7 @@
 </div>
 
 <div class="form-group text-center">
-    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+    <input class="btn btn-success" type="submit" value="Save">
 </div>
 
 <script>
