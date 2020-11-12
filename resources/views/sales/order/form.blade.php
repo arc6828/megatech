@@ -479,9 +479,14 @@ function validate_po(){
     </div> -->
     @elseif( $mode == "show" )
     <script>
-       let elements = document.querySelectorAll("input, button.btn-success, select");
-        // consol
+      setTimeout(function(){ 
+          let elements = document.querySelectorAll("input, button.btn-success, select");
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.setAttribute("disabled","");
+          };
 
+        }, 3000);
         
     </script>
     @endif
