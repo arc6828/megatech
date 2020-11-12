@@ -207,6 +207,8 @@
 
 					$('#table-purchase_requisition-detail').DataTable({
 						data: dataSet,
+						paging : false,
+						info : false,
 						columns: [
 								{ title: "#" },
 								{ title: "วันที่ PR" },
