@@ -59,7 +59,7 @@
                                     <tr>
                                         <!-- <td>{{ $loop->iteration }}</td> -->
                                         <td>
-                                            <a class="" href="{{ url('/sales/return-invoice/' . $item->id . '/edit') }}" title="Edit ReturnInvoice">
+                                            <a class="" href="{{ url('/sales/return-invoice/' . $item->id . '') }}" title="Edit ReturnInvoice">
                                                 {{ $item->code }}
                                             </a>
                                         </td>

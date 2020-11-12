@@ -137,10 +137,25 @@
         </div>
     </div>
 </div>
-
-<div class="form-group text-center">
-    <input class="btn btn-success" type="submit" value="Save">
-</div>
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div>
+    @else
+    <script>
+        let elements = document.querySelectorAll("input");
+        // console.log("want to approved", elements);
+        for(var item of elements){
+        item.setAttribute("disabled","");
+        };
+    </script>
+    @endif
+@else 
+    <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div> 
+@endif
 
 <script>
 function refreshTotal(){
