@@ -9,7 +9,7 @@
       <div class="col-lg-4">
         @if(isset($invoice))
           @if($mode == "show")
-          <div><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, "C128") }}" alt="barcode"   /></div>
+          <div class="text-center"><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, "C128") }}" alt="barcode"   /></div>
 				  <div class="text-center">{{ $row->invoice_code }}</div>
           @endif        
         @endif
