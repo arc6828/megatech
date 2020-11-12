@@ -13,13 +13,15 @@
         </div>    
         <div class="form-group form-row">            
             <label for="customer_id" class="control-label  col-lg-3">{{ 'รหัสลูกหนี้' }}</label>
-            <input class="form-control form-control-sm  col-lg-3" name="customer_id" type="number" id="customer_id" value="{{ isset($returninvoice->customer_id) ? $returninvoice->customer_id : ''}}" >
+            <input class="form-control form-control-sm  col-lg-3" name="customer_id" type="hidden" id="customer_id" value="{{ isset($returninvoice->customer_id) ? $returninvoice->customer_id : ''}}" >
+            <input class="form-control form-control-sm  col-lg-3" type="text"  value="{{ isset($returninvoice->customer_id) ? $returninvoice->customer->customer_code. ' - ' . $returninvoice->customer->company_name  : ''}}" readonly >
             <label for="invoice_code" class="control-label  col-lg-3">{{ 'รหัสเอกสาร Invoice' }}</label>
-            <input class="form-control form-control-sm  col-lg-3" name="invoice_code" type="text" id="invoice_code" value="{{ isset($returninvoice->invoice_code) ? $returninvoice->invoice_code : ''}}" >
+            <input class="form-control form-control-sm  col-lg-3" name="invoice_code" type="text" id="invoice_code" value="{{ isset($returninvoice->invoice_code) ? $returninvoice->invoice_code : ''}}" readonly >
         </div>
         <div class="form-group  form-row">
             <label for="tax_type_id" class="control-label   col-lg-3">{{ 'ชนิดภาษี' }}</label>
-            <input class="form-control form-control-sm   col-lg-3" name="tax_type_id" type="number" id="tax_type_id" value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type_id : ''}}" > 
+            <input class="form-control form-control-sm   col-lg-3" name="tax_type_id" type="hidden" id="tax_type_id" value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type_id : ''}}" > 
+            <input class="form-control form-control-sm   col-lg-3" name="tax_type_id" type="text" id="tax_type_id" value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type->tax_type_name : ''}}" readonly > 
              
             <label for="sales_status_id" class="control-label   col-lg-3">{{ 'สถานะ' }}</label>
             <input class="form-control form-control-sm   col-lg-3" name="sales_status_id" type="hidden" id="sales_status_id" value="{{ isset($returninvoice->sales_status_id) ? $returninvoice->sales_status_id : ''}}" > 

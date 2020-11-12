@@ -36,6 +36,10 @@ class ReturnInvoice extends Model
         return $this->belongsTo('App\CustomerModel','customer_id','customer_id');
     }
 
+    public function tax_type(){
+        return $this->belongsTo('App\TaxTypeModel','tax_type_id','tax_type_id');
+    }
+
     public function user(){
         return $this->belongsTo('App\User','user_id','id');
     }
