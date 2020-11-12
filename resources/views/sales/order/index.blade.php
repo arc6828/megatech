@@ -47,7 +47,9 @@
 								{{ $row->order_code }}
 							</a>
 						</td>
-						<td>{{ explode(" ", $row->datetime)[0] }}</td>
+						<td>
+							{{ date_format( date_create(explode(" ", $row->datetime)[0]) ,"d-m-Y") }}
+						</td>
 						<td>{{ $row->customer_code }}</td>
 						<td><a href2="{{ url('customer') }}/{{ $row->customer_id }}/edit" target="_blank">{{ $row->company_name }}</a></td>
 						<td class="text-right">{{ number_format($row->total,2) }}</td>

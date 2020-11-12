@@ -44,7 +44,7 @@
 								{{ $row->invoice_code }}
 							</a>
 						</td>
-						<td>{{ $row->datetime }}</td>
+						<td>{{ date_format( date_create( explode(" ", $row->datetime)[0]) ,"d-m-Y") }}</td>
 						<td>{{ $row->customer_code }}</td>
 						<td><a href2="{{ url('/customer') }}/{{ $row->customer_id }}/edit" target="_blank">{{ $row->company_name }}</a></td>
 						<td>{{ number_format($row->total_debt,2)  }}</td>
