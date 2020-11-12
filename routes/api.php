@@ -23,6 +23,8 @@ Route::get('/quotation_detail/customer/{customer_id}', 'API\QuotationDetailContr
 Route::get('/quotation_detail/customer/{customer_id}/user/{user_id}', 'API\QuotationDetailController@index_by_user');
 Route::apiResource('/quotation_detail', 'API\QuotationDetailController');
 
+Route::get('invoice', 'API\InvoiceController@index');
+
 //ORDER
 Route::get('/order/validate_po', 'API\OrderController@validate_po');
 Route::apiResource('/order', 'API\OrderController');

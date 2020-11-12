@@ -30,12 +30,15 @@
 	function select_item(id,name,code) {
 		console.log(id);
 		$('#customer_id').val(id);
-		$('#contact_name').val(name);
-		$('#customer_code').val(code);
+		// $('#contact_name').val(name);
+		// $('#customer_code').val(code);
 		$('#customerModal').modal('hide');		
-		$("#btn-ref-order").attr("data-id",id);
-		$("#btn-ref-order").attr("customer_code", code);
-		onChangeCustomer(id);
+		// $("#btn-ref-order").attr("data-id",id);
+		// $("#btn-ref-order").attr("customer_code", code);
+		// onChangeCustomer(id);
+		
+		$("#btn-invoice-modal").click();
+
 	}
 	document.addEventListener("DOMContentLoaded", function(event) {
 		//console.log("555");

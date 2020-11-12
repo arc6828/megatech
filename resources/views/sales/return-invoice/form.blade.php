@@ -30,6 +30,7 @@
                 </div>
             </div>
             @include("sales/return-invoice/customer_modal")
+            @include("sales/return-invoice/invoice_modal")
 
             
             <label for="invoice_code" class="control-label  col-lg-3">{{ 'รหัสเอกสาร Invoice' }}</label>
