@@ -1,6 +1,11 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('purchase'))
+@section('level-0','ส่งคืนสินค้า')
+
 @section('title','Returnorder')
+
+@section('background-tag','bg-success')
 
 @section('content')
     <div class="container">

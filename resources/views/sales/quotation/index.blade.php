@@ -111,7 +111,7 @@
 		</script>
 
     <div class="text-center mt-4">
-      <a class="btn btn-outline-success d-none" href="{{ url('/') }}/sales">
+      <a class="btn btn-outline-success" href="{{ url('/') }}/sales">
 	  	<i class="fa fa-arrow-left" aria-hidden="true"></i> back
 	  </a>
       <a href="{{ url('/') }}/sales/quotation/create" class="btn btn-success">

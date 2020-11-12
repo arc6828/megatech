@@ -15,9 +15,9 @@
                 <div class="card">
                     <div class="card-header">Returninvoice</div>
                     <div class="card-body">
-                        <a href="{{ url('/sales/return-invoice/create') }}" class="btn btn-success btn-sm" title="Add New ReturnInvoice">
+                        <!-- <a href="{{ url('/sales/return-invoice/create') }}" class="btn btn-success btn-sm" title="Add New ReturnInvoice">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
+                        </a> -->
 
                         <form method="GET" action="{{ url('/sales/return-invoice') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
                             <div class="input-group">
@@ -101,6 +101,13 @@
                                 </tbody>
                             </table>
                             <div class="pagination-wrapper"> {!! $returninvoice->appends(['search' => Request::get('search')])->render() !!} </div>
+                        </div>
+
+                        <div class="mt-4 text-center">
+                            <a class="btn btn-outline-success " href="http://localhost/megatech/public/sales"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</a>
+                            <a href="{{ url('/sales/return-invoice/create') }}" class="btn btn-success " title="Add New ReturnInvoice">
+                                <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มใบรับคืนสินค้า
+                            </a>
                         </div>
 
                     </div>
