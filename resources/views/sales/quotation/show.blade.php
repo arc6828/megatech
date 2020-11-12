@@ -48,6 +48,7 @@
     }
   </style>
   @forelse($table_quotation as $row)
+  <div >
     <div class="header">
         <div class="inline" style="width:30%; text-align:center;" >
           <div style="padding-right: 10px; padding-left: 10px;">
@@ -147,7 +148,7 @@
     <div class="main">
 
       <div style="margin-top:10px;">
-        <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
+        <table border="1" style="border-collapse: collapse; width:100%; text-align:center; background-image: url('{{ url('images/megatech-logo-small.jpg') }}'); background-position: center; background-repeat: no-repeat; opacity: 0.1; z-index:1;" >
           <tr >
             <th>ลำดับ</th>
             <th>รหัสสินค้า</th>
@@ -166,7 +167,7 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $row_detail->product_code }} </td>
-              <td>{{ $row_detail->product_name }} / {{ $row_detail->grade }}</td>
+              <td>{{ $row_detail->product_name }} </td>
               <td>3 - 5</td>
               <td>{{ number_format($row_detail->amount) }}</td>
               <td>{{ number_format($row_detail->discount_price,2) }}</td>
@@ -262,6 +263,7 @@
     @if($page < $num_page - 1)
       <div style="page-break-after: always;"></div>
     @endif
+  </div>
   @endfor
 
 
