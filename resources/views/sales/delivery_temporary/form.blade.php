@@ -322,7 +322,7 @@ function onChangeCustomer(){
             item.setAttribute("disabled","");
           };
 
-        }, 1000);
+        }, 500);
         
     </script>
     @endif

@@ -345,7 +345,7 @@ function showProduct(){}
             item.setAttribute("disabled","");
           };
 
-        }, 1000);
+        }, 500);
         
     </script>
     @endif
