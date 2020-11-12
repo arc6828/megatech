@@ -1,6 +1,16 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','สร้างใบรับคืน')
+
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
+
+@section('level-1-url', url('sales/return-invoice'))
+@section('level-1','ใบรับคืน')
+
+
+@section('title', 'สร้าง')
+
+@section('background-tag','bg-warning')
 
 @section('content')
     <div class="container">

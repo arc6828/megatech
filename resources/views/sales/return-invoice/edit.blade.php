@@ -1,6 +1,20 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','แก้ไขใบรับคืน #'.$returninvoice->id)
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
+
+@section('level-1-url', url('sales/return-invoice'))
+@section('level-1','ใบรับคืน')
+
+
+@if( $mode == "edit" and false )
+  @section('level-2-url', url('sales/return-invoice/'.$returninvoice->id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+
+@section('background-tag','bg-warning')
 
 @section('content')
     <div class="container">

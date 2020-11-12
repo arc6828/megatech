@@ -169,8 +169,9 @@ class ReturnInvoiceController extends Controller
         // $returninvoice->vat = 0;
         //$returninvoice->sales_status_id = 0;
         $returninvoicedetail = $returninvoice->return_invoice_details()->get();
+        $mode = "edit";
 
-        return view('sales.return-invoice.edit',compact('returninvoice','returninvoicedetail'));
+        return view('sales.return-invoice.edit',compact('returninvoice','returninvoicedetail','mode'));
 
         // return view('sales.return-invoice.edit', compact('returninvoice'));
     }

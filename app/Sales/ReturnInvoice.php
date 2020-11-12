@@ -31,5 +31,13 @@ class ReturnInvoice extends Model
     public function return_invoice_details(){
         return $this->hasMany('App\Sales\ReturnInvoiceDetail','return_invoice_id','id');
     }
+
+    public function customer(){
+        return $this->belongsTo('App\CustomerModel','customer_id','customer_id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User','user_id','id');
+    }
        
 }

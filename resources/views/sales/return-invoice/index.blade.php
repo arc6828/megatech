@@ -1,6 +1,11 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','Returninvoice')
+@section('level-0-url', url('sales'))
+@section('level-0','การขาย')
+
+@section('title','ใบรับคืน')
+
+@section('background-tag','bg-warning')
 
 @section('content')
     <div class="container">
@@ -31,15 +36,57 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Code</th><th>Customer Id</th><th>Invoice Code</th><th>Tax Type Id</th><th>Sales Status Id</th><th>User Id</th><th>Remark</th><th>Total Before Vat</th><th>Vat</th><th>Vat Percent</th><th>Total After Vat</th><th>Revision</th><th>Actions</th>
+                                        <!-- <th>#</th> -->
+                                        <th>เอกสารเลขที่</th>
+                                        <th>วันที่</th>                                        
+                                        <th>รหัสลูกค้า</th>                              
+                                        <th>ชื่อบริษัท</th>
+                                        <th>ยอดรวม</th>
+                                        <th>พนักงาน</th>
+                                        <th>สถานะ</th>
+                                        <th>รหัส IV</th>
+                                        <!-- <th>Tax Type Id</th> -->
+                                        <!-- <th>Remark</th>
+                                        <th>Total Before Vat</th>
+                                        <th>Vat</th>
+                                        <th>Vat Percent</th> -->
+                                        <!-- <th>Revision</th> -->
+                                        <!-- <th>Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($returninvoice as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->code }}</td><td>{{ $item->customer_id }}</td><td>{{ $item->invoice_code }}</td><td>{{ $item->tax_type_id }}</td><td>{{ $item->sales_status_id }}</td><td>{{ $item->user_id }}</td><td>{{ $item->remark }}</td><td>{{ $item->total_before_vat }}</td><td>{{ $item->vat }}</td><td>{{ $item->vat_percent }}</td><td>{{ $item->total_after_vat }}</td><td>{{ $item->revision }}</td>
+                                        <!-- <td>{{ $loop->iteration }}</td> -->
                                         <td>
+                                            <a class="" href="{{ url('/sales/return-invoice/' . $item->id . '/edit') }}" title="Edit ReturnInvoice">
+                                                {{ $item->code }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $item->created_at }}</td>
+                                        <td>{{ $item->customer->customer_code }}</td>
+                                        <td>{{ $item->customer->company_name }}</td>
+                                        <td>{{ $item->total_after_vat }}</td>
+                                        <td>{{ $item->user->short_name }}</td>
+                                        <td>
+                                            @switch($item->sales_status_id)
+                                                @case("-1")
+                                                    <span class="badge badge-pill badge-secondary">Void</span>
+                                                    @break
+                                                @default
+                                                    <span class="badge badge-pill badge-success">Normal</span>								
+                                                    @break
+                                            @endswitch
+                                        </td>
+
+                                        <td>{{ $item->invoice_code }}</td>
+                                        <!-- <td>{{ $item->tax_type_id }}</td> -->
+                                        <!-- <td>{{ $item->remark }}</td>
+                                        <td>{{ $item->total_before_vat }}</td>
+                                        <td>{{ $item->vat }}</td>
+                                        <td>{{ $item->vat_percent }}</td> -->
+                                        <!-- <td>{{ $item->revision }}</td> -->
+                                        <!-- <td>
                                             <a href="{{ url('/sales/return-invoice/' . $item->id) }}" title="View ReturnInvoice"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/sales/return-invoice/' . $item->id . '/edit') }}" title="Edit ReturnInvoice"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
@@ -48,7 +95,7 @@
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete ReturnInvoice" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                                             </form>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                                 </tbody>
