@@ -74,7 +74,7 @@
                                                     <span class="badge badge-pill badge-secondary">Void</span>
                                                     @break
                                                 @default
-                                                    <span class="badge badge-pill badge-success">Normal</span>								
+                                                    <span class="badge badge-pill badge-success">Yes</span>								
                                                     @break
                                             @endswitch
                                         </td>
