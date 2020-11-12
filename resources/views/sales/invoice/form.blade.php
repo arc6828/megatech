@@ -74,8 +74,12 @@
         <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line"	value="{{ isset($invoice->order) ? $invoice->order->external_reference_id :'' }}" required readonly>
         @if(isset($invoice->order))        
           @if(!empty($invoice->order->po_file) )
-          <a href="{{ url('storage/'.$invoice->order->po_file) }}" target="_blank">ดูไฟล์ P/O</a>
+          <a href="{{ url('storage/'.$invoice->order->po_file) }}" id="po-file-link" target="_blank">ดูไฟล์ P/O</a>
+          @else
+          <a href="#" id="po-file-link"  target="_blank"></a>
           @endif
+        @else
+        <a href="#" id="po-file-link"  target="_blank"></a>
         @endif
       </div>
       <!-- <label class="col-lg-2 offset-lg-1">วันที่ส่งของ</label>
