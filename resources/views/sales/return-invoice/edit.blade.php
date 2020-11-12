@@ -7,7 +7,7 @@
 @section('level-1','ใบรับคืนสินค้า')
 
 
-@if( $mode == "edit" and false )
+@if( $mode == "edit" )
   @section('level-2-url', url('sales/return-invoice/'.$returninvoice->id ))
   @section('level-2','รายละเอียด')
 @endif

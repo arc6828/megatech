@@ -147,8 +147,12 @@ class ReturnInvoiceController extends Controller
     public function show($id)
     {
         $returninvoice = ReturnInvoice::findOrFail($id);
+        
+        $returninvoicedetail = $returninvoice->return_invoice_details()->get();
+        $mode = "show";
+        return view('sales.return-invoice.edit',compact('returninvoice','returninvoicedetail','mode'));
 
-        return view('sales.return-invoice.show', compact('returninvoice'));
+        // return view('sales.return-invoice.show', compact('returninvoice'));
     }
 
     /**
