@@ -54,6 +54,14 @@ class InvoiceModel extends Model
   public function Customer(){
     return $this->belongsTo('App\CustomerModel','customer_id');
   }
+
+  // public function customer(){
+  //   return $this->belongsTo('App\CustomerModel','customer_id','customer_id');
+  // }
+
+  public function tax_type(){
+      return $this->belongsTo('App\TaxTypeModel','tax_type_id','tax_type_id');
+  }
   
   public static function select_all_by_user_id($user_id){
     return DB::table('tb_invoice')
