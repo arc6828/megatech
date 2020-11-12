@@ -25,6 +25,9 @@
                 <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/pdf" target="_blank"  title="พิมพ์">
                     <i class="fas fa-print"></i> พิมพ์
                 </a>
+                <a class="btn btn-sm btn-primary btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/edit"  title="พิมพ์">
+                    <i class="fas fa-edit"></i> แก้ไข
+                </a>
                 @endif        
                 @endif
                 
