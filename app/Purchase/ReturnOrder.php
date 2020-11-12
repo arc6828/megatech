@@ -30,4 +30,12 @@ class ReturnOrder extends Model
     public function return_order_details(){
         return $this->hasMany('App\Purchase\ReturnOrderDetail','return_order_id','id');
     }
+
+    public function supplier(){
+        return $this->belongsTo('App\SupplierModel','supplier_id','supplier_id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User','user_id','id');
+    }
 }
