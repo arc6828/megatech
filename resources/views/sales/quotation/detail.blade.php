@@ -33,7 +33,7 @@
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
-							//{ title: "#" },
+							{ title: "#" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "วันที่ส่งของ(วัน)" },

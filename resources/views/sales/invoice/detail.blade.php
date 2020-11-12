@@ -25,6 +25,9 @@
 
 				$('#table-invoice-detail').DataTable({
 					"ordering": false,
+					"searching": false,
+					"info": false,
+					"paging": false,
 					"pageLength": 50,
 					"data": dataSet,
 					"columns": [
@@ -65,7 +68,7 @@
           element.product_code
               + "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >"
               + "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_name + " / " +element.grade,
+          element.product_name ,
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
           //element.product_unit,
           "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+parseFloat(element.normal_price).toFixed(2)+"' disabled>",

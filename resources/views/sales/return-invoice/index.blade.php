@@ -13,7 +13,7 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Returninvoice</div>
+                    <!-- <div class="card-header">Returninvoice</div> -->
                     <div class="card-body">
                         <!-- <a href="{{ url('/sales/return-invoice/create') }}" class="btn btn-success btn-sm" title="Add New ReturnInvoice">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -63,10 +63,10 @@
                                                 {{ $item->code }}
                                             </a>
                                         </td>
-                                        <td>{{ $item->created_at }}</td>
+                                        <td>{{ date_format(date_create(explode(" ",$item->created_at)[0] ), "d-m-Y") }}</td>
                                         <td>{{ $item->customer->customer_code }}</td>
                                         <td>{{ $item->customer->company_name }}</td>
-                                        <td>{{ $item->total_after_vat }}</td>
+                                        <td>{{ number_format($item->total_after_vat,2) }}</td>
                                         <td>{{ $item->user->short_name }}</td>
                                         <td>
                                             @switch($item->sales_status_id)
@@ -104,7 +104,7 @@
                         </div>
 
                         <div class="mt-4 text-center">
-                            <a class="btn btn-outline-success " href="http://localhost/megatech/public/sales"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</a>
+                            <a class="btn btn-outline-success " href="{{ url('sales') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</a>
                             <a href="{{ url('/sales/return-invoice/create') }}" class="btn btn-success " title="Add New ReturnInvoice">
                                 <i class="fa fa-plus" aria-hidden="true"></i> เพิ่มใบรับคืนสินค้า
                             </a>
