@@ -14,7 +14,24 @@
         <div class="form-group form-row">            
             <label for="customer_id" class="control-label  col-lg-3">{{ 'รหัสลูกหนี้' }}</label>
             <input class="form-control form-control-sm  col-lg-3" name="customer_id" type="hidden" id="customer_id" value="{{ isset($returninvoice->customer_id) ? $returninvoice->customer_id : ''}}" >
-            <input class="form-control form-control-sm  col-lg-3" type="text"  value="{{ isset($returninvoice->customer_id) ? $returninvoice->customer->customer_code. ' - ' . $returninvoice->customer->company_name  : ''}}" readonly >
+            
+
+            <div class="input-group input-group-sm col-lg-3 ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"  >
+                    {{ isset($returninvoice->customer_id) ?  $returninvoice->customer->customer_code  : ''}}
+                    </span>
+                </div>
+                <input class="form-control" value="{{ isset($returninvoice->customer_id) ?  $returninvoice->customer->company_name  : ''}}" readonly>
+                <div class="input-group-append">
+                    <button class="btn btn-success" id="btn-customer" type="button" data-toggle="modal" data-target="#customerModal">
+                    <i class="fa fa-plus"></i> เลือกลูกหนี้
+                    </button>
+                </div>
+            </div>
+            @include("sales/return-invoice/customer_modal")
+
+            
             <label for="invoice_code" class="control-label  col-lg-3">{{ 'รหัสเอกสาร Invoice' }}</label>
             <input class="form-control form-control-sm  col-lg-3" name="invoice_code" type="text" id="invoice_code" value="{{ isset($returninvoice->invoice_code) ? $returninvoice->invoice_code : ''}}" readonly >
         </div>
