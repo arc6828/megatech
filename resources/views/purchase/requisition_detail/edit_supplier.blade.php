@@ -1,13 +1,16 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('purchase'))
+@section('level-0','การซื้อ')
+
 @section('title','กำหนดเจ้าหนี้ใบเสนอซื้อ')
 @section('background-tag','bg-success')
 
 @section('navbar-menu')
-<div style="margin:21px;">
+<!-- <div style="margin:21px;">
   <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
   <button class="btn btn-success d-none" type="submit" onclick="document.getElementById('form').submit();">Update</button>
-</div>
+</div> -->
 @endsection
 
 @section('breadcrumb-menu')
@@ -18,13 +21,13 @@
 
 <div class="card">
 	<div class="card-body">
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <a href="{{ url('/purchase') }}" title="Back" class="pb-4">
         <button class="btn btn-warning btn-sm">
           <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         </button>
       </a>
-    </div>
+    </div> -->
     <form method="get" action="">
   		<div class="form-group form-inline">
   			<label class="col-lg-2 offset-lg-1">สถานะ</label>
@@ -114,8 +117,9 @@
 
   			</table>
   		</div>
+      <hr>
       <div class="form-group form-inline text-center">
-        <div class="col-lg-6 offset-lg-2">
+        <div class="col-lg-12">
           <select name="action" id="action" class="form-control form-control-sm" required>
               @foreach($table_supplier as $row_supplier)
               <option
@@ -132,7 +136,7 @@
               </option>
               @endforeach
           </select>
-          <button type="summit" id="form_summit_table" class="btn btn-success btn-sm">
+          <button type="summit" id="form_summit_table" class="btn btn-success btn-sm ml-2">
     				submit
     			</button>
       </div>
