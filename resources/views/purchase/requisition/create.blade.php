@@ -1,6 +1,13 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','สร้างใบเสนอซื้อ')
+@section('level-0-url', url('purchase'))
+@section('level-0','การซื้อ')
+
+@section('level-1-url', url('purchase/requisition'))
+@section('level-1','ใบเสนอซื้อ')
+
+@section('title','สร้าง')
+
 @section('background-tag','bg-success')
 
 @section('content')

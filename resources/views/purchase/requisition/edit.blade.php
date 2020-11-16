@@ -1,6 +1,21 @@
 @extends('layouts/argon-dashboard/theme')
+<!-- start nav -->
+@section('level-0-url', url('purchase'))
+@section('level-0','การซื้อ')
 
-@section('title','แก้ไขรายละเอียดใบเสนอซื้อ')
+@section('level-1-url', url('purchase/requisition'))
+@section('level-1','ใบเสนอซื้อ')
+
+@if($mode == "edit")
+  @section('level-2-url', url('purchase/requisition/'.$purchase_requisition->purchase_requisition_id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+
+<!-- end nav -->
+
+
 @section('background-tag','bg-success')
 
 @section('content')

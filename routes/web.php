@@ -74,8 +74,6 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('/order', 'Sales\OrderController');
             Route::get('/order_detail', 'Sales\OrderDetailController@index');
             Route::put('/order_detail/approve', 'Sales\OrderDetailController@approve');
-            //Route::resource('/requisition', 'Sales\RequisitionController');
-            //Route::resource('/requisition/{requisition_id}/requisition_detail', 'Sales\RequisitionDetailController');
             
             Route::get('/invoice/{id}/pdf', 'Sales\InvoiceController@pdf');
             Route::patch('/invoice/{id}/cancel', 'Sales\InvoiceController@cancel');
@@ -94,7 +92,6 @@ Route::middleware(['auth'])->group(function () {
     //2. PURCHASE DEPARTMENT
     Route::middleware(['role:purchase,admin'])->group(function () {
         Route::prefix('purchase')->group(function () {
-            //Route::resource('/purchase_requisition/approve', 'Purchase\PurchaseRequisitionController@approve');
             Route::resource('/requisition', 'Purchase\RequisitionController');
             Route::get('/requisition_detail', 'Purchase\RequisitionDetailController@index');
             Route::put('/requisition_detail/approve', 'Purchase\RequisitionDetailController@approve');

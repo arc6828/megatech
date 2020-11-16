@@ -145,7 +145,24 @@ class RequisitionController extends Controller
      */
     public function show($id)
     {
-        //no show
+      $data = [
+        //QUOTATION
+        'table_purchase_requisition' => RequisitionModel::select_by_id($id),
+        'purchase_requisition' => RequisitionModel::findOrFail($id),
+        'table_customer' => CustomerModel::select_all(),
+        'table_delivery_type' => DeliveryTypeModel::select_all(),
+        'table_department' => DepartmentModel::select_all(),
+        'table_tax_type' => TaxTypeModel::select_all(),
+        'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+        'table_purchase_user' => UserModel::select_all(),
+        'table_zone' => ZoneModel::select_all(),
+        'purchase_requisition_id'=> $id,
+        'mode'=> 'show',
+        //QUOTATION Detail
+        'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
+        'table_product' => ProductModel::select_all(),
+      ];
+      return view('purchase/requisition/edit',$data);
     }
 
     /**
@@ -159,6 +176,7 @@ class RequisitionController extends Controller
       $data = [
           //QUOTATION
           'table_purchase_requisition' => RequisitionModel::select_by_id($id),
+          'purchase_requisition' => RequisitionModel::findOrFail($id),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
@@ -167,6 +185,7 @@ class RequisitionController extends Controller
           'table_purchase_user' => UserModel::select_all(),
           'table_zone' => ZoneModel::select_all(),
           'purchase_requisition_id'=> $id,
+          'mode'=> 'edit',
           //QUOTATION Detail
           'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
           'table_product' => ProductModel::select_all(),

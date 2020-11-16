@@ -471,7 +471,7 @@ function validate_po(){
 
 </script>
 
-
+<!-- START DISABLE WHEN SHOW -->
 @if(isset($mode))
     @if( $mode == "edit" )
     <!-- <div class="form-group text-center">
@@ -495,3 +495,5 @@ function validate_po(){
         <input class="btn btn-success" type="submit" value="Save">
     </div>  -->
 @endif
+
+<!-- END DISABLE WHEN SHOW -->

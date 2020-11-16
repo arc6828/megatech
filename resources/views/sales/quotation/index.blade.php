@@ -17,7 +17,7 @@
       </a>
     </div>
     <div class="table-responsive">
-			<table class="table table-sm table-hover text-center table-bordered table-striped" id="table" style="width:100%; margin-top:-1px !important;">
+			<table class="table table-sm table-hover text-center table-bordered table-striped" id="table" >
 				<thead>
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
@@ -96,7 +96,8 @@
 				"info" : false,
 			}).order( [ 0, 'desc' ] ).draw();
 			//DATA TABLE SCROLL
-			var tableCont = document.querySelector('#table');
+			var tableCont = document.querySelector('#table');			
+			tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
 			tableCont.parentNode.style.overflow = 'auto';
 			tableCont.parentNode.style.maxHeight = '400px';
 			tableCont.parentNode.addEventListener('scroll',function (e){
