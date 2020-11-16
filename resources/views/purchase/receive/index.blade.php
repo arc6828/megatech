@@ -1,13 +1,16 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','ใบรับ/ซื้อสินค้า')
+@section('level-0-url', url('purchase'))
+@section('level-0','การซื้อ')
+
+@section('title','ใบรับ-ซื้อสินค้า')
 @section('background-tag','bg-success')
 
 @section('content')
 
 <div class="card">
 	<div class="card-body">
-		<div class="row d-none">
+		<!-- <div class="row d-none">
 			<div class="col-lg-6 align-self-center">
 				<h4 class="card-title">รายการใบรับ/ซื้อสินค้า</h4>
 				<h6 class="card-subtitle">Display infomation in the table</h6>
@@ -20,16 +23,16 @@
 					</div>
 				</form>
 			</div>
-		</div>
+		</div> -->
     
-    <div class="mb-4">
-      <a href="{{ url('/') }}/purchase" title="Back" class="btn btn-warning btn-sm">
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-      </a>
-    </div>
+		<!-- <div class="mb-4">
+		<a href="{{ url('/') }}/purchase" title="Back" class="btn btn-warning btn-sm">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+		</a>
+		</div> -->
 
 		<div class="table-responsive">
-			<table width="100%" class="table table-hover text-center table-sm  table-breceiveed table-striped" id="table">
+			<table class="table table-hover text-center table-sm  table-breceiveed table-striped" id="table">
 				<thead>
 					<tr>
 						<th class="text-center d-none">#</th>
@@ -39,7 +42,7 @@
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">ยอดหนี้คงค้าง</th>
 						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">รหัสพนักงาน</th>
+						<th class="text-center">พนักงาน</th>
 						<th class="text-center">สถานะ</th>
 						<th class="text-center d-none">action</th>
 					</tr>
@@ -56,7 +59,7 @@
 								{{ $row->purchase_receive_code }}
 							</a>
 						</td>
-						<td>{{ $row->datetime }}</td>
+						<td>{{ date_format( date_create(explode(" ",$row->datetime)[0]),"d-m-Y" ) }}</td>
 						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
 						<td>{{ number_format( $row->total_debt?$row->total_debt:0 ,2)}}</td>
@@ -87,8 +90,28 @@
 		</div>
 		<script>
 		document.addEventListener("DOMContentLoaded", function(event) {
-				console.log("555");
-				$('#table').DataTable().order( [ 1, 'desc' ] ).draw();
+			console.log("555");
+			$('#table').DataTable({
+				paging : false,
+				info : false,
+				order: [[ 1, "desc" ]]
+			});
+
+			//DATA TABLE SCROLL
+			var tableCont = document.querySelector('#table');
+			tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+			tableCont.parentNode.style.overflow = 'auto';
+			tableCont.parentNode.style.maxHeight = '350px';
+			tableCont.parentNode.addEventListener('scroll',function (e){
+				var scrollTop = this.scrollTop;
+				this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+				this.querySelector('thead').style.background = "white";
+				this.querySelector('thead').style.zIndex = "3000";
+				this.querySelector('thead').style.marginBottom = "100px";
+				console.log(scrollTop);
+			})
+			//END DATA TABLE SCROLL
+
 		});
 
 		</script>
@@ -98,7 +121,7 @@
 	</div>
 </div>
 
-<div class="mt-4 text-center">
+<div class="mt-2 text-center">
   <a href="{{ url('/') }}/purchase/receive/create" class="btn btn-success">
     <i class="fa fa-plus"></i> เพิ่มใบรับ/ซื้อสินค้า
   </a>

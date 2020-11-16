@@ -24,7 +24,9 @@
 				//console.log(dataSet);
 
 				$('#table-purchase_order-detail').DataTable({
-					"pageLength": 50,
+					paging : false,
+          searching : false,
+          info : false,
 					"data": dataSet,
 					"columns": [
 							//{ title: "#" },						
