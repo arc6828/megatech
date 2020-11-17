@@ -101,6 +101,7 @@ Route::middleware(['auth'])->group(function () {
 
 
             Route::patch('/receive/{id}/cancel', 'Purchase\ReceiveController@cancel');
+            Route::get('/receive/{id}/pdf', 'Purchase\ReceiveController@pdf');
             Route::resource('/receive', 'Purchase\ReceiveController');
             //Route::resource('/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
 

@@ -1,6 +1,21 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','แก้ไขรายละเอียดใบรับ/ซื้อสินค้า')
+<!-- start nav -->
+@section('level-0-url', url('purchase'))
+@section('level-0','การซื้อ')
+
+@section('level-1-url', url('purchase/receive'))
+@section('level-1','ใบรับ/ซื้อสินค้า')
+
+@if($mode == "edit")
+  @section('level-2-url', url('purchase/receive/'.$purchase_receive->purchase_receive_id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+
+<!-- end nav -->
+
 @section('background-tag','bg-success')
 
 
@@ -8,7 +23,7 @@
 @section('content')
 
 	@forelse($table_purchase_receive as $row)
-		<div class="text-center mb-4">
+		<!-- <div class="text-center mb-4">
 	    	<a class="float-right btn-print" href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}" target="_blank">
 			      <i class="fas fa-print"></i>
 			    </a>
@@ -19,7 +34,7 @@
 	        {{ $row->purchase_receive_code }}
 	      </div>
 
-	    </div>
+	    </div> -->
 		<form class="d-none" action="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/cancel" id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to void?')">
 			{{ csrf_field() }}
 			{{ method_field('PATCH') }}
@@ -29,12 +44,12 @@
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 
-			@include('purchase/receive/form', ["mode"=>"edit"])
+			@include('purchase/receive/form')
 
-			<div class="text-center mt-4">
-      	<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/receive">back</a>
-        <button type="submit" class="btn btn-primary" id="form-submit">Save</button>
-      </div>
+			<!-- <div class="text-center mt-4">
+				<a class="btn btn-outline-primary" href="{{ url('/') }}/purchase/receive">back</a>
+				<button type="submit" class="btn btn-primary" id="form-submit">Save</button>
+			</div> -->
 
 		</form>
 

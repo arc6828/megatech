@@ -32,13 +32,13 @@
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('purchase/receive/form', ["mode"=>"create"])
-    <div class="text-center mt-4">
+    <!-- <div class="text-center mt-4">
 
         <a class="btn btn-outline-success " href="{{ url('/') }}/purchase/receive">back</a>
         <button type="submit" class="btn btn-success  " id="form-submit">Save</button>
 
 
-    </div>
+    </div> -->
 </form>
 
 <script >

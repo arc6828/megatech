@@ -55,7 +55,7 @@
 							{{ $row->purchase_receive_id }}
 						</td>
 						<td>
-							<a href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/edit">
+							<a href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}">
 								{{ $row->purchase_receive_code }}
 							</a>
 						</td>

@@ -35,7 +35,10 @@
 				//console.log(dataSet);
 
 				$('#table-purchase_receive-detail').DataTable({
-					"pageLength": 50,
+          // "pageLength": 50,
+          searching : false,
+          info : false,
+          paging : false,
 					"data": dataSet,
 					"columns": [
 							{ title: "#" },

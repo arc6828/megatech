@@ -1,25 +1,43 @@
 <div class="card">
   <div class="card-body">
-    <div class="row mb-4">
+    @if(isset($purchase_receive))
+    <div class="row my-4">
       <div class="col-lg-4">
-        <a href="{{ url('/') }}/purchase/receive" title="Back" class="btn btn-warning btn-sm">
+        <!-- <a href="{{ url('/sales/invoice') }}" title="Back" class="btn btn-warning btn-sm" >
             <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-        </a>
+        </a> -->
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4">        
+        <div class="text-center"><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_receive_code, "C128") }}" alt="barcode"   /></div>
+        <div class="text-center">{{ $row->purchase_receive_code }}</div>
         
       </div>
       <div class="col-lg-4  text-right">
         
-        @if(isset($row->purchase_status_id))
-          @if($row->purchase_status_id > 0)
-          <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
-            <span class="fa fa-trash"> ยกเลิก รับ/ซื้อสินค้า</span>
+        
+        @if($mode == "show")
+          <a class="btn btn-warning btn-sm btn-print mr-2" href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/edit" title="แก้ไข">
+            <i class="fas fa-edit"></i> แก้ไข
           </a>
-          @endif
-        @endif
+          <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}/pdf" target="_blank"  title="พิมพ์">
+            <i class="fas fa-print"></i> พิมพ์
+          </a>
+        @elseif($mode == "edit")
+            @if(isset($row->purchase_status_id))
+              @if($row->purchase_status_id > 0)
+              <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
+                <span class="fa fa-trash"> ยกเลิก รับ/ซื้อสินค้า</span>
+              </a>
+              @endif
+            @endif
+        @endif        
+        
+        
       </div>
+
     </div>
+    @endif
+   
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -405,3 +423,35 @@ function fillReceiveDetail(result){
 function showProduct(){}
 
 </script>
+
+
+
+
+<!-- START DISABLE WHEN SHOW -->
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <div class="form-group text-center mt-2">
+        <input class="btn btn-success" id="form-submit" type="submit" value="Save">
+    </div>
+    @elseif( $mode == "show" )
+    <script>
+      setTimeout(function(){ 
+          let elements = document.querySelectorAll("input, button.btn-success, select");
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.setAttribute("disabled","");
+          };
+
+        }, 500);
+        
+    </script>
+    @elseif( $mode == "create" )
+    <div class="form-group text-center mt-2">
+        <input class="btn btn-success" id="form-submit" type="submit" value="Save">
+    </div> 
+    @endif
+@else 
+    <div class="form-group text-center mt-2">
+        <input class="btn btn-success" id="form-submit" type="submit" value="Save">
+    </div> 
+@endif
