@@ -32,6 +32,9 @@ class OrderModel extends Model
       public function Supplier(){
         return $this->belongsTo('App\SupplierModel','supplier_id');
       }
+      public function purchase_status(){
+        return $this->belongsTo('App\PurchaseStatusModel','purchase_status_id');
+      }
 
 
     public static function select_all(){

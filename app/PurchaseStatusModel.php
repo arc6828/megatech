@@ -20,4 +20,5 @@ class PurchaseStatusModel extends Model
         ->where('category',$category)
         ->get();
     }
+
 }

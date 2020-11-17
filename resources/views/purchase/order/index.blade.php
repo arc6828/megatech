@@ -49,13 +49,12 @@
 				</thead>
 				<tbody>
 					@foreach($table_purchase_order as $row)
-
 					<tr>
 						<td class="d-none">
 							{{ $row->purchase_order_id }}
 						</td>
 						<td>
-							<a href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}/edit">
+							<a href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}">
 								{{ $row->purchase_order_code }}
 							</a>
 						</td>
@@ -74,8 +73,7 @@
 								@break
 							@case(-1)
 								<span class="badge badge-pill badge-secondary">{{ $row->purchase_status_name }}</span>
-								@break
-						
+								@break						
 						@endswitch
 						</td>
 						<td class="d-none">

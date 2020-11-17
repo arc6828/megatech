@@ -1,6 +1,21 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','แก้ไขรายละเอียดใบสั่งซื้อ')
+<!-- start nav -->
+@section('level-0-url', url('purchase'))
+@section('level-0','การซื้อ')
+
+@section('level-1-url', url('purchase/order'))
+@section('level-1','ใบสั่งซื้อ')
+
+@if($mode == "edit")
+  @section('level-2-url', url('purchase/order/'.$order->purchase_order_id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+
+<!-- end nav -->
+
 @section('background-tag','bg-success')
 
 
@@ -8,28 +23,28 @@
 @section('content')
 
 	@forelse($table_purchase_order as $row)
-    <div class="text-center mb-4">
-    	<a class="float-right btn-print" href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}" target="_blank">
-		      <i class="fas fa-print"></i>
-		    </a>
-      <div class="">
-        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_order_code, "C128") }}" alt="barcode"   />
-      </div>
-      <div class="">
-        {{ $row->purchase_order_code }}
-      </div>
-
-    </div>
+		<!-- <div class="text-center mb-4">
+			<a class="float-right btn-print" href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}" target="_blank">
+				<i class="fas fa-print"></i>
+			</a>
+			<div class="">
+				<img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_order_code, "C128") }}" alt="barcode"   />
+			</div>
+			<div class="">
+				{{ $row->purchase_order_code }}
+			</div>
+		</div>
+		 -->
 		<form class="" action="{{ url('/') }}/purchase/order" id="form" method="POST">
 			{{ csrf_field() }}
 			{{ method_field('POST') }}
 
 			@include('purchase/order/form' , ["method"=>"edit"] )
 
-			<div class="text-center mt-4">
+			<!-- <div class="text-center mt-4">
       	<a class="btn btn-outline-primary d-none" href="{{ url('/') }}/purchase/order">back</a>
         <button type="submit" class="btn btn-primary" id="form-submit">Save</button>
-      </div>
+      </div> -->
 
 		</form>
 

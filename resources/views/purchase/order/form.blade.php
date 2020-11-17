@@ -6,6 +6,44 @@
       </a>
     </div> -->
 
+    @if(isset($order))
+    <div class="row my-4">
+      <div class="col-lg-4">
+        <!-- <a href="{{ url('/sales/invoice') }}" title="Back" class="btn btn-warning btn-sm" >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> -->
+      </div>
+      <div class="col-lg-4">        
+        <div class="text-center"><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_order_code, "C128") }}" alt="barcode"   /></div>
+        <div class="text-center">{{ $row->purchase_order_code }}</div>
+        
+      </div>
+      <div class="col-lg-4  text-right">
+        @if(isset($order))
+          @if($mode == "show")
+          <a class="btn btn-warning btn-sm btn-print mr-2" href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}/edit" title="แก้ไข">
+            <i class="fas fa-edit"></i> แก้ไข
+          </a>
+          <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}/pdf" target="_blank"  title="พิมพ์">
+            <i class="fas fa-print"></i> พิมพ์
+          </a>
+          @elseif($mode == "edit")
+            @if(isset($row->purchase_status_id))
+            @if($row->purchase_status_id > 0)
+            <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
+              <span class="fa fa-trash"> ยกเลิก PO</span>
+            </a>
+            @endif
+          @endif
+          @endif        
+        @endif
+        
+        
+      </div>
+
+    </div>
+    @endif
+
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเอกสาร</label>
       <div class="col-lg-3">
@@ -90,6 +128,29 @@
           @endforeach
         </select>
       </div>
+      <label class="col-lg-2 offset-lg-1">สถานะ</label>
+      <div class="col-lg-3">
+        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm d-none" >
+          @foreach($table_purchase_status as $row_purchase_status)
+          <option value="{{ $row_purchase_status->purchase_status_id }}" >
+            {{	$row_purchase_status->purchase_status_name }}
+          </option>
+          @endforeach
+        </select>
+        @if(isset($order))
+          @switch($order->purchase_status_id)
+            @case(3) 
+              <span class="badge badge-pill badge-warning">{{ $order->purchase_status->purchase_status_name }}</span>
+              @break
+            @case(4) 
+              <span class="badge badge-pill badge-success">{{ $order->purchase_status->purchase_status_name }}</span>
+              @break
+            @case(-1)
+              <span class="badge badge-pill badge-secondary">{{ $order->purchase_status->purchase_status_name }}</span>
+              @break						
+          @endswitch
+        @endif
+      </div>
       <label class="col-lg-2 offset-lg-1 d-none">ระยะเวลาส่งของ (วัน) (deplicated)</label>
       <div class="col-lg-3 d-none">
       <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" disabled>
@@ -124,16 +185,7 @@
 
     <div class="form-group form-inline d-none">
 
-      <label class="col-lg-2 offset-lg-1">สถานะ</label>
-      <div class="col-lg-3">
-        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" >
-          @foreach($table_purchase_status as $row_purchase_status)
-          <option value="{{ $row_purchase_status->purchase_status_id }}" >
-            {{	$row_purchase_status->purchase_status_name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
+      
       <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
       <div class="col-lg-3 d-none">
         <select name="zone_id" id="zone_id" class="form-control form-control-sm">
@@ -352,3 +404,31 @@ function fillOrderDetail(result){
 function showProduct(){}
 
 </script>
+
+
+
+
+<!-- START DISABLE WHEN SHOW -->
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <div class="form-group text-center mt-2">
+        <input class="btn btn-success" id="form-submit" type="submit" value="Save">
+    </div>
+    @elseif( $mode == "show" )
+    <script>
+      setTimeout(function(){ 
+          let elements = document.querySelectorAll("input, button.btn-success, select");
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.setAttribute("disabled","");
+          };
+
+        }, 500);
+        
+    </script>
+    @endif
+@else 
+    <div class="form-group text-center mt-2">
+        <input class="btn btn-success" id="form-submit" type="submit" value="Save">
+    </div> 
+@endif

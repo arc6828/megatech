@@ -250,13 +250,7 @@ class OrderController extends Controller
       return $order_code;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function pdf($id)
     {
         //no show
       $data = [
@@ -280,6 +274,57 @@ class OrderController extends Controller
       $pdf = PDF::loadView('purchase/order/show',$data);
       return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
       //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+      //CREATE DICT OF UNCHANGABLE ITEMS
+      $current_oe = OrderModel::findOrFail($id);
+      $receives = $current_oe->receives()->where('purchase_status_id','>','0')->get();
+      //
+      // print_r($receives);
+      // exit();
+      $unchangable_items = [];
+      foreach($receives as $item){
+        $current_pickings = $item->purchase_receive_details;
+        for($i=0; $i<count($current_pickings); $i++)
+        {
+          if(isset($unchangable_items[$current_pickings[$i]->Product->product_code])){
+            $unchangable_items[$current_pickings[$i]->Product->product_code] += $current_pickings[$i]->amount;
+          }else{
+            $unchangable_items[$current_pickings[$i]->Product->product_code] = $current_pickings[$i]->amount;        
+          }
+          
+        }
+      }
+      //print_r($unchangable_items);
+
+      
+      $data = [
+          //QUOTATION
+          'table_purchase_order' => OrderModel::select_by_id($id),
+          'order' => $current_oe,
+          'unchangable_items' => $unchangable_items,
+          'table_supplier' => SupplierModel::select_all(),
+          'table_delivery_type' => DeliveryTypeModel::select_all(),
+          'table_department' => DepartmentModel::select_all(),
+          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
+          'table_purchase_user' => UserModel::all(),
+          'table_zone' => ZoneModel::select_all(),
+          'purchase_order_id'=> $id,
+          'mode' => 'show',
+          //QUOTATION Detail
+          'table_purchase_order_detail' => OrderDetailModel::select_by_purchase_order_id($id),
+          'table_product' => ProductModel::select_all(),
+      ];
+      return view('purchase/order/edit',$data);
     }
 
     /**
@@ -326,6 +371,7 @@ class OrderController extends Controller
           'table_purchase_user' => UserModel::all(),
           'table_zone' => ZoneModel::select_all(),
           'purchase_order_id'=> $id,
+          'mode' => 'edit',
           //QUOTATION Detail
           'table_purchase_order_detail' => OrderDetailModel::select_by_purchase_order_id($id),
           'table_product' => ProductModel::select_all(),
