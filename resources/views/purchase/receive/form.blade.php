@@ -140,13 +140,23 @@
       </div>
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" required>
+        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm d-none" >
           @foreach($table_purchase_status as $row_purchase_status)
           <option value="{{ $row_purchase_status->purchase_status_id }}" >
             {{	$row_purchase_status->purchase_status_name }}
           </option>
           @endforeach
         </select>
+          @if(isset($purchase_receive))
+            @switch($purchase_receive->purchase_status_id)							
+              @case(-1)
+                <span class="badge badge-pill badge-secondary">Void</span>
+                @break
+              @default
+                <span class="badge badge-pill badge-success">Yes</span>
+                @break                
+            @endswitch
+          @endif
       </div>
     </div>
 
