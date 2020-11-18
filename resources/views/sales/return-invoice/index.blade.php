@@ -67,7 +67,7 @@
                                         <td>{{ $item->customer->customer_code }}</td>
                                         <td>{{ $item->customer->company_name }}</td>
                                         <td>{{ number_format($item->total_after_vat,2) }}</td>
-                                        <td>{{ $item->user->short_name }}</td>
+                                        <td>{{ $item->staff->short_name }}</td>
                                         <td>
                                             @switch($item->sales_status_id)
                                                 @case("-1")
