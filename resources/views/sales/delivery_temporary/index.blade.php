@@ -51,7 +51,7 @@
 									<span class="badge badge-pill badge-warning">เปิดใบส่งของชั่วคราว</span>
 									@break
 								@case(11)
-									<span class="badge badge-pill badge-success">เปิดใบส่งของชั่วคราว</span>
+									<span class="badge badge-pill badge-success">ปิดใบส่งของชั่วคราว</span>
 									@break								
 							@endswitch
 							
