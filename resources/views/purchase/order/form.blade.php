@@ -49,6 +49,11 @@
       <div class="col-lg-3">
         <input name="purchase_order_code"	id="purchase_order_code" class="form-control form-control-sm"	readonly>
       </div>
+      <label class="col-lg-2 offset-lg-1 ">วันที่เวลา</label>
+      <div class="col-lg-3">
+        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
+        @include('purchase/order/datetime_modal')
+      </div>
       <label class="col-lg-2 offset-lg-1 d-none">รหัสเอกสารเจ้าหนี้</label>
       <div class="col-lg-3 d-none">
         <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line" value="-"	required>
@@ -79,11 +84,18 @@
       </div>
 
       @include('purchase/order/supplier_modal')
-      <label class="col-lg-2 ">วันที่เวลา</label>
+      <label class="col-lg-2">ชนิดภาษี</label>
       <div class="col-lg-3">
-        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
-        @include('purchase/order/datetime_modal')
+        <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required>
+          <option value="" >None</option>
+          @foreach($table_tax_type as $row_tax_type)
+          <option value="{{ $row_tax_type->tax_type_id }}" >
+            {{	$row_tax_type->tax_type_name }}
+          </option>
+          @endforeach
+        </select>
       </div>
+      
     </div>
 
     <div class="form-group form-inline">
@@ -116,14 +128,24 @@
       </div>
     </div>
 
+    <div class="form-group form-inline d-none">
+      
+      
+      <label class="col-lg-2 offset-lg-1 d-none">ระยะเวลาส่งของ (วัน) (deplicated)</label>
+      <div class="col-lg-3 d-none">
+      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" disabled>
+      </div>
+    </div>
+
     <div class="form-group form-inline">
-      <label class="col-lg-2">ชนิดภาษี</label>
+      
+      <label class="col-lg-2 ">พนักงานผู้บันทึก</label>
       <div class="col-lg-3">
-        <select name="tax_type_id" id="tax_type_id" class="form-control form-control-sm" onChange="onChange(this)"  required>
+        <select name="user_id" id="user_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
-          @foreach($table_tax_type as $row_tax_type)
-          <option value="{{ $row_tax_type->tax_type_id }}" >
-            {{	$row_tax_type->tax_type_name }}
+          @foreach($table_purchase_user as $row_purchase_user)
+          <option value="{{ $row_purchase_user->id }}" >
+            {{	$row_purchase_user->name }}
           </option>
           @endforeach
         </select>
@@ -150,25 +172,6 @@
               @break						
           @endswitch
         @endif
-      </div>
-      <label class="col-lg-2 offset-lg-1 d-none">ระยะเวลาส่งของ (วัน) (deplicated)</label>
-      <div class="col-lg-3 d-none">
-      <input type="number" name="delivery_time"	id="delivery_time" class="form-control form-control-sm form-control-line" disabled>
-      </div>
-    </div>
-
-    <div class="form-group form-inline">
-      
-      <label class="col-lg-2 ">พนักงานผู้บันทึก</label>
-      <div class="col-lg-3">
-        <select name="user_id" id="user_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
-          @foreach($table_purchase_user as $row_purchase_user)
-          <option value="{{ $row_purchase_user->id }}" >
-            {{	$row_purchase_user->name }}
-          </option>
-          @endforeach
-        </select>
       </div>
       <label class="col-lg-2 offset-lg-1 d-none">รหัสแผนก</label>
       <div class="col-lg-3 d-none">

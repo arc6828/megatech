@@ -5,12 +5,9 @@
       <div class="col-lg-3">
         <input name="purchase_requisition_code"	id="purchase_requisition_code" class="form-control form-control-sm"	>
       </div>
-      <label class="col-lg-2 offset-lg-1">เอกสารอ้างอิง</label>
+      <label class="col-lg-2  offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
-        <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm form-control-line"	required>
-      </div>
-      <div class="col-lg-3 d-none">
-        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line">
+        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>
     </div>
     <div class="form-group form-inline">
@@ -30,10 +27,14 @@
         </div>
         @include('purchase/requisition/customer_modal')
       </div>
-      <label class="col-lg-2 ">วันที่เวลา</label>
+      <label class="col-lg-2">เอกสารอ้างอิง</label>
       <div class="col-lg-3">
-        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
+        <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm form-control-line"	required>
       </div>
+      <div class="col-lg-3 d-none">
+        <input name="external_reference_id" id="external_reference_id" class="form-control form-control-sm form-control-line">
+      </div>
+      
     </div>
 
     <div class="form-group form-inline d-none">

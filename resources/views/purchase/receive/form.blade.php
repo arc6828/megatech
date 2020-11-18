@@ -43,17 +43,11 @@
       <div class="col-lg-3">
         <input name="purchase_receive_code"	id="purchase_receive_code" class="form-control form-control-sm"	disabled>
       </div>
-      <label class="col-lg-2 offset-lg-1">เอกสาร IV เจ้าหนี้</label>
+      <label class="col-lg-2 offset-lg-1">วันที่เวลา</label>
       <div class="col-lg-3">
-        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line"	required>
+        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
       </div>
-    </div>
-    <div class="form-group form-inline">
-      <label class="col-lg-2">เลขที่ใบขาย</label>
-      <div class="col-lg-3">
-        <input name="internal_reference_doc" id="internal_reference_doc" class="form-control form-control-sm"  readonly>
-
-      </div>
+      
     </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเจ้าหนี้</label>
@@ -73,14 +67,19 @@
       </div>
 
       @include('purchase/receive/supplier_modal')
-      <label class="col-lg-2 ">วันที่เวลา</label>
+      <label class="col-lg-2 ">เอกสาร IV เจ้าหนี้</label>
       <div class="col-lg-3">
-        <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line"	readonly>
+        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line"	required>
       </div>
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">ระยะเวลาหนี้</label>
+      <label class="col-lg-2">เลขที่ใบขาย</label>
+      <div class="col-lg-3">
+        <input name="internal_reference_doc" id="internal_reference_doc" class="form-control form-control-sm"  readonly>
+
+      </div>
+      <label class="col-lg-2 offset-lg-1 ">ระยะเวลาหนี้</label>
       <div class="col-lg-3">
         <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
       </div>
