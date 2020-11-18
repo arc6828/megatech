@@ -5,42 +5,45 @@
                 <a href="{{ url('/sales/return-invoice') }}" title="Back"><button type="button" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>                        
             </div>
         </div> -->
+        @if(isset($returninvoice))
         <div class="form-row form-group my-4">
             <div class="col-lg-4  text-left pl-5">
-                <a href="{{ url('/sales/return-invoice') }}" title="Back" class="btn btn-warning btn-sm" >
+                <!-- <a href="{{ url('/sales/return-invoice') }}" title="Back" class="btn btn-warning btn-sm" >
                     <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                </a>
+                </a> -->
             </div>
             <div class="col-lg-4">
-                @if(isset($returninvoice))
                 @if(isset($mode))
                     <div class="text-center"><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($returninvoice->code, "C128") }}" alt="barcode"   /></div>
                     <div class="text-center">{{ $returninvoice->code }}</div>
-                @endif        
-                @endif
+                @endif      
             </div>
             <div class="col-lg-4  text-right">
-                @if(isset($returninvoice))
                 @if(isset($mode))
-                <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/pdf" target="_blank"  title="พิมพ์">
-                    <i class="fas fa-print"></i> พิมพ์
-                </a>
-                <a class="btn btn-sm btn-primary btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/edit"  title="พิมพ์">
-                    <i class="fas fa-edit"></i> แก้ไข
-                </a>
-                @endif        
-                @endif
+                    <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/pdf" target="_blank"  title="พิมพ์">
+                        <i class="fas fa-print"></i> พิมพ์
+                    </a>
+                    @if($mode=="show")
+                    <a class="btn btn-sm btn-primary btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/edit"  title="พิมพ์">
+                        <i class="fas fa-edit"></i> แก้ไข
+                    </a>
+                    @elseif($mode=="edit")
+                        @if(isset($returninvoice->sales_status_id))
+                            @if($returninvoice->sales_status_id > 0)
+                            <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
+                                <span class="fa fa-trash"> ยกเลิก RI</span>
+                            </a>
+                            @endif
+                        @endif
+
+                    @endif
+                @endif  
                 
-                @if(isset($returninvoice->sales_status_id))
-                @if($returninvoice->sales_status_id > 0)
-                <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
-                    <span class="fa fa-trash"> ยกเลิก RI</span>
-                </a>
-                @endif
-                @endif
+                
             </div>
 
         </div>
+        @endif
         <div class="form-group form-row">
             <label for="code" class="control-label  col-lg-3">{{ 'รหัสเอกสาร' }}</label>
             <input class="form-control form-control-sm  col-lg-3" name="code" type="text" id="code" value="{{ isset($returninvoice->code) ? $returninvoice->code : ''}}" readonly>
