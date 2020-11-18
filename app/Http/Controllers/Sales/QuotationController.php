@@ -30,10 +30,10 @@ class QuotationController extends Controller
     public function index(Request $request)
     {
       //$table_quotation = QuotationModel::select_by_keyword($q);
-      $table_quotation = (Auth::user()->role === "admin" )?
-          QuotationModel::select_all() :
-          QuotationModel::select_all_by_user_id(Auth::id());
-
+      // $table_quotation = (Auth::user()->role === "admin" )?
+      //     QuotationModel::select_all() :
+      //     QuotationModel::select_all_by_user_id(Auth::id());
+      $table_quotation = QuotationModel::select_all();
       $data = [
         //QUOTATION
         'table_quotation' => $table_quotation,
