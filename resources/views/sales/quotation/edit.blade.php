@@ -76,6 +76,7 @@
         document.querySelector("#department_id").value = "{{ $row->department_id }}";
         document.querySelector("#sales_status_id").value = "{{ $row->sales_status_id }}";
         document.querySelector("#user_id").value = "{{ $row->user_id }}";
+        document.querySelector("#staff_id").value = "{{ $row->staff_id }}";
         document.querySelector("#zone_id").value = "{{ $row->zone_id }}";
         document.querySelector("#total").value = "{{ $row->total }}";
         document.querySelector("#remark").value = "{{ $row->remark }}";

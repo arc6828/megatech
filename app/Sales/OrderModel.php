@@ -31,6 +31,8 @@ class OrderModel extends Model
                           'external_reference_id',
                           'total',
                           'po_file',
+                          'staff_id',
+                          
                           
                           
 

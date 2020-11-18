@@ -44,7 +44,8 @@
 		document.querySelector("#tax_type_id").value = obj.tax_type_id;
 		document.querySelector("#delivery_time").value = "3";
 		document.querySelector("#contact_name").value = obj.contact_name;
-		document.querySelector("#zone_id").value = obj.zone_id;
+		document.querySelector("#zone_id").value = obj.zone_id;		
+		document.querySelector("#staff_id").value = obj.user_id;
 
 
 		$('#customerModal').modal('hide');

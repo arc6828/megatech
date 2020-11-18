@@ -10,7 +10,9 @@ class DeliveryTemporaryModel extends Model
 {
   protected $table = 'tb_delivery_temporary';
   protected $primaryKey = 'delivery_temporary_id';
-  protected $fillable = [];
+  protected $fillable = [
+    'staff_id',
+  ];
 
   public function sales_status()
   {

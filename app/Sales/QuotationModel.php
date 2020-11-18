@@ -11,7 +11,7 @@ class QuotationModel extends Model
   protected $table = 'tb_quotation';
   protected $primaryKey = 'quotation_id';
   protected $fillable = [
-                          'quotation_code','datetime','customer_id','contact_name','debt_duration','billing_duration','payment_condition','delivery_type_id','tax_type_id','delivery_time','department_id','sales_status_id','user_id','zone_id','remark','vat_percent','vat','total_before_vat','internal_reference_doc','external_reference_doc','total'
+                          'quotation_code','datetime','customer_id','contact_name','debt_duration','billing_duration','payment_condition','delivery_type_id','tax_type_id','delivery_time','department_id','sales_status_id','user_id','zone_id','remark','vat_percent','vat','total_before_vat','internal_reference_doc','external_reference_doc','total','staff_id'
   ];
 
   

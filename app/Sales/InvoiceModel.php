@@ -30,6 +30,7 @@ class InvoiceModel extends Model
                           'total',
                           'total_payment',
                           'total_debt',
+                          'staff_id',
                         ];
   public function QuotationDetail(){
     return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');

@@ -75,6 +75,14 @@
             </a>
             @endif
             @if($row->sales_status_id != -1)
+              @if($row->sales_status_id != 0)              
+              <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
+                <i class="fas fa-print"></i> พิมพ์
+              </a>
+              @endif          
+            @endif
+          @elseif($mode == "show")
+            @if($row->sales_status_id != -1)
               @if($row->sales_status_id != 0)
               <a href="javascript:void(0)" onclick="duplicate();" class="px-2 btn btn-sm btn-warning">              
                 <i class="fas fa-copy"></i> copy QT
@@ -93,7 +101,6 @@
               <i class="fas fa-ban"></i> void
             </a>
             @endif
-          @elseif($mode == "show")
           
           @endif
         </div>
@@ -231,7 +238,7 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสพนักงานขาย</label>
+      <label class="col-lg-2">พนักงานผู้บันทึก</label>
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required readonly>
 
@@ -242,9 +249,20 @@
           @endforeach
         </select>
       </div>
-      <label class="col-lg-2 offset-lg-1 ">รหัสแผนก</label>
+      <label class="col-lg-2  offset-lg-1">พนักงานขาย</label>
       <div class="col-lg-3">
-        <select name="department_id" id="department_id" class="form-control form-control-sm" required >
+        <select name="staff_id" id="staff_id" class="form-control form-control-sm" required readonly>
+
+          @foreach($table_sales_user as $row_sales_user)
+          <option value="{{ $row_sales_user->id }}" >
+            {{	$row_sales_user->name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2 offset-lg-1 d-none">รหัสแผนก</label>
+      <div class="col-lg-3  d-none">
+        <select name="department_id" id="department_id" class="form-control form-control-sm"  >
 
           @foreach($table_department as $row_department)
           <option value="{{ $row_department->department_role }}" >

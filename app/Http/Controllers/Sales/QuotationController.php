@@ -97,6 +97,7 @@ class QuotationController extends Controller
           'department_id' => $request->input('department_id'),
           'sales_status_id' => $request->input('sales_status_id'),
           'user_id' => $request->input('user_id'),
+          'staff_id' => $request->input('staff_id'),
           'zone_id' => $request->input('zone_id'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),

@@ -25,7 +25,7 @@ class ReturnInvoice extends Model
      *
      * @var array
      */
-    protected $fillable = ['code', 'customer_id', 'invoice_code', 'tax_type_id', 'sales_status_id', 'user_id', 'remark', 'total_before_vat', 'vat', 'vat_percent', 'total_after_vat', 'revision'];
+    protected $fillable = ['code', 'customer_id', 'invoice_code', 'tax_type_id', 'sales_status_id', 'user_id', 'remark', 'total_before_vat', 'vat', 'vat_percent', 'total_after_vat', 'revision', 'staff_id',];
 
     
     public function return_invoice_details(){
