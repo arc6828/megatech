@@ -21,7 +21,7 @@
 						<th class="text-center">รหัสลูกค้า</th>
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">รหัสพนักงาน</th>
+						<th class="text-center">พนักงาน</th>
 						<th class="text-center">สถานะ</th>
 						<th class="text-center d-none">Action</th>
 					</tr>
@@ -39,7 +39,23 @@
 						<td>{{ $row->company_name }}</td>
 						<td class="number">{{ $row->total?$row->total:0 }}</td>
 						<td>{{ $row->short_name }}</td>
-						<td>{{ $row->sales_status_name }}</td>
+						<td>
+							@switch($row->sales_status_id)							
+								@case(-1)
+									<span class="badge badge-pill badge-secondary">Void</span>
+									@break
+								@case(0)
+									<span class="badge badge-pill badge-primary">Draft</span>
+									@break
+								@case(10)
+									<span class="badge badge-pill badge-warning">สร้าง</span>
+									@break
+								@case(11)
+									<span class="badge badge-pill badge-success">ยกเลิก</span>
+									@break								
+							@endswitch
+							
+						</td>
 						<td class="d-none">
 							<a href="javascript:void(0)" onclick="onDelete( {{ $row->delivery_temporary_id }} )" class="text-danger">
 								<span class="fa fa-trash"></span>

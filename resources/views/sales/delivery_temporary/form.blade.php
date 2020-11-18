@@ -165,9 +165,23 @@
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
         <input type="text" name="sales_status_id"	id="sales_status_id"	 class="d-none form-control form-control-sm form-control-line"   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status_id  : '0'  }}" readonly>
-        <input type="text" name=""	id=""	 class="form-control form-control-sm form-control-line"   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status->sales_status_name  : '0'  }}" readonly>
-
-        
+        <input type="text" name=""	id=""	 class="d-none form-control form-control-sm form-control-line "   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status->sales_status_name  : '0'  }}" readonly>
+        @if(isset($delivery_temporary))
+          @switch($delivery_temporary->sales_status_id)							
+            @case(-1)
+              <span class="badge badge-pill badge-secondary">Void</span>
+              @break
+            @case(0)
+              <span class="badge badge-pill badge-primary">Draft</span>
+              @break
+            @case(10)
+              <span class="badge badge-pill badge-warning">สร้าง</span>
+              @break
+            @case(11)
+              <span class="badge badge-pill badge-success">ยกเลิก</span>
+              @break								
+          @endswitch
+        @endif
       </div>
     </div>
   </div>
