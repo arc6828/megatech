@@ -94,7 +94,11 @@
           "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
 					//"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"' readonly>",
           "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"' readonly>",
+          @if($mode == "create")
           "<input class='input total_edit' name='total_edit[]'  value='0' disabled>",
+          @else
+          "<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"'  disabled>",
+          @endif
           /*"<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",*/
