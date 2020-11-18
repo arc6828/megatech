@@ -393,10 +393,16 @@ function fillReceive(result){
     //var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
     document.querySelector("#debt_duration").value = element.debt_duration;
     document.querySelector("#billing_duration").value = element.billing_duration ;
-    document.querySelector("#payment_condition").value = element.payment_condition ;
+    // document.querySelector("#payment_condition").value = element.payment_condition ;
+    document.querySelector("#payment_condition").value = "ซื้อเชื่อ" ;
     document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
     document.querySelector("#tax_type_id").value = element.tax_type_id ;
-    document.querySelector("#delivery_time").value = element.delivery_time;
+    // document.querySelector("#delivery_time").value = element.delivery_time;
+    
+    let d = new Date();
+    let d2 = new Date(element.datetime);
+    document.querySelector("#delivery_time").value = Math.floor((d - d2)/(1000*60*60*24));
+
     document.querySelector("#department_id").value = element.department_id ;
     //document.querySelector("#purchase_status_id").value = element.sales_status_id ;
     document.querySelector("#user_id").value = element.user_id ;

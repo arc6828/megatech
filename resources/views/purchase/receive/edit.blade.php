@@ -66,7 +66,8 @@
 				var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
 				document.querySelector("#debt_duration").value = "{{ $row->debt_duration }}";
 				document.querySelector("#billing_duration").value = "{{ $row->billing_duration }}";
-				document.querySelector("#payment_condition").value = "{{ $row->payment_condition }}";
+				// document.querySelector("#payment_condition").value = "{{ $row->payment_condition }}";
+				document.querySelector("#payment_condition").value = "ซื้อเชื่อ";
 				document.querySelector("#delivery_type_id").value = "{{ $row->delivery_type_id }}";
 				document.querySelector("#tax_type_id").value = "{{ $row->tax_type_id }}";
 				document.querySelector("#delivery_time").value = "{{ $row->delivery_time }}";
