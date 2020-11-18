@@ -99,9 +99,9 @@
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
 
             "<span class='"+(checked=='checked'?'text-danger':'')+"'>" + 
-            element.product_name 
+            element.product_name +
            "</span>",
-           
+
           ""+select,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
