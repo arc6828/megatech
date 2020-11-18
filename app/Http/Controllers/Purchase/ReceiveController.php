@@ -252,7 +252,7 @@ class ReceiveController extends Controller
 
       }
 
-      return redirect("purchase/receive/{$id}/edit");
+      return redirect("purchase/receive/{$id}");
     }
 
     public function pdf($id)
