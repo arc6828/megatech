@@ -88,13 +88,13 @@
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' readonly>",
           @if($mode == "create")
           "<input class='input amount_pending_edit' name='amount_pending_edit[]'  value='"+element.amount_pending_in+"' readonly>",
-          "<input class='input amount_receive_edit "+amount_class+"' name='amount_receive_edit[]'  value='0' type='number' data-limit='"+element.amount_pending_in+"' data-quantity='"+element.quantity+"'>",
+          "<input class='input amount_receive_edit "+amount_class+"' name='amount_receive_edit[]'  value='0' type='number' min='1' data-limit='"+element.amount_pending_in+"' data-quantity='"+element.quantity+"'>",
           @endif
           //element.product_unit,
           "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
 					//"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"' readonly>",
           "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"' readonly>",
-          "<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"' disabled>",
+          "<input class='input total_edit' name='total_edit[]'  value='0' disabled>",
           /*"<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
           "</a>",*/
@@ -119,7 +119,7 @@
         var discount_percent_edit = row.querySelector(".discount_percent_edit");
         var normal_price_edit = row.querySelector(".normal_price_edit");
         var total_edit = row.querySelector(".total_edit");
-        var amount_edit = row.querySelector(".amount_edit");
+        var amount_edit = row.querySelector(".amount_receive_edit");
         //console.log("DOM : ",discount_percent_edit);
         //var btn_submit = row.querySelector("input[name='new_btn_submit']");
         //console.log("print",event,discount_price_edit,discount_percent_edit,normal_price_edit,total_edit,amount_edit);
