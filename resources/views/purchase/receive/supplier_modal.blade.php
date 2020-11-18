@@ -106,7 +106,7 @@
               var id = element.order_detail_id;
               var row = [
                 "<a href='{{ url('/') }}/purchase/receive/create?purchase_order_code="+element.purchase_order_code+"'>"+element.purchase_order_code+"</a>",
-                element.datetime,
+                moment(element.datetime).format('DD-MM-YYYY'),
                 //element.delivery_time,
                 element.supplier_code,
                 //element.company_name,
@@ -125,8 +125,8 @@
             var table_detail = $('#table-receive-detail').DataTable({
               data: dataSet,
               columns: [
-                  { title: "เลขที่ PR" },
-                  { title: "วันที่ PR" },
+                  { title: "เลขที่ PO" },
+                  { title: "วันที่ PO" },
                   //{ title: "วันที่ส่งของ" },
                   { title: "รหัสเจ้าหนี้" },
                   //{ title: "เจ้าหนี้" },

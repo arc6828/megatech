@@ -131,7 +131,7 @@
               var id = element.requisition_detail_id;
               var row = [
                 element.purchase_requisition_code,
-                element.datetime,
+                moment(element.datetime).format('DD-MM-YYYY'),
                 //element.delivery_time,
                 element.supplier_code,
                 //element.company_name,
