@@ -48,10 +48,10 @@
 									<span class="badge badge-pill badge-primary">Draft</span>
 									@break
 								@case(10)
-									<span class="badge badge-pill badge-warning">เปิด</span>
+									<span class="badge badge-pill badge-warning">เปิดใบส่งของชั่วคราว</span>
 									@break
 								@case(11)
-									<span class="badge badge-pill badge-success">ปิด</span>
+									<span class="badge badge-pill badge-success">เปิดใบส่งของชั่วคราว</span>
 									@break								
 							@endswitch
 							

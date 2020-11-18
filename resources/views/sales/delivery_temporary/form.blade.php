@@ -23,8 +23,8 @@
           </a>
           @endif
           @if($row->sales_status_id == 10)
-          <a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); console.log(5565);" title="ยกเลิก">
-            <i class="fas fa-trash"></i> ยกเลิกใบส่งของชั่วคราว
+          <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); console.log(5565);" title="ยกเลิก">
+            <i class="fas fa-trash"></i> ปิดใบส่งของชั่วคราว
           </a>
           @endif
         @elseif($mode == "show")
@@ -179,10 +179,10 @@
             <span class="badge badge-pill badge-primary">Draft</span>
             @break
           @case(10)
-            <span class="badge badge-pill badge-warning">เปิด</span>
+            <span class="badge badge-pill badge-warning">เปิดใบส่งของชั่วคราว</span>
             @break
           @case(11)
-            <span class="badge badge-pill badge-success">ปิด</span>
+            <span class="badge badge-pill badge-success">ปิดใบส่งของชั่วคราว</span>
             @break	
           @endswitch
         @endif
