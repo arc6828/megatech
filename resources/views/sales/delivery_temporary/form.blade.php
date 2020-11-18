@@ -168,18 +168,18 @@
         <input type="text" name=""	id=""	 class="d-none form-control form-control-sm form-control-line "   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status->sales_status_name  : '0'  }}" readonly>
         @if(isset($delivery_temporary))
           @switch($delivery_temporary->sales_status_id)							
-            @case(-1)
-              <span class="badge badge-pill badge-secondary">Void</span>
-              @break
-            @case(0)
-              <span class="badge badge-pill badge-primary">Draft</span>
-              @break
-            @case(10)
-              <span class="badge badge-pill badge-warning">สร้าง</span>
-              @break
-            @case(11)
-              <span class="badge badge-pill badge-success">ยกเลิก</span>
-              @break								
+          @case(-1)
+            <span class="badge badge-pill badge-secondary">Void</span>
+            @break
+          @case(0)
+            <span class="badge badge-pill badge-primary">Draft</span>
+            @break
+          @case(10)
+            <span class="badge badge-pill badge-warning">เปิด</span>
+            @break
+          @case(11)
+            <span class="badge badge-pill badge-success">ปิด</span>
+            @break	
           @endswitch
         @endif
       </div>
