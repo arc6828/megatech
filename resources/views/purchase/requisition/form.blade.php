@@ -105,6 +105,7 @@
           </option>
           @endforeach
         </select>
+        @if(isset($purchase_requisition))
         @switch($purchase_requisition->purchase_status_id)
           @case("-1") 
             <span class="badge badge-pill badge-secondary">Void</span>
@@ -123,6 +124,7 @@
             <span class="badge badge-pill badge-primary">อนุมัติบางส่วน</span>
             @endif
         @endswitch
+        @endif
       </div>
     </div>
 
