@@ -92,10 +92,16 @@
         console.log(select, wrap);
         return [
 
+          "<span class='"+(checked=='checked'?'text-danger':'')+"'>" + 
           element.product_code +
+          "</span>" +
             "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
             "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >",
-          element.product_name ,
+
+            "<span class='"+(checked=='checked'?'text-danger':'')+"'>" + 
+            element.product_name 
+           "</span>",
+           
           ""+select,
           "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
 
