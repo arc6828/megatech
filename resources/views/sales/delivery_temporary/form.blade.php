@@ -16,24 +16,28 @@
         </div>        
       </div>
       <div class="col-lg-4 text-right">
-        @if($row->sales_status_id == 0)
-		  	<a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="document.querySelector('#sales_status_id').value='10'; document.querySelector('#delivery_temporary_code').value='';  document.querySelector('#form-submit').click(); console.log(5565);" title="สร้าง">
-		      <i class="fas fa-trash"></i> สร้างใบส่งของชั่วคราว
-		    </a>
+        @if($mode == "edit")
+          @if($row->sales_status_id == 0)
+          <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="document.querySelector('#sales_status_id').value='10'; document.querySelector('#delivery_temporary_code').value='';  document.querySelector('#form-submit').click(); console.log(5565);" title="สร้าง">
+            <i class="fas fa-trash"></i> สร้างใบส่งของชั่วคราว
+          </a>
+          @endif
+          @if($row->sales_status_id == 10)
+          <a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); console.log(5565);" title="ยกเลิก">
+            <i class="fas fa-trash"></i> ยกเลิกใบส่งของชั่วคราว
+          </a>
+          @endif
+        @elseif($mode == "show")
+          @if($row->sales_status_id != 11)
+          <a class="px-2 btn btn-sm btn-warning" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/edit" title="แก้ไข" >
+            <i class="fas fa-edit"></i>  แก้ไข
+          </a>
+          @endif
         @endif
-        @if($row->sales_status_id == 10)
-		  	<a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); console.log(5565);" title="ยกเลิก">
-		      <i class="fas fa-trash"></i> ยกเลิกใบส่งของชั่วคราว
-		    </a>
-        @endif
-		  	<a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/pdf" target="_blank"  title="พิมพ์">
-		      <i class="fas fa-print"></i> พิมพ์
-		    </a>
-        @if($row->sales_status_id != 11)
-        <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/edit" title="แก้ไข" >
-		      <i class="fas fa-edit"></i>  แก้ไข
-		    </a>
-        @endif
+        
+        <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/pdf" target="_blank"  title="พิมพ์">
+          <i class="fas fa-print"></i> พิมพ์
+        </a>
 
       </div>
       @endif
