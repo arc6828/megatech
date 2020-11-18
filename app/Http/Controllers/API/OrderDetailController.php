@@ -57,6 +57,14 @@ class OrderDetailController extends Controller
         //
     }
 
+    public function history_sell_price($customer_id, $product_id){
+      $order_detail = OrderDetailModel::join('tb_order','tb_order_detail.order_id','=','tb_order.order_id')
+        ->where('product_id',$product_id)
+        ->where('customer_id',$customer_id)
+        ->orderBy('datetime','desc')->first();
+      return response()->json($order_detail);
+    }
+
     /**
      * Display the specified resource.
      *

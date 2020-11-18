@@ -17,16 +17,18 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-      $q = $request->input("q","");
-      //$q = "";
-      $table_product = ProductModel::select_by_keyword($q);
-      //$table_product = ProductModel::select(DB::raw("product_id,product_code,product_name,brand,promotion_price,max_discount_percent,amount_in_stock,product_unit,pending_in,pending_out,normal_price,BARCODE,quantity"))->get();
-
-      return response()->json($table_product);
+        $q = $request->input("q","");
+        $table_product = ProductModel::where('product_name', 'like' , "%{$q}%" )
+            ->orWhere('item_code', 'like' , "%{$q}%" )
+            ->orWhere('product_code', 'like' , "%{$q}%" )
+            ->orderBy('amount_in_stock','desc')
+            ->limit(500)
+            ->get(); 
+        return response()->json($table_product);
     }
 
     public function index_short(Request $request)
-    {
+    { //WHEN TO USED?
       $q = $request->input("q","");
       $table_product = ProductModel::select_by_keyword($q);
       //$q = "";

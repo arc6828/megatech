@@ -40,7 +40,7 @@
 	function showProduct(){
 		if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
 			$.ajax({
-					url: "{{ url('/') }}/api/product",
+					url: "{{ url('/') }}/api/product?customer_id="+document.querySelector("#customer_id").value,
 					type: "GET",
 					dataType : "json",
 			}).done(function(result){
@@ -66,16 +66,19 @@
             if(search_key != $('#search_key').val()){
               console.log("Hello",table.search() );
               $.ajax({
-        					url: "{{ url('/') }}/api/product?q="+search_key ,
+        					url: "{{ url('/') }}/api/product?q="+search_key+"&customer_id="+document.querySelector("#customer_id").value ,
         					type: "GET",
         					dataType : "json",
         			}).done(function(result1){
-        					//console.log(dataSet);
-                  $('#search_key').val(search_key);
-                  var new_data = prepareDataSet(result1);
-                  table.clear();
-                  table.rows.add(new_data); // Add new data
-                  table.columns.adjust().draw(); // Redraw the DataTable
+        					console.log(dataSet);
+                  	$('#search_key').val(search_key);
+					  
+					
+
+					var new_data = prepareDataSet(result1);
+					table.clear();
+					table.rows.add(new_data); // Add new data
+					table.columns.adjust().draw(); // Redraw the DataTable
               });
             }
           } ); // END SEARCH
@@ -115,10 +118,24 @@
 		//console.log("CLICK PRODUCT : ", product, amount);
 
 		var table = $('#table-order-detail').DataTable();
-		var row = createRow("+", product);
-		table.row.add(row).draw( false );
-		refreshDetailTableEvent();
-		document.querySelector("#btn-close").click();
+		let product_id = product.product_id;
+		let customer_id = document.querySelector("#customer_id").value;
+		let link = "{{ url('/') }}/api/order_detail/customer/"+customer_id+"/product/"+product_id;
+		fetch(link)
+			.then(response => response.json())
+			.then(data => {
+				console.log(link);
+				console.log(data)
+				if(data.discount_price){
+					product["discount_price"] = data.discount_price
+				}
+
+				var row = createRow("+", product);
+				table.row.add(row).draw( false );
+				refreshDetailTableEvent();
+				document.querySelector("#btn-close").click();
+			});
+		
 		//console.log("CLICK");
 	}
 </script>

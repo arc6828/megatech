@@ -47,6 +47,8 @@ Route::apiResource('/supplier', 'API\SupplierController');
 Route::apiResource('/product', 'API\ProductController');
 //Route::apiResource('/order', 'API\OrderController');
 
+
+Route::get('/order_detail/customer/{customer_id}/product/{product_id}', 'API\OrderDetailController@history_sell_price');
 Route::get('/order_detail/index2', 'API\OrderDetailController@index2');
 Route::apiResource('/order_detail', 'API\OrderDetailController');
 
