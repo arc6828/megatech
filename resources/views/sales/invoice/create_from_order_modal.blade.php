@@ -251,7 +251,7 @@
 		
 		document.querySelector("#staff_id").value = element.staff_id;
 
-		alert("sss");
+		//alert("sss");
 		document.querySelector("#zone_id").value = element.zone_id ;
 		document.querySelector("#total").value = element.total ;
 		document.querySelector("#remark").value = element.remark ;
