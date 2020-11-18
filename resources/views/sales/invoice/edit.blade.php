@@ -74,7 +74,7 @@
 				document.querySelector("#max_credit").value = "{{ $row->max_credit }}";
 				document.querySelector("#delivery_type_id").value = "{{ $row->delivery_type_id }}";
 				document.querySelector("#tax_type_id").value = "{{ $row->tax_type_id }}";
-				document.querySelector("#delivery_time").value = "{{ $row->delivery_time }}";
+				//document.querySelector("#delivery_time").value = "{{ $row->delivery_time }}";
 				document.querySelector("#department_id").value = "{{ $row->department_id }}";
 				document.querySelector("#sales_status_id").value = "{{ $row->sales_status_id }}";
 				document.querySelector("#user_id").value = "{{ $row->user_id }}";
