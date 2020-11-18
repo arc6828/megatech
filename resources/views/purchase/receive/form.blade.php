@@ -91,7 +91,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1 d-none">กำหนดยื่นราคา</label>
       <div class="col-lg-3">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line d-none"  >
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line d-none" value="30"  >
       </div>
     </div>
 
@@ -397,7 +397,7 @@ function fillReceive(result){
     //var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm');  //console.log(str_time);
     //var dateControl = document.querySelector('#datetime').value = str_time;  //dateControl.value = '2017-06-01T08:30';
     document.querySelector("#debt_duration").value = element.debt_duration;
-    document.querySelector("#billing_duration").value = element.billing_duration ;
+    document.querySelector("#billing_duration").value = "30" ;
     // document.querySelector("#payment_condition").value = element.payment_condition ;
     document.querySelector("#payment_condition").value = "ซื้อเชื่อ" ;
     document.querySelector("#delivery_type_id").value = element.delivery_type_id ;
