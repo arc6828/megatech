@@ -222,7 +222,7 @@ class OrderController extends Controller
 
 
 
-      return redirect("purchase/order/{$id}/edit");
+      return redirect("purchase/order/{$id}");
     }
 
     public function getNewCode(){
