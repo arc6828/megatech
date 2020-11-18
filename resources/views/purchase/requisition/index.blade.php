@@ -49,7 +49,7 @@
 
 					<tr>
 						<td>
-							<a href="{{ url('/') }}/purchase/requisition/{{ $row->purchase_requisition_id }}/edit">
+							<a href="{{ url('/') }}/purchase/requisition/{{ $row->purchase_requisition_id }}">
 								{{ $row->purchase_requisition_code }}
 							</a>
 						</td>

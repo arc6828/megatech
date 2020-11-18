@@ -7,93 +7,96 @@
         </a>
       </div>
       @if(isset($table_quotation))
-      <div class="col-lg-4 text-center">
-        <div class="">
-          <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->quotation_code, 'C128') }}" alt="barcode"   />
+        <div class="col-lg-4 text-center">
+          <div class="">
+            <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->quotation_code, 'C128') }}" alt="barcode"   />
+          </div>
+          <div class="">
+            {{ $row->quotation_code }}
+          </div>        
         </div>
-        <div class="">
-          {{ $row->quotation_code }}
-        </div>        
-      </div>
-      <script>
-        function duplicate(){
-          //alert('hey'); 
-          let elements = document.querySelector("#form-duplicate").children;
-          // console.log("want to approved", elements);
-          for(var item of elements){
-            item.removeAttribute("disabled");
-          };
-          //click
-          document.querySelector('#btn-duplicate').click();          
-        }
-        function approved(){
-          //document.querySelector("#sales_status_id").removeAttribute("disabled");
-          //document.querySelector("#sales_status_id").setAttribute("readonly","");
-          //document.querySelector("#sales_status_id").value=1;
-          //document.querySelector("#form-submit").removeAttribute("disabled");
-          //document.querySelector("#form-submit").removeAttribute("disabled");
-          //document.querySelector("#form-approve-submit").removeAttribute("disabled");
-          
-          let elements = document.querySelector("#form-approve").children;
-
-          console.log("want to approved", elements);
-          for(var item of elements){
-            item.removeAttribute("disabled");
-          };
-
-          document.querySelector("#form-approve-submit").click();
-          
-        }
-
-        function onDelete(id){
-          //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-          //GET FORM BY ID
-          var form = document.getElementById("form_delete");
-          let elements = form.children;
-          console.log("want to delete", elements);
-          for(var item of elements){
-            item.removeAttribute("disabled");
-          };
-          //CHANGE ACTION TO SPECIFY ID
-          //form.action = "{{ url('/') }}/sales/quotation/"+id;
-          //SUBMIT
-          var want_to_delete = confirm('Are you sure to delete this quotation ?');
-          if(want_to_delete){
-            form.submit();
+        <script>
+          function duplicate(){
+            //alert('hey'); 
+            let elements = document.querySelector("#form-duplicate").children;
+            // console.log("want to approved", elements);
+            for(var item of elements){
+              item.removeAttribute("disabled");
+            };
+            //click
+            document.querySelector('#btn-duplicate').click();          
           }
-        }
-      </script>
-      <div class="col-lg-4 text-right">
-        @if($row->sales_status_id == 0)
-        <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="approved()">
-          <i class="fas fa-check"></i> อนุมัติ QT
-        </a>
-        <a href="javascript:void(0)" onclick="onDelete( {{ $row->quotation_id }} )" class="px-2 btn btn-sm btn-danger">
-          <span class="fa fa-trash"> ลบทิ้ง</span>
-        </a>
-        @endif
-        @if($row->sales_status_id != -1)
-          @if($row->sales_status_id != 0)
-          <a href="javascript:void(0)" onclick="duplicate();" class="px-2 btn btn-sm btn-warning">              
-            <i class="fas fa-copy"></i> copy QT
-          </a>
-          <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
-            <i class="fas fa-print"></i> พิมพ์
-          </a>
+          function approved(){
+            //document.querySelector("#sales_status_id").removeAttribute("disabled");
+            //document.querySelector("#sales_status_id").setAttribute("readonly","");
+            //document.querySelector("#sales_status_id").value=1;
+            //document.querySelector("#form-submit").removeAttribute("disabled");
+            //document.querySelector("#form-submit").removeAttribute("disabled");
+            //document.querySelector("#form-approve-submit").removeAttribute("disabled");
+            
+            let elements = document.querySelector("#form-approve").children;
+
+            console.log("want to approved", elements);
+            for(var item of elements){
+              item.removeAttribute("disabled");
+            };
+
+            document.querySelector("#form-approve-submit").click();
+            
+          }
+
+          function onDelete(id){
+            //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+            //GET FORM BY ID
+            var form = document.getElementById("form_delete");
+            let elements = form.children;
+            console.log("want to delete", elements);
+            for(var item of elements){
+              item.removeAttribute("disabled");
+            };
+            //CHANGE ACTION TO SPECIFY ID
+            //form.action = "{{ url('/') }}/sales/quotation/"+id;
+            //SUBMIT
+            var want_to_delete = confirm('Are you sure to delete this quotation ?');
+            if(want_to_delete){
+              form.submit();
+            }
+          }
+        </script>
+        <div class="col-lg-4 text-right">
+          @if($mode == "edit")
+            @if($row->sales_status_id == 0)
+            <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="approved()">
+              <i class="fas fa-check"></i> อนุมัติ QT
+            </a>
+            <a href="javascript:void(0)" onclick="onDelete( {{ $row->quotation_id }} )" class="px-2 btn btn-sm btn-danger">
+              <span class="fa fa-trash"> ลบทิ้ง</span>
+            </a>
+            @endif
+            @if($row->sales_status_id != -1)
+              @if($row->sales_status_id != 0)
+              <a href="javascript:void(0)" onclick="duplicate();" class="px-2 btn btn-sm btn-warning">              
+                <i class="fas fa-copy"></i> copy QT
+              </a>
+              <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
+                <i class="fas fa-print"></i> พิมพ์
+              </a>
+              @endif
+              @if($row->sales_status_id != 5)
+              <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
+                <i class="fas fa-edit"></i> แก้ไข
+              </a>
+              @endif
+            @else
+            <a class="px-2 btn btn-sm btn-danger" href="#">
+              <i class="fas fa-ban"></i> void
+            </a>
+            @endif
+          @elseif($mode == "show")
+          
           @endif
-          @if($row->sales_status_id != 5)
-          <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/edit">
-            <i class="fas fa-edit"></i> แก้ไข
-          </a>
-          @endif
-        @else
-        <a class="px-2 btn btn-sm btn-danger" href="#">
-          <i class="fas fa-ban"></i> void
-        </a>
-        @endif
-      
-      </div>
+        </div>
       @endif
     </div>
     <input type="hidden" name="quotation_id" value="{{ isset($quotation->quotation_id)? $quotation->quotation_id : '' }}" />

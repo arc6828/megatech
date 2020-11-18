@@ -97,7 +97,7 @@
       </div>
       <label class="col-lg-2 offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="purchase_status_id" id="purchase_status_id" class="form-control form-control-sm" required>
+        <select name="purchase_status_id" id="purchase_status_id" class="d-none form-control form-control-sm" required>
           <option value="" >None</option>
           @foreach($table_purchase_status as $row_purchase_status)
           <option value="{{ $row_purchase_status->purchase_status_id }}" >
@@ -105,6 +105,24 @@
           </option>
           @endforeach
         </select>
+        @switch($purchase_requisition->purchase_status_id)
+          @case("-1") 
+            <span class="badge badge-pill badge-secondary">Void</span>
+            @break
+          @case("0")								
+            <span class="badge badge-pill badge-primary">อนุมัติทั้งหมด / บางส่วน / รอการอนุมัติ</span>
+            @break
+          @default
+            @if($purchase_requisition->requisition_details->sum("purchase_requisition_detail_status_id") == $purchase_requisition->requisition_details->count("purchase_requisition_detail_status_id")  )
+            <span class="badge badge-pill badge-success">อนุมัติทั้งหมด</span>
+            @elseif( $purchase_requisition->requisition_details->sum("purchase_requisition_detail_status_id") == $purchase_requisition->requisition_details->count("purchase_requisition_detail_status_id")*3 )
+            <span class="badge badge-pill badge-info">รอการอนุมัติ</span>
+            @elseif( $purchase_requisition->requisition_details->sum("purchase_requisition_detail_status_id") == $purchase_requisition->requisition_details->count("purchase_requisition_detail_status_id")*2 )
+            <span class="badge badge-pill badge-danger">ไม่อนุมัติ</span>
+            @else
+            <span class="badge badge-pill badge-primary">อนุมัติบางส่วน</span>
+            @endif
+        @endswitch
       </div>
     </div>
 
