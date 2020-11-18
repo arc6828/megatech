@@ -158,24 +158,25 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสแผนก</label>
-      <div class="col-lg-3">
-        <select name="department_id" id="department_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
-          @foreach($table_department as $row_department)
-          <option value="{{ $row_department->department_role }}" >
-            {{	$row_department->department_name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
-      <label class="col-lg-2 offset-lg-1">พนักงานผู้บันทึก</label>
+      
+      <label class="col-lg-2 ">พนักงานผู้บันทึก</label>
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
           @foreach($table_purchase_user as $row_purchase_user)
           <option value="{{ $row_purchase_user->id }}" >
             {{	$row_purchase_user->name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2 offset-lg-1 d-none">รหัสแผนก</label>
+      <div class="col-lg-3 d-none">
+        <select name="department_id" id="department_id" class="form-control form-control-sm" required>
+          <option value="" >None</option>
+          @foreach($table_department as $row_department)
+          <option value="{{ $row_department->department_role }}" >
+            {{	$row_department->department_name }}
           </option>
           @endforeach
         </select>

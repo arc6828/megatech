@@ -84,9 +84,9 @@
       <div class="col-lg-3">
         <input type="number" name="debt_duration"	id="debt_duration"	class="form-control form-control-sm form-control-line"	required>
       </div>
-      <label class="col-lg-2 offset-lg-1">กำหนดยื่นราคา</label>
+      <label class="col-lg-2 offset-lg-1 d-none">กำหนดยื่นราคา</label>
       <div class="col-lg-3">
-        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line"  required>
+        <input type="number" name="billing_duration"	id="billing_duration"	 class="form-control form-control-sm form-control-line d-none"  >
       </div>
     </div>
 
@@ -127,13 +127,24 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสแผนก</label>
-      <div class="col-lg-3">
+      <label class="col-lg-2 d-none">รหัสแผนก</label>
+      <div class="col-lg-3 d-none">
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
           <option value="" >None</option>
           @foreach($table_department as $row_department)
           <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2">พนักงานผู้บันทึก</label>
+      <div class="col-lg-3">
+        <select name="user_id" id="user_id" class="form-control form-control-sm" required>
+          <option value="" >None</option>
+          @foreach($table_purchase_user as $row_purchase_user)
+          <option value="{{ $row_purchase_user->id }}" >
+            {{	$row_purchase_user->name }}
           </option>
           @endforeach
         </select>
@@ -160,18 +171,8 @@
       </div>
     </div>
 
-    <div class="form-group form-inline">
-      <label class="col-lg-2">พนักงานผู้บันทึก</label>
-      <div class="col-lg-3">
-        <select name="user_id" id="user_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
-          @foreach($table_purchase_user as $row_purchase_user)
-          <option value="{{ $row_purchase_user->id }}" >
-            {{	$row_purchase_user->name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
+    <div class="form-group form-inline d-none">
+      
       <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
       <div class="col-lg-3 d-none">
         <select name="zone_id" id="zone_id" class="form-control form-control-sm" >
