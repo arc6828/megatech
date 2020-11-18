@@ -129,7 +129,7 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสพนักงานขาย</label>
+      <label class="col-lg-2">พนักงานผู้บันทึก</label>
       <div class="col-lg-3">
         <select name="user_id" id="user_id" class="form-control form-control-sm" required>
           <option value="" >None</option>

@@ -42,7 +42,7 @@
 						<th class="text-center">รหัสเจ้าหนี้</th>
 						<th class="text-center">ชื่อบริษัท</th>
 						<th class="text-center">ยอดรวม</th>
-						<th class="text-center">พนักงาน</th>
+						<!-- <th class="text-center">พนักงาน</th> -->
 						<th class="text-center">สถานะ</th>
 						<th class="text-center d-none">action</th>
 					</tr>
@@ -62,7 +62,7 @@
 						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
 						<td>{{ number_format($row->total?$row->total:0, 2) }}</td>
-						<td>{{ $row->short_name }}</td>
+						<!-- <td>{{ $row->short_name }}</td> -->
 						<td>
 						@switch($row->purchase_status_id)
 							@case(3) 

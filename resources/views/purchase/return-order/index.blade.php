@@ -44,7 +44,7 @@
                                         <th>ยอดรวม</th>
                                         <!-- <th>Tax Type Id</th> -->
                                         <th>สถานะ</th>
-                                        <th>พนักงาน</th>
+                                        <!-- <th>พนักงาน</th> -->
                                         <!-- <th>Remark</th> -->
                                         <!-- <th>Total Before Vat</th>
                                         <th>Vat</th>
@@ -81,7 +81,7 @@
                                                     @break
                                             @endswitch
                                         </td>
-                                        <td>{{ $item->user->short_name }}</td>
+                                        <!-- <td>{{ $item->user->short_name }}</td> -->
                                         
                                         <td>{{ $item->purchase_receive_code }}</td>
                                         <!-- <td>{{ $item->remark }}</td>

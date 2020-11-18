@@ -40,7 +40,7 @@
 					<tr>
 						<th class="text-center">เลขที่เอกสาร</th>
 						<th class="text-center">วันที่</th>
-						<th class="text-center">รหัสพนักงาน</th>
+						<!-- <th class="text-center">รหัสพนักงาน</th> -->
 						<th class="text-center">สถานะ</th>
 					</tr>
 				</thead>
@@ -54,7 +54,7 @@
 							</a>
 						</td>
 						<td>{{ date_format( date_create(explode(" ",$row->datetime)[0]),"d-m-Y" ) }}</td>
-						<td>{{ $row->User->short_name }}</td>
+						<!-- <td>{{ $row->User->short_name }}</td> -->
 						
 						
 						<td>

@@ -42,7 +42,7 @@
             </div>
 
             <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="user_id" class="control-label">{{ 'พนักงาน' }}</label>
+                <label for="user_id" class="control-label">{{ 'พนักงานผู้บันทึก' }}</label>
                 <input class="form-control form-control-sm" name="user_id" type="number" id="user_id" value="{{ isset($returnorder->user_id) ? $returnorder->user_id : ''}}" >        
                 {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
             </div>
