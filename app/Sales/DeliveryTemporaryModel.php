@@ -60,7 +60,10 @@ class DeliveryTemporaryModel extends Model
     return DB::table('tb_delivery_temporary')
       ->join('tb_customer', 'tb_delivery_temporary.customer_id', '=', 'tb_customer.customer_id')
       ->where('tb_delivery_temporary.delivery_temporary_id', '=' , $id )
-			//->select( DB::raw('tb_delivery_temporary.*, tb_customer.contact_name'))
+      //->select( DB::raw('tb_delivery_temporary.*, tb_customer.contact_name'))
+      ->select( DB::raw(
+        'tb_customer.*,tb_delivery_temporary.*'
+       ))
       ->get();
 	}
 
