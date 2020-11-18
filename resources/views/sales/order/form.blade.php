@@ -139,9 +139,21 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสพนักงานขาย</label>
+
+      <label class="col-lg-2 ">พนักงานขาย</label>
       <div class="col-lg-3">
-        <select name="user_id" id="user_id" class="form-control form-control-sm" required>
+        <select name="staff_id" id="staff_id" class="form-control form-control-sm" required readonly>
+
+          @foreach($table_sales_user as $row_sales_user)
+          <option value="{{ $row_sales_user->id }}" >
+            {{	$row_sales_user->name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2  offset-lg-1">พนักงานผู้บันทึก</label>
+      <div class="col-lg-3">
+        <select name="user_id" id="user_id" class="form-control form-control-sm" required readonly>
 
           @foreach($table_sales_user as $row_sales_user)
           <option value="{{ $row_sales_user->id }}" >
@@ -151,8 +163,8 @@
         </select>
       </div>
       
-      <label class="col-lg-2  offset-lg-1">รหัสแผนก</label>
-      <div class="col-lg-3">
+      <label class="col-lg-2  offset-lg-1 d-none">รหัสแผนก</label>
+      <div class="col-lg-3 d-none">
         <select name="department_id" id="department_id" class="form-control form-control-sm" required>
 
           @foreach($table_department as $row_department)

@@ -129,8 +129,30 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสแผนก</label>
+      <label class="col-lg-2 ">พนักงานขาย</label>
       <div class="col-lg-3">
+        <select name="staff_id" id="staff_id" class="form-control form-control-sm" required readonly>
+
+          @foreach($table_sales_user as $row_sales_user)
+          <option value="{{ $row_sales_user->id }}" >
+            {{	$row_sales_user->name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2  offset-lg-1">พนักงานผู้บันทึก</label>
+      <div class="col-lg-3">
+        <select name="user_id" id="user_id" class="form-control form-control-sm" required readonly>
+
+          @foreach($table_sales_user as $row_sales_user)
+          <option value="{{ $row_sales_user->id }}" >
+            {{	$row_sales_user->name }}
+          </option>
+          @endforeach
+        </select>
+      </div>
+      <label class="col-lg-2 d-none">รหัสแผนก</label>
+      <div class="col-lg-3  d-none">
         <select name="department_id" id="department_id" class="form-control form-control-sm" required readonly>
 
           @foreach($table_department as $row_department)
@@ -154,19 +176,9 @@
     </div>
 
     <div class="form-group form-inline">
-      <label class="col-lg-2">รหัสพนักงานขาย</label>
-      <div class="col-lg-3">
-        <select name="user_id" id="user_id" class="form-control form-control-sm" required readonly>
+      
 
-          @foreach($table_sales_user as $row_sales_user)
-          <option value="{{ $row_sales_user->id }}" >
-            {{	$row_sales_user->name }}
-          </option>
-          @endforeach
-        </select>
-      </div>
-
-      <label class="col-lg-2  offset-lg-1">สถานะ</label>
+      <label class="col-lg-2  offset-lg-6">สถานะ</label>
       <div class="col-lg-3">
         <input type="text" name="sales_status_id"	id="sales_status_id"	 class="d-none form-control form-control-sm form-control-line"   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status_id  : '0'  }}" readonly>
         <input type="text" name=""	id=""	 class="d-none form-control form-control-sm form-control-line "   value="{{ isset($delivery_temporary)? $delivery_temporary->sales_status->sales_status_name  : '0'  }}" readonly>

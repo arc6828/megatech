@@ -94,10 +94,15 @@
             </div>
         </div>
         <div class="form-group  form-row">
-                <label for="user_id" class="control-label   col-lg-3">{{ 'พนักงาน' }}</label>
-                <input class="form-control form-control-sm   col-lg-3" name="user_id" type="hidden" id="user_id" value="{{ isset($returninvoice->user_id) ? $returninvoice->user_id : ''}}" >         
-                
-                <input class="form-control form-control-sm   col-lg-3"  type="text"  value="{{ isset($returninvoice->user_id) ? $returninvoice->user->name : ''}}" readonly>         
+            <label for="staff_id" class="control-label   col-lg-3">{{ 'พนักงานขาย' }}</label>
+            <input class="form-control form-control-sm   col-lg-3" name="staff_id" type="hidden" id="staff_id" value="{{ isset($returninvoice->staff_id) ? $returninvoice->staff_id : ''}}" >         
+            
+            <input class="form-control form-control-sm   col-lg-3"  type="text"  value="{{ isset($returninvoice->staff_id) ? $returninvoice->staff->name : ''}}" readonly>         
+
+            <label for="user_id" class="control-label   col-lg-3">{{ 'พนักงานผู้บันทึก' }}</label>
+            <input class="form-control form-control-sm   col-lg-3" name="user_id" type="hidden" id="user_id" value="{{ isset($returninvoice->user_id) ? $returninvoice->user_id : ''}}" >         
+            
+            <input class="form-control form-control-sm   col-lg-3"  type="text"  value="{{ isset($returninvoice->user_id) ? $returninvoice->user->name : ''}}" readonly>         
         </div>
     </div>
 </div>

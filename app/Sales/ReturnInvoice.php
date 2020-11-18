@@ -44,4 +44,7 @@ class ReturnInvoice extends Model
         return $this->belongsTo('App\User','user_id','id');
     }
        
+    public function staff(){
+        return $this->belongsTo('App\User','staff_id');
+    }
 }

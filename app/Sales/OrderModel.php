@@ -50,6 +50,9 @@ class OrderModel extends Model
   public function User(){
     return $this->belongsTo('App\User','user_id');
   }
+  public function staff(){
+    return $this->belongsTo('App\User','staff_id');
+  }
   public function Customer(){
     return $this->belongsTo('App\CustomerModel','customer_id');
   }
@@ -60,7 +63,7 @@ class OrderModel extends Model
         ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
         ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
         ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-        ->join('users', 'tb_order.user_id', '=', 'users.id')
+        ->join('users', 'tb_order.staff_id', '=', 'users.id')
         ->join('tb_order_detail','tb_order.order_id','=','tb_order_detail.order_id')
         ->where('tb_order.user_id', '=', $user_id)        
         ->whereNotIn('tb_order.sales_status_id', [-1,9])        
@@ -77,7 +80,7 @@ class OrderModel extends Model
         ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
         ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
         ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-        ->join('users', 'tb_order.user_id', '=', 'users.id')
+        ->join('users', 'tb_order.staff_id', '=', 'users.id')
         ->get();
 	}
 

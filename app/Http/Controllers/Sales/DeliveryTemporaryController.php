@@ -89,6 +89,7 @@ class DeliveryTemporaryController extends Controller
           //'sales_status_id' => 10, //default is 10 สร้างใบส่งของชั่วคราว          
           'sales_status_id' => $request->input('sales_status_id'), //default is 0 DRAFT
           'user_id' => $request->input('user_id'),
+          'staff_id' => $request->input('staff_id'),
           'zone_id' => $request->input('zone_id','0'),
           'remark' => $request->input('remark'),
           'vat_percent' => $request->input('vat_percent',7),

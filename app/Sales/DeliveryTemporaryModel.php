@@ -19,6 +19,10 @@ class DeliveryTemporaryModel extends Model
     return $this->belongsTo('App\SalesStatusModel','sales_status_id');
   }
 
+  public function staff(){
+    return $this->belongsTo('App\User','staff_id');
+  }
+
   public function delivery_temporary_details()
   {
     return $this->hasMany('App\Sales\DeliveryTemporaryDetailModel','delivery_temporary_id');
@@ -30,7 +34,7 @@ class DeliveryTemporaryModel extends Model
         ->join('tb_delivery_type', 'tb_delivery_temporary.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
         ->join('tb_tax_type', 'tb_delivery_temporary.tax_type_id', '=', 'tb_tax_type.tax_type_id')
         ->join('tb_sales_status', 'tb_delivery_temporary.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-        ->join('users', 'tb_delivery_temporary.user_id', '=', 'users.id')
+        ->join('users', 'tb_delivery_temporary.staff_id', '=', 'users.id')
         ->where('tb_delivery_temporary.user_id', '=', $user_id)
         ->get();
   }
@@ -41,7 +45,7 @@ class DeliveryTemporaryModel extends Model
         ->join('tb_delivery_type', 'tb_delivery_temporary.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
         ->join('tb_tax_type', 'tb_delivery_temporary.tax_type_id', '=', 'tb_tax_type.tax_type_id')
         ->join('tb_sales_status', 'tb_delivery_temporary.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-        ->join('users', 'tb_delivery_temporary.user_id', '=', 'users.id')
+        ->join('users', 'tb_delivery_temporary.staff_id', '=', 'users.id')
         ->get();
   }
   public static function select_count_by_current_month(){
