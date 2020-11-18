@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="form-group form-inline">
-      <label class="col-lg-2">เลขที่ใบขาย</label>
+      <label class="col-lg-2">เลขที่ P/O</label>
       <div class="col-lg-3">
         <input name="internal_reference_doc" id="internal_reference_doc" class="form-control form-control-sm"  readonly>
 
