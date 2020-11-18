@@ -20,11 +20,8 @@
             </div>
             <div class="col-lg-4  text-right">
                 @if(isset($mode))
-                    <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/pdf" target="_blank"  title="พิมพ์">
-                        <i class="fas fa-print"></i> พิมพ์
-                    </a>
                     @if($mode=="show")
-                    <a class="btn btn-sm btn-primary btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/edit"  title="พิมพ์">
+                    <a class="btn btn-sm btn-warning btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/edit"  title="พิมพ์">
                         <i class="fas fa-edit"></i> แก้ไข
                     </a>
                     @elseif($mode=="edit")
@@ -37,6 +34,10 @@
                         @endif
 
                     @endif
+                    
+                    <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/pdf" target="_blank"  title="พิมพ์">
+                        <i class="fas fa-print"></i> พิมพ์
+                    </a>
                 @endif  
                 
                 
