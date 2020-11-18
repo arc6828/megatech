@@ -67,12 +67,18 @@
       </div>
 
       @include('purchase/receive/supplier_modal')
-      <label class="col-lg-2 ">เอกสาร IV เจ้าหนี้</label>
-      <div class="col-lg-3">
-        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm form-control-line"	required>
-      </div>
+      
     </div>
 
+    <div class="form-group form-inline">
+      <label class="col-lg-2 ">เอกสาร IV เจ้าหนี้</label>
+      <div class="col-lg-3">
+        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm"	required>
+      </div>
+      <div class="offset-lg-1 col-lg-2">
+        <button class="btn btn-sm btn-success">อัพโหลด IV เจ้าหนี้</button>
+      </div>
+    </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">เลขที่ใบขาย</label>
       <div class="col-lg-3">
