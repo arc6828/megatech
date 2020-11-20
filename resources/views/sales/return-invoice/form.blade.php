@@ -21,9 +21,11 @@
             <div class="col-lg-4  text-right">
                 @if(isset($mode))
                     @if($mode=="show")
-                    <a class="btn btn-sm btn-warning btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/edit"  title="พิมพ์">
-                        <i class="fas fa-edit"></i> แก้ไข
-                    </a>
+                        @if($returninvoice->sales_status_id != -1)
+                        <a class="btn btn-sm btn-warning btn-print mr-2" href="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/edit"  title="พิมพ์">
+                            <i class="fas fa-edit"></i> แก้ไข
+                        </a>
+                        @endif
                     @elseif($mode=="edit")
                         @if(isset($returninvoice->sales_status_id))
                             @if($returninvoice->sales_status_id > 0)
@@ -63,11 +65,13 @@
                     </span>
                 </div>
                 <input class="form-control" value="{{ isset($returninvoice->customer_id) ?  $returninvoice->customer->company_name  : ''}}" readonly>
+                @if(!isset($mode))
                 <div class="input-group-append">
                     <button class="btn btn-success" id="btn-customer" type="button" data-toggle="modal" data-target="#customerModal">
                     <i class="fa fa-plus"></i> เลือกลูกหนี้
                     </button>
                 </div>
+                @endif
             </div>
             @include("sales/return-invoice/customer_modal")
             @include("sales/return-invoice/invoice_modal")

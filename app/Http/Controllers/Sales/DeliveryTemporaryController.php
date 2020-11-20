@@ -198,7 +198,7 @@ class DeliveryTemporaryController extends Controller
         }
       }
 
-      return redirect("sales/delivery_temporary/{$id}/edit");
+      return redirect("sales/delivery_temporary/{$id}");
     }
 
     public function getNewCode(){

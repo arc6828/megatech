@@ -16,15 +16,17 @@
         </div>        
       </div>
       <div class="col-lg-4 text-right">
-      
-        @if($row->sales_status_id != -1)
+        @if($mode == "show")
+          @include('sales/order/invoice_detail_modal')
+          <a class="px-2 btn btn-sm btn-warning" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit" title="แก้ไข" >
+            <i class="fas fa-edit"></i> แก้ไข
+		      </a>
+        @endif
+        
 		  	<a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/pdf" target="_blank"  title="พิมพ์">
 		      <i class="fas fa-print"></i> พิมพ์
-		    </a>
-        <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/order/{{ $row->order_id }}/edit" title="แก้ไข" >
-		      <i class="fas fa-edit"></i>  แก้ไข
-		    </a>
-        @endif
+		    </a>        
+        
 
       </div>
       @endif

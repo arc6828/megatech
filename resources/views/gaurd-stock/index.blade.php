@@ -95,7 +95,19 @@
                                                     @endphp  
                                                     {{ $item->code }}         
                                                     @break
+                                                @case("sales_return_invoice_cancel")                                                    
+                                                    @php 
+                                                        $positive = false;
+                                                    @endphp  
+                                                    {{ $item->code }}         
+                                                    @break
                                                 @case("purchase_return_order")                                                    
+                                                    @php 
+                                                        $positive = false;
+                                                    @endphp  
+                                                    {{ $item->code }}         
+                                                    @break
+                                                @case("purchase_return_order_cancel")                                                    
                                                     @php 
                                                         $positive = false;
                                                     @endphp  

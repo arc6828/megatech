@@ -31,6 +31,12 @@
 
 		</form>
 
+		<form method="POST" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}" accept-charset="UTF-8" style="display:none">
+			{{ method_field('DELETE') }}
+			{{ csrf_field() }}
+			<button type="submit" id="form-delete-submit" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+		</form>
+
 		<form class="" action="{{ url('/') }}/sales/delivery_temporary" id="form" method="POST">
 			{{ csrf_field() }}
 

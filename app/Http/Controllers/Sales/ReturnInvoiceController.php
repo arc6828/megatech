@@ -25,23 +25,24 @@ class ReturnInvoiceController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
-            $returninvoice = ReturnInvoice::where('code', 'LIKE', "%$keyword%")
-                ->orWhere('customer_id', 'LIKE', "%$keyword%")
-                ->orWhere('invoice_code', 'LIKE', "%$keyword%")
-                ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
-                ->orWhere('sales_status_id', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->orWhere('remark', 'LIKE', "%$keyword%")
-                ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
-                ->orWhere('vat', 'LIKE', "%$keyword%")
-                ->orWhere('vat_percent', 'LIKE', "%$keyword%")
-                ->orWhere('total_after_vat', 'LIKE', "%$keyword%")
-                ->orWhere('revision', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $returninvoice = ReturnInvoice::latest()->paginate($perPage);
-        }
+        // if (!empty($keyword)) {
+        //     $returninvoice = ReturnInvoice::where('code', 'LIKE', "%$keyword%")
+        //         ->orWhere('customer_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('invoice_code', 'LIKE', "%$keyword%")
+        //         ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('sales_status_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('user_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('remark', 'LIKE', "%$keyword%")
+        //         ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('vat_percent', 'LIKE', "%$keyword%")
+        //         ->orWhere('total_after_vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('revision', 'LIKE', "%$keyword%")
+        //         ->latest()->paginate($perPage);
+        // } else {
+        //     $returninvoice = ReturnInvoice::latest()->paginate($perPage);
+        // }
+        $returninvoice = ReturnInvoice::latest()->get();
 
         return view('sales.return-invoice.index', compact('returninvoice'));
     }
@@ -80,6 +81,26 @@ class ReturnInvoiceController extends Controller
         $requestData["revision"] = 0;
         $returninvoice = ReturnInvoice::create($requestData);
 
+        $this->store_detail($request, $returninvoice);
+
+        return redirect('sales/return-invoice')->with('flash_message', 'ReturnInvoice added!');
+    }
+
+    public function getNewCode(){
+        $number = ReturnInvoice::where('sales_status_id','!=','-1')
+            ->whereMonth('created_at',date("m"))
+            ->whereYear('created_at',date("Y"))
+            ->count();
+        $count =  $number + 1;
+        //$year = (date("Y") + 543) % 100;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $code = "RI{$year}{$month}-{$number}";
+        return $code;
+    }
+
+    public function store_detail(Request $request, $returninvoice){
         //CREATE RETURN INVOICE DETAIL
         $details = [];
         $products = $request->input('product_ids');
@@ -99,8 +120,11 @@ class ReturnInvoiceController extends Controller
         }
         ReturnInvoiceDetail::insert($details);
 
-        //GAURD STOCK UPDATE
+        //GAURD STOCK UPDATE        
         foreach($details as $item){
+            if($item['amount'] == 0){
+                continue;
+            }
             $product = ProductModel::findOrFail($item['product_id']);
             $gaurd_stock = GaurdStock::create([
                 "code" => $returninvoice->code,
@@ -117,24 +141,12 @@ class ReturnInvoiceController extends Controller
             $product->pending_in = $gaurd_stock['pending_in'];
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
-
         }
-
-        return redirect('sales/return-invoice')->with('flash_message', 'ReturnInvoice added!');
-    }
-
-    public function getNewCode(){
-        $number = ReturnInvoice::where('sales_status_id','!=','-1')
-            ->whereMonth('created_at',date("m"))
-            ->whereYear('created_at',date("Y"))
-            ->count();
-        $count =  $number + 1;
-        //$year = (date("Y") + 543) % 100;
-        $year = date("y");
-        $month = date("m");
-        $number = sprintf('%05d', $count);
-        $code = "RI{$year}{$month}-{$number}";
-        return $code;
+        // //VOID IF NO CHANGE
+        // if( $returninvoice->total_after_vat == 0 ){
+        //     $returninvoice->sales_status_id = -1;
+        //     $returninvoice->save();
+        // }
     }
 
     /**
@@ -191,12 +203,54 @@ class ReturnInvoiceController extends Controller
     public function update(Request $request, $id)
     {
         
-        $requestData = $request->all();
-        
-        $returninvoice = ReturnInvoice::findOrFail($id);
-        $returninvoice->update($requestData);
+        $requestData = $request->all();                
+        //LOAD OLD DATA
+        $new_returninvoice = ReturnInvoice::create($requestData);              
 
-        return redirect('sales/return-invoice')->with('flash_message', 'ReturnInvoice updated!');
+        //UPDATE SOME DATA
+        $returninvoice = ReturnInvoice::findOrFail($id);
+        $returninvoice->sales_status_id = -1; //VOID
+        $returninvoice->save();
+
+        //DUPLICATE OBJECT
+        $revision = $returninvoice->revision + 1;
+        $segments = explode("-",$returninvoice->code);
+        $code = $segments[0]."-".$segments[1]."-R".$revision; 
+        //$returninvoice->update($requestData);
+        $new_returninvoice->update([
+            'created_at' => date("Y-m-d h:i:s"),
+            'updated_at' => date("Y-m-d h:i:s"),
+            'code' => $code,
+            'revision' => $revision,
+        ]);
+
+        //ROLLBACK Gaurd stock 
+        $details = $returninvoice->details()->get();
+        foreach($details as $item){
+            $product = ProductModel::findOrFail($item->product_id);
+            $gaurd_stock = GaurdStock::create([
+                "code" => $returninvoice->code,
+                "type" => "sales_return_invoice_cancel",
+                "amount" => $item->amount,
+                "amount_in_stock" => ($product->amount_in_stock - $item->amount),
+                "pending_in" => $product->pending_in,
+                "pending_out" => ($product->pending_out),
+                "product_id" => $product->product_id,
+            ]);
+            
+            //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+            $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+            $product->pending_in = $gaurd_stock['pending_in'];
+            $product->pending_out = $gaurd_stock['pending_out'];
+            $product->save();
+        }
+        //DELAY FOR TIMESTAMP
+        sleep(1);
+
+        //SAVE DETAIL + GAURD STOCK
+        $this->store_detail($request, $new_returninvoice);
+
+        return redirect('sales/return-invoice/'.$new_returninvoice->id)->with('flash_message', 'ReturnInvoice updated!');
     }
 
     /**

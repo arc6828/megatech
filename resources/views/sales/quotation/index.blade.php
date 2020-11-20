@@ -88,8 +88,8 @@
 		document.addEventListener("DOMContentLoaded", function(event) {
 			console.log("555");
 			$('.number').each(function(index){
-			var number = Number($(this).text()).toLocaleString("en",{minimumFractionDigits: 2});
-			$(this).text(number);
+				var number = Number($(this).text()).toLocaleString("en",{minimumFractionDigits: 2});
+				$(this).text(number);
 			});
 			$('#table').DataTable({
 				"paging" : false ,

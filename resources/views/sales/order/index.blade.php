@@ -24,7 +24,7 @@
     </div>
 
 		<div class="table-responsive">
-			<table class="table table-sm table-hover text-center  table-bordered" id="table" >
+			<table class="table table-sm table-hover text-center  table-bordered table-striped " id="table" >
 				<thead >
 					<tr >
 						<th class="text-center">เลขที่เอกสาร</th>

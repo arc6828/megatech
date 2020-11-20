@@ -5,7 +5,7 @@
     }
 </style>
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table table-sm text-center" width="100%">
         <thead>
             <tr>
                 <th>รหัสสินค้า</th><th>สินค้า</th><th>จำนวน</th><th>ราคาที่ขาย</th><th>รวม</th><th class="d-none">Return Invoice Id</th>

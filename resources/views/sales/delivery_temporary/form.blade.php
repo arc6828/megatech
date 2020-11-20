@@ -19,9 +19,13 @@
         @if($mode == "edit")
           @if($row->sales_status_id == 0)
           <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="document.querySelector('#sales_status_id').value='10'; document.querySelector('#delivery_temporary_code').value='';  document.querySelector('#form-submit').click(); console.log(5565);" title="สร้าง">
-            <i class="fas fa-trash"></i> สร้างใบส่งของชั่วคราว
+            <i class="fas fa-check"></i> สร้างใบส่งของชั่วคราว
+          </a>          
+          <a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)" onclick="document.querySelector('#form-delete-submit').click();" title="ลบทิ้ง">
+            <i class="fas fa-trash"></i> ลบทิ้ง
           </a>
           @endif
+          
           @if($row->sales_status_id == 10)
           <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); console.log(5565);" title="ยกเลิก">
             <i class="fas fa-trash"></i> ปิดใบส่งของชั่วคราว

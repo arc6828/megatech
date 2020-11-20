@@ -44,6 +44,12 @@ class OrderModel extends Model
   public function order_details(){
     return $this->hasMany('App\Sales\OrderDetail2Model','order_id');
   }
+  public function details(){
+    return $this->hasMany('App\Sales\OrderDetail2Model','order_id');
+  }
+  public function invoices(){
+    return $this->hasMany('App\Sales\InvoiceModel','internal_reference_id','order_code');
+  }
   public function pickings(){
     return $this->hasMany('App\Sales\OrderDetailModel','order_id');
   }
