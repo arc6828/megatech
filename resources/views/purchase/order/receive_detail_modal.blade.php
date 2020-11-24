@@ -1,7 +1,7 @@
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#detailModal" id="btn-detail">
-	<i class="fa fa-truck"></i> รายละเอียดส่งสินค้า
+	<i class="fa fa-truck"></i> รายละเอียดรับสินค้า
 </button>
 
 <!-- Modal -->
