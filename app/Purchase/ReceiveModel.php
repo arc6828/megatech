@@ -25,11 +25,12 @@ class ReceiveModel extends Model
         'zone_id',
         'remark',
         'vat_percent',
-        'external_reference_id',
-        'internal_reference_id',
+        'external_reference_doc',
+        'internal_reference_doc',
         'total',
         'total_payment',
         'total_debt',
+        'file',
       ];
 
     

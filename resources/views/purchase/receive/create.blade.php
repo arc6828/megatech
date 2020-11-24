@@ -28,7 +28,7 @@
     </div>
   </div>
 </div>
-<form class="" action="{{ url('/') }}/purchase/receive" id="form" method="POST">
+<form class="" action="{{ url('/') }}/purchase/receive" id="form" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('purchase/receive/form', ["mode"=>"create"])

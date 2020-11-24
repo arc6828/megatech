@@ -59,7 +59,7 @@
                                     <tr>
                                         <!-- <td>{{ $loop->iteration }}</td> -->
                                         <td>
-                                            <a href="{{ url('/purchase/return-order/' . $item->id).'/edit' }}" class="">                                            
+                                            <a href="{{ url('/purchase/return-order/' . $item->id).'' }}" class="">                                            
                                                 {{ $item->code }}
                                             </a>
                                             
@@ -103,7 +103,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $returnorder->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
 
                         <div class="text-center mt-4">

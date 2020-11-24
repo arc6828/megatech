@@ -83,7 +83,7 @@ class ReturnInvoiceController extends Controller
 
         $this->store_detail($request, $returninvoice);
 
-        return redirect('sales/return-invoice')->with('flash_message', 'ReturnInvoice added!');
+        return redirect('sales/return-invoice/'.$returninvoice->id)->with('flash_message', 'ReturnInvoice added!');
     }
 
     public function getNewCode(){
@@ -142,11 +142,7 @@ class ReturnInvoiceController extends Controller
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
         }
-        // //VOID IF NO CHANGE
-        // if( $returninvoice->total_after_vat == 0 ){
-        //     $returninvoice->sales_status_id = -1;
-        //     $returninvoice->save();
-        // }
+        
     }
 
     /**

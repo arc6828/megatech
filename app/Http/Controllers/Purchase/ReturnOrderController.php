@@ -25,23 +25,24 @@ class ReturnOrderController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
-            $returnorder = ReturnOrder::where('code', 'LIKE', "%$keyword%")
-                ->orWhere('supplier_id', 'LIKE', "%$keyword%")
-                ->orWhere('purchase_receive_code', 'LIKE', "%$keyword%")
-                ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
-                ->orWhere('purchase_status_id', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->orWhere('remark', 'LIKE', "%$keyword%")
-                ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
-                ->orWhere('vat', 'LIKE', "%$keyword%")
-                ->orWhere('vat_percent', 'LIKE', "%$keyword%")
-                ->orWhere('total_after_vat', 'LIKE', "%$keyword%")
-                ->orWhere('revision', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $returnorder = ReturnOrder::latest()->paginate($perPage);
-        }
+        // if (!empty($keyword)) {
+        //     $returnorder = ReturnOrder::where('code', 'LIKE', "%$keyword%")
+        //         ->orWhere('supplier_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('purchase_receive_code', 'LIKE', "%$keyword%")
+        //         ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('purchase_status_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('user_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('remark', 'LIKE', "%$keyword%")
+        //         ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('vat_percent', 'LIKE', "%$keyword%")
+        //         ->orWhere('total_after_vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('revision', 'LIKE', "%$keyword%")
+        //         ->latest()->paginate($perPage);
+        // } else {
+        //     $returnorder = ReturnOrder::latest()->paginate($perPage);
+        // }
+        $returnorder = ReturnOrder::latest()->get();
 
         return view('purchase.return-order.index', compact('returnorder'));
     }
@@ -72,13 +73,32 @@ class ReturnOrderController extends Controller
      */
     public function store(Request $request)
     {
-
         //CREATE RETURN INVOICE
         $requestData = $request->all();        
         $requestData["code"] = $this->getNewCode();
         $requestData["revision"] = 0;        
         $returnorder = ReturnOrder::create($requestData);
 
+        $this->store_detail($request, $returnorder);
+
+        return redirect('purchase/return-order/'.$returnorder->id)->with('flash_message', 'ReturnOrder added!');
+    }
+
+    public function getNewCode(){
+        $number = ReturnOrder::where('purchase_status_id','!=','-1')
+            ->whereMonth('created_at',date("m"))
+            ->whereYear('created_at',date("Y"))
+            ->count();
+        $count =  $number + 1;
+        //$year = (date("Y") + 543) % 100;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $code = "RO{$year}{$month}-{$number}";
+        return $code;
+    }
+
+    public function store_detail(Request $request, $returnorder){
         //CREATE RETURN INVOICE DETAIL
         $details = [];
         $products = $request->input('product_ids');
@@ -100,6 +120,9 @@ class ReturnOrderController extends Controller
 
         //GAURD STOCK UPDATE
         foreach($details as $item){
+            if($item['amount'] == 0){
+                continue;
+            }
             $product = ProductModel::findOrFail($item['product_id']);
             $gaurd_stock = GaurdStock::create([
                 "code" => $returnorder->code,
@@ -116,30 +139,7 @@ class ReturnOrderController extends Controller
             $product->pending_in = $gaurd_stock['pending_in'];
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
-
         }
-
-
-
-
-
-
-
-        return redirect('purchase/return-order')->with('flash_message', 'ReturnOrder added!');
-    }
-
-    public function getNewCode(){
-        $number = ReturnOrder::where('purchase_status_id','!=','-1')
-            ->whereMonth('created_at',date("m"))
-            ->whereYear('created_at',date("Y"))
-            ->count();
-        $count =  $number + 1;
-        //$year = (date("Y") + 543) % 100;
-        $year = date("y");
-        $month = date("m");
-        $number = sprintf('%05d', $count);
-        $code = "RO{$year}{$month}-{$number}";
-        return $code;
     }
 
     /**
@@ -152,8 +152,10 @@ class ReturnOrderController extends Controller
     public function show($id)
     {
         $returnorder = ReturnOrder::findOrFail($id);
+        $returnorderdetail = $returnorder->return_order_details()->get();
+        $mode = "show";
 
-        return view('purchase.return-order.show', compact('returnorder'));
+        return view('purchase.return-order.edit', compact('returnorder','returnorderdetail','mode'));
     }
 
     /**
@@ -185,11 +187,57 @@ class ReturnOrderController extends Controller
     {
         
         $requestData = $request->all();
-        
-        $returnorder = ReturnOrder::findOrFail($id);
-        $returnorder->update($requestData);
+        //LOAD OLD DATA
+        $new_returnorder = ReturnOrder::create($requestData);              
 
-        return redirect('purchase/return-order')->with('flash_message', 'ReturnOrder updated!');
+        //UPDATE SOME DATA
+        $returnorder = ReturnOrder::findOrFail($id);
+        $returnorder->purchase_status_id = -1; //VOID
+        $returnorder->save();
+
+        //DUPLICATE OBJECT
+        $revision = $returnorder->revision + 1;
+        $segments = explode("-",$returnorder->code);
+        $code = $segments[0]."-".$segments[1]."-R".$revision; 
+        // $returnorder->update($requestData);
+        $new_returnorder->update([
+            'created_at' => date("Y-m-d h:i:s"),
+            'updated_at' => date("Y-m-d h:i:s"),
+            'code' => $code,
+            'revision' => $revision,
+        ]);
+
+        //ROLLBACK Gaurd stock 
+        $details = $returnorder->details()->get();
+        foreach($details as $item){
+            if($item['amount'] == 0){
+                continue;
+            }
+            $product = ProductModel::findOrFail($item['product_id']);
+            $gaurd_stock = GaurdStock::create([
+                "code" => $returnorder->code,
+                "type" => "purchase_return_order",
+                "amount" => $item['amount'],
+                "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+                "pending_in" => $product->pending_in,
+                "pending_out" => ($product->pending_out),
+                "product_id" => $product->product_id,
+            ]);
+            
+            //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+            $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+            $product->pending_in = $gaurd_stock['pending_in'];
+            $product->pending_out = $gaurd_stock['pending_out'];
+            $product->save();
+        }
+
+        //DELAY FOR TIMESTAMP
+        sleep(1);
+
+        //SAVE DETAIL + GAURD STOCK
+        $this->store_detail($request, $new_returnorder);
+
+        return redirect('purchase/return-order/'.$new_returnorder->id)->with('flash_message', 'ReturnOrder updated!');
     }
 
     /**

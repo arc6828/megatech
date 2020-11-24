@@ -6,6 +6,11 @@
 @section('level-1-url', url('purchase/return-order'))
 @section('level-1','ใบส่งคืนสินค้า')
 
+@if( $mode == "edit" )
+  @section('level-2-url', url('purchase/return-order/'.$returnorder->id ))
+  @section('level-2','รายละเอียด')
+@endif
+
 
 @section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
 

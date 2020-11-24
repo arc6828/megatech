@@ -1,0 +1,24 @@
+{
+    "fields": [
+        {
+            "name": "product_id",
+            "type": "integer"
+        },
+        {
+            "name": "amount",
+            "type": "integer"
+        },
+        {
+            "name": "discount_price",
+            "type": "float"
+        },
+        {
+            "name": "total",
+            "type": "float"
+        },
+        {
+            "name": "receive_final_id",
+            "type": "integer"
+        }
+    ]
+}

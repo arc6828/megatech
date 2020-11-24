@@ -21,9 +21,16 @@
             <tr>
                 <td><input type="hidden" class="input product_ids" name="product_ids[]" value="{{ $item->product_id }}" /> {{ $item->product->product_code }}</td>
                 <td>{{ $item->product->product_name }}</td>
+                @if(isset($mode))
+                <td><input type="number" class="input amounts" name="amounts[]" value="{{ $item->amount }}" min="0" max="{{ $item->amount }}" title="[0,{{ $item->amount }}]" style="max-width:60px;" /> / {{ $item->amount }}</td>
+                <td><input type="hidden" class="input discount_prices" name="discount_prices[]" value="{{ $item->discount_price }}" /> {{ number_format($item->discount_price,2) }}</td>
+                <td><input type="number" class="input totals" name="totals[]" value="{{ $item->amount *  $item->discount_price}}" style="max-width:100px;" readonly /></td>
+                @else
                 <td><input type="number" class="input amounts" name="amounts[]" value="0" min="0" max="{{ $item->amount }}" title="[0,{{ $item->amount }}]" style="max-width:60px;" /> / {{ $item->amount }}</td>
                 <td><input type="hidden" class="input discount_prices" name="discount_prices[]" value="{{ $item->discount_price }}" /> {{ number_format($item->discount_price,2) }}</td>
                 <td><input type="number" class="input totals" name="totals[]" value="0" style="max-width:100px;" readonly /></td>
+
+                @endif
                 <td class="d-none">{{ $item->return_order_id }}</td>
                 <!-- <td>
                     <a href="{{ url('/purchase/return-order-detail/' . $item->id) }}" title="View ReturnOrderDetail"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>

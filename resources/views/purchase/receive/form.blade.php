@@ -51,7 +51,7 @@
     </div>
     <div class="form-group form-inline">
       <label class="col-lg-2">รหัสเจ้าหนี้</label>
-      <div class="col-lg-4">
+      <div class="col-lg-3">
         <input type="hidden" name="supplier_id" id="supplier_id" class="form-control form-control-sm"  required>
         <div class="input-group input-group-sm ">
           <div class="input-group-prepend">
@@ -60,25 +60,32 @@
           <input class="form-control" name="company_name" id="company_name" readonly>
           <div class="input-group-append">
             <button class="btn btn-success" type="button" data-toggle="modal" data-target="#supplierModal">
-              <i class="fa fa-plus"></i> เลือกเจ้าหนี้
+              <i class="fa fa-plus"></i> เลือก
             </button>
           </div>
         </div>
       </div>
 
       @include('purchase/receive/supplier_modal')
+
+      <label class="col-lg-2  offset-lg-1">เอกสาร IV เจ้าหนี้</label>
+      <div class="col-lg-3 form-inline">
+        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm"	required>
+        <label class="col-lg-2  offset-lg-1" for="file" id="label_file"><a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="$('#label_file').click();">อัพโหลด </a></label>
+       
+        @if(isset($purchase_receive))
+          <a href="{{ url('storage/'.$purchase_receive->file ) }}" target="_blank" id="file_name">
+            {{ (!empty($purchase_receive->file)) ? substr($purchase_receive->file,-12) : ''}}
+          </a>
+        @else        
+          <a href="#" id="file_name"></a>
+        @endif
+        <input type="file" class="d-none" id="file" name="file" value="......" onchange="document.querySelector('#file_name').innerHTML = this.value">
       
+      </div>      
     </div>
 
-    <div class="form-group form-inline">
-      <label class="col-lg-2 ">เอกสาร IV เจ้าหนี้</label>
-      <div class="col-lg-3">
-        <input name="external_reference_doc" id="external_reference_doc" class="form-control form-control-sm"	required>
-      </div>
-      <div class="offset-lg-1 col-lg-2">
-        <button class="btn btn-sm btn-success">อัพโหลด IV เจ้าหนี้</button>
-      </div>
-    </div>
+    
     <div class="form-group form-inline">
       <label class="col-lg-2">เลขที่ P/O</label>
       <div class="col-lg-3">
@@ -134,8 +141,7 @@
     <div class="form-group form-inline">
       <label class="col-lg-2 d-none">รหัสแผนก</label>
       <div class="col-lg-3 d-none">
-        <select name="department_id" id="department_id" class="form-control form-control-sm" required>
-          <option value="" >None</option>
+        <select name="department_id" id="department_id" class="form-control form-control-sm" >
           @foreach($table_department as $row_department)
           <option value="{{ $row_department->department_role }}" >
             {{	$row_department->department_name }}

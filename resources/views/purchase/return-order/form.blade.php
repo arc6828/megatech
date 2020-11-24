@@ -1,10 +1,52 @@
 <div class="card mb-4">
     <div class="card-body">
-        <div class="form-row">
+        <!-- <div class="form-row">
             <div class="form-group col-lg-3">
                 <a href="{{ url('/purchase/return-order') }}" title="Back"><button type="button" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>                        
             </div>
+        </div> -->
+        @if(isset($returnorder))
+        <div class="form-row form-group my-4">
+            <div class="col-lg-4  text-left pl-5">
+                <!-- <a href="{{ url('/purchase/return-order') }}" title="Back" class="btn btn-warning btn-sm" >
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                </a> -->
+            </div>
+            <div class="col-lg-4">
+                @if(isset($mode))
+                    <div class="text-center"><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($returnorder->code, "C128") }}" alt="barcode"   /></div>
+                    <div class="text-center">{{ $returnorder->code }}</div>
+                @endif      
+            </div>
+            <div class="col-lg-4  text-right">
+                @if(isset($mode))
+                    @if($mode=="show")
+                        @if($returnorder->purchase_status_id != -1)
+                        <a class="btn btn-sm btn-warning btn-print mr-2" href="{{ url('/') }}/purchase/return-order/{{ $returnorder->id }}/edit"  title="พิมพ์">
+                            <i class="fas fa-edit"></i> แก้ไข
+                        </a>
+                        @endif
+                    @elseif($mode=="edit")
+                        @if(isset($returnorder->purchase_status_id))
+                            @if($returnorder->purchase_status_id > 0)
+                            <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
+                                <span class="fa fa-trash"> ยกเลิก RO</span>
+                            </a>
+                            @endif
+                        @endif
+
+                    @endif
+                    
+                    <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/purchase/return-order/{{ $returnorder->id }}/pdf" target="_blank"  title="พิมพ์">
+                        <i class="fas fa-print"></i> พิมพ์
+                    </a>
+                @endif  
+                
+                
+            </div>
+
         </div>
+        @endif
         <div class="form-row">
             <div class="form-group {{ $errors->has('code') ? 'has-error' : ''}} col-lg-3">
                 <label for="code" class="control-label">{{ 'รหัสเอกสาร' }}</label>
@@ -91,9 +133,30 @@
     </div>
 </div>
 
-<div class="form-group text-center">
+<!-- <div class="form-group text-center">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-</div>
+</div> -->
+
+
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div>
+    @elseif( $mode == "show" )
+    <script>
+        let elements = document.querySelectorAll("input, button.btn-success");
+        // console.log("want to approved", elements);
+        for(var item of elements){
+        item.setAttribute("disabled","");
+        };
+    </script>
+    @endif
+@else 
+    <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div> 
+@endif
 
 <script>
 function refreshTotal(){
@@ -160,4 +223,4 @@ function onChange(){
 
 
 }
-</script>s
+</script>

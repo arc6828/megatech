@@ -98,7 +98,21 @@ class ReceiveController extends Controller
           'total' => $request->input('total_after_vat',0),
           'total_debt' => $request->input('total_after_vat',0),
       ];
+
+      //UPLOAD
       $id = ReceiveModel::insert($input);
+
+      //UPLOAD FILE P/O
+      $receive = ReceiveModel::findOrFail($id);
+      //UPLOAD FILE P/O      
+      if ($request->hasFile('file')) {
+        $folder = "supplier/iv";
+        
+        $requestData['file'] = $request->file('file')->store($folder, 'public');
+        $requestData['external_reference_doc'] = $request->input('external_reference_doc');
+        //$requestData['file'] = "sss.jpg";
+        $receive->update($requestData);
+      }    
 
       //INSERT ALL NEW QUOTATION DETAIL
       $list = [];
@@ -348,50 +362,66 @@ class ReceiveController extends Controller
      */
     public function update(Request $request, $id)
     {
-      //1.INSERT QUOTATION
-      $input = [
-        //'purchase_receive_code' => $purchase_receive_code,
-        'external_reference_doc' => $request->input('external_reference_doc'),
-        'supplier_id' => $request->input('supplier_id'),
-        'debt_duration' => $request->input('debt_duration'),
-        'billing_duration' => $request->input('billing_duration'),
-        'payment_condition' => $request->input('payment_condition',""),
-        'delivery_type_id' => $request->input('delivery_type_id'),
-        'tax_type_id' => $request->input('tax_type_id'),
-        'delivery_time' => $request->input('delivery_time'),
-        'department_id' => $request->input('department_id'),
-        'purchase_status_id' => $request->input('purchase_status_id'),
-        'user_id' => $request->input('user_id'),
-        'zone_id' => $request->input('zone_id'),
-        'remark' => $request->input('remark'),
-        'vat_percent' => $request->input('vat_percent',7),
-        'total' => $request->input('total',0),
-      ];
-      ReceiveModel::update_by_id($input,$id);
+      // //1.INSERT QUOTATION
+      // $input = [
+      //   //'purchase_receive_code' => $purchase_receive_code,
+      //   'external_reference_doc' => $request->input('external_reference_doc'),
+      //   'supplier_id' => $request->input('supplier_id'),
+      //   'debt_duration' => $request->input('debt_duration'),
+      //   'billing_duration' => $request->input('billing_duration'),
+      //   'payment_condition' => $request->input('payment_condition',""),
+      //   'delivery_type_id' => $request->input('delivery_type_id'),
+      //   'tax_type_id' => $request->input('tax_type_id'),
+      //   'delivery_time' => $request->input('delivery_time'),
+      //   'department_id' => $request->input('department_id'),
+      //   'purchase_status_id' => $request->input('purchase_status_id'),
+      //   'user_id' => $request->input('user_id'),
+      //   'zone_id' => $request->input('zone_id'),
+      //   'remark' => $request->input('remark'),
+      //   'vat_percent' => $request->input('vat_percent',7),
+      //   'total' => $request->input('total',0),
+      // ];
+      // ReceiveModel::update_by_id($input,$id);
 
-      //2.DELETE QUOTATION DETAIL FIRST
-      ReceiveDetailModel::delete_by_purchase_receive_id($id);
+      // //2.DELETE QUOTATION DETAIL FIRST
+      // ReceiveDetailModel::delete_by_purchase_receive_id($id);
 
-      //3.INSERT ALL NEW QUOTATION DETAIL
-      $list = [];
-      //print_r($request->input('product_id_edit'));
-      //print_r($request->input('amount_edit'));
-      //print_r($request->input('discount_price_edit'));
-      //echo $id;
-      if (is_array ($request->input('product_id_edit'))){
-        for($i=0; $i<count($request->input('product_id_edit')); $i++){
-          $list[] = [
-              "product_id" => $request->input('product_id_edit')[$i],
-              "amount" => $request->input('amount_edit')[$i],
-              "discount_price" => $request->input('discount_price_edit')[$i],
-              "purchase_receive_id" => $id,
-          ];
-        }
-      }
+      // //3.INSERT ALL NEW QUOTATION DETAIL
+      // $list = [];
+      // //print_r($request->input('product_id_edit'));
+      // //print_r($request->input('amount_edit'));
+      // //print_r($request->input('discount_price_edit'));
+      // //echo $id;
+      // if (is_array ($request->input('product_id_edit'))){
+      //   for($i=0; $i<count($request->input('product_id_edit')); $i++){
+      //     $list[] = [
+      //         "product_id" => $request->input('product_id_edit')[$i],
+      //         "amount" => $request->input('amount_edit')[$i],
+      //         "discount_price" => $request->input('discount_price_edit')[$i],
+      //         "purchase_receive_id" => $id,
+      //     ];
+      //   }
+      // }
 
-      ReceiveDetailModel::insert($list);
+      // ReceiveDetailModel::insert($list);
+      
+      $receive = ReceiveModel::findOrFail($id);
 
+      //UPLOAD FILE P/O      
+      if ($request->hasFile('file')) {
+        $folder = "supplier/iv";
+        
+        $requestData['file'] = $request->file('file')->store($folder, 'public');
+        $requestData['external_reference_doc'] = $request->input('external_reference_doc');
+        //$requestData['file'] = "sss.jpg";
+        $receive->update($requestData);
+      }      
+      $requestData['external_reference_doc'] = $request->input('external_reference_doc');
+      //exit();
       //UPDATE PR Detail
+      
+      // $requestData['external_reference_doc'] = '555';      
+      $receive->update($requestData);
 
       //4.REDIRECT
       return redirect("purchase/receive/{$id}/edit");

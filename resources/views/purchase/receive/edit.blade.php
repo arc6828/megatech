@@ -40,7 +40,7 @@
 			{{ method_field('PATCH') }}
 			<button type="submit" class="btn btn-success " id="form-cancel-submit" style="width:150px;">Save</button>
 		</form>
-		<form class="" action="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}" id="form" method="POST">
+		<form class="" action="{{ url('/') }}/purchase/receive/{{ $row->purchase_receive_id }}" id="form" method="POST" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 

@@ -1,0 +1,40 @@
+{
+    "fields": [
+        {
+            "name": "code",
+            "type": "string"
+        },
+        {
+            "name": "reference",
+            "type": "string"
+        },        
+        {
+            "name": "adjust_type",
+            "type": "integer"
+        },
+        {
+            "name": "status_id",
+            "type": "integer"
+        },
+        {
+            "name": "user_id",
+            "type": "integer"
+        },        
+        {
+            "name": "adjust_definition_id",
+            "type": "integer"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        },
+        {
+            "name": "total",
+            "type": "float"
+        },
+        {
+            "name": "revision",
+            "type": "integer"
+        }
+    ]
+}
