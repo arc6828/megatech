@@ -440,6 +440,7 @@ class OrderController extends Controller
         }
         
       }
+      //exit();
 
       //QUERY DT OF THIS CUSTOMER
       // $customer_id = $current_oe->customer_id;

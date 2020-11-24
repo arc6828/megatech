@@ -20,7 +20,7 @@
                     <h4>รายละเอียดคงค้าง</h4>
                     <table width="100%" class="table text-center table-sm table-bordered table-striped " id="table-detail-model">
                         <thead >
-                            <tr >
+                            <tr > 
                                 <th class="text-center">#</th>
                                 <th class="text-center">รหัสสินค้า</th>
                                 <th class="text-center">รายละเอียด</th>
@@ -32,15 +32,15 @@
                         <tbody>
                             @foreach($order->details as $item )
                             @php 
-                                $invoiced_item = array_key_exists($item->product->product_code,$unchangable_items)?$unchangable_items[$item->product->product_code]:0;
+                                $received_item = array_key_exists($item->product->product_code,$unchangable_items)?$unchangable_items[$item->product->product_code]:0;
                             @endphp
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->product->product_code}}</td>
                                 <td>{{$item->product->product_name}}</td>
                                 <td>{{$item->amount}}</td>
-                                <td>{{ $item->amount - $invoiced_item }}</td>
-                                <td>{{ $invoiced_item  }}</td>
+                                <td>{{ $item->amount - $received_item }}</td>
+                                <td>{{ $received_item  }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -48,8 +48,8 @@
                 </div>
                 <!-- <hr>    -->
                 <div class="table-responsive mb-4">
-                    <h4>ตรวจสอบรายละเอียดใบส่งสินค้า (IV)</h4>
-                    <table width="100%" class="table  text-center table-sm table-bordered table-striped " id="table-detail-invoice-model">
+                    <h4>ตรวจสอบรายละเอียดใบรับสินค้า (RC)</h4>
+                    <table width="100%" class="table  text-center table-sm table-bordered table-striped " id="table-detail-receive-model">
                         <thead >
                             <tr >
                                 <th class="text-center">#</th>
@@ -61,12 +61,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($order->invoices as $invoice )
-                                @foreach($invoice->details as $item )
+                            @foreach($order->receives as $receive )
+                                @foreach($receive->details as $item )
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td>{{date_format( date_create( explode(" ", $item->invoice->datetime)[0]),"d-m-Y" ) }}</td>
-                                    <td>{{$item->invoice->invoice_code}}</td>
+                                    <td>{{date_format( date_create( explode(" ", $item->receive->datetime)[0]),"d-m-Y" ) }}</td>
+                                    <td>{{$item->receive->purchase_receive_code}}</td>
                                     <td>{{$item->product->product_code}}</td>
                                     <td>{{$item->product->product_name}}</td>
                                     <td>{{$item->amount}}</td>
@@ -95,7 +95,7 @@
                     searching : false,
                 }); // END DATATABLE	
 
-                $('#table-detail-invoice-model').DataTable({
+                $('#table-detail-receive-model').DataTable({
                     order : [ 3, 'asc' ],
                     paging : false,
                     info : false,

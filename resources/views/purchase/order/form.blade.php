@@ -21,6 +21,7 @@
       <div class="col-lg-4  text-right">
         @if(isset($order))
           @if($mode == "show")
+          @include('purchase/order/receive_detail_modal')
           <a class="btn btn-warning btn-sm btn-print mr-2" href="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}/edit" title="แก้ไข">
             <i class="fas fa-edit"></i> แก้ไข
           </a>
