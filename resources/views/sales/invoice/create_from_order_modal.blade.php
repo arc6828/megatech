@@ -100,6 +100,8 @@
 				if(  ! $.fn.DataTable.isDataTable('#table-order-model') ){
 					var table = $('#table-order-model').DataTable({
 						"data": dataSet,
+						paging : false,
+						info : false,
 						"columns": [
 						{ title: "เลขที่เอกสาร" },
 						{ title: "วันที่" },
@@ -112,6 +114,20 @@
 						],
 						"pageLength" : 3,
 					}).order( [ 0, 'desc' ] ).draw();
+					//DATA TABLE SCROLL
+					var tableCont = document.querySelector('#table-order-model');
+					tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+
+					tableCont.parentNode.style.overflow = 'auto';
+					tableCont.parentNode.style.maxHeight = '200px';
+					tableCont.parentNode.addEventListener('scroll',function (e){
+						var scrollTop = this.scrollTop-1;
+						this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 1000 + 'px)';
+						this.querySelector('thead').style.background = "white";
+						this.querySelector('thead').style.zIndex = "3000";
+						//this.querySelector('thead').style.marginBottom = "200px";
+						//console.log(scrollTop);
+					})
 				}else{
 					table = $('#table-order-model').DataTable();
 				}
@@ -162,6 +178,8 @@
 				var table_detail;
 				if(  ! $.fn.DataTable.isDataTable('#table-order-detail') ){
 					table_detail = $('#table-order-detail').DataTable({
+						paging : false,
+						info : false,
 						data: dataSet,
 						columns: [
 								{ title: "เลขที่ OE" },
@@ -178,6 +196,20 @@
 						],
 						"pageLength" : 3,
 					}); //END DATATABLE
+					//DATA TABLE SCROLL
+					var tableCont = document.querySelector('#table-order-detail');
+					tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+
+					tableCont.parentNode.style.overflow = 'auto';
+					tableCont.parentNode.style.maxHeight = '200px';
+					tableCont.parentNode.addEventListener('scroll',function (e){
+						var scrollTop = this.scrollTop-1;
+						this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 1000 + 'px)';
+						this.querySelector('thead').style.background = "white";
+						this.querySelector('thead').style.zIndex = "3000";
+						//this.querySelector('thead').style.marginBottom = "200px";
+						//console.log(scrollTop);
+					})
 				}else{
 					table_detail = $('#table-order-detail').DataTable();
 				}

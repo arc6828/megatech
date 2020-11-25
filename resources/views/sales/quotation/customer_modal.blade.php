@@ -118,6 +118,8 @@
 					.draw();// END DATATABLE;
 					//DATA TABLE SCROLL
 					var tableCont = document.querySelector('#table-customer-modal');
+					tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+
 					tableCont.parentNode.style.overflow = 'auto';
 					tableCont.parentNode.style.maxHeight = '400px';
 					tableCont.parentNode.addEventListener('scroll',function (e){
