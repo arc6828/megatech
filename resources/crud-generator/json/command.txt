@@ -33,3 +33,12 @@ php artisan crud:generate ReturnInvoiceDetail --fields_from_file="resources/crud
 php artisan crud:generate ReturnOrder --fields_from_file="resources/crud-generator/json/ReturnOrder.json" --view-path=purchase --controller-namespace=App\Http\Controllers\Purchase --model-namespace=Purchase --route-group=purchase
 
 php artisan crud:generate ReturnOrderDetail --fields_from_file="resources/crud-generator/json/ReturnOrderDetail.json" --view-path=purchase --controller-namespace=App\Http\Controllers\Purchase --model-namespace=Purchase --route-group=purchase
+
+php artisan crud:generate IssueStock --fields_from_file="resources/crud-generator/json/IssueStock.json" 
+php artisan crud:generate IssueStockDetail --fields_from_file="resources/crud-generator/json/IssueStockDetail.json" 
+
+php artisan crud:generate ReceiveFinal --fields_from_file="resources/crud-generator/json/ReceiveFinal.json" 
+php artisan crud:generate ReceiveFinalDetail --fields_from_file="resources/crud-generator/json/ReceiveFinalDetail.json" 
+
+php artisan crud:generate AdjustStock --fields_from_file="resources/crud-generator/json/AdjustStock.json" 
+php artisan crud:generate AdjustStockDetail --fields_from_file="resources/crud-generator/json/AdjustStockDetail.json" 

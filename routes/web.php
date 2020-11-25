@@ -348,3 +348,10 @@ Auth::routes();
 
 Route::resource('brand', 'BrandController');
 
+
+Route::resource('issue-stock', 'IssueStockController');
+Route::resource('issue-stock-detail', 'IssueStockDetailController');
+Route::resource('receive-final', 'ReceiveFinalController');
+Route::resource('receive-final-detail', 'ReceiveFinalDetailController');
+Route::resource('adjust-stock', 'AdjustStockController');
+Route::resource('adjust-stock-detail', 'AdjustStockDetailController');

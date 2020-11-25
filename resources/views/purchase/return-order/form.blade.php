@@ -1,12 +1,12 @@
 <div class="card mb-4">
     <div class="card-body">
-        <!-- <div class="form-row">
+        <!-- <div class="form-row form-group">
             <div class="form-group col-lg-3">
                 <a href="{{ url('/purchase/return-order') }}" title="Back"><button type="button" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>                        
             </div>
         </div> -->
         @if(isset($returnorder))
-        <div class="form-row form-group my-4">
+        <div class="form-row form-group form-group my-4">
             <div class="col-lg-4  text-left pl-5">
                 <!-- <a href="{{ url('/purchase/return-order') }}" title="Back" class="btn btn-warning btn-sm" >
                     <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
@@ -47,49 +47,35 @@
 
         </div>
         @endif
-        <div class="form-row">
-            <div class="form-group {{ $errors->has('code') ? 'has-error' : ''}} col-lg-3">
-                <label for="code" class="control-label">{{ 'รหัสเอกสาร' }}</label>
-                <input class="form-control form-control-sm" name="code" type="text" id="code" value="{{ isset($returnorder->code) ? $returnorder->code : ''}}" readonly>
-                {!! $errors->first('code', '<p class="help-block">:message</p>') !!}
-            </div>
-            <div class="form-group {{ $errors->has('supplier_id') ? 'has-error' : ''}} col-lg-6 ">
-                <label for="supplier_id" class="control-label">{{ 'รหัสเจ้าหนี้' }}</label>
-                <input class="form-control form-control-sm" name="supplier_id" type="number" id="supplier_id" value="{{ isset($returnorder->supplier_id) ? $returnorder->supplier_id : ''}}" >
-                {!! $errors->first('supplier_id', '<p class="help-block">:message</p>') !!}
-            </div>    
-            <div class="form-group {{ $errors->has('created_at') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="supplier_id" class="control-label">{{ 'วันที่เวลา' }}</label>
-                <input class="form-control form-control-sm" name="" type="" id="" value="{{ isset($returnorder->created_at) ? $returnorder->created_at : ''}}" readonly>
-                {!! $errors->first('created_at', '<p class="help-block">:message</p>') !!}
-            </div>
-        </div>
-        <div class="form-row">
-
-            <div class="form-group {{ $errors->has('purchase_receive_code') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="purchase_receive_code" class="control-label">{{ 'รหัสเอกสาร RC' }}</label>
-                <input class="form-control form-control-sm" name="purchase_receive_code" type="text" id="purchase_receive_code" value="{{ isset($returnorder->purchase_receive_code) ? $returnorder->purchase_receive_code : ''}}" >
-                {!! $errors->first('purchase_receive_code', '<p class="help-block">:message</p>') !!}
-            </div>
-            <div class="form-group {{ $errors->has('tax_type_id') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="tax_type_id" class="control-label">{{ 'ชนิดภาษี' }}</label>
-                <input class="form-control form-control-sm" name="tax_type_id" type="number" id="tax_type_id" value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type_id : ''}}" >
-                {!! $errors->first('tax_type_id', '<p class="help-block">:message</p>') !!}
-            </div>
+        <div class="text-center pr-5">
+            <div class="form-row form-group form-group ">
+                <label for="code" class="col-lg-3 control-label">{{ 'รหัสเอกสาร' }}</label>
+                <input class="col-lg-3 form-control form-control-sm" name="code" type="text" id="code" value="{{ isset($returnorder->code) ? $returnorder->code : ''}}" readonly>
+                <label for="supplier_id" class="col-lg-3 control-label">{{ 'รหัสเจ้าหนี้' }}</label>
+                <input class="col-lg-3 form-control form-control-sm" name="supplier_id" type="number" id="supplier_id" value="{{ isset($returnorder->supplier_id) ? $returnorder->supplier_id : ''}}" >
             
-            <div class="form-group {{ $errors->has('purchase_status_id') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="purchase_status_id" class="control-label">{{ 'สถานะ' }}</label>
-                <input class="form-control form-control-sm" name="purchase_status_id" type="number" id="purchase_status_id" value="{{ isset($returnorder->purchase_status_id) ? $returnorder->purchase_status_id : ''}}" >
-                {!! $errors->first('purchase_status_id', '<p class="help-block">:message</p>') !!}
             </div>
-
-            <div class="form-group {{ $errors->has('user_id') ? 'has-error' : ''}} col-lg-3 ">
-                <label for="user_id" class="control-label">{{ 'พนักงานผู้บันทึก' }}</label>
-                <input class="form-control form-control-sm" name="user_id" type="number" id="user_id" value="{{ isset($returnorder->user_id) ? $returnorder->user_id : ''}}" >        
-                {!! $errors->first('user_id', '<p class="help-block">:message</p>') !!}
+            <div class="form-row form-group form-group ">
+                <label for="supplier_id" class="col-lg-3 control-label">{{ 'วันที่เวลา' }}</label>
+                <input class="col-lg-3 form-control form-control-sm" name="" type="" id="" value="{{ isset($returnorder->created_at) ? $returnorder->created_at : ''}}" readonly>
+                <label for="purchase_receive_code" class="col-lg-3 control-label">{{ 'รหัสเอกสาร RC' }}</label>
+                <input class="col-lg-3 form-control form-control-sm" name="purchase_receive_code" type="text" id="purchase_receive_code" value="{{ isset($returnorder->purchase_receive_code) ? $returnorder->purchase_receive_code : ''}}" >
+                    
             </div>
+            <div class="form-row form-group">
 
-            
+                <label for="tax_type_id" class="col-lg-3 control-label">{{ 'ชนิดภาษี' }}</label>
+                <input class="col-lg-3 form-control form-control-sm" name="tax_type_id" type="number" id="tax_type_id" value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type_id : ''}}" >
+                <label for="purchase_status_id" class="col-lg-3 control-label">{{ 'สถานะ' }}</label>
+                <input class="col-lg-3 form-control form-control-sm" name="purchase_status_id" type="number" id="purchase_status_id" value="{{ isset($returnorder->purchase_status_id) ? $returnorder->purchase_status_id : ''}}" >
+                    
+            </div>
+            <div class="form-row form-group">
+                <label for="user_id" class="col-lg-3 control-label">{{ 'พนักงานผู้บันทึก' }}</label>
+                <input class="col-lg-3 form-control form-control-sm" name="user_id" type="number" id="user_id" value="{{ isset($returnorder->user_id) ? $returnorder->user_id : ''}}" >        
+                    
+                    
+            </div>
         </div>
     </div>
 </div>
@@ -100,7 +86,7 @@
 </div>
 <div class="card mb-4">
     <div class="card-body">
-        <div class="form-row">
+        <div class="form-row form-group">
             <div class="form-group {{ $errors->has('remark') ? 'has-error' : ''}} col-lg-6">
                 <label for="remark" class="control-label">{{ 'หมายเหตุ' }}</label>
                 <textarea class="form-control form-control-sm" rows="5" name="remark" type="textarea" id="remark" >{{ isset($returnorder->remark) ? $returnorder->remark : ''}}</textarea>
@@ -110,12 +96,12 @@
                 <input type="hidden"  name="temp_total" value="0"  />
             </div>
             <div class="col-lg-5">
-                <div class="form-group {{ $errors->has('total_before_vat') ? 'has-error' : ''}} form-row">
+                <div class="form-group {{ $errors->has('total_before_vat') ? 'has-error' : ''}} form-row form-group">
                     <label for="total_before_vat" class="control-label col-lg-6">{{ 'ยอดรวมก่อนภาษี' }}</label>
                     <input class="form-control form-control-sm col-lg-6" name="total_before_vat" type="number" id="total_before_vat" value="{{ isset($returnorder->total_before_vat) ? $returnorder->total_before_vat : ''}}" readonly>
                     {!! $errors->first('total_before_vat', '<p class="help-block">:message</p>') !!}
                 </div>
-                <div class="form-group {{ $errors->has('vat') ? 'has-error' : ''}} form-row">
+                <div class="form-group {{ $errors->has('vat') ? 'has-error' : ''}} form-row form-group">
                     <label for="vat" class="control-label col-lg-3">{{ 'ภาษีมูลค่าเพิ่ม' }}</label>
                     <input class="form-control form-control-sm col-lg-2" name="vat_percent" type="number" id="vat_percent" value="{{ isset($returnorder->vat_percent) ? $returnorder->vat_percent : ''}}" readonly>
                     <!-- {!! $errors->first('vat', '<p class="help-block">:message</p>') !!} -->
@@ -123,7 +109,7 @@
                     <input class="form-control form-control-sm col-lg-6" name="vat" type="number" id="vat" value="{{ isset($returnorder->vat) ? $returnorder->vat : ''}}" readonly >
                     <!-- {!! $errors->first('vat_percent', '<p class="help-block">:message</p>') !!} -->
                 </div>
-                <div class="form-group {{ $errors->has('total_after_vat') ? 'has-error' : ''}} form-row" >
+                <div class="form-group {{ $errors->has('total_after_vat') ? 'has-error' : ''}} form-row form-group" >
                     <label for="total_after_vat" class="control-label col-lg-6">{{ 'ยอดรวมหลังภาษี' }}</label>
                     <input class="form-control form-control-sm col-lg-6" name="total_after_vat" type="number" id="total_after_vat" value="{{ isset($returnorder->total_after_vat) ? $returnorder->total_after_vat : ''}}" readonly>
                     <!-- {!! $errors->first('total_after_vat', '<p class="help-block">:message</p>') !!} -->
