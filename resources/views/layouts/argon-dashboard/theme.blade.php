@@ -71,6 +71,10 @@
             background-color: #e9ecef;
             border: 1px solid #cad1d7;
         }
+        button, a.btn{
+          position:static !important; 
+          will-change:unset !important;
+        }
     </style>
   @yield('head')
   <script>

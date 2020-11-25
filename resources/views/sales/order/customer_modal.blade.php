@@ -87,6 +87,8 @@
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,
+							paging : false,
+							info : false,
 							deferRender : true,
 							columns: [
 									{ title: "รหัส" },
@@ -95,6 +97,21 @@
 									{ title: "#" },
 							]
 						});
+						//DATA TABLE SCROLL
+						var tableCont = document.querySelector('#table-customer-modal');			
+						tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+						tableCont.parentNode.style.overflow = 'auto';
+						tableCont.parentNode.style.maxHeight = '400px';
+						tableCont.parentNode.addEventListener('scroll',function (e){
+							var scrollTop = this.scrollTop;
+							this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 1000 + 'px)';
+							this.querySelector('thead').style.background = "white";
+							this.querySelector('thead').style.zIndex = "3000";
+							//this.querySelector('thead').style.marginBottom = "200px";
+							console.log(scrollTop);
+						})
+						//tableCont.parentNode.dispatchEvent(new Event('scroll'));
+						//END DATA TABLE SCROLL
             $('#table-customer-modal').DataTable().search($("#customer_code").text()).draw();
 
             /*if()*/

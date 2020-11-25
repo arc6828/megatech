@@ -1,5 +1,11 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('inventory'))
+@section('level-0','คงคลัง')
+
+@section('title','เบิกของไปผลิต')
+@section('background-tag','bg-yellow')
+
 @section('title','Issuestock')
 
 @section('content')

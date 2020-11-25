@@ -49,6 +49,9 @@
 					//console.log(dataSet);
 					var table = $('#table-product-model').DataTable({
 						"data": dataSet,
+						paging : false,
+						info : false,
+						
 						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
@@ -61,6 +64,22 @@
 						],
 						"order": [[ 3, "desc" ]],
 					}); // END DATATABLE
+					//DATA TABLE SCROLL
+					var tableCont = document.querySelector('#table-product-model');			
+					tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+					tableCont.parentNode.style.overflow = 'auto';
+					tableCont.parentNode.style.maxHeight = '400px';
+					tableCont.parentNode.addEventListener('scroll',function (e){
+						var scrollTop = this.scrollTop;
+						this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+						this.querySelector('thead').style.background = "white";
+						this.querySelector('thead').style.zIndex = "3000";
+						this.querySelector('thead').style.marginBottom = "100px";
+						console.log(scrollTop);
+					})
+					//END DATA TABLE SCROLL
+
+
           table.on( 'search.dt', function () {
             var search_key = table.search();
             if(search_key != $('#search_key').val()){
