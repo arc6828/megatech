@@ -75,7 +75,11 @@
             </a>
             @endif
             @if($row->sales_status_id != -1)
-              @if($row->sales_status_id != 0)              
+              @if($row->sales_status_id != 0)   
+              btn-change-status
+              <button class="px-2 btn btn-sm btn-warning" type="button" onclick="document.querySelector('#btn-change-status').click();">              
+                <i class="fas fa-refresh"></i> เปลี่ยนสถานะ
+              </button>
               <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf" target="_blank">              
                 <i class="fas fa-print"></i> พิมพ์
               </a>
@@ -210,7 +214,11 @@
           </option>
           @endforeach
         </select>
+        @if($mode=="edit")
         <input name="reason" id="reason" class="d-none" value="">
+        @elseif($mode=="show")
+        <input name="reason" id="reason" value="{{ $row->reason }}">
+        @endif
       </div>
       
       

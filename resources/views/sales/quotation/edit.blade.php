@@ -21,7 +21,7 @@
   
 
 	@forelse($table_quotation as $row)
-    
+    @include('sales/quotation/change_status_modal')
 
     <form class="d-none"  action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/duplicate" method="POST" id="form-duplicate" onsubmit="return confirm('Do you confirm to duplicate?')" >
       {{ csrf_field() }}

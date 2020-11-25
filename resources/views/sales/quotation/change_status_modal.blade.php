@@ -1,11 +1,11 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#statusModal">
+<button type="button" class="btn btn-success btn-sm d-none" id="btn-change-status" data-toggle="modal" data-target="#statusModal">
 	<i class="fa fa-refresh"></i> เปลี่ยนสถานะ
 </button>
 
 <!-- Modal -->
 <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document" style="max-width:1500px;">
+	<div class="modal-dialog " role="document" >
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">เปลี่ยนแปลงสถานะ</h5>
@@ -14,7 +14,36 @@
 				</button>
 			</div>
 			<div class="modal-body">
-        		
+				<form class=""  action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/status" method="POST" id="form-duplicate" onsubmit="return confirm('Do you confirm to change status?')" >
+					{{ csrf_field() }}
+					{{ method_field('PATCH') }}
+					
+					<div class="form-group ">
+						<lable>สถานะ</label>
+						<select name="sales_status_id" id="sales_status_id2" class="form-control form-control-sm" required  >
+
+							@foreach($table_sales_status as $row_sales_status)
+							<option value="{{ $row_sales_status->sales_status_id }}"
+									{{ $row_sales_status->sales_status_id == "5" ? "disabled" : "" }} >
+								{{	$row_sales_status->sales_status_name }}
+							</option>
+							@endforeach
+						</select>
+						@if($mode == "edit")
+						<script>
+							document.querySelector("#sales_status_id2").value = "{{ $row->sales_status_id }}"
+						</script>
+						@endif
+					</div>
+					
+					<div class="form-group ">
+						<lable>เหตุผล</label>
+						<input name="reason" class="form-control form-control-sm" id="reason2" value="" required>
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-sm btn-success" id="btn-change-status-submit">เปลี่นแปลงสถานะ</button>
+					</div>
+				</form>
 			</div>
 			<div class="modal-footer d-none">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-close">Close</button>

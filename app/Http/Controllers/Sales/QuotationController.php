@@ -198,6 +198,20 @@ class QuotationController extends Controller
       return redirect("sales/quotation/{$new_quotaion->quotation_id}")->with('flash_message', 'popup');
     }
 
+    public function change_status(Request $request,$id)
+    {
+      // echo "hello";
+      // exit();
+      //Query
+      $quotaion = QuotationModel::findOrFail($id);
+      $quotaion->sales_status_id = $request->input("sales_status_id");
+      $quotaion->reason = $request->input("reason");      
+      $quotaion->save();
+
+      
+      return redirect("sales/quotation/{$quotaion->quotation_id}")->with('flash_message', 'popup');
+    }
+
     /**
      * Display the specified resource.
      *
