@@ -76,7 +76,7 @@
             @endif
             @if($row->sales_status_id != -1)
               @if($row->sales_status_id != 0)   
-              btn-change-status
+              
               <button class="px-2 btn btn-sm btn-warning" type="button" onclick="document.querySelector('#btn-change-status').click();">              
                 <i class="fas fa-refresh"></i> เปลี่ยนสถานะ
               </button>
