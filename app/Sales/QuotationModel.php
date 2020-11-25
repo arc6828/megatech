@@ -62,10 +62,12 @@ class QuotationModel extends Model
 	public static function select_by_id($id){
     return DB::table('tb_quotation')
       ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
+      ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+        
       ->join('users', 'users.id', '=', 'tb_quotation.user_id')
       ->where('tb_quotation.quotation_id', '=' , $id )
       ->orWhere('tb_quotation.quotation_code', '=' , $id )
-			->select( DB::raw('users.*,tb_customer.*, tb_quotation.*'))
+			->select( DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
       ->get();
 	}
 

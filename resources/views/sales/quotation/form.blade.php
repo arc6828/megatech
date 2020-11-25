@@ -205,7 +205,29 @@
 
       <label class="col-lg-2  offset-lg-1">สถานะ</label>
       <div class="col-lg-3">
-        <select name="sales_status_id" id="sales_status_id" class="form-control form-control-sm" required onchange="document.querySelector('#sales_status_id').value > 1 ? $('#reason').removeClass('d-none') : $('#reason').addClass('d-none') " >
+        @if(isset($mode))
+          @if( $row->sales_status_id == 1  )
+            <a  href="#"
+              href2="{{ url('/') }}/sales/order/create?quotation_code={{ $row->quotation_code }}"
+              title="{{ $row->sales_status_name }}"
+              class="btn btn-primary btn-sm d-none"
+              >
+              รอเปิด Order
+            </a>
+            <span class="badge badge-pill badge-primary">{{ $row->sales_status_name }}</span>
+          @elseif( $row->sales_status_id == 4    )
+            <span class="badge badge-pill badge-danger">{{ $row->sales_status_name }}</span>							
+          @elseif( $row->sales_status_id == 5    )
+            <span class="badge badge-pill badge-success">{{ $row->sales_status_name }}</span>
+          @elseif( $row->sales_status_id == -1    )
+            <span class="badge badge-pill badge-secondary">{{ $row->sales_status_name }}</span>
+            
+          @else
+            <span class="badge badge-pill badge-warning">{{ $row->sales_status_name }}</span>
+            
+          @endif
+        @endif
+        <select name="sales_status_id" id="sales_status_id" class="d-none form-control form-control-sm" required onchange="document.querySelector('#sales_status_id').value > 1 ? $('#reason').removeClass('d-none') : $('#reason').addClass('d-none') " >
 
           @foreach($table_sales_status as $row_sales_status)
           <option value="{{ $row_sales_status->sales_status_id }}"
@@ -214,10 +236,12 @@
           </option>
           @endforeach
         </select>
-        @if($mode=="edit")
-        <input name="reason" id="reason" class="d-none" value="">
-        @elseif($mode=="show")
-        <input name="reason" id="reason" value="{{ $row->reason }}">
+        @if(isset($mode))
+          @if($mode=="edit")
+          <input name="reason" id="reason" class="d-none" value="">
+          @elseif($mode=="show")
+          <input name="reason" id="reason" value="{{ $row->reason }}">
+          @endif
         @endif
       </div>
       
