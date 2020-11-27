@@ -4,23 +4,23 @@
 @section('level-0','คงคลัง')
 
 @section('title','เบิกของไปผลิต')
-@section('background-tag','bg-yellow')
+@section('background-tag','bg-yellow ')
 
 @section('title','Issuestock')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Issuestock</div>
+                    <!-- <div class="card-header">Issuestock</div> -->
                     <div class="card-body">
-                        <a href="{{ url('/issue-stock/create') }}" class="btn btn-success btn-sm" title="Add New IssueStock">
+                        <!-- <a href="{{ url('/issue-stock/create') }}" class="btn btn-success btn-sm" title="Add New IssueStock">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
+                        </a> -->
 
-                        <form method="GET" action="{{ url('/issue-stock') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
+                        <!-- <form method="GET" action="{{ url('/issue-stock') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                                 <span class="input-group-append">
@@ -32,7 +32,7 @@
                         </form>
 
                         <br/>
-                        <br/>
+                        <br/> -->
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -60,6 +60,12 @@
                                 </tbody>
                             </table>
                             <div class="pagination-wrapper"> {!! $issuestock->appends(['search' => Request::get('search')])->render() !!} </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="{{ url('/issue-stock/create') }}" class="btn btn-success" title="Add New IssueStock">
+                                <i class="fa fa-plus" aria-hidden="true"></i> เบิกของไปผลิต
+                            </a>
                         </div>
 
                     </div>

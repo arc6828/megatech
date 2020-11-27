@@ -1,22 +1,22 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
+<!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
 	<i class="fa fa-plus"></i> เพิ่มรายการสินค้า
-</button>
+</button> -->
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="productFinalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document" >
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการสินค้า</h5>
-				<button type="button" class="close" id="btn-close-product" data-dismiss="modal" aria-label="Close">
+				<h5 class="modal-title" >เลือกรายการสินค้าสำเร็จรูป</h5>
+				<button type="button" class="close" id="btn-close-product-final" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
         		<input hidden id="search_key" value="">
 				<div class="table-responsive" id="table-container" >
-					<table class="table table-hover text-center table-sm" id="table-product-model" style="width:100%; margin-top:-1px !important"  ></table>
+					<table class="table table-hover text-center table-sm" id="table-product-final-model" style="width:100%; margin-top:-1px !important"  ></table>
 				</div>
 			</div>
 			<div class="modal-footer d-none">
@@ -30,14 +30,14 @@
 	document.addEventListener("DOMContentLoaded", function(event) {
 
 		
-		$('#exampleModal').on('shown.bs.modal', function (e) {
-			showProduct();
+		$('#productFinalModal').on('shown.bs.modal', function (e) {
+			showProductFinal();
 		}); // END MODAL EVENT
 
 	}); //END ADD EVENT LISTENER
 
-	function showProduct(){
-		if(  ! $.fn.DataTable.isDataTable('#table-product-model') ){
+	function showProductFinal(){
+		if(  ! $.fn.DataTable.isDataTable('#table-product-final-model') ){
 			//setPreLoader(true);
 
 			//FETCHING
@@ -45,8 +45,8 @@
 				.then(response => response.json())
 				.then(result => {
 					console.log(result)
-					var table = $('#table-product-model').DataTable({
-						"data": prepareDataSet(result),
+					var table = $('#table-product-final-model').DataTable({
+						"data": prepareDataSetFinal(result),
 						"deferRender" : true,
 						"columns": [
 							{ title: "รหัสสินค้า" },
@@ -70,7 +70,7 @@
 					table.columns.adjust().draw();
 
 					//DATA TABLE SCROLL
-					var tableCont = document.querySelector('#table-product-model');
+					var tableCont = document.querySelector('#table-product-final-model');
 					tableCont.parentNode.style.overflow = 'auto';
 					tableCont.parentNode.style.height = '500px';
 					tableCont.parentNode.addEventListener('scroll',function (e){
@@ -95,7 +95,7 @@
 								.then(result1 => {
 									// console.log(result1)
 									$('#search_key').val(search_key);
-									var new_data = prepareDataSet(result1);
+									var new_data = prepareDataSetFinal(result1);
 									table.clear();
 									table.rows.add(new_data); // Add new data
 									table.columns.adjust().draw(); // Redraw the DataTable
@@ -110,7 +110,7 @@
 		}
 	}
 
-	function prepareDataSet(result){
+	function prepareDataSetFinal(result){
 		var dataSet = [];
 		result.forEach(function(element,index) {
 		//console.log(element,index);
@@ -126,7 +126,7 @@
 			// element.pending_in,
 			// element.pending_out,
 			// element.amount_in_stock - element.pending_out,
-			"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProduct(this);' style='position:static; will-change:unset;'>" +
+			"<button type='button' json='"+JSON.stringify(element)+"' class='btn btn-success btn-create btn-sm' onclick='addProductFinal(this);' style='position:static; will-change:unset;'>" +
 			"<span class='fa fa-plus'></span>" +
 			"</button>",
 		];
@@ -136,17 +136,20 @@
 		return dataSet;
 	}
 
-	function addProduct(obj){
+	function addProductFinal(obj){
 		var product = JSON.parse(obj.getAttribute("json"));
 		product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
-		product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
+		// product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
 		//console.log("CLICK PRODUCT : ", product);
 
-		var table = $('#table').DataTable();
-		var row = createRow(product);
-		table.row.add(row).draw( false );
+		// var table = $('#table').DataTable();
+		// var row = createRow(product);
+		// table.row.add(row).draw( false );
 		//refreshDetailTableEvent();
-		document.querySelector("#btn-close-product").click();
+		document.querySelector("#btn-close-product-final").click();
 		//console.log("CLICK");
+		document.querySelector("#product_name").value = product.product_name;
+		document.querySelector("#product_code").innerHTML = product.product_code;
+		document.querySelector("#product_id").value = product.product_id;
 	}
 </script>

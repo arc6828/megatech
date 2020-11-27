@@ -1,9 +1,17 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','Create New IssueStock')
+@section('level-0-url', url('inventory'))
+@section('level-0','คงคลัง')
+
+@section('level-1-url', url('purchase/return-order'))
+@section('level-1','เบิกของไปผลิต')
+
+@section('title', 'สร้าง')
+
+@section('background-tag','bg-yellow')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
 
             <div class="col-md-12">

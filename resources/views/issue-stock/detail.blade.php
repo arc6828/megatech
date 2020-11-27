@@ -5,11 +5,11 @@
     }
 </style>
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table table-sm text-center" id="table">
         <thead>
             <tr>
-                <th>รหัสสินค้า</th><th>สินค้า</th><th>จำนวน</th><th>ราคาที่ซื้อ</th><th>รวม</th><th class="d-none">Return Order Id</th>
-                <!-- <th>Actions</th> -->
+                <th>รหัสสินค้า</th><th>สินค้า</th><th>จำนวน</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,35 +19,34 @@
         @endphp
         @foreach($issuestock as $item)
             <tr>
-                <td><input type="hidden" class="input product_ids" name="product_ids[]" value="{{ $item->product_id }}" /> {{ $item->product->product_code }}</td>
-                <td>{{ $item->product->product_name }}</td>
-                @if(isset($mode))
-                <td><input type="number" class="input amounts" name="amounts[]" value="{{ $item->amount }}" min="0" max="{{ $item->amount }}" title="[0,{{ $item->amount }}]" style="max-width:60px;" /> / {{ $item->amount }}</td>
-                <td><input type="hidden" class="input discount_prices" name="discount_prices[]" value="{{ $item->discount_price }}" /> {{ number_format($item->discount_price,2) }}</td>
-                <td><input type="number" class="input totals" name="totals[]" value="{{ $item->amount *  $item->discount_price}}" style="max-width:100px;" readonly /></td>
-                @else
-                <td><input type="number" class="input amounts" name="amounts[]" value="0" min="0" max="{{ $item->amount }}" title="[0,{{ $item->amount }}]" style="max-width:60px;" /> / {{ $item->amount }}</td>
-                <td><input type="hidden" class="input discount_prices" name="discount_prices[]" value="{{ $item->discount_price }}" /> {{ number_format($item->discount_price,2) }}</td>
-                <td><input type="number" class="input totals" name="totals[]" value="0" style="max-width:100px;" readonly /></td>
-
-                @endif
-                <td class="d-none">{{ $item->return_order_id }}</td>
-                <!-- <td>
-                    <a href="{{ url('/purchase/return-order-detail/' . $item->id) }}" title="View ReturnOrderDetail"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                    <a href="{{ url('/purchase/return-order-detail/' . $item->id . '/edit') }}" title="Edit ReturnOrderDetail"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
-
-                    <form method="POST" action="{{ url('/purchase/return-order-detail' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                        {{ method_field('DELETE') }}
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger btn-sm" title="Delete ReturnOrderDetail" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                    </form>
-                </td> -->
+                <td>
+                    <input type="hidden" class="input product_ids" name="product_ids[]" value="{{ $item->product_id }}" /> 
+                    {{ $item->product->product_code }}
+                </td>
+                <td>
+                    {{ $item->product->product_name }}
+                </td>
+                <td>
+                    <input type="number" class="input amounts" name="amounts[]" value="{{ $item->amount }}" min="0" max="{{ $item->amount }}" title="[0,{{ $item->amount }}]" style="max-width:60px;" /> 
+                </td>                
+                <td> </td>
             </tr>
         @endforeach
         </tbody>
     </table>    
 </div>
 <script>
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    var table = $('#table').DataTable({          
+        ordering: false,                  
+        paging: false,
+        info: false,          
+        searching: false,                
+    }); //END DataTable
+});
+
+
 //ON CHANGE + ON KEYUP
 function calculateNumber(){
     document.querySelectorAll(".input").forEach(function(element,index){
@@ -82,4 +81,16 @@ function onChangeDetail(){
     onChange();
 }
 
+function createRow(element){    
+    return [        
+        "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
+            "<input type='hidden' class='id_edit' name='id_edit[]'  value='' >" + 
+            element.product_code,        
+        element.product_name,       
+        "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+        "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+            "<span class='fa fa-trash'></span>" +
+        "</a> ",
+    ];
+}
 </script>
