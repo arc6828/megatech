@@ -129,7 +129,7 @@ class ReceiveFinalController extends Controller
             $product = ProductModel::findOrFail($item['product_id']);
             $gaurd_stock = GaurdStock::create([
                 "code" => $receivefinal->code,
-                "type" => "issue_stock",
+                "type" => "receive_final",
                 "amount" => $item['amount'],
                 "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
                 "pending_in" => $product->pending_in,
