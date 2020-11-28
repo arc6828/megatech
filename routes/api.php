@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
    return $request->user();
 });
+
 //QUOTATION
 Route::get('/quotation_detail/user/{user_id}', 'API\QuotationDetailController@index_by_user');
 
@@ -68,3 +69,6 @@ Route::get('/user', 'UserController@getUser');
 //Route::get('/api/order_detail', 'Sales\OrderDetailController@getOrderDetails');
 //Route::get('/purchase_requisition_detail', 'Purchase\PurchaseRequisitionController@getPurchaseRequisitionDetails');
 Route::get('/bank_detail', 'BankDetailController@index');
+
+
+Route::apiResource('issue-stock', 'API\IssueStockController');

@@ -38,4 +38,8 @@ class IssueStock extends Model
     public function product(){
         return $this->belongsTo('App\ProductModel','product_id');
     }
+
+    public function receive_final(){
+        return $this->hasOne('App\ReceiveFinal','is_code','code');
+    }
 }

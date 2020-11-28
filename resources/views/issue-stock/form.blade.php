@@ -39,6 +39,22 @@
         
             <label for="status_id" class="col-lg-3 control-label">{{ 'สถานะ' }}</label>
             <input class="col-lg-3 form-control form-control-sm" name="status_id" type="hidden" id="status_id" value="{{ isset($issuestock->status_id) ? $issuestock->status_id : ''}}" >
+
+            <div class="col-lg-3" >
+            @if(isset($issuestock->status_id))
+                @switch($issuestock->status_id)
+                    @case("-1")
+                        <span class="badge badge-pill badge-secondary">Void</span>
+                        @break
+                    @case("1")
+                        <span class="badge badge-pill badge-warning">เบิกไปผลิต</span>								
+                        @break                                                
+                    @case("2")
+                        <span class="badge badge-pill badge-success">รันสินค้าสำเร็จรูปแล้ว</span>								
+                        @break
+                @endswitch
+            @endif
+            </div>
         </div>
         <div class="form-row form-group {{ $errors->has('user_id') ? 'has-error' : ''}}">
             

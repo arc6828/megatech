@@ -30,4 +30,18 @@ class ReceiveFinal extends Model
     public function user(){
         return $this->belongsTo('App\User','user_id','id');
     }
+
+    public function details(){
+        return $this->hasMany('App\ReceiveFinalDetail','receive_final_id','id');
+    }
+
+    // public function is(){
+    //     return $this->belongsTo('App\IssueStock','is_code','code');
+    // }    
+
+    public function issue_stock(){
+        return $this->belongsTo('App\IssueStock','is_code','code');
+    }
+
+
 }

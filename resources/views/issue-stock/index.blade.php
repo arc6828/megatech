@@ -6,7 +6,6 @@
 @section('title','เบิกของไปผลิต')
 @section('background-tag','bg-yellow ')
 
-@section('title','Issuestock')
 
 @section('content')
     <div class="container-fluid">
@@ -34,7 +33,7 @@
                         <br/>
                         <br/> -->
                         <div class="table-responsive">
-                            <table class="table table-sm table-hover text-center table-bordered table-striped">
+                            <table class="table table-sm table-hover text-center table-bordered table-striped" id="table">
                                 <thead>
                                     <tr>
                                         <!-- <th>#</th> -->
@@ -43,6 +42,7 @@
                                         <th>สินค้าสำเร็จรูป</th>
                                         <th>จำนวน</th>
                                         <th>พนักงานผู้บันทึก</th>
+                                        <th>รหัสรับสินค้า</th>
                                         <th>สถานะ</th>
                                         <!-- <th>Remark</th><th>Total</th><th>Revision</th> -->
                                         <!-- <th>Actions</th> -->
@@ -62,12 +62,22 @@
                                         <td>{{ $item->amount }}</td>
                                         <td>{{ $item->user->short_name }}</td>
                                         <td>
+                                             @switch($item->status_id)                                                                                          
+                                                @case("2")
+                                                    {{ $item->receive_final->code }}							
+                                                    @break
+                                            @endswitch
+                                        </td>
+                                        <td>
                                             @switch($item->status_id)
                                                 @case("-1")
                                                     <span class="badge badge-pill badge-secondary">Void</span>
                                                     @break
-                                                @default
-                                                    <span class="badge badge-pill badge-success">Normal</span>								
+                                                @case("1")
+                                                    <span class="badge badge-pill badge-warning">เบิกไปผลิต</span>								
+                                                    @break                                                
+                                                @case("2")
+                                                    <span class="badge badge-pill badge-success">รันสินค้าสำเร็จรูปแล้ว</span>								
                                                     @break
                                             @endswitch
                                         </td>
@@ -86,7 +96,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $issuestock->appends(['search' => Request::get('search')])->render() !!} </div>
+                            
                         </div>
 
                         <div class="text-center mt-4">
@@ -100,4 +110,14 @@
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var table = $('#table').DataTable({          
+            ordering: false,                  
+            paging: false,
+            info: false,          
+            // searching: false,                
+        }); //END DataTable
+    });
+    </script>
 @endsection
