@@ -1,18 +1,30 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('inventory'))
+@section('level-0','คงคลัง')
+
+@section('level-1-url', url('product'))
+@section('level-1','แฟ้มหลักสินค้า')
+
+
+@section('level-2-url', url('product/'.$product->product_id.'/edit' ))
+@section('level-2', $product->product_code)
+
+@section('title','Gaurd Stock')
+
 @section('content')
     <div class="container">
         <div class="row  justify-content-center">
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Gaurdstock</div>
+                    <!-- <div class="card-header">Gaurdstock</div> -->
                     <div class="card-body">
-                        <a href="{{ url('/gaurd-stock/create') }}" class="btn btn-success btn-sm d-none" title="Add New GaurdStock">
+                        <!-- <a href="{{ url('/gaurd-stock/create') }}" class="btn btn-success btn-sm d-none" title="Add New GaurdStock">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                        </a>
+                        </a> -->
 
-                        <form method="GET" action="{{ url('/gaurd-stock') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
+                        <!-- <form method="GET" action="{{ url('/gaurd-stock') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                                 <span class="input-group-append">
@@ -21,12 +33,12 @@
                                     </button>
                                 </span>
                             </div>
-                        </form>
+                        </form> -->
 
-                        <br/>
-                        <br/>
+                        <!-- <br/>
+                        <br/> -->
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-sm table-hover text-center table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -113,6 +125,21 @@
                                                     @endphp  
                                                     {{ $item->code }}         
                                                     @break
+                                                @case("issue_stock")
+                                                @case("issue_stock_cancel")                                                        
+                                                    @php 
+                                                        $positive = $item->type == "issue_stock" ? false : true;
+                                                    @endphp  
+                                                    {{ $item->code }}
+                                                    @break
+                                                    @case("issue_stock")
+                                                @case("receive_final")   
+                                                @case("receive_final_cancel")                                                       
+                                                    @php 
+                                                        $positive = $item->type == "receive_final" ? true : false;
+                                                    @endphp  
+                                                    {{ $item->code }}
+                                                    @break
                                             @endswitch
                                         </td>
                                         @if( $positive )
@@ -140,7 +167,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $gaurdstock->appends(['search' => Request::get('search')])->render() !!} </div>
+                            
                         </div>
 
                     </div>

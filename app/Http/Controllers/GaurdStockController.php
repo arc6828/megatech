@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\GaurdStock;
+use App\ProductModel;
 use Illuminate\Http\Request;
 
 class GaurdStockController extends Controller
@@ -17,37 +18,50 @@ class GaurdStockController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('product_id');
-        $hidden = $request->get('hidden');
-        $perPage = 25;
+        $product_id = $request->get('product_id');
+        // $hidden = $request->get('hidden');
+        // $perPage = 25;
 
-        if (!empty($keyword)) {
-            if(empty($hidden)){
-                $whitelist = [
-                    'sales_invoice',
-                    'purchase_receive',
-                    'sales_dt_create',
-                    'sales_dt_cancel',
-                    'sales_dt_void',
-                    'sales_return_invoice',
-                    'sales_return_invoice_cancel',
-                    'purchase_return_order',
-                    'purchase_return_order_cancel',
-                ];
-                $gaurdstock = GaurdStock::where('product_id',  $keyword)                
-                ->whereIn('type', $whitelist) //"type" => "",
-                ->latest()->paginate($perPage);
-            }else{
-                $gaurdstock = GaurdStock::where('product_id',  $keyword)
-                //->whereIn('type',['sales_invocie','purchase_receive'])
-                ->latest()->paginate($perPage);
-            }
+        // if (!empty($keyword)) {
+        //     if(empty($hidden)){
+        //         $whitelist = [
+        //             'sales_invoice',
+        //             'purchase_receive',
+        //             'sales_dt_create', 'sales_dt_cancel', 'sales_dt_void',
+        //             'sales_return_invoice', 'sales_return_invoice_cancel',
+        //             'purchase_return_order', 'purchase_return_order_cancel',
+        //             'issue_stock', 'issue_stock_cancel',
+        //             'receive_final', 'receive_final_cancel',
+        //         ];
+        //         $gaurdstock = GaurdStock::where('product_id',  $keyword)                
+        //         ->whereIn('type', $whitelist) //"type" => "",
+        //         ->latest()->paginate($perPage);
+        //     }else{
+        //         $gaurdstock = GaurdStock::where('product_id',  $keyword)
+        //         //->whereIn('type',['sales_invocie','purchase_receive'])
+        //         ->latest()->paginate($perPage);
+        //     }
             
-        } else {
-            $gaurdstock = GaurdStock::latest()->paginate($perPage);
-        }
+        // } else {
+        //     $gaurdstock = GaurdStock::latest()->paginate($perPage);
+        // }
 
-        return view('gaurd-stock.index', compact('gaurdstock'));
+        $product = ProductModel::where('product_id',$product_id)->firstOrFail();
+        $whitelist = [
+            'sales_invoice',
+            'purchase_receive',
+            'sales_dt_create', 'sales_dt_cancel', 'sales_dt_void',
+            'sales_return_invoice', 'sales_return_invoice_cancel',
+            'purchase_return_order', 'purchase_return_order_cancel',
+            'issue_stock', 'issue_stock_cancel',
+            'receive_final', 'receive_final_cancel',
+        ];
+        $gaurdstock = GaurdStock::where('product_id',  $product_id)                
+            ->whereIn('type', $whitelist) //"type" => "",
+            ->latest()->get();
+        $mode = "gaurd-stock";
+
+        return view('gaurd-stock.index', compact('gaurdstock','mode','product'));
     }
 
     /**

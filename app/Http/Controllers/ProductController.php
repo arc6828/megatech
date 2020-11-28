@@ -56,7 +56,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $brands = Brand::all();
+        $table_product = ProductModel::findOrFail($id);
+        $product = ProductModel::findOrFail($id);
+        $mode = "show";
+        return view('product/edit', compact('table_product','brands','product','mode'));
     }
 
     /**
@@ -69,7 +73,9 @@ class ProductController extends Controller
     {
         $brands = Brand::all();
         $table_product = ProductModel::findOrFail($id);
-        return view('product/edit', compact('table_product','brands'));
+        $product = ProductModel::findOrFail($id);
+        $mode = "edit";
+        return view('product/edit', compact('table_product','brands','product','mode'));
     }
 
     /**

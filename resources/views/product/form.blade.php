@@ -1,8 +1,4 @@
-@if(isset($table_product))
-<div class="form-group text-right">
-  <a href="{{ url('/') }}/gaurd-stock?product_id={{ $table_product->product_id }}" target="_blank">ดู Gaurd Stock ของสินค้า</a>
-</div>
-@endif
+
 <div class="form-group ">
   <div class="form-row ">
       
@@ -130,7 +126,33 @@
 </div>
 
 
-
+<!-- 
 <div class="form-group">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-</div>
+</div> -->
+
+
+<!-- START DISABLE WHEN SHOW -->
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <div class="form-group text-center mt-2">
+        <input class="btn btn-success" id="form-submit" type="submit" value="Save">
+    </div>
+    @elseif( $mode == "show" )
+    <script>
+      setTimeout(function(){ 
+          let elements = document.querySelectorAll("input, button.btn-success, select");
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.setAttribute("disabled","");
+          };
+
+        }, 500);
+        
+    </script>
+    @endif
+@else 
+    <div class="form-group text-center mt-2">
+        <input class="btn btn-success" id="form-submit" type="submit" value="Save">
+    </div> 
+@endif

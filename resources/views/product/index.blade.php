@@ -1,5 +1,8 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('inventory'))
+@section('level-0','คงคลัง')
+
 @section('title','แฟ้มสินค้า')
 
 
