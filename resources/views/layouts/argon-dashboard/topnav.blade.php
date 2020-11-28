@@ -19,7 +19,7 @@
       </li>
       @endif
       <li class="breadcrumb-item">
-        <a class="text-white text-uppercase" href="#">@yield('title')</a>
+        <a class="text-dark text-uppercase" href="#">@yield('title')</a>
       </li>
     </ol>
     

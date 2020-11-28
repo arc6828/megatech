@@ -27,5 +27,7 @@ class ReceiveFinal extends Model
      */
     protected $fillable = ['code', 'is_code', 'status_id', 'user_id', 'remark', 'total', 'revision'];
 
-    
+    public function user(){
+        return $this->belongsTo('App\User','user_id','id');
+    }
 }

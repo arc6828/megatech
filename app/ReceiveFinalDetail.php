@@ -27,5 +27,7 @@ class ReceiveFinalDetail extends Model
      */
     protected $fillable = ['product_id', 'amount', 'discount_price', 'total', 'receive_final_id'];
 
-    
+    public function product(){
+        return $this->belongsTo('App\ProductModel','product_id');
+    }
 }

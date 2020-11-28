@@ -27,5 +27,7 @@ class AdjustStock extends Model
      */
     protected $fillable = ['code', 'reference', 'adjust_type', 'status_id', 'user_id', 'adjust_definition_id', 'remark', 'total', 'revision'];
 
-    
+    public function user(){
+        return $this->belongsTo('App\User','user_id','id');
+    }
 }

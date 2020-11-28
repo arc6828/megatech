@@ -14,10 +14,10 @@
         </thead>
         <tbody>
         @php 
-            $issuestock = isset($issuestock)? $issuestock : [];
+            $issuestockdetail = isset($issuestockdetail)? $issuestockdetail : [];
                     
         @endphp
-        @foreach($issuestock as $item)
+        @foreach($issuestockdetail as $item)
             <tr>
                 <td>
                     <input type="hidden" class="input product_ids" name="product_ids[]" value="{{ $item->product_id }}" /> 
@@ -83,11 +83,11 @@ function onChangeDetail(){
 
 function createRow(element){    
     return [        
-        "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >" +
-            "<input type='hidden' class='id_edit' name='id_edit[]'  value='' >" + 
+        "<input type='hidden' class='product_ids' name='product_ids[]'  value='"+element.product_id+"' >" +
+            "<input type='hidden' class='ids' name='ids[]'  value='' >" + 
             element.product_code,        
         element.product_name,       
-        "<input type='number' class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' >",
+        "<input type='number' class='input amounts' name='amounts[]'  value='"+element.amount+"' >",
         "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
             "<span class='fa fa-trash'></span>" +
         "</a> ",

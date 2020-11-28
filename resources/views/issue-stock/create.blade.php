@@ -3,7 +3,7 @@
 @section('level-0-url', url('inventory'))
 @section('level-0','คงคลัง')
 
-@section('level-1-url', url('purchase/return-order'))
+@section('level-1-url', url('issue-stock'))
 @section('level-1','เบิกของไปผลิต')
 
 @section('title', 'สร้าง')

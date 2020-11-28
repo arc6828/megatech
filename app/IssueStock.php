@@ -27,5 +27,15 @@ class IssueStock extends Model
      */
     protected $fillable = ['code', 'product_id', 'amount', 'status_id', 'user_id', 'remark', 'total', 'revision'];
 
-    
+    public function user(){
+        return $this->belongsTo('App\User','user_id','id');
+    }
+
+    public function details(){
+        return $this->hasMany('App\IssueStockDetail','issue_stock_id','id');
+    }
+
+    public function product(){
+        return $this->belongsTo('App\ProductModel','product_id');
+    }
 }

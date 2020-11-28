@@ -16,8 +16,6 @@
 
 @section('background-tag','bg-success')
 
-@section('title','Edit ReturnOrder #'.$returnorder->id)
-
 @section('content')
     <div class="container">
         <div class="row">

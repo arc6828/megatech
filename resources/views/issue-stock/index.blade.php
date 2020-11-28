@@ -34,18 +34,45 @@
                         <br/>
                         <br/> -->
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-sm table-hover text-center table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Code</th><th>Product Id</th><th>Amount</th><th>Status Id</th><th>User Id</th><th>Remark</th><th>Total</th><th>Revision</th><th>Actions</th>
+                                        <!-- <th>#</th> -->
+                                        <th>รหัสเอกสาร</th>
+                                        <th>รหัสสินค้าสำเร็จรูป</th>
+                                        <th>สินค้าสำเร็จรูป</th>
+                                        <th>จำนวน</th>
+                                        <th>พนักงานผู้บันทึก</th>
+                                        <th>สถานะ</th>
+                                        <!-- <th>Remark</th><th>Total</th><th>Revision</th> -->
+                                        <!-- <th>Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($issuestock as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->code }}</td><td>{{ $item->product_id }}</td><td>{{ $item->amount }}</td><td>{{ $item->status_id }}</td><td>{{ $item->user_id }}</td><td>{{ $item->remark }}</td><td>{{ $item->total }}</td><td>{{ $item->revision }}</td>
+                                        <!-- <td>{{ $loop->iteration }}</td> -->
                                         <td>
+                                            <a href="{{ url('/issue-stock/' . $item->id) }}" title="รายละเอียดเบิกของไปผลิต">
+                                                {{ $item->code }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $item->product->product_code }}</td>
+                                        <td>{{ $item->product->product_name }}</td>
+                                        <td>{{ $item->amount }}</td>
+                                        <td>{{ $item->user->short_name }}</td>
+                                        <td>
+                                            @switch($item->status_id)
+                                                @case("-1")
+                                                    <span class="badge badge-pill badge-secondary">Void</span>
+                                                    @break
+                                                @default
+                                                    <span class="badge badge-pill badge-success">Normal</span>								
+                                                    @break
+                                            @endswitch
+                                        </td>
+                                        <!-- <td>{{ $item->remark }}</td><td>{{ $item->total }}</td><td>{{ $item->revision }}</td> -->
+                                        <!-- <td>
                                             <a href="{{ url('/issue-stock/' . $item->id) }}" title="View IssueStock"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/issue-stock/' . $item->id . '/edit') }}" title="Edit IssueStock"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
@@ -54,7 +81,7 @@
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete IssueStock" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                                             </form>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                                 </tbody>
