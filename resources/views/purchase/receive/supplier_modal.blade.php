@@ -17,8 +17,9 @@
 				<div class="table-responsive">
 					<table class="table table-hover text-center table-sm" id="table-supplier-modal" style="width:100%"></table>
 				</div>
-        <hr>
-        <div class="table-responsive">
+				<hr>
+				<h5 class="modal-title" id="exampleModalLabel">รายการจากใบสั่งซื้อ</h5>
+				<div class="table-responsive">
 					<table class="table table-hover text-center table-sm" id="table-receive-detail" style="width:100%"></table>
 				</div>
 			</div>
@@ -45,48 +46,63 @@
 		$('#supplierModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-supplier-modal') ){
 				$.ajax({
-	          url: "{{ url('/') }}/api/supplier",
-	          type: "GET",
-	          dataType : "json",
-	      }).done(function(result){
-						//console.log(result);
-						var dataSet = [];
-						result.forEach(function(element,index) {
-							//console.log(element,index);
-							var row = [
-								element.supplier_code,
-								element.company_name,
-								//element.contact_name,
-								"<button type='button' " +
-										"class='btn btn-warning btn-sm d-none'" +
-										"onClick='select_item("+element.supplier_id+",`"+element.company_name+"`,`"+element.supplier_code+"`)' "
-										+">เลือก</button>",
-							];
-							dataSet.push(row);
-						});
-						//console.log(dataSet);
+					url: "{{ url('/') }}/api/supplier",
+					type: "GET",
+					dataType : "json",
+				}).done(function(result){
+					//console.log(result);
+					var dataSet = [];
+					result.forEach(function(element,index) {
+						//console.log(element,index);
+						var row = [
+							element.supplier_code,
+							element.company_name,
+							//element.contact_name,
+							"<button type='button' " +
+									"class='btn btn-warning btn-sm d-none'" +
+									"onClick='select_item("+element.supplier_id+",`"+element.company_name+"`,`"+element.supplier_code+"`)' "
+									+">เลือก</button>",
+						];
+						dataSet.push(row);
+					});
+					//console.log(dataSet);
 
-						var table = $('#table-supplier-modal').DataTable({
-							data: dataSet,
-  						deferRender : true,
-							columns: [
-									{ title: "รหัส" },
-									{ title: "บริษัท" },
-									//{ title: "ผู้ติดต่อ" },
-									{ title: "#" },
-							],
-              "pageLength" : 3,
-						});
+					var table = $('#table-supplier-modal').DataTable({
+						data: dataSet,
+						deferRender : true,
+						info : false,
+						paging : false,
+						columns: [
+							{ title: "รหัส" },
+							{ title: "บริษัท" },
+							//{ title: "ผู้ติดต่อ" },
+							{ title: "#" },
+						],
+					});
+					//DATA TABLE SCROLL
+					var tableCont = document.querySelector('#table-supplier-modal');
+					tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+					tableCont.parentNode.style.overflow = 'auto';
+					tableCont.parentNode.style.maxHeight = '200px';
+					tableCont.parentNode.addEventListener('scroll',function (e){
+					var scrollTop = this.scrollTop;
+					this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+					this.querySelector('thead').style.background = "white";
+					this.querySelector('thead').style.zIndex = "3000";
+					this.querySelector('thead').style.marginBottom = "100px";
+					console.log(scrollTop);
+					})
+					//END DATA TABLE SCROLL
 
-            $('#table-supplier-modal').on( 'click', 'tr', function () {
-                var d = table.row( this ).data();
-                //console.log("ROW : ",d);
+					$('#table-supplier-modal').on( 'click', 'tr', function () {
+						var d = table.row( this ).data();
+						//console.log("ROW : ",d);
 
-                var key = d[0];
-                var table_detail = $('#table-receive-detail').DataTable();
-                table_detail.search(key).draw();
-            } );
-					}); //END AJAX
+						var key = d[0];
+						var table_detail = $('#table-receive-detail').DataTable();
+						table_detail.search(key).draw();
+					} );
+				}); //END AJAX
 			}
 
 
@@ -124,6 +140,8 @@
 
             var table_detail = $('#table-receive-detail').DataTable({
               data: dataSet,
+			  info : false,
+			  paging : false,
               columns: [
                   { title: "เลขที่ PO" },
                   { title: "วันที่ PO" },
@@ -140,6 +158,20 @@
               ],
               "pageLength" : 3,
             }); //END DATATABLE
+			//DATA TABLE SCROLL
+            var tableCont = document.querySelector('#table-receive-detail');
+            tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+            tableCont.parentNode.style.overflow = 'auto';
+            tableCont.parentNode.style.maxHeight = '200px';
+            tableCont.parentNode.addEventListener('scroll',function (e){
+              var scrollTop = this.scrollTop;
+              this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+              this.querySelector('thead').style.background = "white";
+              this.querySelector('thead').style.zIndex = "3000";
+              this.querySelector('thead').style.marginBottom = "100px";
+              console.log(scrollTop);
+            })
+            //END DATA TABLE SCROLL
             //$('#table-receive-detail input').attr("readonly",true);
             table_detail.search("*").draw();
           });//END DONE AJAX

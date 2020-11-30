@@ -13,7 +13,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body  text-right ">
 				<div class="table-responsive">
 					<table class="table table-hover text-center table-sm" id="table-customer-modal" style="width:100%"></table>
 				</div>
@@ -100,10 +100,10 @@
 		$('#customerModal').on('show.bs.modal', function (e) {
 			if(  ! $.fn.DataTable.isDataTable('#table-customer-modal') ){
 				$.ajax({
-	          url: "{{ url('/') }}/api/customer",
-	          type: "GET",
-	          dataType : "json",
-	      }).done(function(result){
+					url: "{{ url('/') }}/api/customer",
+					type: "GET",
+					dataType : "json",
+				}).done(function(result){
 						//console.log(result);
 						var dataSet = [];
 						result.forEach(function(element,index) {
@@ -123,7 +123,10 @@
 
 						$('#table-customer-modal').DataTable({
 							data: dataSet,
-  						deferRender : true,
+  							deferRender : true,
+  							info : false,
+							paging : false,
+
 							columns: [
 									{ title: "รหัส" },
 									{ title: "บริษัท" },
@@ -131,6 +134,20 @@
 									{ title: "#" },
 							]
 						});
+						//DATA TABLE SCROLL
+						var tableCont = document.querySelector('#table-customer-modal');
+						tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+						tableCont.parentNode.style.overflow = 'auto';
+						tableCont.parentNode.style.maxHeight = '400px';
+						tableCont.parentNode.addEventListener('scroll',function (e){
+							var scrollTop = this.scrollTop;
+							this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+							this.querySelector('thead').style.background = "white";
+							this.querySelector('thead').style.zIndex = "3000";
+							this.querySelector('thead').style.marginBottom = "100px";
+							console.log(scrollTop);
+						})
+						//END DATA TABLE SCROLL
 					}); //END AJAX
 			}
 		}); // END MODAL EVENT

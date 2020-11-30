@@ -43,42 +43,58 @@
 					type: "GET",
 					dataType : "json",
 			}).done(function(result){
-					//console.log(result);
-					var dataSet = prepareDataSet(result);
-					//console.log(dataSet);
-					var table = $('#table-product-model').DataTable({
-						"data": dataSet,
-						"columns": [
-							{ title: "รหัสสินค้า" },
-							{ title: "ชื่อสินค้า" },
-							{ title: "จำนวนในคลัง" },
-							{ title: "ราคาขาย" },
-							{ title: "จำนวน" },
-							{ title: "action" },
-						],
-						"order": [[ 2, "desc" ]],
-					}); // END DATATABLE
-          table.on( 'search.dt', function () {
-            var search_key = table.search();
-            if(search_key != $('#search_key').val()){
-              console.log("Hello",table.search() );
-              $.ajax({
-        					url: "{{ url('/') }}/api/product?q="+search_key ,
-        					type: "GET",
-        					dataType : "json",
-        			}).done(function(result1){
-        					//console.log(dataSet);
-                  $('#search_key').val(search_key);
-                  var new_data = prepareDataSet(result1);
-                  table.clear();
-                  table.rows.add(new_data); // Add new data
-                  table.columns.adjust().draw(); // Redraw the DataTable
-              });
-            }
-          } ); // END SEARCH
+				//console.log(result);
+				var dataSet = prepareDataSet(result);
+				//console.log(dataSet);
+				var table = $('#table-product-model').DataTable({
+					"data": dataSet,
+					paging : false,
+					info : false,
+					"columns": [
+						{ title: "รหัสสินค้า" },
+						{ title: "ชื่อสินค้า" },
+						{ title: "จำนวนในคลัง" },
+						{ title: "ราคาขาย" },
+						{ title: "จำนวน" },
+						{ title: "action" },
+					],
+					"order": [[ 2, "desc" ]],
+				}); // END DATATABLE
+				//DATA TABLE SCROLL
+				var tableCont = document.querySelector('#table-product-model');
+				tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+				tableCont.parentNode.style.overflow = 'auto';
+				tableCont.parentNode.style.maxHeight = '400px';
+				tableCont.parentNode.addEventListener('scroll',function (e){
+					var scrollTop = this.scrollTop;
+					this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+					this.querySelector('thead').style.background = "white";
+					this.querySelector('thead').style.zIndex = "3000";
+					this.querySelector('thead').style.marginBottom = "100px";
+					console.log(scrollTop);
+				})
+				//END DATA TABLE SCROLL
+				table.on( 'search.dt', function () {
+					var search_key = table.search();
+					if(search_key != $('#search_key').val()){
+					console.log("Hello",table.search() );
+						$.ajax({
+										url: "{{ url('/') }}/api/product?q="+search_key ,
+										type: "GET",
+										dataType : "json",
+								}).done(function(result1){
+										//console.log(dataSet);
+							$('#search_key').val(search_key);
+							var new_data = prepareDataSet(result1);
+							table.clear();
+							table.rows.add(new_data); // Add new data
+							table.columns.adjust().draw(); // Redraw the DataTable
+						});
+					}
+				} ); // END SEARCH
 
 
-				}); //END AJAX
+			}); //END AJAX
 		}
 	}
 

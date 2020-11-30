@@ -18,6 +18,7 @@
 					<table class="table table-hover text-center table-sm" id="table-supplier-modal" style="width:100%"></table>
 				</div>
         <hr>
+        <h5 class="modal-title" id="exampleModalLabel">รายการจากใบเสนอซื้อ</h5>
         <div class="table-responsive">
 					<table class="table table-hover text-center table-sm" id="table-order-detail" style="width:100%"></table>
 				</div>
@@ -95,6 +96,8 @@
 						var table = $('#table-supplier-modal').DataTable({
 							data: dataSet,
   						deferRender : true,
+              paging : false,
+              info : false,
 							columns: [
 									{ title: "รหัส" },
 									{ title: "บริษัท" },
@@ -103,6 +106,20 @@
 							],
               "pageLength" : 3,
 						});
+            //DATA TABLE SCROLL
+            var tableCont = document.querySelector('#table-supplier-modal');
+            tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+            tableCont.parentNode.style.overflow = 'auto';
+            tableCont.parentNode.style.maxHeight = '200px';
+            tableCont.parentNode.addEventListener('scroll',function (e){
+              var scrollTop = this.scrollTop;
+              this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+              this.querySelector('thead').style.background = "white";
+              this.querySelector('thead').style.zIndex = "3000";
+              this.querySelector('thead').style.marginBottom = "100px";
+              console.log(scrollTop);
+            })
+            //END DATA TABLE SCROLL
 
             $('#table-supplier-modal').on( 'click', 'tr', function () {
                 var d = table.row( this ).data();
@@ -168,6 +185,8 @@
 
             var table_detail = $('#table-order-detail').DataTable({
               data: dataSet,
+              info : false,
+              paging : false,
               columns: [
                   { title: "เลขที่ PR" },
                   { title: "วันที่ PR" },
@@ -184,6 +203,20 @@
               ],
               "pageLength" : 3,
             }); //END DATATABLE
+            //DATA TABLE SCROLL
+            var tableCont = document.querySelector('#table-order-detail');
+            tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+            tableCont.parentNode.style.overflow = 'auto';
+            tableCont.parentNode.style.maxHeight = '200px';
+            tableCont.parentNode.addEventListener('scroll',function (e){
+              var scrollTop = this.scrollTop;
+              this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+              this.querySelector('thead').style.background = "white";
+              this.querySelector('thead').style.zIndex = "3000";
+              this.querySelector('thead').style.marginBottom = "100px";
+              console.log(scrollTop);
+            })
+            //END DATA TABLE SCROLL
             $('#table-order-detail input').attr("readonly",true);
             table_detail.search("*").draw();
           });//END DONE AJAX

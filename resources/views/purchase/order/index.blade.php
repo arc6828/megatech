@@ -61,7 +61,7 @@
 						<td>{{ date_format(date_create(explode(" ", $row->datetime)[0]),"d-m-Y") }}</td>
 						<td>{{ $row->supplier_code }}</td>
 						<td>{{ $row->company_name }}</td>
-						<td>{{ number_format($row->total?$row->total:0, 2) }}</td>
+						<td class="text-right">{{ number_format($row->total?$row->total:0, 2) }}</td>
 						<!-- <td>{{ $row->short_name }}</td> -->
 						<td>
 						@switch($row->purchase_status_id)
@@ -94,9 +94,9 @@
 					paging : false,
 					info : false,
 					columnDefs: [
-						{ targets: [1], className : 'text-left'},
-						{ targets: [-4], className : 'text-right'},
-						{ targets: '_all', className : 'text-center' }
+						// { targets: [1], className : 'text-left'},
+						//{ targets: [-3], className : 'text-right'},
+						// { targets: '_all', className : 'text-center' }
 					]
 				}).order( [ 1, 'desc' ] ).draw();
 				//DATA TABLE SCROLL

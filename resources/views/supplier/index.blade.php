@@ -28,7 +28,6 @@
 					<tr>
 						<th class="text-center">รหัส</th>
 						<th class="text-center">ชื่อบริษัท</th>
-						<!--th class="text-center">อีเมล์</th-->
 						<th class="text-center">เบอร์โทรศัพท์</th>
 						<th class="text-center">ยอดหนึ้ขณะนี้</th>
 						<!--th class="text-center ">วางบิล</th>
@@ -43,7 +42,6 @@
 				<tr>
 					<td><a href="{{ url('/') }}/supplier/{{ $row->supplier_id }}/edit">{{ $row->supplier_code }}</a></td>
 					<td>{{ $row->company_name }}</td>
-					<!--td>{{ $row->email }}</td-->
 					<td>{{ $row->telephone }}</td>
 					<td>{{ number_format($total_debt,2) }}</td>
 					<!--td class=" ">
@@ -81,10 +79,28 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function(event) {
-      //console.log("555");
-      $('#table').DataTable().order( [ 0, 'asc' ] ).draw();
-  });
+  	document.addEventListener("DOMContentLoaded", function(event) {
+		//console.log("555");
+		$('#table').DataTable({
+			info : false,
+			paging : false,
+
+		}).order( [ 3, 'desc' ] ).draw();
+		//DATA TABLE SCROLL
+		var tableCont = document.querySelector('#table');
+		tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
+		tableCont.parentNode.style.overflow = 'auto';
+		tableCont.parentNode.style.maxHeight = '400px';
+		tableCont.parentNode.addEventListener('scroll',function (e){
+			var scrollTop = this.scrollTop;
+			this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 100 + 'px)';
+			this.querySelector('thead').style.background = "white";
+			this.querySelector('thead').style.zIndex = "3000";
+			this.querySelector('thead').style.marginBottom = "100px";
+			console.log(scrollTop);
+		})
+		//END DATA TABLE SCROLL
+  	});
 
 	function onDelete(id){
 		//--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//

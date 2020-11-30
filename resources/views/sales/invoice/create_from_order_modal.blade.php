@@ -117,7 +117,6 @@
 					//DATA TABLE SCROLL
 					var tableCont = document.querySelector('#table-order-model');
 					tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
-
 					tableCont.parentNode.style.overflow = 'auto';
 					tableCont.parentNode.style.maxHeight = '200px';
 					tableCont.parentNode.addEventListener('scroll',function (e){
