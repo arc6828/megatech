@@ -37,10 +37,11 @@
                                     <tr>
                                         <!-- <th>#</th> -->
                                         <th>รหัสเอกสาร</th>
-                                        <th>อ้างอิง</th>
+                                        <th>วันที่</th>
+                                        <!-- <th>อ้างอิง</th> -->
+                                        <th>หมายเหตุ</th>
                                         <th>พนักงานผู้บันทึก</th>                                        
                                         <th>รหัสการปรับปรุง</th>
-                                        <th>หมายเหตุ</th>
                                         <th>ชนิด</th>
                                         <th>สถานะ</th>
                                         <!-- <th>Total</th>
@@ -57,12 +58,13 @@
                                                 {{ $item->code }}
                                             </a>
                                         </td>
-                                        <td>{{ $item->reference }}</td>
+                                        <td>{{ date_format( date_create( explode(" ", $item->created_at)[0]) ,"d-m-Y") }}</td>
+                                        <!-- <td>{{ $item->reference }}</td> -->
+                                        <td>{{ $item->remark }}</td>
                                         
                                         <td>{{ $item->user->short_name }}</td>
                                         
                                         <td>{{ $item->adjust_definition_id }}</td>
-                                        <td>{{ $item->remark }}</td>
                                         <td>
                                             @switch($item->adjust_type)
                                                 @case("-1")

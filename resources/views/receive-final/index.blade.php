@@ -36,7 +36,8 @@
                                 <thead>
                                     <tr>
                                         <!-- <th>#</th> -->
-                                        <th>รหัสเอกสาร</th>
+                                        <th>รหัสเอกสาร</th> 
+                                        <th>วันที่</th> 
                                         <th>รหัสใบเบิก</th>
                                         <th>รหัสสินค้าสำเร็จรูป</th>
                                         <th>ชื่อสินค้า</th>
@@ -56,6 +57,8 @@
                                                 {{ $item->code }}
                                             </a>
                                         </td>
+                                        <td>{{ date_format( date_create( explode(" ", $item->created_at)[0]) ,"d-m-Y") }}</td>
+                                        
                                         <td>{{ $item->issue_stock->code }}</td>
                                         <td>{{ $item->issue_stock->product->product_code }}</td>
                                         <td>{{ $item->issue_stock->product->product_name }}</td>

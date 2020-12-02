@@ -143,7 +143,7 @@
 		var extension = "<span class='text-danger'>"+(element.stock?"("+element.stock+")":"")+"</span>";
         var row = [
 			//element.product_id,
-          "<a href='{{ url("/") }}/product/"+element.product_id+"/edit'>"+ element.product_code+"</a>",
+          "<a href='{{ url("/") }}/product/"+element.product_id+"'>"+ element.product_code+"</a>",
           //element.BARCODE,
           element.product_name, //+" / "+element.grade + " " +extension,
           number_format(price,2),
