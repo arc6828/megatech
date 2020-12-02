@@ -376,7 +376,7 @@ class QuotationController extends Controller
       QuotationModel::update_by_id($input,$id);
 
       //3.REDIRECT
-      return redirect("sales/quotation/{$id}");
+      return redirect("sales/quotation/{$id}")->with('flash_message', 'popup');
     }
 
     /**
