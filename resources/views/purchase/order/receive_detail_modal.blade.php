@@ -24,9 +24,9 @@
                                 <th class="text-center">#</th>
                                 <th class="text-center">รหัสสินค้า</th>
                                 <th class="text-center">รายละเอียด</th>
-                                <th class="text-center">ยอดจอง</th>
-                                <th class="text-center">ยอดค้างส่ง</th>
-                                <th class="text-center">ยอดส่ง</th>
+                                <th class="text-center">ยอดสั่งซื้อ</th>
+                                <th class="text-center">ยอดรับ</th>
+                                <th class="text-center">ยอดค้างรับ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,8 +39,8 @@
                                 <td>{{$item->product->product_code}}</td>
                                 <td>{{$item->product->product_name}}</td>
                                 <td>{{$item->amount}}</td>
-                                <td>{{ $item->amount - $received_item }}</td>
                                 <td>{{ $received_item  }}</td>
+                                <td>{{ $item->amount - $received_item }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -57,7 +57,7 @@
                                 <th class="text-center">เลขที่ใบส่งสินค้า</th>
                                 <th class="text-center">รหัสสินค้า</th>
                                 <th class="text-center">รายละเอียด</th>
-                                <th class="text-center">ยอดส่ง</th>
+                                <th class="text-center">ยอดรับ</th>
                             </tr>
                         </thead>
                         <tbody>
