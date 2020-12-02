@@ -105,11 +105,11 @@
                                                 @case("purchase_order")
                                                     <a href="{{ url('/') }}/purchase/order/{{ $item->purchase_order->purchase_order_id }}/edit">{{ $item->purchase_order->purchase_order_code }}</a>
                                                     @break
-                                                @case("purchase_recieve")
-                                                    PR                                                    
+                                                @case("purchase_receive")                                                                                                        
                                                     @php 
                                                         $positive = true;
-                                                    @endphp           
+                                                    @endphp
+                                                    {{ $item->purchase_receive->purchase_receive_code }}    
                                                     @break
                                                 @case("sales_return_invoice")                                                    
                                                     @php 
