@@ -106,8 +106,9 @@
                                                     <a href="{{ url('/') }}/purchase/order/{{ $item->purchase_order->purchase_order_id }}/edit">{{ $item->purchase_order->purchase_order_code }}</a>
                                                     @break
                                                 @case("purchase_receive")                                                                                                        
+                                                @case("purchase_receive_cancel")                                                                                                        
                                                     @php 
-                                                        $positive = true;
+                                                        $positive = $item->type == "purchase_receive" ? true : false;
                                                     @endphp
                                                     {{ $item->purchase_receive->purchase_receive_code }}    
                                                     @break

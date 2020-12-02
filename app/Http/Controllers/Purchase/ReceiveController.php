@@ -258,7 +258,7 @@ class ReceiveController extends Controller
         $product = ProductModel::findOrFail($item['product_id']);
         $gaurd_stock = GaurdStock::create([
           "code" => $id,
-          "type" => "sales_invoice_cancel",
+          "type" => "purchase_receive_cancel",
           "amount" => $item['amount'],
           "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
           "pending_in" => ($product->pending_in +  $item['amount'] ),
