@@ -7,7 +7,7 @@
 @section('level-1','แฟ้มหลักสินค้า')
 
 
-@section('level-2-url', url('product/'.$product->product_id.'/edit' ))
+@section('level-2-url', url('product/'.$product->product_id.'' ))
 @section('level-2', $product->product_code)
 
 @section('title','Gaurd Stock')
