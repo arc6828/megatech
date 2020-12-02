@@ -113,7 +113,7 @@
 						{ title: "action" },
 						],
 						"pageLength" : 3,
-					}).order( [ 0, 'desc' ] ).draw();
+					}).order( [ 0, 'asc' ] ).draw();
 					//DATA TABLE SCROLL
 					var tableCont = document.querySelector('#table-order-model');
 					tableCont.style.cssText  = "margin-top : -1px !important; width:100%;";
