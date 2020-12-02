@@ -3,11 +3,11 @@
 @section('level-0-url', url('sales'))
 @section('level-0','การขาย')
 
-@section('level-1-url', url('sales/order'))
+@section('level-1-url', url('sales/invoice'))
 @section('level-1','ใบขาย')
 
 @if( $mode == "edit" )
-  @section('level-2-url', url('sales/order/'.$order->order_id ))
+  @section('level-2-url', url('sales/invoice/'.$invoice->invoice_id ))
   @section('level-2','รายละเอียด')
 @endif
 

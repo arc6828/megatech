@@ -20,14 +20,19 @@
           <a class="btn btn-primary btn-sm btn-print mr-2" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/pdf" target="_blank"  title="พิมพ์">
             <i class="fas fa-print"></i> พิมพ์
           </a>
-          @endif        
+          <a class="btn btn-warning btn-sm" href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit" title="แก้ไข">
+            <i class="fas fa-edit"></i> แก้ไข
+          </a>
+          @endif      
         @endif
         
         @if(isset($row->sales_status_id))
           @if($row->sales_status_id > 0)
-          <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
-            <span class="fa fa-trash"> ยกเลิก Invoice</span>
-          </a>
+            @if($mode == "edit")
+            <a href="javascript:void(0)" onclick="document.querySelector('#form-cancel-submit').click(); " class="px-2 btn btn-sm btn-danger">
+              <span class="fa fa-trash"> ยกเลิก Invoice</span>
+            </a>
+            @endif
           @endif
         @endif
       </div>

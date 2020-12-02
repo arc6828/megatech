@@ -79,9 +79,10 @@
                                                     {{ $item->sales_order->order_code }}
                                                     @break
                                                 @case("sales_invoice")
+                                                @case("sales_invoice_cancel")
                                                     {{ $item->sales_invoice->invoice_code }}      
                                                     @php 
-                                                        $positive = false;
+                                                        $positive = $item->type == "sales_invoice" ? false : true;
                                                     @endphp                                             
                                                     @break
                                                 @case("sales_dt_create")

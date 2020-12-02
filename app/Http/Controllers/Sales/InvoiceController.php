@@ -197,6 +197,10 @@ class InvoiceController extends Controller
       $invoice = InvoiceModel::findOrFail($id);
       //VOID
       $invoice->sales_status_id = -1; //-1 MEANS Void    
+      $invoice->vat = 0;
+      $invoice->total_debt = 0;
+      $invoice->total_before_vat = 0;
+      $invoice->total = 0;
       $invoice->save();     
       
       //FIND OE
@@ -218,6 +222,9 @@ class InvoiceController extends Controller
         ->where('amount',$p->amount)
         ->where('order_detail_status_id','4') //4 means ออก IV แล้ว
         ->update(["order_detail_status_id" => "1"]); //ออก IV แล้ว -> อนุมัติ (1)
+
+        $p->discount_price = 0;
+        $p->save();
       }
 
 
