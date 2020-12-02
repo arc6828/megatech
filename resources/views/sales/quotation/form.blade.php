@@ -362,6 +362,7 @@
                     @endforeach
                     @if (session('flash_message'))
                     <script>
+                      @if($quotation->quotation_code != "QTDRAFT")
                       alert(""
                         @foreach ($customer->contacts as $contact)
                             @if(isset($contact->ref_qt))
@@ -370,6 +371,7 @@
                         @endforeach
                       
                       );
+                      @endif
                     </script>
                     @endif
                   @endif
