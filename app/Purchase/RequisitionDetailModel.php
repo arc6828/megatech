@@ -91,6 +91,7 @@ class RequisitionDetailModel extends Model
     $tail = "";
     if($date_end === ""){
       // $date_end = $date_begin;
+      $date_begin = date("Y-m-d");
       $date_end = date("Y-m-d");
 
       $tail = " - INTERVAL 12 MONTH";
