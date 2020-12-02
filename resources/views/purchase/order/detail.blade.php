@@ -65,6 +65,11 @@
         //var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
         var checked = true;
         var discount_price = ("{{$method}}"=="edit")?element.discount_price:0;
+        @if(!isset($mode))
+        if(element.discount_price){
+					discount_price = element.discount_price
+				}
+        @endif
         //discount_price = 0;
 
 		//ELEMENT DELIVERY DURATION

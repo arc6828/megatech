@@ -389,21 +389,41 @@ function fillOrder(result){
 function fillOrderDetail(result){
   //console.log(result);
   var dataSet = [];
+  let table = $('#table-purchase_order-detail').DataTable();
+  table .clear();
   result.forEach(function(element,index) {
     var id = element.purchase_requisition_detail_id;
     console.log("ELEMENT id : ",id,element);
     //4 : means DEFINED SUPPLIER
     if(element.purchase_requisition_detail_status_id == 4){
-      var row = createRow("+", element,element.purchase_requisition_detail_id);
-      dataSet.push(row);
+      let product_id = element.product_id;
+      let supplier_id = document.querySelector("#supplier_id").value;
+      let link = "{{ url('/') }}/api/purchase/order_detail/supplier/"+supplier_id+"/product/"+product_id;
+      
+      fetch(link)
+			.then(response => response.json())
+			.then(data => {
+				console.log(link);
+				console.log(data)
+        @if(!isset($mode))
+				if(data.discount_price){
+					element["discount_price"] = data.discount_price
+				}
+        @endif
+        //START
+        let row = createRow("+", element,element.purchase_requisition_detail_id);
+        //dataSet.push(row);
+        table.row.add(row);
+        
+        table.draw();
+
+        //END
+      });
+
     }
   });
   //console.log(dataSet);
-  var table = $('#table-purchase_order-detail').DataTable();
-  table
-      .clear()
-      .rows.add(dataSet)
-      .draw();
+  
 }
 
 function showProduct(){}

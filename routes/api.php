@@ -58,7 +58,8 @@ Route::prefix('purchase')->group(function () {
   Route::get('/requisition_detail/index2', 'API\Purchase\RequisitionDetailController@index2');
   Route::apiResource('/requisition_detail', 'API\Purchase\RequisitionDetailController');
   //PO - Detail
-  Route::get('/order_detail/supplier/{supplier_id}', 'API\Purchase\OrderDetailController@supplier');
+  Route::get('/order_detail/supplier/{supplier_id}', 'API\Purchase\OrderDetailController@supplier');  
+  Route::get('/order_detail/supplier/{supplier_id}/product/{product_id}', 'API\Purchase\OrderDetailController@history_purchase_price');
   Route::get('/order_detail/order_code/{order_code}', 'API\Purchase\OrderDetailController@order_code');
   Route::get('/order_detail/index2', 'API\Purchase\OrderDetailController@index2');
   Route::apiResource('/order_detail', 'API\Purchase\OrderDetailController');
