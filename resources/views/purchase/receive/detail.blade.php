@@ -54,7 +54,9 @@
 							//{ title: "ส่วนลด %" },
 							{ title: "ราคาซื้อ" },
 							{ title: "ราคาซื้อรวม" },
-							//{ title: "action" },
+              @if($mode == "create")
+							{ title: "action" },
+              @endif
 					],
 					"fnCreatedRow" : function( nRow, aData, iDataIndex ) {
 						//console.log("aData : ", aData, iDataIndex);
@@ -96,12 +98,13 @@
           "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"' readonly>",
           @if($mode == "create")
           "<input class='input total_edit' name='total_edit[]'  value='0' disabled>",
+          "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+            "<span class='fa fa-trash'></span>" +
+          "</a>",
           @else
           "<input class='input total_edit' name='total_edit[]'  value='"+(element.discount_price *  element.amount)+"'  disabled>",
           @endif
-          /*"<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
-            "<span class='fa fa-trash'></span>" +
-          "</a>",*/
+          
         ];
       }
 
