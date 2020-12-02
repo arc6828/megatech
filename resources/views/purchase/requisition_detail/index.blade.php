@@ -51,8 +51,8 @@
   		</div>
 
   		<div class="form-group form-inline">
-  			<label class="col-lg-2 offset-lg-1">เลือกเดือน</label>
-  			<div class="col-lg-2">
+  			<label class="col-lg-2 offset-lg-1">เลือกช่วงเวลา</label>
+  			<div class="col-lg-2 d-none">
   					<select name="m_date" id="m_date" class="form-control form-control-sm"
               onchange="onSubmit(this);"  style="max-width:150px;">
                 <option value="">None</option>
@@ -66,12 +66,12 @@
                 @endfor
   					</select>
   			</div>
-        <label class="col-lg-1 ">หรือ</label>
+        <!-- <label class="col-lg-1 ">หรือ</label> -->
   			<div class="col-lg-2">
   				<input type="date" name="date_begin" id="date_begin" class="form-control form-control-sm"
             onchange="onSubmit(this);" value="{{ $filter->date_begin }}" style="max-width:150px;">
   			</div>
-  			<label class="col-lg-1">-</label>
+  			<label class="col-lg-2">-</label>
   			<div class="col-lg-2">
   				<input type="date" name="date_end" id="date_end" class="form-control form-control-sm"
             onchange="onSubmit(this);" value="{{ $filter->date_end }}" style="max-width:150px;" >

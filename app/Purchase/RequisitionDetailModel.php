@@ -90,8 +90,11 @@ class RequisitionDetailModel extends Model
   public static function select_search($purchase_requisition_detail_status_id,$date_begin,$date_end=""){
     $tail = "";
     if($date_end === ""){
+      // $date_end = $date_begin;
       $date_end = $date_begin;
-      $tail = " + INTERVAL 1 MONTH";
+
+      $tail = " - INTERVAL 12 MONTH";
+      //$tail = "";
     }
     //echo $purchase_requisition_detail_status_id;
     //echo "s".$date_begin;
@@ -109,7 +112,7 @@ class RequisitionDetailModel extends Model
         ->whereIn("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $whitelist)
         // ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
         //->whereBetween("datetime",">=",[$date_begin,$date_end])
-        ->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+        ->whereRaw("datetime >= '{$date_begin}' {$tail} AND datetime < '{$date_end}' ")
         ->select( DB::raw('*,DATE(datetime) as date'))
         ->get();
 	}
