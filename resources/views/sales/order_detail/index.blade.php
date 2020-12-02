@@ -299,6 +299,7 @@
 					$('#table-order-detail').DataTable({
             data: dataSet,
             paging : false,
+            info : false,
             //searching : false,
 						columns: [
 								{ title: "#" },
