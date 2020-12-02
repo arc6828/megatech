@@ -80,9 +80,9 @@
         var amount_class = order_id + "-" + element.BARCODE;
 
         return [
-          id +
+         
           "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +
-          "<input type='hidden' class='purchase_order_detail_id_edit' name='purchase_order_detail_id_edit[]'  value='"+element.purchase_order_detail_id+"' >",
+          "<input type='hidden' class='purchase_order_detail_id_edit' name='purchase_order_detail_id_edit[]'  value='"+element.purchase_order_detail_id+"' >" +
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
           element.product_name,
           "<input class='input amount_edit' name='amount_edit[]'  value='"+element.amount+"' readonly>",

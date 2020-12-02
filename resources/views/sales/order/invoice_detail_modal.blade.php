@@ -25,8 +25,8 @@
                                 <th class="text-center">รหัสสินค้า</th>
                                 <th class="text-center">รายละเอียด</th>
                                 <th class="text-center">ยอดจอง</th>
-                                <th class="text-center">ยอดค้างส่ง</th>
                                 <th class="text-center">ยอดส่ง</th>
+                                <th class="text-center">ยอดค้างส่ง</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,8 +39,8 @@
                                 <td>{{$item->product->product_code}}</td>
                                 <td>{{$item->product->product_name}}</td>
                                 <td>{{$item->amount}}</td>
-                                <td>{{ $item->amount - $invoiced_item }}</td>
                                 <td>{{ $invoiced_item  }}</td>
+                                <td>{{ $item->amount - $invoiced_item }}</td>
                             </tr>
                             @endforeach
                         </tbody>
