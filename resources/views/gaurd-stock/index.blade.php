@@ -80,7 +80,10 @@
                                                     @break
                                                 @case("sales_invoice")
                                                 @case("sales_invoice_cancel")
-                                                    {{ $item->sales_invoice->invoice_code }}      
+                                                    {{ $item->sales_invoice->invoice_code }}    
+                                                    @if($item->type != "sales_invoice")
+                                                        <span class="text-danger"> (VOID)</span>
+                                                    @endif   
                                                     @php 
                                                         $positive = $item->type == "sales_invoice" ? false : true;
                                                     @endphp                                             
@@ -111,7 +114,10 @@
                                                     @php 
                                                         $positive = $item->type == "purchase_receive" ? true : false;
                                                     @endphp
-                                                    {{ $item->purchase_receive->purchase_receive_code }}    
+                                                    {{ $item->purchase_receive->purchase_receive_code }}   
+                                                    @if($item->type != "purchase_receive")
+                                                        <span class="text-danger"> (VOID)</span>
+                                                    @endif 
                                                     @break
                                                 @case("sales_return_invoice")                                                    
                                                     @php 
