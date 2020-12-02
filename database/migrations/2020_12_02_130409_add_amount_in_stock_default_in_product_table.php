@@ -15,6 +15,7 @@ class AddAmountInStockDefaultInProductTable extends Migration
     {
         Schema::table('tb_product', function (Blueprint $table) {            
             $table->integer('amount_in_stock_default')->default(0)->nullable();
+            $table->timestamp('date_default')->nullable();
         });
     }
 

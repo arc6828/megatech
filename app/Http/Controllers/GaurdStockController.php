@@ -59,7 +59,7 @@ class GaurdStockController extends Controller
         ];
         $gaurdstock = GaurdStock::where('product_id',  $product_id)                
             ->whereIn('type', $whitelist) //"type" => "",
-            ->latest()->get();
+            ->oldest()->get();
         $mode = "gaurd-stock";
 
         return view('gaurd-stock.index', compact('gaurdstock','mode','product'));

@@ -54,7 +54,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($gaurdstock as $item)
+                                    <tr>
+                                        <td>0</td>
+                                        <td>{{ $product->date_default }}</td>                                        
+                                        <td>{{ $product->product_code }}</td>                                        
+                                        <td> ยอดยกมา </td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>{{ $product->amount_in_stock_default }}</td>                                        
+                                    </tr>
+
+                                @foreach($gaurdstock as $item)                                    
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->created_at }}</td>

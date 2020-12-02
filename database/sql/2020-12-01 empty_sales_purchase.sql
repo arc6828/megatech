@@ -39,5 +39,4 @@ TRUNCATE TABLE  receive_finals;
 TRUNCATE TABLE  receive_final_details;
 
 -- CLEAR pending-in pending-out -- 
-UPDATE `tb_product` SET  `pending_in` = 0 , `pending_out`=0, `amount_in_stock_default` = `amount_in_stock
-
+UPDATE `tb_product` SET `pending_in` = 0 , `pending_out`=0, `amount_in_stock_default` = `amount_in_stock`, `date_default` = now();
