@@ -41,6 +41,7 @@ class OrderDetailController extends Controller
 
     public function index2(Request $request)
     {
+      //USE FOR RC
       $order_detail_status_id = $request->input("order_detail_status_id",3);
       $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
 

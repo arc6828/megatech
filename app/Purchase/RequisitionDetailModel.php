@@ -125,13 +125,15 @@ class RequisitionDetailModel extends Model
 	}
 
   public static function select_search2($purchase_requisition_detail_status_id){
-
+    //USE FOR RC SELECTION
     return DB::table('tb_purchase_requisition_detail')
         ->join('tb_product','tb_purchase_requisition_detail.product_id','=','tb_product.product_id')
         ->join('tb_purchase_requisition','tb_purchase_requisition.purchase_requisition_id','=','tb_purchase_requisition_detail.purchase_requisition_id')
         ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
         ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
         ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
+        
+        //USE FOR RC SELECTION
         //->whereBetween("datetime",">=",[$date_begin,$date_end])
         //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
         //->select( DB::raw('*,DATE(datetime) as date'))

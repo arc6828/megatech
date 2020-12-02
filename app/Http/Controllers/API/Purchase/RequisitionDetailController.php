@@ -40,6 +40,7 @@ class RequisitionDetailController extends Controller
 
     public function index2(Request $request)
     {
+      //USE FOR RC SELECTION
       //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
       $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id",4);
       $table_purchase_requisition_detail = RequisitionDetailModel::select_search2($purchase_requisition_detail_status_id);

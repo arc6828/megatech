@@ -209,7 +209,12 @@ class ReceiveController extends Controller
       //
       $purchase_receive = ReceiveModel::findOrFail($id);
       //VOID
-      $purchase_receive->purchase_status_id = -1; //-1 MEANS Void    
+      $purchase_receive->purchase_status_id = -1; //-1 MEANS Void  
+      $purchase_receive->vat = 0;
+      $purchase_receive->total_debt = 0;
+      $purchase_receive->total_before_vat = 0;
+      $purchase_receive->total = 0;
+
       $purchase_receive->save();     
       
       //FIND OE
@@ -239,6 +244,9 @@ class ReceiveController extends Controller
 
         //UPDATE STATUS
         $order_detail->update(["purchase_order_detail_status_id" => "5"]); //6 รับสินค้าแล้ว -> 5 ออก PO แล้ว
+
+        $p->discount_price = 0;
+        $p->save();
           
       }
 

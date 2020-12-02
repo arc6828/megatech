@@ -105,19 +105,21 @@ class OrderDetailModel extends Model
         ->where("tb_purchase_order_detail.purchase_order_detail_status_id","=",$purchase_order_detail_status_id)
         //->whereBetween("datetime",">=",[$date_begin,$date_end])
         ->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+        ->where("tb_purchase_order.purchase_status_id","!=","-1")
         ->select( DB::raw('*,DATE(datetime) as date'))
         ->get();
 	}
 
   //No Filter Date, but status_id
   public static function select_search2($order_detail_status_id){
-
+    //USE FOR RC
     return DB::table('tb_purchase_order_detail')
         ->join('tb_product','tb_purchase_order_detail.product_id','=','tb_product.product_id')
         ->join('tb_purchase_order','tb_purchase_order.purchase_order_id','=','tb_purchase_order_detail.purchase_order_id')
         ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
         //->join('tb_purchase_order_detail_status', 'tb_purchase_order_detail.order_detail_status_id', '=', 'tb_purchase_order_detail_status.order_detail_status_id')
         ->where("tb_purchase_order_detail.purchase_order_detail_status_id","=",$order_detail_status_id)
+        ->where("tb_purchase_order.purchase_status_id","!=","-1")
         //->whereBetween("datetime",">=",[$date_begin,$date_end])
         //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
         ->select( DB::raw('*,DATE(datetime) as date'))
