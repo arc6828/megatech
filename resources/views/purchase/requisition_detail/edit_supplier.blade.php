@@ -50,7 +50,7 @@
   			</div>
   		</div>
 
-  		<div class="form-group form-inline">
+  		<div class="form-group form-inline d-none">
   			<label class="col-lg-2 offset-lg-1">เลือกช่วงเวลา</label>
   			<div class="col-lg-2 d-none">
   					<select name="m_date" id="m_date" class="form-control form-control-sm"
