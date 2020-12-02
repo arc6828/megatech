@@ -31,16 +31,14 @@
                         </thead>
                         <tbody>
                             @foreach($order->details as $item )
-                            @php 
-                                $received_item = array_key_exists($item->product->product_code,$unchangable_items)?$unchangable_items[$item->product->product_code]:0;
-                            @endphp
+                           
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->product->product_code}}</td>
                                 <td>{{$item->product->product_name}}</td>
-                                <td>{{$item->amount}}</td>
-                                <td>{{ $received_item  }}</td>
-                                <td>{{ $item->amount - $received_item }}</td>
+                                <td>{{ $item->amount }}</td>
+                                <td>{{ $item->amount -  $item->amount_pending_in }}</td>
+                                <td>{{ $item->amount_pending_in }}</td>
                             </tr>
                             @endforeach
                         </tbody>
