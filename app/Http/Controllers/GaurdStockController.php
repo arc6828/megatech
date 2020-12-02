@@ -55,6 +55,7 @@ class GaurdStockController extends Controller
             'purchase_return_order', 'purchase_return_order_cancel',
             'issue_stock', 'issue_stock_cancel',
             'receive_final', 'receive_final_cancel',
+            'adjust_stock', 'adjust_stock_cancel',
         ];
         $gaurdstock = GaurdStock::where('product_id',  $product_id)                
             ->whereIn('type', $whitelist) //"type" => "",

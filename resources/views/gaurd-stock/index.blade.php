@@ -140,6 +140,13 @@
                                                     @endphp  
                                                     {{ $item->code }}
                                                     @break
+                                                @case("adjust_stock")
+                                                @case("adjust_stock_cancel")                                                           
+                                                    @php 
+                                                        $positive = $item->adjust_stock->adjust_type == "1" ? true : false;
+                                                    @endphp  
+                                                    {{ $item->code }}
+                                                    @break
                                             @endswitch
                                         </td>
                                         @if( $positive )

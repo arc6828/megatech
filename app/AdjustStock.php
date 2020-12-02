@@ -33,10 +33,12 @@ class AdjustStock extends Model
     }
 
     public function details(){
-        return $this->hasMany('App\AdjustStockDetail','adjust_stock_id','id');
+        return $this->hasMany('App\AdjustStockDetail','adjust_id','id');
     }
 
     public function product(){
         return $this->belongsTo('App\ProductModel','product_id');
     }
+
+    
 }

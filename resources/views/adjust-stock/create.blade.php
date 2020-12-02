@@ -1,18 +1,26 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','Create New AdjustStock')
+@section('level-0-url', url('inventory'))
+@section('level-0','คงคลัง')
+
+@section('level-1-url', url('adjust-stock'))
+@section('level-1','ปรับปรุงเพิ่ม-ลดสินค้า')
+
+@section('title', 'สร้าง')
+
+@section('background-tag','bg-yellow')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
 
             <div class="col-md-12">
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-header">Create New AdjustStock</div>
                     <div class="card-body">
                         <a href="{{ url('/adjust-stock') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
-                        <br />
+                        <br /> -->
 
                         @if ($errors->any())
                             <ul class="alert alert-danger">
@@ -29,8 +37,8 @@
 
                         </form>
 
-                    </div>
-                </div>
+                    <!-- </div>
+                </div> -->
             </div>
         </div>
     </div>

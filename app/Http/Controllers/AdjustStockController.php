@@ -6,6 +6,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\AdjustStock;
+use App\AdjustStockDetail;
+use App\ProductModel;
+use App\GaurdStock;
 use Illuminate\Http\Request;
 
 class AdjustStockController extends Controller
@@ -58,12 +61,75 @@ class AdjustStockController extends Controller
     public function store(Request $request)
     {
         
-        $requestData = $request->all();
-        
-        AdjustStock::create($requestData);
+        $requestData = $request->all();                  
+        $requestData["code"] = $this->getNewCode();
+        $requestData["revision"] = 0;              
+        $requestData["status_id"] = 1;  
+        $adjuststock = AdjustStock::create($requestData);
+        $this->store_detail($request, $adjuststock);
 
-        return redirect('adjust-stock')->with('flash_message', 'AdjustStock added!');
+        return redirect('adjust-stock/'.$adjuststock->id)->with('flash_message', 'AdjustStock added!');
     }
+
+    public function getNewCode(){
+        $number = AdjustStock::where('status_id','!=','-1')
+            ->whereMonth('created_at',date("m"))
+            ->whereYear('created_at',date("Y"))
+            ->count();
+        $count =  $number + 1;
+        //$year = (date("Y") + 543) % 100;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $code = "AJ{$year}{$month}-{$number}";
+        return $code;
+    }
+
+    public function store_detail(Request $request, $adjuststock){
+        //CREATE RETURN INVOICE DETAIL
+        $details = [];
+        $products = $request->input('product_ids');
+        $amounts = $request->input('amounts');
+        //$discount_prices = $request->input('discount_prices');
+        //$totals = $request->input('totals');
+        if (is_array($products)){
+          for($i=0; $i<count($products); $i++){
+            $details[] = [
+                "product_id" => $products[$i],
+                "amount" => $amounts[$i],
+                //"discount_price" => $discount_prices[$i],
+                //"total" => $totals[$i],
+                "adjust_id" => $adjuststock->id,              
+            ];
+          }
+        }
+        AdjustStockDetail::insert($details);
+
+        //GAURD STOCK UPDATE
+        foreach($details as $item){
+            if($item['amount'] == 0){
+                continue;
+            }
+            $product = ProductModel::findOrFail($item['product_id']);
+            $gaurd_stock = GaurdStock::create([
+                "code" => $adjuststock->code,
+                "type" => "adjust_stock",
+                "amount" => $item['amount'],
+                "amount_in_stock" => ($product->amount_in_stock + ($adjuststock->adjust_type * $item['amount']) ),
+                "pending_in" => $product->pending_in,
+                "pending_out" => ($product->pending_out),
+                "product_id" => $product->product_id,
+            ]);
+            
+            //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+            $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+            $product->pending_in = $gaurd_stock['pending_in'];
+            $product->pending_out = $gaurd_stock['pending_out'];
+            $product->save();
+        }
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -75,8 +141,10 @@ class AdjustStockController extends Controller
     public function show($id)
     {
         $adjuststock = AdjustStock::findOrFail($id);
+        $adjuststockdetail = $adjuststock->details()->get();
+        $mode = "show";
 
-        return view('adjust-stock.show', compact('adjuststock'));
+        return view('adjust-stock.edit', compact('adjuststock','adjuststockdetail','mode'));
     }
 
     /**
@@ -89,8 +157,9 @@ class AdjustStockController extends Controller
     public function edit($id)
     {
         $adjuststock = AdjustStock::findOrFail($id);
-
-        return view('adjust-stock.edit', compact('adjuststock'));
+        $adjuststockdetail = $adjuststock->details()->get();
+        $mode = "edit";
+        return view('adjust-stock.edit', compact('adjuststock','adjuststockdetail','mode'));
     }
 
     /**

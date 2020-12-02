@@ -47,6 +47,12 @@ class GaurdStock extends Model
         return $this->belongsTo('App\Purchase\OrderModel','code');
     }
 
+    
+
+    public function adjust_stock(){
+        return $this->belongsTo('App\AdjustStock','code','code');
+    }
+
   
     
 }
