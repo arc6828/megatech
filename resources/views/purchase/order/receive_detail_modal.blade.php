@@ -59,7 +59,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($order->receives as $receive )
+                            @foreach($order->receives->where("purchase_status_id","!=","-1") as $receive )
                                 @foreach($receive->details as $item )
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
