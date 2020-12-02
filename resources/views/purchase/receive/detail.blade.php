@@ -41,7 +41,7 @@
           paging : false,
 					"data": dataSet,
 					"columns": [
-							{ title: "#" },
+							
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },
@@ -50,7 +50,7 @@
 							{ title: "จำนวนที่รับ" },
               @endif
 							//{ title: "หน่วย" },
-							{ title: "ราคาตั้ง" },
+							//{ title: "ราคาตั้ง" },
 							//{ title: "ส่วนลด %" },
 							{ title: "ราคาซื้อ" },
 							{ title: "ราคาซื้อรวม" },
@@ -91,7 +91,7 @@
           "<input class='input amount_receive_edit "+amount_class+"' name='amount_receive_edit[]'  value='0' type='number' min='1' data-limit='"+element.amount_pending_in+"' data-quantity='"+element.quantity+"'>",
           @endif
           //element.product_unit,
-          "<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
+          //"<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",
 					//"<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max="+element.max_discount_percent+"  value='"+(100 - element.discount_price / element.normal_price * 100)+"' readonly>",
           "<input class='input discount_price_edit' name='discount_price_edit[]'  value='"+element.discount_price+"' readonly>",
           @if($mode == "create")
