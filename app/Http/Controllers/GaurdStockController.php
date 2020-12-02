@@ -49,7 +49,7 @@ class GaurdStockController extends Controller
         $product = ProductModel::where('product_id',$product_id)->firstOrFail();
         $whitelist = [
             'sales_invoice',
-            'purchase_receive',
+            'purchase_receive','purchase_receive_cancel',
             'sales_dt_create', 'sales_dt_cancel', 'sales_dt_void',
             'sales_return_invoice', 'sales_return_invoice_cancel',
             'purchase_return_order', 'purchase_return_order_cancel',
