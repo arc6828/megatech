@@ -38,12 +38,16 @@
     @include('finance/menu/cheque')
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    let tab = "#{{ request('tab') }}-tab";
+    //console.log(tab,$(tab));
+    $(tab).tab('show')
+  });
+</script>
 @endsection
 @section('script')
 
-<script>
-  $(function () {
-    $("#{{ request('tab') }}").tab('show')
-  })
-</script>
+
 @endsection

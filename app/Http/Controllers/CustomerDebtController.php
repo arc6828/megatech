@@ -48,11 +48,8 @@ class CustomerDebtController extends Controller
         }
         */
         
-        $perPage = 2500;
-
         $type_debt = $request->get('type_debt');
-
-        $customerdebt = CustomerDebt::where('type_debt',$type_debt)->latest()->paginate($perPage);
+        $customerdebt = CustomerDebt::where('type_debt',$type_debt)->orderBy('doc_no','desc')->get();
 
         return view('customer-debt.index', compact('customerdebt'));
     }

@@ -1,6 +1,28 @@
 @extends('layouts/argon-dashboard/theme')
+@php
+    $main = request('type_debt');
+    switch($main){
+        case "XR" : 
+            $main = "ตั้งหนี้คงค้าง";
+            break;              
+        case "AP" : 
+            $main = "ตั้งหนี้ลูกหนี้";
+            break;              
+        case "DP" : 
+            $main = "ลดหนี้ลูกหนี้";
+            break;         
+    }
+@endphp
 
-@section('title',  request('type_debt')   )
+@section('level-0-url', url('finance')."?tab=debtor-tab")
+@section('level-0','การเงิน')
+
+@section('level-1-url', url('finance/customer-debt')."?type_debt=".request('type_debt'))
+@section('level-1', $main)
+
+
+@section('title', 'สร้าง' )
+@section('background-tag','bg-info ')
 
 @section('content')
     <div class="container">
@@ -8,11 +30,11 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">สร้าง {{ request('type_debt') }} </div>
+                    <!-- <div class="card-header">สร้าง {{ request('type_debt') }} </div> -->
                     <div class="card-body">
-                        <a href="{{ url('/finance/customer-debt') }}?type_debt={{request('type_debt')}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <!-- <a href="{{ url('/finance/customer-debt') }}?type_debt={{request('type_debt')}}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
-                        <br />
+                        <br /> -->
 
                         @if ($errors->any())
                             <ul class="alert alert-danger">

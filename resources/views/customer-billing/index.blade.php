@@ -1,18 +1,22 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('finance')."?tab=debtor-tab")
+@section('level-0','การเงิน')
+
 @section('title',  'ใบวางบิล'   )
+@section('background-tag','bg-info ')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
         
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">@yield('title')</div>
+                    <!-- <div class="card-header">@yield('title')</div> -->
                     <div class="card-body">
                     
-                        <a href="{{ url('/finance') }}?tab=debtor-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <!-- <a href="{{ url('/finance') }}?tab=debtor-tab" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         
                         <a href="{{ url('/finance/customer-billing/create') }}" class="btn btn-success btn-sm" title="Add New CustomerBilling">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
@@ -30,7 +34,7 @@
                         </form>
 
                         <br/>
-                        <br/>
+                        <br/> -->
                         <div class="table-responsive">
                             <table class="table table-sm">
                                 <thead>
@@ -95,6 +99,11 @@
                                 </tbody>
                             </table>
                             <div class="pagination-wrapper"> {!! $customerbilling->appends(['search' => Request::get('search')])->render() !!} </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="{{ url('/finance/customer-billing/create') }}" class="btn btn-success " title="Add New CustomerBilling">
+                                <i class="fa fa-plus" aria-hidden="true"></i> ใบวางบิล
+                            </a>
                         </div>
 
                     </div>

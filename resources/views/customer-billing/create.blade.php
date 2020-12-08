@@ -1,18 +1,25 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  'สร้างใบวางบิล'  )
+@section('level-0-url', url('finance')."?tab=debtor-tab")
+@section('level-0','การเงิน')
+
+@section('level-1-url', url('finance/customer-billing'))
+@section('level-1','ใบวางบิล')
+
+@section('title',  'สร้าง'  )
+
+@section('background-tag','bg-info ')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <div class="card-header">@yield('title')</div>
+                    <!-- <div class="card-header">@yield('title')</div> -->
                     <div class="card-body">
-                        <a href="{{ url('/finance/customer-billing') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <!-- <a href="{{ url('/finance/customer-billing') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
-                        <br />
+                        <br /> -->
 
                         @if ($errors->any())
                             <ul class="alert alert-danger">
