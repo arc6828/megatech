@@ -68,7 +68,7 @@
       <label class="col-lg-2 offset-lg-1">เลขที่ใบจอง</label>
       <div class="col-lg-3">
         <input name="internal_reference_id" id="internal_reference_id" class="form-control form-control-sm"  readonly style="max-width:120px;">
-        @include('sales/invoice/create_from_order_modal')
+        <!-- include('sales/invoice/create_from_order_modal') -->
       </div>
     </div>
     
