@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-sm btn-light" id="btn-customer" data-toggle="modal" data-target="#customerModal">
+<button type="button" class="btn btn-sm btn-light d-none" id="btn-customer" data-toggle="modal" data-target="#customerModal">
 	<i class="fa fa-plus"></i> เลือกลูกค้า
 </button>
 

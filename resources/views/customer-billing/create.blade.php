@@ -42,10 +42,11 @@
                 </div>
                 
                 <div class="card">
-                    <div class="card-header">รายละเอียดใบวางบิล</div>
+                    <!-- <div class="card-header">รายละเอียดใบวางบิล</div> -->
                     <div class="card-body">
+                        <h4>รายละเอียดใบวางบิล</h4>
                         <div class="table-responsive table-binvoiceed">
-                            <table width="100%" class="table table-hover text-center table-sm" id="table">
+                            <table width="100%" class="table table-hover text-center table-bordered table-sm" id="table">
                                 <thead>
                                     <tr>
                                         <th class="text-center">เลขที่เอกสาร</th>

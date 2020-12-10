@@ -1,9 +1,15 @@
 @extends('layouts/argon-dashboard/theme')
+@section('level-0-url', url('finance')."?tab=debtor-tab")
+@section('level-0','การเงิน')
 
-@section('title',  'สร้างการรับชำระเงิน'  )
+@section('level-1-url', url('finance/customer-payment'))
+@section('level-1','รับชำระเงิน')
+
+@section('title',  'สร้าง'  )
+@section('background-tag','bg-info ')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <script>
             function validate(form) {
 
@@ -44,169 +50,171 @@
     
 
         <form method="POST" onsubmit="return validate(this);" action="{{ url('/finance/customer-payment') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        <div class="row">
+            {{ csrf_field() }}
+            <div class="row">
 
-            <div class="col-md-12">
-                <div class="card mb-4">
-                    <div class="card-header">@yield('title')</div>
-                    <div class="card-body">
-                        <a href="{{ url('/finance/customer-payment') }}" title="Back" class="btn btn-warning btn-sm"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back </a>
-                        <br />
-                        <br />
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <!-- <div class="card-header">@yield('title')</div> -->
+                        <div class="card-body">
+                            <!-- <a href="{{ url('/finance/customer-payment') }}" title="Back" class="btn btn-warning btn-sm"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back </a>
+                            <br />
+                            <br /> -->
 
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                            @if ($errors->any())
+                                <ul class="alert alert-danger">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
 
-                        @include ('customer-payment.form', ['formMode' => 'create'])
+                            @include ('customer-payment.form', ['formMode' => 'create'])
 
 
+                        </div>
                     </div>
-                </div>
 
-                @php
-                //$invoices = $invoices? $invoices : [];
-                @endphp
-                <div class="card mb-4">
-                    <div class="card-header">รายละเอียด Invoice</div>
-                    <div class="card-body">
-                        <div class="table-responsive table-binvoiceed">
-                            <table width="100%" class="table table-hover text-center table-sm" id="table">
+                    @php
+                    //$invoices = $invoices? $invoices : [];
+                    @endphp
+                    <div class="card mb-4">
+                        <!-- <div class="card-header">รายละเอียด Invoice</div> -->
+                        <div class="card-body">
+                            <h3>รายละเอียด Invoice</h3>
+                            <div class="table-responsive table-binvoiceed">
+                                <table width="100%" class="table table-hover text-center table-sm table-bordered" id="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">ใบวางบิล</th>
+                                            <th class="text-center">เลขที่เอกสาร</th>
+                                            <th class="text-center">วันที่</th>
+                                            <th class="text-center">เอกสารอ้างอิง</th>
+                                            <th class="text-center">ยอดหนี้คงค้าง</th>
+                                            <th class="text-center">รับชำระ</th>
+                                            <th class="text-center d-none">ยอดรวม</th>
+                                            <th class="text-center">รหัสพนักงาน</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($invoices as $row)
+                                        <tr>
+                                            <td>{{ isset($row->customer_billing_detail) ? $row->customer_billing_detail->customer_billing->doc_no : '' }}</td>
+                                            <td>
+                                                <a href="#">
+                                                    {{ $row->invoice_code }}
+                                                </a>
+                                            </td>
+                                            <td>{{ $row->datetime }}</td>
+                                            
+                                            <td>{{ $row->external_reference_id }}</td>
+                                            <td>{{ $row->total_debt }}</td>
+                                            <td>
+                                                <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
+                                                
+                                                <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
+                                            </td>
+                                            <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
+                                            <td>{{ $row->User->short_name }}</td>
+                                        </tr>
+                                        @endforeach
+                                        @foreach($debts as $row)
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <a href="#">
+                                                    {{ $row->doc_no }}
+                                                </a>
+                                            </td>
+                                            <td>{{ $row->date }}</td>
+                                            
+                                            <td> </td>
+                                            <td>{{ $row->total_debt }}</td>
+                                            <td>
+                                                <input style="width:100px;" name="customer_debt_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
+                                                
+                                                <input type="hidden" name="customer_debt_ids[]" value="{{ $row->id }}">
+                                            </td>
+                                            <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
+                                            <td>{{ isset($row->user_id) ? $row->User->short_name : '' }}</td>
+                                        </tr>
+                                        @endforeach
+                                        
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                    
+                            <script>
+                            document.addEventListener("DOMContentLoaded", function(event) {
+                                    console.log("555");
+                                    //$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
+                            });
+
+                            </script>
+
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <!-- <div class="card-header">วิธีการชำระเงิน</div> -->
+                        <div class="card-body">
+                            <h3>วิธีการชำระเงิน</h3>
+                            <table class="table table-sm text-center  table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">ใบวางบิล</th>
-                                        <th class="text-center">เลขที่เอกสาร</th>
-                                        <th class="text-center">วันที่</th>
-                                        <th class="text-center">เอกสารอ้างอิง</th>
-                                        <th class="text-center">ยอดหนี้คงค้าง</th>
-                                        <th class="text-center">รับชำระ</th>
-                                        <th class="text-center d-none">ยอดรวม</th>
-                                        <th class="text-center">รหัสพนักงาน</th>
+                                        <th>ประเภท Transaction</th>
+                                        <th>วันที่</th>
+                                        <th>รหัสธนาคาร</th>
+                                        <th>ยอดเงินฝาก</th>
+                                        <th>หมายเหตุ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($invoices as $row)
+                                    @php
+                                        $transaction_code_object = [
+                                            "discount-fee" => "ส่วนลด/ค่าธรรมเนียม",
+                                            "cash-transfer-in" => "โอนเงินสด",
+                                            "deposite-cheque" => "ฝากด้วยเช็ค",
+                                            "credit" => "บัตรเครดิต",
+                                        ];
+                                    @endphp
+                                    @foreach($transaction_code_object as $key => $value)
                                     <tr>
-                                        <td>{{ isset($row->customer_billing_detail) ? $row->customer_billing_detail->customer_billing->doc_no : '' }}</td>
                                         <td>
-                                            <a href="#">
-                                                {{ $row->invoice_code }}
-                                            </a>
+                                            <input class="form-control form-control-sm" name="transaction_code[]" type="hidden" id="transaction_code" value="{{ $key }}">   
+                                            <input class="form-control form-control-sm" name="" type="text" id="" value="{{ $value }}" readonly>  
                                         </td>
-                                        <td>{{ $row->datetime }}</td>
-                                        
-                                        <td>{{ $row->external_reference_id }}</td>
-                                        <td>{{ $row->total_debt }}</td>
                                         <td>
-                                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
-                                            
-                                            <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
+                                            <input class="form-control form-control-sm payments-date" name="date[]" type="date" id="date-{{ $key }}" value="">    
                                         </td>
-                                        <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
-                                        <td>{{ $row->User->short_name }}</td>
+                                        <td>
+                                            <select class="form-control form-control-sm" name="bank_account_id[]" id="bank_account_id" >
+                                                @foreach( $bank_accounts as $bank_account )
+                                                <option value="{{ $bank_account->id }}">{{ $bank_account->name }} {{ $bank_account->branch }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input class="form-control form-control-sm payments-amount" name="amount[]" type="text" id="amount-{{$key}}" step="any" value="" key="{{ $key }}">                            
+                                        </td>
+                                        <td>
+                                            <input class="form-control form-control-sm" name="remark[]" type="text" id="remark" value="" >  
+                                        </td>
                                     </tr>
                                     @endforeach
-                                    @foreach($debts as $row)
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <a href="#">
-                                                {{ $row->doc_no }}
-                                            </a>
-                                        </td>
-                                        <td>{{ $row->date }}</td>
-                                        
-                                        <td> </td>
-                                        <td>{{ $row->total_debt }}</td>
-                                        <td>
-                                            <input style="width:100px;" name="customer_debt_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
-                                            
-                                            <input type="hidden" name="customer_debt_ids[]" value="{{ $row->id }}">
-                                        </td>
-                                        <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
-                                        <td>{{ isset($row->user_id) ? $row->User->short_name : '' }}</td>
-                                    </tr>
-                                    @endforeach
-                                    
                                 </tbody>
+                            </table>                         
 
-                            </table>
                         </div>
-
-                   
-                        <script>
-                        document.addEventListener("DOMContentLoaded", function(event) {
-                                console.log("555");
-                                //$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
-                        });
-
-                        </script>
-
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header">วิธีการชำระเงิน</div>
-                    <div class="card-body">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>ประเภท Transaction</th>
-                                    <th>วันที่</th>
-                                    <th>รหัสธนาคาร</th>
-                                    <th>ยอดเงินฝาก</th>
-                                    <th>หมายเหตุ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $transaction_code_object = [
-                                        "discount-fee" => "ส่วนลด/ค่าธรรมเนียม",
-                                        "cash-transfer-in" => "โอนเงินสด",
-                                        "deposite-cheque" => "ฝากด้วยเช็ค",
-                                        "credit" => "บัตรเครดิต",
-                                    ];
-                                @endphp
-                                @foreach($transaction_code_object as $key => $value)
-                                <tr>
-                                    <td>
-                                        <input class="form-control form-control-sm" name="transaction_code[]" type="hidden" id="transaction_code" value="{{ $key }}">   
-                                        <input class="form-control form-control-sm" name="" type="text" id="" value="{{ $value }}" readonly>  
-                                    </td>
-                                    <td>
-                                        <input class="form-control form-control-sm payments-date" name="date[]" type="date" id="date-{{ $key }}" value="">    
-                                    </td>
-                                    <td>
-                                        <select class="form-control form-control-sm" name="bank_account_id[]" id="bank_account_id" >
-                                            @foreach( $bank_accounts as $bank_account )
-                                            <option value="{{ $bank_account->id }}">{{ $bank_account->name }} {{ $bank_account->branch }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-control form-control-sm payments-amount" name="amount[]" type="text" id="amount-{{$key}}" step="any" value="" key="{{ $key }}">                            
-                                    </td>
-                                    <td>
-                                        <input class="form-control form-control-sm" name="remark[]" type="text" id="remark" value="" >  
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>                         
-
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="text-center mb-4">
-            <input class="btn btn-primary" type="submit" onclick="validate(this)" value="create">
-            <button type="button" onclick="validate(this);"></button>
-        </div>
+            <div class="text-center mb-4">
+                <input class="btn btn-primary" type="submit" onclick="validate(this)" value="create">
+                <button type="button" class="d-none" onclick="validate(this);"></button>
+            </div>
         
         </form>
     </div>

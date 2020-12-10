@@ -23,23 +23,24 @@ class CustomerBillingController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
+        // $keyword = $request->get('search');
+        // $perPage = 25;
 
-        if (!empty($keyword)) {
-            $customerbilling = CustomerBilling::where('doc_no', 'LIKE', "%$keyword%")
-                ->orWhere('total', 'LIKE', "%$keyword%")
-                ->orWhere('customer_id', 'LIKE', "%$keyword%")
-                ->orWhere('condition_billing', 'LIKE', "%$keyword%")
-                ->orWhere('condition_cheque', 'LIKE', "%$keyword%")
-                ->orWhere('date_billing', 'LIKE', "%$keyword%")
-                ->orWhere('date_cheque', 'LIKE', "%$keyword%")
-                ->orWhere('remark', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $customerbilling = CustomerBilling::latest()->paginate($perPage);
-        }
+        // if (!empty($keyword)) {
+        //     $customerbilling = CustomerBilling::where('doc_no', 'LIKE', "%$keyword%")
+        //         ->orWhere('total', 'LIKE', "%$keyword%")
+        //         ->orWhere('customer_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('condition_billing', 'LIKE', "%$keyword%")
+        //         ->orWhere('condition_cheque', 'LIKE', "%$keyword%")
+        //         ->orWhere('date_billing', 'LIKE', "%$keyword%")
+        //         ->orWhere('date_cheque', 'LIKE', "%$keyword%")
+        //         ->orWhere('remark', 'LIKE', "%$keyword%")
+        //         ->orWhere('user_id', 'LIKE', "%$keyword%")
+        //         ->latest()->paginate($perPage);
+        // } else {
+        //     $customerbilling = CustomerBilling::latest()->paginate($perPage);
+        // }
+        $customerbilling = CustomerBilling::latest()->get();
 
         return view('customer-billing.index', compact('customerbilling'));
     }

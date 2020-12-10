@@ -36,7 +36,7 @@
                         <br/>
                         <br/> -->
                         <div class="table-responsive">
-                            <table class="table table-sm">
+                            <table class="table table-sm table-hover text-center table-bordered table-striped" id="table">
                                 <thead>
                                     <tr>
                                         <th>เลขที่เอกสาร</th>
@@ -45,7 +45,7 @@
                                         <th>รหัสลูกค้า</th>
                                         <th>ลูกค้า</th>
                                         <th>เลขที่รับชำระ</th>
-                                        <th class="d-none">Action</th>
+                                        <!-- <th class="d-none">Action</th> -->
                                         
                                     </tr>
                                 </thead>
@@ -82,7 +82,7 @@
                                             @endif
                                         
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <a href="{{ url('/finance/customer-billing/' . $item->id) }}/pdf" title="View CustomerBilling"><button class="btn btn-success btn-sm d-none"><i class="fa fa-file-pdf" aria-hidden="true"></i> PDF</button></a>
                                             
                                             <a class="d-none"  href="{{ url('/finance/customer-billing/' . $item->id) }}" title="View CustomerBilling"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
@@ -93,12 +93,11 @@
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete CustomerBilling" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                                             </form>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            <div class="pagination-wrapper"> {!! $customerbilling->appends(['search' => Request::get('search')])->render() !!} </div>
                         </div>
                         <div class="text-center mt-4">
                             <a href="{{ url('/finance/customer-billing/create') }}" class="btn btn-success " title="Add New CustomerBilling">
@@ -111,4 +110,14 @@
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var table = $('#table').DataTable({          
+            ordering: false,                  
+            paging: false,
+            info: false,          
+            // searching: false,                
+        }); //END DataTable
+    });
+    </script>
 @endsection
