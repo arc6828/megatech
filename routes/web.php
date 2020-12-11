@@ -22,7 +22,7 @@
 
 
 //LOGIN REQUIRED
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
     Route::get('/user-manual',function(){
         return view('user-manual');
     });
@@ -341,18 +341,17 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('comment', 'CommentController');
     Route::get('backuplog/download/{filename}','BackuplogController@download');
     Route::resource('backuplog', 'BackuplogController');
+    
+
+
+    Route::resource('brand', 'BrandController');
+    Route::resource('issue-stock', 'IssueStockController');
+    Route::resource('issue-stock-detail', 'IssueStockDetailController');
+    Route::resource('receive-final', 'ReceiveFinalController');
+    Route::resource('receive-final-detail', 'ReceiveFinalDetailController');
+    Route::resource('adjust-stock', 'AdjustStockController');
+    Route::resource('adjust-stock-detail', 'AdjustStockDetailController');
 });
 //END MIDDLEWARE AUTH
 
 Auth::routes();
-
-
-Route::resource('brand', 'BrandController');
-
-
-Route::resource('issue-stock', 'IssueStockController');
-Route::resource('issue-stock-detail', 'IssueStockDetailController');
-Route::resource('receive-final', 'ReceiveFinalController');
-Route::resource('receive-final-detail', 'ReceiveFinalDetailController');
-Route::resource('adjust-stock', 'AdjustStockController');
-Route::resource('adjust-stock-detail', 'AdjustStockDetailController');
