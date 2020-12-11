@@ -24,7 +24,7 @@ $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( 
                 <tbody>
                     @foreach($invoices as $row)
                     <tr>
-                        <td> <input type="checkbox" onchange="onSelect(this);"> </td>
+                        <td> <input type="checkbox" index="{{ $loop->index }}" onchange="onSelect(this);"> </td>
                         <td>{{ isset($row->customer_billing_detail) ? $row->customer_billing_detail->customer_billing->doc_no : '' }}</td>
                         <td>{{ $row->invoice_code }}</td>
                         <td>{{ explode(" ",$row->datetime)[0] }}</td>
@@ -32,18 +32,20 @@ $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( 
                         <td>{{ $row->external_reference_id }}</td>
                         <td>{{ $row->total_debt }}</td>
                         <td>
-                            <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
+                            <input style="width:100px;" name="invoice_payments[]" total_debt="{{ $row->total_debt }}"  value="0" class="invoice_payments payments">
                             
                             <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
                         </td>
                         <!-- <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td> -->
                         <td>
-                            <input style="width:100px;" name="remains[]" value="0" class="remains">
+                        <input style="width:100px;" name="remains[]" total_debt="{{ $row->total_debt }}" class="remains" value="{{ $row->total_debt }}" class="remains">
                         </td>
                     </tr>
                     @endforeach
                     @foreach($debts as $row)
                     <tr>
+                        <td> <input type="checkbox" index="{{ count($invoices) + $loop->index }}" onchange="onSelect(this);"> </td>
+                        
                         <td></td>
                         <td>{{ $row->doc_no }}</td>
                         <td>{{ explode(" ",$row->date)[0] }}</td>
@@ -51,13 +53,12 @@ $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( 
                         <td> </td>
                         <td>{{ $row->total_debt }}</td>
                         <td>
-                            <input style="width:100px;" name="customer_debt_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
-                            
+                            <input style="width:100px;" name="customer_debt_payments[]" total_debt="{{ $row->total_debt }}" value="0" class="invoice_payments payments">                            
                             <input type="hidden" name="customer_debt_ids[]" value="{{ $row->id }}">
                         </td>
                         <!-- <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td> -->
                         <td>
-                            <input style="width:100px;" name="remains[]" value="0" class="remains">
+                            <input style="width:100px;" name="remains[]" total_debt="{{ $row->total_debt }}" class="remains" value="{{ $row->total_debt }}" class="remains">
                         </td>
                     </tr>
                     @endforeach
@@ -73,10 +74,13 @@ $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( 
                         <input style="width:100px;"  name="debt_total" type="text" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}"  readonly>            
                     </th>
                     <th class="text-center">
-                        <input style="width:100px;"  name="payment_total" type="text" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" readonly>
+                        <!-- <input style="width:100px;"  name="payment_total" type="text" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" readonly> -->
+                        <input style="width:100px;"  name="payment_total" type="text" id="payment_total" value="0" readonly>
                     </th>
                     <!-- <th class="text-center d-none">ยอดรวม</th> -->
-                    <th class="text-center"></th>
+                    <th class="text-center">
+                        <input style="width:100px;"  name="remain_total" type="text" id="remain_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}" readonly>
+                    </th>
                 </tfoot>
 
             </table>
@@ -99,7 +103,18 @@ $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( 
         });
 
         function onSelect(element){
-            
+            let i = element.getAttribute("index");            
+            let payment = document.querySelectorAll(".invoice_payments")[i];
+            let remain = document.querySelectorAll(".remains")[i];
+            if(element.checked){
+                console.log("checked");
+                payment.value = payment.getAttribute("total_debt");
+                $(payment).change();
+            }else{
+                console.log("unchecked");
+                payment.value = 0;
+                $(payment).change();
+            }
         }
 
         </script>

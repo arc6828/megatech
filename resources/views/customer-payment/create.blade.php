@@ -146,9 +146,18 @@
         $(".payments").change(function(){
             console.log("Payment Change !!!");
             var sum = 0;
-            $('.payments').each(function() {
+            $('.payments').each(function(i) {
                 sum += Number($(this).val());
+                
+                
             });
+            for(let i=0; i<document.querySelectorAll(".payments").length; i++){
+                let payment = document.querySelectorAll(".payments")[i];            
+                let remain = document.querySelectorAll(".remains")[i]; 
+                console.log(payment,remain);
+                remain.value = payment.getAttribute("total_debt") - payment.value;
+            }
+                
             $("#payment_total").val(sum);
         });
         $(".payments-amount").change(function(){
