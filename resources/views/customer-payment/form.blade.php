@@ -37,23 +37,24 @@
     
 </div>
 <div class="form-group form-row text-center pr-5">    
+    <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
+    <small class="col-lg-3  text-left">
+        {{ isset($customer) ? $customer->user->name : '' }}
+    </small>
+
     <label for="user_id" class="col-lg-3 control-label">{{ 'พนักงานผู้บันทึก' }}</label>
     <input class="col-lg-3 form-control form-control-sm d-none" name="user_id" type="number" id="user_id" value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::id() }}" >
     <input class="col-lg-3 form-control form-control-sm"  value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::user()->name }}" disabled>
     
+</div>
+
+<div class="form-group form-row text-center pr-5">    
     <label for="remark" class="col-lg-3 control-label">{{ 'หมายเหตุ' }}</label>
     <textarea class="col-lg-3 form-control form-control-sm" rows="2" name="remark" type="textarea" id="remark" >{{ isset($customerpayment->remark) ? $customerpayment->remark : ''}}</textarea>
   
+
 </div>
-<div class="form-group form-row text-center pr-5">
-    <label for="debt_total" class="col-lg-3 control-label">{{ 'ยอดรวมหนี้' }}</label>
-    <input class="col-lg-3 form-control form-control-sm" name="debt_total" type="text" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}"  readonly>
-    
-    
-    <label for="payment_total" class="col-lg-3 control-label">{{ 'ยอดรวมรับชำระ' }}</label>
-    <input class="col-lg-3 form-control form-control-sm" name="payment_total" type="text" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" readonly>
-    
-</div>
+
 
 <div class="form-group d-none {{ $errors->has('role') ? 'has-error' : ''}}">
     <label for="role" class="col-lg-3 control-label">{{ 'รหัสแผนก' }}</label>

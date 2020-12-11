@@ -40,7 +40,7 @@
 
         <div class="form-row form-group text-center pr-5">
             <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
-            <small class="col-lg-3 ">
+            <small class="col-lg-3 text-left ">
                 {{ isset($customer) ? $customer->user->name : '' }}
             </small>
             

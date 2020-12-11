@@ -75,87 +75,7 @@
                         </div>
                     </div>
 
-                    @php
-                    //$invoices = $invoices? $invoices : [];
-                    @endphp
-                    <div class="card mb-4">
-                        <!-- <div class="card-header">รายละเอียด Invoice</div> -->
-                        <div class="card-body">
-                            <h3>รายละเอียด Invoice</h3>
-                            <div class="table-responsive table-binvoiceed">
-                                <table width="100%" class="table table-hover text-center table-sm table-bordered" id="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">ใบวางบิล</th>
-                                            <th class="text-center">เลขที่เอกสาร</th>
-                                            <th class="text-center">วันที่</th>
-                                            <th class="text-center">เอกสารอ้างอิง</th>
-                                            <th class="text-center">ยอดหนี้คงค้าง</th>
-                                            <th class="text-center">รับชำระ</th>
-                                            <th class="text-center d-none">ยอดรวม</th>
-                                            <th class="text-center">รหัสพนักงาน</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($invoices as $row)
-                                        <tr>
-                                            <td>{{ isset($row->customer_billing_detail) ? $row->customer_billing_detail->customer_billing->doc_no : '' }}</td>
-                                            <td>
-                                                <a href="#">
-                                                    {{ $row->invoice_code }}
-                                                </a>
-                                            </td>
-                                            <td>{{ $row->datetime }}</td>
-                                            
-                                            <td>{{ $row->external_reference_id }}</td>
-                                            <td>{{ $row->total_debt }}</td>
-                                            <td>
-                                                <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
-                                                
-                                                <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
-                                            </td>
-                                            <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
-                                            <td>{{ $row->User->short_name }}</td>
-                                        </tr>
-                                        @endforeach
-                                        @foreach($debts as $row)
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <a href="#">
-                                                    {{ $row->doc_no }}
-                                                </a>
-                                            </td>
-                                            <td>{{ $row->date }}</td>
-                                            
-                                            <td> </td>
-                                            <td>{{ $row->total_debt }}</td>
-                                            <td>
-                                                <input style="width:100px;" name="customer_debt_payments[]" value="{{ $row->total_debt }}" class="invoice_payments payments">
-                                                
-                                                <input type="hidden" name="customer_debt_ids[]" value="{{ $row->id }}">
-                                            </td>
-                                            <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
-                                            <td>{{ isset($row->user_id) ? $row->User->short_name : '' }}</td>
-                                        </tr>
-                                        @endforeach
-                                        
-                                    </tbody>
-
-                                </table>
-                            </div>
-
-                    
-                            <script>
-                            document.addEventListener("DOMContentLoaded", function(event) {
-                                    console.log("555");
-                                    //$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
-                            });
-
-                            </script>
-
-                        </div>
-                    </div>
+                   @include('customer-payment/detail')
 
                     <div class="card mb-4">
                         <!-- <div class="card-header">วิธีการชำระเงิน</div> -->
@@ -205,6 +125,8 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
+                                
+
                             </table>                         
 
                         </div>

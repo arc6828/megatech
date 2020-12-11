@@ -149,6 +149,9 @@
                                         <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
                                     </tr>
                                     @endforeach
+                                    
+                                </tbody>
+                                <tfoot>
                                     <tr>
                                         <td>  </td>
                                         <td> </td>
@@ -158,7 +161,7 @@
                                         <!-- <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td> -->
                                         <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
                                     </tr>
-                                </tbody>
+                                </tfoot>
 
                             </table>
                         </div>
