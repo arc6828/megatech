@@ -130,8 +130,8 @@
                                     <tr>
                                         <th class="text-center">เลขที่เอกสาร</th>
                                         <th class="text-center">วันที่</th>
-                                        <th class="text-center">รหัสลูกค้า</th>
-                                        <!-- <th class="text-center">เอกสารอ้างอิง</th> -->
+                                        <!-- <th class="text-center">รหัสลูกค้า</th> -->
+                                        <th class="text-center">PO ลูกค้า</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
                                         <!-- <th class="text-center">ยอดรวม</th> -->
                                         <th class="text-center">รหัสพนักงาน</th>
@@ -142,8 +142,8 @@
                                     <tr>
                                         <td> {{ $row->invoice->invoice_code }} </td>
                                         <td>{{ $row->invoice->datetime }}</td>
-                                        <td>{{ $row->invoice->Customer->customer_code }}</td>
-                                        <!-- <td>{{ $row->invoice->external_reference_id }}</td> -->
+                                        <!-- <td>{{ $row->invoice->Customer->customer_code }}</td> -->
+                                        <td>{{ $row->invoice->external_reference_id }}</td>
                                         <td>{{ number_format($row->invoice->total_debt,2) }}</td>
                                         <!-- <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td> -->
                                         <td>{{ $row->invoice->User->short_name }}</td>
