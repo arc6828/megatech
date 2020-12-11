@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\UserModel;
 use App\User;
 use App\DepartmentModel;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -56,6 +58,13 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+
+        return view('user.show', compact('user'));
+    }
+
+    public function profile()
+    {
+        $user = User::findOrFail(Auth::id());
 
         return view('user.show', compact('user'));
     }

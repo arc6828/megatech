@@ -15,8 +15,11 @@
         return view('welcome');
     });
 
-    Route::get('/index',function(){
-        return redirect('/sales');
+    // Route::get('/index',function(){
+    //     return redirect('/sales');
+    // });
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/profile','UserController@profile');
     });
 
 
@@ -147,9 +150,9 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
     });
 
 
-    Route::get('/user','UserController@index');
+    
     Route::middleware(['role:admin'])->group(function () {
-        Route::resource('/user','UserController')->except(['index']);
+        Route::resource('/user','UserController');
     });
 
 
