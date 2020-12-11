@@ -131,8 +131,9 @@ class CustomerBillingController extends Controller
     public function show($id)
     {
         $customerbilling = CustomerBilling::findOrFail($id);
+        $customer = CustomerModel::find($customerbilling->customer_id);
 
-        return view('customer-billing.show', compact('customerbilling'));
+        return view('customer-billing.show', compact('customerbilling','customer'));
     }
     public function pdf($id)
     {

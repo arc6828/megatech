@@ -54,13 +54,13 @@
                             <small class="col-lg-3 text-left"> {{ $customerbilling->user->name }}  </small>
                         </div>
 
-                        <div class="form-row form-group text-center pr-5" >                            
+                        <!-- <div class="form-row form-group text-center pr-5" >                            
                             <label class="col-lg-3">  เงื่อนไขการวางบิล </label>
                             <small class="col-lg-3 text-left"> {{ $customerbilling->condition_billing }} </small>
                             
                             <label class="col-lg-3"> เงื่อนไขการรับเช็ค </label>
                             <small class="col-lg-3 text-left"> {{ $customerbilling->condition_cheque }}  </small>
-                        </div>
+                        </div> -->
 
                         <div class="form-row form-group text-center pr-5" >                            
                             <label class="col-lg-3">  วันที่รับเช็ค </label>
@@ -96,7 +96,18 @@
 
                                 </form>
                             </div>
-                        </div>                        
+                        </div>    
+                        @if($customer)
+                            <div class="px-5" >
+                                @include('customer-billing/form-customer-billing')
+                            </div>
+                        @endif        
+
+                        @if($customer)
+                            <div class="px-5" >
+                                @include('customer-billing/form-customer-cheque')
+                            </div>
+                        @endif            
 
                     </div>
                 </div>
