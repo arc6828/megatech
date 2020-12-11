@@ -1,6 +1,30 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title','สร้างทะเบียนเช็ค')
+@php
+    $main = request('cheque_type_code');
+    switch($main){
+        case "cheque-in" : 
+            $main = "ทะเบียนเช็ครับ";
+            break;              
+        case "cheque-out" : 
+            $main = "ทะเบียนเช็คจ่าย";
+            break;        
+        case "" : 
+            $main = "ทั้งหมด";
+            break;        
+    }
+@endphp
+
+@section('level-0-url', url('finance')."?tab=cheque-tab")
+@section('level-0','การเงินเช็ค')
+
+@section('level-1-url', url('finance/cheque')."?cheque_type_code=".request('cheque_type_code'))
+@section('level-1', $main)
+
+
+@section('title', 'สร้าง' )
+@section('background-tag','bg-info ')
+
 
 @section('content')
     <div class="container">
