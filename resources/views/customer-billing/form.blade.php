@@ -34,13 +34,24 @@
                 </div>
             </div>        
 
+            
+           
+        </div>
+
+        <div class="form-row form-group text-center pr-5">
+            <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
+            <small class="col-lg-3 ">
+                {{ isset($customer) ? $customer->user->name : '' }}
+            </small>
+            
+
             <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานผู้บันทึก' }}</label>
             <input class="form-control form-control-sm" name="user_id" type="hidden" id="user_id" value="{{ isset($customerbilling->user_id) ? $customerbilling->user_id : Auth::id() }}"  readonly>
 
             <input class="col-lg-3  form-control form-control-sm" value="{{ isset($customerbilling->user_id) ? $customerbilling->user_id : Auth::user()->name }}" disabled >
     
 
-           
+
         </div>
 
         

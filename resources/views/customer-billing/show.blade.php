@@ -39,9 +39,19 @@
                         </div>
 
                         <div class="form-row form-group text-center pr-5" >                            
-                            <label class="col-lg-3"> รหัสลูกค้า </label>
-                            <small class="col-lg-3 text-left"> {{ $customerbilling->customer->customer_code }}  {{ $customerbilling->customer->company_name }} </small>
                             
+                            <label class="col-lg-3"> รหัสลูกค้า </label>
+                            <small class="col-lg-6 text-left"> {{ $customerbilling->customer->customer_code }}  {{ $customerbilling->customer->company_name }} </small>
+                           
+                            
+                            
+                        </div>
+
+                        <div class="form-row form-group text-center pr-5" >                            
+                            <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
+                            <small class="col-lg-3 text-left">
+                                {{ isset($customer) ? $customer->user->name : '' }}
+                            </small>
                             <label class="col-lg-3"> พนักงานผู้บันทึก </label>
                             <small class="col-lg-3 text-left"> {{ $customerbilling->user->name }}  </small>
                             
@@ -87,7 +97,7 @@
                                         document.querySelector("#status2").value = "{{$customerbilling->status}}"; 
                                     
                                     </script>                           
-                                    <button type="submit" class="btn btn-sm btn-primary ml-4">save</button>                                              
+                                    <!-- <button type="submit" class="btn btn-sm btn-primary ml-4">save</button>                                               -->
 
                                 </form>
                             </div>
