@@ -17,36 +17,37 @@ class SupplierDebtController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
+        // $keyword = $request->get('search');
+        // $perPage = 25;
 
-        if (!empty($keyword)) {
-            $supplierdebt = SupplierDebt::where('doc_no', 'LIKE', "%$keyword%")
-                ->orWhere('date', 'LIKE', "%$keyword%")
-                ->orWhere('supplier_id', 'LIKE', "%$keyword%")
-                ->orWhere('discount', 'LIKE', "%$keyword%")
-                ->orWhere('amount', 'LIKE', "%$keyword%")
-                ->orWhere('vat_percent', 'LIKE', "%$keyword%")
-                ->orWhere('vat', 'LIKE', "%$keyword%")
-                ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
-                ->orWhere('total', 'LIKE', "%$keyword%")
-                ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
-                ->orWhere('completed_at', 'LIKE', "%$keyword%")
-                ->orWhere('tax_category', 'LIKE', "%$keyword%")
-                ->orWhere('round', 'LIKE', "%$keyword%")
-                ->orWhere('type_debt', 'LIKE', "%$keyword%")
-                ->orWhere('debt_duration', 'LIKE', "%$keyword%")
-                ->orWhere('user_id', 'LIKE', "%$keyword%")
-                ->orWhere('role', 'LIKE', "%$keyword%")
-                ->orWhere('reference', 'LIKE', "%$keyword%")
-                ->orWhere('zone_id', 'LIKE', "%$keyword%")
-                ->orWhere('cheque_id', 'LIKE', "%$keyword%")
-                ->orWhere('payment_method', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $supplierdebt = SupplierDebt::latest()->paginate($perPage);
-        }
-
+        // if (!empty($keyword)) {
+        //     $supplierdebt = SupplierDebt::where('doc_no', 'LIKE', "%$keyword%")
+        //         ->orWhere('date', 'LIKE', "%$keyword%")
+        //         ->orWhere('supplier_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('discount', 'LIKE', "%$keyword%")
+        //         ->orWhere('amount', 'LIKE', "%$keyword%")
+        //         ->orWhere('vat_percent', 'LIKE', "%$keyword%")
+        //         ->orWhere('vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
+        //         ->orWhere('total', 'LIKE', "%$keyword%")
+        //         ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('completed_at', 'LIKE', "%$keyword%")
+        //         ->orWhere('tax_category', 'LIKE', "%$keyword%")
+        //         ->orWhere('round', 'LIKE', "%$keyword%")
+        //         ->orWhere('type_debt', 'LIKE', "%$keyword%")
+        //         ->orWhere('debt_duration', 'LIKE', "%$keyword%")
+        //         ->orWhere('user_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('role', 'LIKE', "%$keyword%")
+        //         ->orWhere('reference', 'LIKE', "%$keyword%")
+        //         ->orWhere('zone_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('cheque_id', 'LIKE', "%$keyword%")
+        //         ->orWhere('payment_method', 'LIKE', "%$keyword%")
+        //         ->latest()->paginate($perPage);
+        // } else {
+        //     $supplierdebt = SupplierDebt::latest()->paginate($perPage);
+        // }
+        $type_debt = $request->get('type_debt');
+        $supplierdebt = SupplierDebt::where('type_debt',$type_debt)->orderBy('doc_no','desc')->get();
         return view('supplier-debt.index', compact('supplierdebt'));
     }
 

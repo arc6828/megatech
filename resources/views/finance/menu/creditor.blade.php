@@ -2,7 +2,7 @@
   <div class="card-block">      
     <div class="row text-center">
       <div class="col-6 col-md-3">
-        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/supplier-debt/create?debt_type=ตั้งหนี้คงค้าง">
+        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/supplier-debt?type_debt=XP">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
             <div>ตั้งยอดหนี้<br>คงค้าง</div>
@@ -10,7 +10,7 @@
         </a> 
       </div>
       <div class="col-6 col-md-3">
-        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/supplier-debt/create?debt_type=ตั้งหนี้เจ้าหนี้">
+        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/supplier-debt?type_debt=AP">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
             <div>ตั้งหนี้<br>เจ้าหนี้</div>     
@@ -18,7 +18,7 @@
         </a>         
       </div>
       <div class="col-6 col-md-3">
-        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/supplier-debt/create?debt_type=ลดหนี้เจ้าหนี้">
+        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/supplier-debt?type_debt=DP">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
             <div>ลดหนี้<br>เจ้าหนี้</div>       

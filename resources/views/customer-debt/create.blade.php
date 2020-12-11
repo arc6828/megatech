@@ -5,17 +5,17 @@
         case "XR" : 
             $main = "ตั้งหนี้คงค้าง";
             break;              
-        case "AP" : 
-            $main = "ตั้งหนี้ลูกหนี้";
+        case "AR" : 
+            $main = "ตั้งหนี้";
             break;              
-        case "DP" : 
-            $main = "ลดหนี้ลูกหนี้";
+        case "DR" : 
+            $main = "ลดหนี้";
             break;         
     }
 @endphp
 
 @section('level-0-url', url('finance')."?tab=debtor-tab")
-@section('level-0','การเงิน')
+@section('level-0','การเงินลูกหนี้')
 
 @section('level-1-url', url('finance/customer-debt')."?type_debt=".request('type_debt'))
 @section('level-1', $main)

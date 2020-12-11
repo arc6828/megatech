@@ -10,7 +10,7 @@
         </a>   
       </div>
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/customer-debt?type_debt=AP">
+        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/customer-debt?type_debt=AR">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
             <div>ตั้งหนี้/<br>ลูกหนี้</div>
@@ -18,7 +18,7 @@
         </a>   
       </div>
       <div class="col-6 col-md-4 ">
-        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/customer-debt?type_debt=DP">
+        <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/customer-debt?type_debt=DR">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
             <div>ลดหนี้/<br>ลูกหนี้</div>

@@ -30,7 +30,7 @@ class SupplierDebt extends Model
     public function User(){
         return $this->belongsTo('App\User','user_id');
     }
-    public function customer(){
-        return $this->belongsTo('App\CustomerModel','customer_id');
+    public function supplier(){
+        return $this->belongsTo('App\SupplierModel','supplier_id');
     }
 }

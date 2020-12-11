@@ -15,9 +15,9 @@
         return view('welcome');
     });
 
-    // Route::get('/index',function(){
-    //     return redirect('/sales');
-    // });
+    Route::get('/index',function(){
+        return redirect('/sales');
+    });
     Route::middleware(['auth'])->group(function () {
         Route::get('/profile','UserController@profile');
     });

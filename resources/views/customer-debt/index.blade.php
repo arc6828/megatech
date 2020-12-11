@@ -5,17 +5,17 @@
         case "XR" : 
             $main = "ตั้งหนี้คงค้าง";
             break;              
-        case "AP" : 
-            $main = "ตั้งหนี้ลูกหนี้";
+        case "AR" : 
+            $main = "ตั้งหนี้";
             break;              
-        case "DP" : 
-            $main = "ลดหนี้ลูกหนี้";
+        case "DR" : 
+            $main = "ลดหนี้";
             break;         
     }
 @endphp
 
 @section('level-0-url', url('finance')."?tab=debtor-tab")
-@section('level-0','การเงิน-'.$main)
+@section('level-0','การเงินลูกหนี้')
 
 @section('title', $main )
 @section('background-tag','bg-info ')
@@ -58,14 +58,16 @@
                                         <th>ยอดสุทธิ</th>
                                         <th>ยอดหนี้คงเหลือ</th>
                                         
-                                        <th class="d-none">Actions</th>
+                                        <!-- <th class="d-none">Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($customerdebt as $item)
                                     <tr>
                                         <td>
-                                            <a href="{{ url('/finance/customer-debt/' . $item->id) }}">{{ $item->doc_no }}</a>
+                                            <a href="{{ url('/finance/customer-debt/' . $item->id) }}">
+                                                {{ $item->doc_no }}
+                                            </a>
                                         </td>
                                         <td>{{ $item->date }}</td>
                                         <td>
@@ -76,7 +78,7 @@
                                         </td>
                                         <td>{{ number_format($item->total,2) }}</td>
                                         <td>{{number_format($item->total_debt,2)}}</td>
-                                        <td class="d-none">
+                                        <!-- <td class="d-none">
                                             <a href="{{ url('/finance/customer-debt/' . $item->id) }}" title="View CustomerDebt"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/finance/customer-debt/' . $item->id . '/edit') }}" title="Edit CustomerDebt"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
@@ -85,7 +87,7 @@
                                                 {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger btn-sm" title="Delete CustomerDebt" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                                             </form>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 @endforeach
                                 </tbody>
