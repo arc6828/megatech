@@ -82,7 +82,7 @@
                                         <th class="text-center">ยอดหนี้</th>
                                         <th class="text-center">ยอดชำระ</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
-                                        <th class="text-center">รหัสพนักงาน</th>
+                                        <!-- <th class="text-center">รหัสพนักงาน</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -106,7 +106,7 @@
                                             <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
                                         </td>
                                         <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
-                                        <td>{{ $row->User->short_name }}</td>
+                                        <!-- <td>{{ $row->User->short_name }}</td> -->
                                     </tr>
                                     @endforeach
 
@@ -123,13 +123,14 @@
                                         <td>{{ $row->external_reference_id }}</td>
                                         <td>{{ $row->total_debt }}</td>
                                         <td>{{ $row->total_payment }}</td>
+                                        <td></td>
                                         <td class="d-none">
                                             <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
                                             
                                             <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
                                         </td>
                                         <td class="d-none">{{ number_format($row->total?$row->total:0,2) }}</td>
-                                        <td>{{ isset($row->user_id) ? $row->User->short_name : '' }}</td>
+                                        <!-- <td>{{ isset($row->user_id) ? $row->User->short_name : '' }}</td> -->
                                     </tr>
                                     @endforeach
                                 </tbody>
