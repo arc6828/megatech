@@ -41,8 +41,8 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
-    let tab = "#{{ request('tab') }}-tab";
-    //console.log(tab,$(tab));
+    let tab = "#{{ request('tab') }}";
+    console.log(tab,$(tab));
     $(tab).tab('show')
   });
 </script>

@@ -15,7 +15,7 @@
 @endphp
 
 @section('level-0-url', url('finance')."?tab=debtor-tab")
-@section('level-0','การเงิน')
+@section('level-0','การเงิน-'.$main)
 
 @section('title', $main )
 @section('background-tag','bg-info ')
