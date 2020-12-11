@@ -149,6 +149,15 @@
                                         <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
                                     </tr>
                                     @endforeach
+                                    <tr>
+                                        <td>  </td>
+                                        <td> </td>
+                                        <!-- <td>{{ $row->invoice->Customer->customer_code }}</td> -->
+                                        <th> <strong> ยอดเงินรวม </strong> </th>
+                                        <th>  <strong> {{ number_format($customerbilling->total,2) }}  </strong> </th>
+                                        <!-- <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td> -->
+                                        <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
+                                    </tr>
                                 </tbody>
 
                             </table>
@@ -174,8 +183,8 @@
                             <label class="col-lg-3">  หมายเหตุ </label>
                             <small class="col-lg-3 text-left"> {{ $customerbilling->remark }} </small>
                             
-                            <label class="col-lg-3"> ยอดเงินรวม </label>
-                            <small class="col-lg-3 text-left"> {{ number_format($customerbilling->total,2) }} </small>
+                            <!-- <label class="col-lg-3"> ยอดเงินรวม </label>
+                            <small class="col-lg-3 text-left"> {{ number_format($customerbilling->total,2) }} </small> -->
                         </div>
                     </div>
                 </div>  
