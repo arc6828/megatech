@@ -54,7 +54,7 @@
                                         <th class="text-center">รหัสลูกค้า</th>
                                         <th class="text-center">ชื่อบริษัท</th>
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
-                                        <th class="text-center">ยอดรวม</th>
+                                        <!-- <th class="text-center">ยอดรวม</th> -->
                                         <th class="text-center">รหัสพนักงาน</th>
                                     </tr>
                                 </thead>
@@ -62,15 +62,13 @@
                                     @foreach($table_invoice as $row)
                                     <tr>
                                         <td>
-                                            <a href="{{ url('/') }}/sales/invoice/{{ $row->invoice_id }}/edit">
-                                                {{ $row->invoice_code }}
-                                            </a>
+                                            {{ $row->invoice_code }}
                                         </td>
                                         <td>{{ $row->datetime }}</td>
                                         <td>{{ $row->Customer->customer_code }}</td>
                                         <td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->Customer->company_name }}</a></td>
                                         <td>{{ $row->total_debt }}</td>
-                                        <td>{{ number_format($row->total?$row->total:0,2) }}</td>
+                                        <!-- <td>{{ number_format($row->total?$row->total:0,2) }}</td> -->
                                         <td>{{ $row->User->short_name }}</td>
                                     </tr>
                                     @endforeach
