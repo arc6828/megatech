@@ -42,17 +42,12 @@
                             <label class="col-lg-3"> รหัสลูกค้า </label>
                             <small class="col-lg-3 text-left"> {{ $customerbilling->customer->customer_code }}  {{ $customerbilling->customer->company_name }} </small>
                             
-                            <label class="col-lg-3"> ยอดเงินรวม </label>
-                            <small class="col-lg-3 text-left"> {{ number_format($customerbilling->total,2) }} </small>
-                        </div>
-
-                        <div class="form-row form-group text-center pr-5" >                            
-                            <label class="col-lg-3">  หมายเหตุ </label>
-                            <small class="col-lg-3 text-left"> {{ $customerbilling->remark }} </small>
-                            
                             <label class="col-lg-3"> พนักงานผู้บันทึก </label>
                             <small class="col-lg-3 text-left"> {{ $customerbilling->user->name }}  </small>
+                            
                         </div>
+
+                        
 
                         <!-- <div class="form-row form-group text-center pr-5" >                            
                             <label class="col-lg-3">  เงื่อนไขการวางบิล </label>
@@ -115,7 +110,7 @@
                 @php
                     $customer_billing_details = $customerbilling->customer_billing_details;
                 @endphp
-                <div class="card">
+                <div class="card mb-4">
                     <!-- <div class="card-header">รายละเอียดใบวางบิล</div> -->
                     <div class="card-body">
                         <h3>รายละเอียดใบวางบิล</h3>
@@ -160,6 +155,20 @@
 
                     </div>
                 </div>
+
+                <div class="card mb-4">
+                    <!-- <div class="card-header">รายละเอียดใบวางบิล</div> -->
+                    <div class="card-body">
+
+                        <div class="form-row form-group text-center pr-5" >                            
+                            <label class="col-lg-3">  หมายเหตุ </label>
+                            <small class="col-lg-3 text-left"> {{ $customerbilling->remark }} </small>
+                            
+                            <label class="col-lg-3"> ยอดเงินรวม </label>
+                            <small class="col-lg-3 text-left"> {{ number_format($customerbilling->total,2) }} </small>
+                        </div>
+                    </div>
+                </div>  
             </div>
         </div>
     </div>
