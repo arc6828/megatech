@@ -52,7 +52,7 @@
                                         <th class="text-center">เลขที่เอกสาร</th>
                                         <th class="text-center">วันที่</th>
                                         <th class="text-center">รหัสลูกค้า</th>
-                                        <th class="text-center">ชื่อบริษัท</th>
+                                        <!-- <th class="text-center">ชื่อบริษัท</th> -->
                                         <th class="text-center">ยอดหนี้คงค้าง</th>
                                         <!-- <th class="text-center">ยอดรวม</th> -->
                                         <th class="text-center">รหัสพนักงาน</th>
@@ -66,7 +66,7 @@
                                         </td>
                                         <td>{{ $row->datetime }}</td>
                                         <td>{{ $row->Customer->customer_code }}</td>
-                                        <td><a href="{{ url('/customer') }}/{{ $row->customer_id }}">{{ $row->Customer->company_name }}</a></td>
+                                        <!-- <td>{{ $row->Customer->company_name }}</td> -->
                                         <td>{{ $row->total_debt }}</td>
                                         <!-- <td>{{ number_format($row->total?$row->total:0,2) }}</td> -->
                                         <td>{{ $row->User->short_name }}</td>
