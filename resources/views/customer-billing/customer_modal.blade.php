@@ -31,8 +31,8 @@
 						<tbody>
 						@foreach($customers as $row)
 						@php
-							$total_debt = $row->Invoice_on_debt->sum('total_debt');
-							$total_debt_last_cycle = $row->Invoice_on_debt_last_cycle->sum('total_debt');
+							$total_debt = $row->Invoice_on_debt->sum('total_debt') + $row->XR_on_debt->sum('total_debt') ;
+							$total_debt_last_cycle = $row->Invoice_on_debt_last_cycle->sum('total_debt') ;
 							
 						@endphp
 						<tr>
