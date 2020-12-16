@@ -38,7 +38,8 @@
 				<tbody>
 				@foreach($table_customer as $row)
 				@php
-					$total_debt = $row->Invoice_on_debt->sum('total_debt') + $row->XR_on_debt->sum('total_debt') ;
+					//$total_debt = $row->Invoice_on_debt->sum('total_debt') + $row->XR_on_debt->sum('total_debt') ;
+					$total_debt = $row->Invoice_on_debt->sum('total_debt');
 				@endphp
 				<tr>
 					<td><a href="{{ url('/') }}/customer/{{ $row->customer_id }}/edit">{{ $row->customer_code }}</a></td>
