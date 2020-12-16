@@ -65,22 +65,24 @@ $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( 
                     
                 </tbody>
                 <tfoot>
-                    <th class="text-center"></th>
-                    <th class="text-center"></th>
-                    <th class="text-center"></th>
-                    <th class="text-center"></th>
-                    <th class="text-center">รวม</th>
-                    <th class="text-center">
-                        <input style="width:100px;"  name="debt_total" type="text" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}"  readonly>            
-                    </th>
-                    <th class="text-center">
-                        <!-- <input style="width:100px;"  name="payment_total" type="text" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" readonly> -->
-                        <input style="width:100px;"  name="payment_total" type="text" id="payment_total" value="0" readonly>
-                    </th>
-                    <!-- <th class="text-center d-none">ยอดรวม</th> -->
-                    <th class="text-center">
-                        <input style="width:100px;"  name="remain_total" type="text" id="remain_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}" readonly>
-                    </th>
+                    <tr>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
+                        <th class="text-center"></th>
+                        <th class="text-center">รวม</th>
+                        <th class="text-center">
+                            <input style="width:100px;"  name="debt_total" type="text" id="debt_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}"  readonly>            
+                        </th>
+                        <th class="text-center">
+                            <!-- <input style="width:100px;"  name="payment_total" type="text" id="payment_total" value="{{ isset($customerpayment->payment_total) ? $customerpayment->payment_total : $customer_billing_total}}" readonly> -->
+                            <input style="width:100px;"  name="payment_total" type="text" id="payment_total" value="0" readonly>
+                        </th>
+                        <!-- <th class="text-center d-none">ยอดรวม</th> -->
+                        <th class="text-center">
+                            <input style="width:100px;"  name="remain_total" type="text" id="remain_total" value="{{ isset($customerpayment->debt_total) ? $customerpayment->debt_total : $customer_billing_total }}" readonly>
+                        </th>
+                    </tr>
                 </tfoot>
 
             </table>

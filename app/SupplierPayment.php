@@ -25,7 +25,7 @@ class SupplierPayment extends Model
      *
      * @var array
      */
-    protected $fillable = ['doc_no', 'supplier_id', 'role', 'remark', 'round', 'supplier_billing_id', 'discount', 'debt_total', 'cash', 'credit', 'tax', 'payment_total', 'user_id'];
+    protected $fillable = ['doc_no', 'supplier_id', 'role', 'remark', 'round', 'supplier_billing_id', 'discount', 'debt_total', 'cash', 'credit', 'tax', 'payment_total', 'user_id','payment_file'];
 
     public function supplier(){
         return $this->belongsTo('App\SupplierModel','supplier_id');

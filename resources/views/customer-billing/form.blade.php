@@ -108,11 +108,6 @@
             <label for="remark" class="col-lg-3  control-label">{{ 'หมายเหตุ' }}</label>
             <textarea class="col-lg-3  form-control form-control-sm" rows="2" name="remark" type="textarea" id="remark" >{{ isset($customerbilling->remark) ? $customerbilling->remark : ''}}</textarea>
             
-            @php
-                $total = count($table_invoice) > 0 ? $table_invoice->sum('total_debt') : 0;
-            @endphp
-            <label for="total" class="col-lg-3  control-label">{{ 'ยอดเงินรวม' }}</label>
-            <input class="col-lg-3  form-control form-control-sm" name="total" type="number" id="total" value="{{ isset($customerbilling->total) ? $customerbilling->total : $total }}" readonly >
             
         </div>
 

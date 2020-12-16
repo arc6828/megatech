@@ -144,7 +144,7 @@
                                         <td>{{ $row->invoice->datetime }}</td>
                                         <!-- <td>{{ $row->invoice->Customer->customer_code }}</td> -->
                                         <td>{{ $row->invoice->external_reference_id }}</td>
-                                        <td>{{ number_format($row->invoice->total_debt,2) }}</td>
+                                        <td>{{ number_format($row->total_debt,2) }}</td>
                                         <!-- <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td> -->
                                         <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
                                     </tr>

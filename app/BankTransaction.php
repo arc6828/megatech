@@ -25,7 +25,7 @@ class BankTransaction extends Model
      *
      * @var array
      */
-    protected $fillable = ['code','bank_account_id','transaction_code', 'amount', 'balance', 'remark', 'user_id'];
+    protected $fillable = ['code','bank_account_id','transaction_code', 'amount', 'balance', 'remark', 'user_id','cheque_code','document_code'];
 
     public function user(){
         return $this->belongsTo('App\User','user_id');

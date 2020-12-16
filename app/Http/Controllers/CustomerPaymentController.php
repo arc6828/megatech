@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\CustomerPayment;
+use App\CustomerPaymentDetail;
 use App\CustomerBilling;
 use App\CustomerModel;
 use App\Sales\InvoiceModel;
@@ -108,6 +109,11 @@ class CustomerPaymentController extends Controller
         
         $requestData = $request->except(['transaction_code','date','bank_account_id','amount','remark']);
         $requestData['doc_no'] = $this->getNewCode("BR");
+
+        if ($request->hasFile('payment_file')) {
+            $folder = "customer-payment";
+            $requestData['payment_file'] = $request->file('payment_file')->store($folder, 'public');
+        }
         
         $customer_payment = CustomerPayment::create($requestData);
 
@@ -117,38 +123,54 @@ class CustomerPaymentController extends Controller
             //UPDATE INVOICE 
             if (is_array ($requestData['invoice_payments'])){
                 for( $i=0; $i<count($requestData['invoice_payments']); $i++ ){
+                    //INVOICE UPDATE
                     $invoice_payment = $requestData['invoice_payments'][$i];
                     $invoice_id = $requestData['invoice_ids'][$i];
                     $invoice = InvoiceModel::find($invoice_id);
+                    //SKIP IF ZERO
+                    if($invoice_payment == 0 ){
+                        continue;
+                    }
                     if($invoice){
+                        //CREATE CUSTOMER PAYMENT
+                        CustomerPaymentDetail::create([
+                            'doc_id' => $invoice->invoice_id,
+                            'customer_payment_id' => $customer_payment->id,
+                            'code' =>  $invoice->invoice_code,
+                            'total_debt' => $invoice->total_debt,
+                            'total_payment' => $invoice_payment,
+                            'total_remain' => $invoice->total_debt - $invoice_payment ,
+                        ]);
+
                         //ADD UP
                         $invoice->total_payment = $invoice->total_payment + $invoice_payment;
                         $invoice->total_debt = $invoice->total_debt - $invoice_payment;
                         $invoice->customer_payment_id = $customer_payment->id;
                         $invoice->save();
+
                     }
                 }
             }
 
         }
-        if(isset($requestData['customer_debt_payments']))
-        {
-            //UPDATE customer_debt หนี้คงค้าง
-            if (is_array ($requestData['customer_debt_payments'])){
-                for( $i=0; $i<count($requestData['customer_debt_payments']); $i++ ){
-                    $customer_debt_payment = $requestData['customer_debt_payments'][$i];
-                    $customer_debt_id = $requestData['customer_debt_ids'][$i];
-                    $customer_debt = CustomerDebt::find($customer_debt_id);
-                    if($customer_debt){
-                        //ADD UP
-                        $customer_debt->total_payment = $customer_debt->total_payment + $customer_debt_payment;
-                        $customer_debt->total_debt = $customer_debt->total_debt - $customer_debt_payment;
-                        $customer_debt->customer_payment_id = $customer_payment->id;
-                        $customer_debt->save();
-                    }
-                }
-            }
-        }
+        // if(isset($requestData['customer_debt_payments']))
+        // {
+        //     //UPDATE customer_debt หนี้คงค้าง
+        //     if (is_array ($requestData['customer_debt_payments'])){
+        //         for( $i=0; $i<count($requestData['customer_debt_payments']); $i++ ){
+        //             $customer_debt_payment = $requestData['customer_debt_payments'][$i];
+        //             $customer_debt_id = $requestData['customer_debt_ids'][$i];
+        //             $customer_debt = CustomerDebt::find($customer_debt_id);
+        //             if($customer_debt){
+        //                 //ADD UP
+        //                 $customer_debt->total_payment = $customer_debt->total_payment + $customer_debt_payment;
+        //                 $customer_debt->total_debt = $customer_debt->total_debt - $customer_debt_payment;
+        //                 $customer_debt->customer_payment_id = $customer_payment->id;
+        //                 $customer_debt->save();
+        //             }
+        //         }
+        //     }
+        // }
         
 
         //INSERT BANK-ACCOUNT
@@ -165,6 +187,9 @@ class CustomerPaymentController extends Controller
                         'amount' => $requestData['amount'][$i],
                         'remark' => $requestData['remark'][$i],
                         'user_id' => Auth::id() ,
+                        'cheque_code' => "" ,
+                        'document_code' => $customer_payment->doc_no ,
+                        'code' => "" ,
                     ]);
 
                     //INSERT CHEQUE IF EXISTสร

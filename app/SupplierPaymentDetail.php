@@ -25,7 +25,7 @@ class SupplierPaymentDetail extends Model
      *
      * @var array
      */
-    protected $fillable = ['doc_id', 'supplier_billing_id'];
+    protected $fillable = ['doc_id', 'supplier_payment_id','code','total_debt','total_payment','total_remain'];
 
     
 }

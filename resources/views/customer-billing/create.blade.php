@@ -28,8 +28,20 @@
                                 @endforeach
                             </ul>
                         @endif
+                        <script>
+                            function validateCheckbox(){
+                                checked = $("input[type=checkbox]:checked").length;
+                                var clean = true;
+                                if(checked == 0) {
+                                    alert("กรุณาเลือกอย่างน้อย 1 รายการ");
+                                    clean = false;
+                                }
+                                return clean;
+                            }
 
-                        <form method="POST" action="{{ url('/finance/customer-billing') }}?end_date={{ request('end_date') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        </script>
+
+                        <form method="POST" action="{{ url('/finance/customer-billing') }}?end_date={{ request('end_date') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" onsubmit="return validateCheckbox();">
                             {{ csrf_field() }}
 
 

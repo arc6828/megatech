@@ -25,7 +25,11 @@ class CustomerPaymentDetail extends Model
      *
      * @var array
      */
-    protected $fillable = ['doc_id', 'customer_billing_id'];
+    protected $fillable = ['doc_id', 'customer_payment_id','code','total_debt','total_payment','total_remain'];
 
-    
+    public function invoice(){
+        return $this->belongsTo('App\Sales\InvoiceModel','code','invoice_code');
+    }
+
+
 }

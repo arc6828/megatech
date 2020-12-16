@@ -25,13 +25,17 @@ class CustomerPayment extends Model
      *
      * @var array
      */
-    protected $fillable = ['doc_no', 'customer_id', 'role', 'remark', 'round', 'customer_billing_id', 'discount', 'debt_total', 'cash', 'credit', 'tax', 'payment_total', 'user_id'];
+    protected $fillable = ['doc_no', 'customer_id', 'role', 'remark', 'round', 'customer_billing_id', 'discount', 'debt_total', 'cash', 'credit', 'tax', 'payment_total', 'user_id','payment_file'];
 
     public function customer(){
         return $this->belongsTo('App\CustomerModel','customer_id');
     }
     public function user(){
         return $this->belongsTo('App\User','user_id');
+    }
+
+    public function details(){
+        return $this->hasMany('App\CustomerPaymentDetail','customer_payment_id','id');
     }
 
     public function customer_billing(){
@@ -45,5 +49,9 @@ class CustomerPayment extends Model
     
     public function customer_debts(){
         return $this->hasMany('App\CustomerDebt','customer_payment_id');
+    }
+
+    public function bank_transactions(){
+        return $this->hasMany('App\BankTransaction','document_code','doc_no');
     }
 }

@@ -85,7 +85,8 @@ class CustomerBillingController extends Controller
         $requestData['doc_no'] = $this->getNewCode("BI");
         $customer_billing = CustomerBilling::create($requestData);
 
-        
+        //MAKE a whitelist (checkbox)
+        $whitelist = $request->input('checkboxs');
 
         //CREATE CustomerBillingDetail        
         $end_date = !empty( $request->get('end_date') ) ? request('end_date') : date('Y-m-d');
@@ -100,6 +101,12 @@ class CustomerBillingController extends Controller
             $customer_billing_detail = new CustomerBillingDetail;
             $customer_billing_detail->doc_id = $item->invoice_id;            
             $customer_billing_detail->customer_billing_id = $customer_billing->id;
+            $customer_billing_detail->code = $item->invoice_code;
+            $customer_billing_detail->total_debt = $item->total_debt;
+            //CHECK IF NOT IN WHITELIST -> SKIP
+            if(!in_array($item->invoice_code, $whitelist)){
+                continue;
+            }
             $customer_billing_detail->save();
 
             $item->sales_status_id = 12; //sales_status_id 12 : วางบิลแล้ว
