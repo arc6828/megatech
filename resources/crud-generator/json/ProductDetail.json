@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "name": "final_product_id",
+            "type": "integer"
+        },
+        {
+            "name": "detail_product_id",
+            "type": "integer"
+        },
+        {
+            "name": "amount",
+            "type": "integer"
+        },
+        {
+            "name": "remark",
+            "type": "text"
+        }
+    ]
+}

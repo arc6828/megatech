@@ -42,3 +42,7 @@ php artisan crud:generate ReceiveFinalDetail --fields_from_file="resources/crud-
 
 php artisan crud:generate AdjustStock --fields_from_file="resources/crud-generator/json/AdjustStock.json" 
 php artisan crud:generate AdjustStockDetail --fields_from_file="resources/crud-generator/json/AdjustStockDetail.json" 
+
+
+php artisan crud:generate ProductDetail --fields_from_file="resources/crud-generator/json/ProductDetail.json"
+ 

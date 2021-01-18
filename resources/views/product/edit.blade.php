@@ -20,52 +20,61 @@
 
 
 @section('content')
-        <div class="row">
+    <div class="row">
 
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header d-none">Edit Product</div>
-                    <div class="card-body">
-                        <div class="row mb-4">
-                            <div class="col-lg-4">
-                                <!-- <a href="{{ url('/product') }}" title="Back" class="btn btn-warning btn-sm">
-                                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Back 
-                                </a>                         -->
-                            </div>
-                            <div class="col-lg-4">
-                            </div>
-                            <div class="col-lg-4 text-right">
-                            
-                                <a class="btn btn-info btn-sm"  href="{{ url('/') }}/gaurd-stock?product_id={{ $product->product_id }}" >
-                                    <i class="fa fa-home" aria-hidden="true"></i> Gaurd Stock 
-                                </a>
-                                @if($mode == "show" )
-                                <a class="btn btn-warning btn-sm" href="{{ url('/product/'.$product->product_id.'/edit') }}" title="Edit">
-                                    <i class="fa fa-edit" aria-hidden="true"></i> แก้ไข
-                                </a>       
-                                @endif
-                            </div>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-none">Edit Product</div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-lg-4">
+                            <!-- <a href="{{ url('/product') }}" title="Back" class="btn btn-warning btn-sm">
+                                <i class="fa fa-arrow-left" aria-hidden="true"></i> Back 
+                            </a>                         -->
                         </div>
+                        <div class="col-lg-4">
+                        </div>
+                        <div class="col-lg-4 text-right">
+                        
+                            <a class="btn btn-info btn-sm"  href="{{ url('/') }}/gaurd-stock?product_id={{ $product->product_id }}" >
+                                <i class="fa fa-home" aria-hidden="true"></i> Gaurd Stock 
+                            </a>
+                            @if($mode == "show" )
+                            <a class="btn btn-warning btn-sm" href="{{ url('/product/'.$product->product_id.'/edit') }}" title="Edit">
+                                <i class="fa fa-edit" aria-hidden="true"></i> แก้ไข
+                            </a>       
+                            @endif
+                        </div>
+                    </div>
 
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                    @if ($errors->any())
+                        <ul class="alert alert-danger">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
 
-                        <form method="POST" action="{{ url('/product/' . $table_product->product_id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            {{ csrf_field() }}
+                    <form method="POST" action="{{ url('/product/' . $table_product->product_id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                        {{ method_field('PATCH') }}
+                        {{ csrf_field() }}
 
-                            @include ('product.form', ['formMode' => 'edit'])
+                        @include ('product.form', ['formMode' => 'edit'])
 
-                        </form>
+                    </form>
 
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    @include('issue-stock/detail')
+                    <div class="text-center pt-4">
+                    @include('issue-stock/create_detail_modal')
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 @endsection

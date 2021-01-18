@@ -358,3 +358,4 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
 //END MIDDLEWARE AUTH
 
 Auth::routes();
+Route::resource('product-detail', 'ProductDetailController');
