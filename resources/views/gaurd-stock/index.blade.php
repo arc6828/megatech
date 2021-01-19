@@ -22,9 +22,9 @@
                     <div class="card-body">
                         <div class="float-right">
                             <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d') }}">วันนี้</a>
-                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-7 days')) }}">สัปดาห์นี้</a>
-                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-31 days')) }}">เดือนนี้</a>
-                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-366 days')) }}">ปีนี้</a>
+                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-7 days')) }}">7 วัน</a>
+                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-31 days')) }}">30 วัน</a>
+                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-366 days')) }}">365 วัน</a>
                         </div>
                         <h2>Gaurd Stock ตั้งแต่วันที่ {{ $product->date_default }}</h2>
                         
