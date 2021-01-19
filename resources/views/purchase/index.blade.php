@@ -77,7 +77,7 @@
 				<div class="vertical-center">
 						<div class="px-4"><span class="round round-success my-2">
 						<!-- <i class="ni ni-single-copy-04"></i> -->
-						<h1>R</h1>
+						<h1>RO</h1>
 						</span></div>
 						<div>ส่งคืน<br>สินค้า</div>
 				</div>
