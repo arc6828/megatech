@@ -16,7 +16,10 @@
 			<div class="col-6 col-md-3">
 			<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/purchase/requisition">
         <div class="vertical-center">
-  				<div class="px-4"><span class="round round-success my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div class="px-4"><span class="round round-success my-2">
+				  <!-- <i class="ni ni-single-copy-04"></i> -->
+				  <h1>PR</h1>
+				  </span></div>
   				<div>ใบเสนอซื้อ</div>
         </div>
 			</a>
@@ -24,7 +27,9 @@
 			<div class="col-6 col-md-3">
 			<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/purchase/requisition_detail">
         <div class="vertical-center">
-  				<div class="px-4"><span class="round round-success my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div class="px-4"><span class="round round-success my-2">
+				  <i class="ni ni-single-copy-04"></i>
+				  </span></div>
   				<div>อนุมัติ<br>ใบเสนอซื้อ</div>
         </div>
 			</a>
@@ -40,7 +45,10 @@
 			<div class="col-6 col-md-3">
 			<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/purchase/order">
         <div class="vertical-center">
-  				<div class="px-4"><span class="round round-success my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div class="px-4"><span class="round round-success my-2">
+				  <!-- <i class="ni ni-single-copy-04"></i> -->
+				  <h1>PO</h1>
+				  </span></div>
   				<div>ใบสั่งซื้อ</div>
         </div>
 			</a>
@@ -56,7 +64,10 @@
 			<div class="col-6 col-md-3">
 			<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/purchase/receive">
         <div class="vertical-center">
-  				<div class="px-4"><span class="round round-success my-2"><i class="ni ni-single-copy-04"></i></span></div>
+  				<div class="px-4"><span class="round round-success my-2">
+				  <!-- <i class="ni ni-single-copy-04"></i> -->
+				  <h1>RC</h1>
+				  </span></div>
   				<div>รับ/ซื้อ<br>สินค้า</div>
         </div>
 			</a>
@@ -64,7 +75,10 @@
 			<div class="col-6 col-md-3">
 			<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/purchase/return-order">
 				<div class="vertical-center">
-						<div class="px-4"><span class="round round-success my-2"><i class="ni ni-single-copy-04"></i></span></div>
+						<div class="px-4"><span class="round round-success my-2">
+						<!-- <i class="ni ni-single-copy-04"></i> -->
+						<h1>R</h1>
+						</span></div>
 						<div>ส่งคืน<br>สินค้า</div>
 				</div>
 			</a>
