@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ProductModel;
+use App\ProductDetail;
 use App\Brand;
 
 
@@ -46,6 +47,30 @@ class ProductController extends Controller
 
         ProductModel::create($requestData);
         return redirect('product');
+    }
+
+    public function store_detail(Request $request, $product){
+        //CREATE RETURN INVOICE DETAIL
+        $details = [];
+        $products = $request->input('product_ids');
+        $amounts = $request->input('amounts');
+        //$discount_prices = $request->input('discount_prices');
+        //$totals = $request->input('totals');
+        if (is_array($products)){
+            for($i=0; $i<count($products); $i++){
+                $details[] = [
+                    "detail_product_id" => $products[$i],
+                    "amount" => $amounts[$i],
+                    "final_product_id" => $product->product_id,              
+                ];
+            }
+            //DELETE ALL BEFORE INSERT
+            ProductDetail::where('final_product_id',$product->product_id)->delete();
+            //INSERT
+            ProductDetail::insert($details);
+            
+        }
+        
     }
 
     /**
@@ -104,11 +129,15 @@ class ProductController extends Controller
         //$requestData['product_id'] =  $requestData["id"];
         //$requestData['id'] = null;
 
-        //product2 = ProductModel::findOrFail($id);
-        ProductModel::update_by_id($requestData,$id);
+        $product = ProductModel::findOrFail($id);
+        $product->update($requestData);
+        // ProductModel::update_by_id($requestData,$id);
+        
         //$product2->update($requestData);
 
-        return redirect("product/{$id}/edit");
+        $this->store_detail($request, $product);
+
+        return redirect("product/{$id}");
 
 
     }

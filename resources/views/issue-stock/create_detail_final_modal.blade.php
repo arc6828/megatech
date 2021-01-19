@@ -146,10 +146,11 @@
 		// var row = createRow(product);
 		// table.row.add(row).draw( false );
 		//refreshDetailTableEvent();
-		document.querySelector("#btn-close-product-final").click();
-		//console.log("CLICK");
-		document.querySelector("#product_name").value = product.product_name;
-		document.querySelector("#product_code").innerHTML = product.product_code;
-		document.querySelector("#product_id").value = product.product_id;
+
+		window.location.href = "{{ url('issue-stock/create') }}?product_id="+product.product_id;
+		// document.querySelector("#btn-close-product-final").click();
+		// document.querySelector("#product_name").value = product.product_name;
+		// document.querySelector("#product_code").innerHTML = product.product_code;
+		// document.querySelector("#product_id").value = product.product_id;
 	}
 </script>

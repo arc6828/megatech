@@ -1,5 +1,8 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('customer'))
+@section('level-0','แฟ้มลูกค้า')
+
 @section('title','เพิ่มลูกค้า')
 
 

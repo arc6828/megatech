@@ -1,5 +1,26 @@
 <div class="card">
   <div class="card-body">
+  <div class="row mb-4">
+      <div class="col-lg-4">
+        <!-- <a href="{{ url('/sales/order') }}" title="Back" class="btn btn-warning btn-sm" >
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        </a> -->
+      </div>
+      @if(isset($customer))
+      <div class="col-lg-4 text-center"></div>
+      <div class="col-lg-4 text-right">
+        @if($mode == "show")
+          <a class="px-2 btn btn-sm btn-warning" href="{{ url('/customer') }}/{{ $customer->customer_id }}/edit" title="แก้ไข" >
+            <i class="fas fa-edit"></i> แก้ไข
+		      </a>
+        @endif
+        
+		  	<!-- <a class="px-2 btn btn-sm btn-primary" href="{{ url('/') }}/sales/order/{{ $customer->customer_id }}/pdf" target="_blank"  title="พิมพ์">
+		      <i class="fas fa-print"></i> พิมพ์
+		    </a>        -->
+      </div>
+      @endif
+    </div>
 
     <h2>ข้อมูลพื้นฐานลูกค้า</h2>
     <div class="row">
@@ -376,3 +397,27 @@
     <input type="number" name="loyalty_discount"  class="form-control form-control-sm  " value="" >
   </div>
 </div>
+
+@if(isset($mode))
+    @if( $mode == "edit" )
+    <!-- <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div> -->
+    @elseif( $mode == "show" )
+    <script>
+      setTimeout(function(){ 
+          let elements = document.querySelectorAll("input, button.btn-success, select");
+          // console.log("want to approved", elements);
+          for(var item of elements){
+            item.setAttribute("disabled","");
+          };
+
+        }, 500);
+        
+    </script>
+    @endif
+@else 
+    <!-- <div class="form-group text-center">
+        <input class="btn btn-success" type="submit" value="Save">
+    </div>  -->
+@endif

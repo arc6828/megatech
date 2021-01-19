@@ -1,5 +1,17 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('customer'))
+@section('level-0','แฟ้มลูกค้า')
+
+
+
+@if( $mode == "edit" )
+  @section('level-2-url', url('customer/'.$customer->customer_id ))
+  @section('level-2','รายละเอียด')
+@endif
+
+@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+
 @section('title','แก้ไขข้อมูลลูกค้า')
 
 @section('content')
@@ -26,8 +38,8 @@ onsubmit="return (checkID(document.querySelector('#tax_number').value)) || docum
   <div class="form-group mt-5">
     <div class="col-lg-12">
       <div class="text-center">
-        <a class="btn btn-outline-primary " href="{{ url('/') }}/customer">back</a>
-        <button class="btn btn-primary" type="submit" >Update</button>
+        <a class="btn btn-outline-success " href="{{ url('/') }}/customer">back</a>
+        <button class="btn btn-success" type="submit" >Update</button>
       </div>
     </div>
   </div>

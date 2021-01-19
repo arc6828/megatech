@@ -45,9 +45,26 @@ class IssueStockController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('issue-stock.create');
+        $product = ProductModel::find(request('product_id',0));  
+        $issuestock = null;
+        $issuestockdetail = null;
+        if( isset($product) ){
+            //IssueStock
+            $issuestock = new IssueStock();    
+            $issuestock->product_id = $product->product_id;     
+            //Detail   
+            $productdetails = $product->details()->get();  
+            $issuestockdetail = [];
+            foreach($productdetails as $item){
+                $detail = new IssueStockDetail();
+                $detail->product_id = $item->detail_product_id;
+                $detail->amount = $item->amount;
+                $issuestockdetail[] = $detail;
+            }
+        }
+        return view('issue-stock.create',compact('issuestock','issuestockdetail') );
     }
 
     /**

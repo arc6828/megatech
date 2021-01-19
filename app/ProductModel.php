@@ -14,6 +14,9 @@ class ProductModel extends Model
     public function product_details(){
         return $this->hasMany('App\ProductDetail','final_product_id','product_id');
     }
+    public function details(){
+        return $this->hasMany('App\ProductDetail','final_product_id','product_id');
+    }
 
     public function gaurd_stock(){
         return $this->hasMany('App\GaurdStock','product_id');

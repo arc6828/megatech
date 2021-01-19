@@ -13,13 +13,21 @@
 @section('title','Gaurd Stock')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row  justify-content-center">
 
             <div class="col-md-12">
                 <div class="card">
                     <!-- <div class="card-header">Gaurdstock</div> -->
                     <div class="card-body">
+                        <div class="float-right">
+                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d') }}">วันนี้</a>
+                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-7 days')) }}">สัปดาห์นี้</a>
+                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-31 days')) }}">เดือนนี้</a>
+                            <a class="px-4" href="{{ url('gaurd-stock') }}?product_id={{ $product->product_id }}&since={{ date('Y-m-d',strtotime('-366 days')) }}">ปีนี้</a>
+                        </div>
+                        <h2>Gaurd Stock ตั้งแต่วันที่ {{ $product->date_default }}</h2>
+                        
                         <!-- <a href="{{ url('/gaurd-stock/create') }}" class="btn btn-success btn-sm d-none" title="Add New GaurdStock">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a> -->
@@ -42,9 +50,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Date</th>
-                                        <th>Product Id</th>
-                                        <th>Code</th>
+                                        <th>วันที่</th>
+                                        <th>รหัสสินค้า</th>
+                                        <th>รหัสเอกสาร</th>
                                         <!-- <th>Amount</th> -->
                                         <th>รับเข้า</th>
                                         <th>ส่งออก</th>
@@ -55,13 +63,13 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>0</td>
-                                        <td>{{ $product->date_default }}</td>                                        
-                                        <td>{{ $product->product_code }}</td>                                        
-                                        <td> ยอดยกมา </td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>{{ $product->amount_in_stock_default }}</td>                                        
+                                        <th></th>
+                                        <th>{{ $product->date_default }}</th>                                        
+                                        <th>{{ $product->product_code }}</th>                                        
+                                        <th> ยอดยกมา </th>
+                                        <th>-</th>
+                                        <th>-</th>
+                                        <th>{{ number_format($product->amount_in_stock_default) }}</th>                                        
                                     </tr>
 
                                 @foreach($gaurdstock as $item)                                    
@@ -176,7 +184,7 @@
                                         @endif
                                         <!-- <td>{{ $item->pending_in }}</td>
                                         <td>{{ $item->pending_out }}</td> -->
-                                        <td>{{ $item->amount_in_stock }}</td>
+                                        <td>{{ number_format($item->amount_in_stock) }}</td>
                                         <!-- <td>{{ $item->remark }}</td> -->
                                         <td class=" d-none">
                                             <a href="{{ url('/gaurd-stock/' . $item->id) }}" title="View GaurdStock"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>

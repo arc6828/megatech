@@ -14,22 +14,26 @@
         </thead>
         <tbody>
         @php 
-            $issuestockdetail = isset($issuestockdetail)? $issuestockdetail : [];
+            $productdetail = isset($productdetail)? $productdetail : [];
                     
         @endphp
-        @foreach($issuestockdetail as $item)
+        @foreach($productdetail as $item)
             <tr>
                 <td>
-                    <input type="hidden" class="input product_ids" name="product_ids[]" value="{{ $item->product_id }}" /> 
-                    {{ $item->product->product_code }}
+                    <input type="hidden" class="input product_ids" name="product_ids[]" value="{{ $item->detail_product_id }}" /> 
+                    {{ $item->detail_product->product_code }}
                 </td>
                 <td>
-                    {{ $item->product->product_name }}
+                    {{ $item->detail_product->product_name }}
                 </td>
                 <td>
                     <input type="number" class="input amounts" name="amounts[]" value="{{ $item->amount }}" min="0" max="{{ $item->amount }}" title="[0,{{ $item->amount }}]" style="max-width:60px;" /> 
                 </td>                
-                <td> </td>
+                <td>
+                    <a href="javascript:void(0)" class="text-danger btn-delete-detail" style="padding-right:10px;" title="delete" onclick="deleteDetail(this)">
+                        <span class="fa fa-trash"></span>
+                    </a> 
+                </td>
             </tr>
         @endforeach
         </tbody>
@@ -88,9 +92,27 @@ function createRow(element){
             element.product_code,        
         element.product_name,       
         "<input type='number' class='input amounts' name='amounts[]'  value='"+element.amount+"' >",
-        "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
+        "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' onclick='deleteDetail(this)' >" +
             "<span class='fa fa-trash'></span>" +
         "</a> ",
     ];
+}
+
+function deleteDetail(element){
+    //console.log("CHANGE : ", this,this.getAttribute("data_id"));
+    //onChange3(this,this.getAttribute("data_id"));
+    var want_to_delete = confirm('Are you sure to delete this detail?');
+    if(want_to_delete){
+        // var id_edit = $(this).parents('tr').find(".product_ids");
+        // id_edit.val("-"+id_edit.val());
+        // $(this).parents('tr').hide();
+        console.log("ROW : " ,$(element));
+        var table = $('#table').DataTable();
+        table
+            .row( $(element).parents('tr') )
+            .remove()
+            .draw();
+        //onChange(document.getElementById("vat_percent"));
+    }
 }
 </script>

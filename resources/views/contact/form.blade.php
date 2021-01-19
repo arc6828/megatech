@@ -6,7 +6,18 @@
 <div class="form-group {{ $errors->has('department') ? 'has-error' : ''}}">
     <label for="department" class="control-label">{{ 'Department' }}</label>
     <select name="department" class="form-control form-control-sm" id="department" >
-    @foreach (json_decode('{"เจ้าของธุรกิจ":"เจ้าของธุรกิจ","จัดซื้อ":"จัดซื้อ","Engineer":"Engineer","Store":"Store","Sales":"Sales"}', true) as $optionKey => $optionValue)
+    @php
+        $departments = [
+            "เจ้าของธุรกิจ"=>"เจ้าของธุรกิจ",
+            "จัดซื้อ"=>"จัดซื้อ",
+            "Engineer"=>"Engineer",
+            "Store"=>"Store",
+            "Sales"=>"Sales",
+            "บัญชีและการเงิน"=>"บัญชีและการเงิน",
+        ];
+        //json_decode('{}', true)
+    @endphp
+    @foreach ($departments as $optionKey => $optionValue)
         <option value="{{ $optionKey }}" {{ (isset($contact->department) && $contact->department == $optionKey) ? 'selected' : ''}}>{{ $optionValue }}</option>
     @endforeach
     </select>
@@ -137,7 +148,7 @@
 </div>
 
 
-<div class="form-group {{ $errors->has('contact_type') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('contact_type') ? 'has-error' : ''}}">
     <label for="contact_type" class="control-label">{{ 'Contact Type' }}</label>
     
     @php
@@ -152,12 +163,12 @@
     </select>
     {!! $errors->first('contact_type', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('customer_id') ? 'has-error' : ''}}">
+<div class="form-group d-none {{ $errors->has('customer_id') ? 'has-error' : ''}}">
     <label for="customer_id" class="control-label">{{ 'Customer Id' }}</label>
     <input class="form-control form-control-sm" name="customer_id" type="text" id="customer_id" value="{{ isset($contact->customer_id) ? $contact->customer_id : request('customer_id') }}"  readonly>
     {!! $errors->first('customer_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('supplier_id') ? 'has-error' : ''}}">
+<div class="form-group  d-none {{ $errors->has('supplier_id') ? 'has-error' : ''}}">
     <label for="supplier_id" class="control-label">{{ 'Supplier Id' }}</label>
     <input class="form-control form-control-sm" name="supplier_id" type="text" id="supplier_id" value="{{ isset($contact->supplier_id) ? $contact->supplier_id : request('supplier_id')}}" readonly>
     {!! $errors->first('supplier_id', '<p class="help-block">:message</p>') !!}

@@ -20,8 +20,10 @@
 
 
 @section('content')
+<form method="POST" action="{{ url('/product/' . $table_product->product_id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+    {{ method_field('PATCH') }}
+    {{ csrf_field() }}
     <div class="row">
-
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header d-none">Edit Product</div>
@@ -55,26 +57,30 @@
                         </ul>
                     @endif
 
-                    <form method="POST" action="{{ url('/product/' . $table_product->product_id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                        {{ method_field('PATCH') }}
-                        {{ csrf_field() }}
+                    
 
-                        @include ('product.form', ['formMode' => 'edit'])
+                    @include ('product.form', ['formMode' => 'edit'])
 
-                    </form>
 
                 </div>
             </div>
 
-            <div class="card mb-4">
+            <hr>
+            @php
+                $productdetail = $product->details()->get();
+            @endphp
+
+            <div class="card mt-4">
                 <div class="card-body">
-                    @include('issue-stock/detail')
+                    <h4>รายละเอียดสินค้า</h4>
+                    @include('product/detail')
                     <div class="text-center pt-4">
-                    @include('issue-stock/create_detail_modal')
+                    @include('product/create_detail_modal')
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+</form>
 @endsection

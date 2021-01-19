@@ -1,5 +1,14 @@
 @extends('layouts/argon-dashboard/theme')
 
+@section('level-0-url', url('customer'))
+@section('level-0','แฟ้มลูกค้า')
+
+
+@section('level-2-url', url('customer/'.request('customer_id') ))
+@section('level-2','รายละเอียด')
+
+
+
 @section('title','สร้างผู้ติดต่อ')
 
 @section('content')
@@ -8,7 +17,7 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Create New Contact</div>
+                    <!-- <div class="card-header">Create New Contact</div> -->
                     <div class="card-body">
                         @php
                         $contact_type = request('customer_id')?'customer':'supplier';

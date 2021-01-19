@@ -19,6 +19,7 @@ class GaurdStockController extends Controller
     public function index(Request $request)
     {
         $product_id = $request->get('product_id');
+        $since = $request->get('since',date('Y-m-d'));
         // $hidden = $request->get('hidden');
         // $perPage = 25;
 
@@ -57,10 +58,20 @@ class GaurdStockController extends Controller
             'receive_final', 'receive_final_cancel',
             'adjust_stock', 'adjust_stock_cancel',
         ];
-        $gaurdstock = GaurdStock::where('product_id',  $product_id)                
+        $gaurdstock = GaurdStock::where('product_id',  $product_id)   
+            ->whereDate('created_at','>=',$since)             
             ->whereIn('type', $whitelist) //"type" => "",
             ->oldest()->get();
         $mode = "gaurd-stock";
+
+        $last = GaurdStock::where('product_id',  $product_id)   
+            ->whereDate('created_at','<',$since)             
+            ->whereIn('type', $whitelist) //"type" => "",
+            ->latest()->first();
+        if( isset($last) ){
+            $product->amount_in_stock_default = $last->amount_in_stock;
+            $product->date_default = $since." 00:00:00";
+        }
 
         return view('gaurd-stock.index', compact('gaurdstock','mode','product'));
     }

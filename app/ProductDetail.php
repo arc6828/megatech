@@ -27,5 +27,10 @@ class ProductDetail extends Model
      */
     protected $fillable = ['final_product_id', 'detail_product_id', 'amount', 'remark'];
 
-    
+    public function final_product(){
+        return $this->belongsTo('App\ProductModel','final_product_id','product_id');
+    }
+    public function detail_product(){
+        return $this->belongsTo('App\ProductModel','detail_product_id','product_id');
+    }
 }
