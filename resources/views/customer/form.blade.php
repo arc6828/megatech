@@ -354,11 +354,11 @@
         
       </div>
       <div class="form-group col-lg-3">
-        <label  >เงื่อนไขรับเช็ค (ถ้ามี)</label>
+        <label  >เงื่อนไขการจ่ายชำระ (ถ้ามี)</label>
         <input name="cheqe_condition"  id="cheqe_condition"  class="form-control form-control-sm  "  >
       </div>
       <div class="form-group col-lg-6">
-        <label >หมายเหตุการรับเช็ค (ถ้ามี)</label>
+        <label >หมายเหตุการจ่ายชำระ (ถ้ามี)</label>
         <input name="remark_cheque" id="remark_cheque" class="form-control form-control-sm  "  >
       </div>
     </div>
