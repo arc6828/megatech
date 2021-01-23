@@ -1,7 +1,7 @@
 <div class="card mt-4">    
     <div class="card-body">
         <h2 class="">Contact</h2>
-        <a href="{{ url('/contact/create') }}?customer_id={{ $customer->customer_id }}" class="btn btn-success btn-sm" title="Add New Contact">
+        <a href="{{ url('/contact/create') }}?customer_id={{ $customer->customer_id }}" class="btn btn-success btn-sm" title="Add New Contact" target="_blank">
             <i class="fa fa-plus" aria-hidden="true"></i> Add New
         </a>
 

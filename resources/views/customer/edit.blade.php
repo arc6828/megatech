@@ -88,6 +88,9 @@ onsubmit="return (checkID(document.querySelector('#tax_number').value)) || docum
       $("#tax_number").val("{{ $row->tax_number }}");
       $("#location_type_id").val("{{ $row->location_type_id }}");
       $("#branch_id").val("{{ $row->branch_id }}");
+      $("#billing_cycle_date").val("{{ $row->billing_cycle_date }}");
+      $("#billing_remark").val("{{ $row->billing_remark }}");
+      $("#remark_cheque").val("{{ $row->remark_cheque }}");
       //UPLOAD
       @if( $row->upload != null)
         @foreach(json_decode($row->upload) as $row_upload)
