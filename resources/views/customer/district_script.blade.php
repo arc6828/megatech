@@ -44,6 +44,9 @@ function showProvinces(key, customer_address){
         .then(data => {
             //console.log('Success Province :', data);
             $(elements[key].province).empty();
+            $(elements[key].province).append(
+                $('<option></option>').attr("value", "").html("ไม่ระบุ")
+            );
             data.forEach(function(item){
                 $(elements[key].province).append(
                     $('<option></option>').attr("value", ""+item.province).html(""+item.province)
@@ -65,7 +68,10 @@ function showAmphoes(key, customer_address){
         .then(response => response.json())
         .then(data => {
             //console.log('Success Amphoe :', data);
-            $(elements[key].district).empty();
+            $(elements[key].district).empty();            
+            $(elements[key].province).append(
+                $('<option></option>').attr("value", "").html("ไม่ระบุ")
+            );
             data.forEach(function(item){
                 $(elements[key].district).append(
                     $('<option></option>').attr("value", ""+item.amphoe).html(""+item.amphoe)
@@ -89,6 +95,9 @@ function showDistricts(key, customer_address){
         .then(data => {
             //console.log('Success District :', data);
             $(elements[key].sub_district).empty();
+            $(elements[key].province).append(
+                $('<option></option>').attr("value", "").html("ไม่ระบุ")
+            );
             data.forEach(function(item){
                 $(elements[key].sub_district).append(
                     $('<option></option>').attr("value", ""+item.district).html(""+item.district)

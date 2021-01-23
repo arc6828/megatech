@@ -95,17 +95,23 @@
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <select class="form-control form-control-sm" name="province"  id="province" onchange="showAmphoes('address')"></select>
+        <select class="form-control form-control-sm" name="province"  id="province" onchange="showAmphoes('address')">
+          <option value="">ไม่ระบุ</option>
+        </select>
         
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
-        <select class="form-control form-control-sm"  name="district"  id="district"  onchange="showDistricts('address')"></select>
+        <select class="form-control form-control-sm"  name="district"  id="district"  onchange="showDistricts('address')">
+        <option value="">ไม่ระบุ</option>
+        </select>
         
       </div>
       <div class="form-group col-lg-2">
         <label>ตำบล</label>
-        <select class="form-control form-control-sm"  name="sub_district" id="sub_district" onchange="showZipcode('address')"></select>
+        <select class="form-control form-control-sm"  name="sub_district" id="sub_district" onchange="showZipcode('address')">
+        <option value="">ไม่ระบุ</option>
+        </select>
         
       </div>
       <div class="form-group col-lg-2">
@@ -149,17 +155,23 @@
       </div>
       <div class="form-group col-lg-2">
         <label >จังหวัด</label>
-        <select class="form-control form-control-sm" name="delivery_province"  id="delivery_province" onchange="showAmphoes('delivery_address')"></select>
+        <select class="form-control form-control-sm" name="delivery_province"  id="delivery_province" onchange="showAmphoes('delivery_address')">
+        <option value="">ไม่ระบุ</option>
+        </select>
         
       </div>
       <div class="form-group col-lg-2">
         <label >อำเภอ</label>
-        <select class="form-control form-control-sm"  name="delivery_district"  id="delivery_district"  onchange="showDistricts('delivery_address')"></select>
+        <select class="form-control form-control-sm"  name="delivery_district"  id="delivery_district"  onchange="showDistricts('delivery_address')">
+        <option value="">ไม่ระบุ</option>
+        </select>
         
       </div>
       <div class="form-group col-lg-2">
         <label>ตำบล</label>
-        <select class="form-control form-control-sm"  name="delivery_sub_district" id="delivery_sub_district" onchange="showZipcode('delivery_address')"></select>
+        <select class="form-control form-control-sm"  name="delivery_sub_district" id="delivery_sub_district" onchange="showZipcode('delivery_address')">
+        <option value="">ไม่ระบุ</option>
+        </select>
         
       </div>
       <div class="form-group col-lg-2">
