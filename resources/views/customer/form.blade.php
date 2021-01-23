@@ -348,7 +348,7 @@
     <div class="row">            
       <div class="form-group col-lg-3">
         <label  >ช่องทางการชำระเงิน <span class="text-red">*</span></label>
-        <select class="form-control form-control-sm  ">
+        <select class="form-control form-control-sm  " id="payment" name="payment">
           <option>รับเช็ค (พร้อมใบเสร็จรับเงิน)</option>
           <option>โอน</option>
         </select>

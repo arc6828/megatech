@@ -54,7 +54,10 @@ class CustomerModel extends Model
 							'file_map',
 							'file_cc',
 							'file_cv_20',
-							'file_cheque',							
+							'file_cheque',		
+							
+							'billing_method',	
+							'payment',				
 							
 							'billing_cycle_date',
 							'billing_remark',

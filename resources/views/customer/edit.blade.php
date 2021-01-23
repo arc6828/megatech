@@ -88,6 +88,9 @@ onsubmit="return (checkID(document.querySelector('#tax_number').value)) || docum
       $("#tax_number").val("{{ $row->tax_number }}");
       $("#location_type_id").val("{{ $row->location_type_id }}");
       $("#branch_id").val("{{ $row->branch_id }}");
+      $("#billing_method").val("{{ $row->billing_method }}");
+      $("#payment").val("{{ $row->payment }}");
+      
       $("#billing_cycle_date").val("{{ $row->billing_cycle_date }}");
       $("#billing_remark").val("{{ $row->billing_remark }}");
       $("#remark_cheque").val("{{ $row->remark_cheque }}");
