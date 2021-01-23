@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer px-5 mt-5" style="">
   <div class="row align-items-center justify-content-xl-between">
     <div class="col-xl-6">
       <div class="copyright text-center text-xl-left text-muted">

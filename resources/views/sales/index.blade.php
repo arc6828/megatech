@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="card">
-	<div class="card-block">
+	<div class="card-body">
 		<div class="row text-center">
 			<div class="col-6 col-md-3 ">
 				<a class="btn btn-outline-warning btn-menu my-3" href="{{url('/')}}/sales/quotation">

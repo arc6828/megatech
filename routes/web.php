@@ -119,6 +119,10 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
             Route::resource('return-order', 'Purchase\ReturnOrderController');
             Route::resource('return-order-detail', 'Purchase\ReturnOrderDetailController');
 
+            Route::get('/receive_temporary/{id}/pdf', 'Purchase\ReceiveTemporaryController@pdf');
+            Route::patch('/receive_temporary/{id}/cancel', 'Purchase\ReceiveTemporaryController@cancel');
+            Route::resource('/receive_temporary', 'Purchase\ReceiveTemporaryController');
+            
         });
 
     });

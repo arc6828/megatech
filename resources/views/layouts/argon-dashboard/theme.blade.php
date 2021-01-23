@@ -84,7 +84,7 @@
   </script>
 </head>
 
-<body>
+<body style="background-color: #e9ecef;">
   <!-- Core -->
   <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="{{ url('/') }}/argon-dashboard-v1.0.0/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -193,9 +193,10 @@
     <div class="container-fluid pt-5">
       @yield('content')
 
-      <!-- Footer -->
-      @include('layouts/argon-dashboard/footer')
+      
     </div>
+    <!-- Footer -->
+    @include('layouts/argon-dashboard/footer')
   </div>
   <!-- Argon Scripts -->
   
