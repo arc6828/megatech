@@ -116,7 +116,7 @@
       var row = [
         element.product_code,
         element.BARCODE,
-        element.product_name + " / "+ element.grade,
+        element.product_name ,
         element.amount_in_stock,
         parseFloat(price).toFixed(2),
         "<input name='amount_create' id='amount_create"+id+"'  value='"+element.quantity+"' style='width:50px;' >",
