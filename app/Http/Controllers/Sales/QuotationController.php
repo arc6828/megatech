@@ -108,7 +108,7 @@ class QuotationController extends Controller
       //VOID IF HAS CODE (Revision)
       if( !empty($request->input('quotation_code') ) ){
         switch($request->input('quotation_code')){
-          case "QTDRAFT" : 
+          case "M-QTDRAFT" : 
             $id =   $request->input('quotation_id');
             QuotationModel::destroy($id);
             QuotationDetailModel::where('quotation_id',$id)->delete();
@@ -131,7 +131,7 @@ class QuotationController extends Controller
       if($input['sales_status_id'] == 0 )
       {
         //0 means DRART -> do not set quotation_code / date
-        $input['quotation_code'] = "QTDRAFT";
+        $input['quotation_code'] = "M-QTDRAFT";
         $input['datetime'] = "";
 
       }
@@ -166,7 +166,7 @@ class QuotationController extends Controller
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $quotation_code = "QT{$year}{$month}-{$number}";
+        $quotation_code = "M-QT{$year}{$month}-{$number}";
         
         return $quotation_code;
     }
@@ -181,8 +181,8 @@ class QuotationController extends Controller
 
       //Clone
       $new_quotaion = $quotaion->replicate()->fill([
-        'quotation_code' => "QTDRAFT",
-        'datetime' => "QTDRAFT",
+        'quotation_code' => "M-QTDRAFT",
+        'datetime' => "M-QTDRAFT",
         'revision' => "0",
         'sales_status_id' => "0",
       ]);

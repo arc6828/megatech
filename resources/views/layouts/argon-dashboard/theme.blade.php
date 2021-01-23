@@ -52,6 +52,10 @@
     input.checklist {
         display : none;
     }
+
+    select.form-control {
+      width: 100% !important;
+    }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
     <style>

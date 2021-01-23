@@ -308,7 +308,7 @@ class OrderController extends Controller
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $order_code = "OE{$year}{$month}-{$number}";
+        $order_code = "M-OE{$year}{$month}-{$number}";
         return $order_code;
     }
 
@@ -322,7 +322,7 @@ class OrderController extends Controller
       $year = date_format($date,"y");
       $month = date_format($date,"m");
       $number = sprintf('%05d', $count);
-      $order_code = "OE{$year}{$month}-{$number}";
+      $order_code = "M-OE{$year}{$month}-{$number}";
       return $order_code;
     }
 

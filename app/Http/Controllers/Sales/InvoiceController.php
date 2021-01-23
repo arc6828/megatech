@@ -187,7 +187,7 @@ class InvoiceController extends Controller
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $invoice_code = "IV{$year}{$month}-{$number}";
+        $invoice_code = "M-IV{$year}{$month}-{$number}";
         return $invoice_code;
     }
 

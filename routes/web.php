@@ -361,5 +361,6 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
 });
 //END MIDDLEWARE AUTH
 
+Route::redirect('register', 'login',301);
 Auth::routes();
 Route::resource('product-detail', 'ProductDetailController');

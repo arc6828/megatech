@@ -152,7 +152,13 @@
 				var row = createRow("+", product);
 				table.row.add(row).draw( false );
 				refreshDetailTableEvent();
+
 				document.querySelector("#btn-close").click();
+				//CLEAR SEARCH
+				$('#table-product-model').DataTable()
+					.search( '' )
+					.columns().search( '' )
+					.draw();
 			});
 		
 		//console.log("CLICK");
