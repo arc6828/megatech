@@ -69,7 +69,7 @@ function showAmphoes(key, customer_address){
         .then(data => {
             //console.log('Success Amphoe :', data);
             $(elements[key].district).empty();            
-            $(elements[key].province).append(
+            $(elements[key].district).append(
                 $('<option></option>').attr("value", "").html("ไม่ระบุ")
             );
             data.forEach(function(item){
@@ -95,7 +95,7 @@ function showDistricts(key, customer_address){
         .then(data => {
             //console.log('Success District :', data);
             $(elements[key].sub_district).empty();
-            $(elements[key].province).append(
+            $(elements[key].sub_district).append(
                 $('<option></option>').attr("value", "").html("ไม่ระบุ")
             );
             data.forEach(function(item){
