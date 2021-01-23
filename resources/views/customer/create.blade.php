@@ -10,6 +10,16 @@
 <form action="{{ url('/') }}/customer" method="POST" enctype="multipart/form-data" >
   {{ csrf_field() }}
   {{ method_field('POST') }}
+  @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
+  
   @include('customer/form')
 
   <div class="form-group mt-5">

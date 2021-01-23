@@ -73,6 +73,7 @@ class CustomerController extends Controller
     {     
         $validated = $request->validate([
             'customer_code' => 'unique:tb_customer,customer_code',
+            'tax_number' => 'unique:tb_customer,tax_number',
         ]);
         $requestData = $request->all();
 
