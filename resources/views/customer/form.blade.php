@@ -27,6 +27,7 @@
       <div class="form-group col-lg-2">
         <label>รหัสลูกค้า <span class="text-red">*</span> </label>
         <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value=""  required="" >
+        
       </div>
       <div class="form-group col-lg-6">
         <label>ชื่อบริษัท <span class="text-red">*</span></label>

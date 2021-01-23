@@ -7,7 +7,7 @@
 
 
 @section('content')
-<form action="{{ url('/') }}/customer" method="POST">
+<form action="{{ url('/') }}/customer" method="POST" enctype="multipart/form-data" >
   {{ csrf_field() }}
   {{ method_field('POST') }}
   @include('customer/form')

@@ -71,7 +71,9 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {     
-        
+        $validated = $request->validate([
+            'customer_code' => 'unique:tb_customer,customer_code',
+        ]);
         $requestData = $request->all();
 
         if ($request->hasFile('file_map')) {
