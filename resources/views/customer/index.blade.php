@@ -86,7 +86,23 @@
 <script>
   document.addEventListener("DOMContentLoaded", function(event) {
       //console.log("555");
-      $('#table').DataTable().order( [ 0, 'asc' ] ).draw();
+	  $('#table').DataTable({
+		  paging : false,
+		  info : false,
+	  }).order( [ 0, 'asc' ] ).draw();
+	  //DATA TABLE SCROLL
+	  var tableCont = document.querySelector('#table');
+		tableCont.parentNode.style.overflow = 'auto';
+		tableCont.parentNode.style.maxHeight = '400px';
+		tableCont.parentNode.addEventListener('scroll',function (e){
+			var scrollTop = this.scrollTop-1;
+			this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) '+'translateZ(' + 1000 + 'px)';
+			this.querySelector('thead').style.background = "white";
+			this.querySelector('thead').style.zIndex = "3000";
+			//this.querySelector('thead').style.marginBottom = "200px";
+			//console.log(scrollTop);
+		})
+		//END DATA TABLE SCROLL
   });
 
 	function onDelete(id){
