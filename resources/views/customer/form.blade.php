@@ -25,17 +25,17 @@
     <h2>ข้อมูลพื้นฐานลูกค้า</h2>
     <div class="row">
       <div class="form-group col-lg-2">
-        <label>รหัสลูกค้า</label>
+        <label>รหัสลูกค้า <span class="text-red">*</span> </label>
         <input name="customer_code"  id="customer_code" class="form-control form-control-sm " value=""  required="" >
       </div>
       <div class="form-group col-lg-6">
-        <label>ชื่อบริษัท</label>
-        <input type="text" name="company_name"   id="company_name"   class="form-control form-control-sm  "  >
+        <label>ชื่อบริษัท <span class="text-red">*</span></label>
+        <input type="text" name="company_name"   id="company_name"   class="form-control form-control-sm  "  required>
       </div>
       <div class="form-group col-lg-4">
-        <label >ชื่อพนักงานที่ดูแล</label>
+        <label >ชื่อพนักงานที่ดูแล <span class="text-red">*</span></label>
         <div class="input-group">
-          <input name="short_name" id="name"  class="form-control form-control-sm  "  readonly >
+          <input name="short_name" id="name"  class="form-control form-control-sm  "  readonly>
           <div class="input-group-append">
             <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal2">
               <i class="fa fa-plus"></i> รหัสพนักงาน
@@ -56,11 +56,11 @@
     </div>
     <div class="row">
       <div class="form-group col-lg-3">
-        <label >เลขภาษี <span class="text-red">*</span> </label>
-        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  tax-format"    maxlength="13"  >
+        <label >เลขภาษี <span class="text-red">*</span></label>
+        <input name="tax_number" id="tax_number"  class="form-control form-control-sm  tax-format"    maxlength="13"  required>
       </div>
       <div class="form-group col-lg-3">
-        <label >ชนิดสถานที่ประกอบการ </label>
+        <label >ชนิดสถานที่ประกอบการ <span class="text-red">*</span></label>
         <select name="location_type_id" id="location_type_id" class="form-control form-control-sm  "  >
             @foreach ($table_location as $location)
             <option value="{{ $location->location_type_id }}">{{ $location->location_type_name }}</option>
@@ -68,11 +68,11 @@
         </select>
       </div>
       <div class="form-group col-lg-3">
-        <label  >สำนักงาน/สาขา (แสดงในภาษี) </label>
+        <label  >สำนักงาน/สาขา (แสดงในภาษี) (ถ้ามี) </label>
         <input name="branch_id" id="branch_id"  class="form-control form-control-sm  "  value="" >
       </div>
       <div class="form-group col-lg-3">
-        <label >รหัสผังบัญชี</label>
+        <label >รหัสผังบัญชี (ถ้ามี)</label>
         <div class="input-group">
           <input name="account_id" id="account_id"  class="form-control form-control-sm  ">
           <div class="input-group-append">
@@ -90,52 +90,52 @@
 
     <div class="row">
       <div class="form-group col-lg-4">
-        <label >ที่อยู่</label>
-        <input type="text" name="address"  id="address" class="form-control form-control-sm"  >
+        <label >ที่อยู่ <span class="text-red">*</span></label>
+        <input type="text" name="address"  id="address" class="form-control form-control-sm"  required>
       </div>
       <div class="form-group col-lg-2">
-        <label >จังหวัด</label>
-        <select class="form-control form-control-sm" name="province"  id="province" onchange="showAmphoes('address')">
+        <label >จังหวัด <span class="text-red">*</span></label>
+        <select class="form-control form-control-sm" name="province"  id="province" onchange="showAmphoes('address')" required>
           <option value="">ไม่ระบุ</option>
         </select>
         
       </div>
       <div class="form-group col-lg-2">
-        <label >อำเภอ</label>
-        <select class="form-control form-control-sm"  name="district"  id="district"  onchange="showDistricts('address')">
+        <label >อำเภอ <span class="text-red">*</span></label>
+        <select class="form-control form-control-sm"  name="district"  id="district"  onchange="showDistricts('address')" required>
         <option value="">ไม่ระบุ</option>
         </select>
         
       </div>
       <div class="form-group col-lg-2">
-        <label>ตำบล</label>
-        <select class="form-control form-control-sm"  name="sub_district" id="sub_district" onchange="showZipcode('address')">
+        <label>ตำบล <span class="text-red">*</span></label>
+        <select class="form-control form-control-sm"  name="sub_district" id="sub_district" onchange="showZipcode('address')" required>
         <option value="">ไม่ระบุ</option>
         </select>
         
       </div>
       <div class="form-group col-lg-2">
-        <label  >รหัสไปรษณีย์</label>
-        <input class="form-control form-control-sm"  name="zipcode"  id="zipcode" placeholder="รหัสไปรษณีย์" />
+        <label  >รหัสไปรษณีย์ <span class="text-red">*</span></label>
+        <input class="form-control form-control-sm"  name="zipcode"  id="zipcode" placeholder="รหัสไปรษณีย์" required />
         
       </div>
     </div>
 
     <div class="row">
       <div class="form-group  col-lg-6 d-none">
-          <label >รายชื่อผู้ติดต่อ</label>
+          <label >รายชื่อผู้ติดต่อ (ถ้ามี)</label>
           <input name="contact_name" id="contact_name" class="form-control form-control-sm "  >
       </div>
       <div class="form-group col-lg-3">
-          <label >เบอร์โทรศัพท์</label>
-          <input name="telephone" id="telephone" class="form-control form-control-sm "  >
+          <label >เบอร์โทรศัพท์ <span class="text-red">*</span></label>
+          <input name="telephone" id="telephone" class="form-control form-control-sm " required >
       </div>
       <div class="form-group col-lg-3">
-        <label >เบอร์ FAX</label>
+        <label >เบอร์ FAX (ถ้ามี)</label>
         <input name="fax" id="fax"  class="form-control form-control-sm  "   >
       </div>
       <div class="form-group col-lg-3">
-      <label >หมายเหตุ</label>
+      <label >หมายเหตุ (ถ้ามี)</label>
         <input name="remark" id="remark"  class="form-control form-control-sm  "   >
       </div>
     </div>
@@ -150,32 +150,32 @@
 
     <div class="row">
       <div class="form-group col-lg-4">
-        <label >สถานที่ส่งของ</label>
+        <label >สถานที่ส่งของ (ถ้ามี)</label>
         <input type="text" name="delivery_address" id="delivery_address" class="form-control form-control-sm  " >
       </div>
       <div class="form-group col-lg-2">
-        <label >จังหวัด</label>
+        <label >จังหวัด (ถ้ามี)</label>
         <select class="form-control form-control-sm" name="delivery_province"  id="delivery_province" onchange="showAmphoes('delivery_address')">
         <option value="">ไม่ระบุ</option>
         </select>
         
       </div>
       <div class="form-group col-lg-2">
-        <label >อำเภอ</label>
+        <label >อำเภอ (ถ้ามี)</label>
         <select class="form-control form-control-sm"  name="delivery_district"  id="delivery_district"  onchange="showDistricts('delivery_address')">
         <option value="">ไม่ระบุ</option>
         </select>
         
       </div>
       <div class="form-group col-lg-2">
-        <label>ตำบล</label>
+        <label>ตำบล (ถ้ามี)</label>
         <select class="form-control form-control-sm"  name="delivery_sub_district" id="delivery_sub_district" onchange="showZipcode('delivery_address')">
         <option value="">ไม่ระบุ</option>
         </select>
         
       </div>
       <div class="form-group col-lg-2">
-        <label  >รหัสไปรษณีย์</label>
+        <label  >รหัสไปรษณีย์ (ถ้ามี)</label>
         <input class="form-control form-control-sm"  name="delivery_zipcode"  id="delivery_zipcode" placeholder="รหัสไปรษณีย์" />
         
       </div>
@@ -192,8 +192,8 @@
         </select>
       </div>
       <div class="form-group col-lg-3">
-        <label >ขนส่งโดย</label>
-        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm  ">
+        <label >ขนส่งโดย <span class="text-red">*</span></label>
+        <select name="delivery_type_id" id="delivery_type_id" class="form-control form-control-sm  " required>
           @foreach ($table_delivery_type as $d)
             <option value="{{ $d->delivery_type_id }}">{{ $d->delivery_type_name }}</option>
           @endforeach
@@ -211,31 +211,32 @@
     <div class="row">      
 
       <div class="form-group col-lg-3">
-        <label >วิธีการขาย</label>
+        <label >วิธีการขาย <span class="text-red">*</span></label>
         <select class="form-control form-control-sm"  name="payment_method"  id="payment_method" >
           <option value="credit">ขายเชื่อ</option>
           <option value="cash">ขายสด</option>
         </select>
       </div>
       <div class="form-group col-lg-3">
-        <label >วงเงินเครดิต (บาท)</label>
+        <label >วงเงินเครดิต (บาท) <span class="text-red">*</span></label>
         @if( Auth()->user()->role == "admin" )
-        <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  " value="{{ isset($customer) ? number_format($customer->max_credit) : '-1'  }}"   >
+        <input type="number" name="max_credit"  id="max_credit" class="form-control form-control-sm  " value="{{ isset($customer) ? number_format($customer->max_credit) : '-1'  }}"   required>
         @else
         <div>{{ isset($customer) ? number_format($customer->max_credit) : "-1"  }} </div>
         @endif
       </div>
       <div class="form-group col-lg-3">
-        <label >ระยะเวลาหนี้ (วัน)</label>
-          <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "    >
+        <label >ระยะเวลาหนี้ (วัน) <span class="text-red">*</span></label>
+          <input type="number" name="debt_duration"  id="debt_duration" class="form-control form-control-sm  "    required>
       </div>
       <div class="form-group col-lg-3">
         <label >วันที่ตัดรอบบิล <span class="text-red">*</span></label>
-        <select class="form-control form-control-sm"  name="billing_cycle_date"  id="billing_cycle_date" >          
+        <select class="form-control form-control-sm"  name="billing_cycle_date"  id="billing_cycle_date" >                    
           @for($i=1; $i<=28; $i++)
           <option value="{{ $i }}">{{ $i }}</option>
           @endfor
           <option value="last-day" selected>วันสุดท้ายของเดือน</option>
+          <option value="calendar" >ตามปฏิทินที่ให้ไว้</option>
         </select>
       </div>
     </div>
@@ -257,21 +258,22 @@
     <div class="row">      
 
 
+      
       <div class="form-group col-lg-3">
-        <label >เงื่อนไขวางบิล </label>
-        <input name="billing_duration" id="billing_duration" class="form-control form-control-sm  " >
-      </div>
-      <div class="form-group col-lg-3">
-        <label >ช่องทางการวางบิล<span class="text-red">*</span></label>
+        <label >ช่องทางการวางบิล <span class="text-red">*</span></label>
         <select name="billing_method" id="billing_method" class="form-control form-control-sm  ">
           <option value="drive">ไปวางเอง</option>
           <option value="post">ไปรษณีย์</option>
           <option value="email">อีเมล์</option>
         </select>
       </div>
+      <div class="form-group col-lg-3">
+        <label >เงื่อนไขวางบิล (ถ้ามี)</label>
+        <input name="billing_duration" id="billing_duration" class="form-control form-control-sm  " >
+      </div>
       
       <div class="form-group col-lg-6">
-        <label >หมายเหตุการวางบิล<span class="text-red">*</span></label>
+        <label >หมายเหตุการวางบิล (ถ้ามี)</label>
         <input name="billing_remark" id="billing_remark" class="form-control form-control-sm  "  >
       </div>
       
@@ -318,7 +320,7 @@
           <input class="form-control form-control-sm checklist" name="billing_delivery" type="text" id="billing_delivery" value="{{ isset($checklist->billing_delivery) ? $checklist->billing_delivery : ''}}" >
           {!! $errors->first('billing_delivery', '<p class="help-block">:message</p>') !!}
       </div>
-      <div class="form-group col-lg-3 {{ $errors->has('billing_reference') ? 'has-error' : ''}}">
+      <div class="form-group col-lg-3 d-none {{ $errors->has('billing_reference') ? 'has-error' : ''}}">
           <label for="billing_reference" class="control-label">
             <input type="checkbox" {{ $checklist->billing_reference === "true" ? 'checked' : ''}} onclick="document.querySelector('#billing_reference').value = this.checked"> 
             {{ 'พิมพ์เอกสารแนบใบวางบิล' }}
@@ -344,7 +346,7 @@
     <h2>การจ่ายชำระ</h2>
     <div class="row">            
       <div class="form-group col-lg-3">
-        <label  >ช่องทางการชำระเงิน </label>
+        <label  >ช่องทางการชำระเงิน <span class="text-red">*</span></label>
         <select class="form-control form-control-sm  ">
           <option>รับเช็ค (พร้อมใบเสร็จรับเงิน)</option>
           <option>โอน</option>
@@ -352,11 +354,11 @@
         
       </div>
       <div class="form-group col-lg-3">
-        <label  >เงื่อนไขรับเช็ค </label>
+        <label  >เงื่อนไขรับเช็ค (ถ้ามี)</label>
         <input name="cheqe_condition"  id="cheqe_condition"  class="form-control form-control-sm  "  >
       </div>
       <div class="form-group col-lg-6">
-        <label >หมายเหตุการรับเช็ค</label>
+        <label >หมายเหตุการรับเช็ค (ถ้ามี)</label>
         <input name="remark_cheque" id="remark_cheque" class="form-control form-control-sm  "  >
       </div>
     </div>
@@ -395,9 +397,9 @@
   </div>
 </div>
 
-@if(isset($customer))
+
 @include('customer/form-upload')
-@endif
+
 
 <div>
   <div class="form-group col-lg-3 d-none">

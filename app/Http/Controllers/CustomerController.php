@@ -91,10 +91,10 @@ class CustomerController extends Controller
             $requestData['file_cheque'] = $request->file('file_cheque')->store($folder, 'public');
         }
         //CHANGE LATER
-        $requestData['max_credit'] = -1;
+        //$requestData['max_credit'] = -1;
         //UPDATE CUSTOMER
-        CustomerModel::create($requestData);
-        return redirect('customer');
+        $customer = CustomerModel::create($requestData);
+        return redirect('customer/'.$customer->customer_id."/edit");
     }
 
     /**

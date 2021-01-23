@@ -16,7 +16,7 @@
           <tr>
             <td>แผนที่</td>
             <td>
-              @if( $customer->file_map )
+              @if( isset($customer->file_map) )
               <a class="" href="{{ url('/storage') }}/{{ $customer->file_map }}"  target="_blank">
               {{ $customer->file_map }}
               </a>
@@ -35,7 +35,7 @@
           <tr>
             <td>ใบรับรองบริษัท	</td>
             <td>
-              @if( $customer->file_cc )
+              @if( isset($customer->file_cc) )
               <a class="" href="{{ url('/storage') }}/{{ $customer->file_cc }}"   target="_blank">
               {{ $customer->file_cc }}
               </a>
@@ -54,7 +54,7 @@
           <tr>
             <td>ใบภพ.20		</td>
             <td>
-              @if( $customer->file_cv_20 )
+              @if( isset($customer->file_cv_20) )
               <a class="" href="{{ url('/storage') }}/{{ $customer->file_cv_20 }}"   target="_blank">
                 {{ $customer->file_cv_20 }}
               </a>
@@ -73,7 +73,7 @@
           <tr>
             <td>ระเบียบวางบิล-รับเช็ค	</td>
             <td>
-              @if( $customer->file_cheque )
+              @if( isset($customer->file_cheque) )
               <a class="" href="{{ url('/storage') }}/{{ $customer->file_cheque }}"   target="_blank">
                 {{ $customer->file_cheque }}
               </a>
