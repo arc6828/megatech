@@ -1,0 +1,36 @@
+{
+  "fields": [
+    {
+      "name": "thname_company",
+      "type": "string"
+    },
+    {
+      "name": "enname_company",
+      "type": "string"
+    },
+    {
+      "name": "address",
+      "type": "text"
+    },
+    {
+      "name": "tal",
+      "type": "integer"
+    },
+    {
+      "name": "fax",
+      "type": "integer"
+    },
+    {
+      "name": "number_tex",
+      "type": "integer"
+    },
+    {
+      "name": "image",
+      "type": "file"
+    },
+    {
+      "name": "email",
+      "type": "string"
+    }
+  ]
+}

@@ -1,63 +1,60 @@
     <?php
+      use Illuminate\Support\Facades\Route;
+      use Illuminate\Support\Facades\Auth;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Web Routes
-    |--------------------------------------------------------------------------
-    |
-    | Here is where you can register web routes for your application. These
-    | routes are loaded by the RouteServiceProvider within a group which
-    | contains the "web" middleware group. Now create something great!
-    |
-    */
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+ */
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+Route::get('/', function () {
+    return view('welcome');
+});
 
-    Route::get('/index',function(){
-        return redirect('/sales');
-    });
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/profile','UserController@profile');
-    });
-
-
+Route::get('/index', function () {
+    return redirect('/sales');
+});
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', 'UserController@profile');
+});
 
 //LOGIN REQUIRED
-Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
-    Route::get('/user-manual',function(){
+Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
+    Route::get('/user-manual', function () {
         return view('user-manual');
     });
     //Main Menu
-    Route::get('/sales',function(){
+    Route::get('/sales', function () {
         return view('sales/index');
     });
-    Route::get('/purchase',function(){
+    Route::get('/purchase', function () {
         return view('purchase/index');
     });
-    Route::get('/inventory',function(){
+    Route::get('/inventory', function () {
         return view('inventory/index');
     });
-    Route::get('/finance',function(){
+    Route::get('/finance', function () {
         return view('finance/index');
     });
-    Route::get('/account',function(){
+    Route::get('/account', function () {
         return view('account/index');
     });
-    Route::get('/others',function(){
+    Route::get('/others', function () {
         return view('others/index');
     });
-    Route::get('/genbarcode',function(){
-        $oe= "OE1906-00004";
+    Route::get('/genbarcode', function () {
+        $oe = "OE1906-00004";
         //echo DNS1D::getBarcodeHTML($oe, "C128");
         //echo '<img src="data:image/png,' . DNS1D::getBarcodePNG($oe, "C128") . '" alt="barcode"   />';
         echo '<img src="data:image/png;base64,' . DNS1D::getBarcodePNG($oe, "C128") . '" alt="barcode"   />';
         echo $oe;
     });
-
-
-
 
     //1. SALES DEPARTMENT
     Route::middleware(['role:sales,admin'])->group(function () {
@@ -68,7 +65,7 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
             Route::post('/quotation/{id}/duplicate', 'Sales\QuotationController@duplicate');
             Route::get('/quotation/{id}/pdf', 'Sales\QuotationController@pdf');
             Route::put('/quotation/{id}/approve', 'Sales\QuotationController@approve');
-            
+
             //Route::delete('/quotation/{id}', 'Sales\QuotationController@destroy');
             Route::resource('/quotation', 'Sales\QuotationController');
             //Route::resource('/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
@@ -78,16 +75,16 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
             Route::resource('/order', 'Sales\OrderController');
             Route::get('/order_detail', 'Sales\OrderDetailController@index');
             Route::put('/order_detail/approve', 'Sales\OrderDetailController@approve');
-            
+
             Route::get('/invoice/{id}/pdf', 'Sales\InvoiceController@pdf');
             Route::patch('/invoice/{id}/cancel', 'Sales\InvoiceController@cancel');
             Route::resource('/invoice', 'Sales\InvoiceController');
-            
+
             Route::get('/delivery_temporary/{id}/pdf', 'Sales\DeliveryTemporaryController@pdf');
             Route::patch('/delivery_temporary/{id}/cancel', 'Sales\DeliveryTemporaryController@cancel');
             Route::resource('/delivery_temporary', 'Sales\DeliveryTemporaryController');
             //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
-            
+
             Route::resource('return-invoice', 'Sales\ReturnInvoiceController');
             Route::resource('return-invoice-detail', 'Sales\ReturnInvoiceDetailController');
         });
@@ -102,7 +99,6 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
             Route::get('/requisition_detail/edit_supplier', 'Purchase\RequisitionDetailController@edit_supplier');
             Route::put('/requisition_detail/update_supplier', 'Purchase\RequisitionDetailController@update_supplier');
             //Route::resource('/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
-
 
             Route::patch('/receive/{id}/cancel', 'Purchase\ReceiveController@cancel');
             Route::get('/receive/{id}/pdf', 'Purchase\ReceiveController@pdf');
@@ -122,14 +118,14 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
             Route::get('/receive_temporary/{id}/pdf', 'Purchase\ReceiveTemporaryController@pdf');
             Route::patch('/receive_temporary/{id}/cancel', 'Purchase\ReceiveTemporaryController@cancel');
             Route::resource('/receive_temporary', 'Purchase\ReceiveTemporaryController');
-            
+
         });
 
     });
-    Route::get('customer-debt', function(){return redirect('finance/customer-debt'); });
-    Route::get('supplier-debt', function(){return redirect('finance/supplier-debt'); });
-    Route::get('bank-account', function(){return redirect('finance/bank-account'); });
-    Route::get('bank-transaction', function(){return redirect('finance/bank-transaction'); });
+    Route::get('customer-debt', function () {return redirect('finance/customer-debt');});
+    Route::get('supplier-debt', function () {return redirect('finance/supplier-debt');});
+    Route::get('bank-account', function () {return redirect('finance/bank-account');});
+    Route::get('bank-transaction', function () {return redirect('finance/bank-transaction');});
     Route::prefix('finance')->group(function () {
         Route::resource('customer-debt', 'CustomerDebtController');
         Route::resource('supplier-debt', 'SupplierDebtController');
@@ -148,23 +144,17 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
         Route::resource('supplier-payment-detail', 'SupplierPaymentDetailController');
         Route::resource('supplier-payment', 'SupplierPaymentController');
         Route::resource('supplier-billing-detail', 'SupplierBillingDetailController');
-        
+
         Route::get('supplier-billing/{id}/pdf', 'SupplierBillingController@pdf');
         Route::resource('supplier-billing', 'SupplierBillingController');
     });
 
-
-    
     Route::middleware(['role:admin'])->group(function () {
-        Route::resource('/user','UserController');
+        Route::resource('/user', 'UserController');
     });
-
 
     //storage
     Route::get('/storage/{blob}/{id}/{type}/{filename}', 'StorageController@index');
-
-
-
 
     //Supplier
     Route::resource('/supplier', 'SupplierController');
@@ -173,12 +163,9 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
     Route::resource('/customer', 'CustomerController');
     Route::resource('/product', 'ProductController');
 
-
-
     //not confirm
 
     //Users
-
 
     //Process Deptor
     Route::resource('/finance/debtout', 'DebtoutController');
@@ -186,11 +173,10 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
     Route::resource('/finance/settle', 'SettleController');
 
     //Process bank and bank_detail
-    Route::resource('/bank','BankController');
+    Route::resource('/bank', 'BankController');
 
     //Inventory_main
-    Route::resource('/inventory_main','InventoryController');
-
+    Route::resource('/inventory_main', 'InventoryController');
 
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -205,9 +191,9 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
     //Creditor
     Route::resource('/finance/creditor/debtout', 'creditorDebtoutController');
 
-    Route::resource('/finance/creditor/debtsettle','creditorDebtSettleController');
+    Route::resource('/finance/creditor/debtsettle', 'creditorDebtSettleController');
 
-    Route::resource('/finance/creditor/reduce','reduceCreditorController');
+    Route::resource('/finance/creditor/reduce', 'reduceCreditorController');
     //THEME
     Route::get('/dashboard', function () {
         return view('monster-lite/index');
@@ -239,99 +225,97 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
     Route::resource('stock', 'StockController');
 
     //REPORT SALES : 1/x
-    Route::get("report/sales/1/3","Report\SalesController@screen_1_3");
-    Route::get("report/sales/1/5","Report\SalesController@screen_1_5");
-    Route::get("report/sales/1/12","Report\SalesController@screen_1_12");
-    Route::get("report/sales/1/15","Report\SalesController@screen_1_15");
-    Route::get("report/sales/1/16","Report\SalesController@screen_1_16");
-    Route::get("report/sales/1/18","Report\SalesController@screen_1_18");
-    Route::get("report/sales/1/19","Report\SalesController@screen_1_19");
-    Route::get("report/sales/1/21","Report\SalesController@screen_1_21");
+    Route::get("report/sales/1/3", "Report\SalesController@screen_1_3");
+    Route::get("report/sales/1/5", "Report\SalesController@screen_1_5");
+    Route::get("report/sales/1/12", "Report\SalesController@screen_1_12");
+    Route::get("report/sales/1/15", "Report\SalesController@screen_1_15");
+    Route::get("report/sales/1/16", "Report\SalesController@screen_1_16");
+    Route::get("report/sales/1/18", "Report\SalesController@screen_1_18");
+    Route::get("report/sales/1/19", "Report\SalesController@screen_1_19");
+    Route::get("report/sales/1/21", "Report\SalesController@screen_1_21");
 
     //REPORT SALES : 2/x
-    Route::get("report/sales/2/3","Report\SalesController@screen_2_3");
+    Route::get("report/sales/2/3", "Report\SalesController@screen_2_3");
 
     //REPORT SALES : 3/x
-    Route::get("report/sales/3/11","Report\SalesController@screen_3_11");
-    Route::get("report/sales/3/17","Report\SalesController@screen_3_17");
-    Route::get("report/sales/3/21","Report\SalesController@screen_3_21");
-    Route::get("report/sales/3/26","Report\SalesController@screen_3_26");
+    Route::get("report/sales/3/11", "Report\SalesController@screen_3_11");
+    Route::get("report/sales/3/17", "Report\SalesController@screen_3_17");
+    Route::get("report/sales/3/21", "Report\SalesController@screen_3_21");
+    Route::get("report/sales/3/26", "Report\SalesController@screen_3_26");
 
     //REPORT SALES : 4/x
-    Route::get("report/sales/4/1","Report\SalesController@screen_4_1");
+    Route::get("report/sales/4/1", "Report\SalesController@screen_4_1");
 
     //REPORT SALES : 5/x
-    Route::get("report/sales/5/x","Report\SalesController@screen_5_x");
+    Route::get("report/sales/5/x", "Report\SalesController@screen_5_x");
 
     //REPORT SALES : 6/x
-    Route::get("report/sales/6/4","Report\SalesController@screen_6_4");
-    Route::get("report/sales/6/5","Report\SalesController@screen_6_5");
-    Route::get("report/sales/6/6","Report\SalesController@screen_6_6");
+    Route::get("report/sales/6/4", "Report\SalesController@screen_6_4");
+    Route::get("report/sales/6/5", "Report\SalesController@screen_6_5");
+    Route::get("report/sales/6/6", "Report\SalesController@screen_6_6");
 
     //REPORT PURCHASE : 1/x
-    Route::get("report/purchase/1/4","Report\PurchaseController@screen_1_4");
-    Route::get("report/purchase/1/6","Report\PurchaseController@screen_1_6");
-    Route::get("report/purchase/1/8","Report\PurchaseController@screen_1_8");
-    Route::get("report/purchase/1/9","Report\PurchaseController@screen_1_9");
+    Route::get("report/purchase/1/4", "Report\PurchaseController@screen_1_4");
+    Route::get("report/purchase/1/6", "Report\PurchaseController@screen_1_6");
+    Route::get("report/purchase/1/8", "Report\PurchaseController@screen_1_8");
+    Route::get("report/purchase/1/9", "Report\PurchaseController@screen_1_9");
 
     //REPORT PURCHASE : 2/x
-    Route::get("report/purchase/2/2","Report\PurchaseController@screen_2_2");
-    Route::get("report/purchase/2/3","Report\PurchaseController@screen_2_3");
+    Route::get("report/purchase/2/2", "Report\PurchaseController@screen_2_2");
+    Route::get("report/purchase/2/3", "Report\PurchaseController@screen_2_3");
 
     //REPORT PURCHASE : 3/x
-    Route::get("report/purchase/3/2","Report\PurchaseController@screen_3_2");
-    Route::get("report/purchase/3/3","Report\PurchaseController@screen_3_3");
-    Route::get("report/purchase/3/5","Report\PurchaseController@screen_3_5");
+    Route::get("report/purchase/3/2", "Report\PurchaseController@screen_3_2");
+    Route::get("report/purchase/3/3", "Report\PurchaseController@screen_3_3");
+    Route::get("report/purchase/3/5", "Report\PurchaseController@screen_3_5");
 
     //REPORT PURCHASE : 4/x
-    Route::get("report/purchase/4/1","Report\PurchaseController@screen_4_1");
+    Route::get("report/purchase/4/1", "Report\PurchaseController@screen_4_1");
 
     //REPORT PURCHASE : 5/x
-    Route::get("report/purchase/5/3","Report\PurchaseController@screen_5_3");
+    Route::get("report/purchase/5/3", "Report\PurchaseController@screen_5_3");
 
     //REPORT INVENTORY : 1/x
-    Route::get("report/inventory/1/1","Report\InventoryController@screen_1_1");
+    Route::get("report/inventory/1/1", "Report\InventoryController@screen_1_1");
 
     //REPORT INVENTORY : 2/x
-    Route::get("report/inventory/2/1","Report\InventoryController@screen_2_1");
-    Route::get("report/inventory/2/6","Report\InventoryController@screen_2_6");
-    Route::get("report/inventory/2/9","Report\InventoryController@screen_2_9");
+    Route::get("report/inventory/2/1", "Report\InventoryController@screen_2_1");
+    Route::get("report/inventory/2/6", "Report\InventoryController@screen_2_6");
+    Route::get("report/inventory/2/9", "Report\InventoryController@screen_2_9");
 
     //REPORT INVENTORY : 3/x
-    Route::get("report/inventory/3/2","Report\InventoryController@screen_3_2");
-    Route::get("report/inventory/3/6","Report\InventoryController@screen_3_6");
-    Route::get("report/inventory/3/13","Report\InventoryController@screen_3_13");
+    Route::get("report/inventory/3/2", "Report\InventoryController@screen_3_2");
+    Route::get("report/inventory/3/6", "Report\InventoryController@screen_3_6");
+    Route::get("report/inventory/3/13", "Report\InventoryController@screen_3_13");
 
     //REPORT INVENTORY : 4/x
-    Route::get("report/inventory/4/4","Report\InventoryController@screen_4_4");
+    Route::get("report/inventory/4/4", "Report\InventoryController@screen_4_4");
 
     //REPORT INDEX
-    Route::get('report/',function(){
+    Route::get('report/', function () {
         return view('report/index');
     });
 
-
     Route::resource('gaurd-stock', 'GaurdStockController');
     //
-    Route::get('report/supplier/1/4',"Report\SupplierController@screen_1_4");
-    Route::get('report/supplier/1/5',"Report\SupplierController@screen_1_5");
-    Route::get('report/supplier/2/2',"Report\SupplierController@screen_2_2");
-    Route::get('report/supplier/3/2',"Report\SupplierController@screen_3_2"); 
-    Route::get('report/supplier/4/1',"Report\SupplierController@screen_4_1");
-    Route::get('report/supplier/5/2',"Report\SupplierController@screen_5_2");
-    Route::get('report/supplier/6/16',"Report\SupplierController@screen_6_16");
-    Route::get('report/supplier/7/2',"Report\SupplierController@screen_7_2");
+    Route::get('report/supplier/1/4', "Report\SupplierController@screen_1_4");
+    Route::get('report/supplier/1/5', "Report\SupplierController@screen_1_5");
+    Route::get('report/supplier/2/2', "Report\SupplierController@screen_2_2");
+    Route::get('report/supplier/3/2', "Report\SupplierController@screen_3_2");
+    Route::get('report/supplier/4/1', "Report\SupplierController@screen_4_1");
+    Route::get('report/supplier/5/2', "Report\SupplierController@screen_5_2");
+    Route::get('report/supplier/6/16', "Report\SupplierController@screen_6_16");
+    Route::get('report/supplier/7/2', "Report\SupplierController@screen_7_2");
     //
-    Route::get("report/customer/1/3","Report\CustomerController@screen_1_3");
-    Route::get("report/customer/1/5","Report\CustomerController@screen_1_5");
-    Route::get("report/customer/2/3","Report\CustomerController@screen_2_3");
-    Route::get("report/customer/4/1","Report\CustomerController@screen_4_1");
-    Route::get("report/customer/3/2","Report\CustomerController@screen_3_2");
-    Route::get("report/customer/5/8","Report\CustomerController@screen_5_8");
-    Route::get("report/customer/5/9","Report\CustomerController@screen_5_9");
-    Route::get("report/customer/6/15","Report\CustomerController@screen_6_15");
-    Route::get("report/customer/7/8","Report\CustomerController@screen_7_8");
-
+    Route::get("report/customer/1/3", "Report\CustomerController@screen_1_3");
+    Route::get("report/customer/1/5", "Report\CustomerController@screen_1_5");
+    Route::get("report/customer/2/3", "Report\CustomerController@screen_2_3");
+    Route::get("report/customer/4/1", "Report\CustomerController@screen_4_1");
+    Route::get("report/customer/3/2", "Report\CustomerController@screen_3_2");
+    Route::get("report/customer/5/8", "Report\CustomerController@screen_5_8");
+    Route::get("report/customer/5/9", "Report\CustomerController@screen_5_9");
+    Route::get("report/customer/6/15", "Report\CustomerController@screen_6_15");
+    Route::get("report/customer/7/8", "Report\CustomerController@screen_7_8");
 
     Route::resource('contact', 'ContactController');
     Route::resource('calendar', 'CalendarController');
@@ -343,13 +327,9 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
     Route::resource('full-calendar', 'FullCalendarController');
     Route::resource('checklist', 'ChecklistController');
 
-
-    
     Route::resource('comment', 'CommentController');
-    Route::get('backuplog/download/{filename}','BackuplogController@download');
+    Route::get('backuplog/download/{filename}', 'BackuplogController@download');
     Route::resource('backuplog', 'BackuplogController');
-    
-
 
     Route::resource('brand', 'BrandController');
     Route::resource('issue-stock', 'IssueStockController');
@@ -361,6 +341,8 @@ Route::middleware(['auth','role:sales,purchase,admin'])->group(function () {
 });
 //END MIDDLEWARE AUTH
 
-Route::redirect('register', 'login',301);
+Route::redirect('register', 'login', 301);
 Auth::routes();
 Route::resource('product-detail', 'ProductDetailController');
+Route::resource('company', 'CompanyController');
+Route::resource('company', 'CompanyController');

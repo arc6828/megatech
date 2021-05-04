@@ -85,11 +85,11 @@
 							//element.contact_name,
 							"<a "
 									+"style='position:static; will-change:unset;' "
-									+"class='btn btn-success btn-sm'"
+									+"class='btn btn-success btn-sm d-none'"
 									+"href='{{ url('/') }}/sales/quotation/create?customer_id="+element.customer_id+"'"
 									+">เลือก</a>"
 									+"<button type='button' "
-									+"class='btn btn-warning btn-sm d-none'"
+									+"class='btn btn-success btn-sm'"
 									+"style='position:static; will-change:unset;' "
 									+"onClick='select_item("+element.customer_id+",`"+element.company_name+"`,`"+element.customer_code+"`)' "
 									+">เลือก</button>"
