@@ -57,7 +57,6 @@ class ReturnOrder extends Model
         return DB::table('return_orders')
             ->join('tb_supplier', 'return_orders.supplier_id', '=', 'tb_supplier.supplier_id')
             ->where('return_orders.id', '=', $id)
-            ->select(DB::raw('return_orders.*', 'tb_supplier.*'))
             ->get();
     }
 }

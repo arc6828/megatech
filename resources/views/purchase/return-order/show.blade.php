@@ -86,6 +86,19 @@
                 </div>
             </div>
             <div style="margin-top:10px;">
+              <table border="1" style="border-collapse: collapse; width:100%;">
+                  <tr>
+                      <td>
+                          <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
+                          <strong>ที่อยู่ :</strong> {{ $row->company_name }} <br>
+                          <strong>โทร :</strong> 02-152-7250
+                          <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> 02-152-7250
+                          <strong style="margin-left:150px;">รหัสลูกค้า :</strong> {{ $row->supplier_code }} <br>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+            <div style="margin-top:10px;">
                 <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
                     <tr>
                         <th>ลำดับ</th>
