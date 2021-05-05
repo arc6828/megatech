@@ -1,6 +1,6 @@
     <?php
-      use Illuminate\Support\Facades\Route;
-      use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,8 +84,9 @@ Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
             Route::patch('/delivery_temporary/{id}/cancel', 'Sales\DeliveryTemporaryController@cancel');
             Route::resource('/delivery_temporary', 'Sales\DeliveryTemporaryController');
             //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
-
+            Route::get('/return-invoice/{id}/pdf', 'Sales\ReturnInvoiceController@pdf');
             Route::resource('return-invoice', 'Sales\ReturnInvoiceController');
+
             Route::resource('return-invoice-detail', 'Sales\ReturnInvoiceDetailController');
         });
     });
@@ -112,6 +113,7 @@ Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
             Route::get('/order_detail', 'Purchase\OrderDetailController@index');
             Route::put('/order_detail/approve', 'Purchase\OrderDetailController@approve');
 
+            Route::get('/return-order/{id}/pdf', 'Purchase\ReturnOrderController@pdf');
             Route::resource('return-order', 'Purchase\ReturnOrderController');
             Route::resource('return-order-detail', 'Purchase\ReturnOrderDetailController');
 
@@ -134,6 +136,8 @@ Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
         //NEW
         Route::resource('cheque', 'ChequeController');
         Route::resource('customer-payment-detail', 'CustomerPaymentDetailController');
+
+        Route::get('/customer-payment/{id}/pdf', 'CustomerPaymentController@pdf');
         Route::resource('customer-payment', 'CustomerPaymentController');
         Route::resource('customer-billing-detail', 'CustomerBillingDetailController');
         //NEW2
@@ -145,7 +149,7 @@ Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
         Route::resource('supplier-payment', 'SupplierPaymentController');
         Route::resource('supplier-billing-detail', 'SupplierBillingDetailController');
 
-        Route::get('supplier-billing/{id}/pdf', 'SupplierBillingController@pdf');
+        // Route::get('supplier-billing/{id}/pdf', 'SupplierBillingController@pdf');
         Route::resource('supplier-billing', 'SupplierBillingController');
     });
 

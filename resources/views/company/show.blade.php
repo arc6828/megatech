@@ -32,39 +32,39 @@
                             <table class="table">
                                 <tbody>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>ลำดับ</th>
                                         <td>{{ $company->id }}</td>
                                     </tr>
                                     <tr>
-                                        <th> Thname Company </th>
+                                        <th> ชื่อไทยบริษัท </th>
                                         <td> {{ $company->thname_company }} </td>
                                     </tr>
                                     <tr>
-                                        <th> Enname Company </th>
+                                        <th> ชื่ออังฤษบริษัท </th>
                                         <td> {{ $company->enname_company }} </td>
                                     </tr>
                                     <tr>
-                                        <th> Address </th>
+                                        <th> ที่อยู่ </th>
                                         <td> {{ $company->address }} </td>
                                     </tr>
                                     <tr>
-                                        <th> Tal </th>
+                                        <th> เบอร์โทรศัพท์ </th>
                                         <td> {{ $company->tal }} </td>
                                     </tr>
                                     <tr>
-                                        <th> Fax </th>
+                                        <th> เบอร์แฟกซ์ </th>
                                         <td> {{ $company->fax }} </td>
                                     </tr>
                                     <tr>
-                                        <th> Number Tex </th>
+                                        <th> เลขประจำตัวผู้เสียภาษี </th>
                                         <td> {{ $company->number_tex }} </td>
                                     </tr>
                                     <tr>
-                                        <th> Image </th>
+                                        <th> โลโก้ </th>
                                         <td> {{ $company->image }} </td>
                                     </tr>
                                     <tr>
-                                        <th> Email </th>
+                                        <th> อีเมล </th>
                                         <td> {{ $company->email }} </td>
                                     </tr>
                                 </tbody>

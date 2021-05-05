@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Sales;
 
-use App\Http\Requests;
+use App\GaurdStock;
 use App\Http\Controllers\Controller;
-
+use App\Models\Company;
+use App\ProductModel;
+use App\Sales\InvoiceModel;
 use App\Sales\ReturnInvoice;
 use App\Sales\ReturnInvoiceDetail;
-use App\Sales\InvoiceModel;
-use App\ProductModel;
-use App\GaurdStock;
-
+use App\Sales\unused\InvoiceDetailModel;
 use Illuminate\Http\Request;
+use PDF;
 
 class ReturnInvoiceController extends Controller
 {
@@ -56,14 +56,14 @@ class ReturnInvoiceController extends Controller
     {
 
         $keyword = $request->get('search');
-        $returninvoice = InvoiceModel::firstOrNew(['invoice_code'=> $keyword]);
+        $returninvoice = InvoiceModel::firstOrNew(['invoice_code' => $keyword]);
         $returninvoice->total_before_vat = 0;
         $returninvoice->total_after_vat = 0;
         $returninvoice->vat = 0;
         //$returninvoice->sales_status_id = 0;
         $returninvoicedetail = isset($returninvoice) ? $returninvoice->invoice_details()->get() : [];
 
-        return view('sales.return-invoice.create',compact('returninvoice','returninvoicedetail'));
+        return view('sales.return-invoice.create', compact('returninvoice', 'returninvoicedetail'));
     }
 
     /**
@@ -76,22 +76,23 @@ class ReturnInvoiceController extends Controller
     public function store(Request $request)
     {
         //CREATE RETURN INVOICE
-        $requestData = $request->all();        
+        $requestData = $request->all();
         $requestData["code"] = $this->getNewCode();
         $requestData["revision"] = 0;
         $returninvoice = ReturnInvoice::create($requestData);
 
         $this->store_detail($request, $returninvoice);
 
-        return redirect('sales/return-invoice/'.$returninvoice->id)->with('flash_message', 'ReturnInvoice added!');
+        return redirect('sales/return-invoice/' . $returninvoice->id)->with('flash_message', 'ReturnInvoice added!');
     }
 
-    public function getNewCode(){
-        $number = ReturnInvoice::where('sales_status_id','!=','-1')
-            ->whereMonth('created_at',date("m"))
-            ->whereYear('created_at',date("Y"))
+    public function getNewCode()
+    {
+        $number = ReturnInvoice::where('sales_status_id', '!=', '-1')
+            ->whereMonth('created_at', date("m"))
+            ->whereYear('created_at', date("Y"))
             ->count();
-        $count =  $number + 1;
+        $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
@@ -100,29 +101,30 @@ class ReturnInvoiceController extends Controller
         return $code;
     }
 
-    public function store_detail(Request $request, $returninvoice){
+    public function store_detail(Request $request, $returninvoice)
+    {
         //CREATE RETURN INVOICE DETAIL
         $details = [];
         $products = $request->input('product_ids');
         $amounts = $request->input('amounts');
         $discount_prices = $request->input('discount_prices');
         $totals = $request->input('totals');
-        if (is_array($products)){
-          for($i=0; $i<count($products); $i++){
-            $details[] = [
-                "product_id" => $products[$i],
-                "amount" => $amounts[$i],
-                "discount_price" => $discount_prices[$i],
-                "total" => $totals[$i],
-                "return_invoice_id" => $returninvoice->id,              
-            ];
-          }
+        if (is_array($products)) {
+            for ($i = 0; $i < count($products); $i++) {
+                $details[] = [
+                    "product_id" => $products[$i],
+                    "amount" => $amounts[$i],
+                    "discount_price" => $discount_prices[$i],
+                    "total" => $totals[$i],
+                    "return_invoice_id" => $returninvoice->id,
+                ];
+            }
         }
         ReturnInvoiceDetail::insert($details);
 
-        //GAURD STOCK UPDATE        
-        foreach($details as $item){
-            if($item['amount'] == 0){
+        //GAURD STOCK UPDATE
+        foreach ($details as $item) {
+            if ($item['amount'] == 0) {
                 continue;
             }
             $product = ProductModel::findOrFail($item['product_id']);
@@ -135,14 +137,14 @@ class ReturnInvoiceController extends Controller
                 "pending_out" => ($product->pending_out),
                 "product_id" => $product->product_id,
             ]);
-            
+
             //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
             $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
             $product->pending_in = $gaurd_stock['pending_in'];
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
         }
-        
+
     }
 
     /**
@@ -155,10 +157,10 @@ class ReturnInvoiceController extends Controller
     public function show($id)
     {
         $returninvoice = ReturnInvoice::findOrFail($id);
-        
+
         $returninvoicedetail = $returninvoice->return_invoice_details()->get();
         $mode = "show";
-        return view('sales.return-invoice.edit',compact('returninvoice','returninvoicedetail','mode'));
+        return view('sales.return-invoice.edit', compact('returninvoice', 'returninvoicedetail', 'mode'));
 
         // return view('sales.return-invoice.show', compact('returninvoice'));
     }
@@ -183,7 +185,7 @@ class ReturnInvoiceController extends Controller
         $returninvoicedetail = $returninvoice->return_invoice_details()->get();
         $mode = "edit";
 
-        return view('sales.return-invoice.edit',compact('returninvoice','returninvoicedetail','mode'));
+        return view('sales.return-invoice.edit', compact('returninvoice', 'returninvoicedetail', 'mode'));
 
         // return view('sales.return-invoice.edit', compact('returninvoice'));
     }
@@ -198,10 +200,10 @@ class ReturnInvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $requestData = $request->all();                
+
+        $requestData = $request->all();
         //LOAD OLD DATA
-        $new_returninvoice = ReturnInvoice::create($requestData);              
+        $new_returninvoice = ReturnInvoice::create($requestData);
 
         //UPDATE SOME DATA
         $returninvoice = ReturnInvoice::findOrFail($id);
@@ -210,8 +212,8 @@ class ReturnInvoiceController extends Controller
 
         //DUPLICATE OBJECT
         $revision = $returninvoice->revision + 1;
-        $segments = explode("-",$returninvoice->code);
-        $code = $segments[0]."-".$segments[1]."-R".$revision; 
+        $segments = explode("-", $returninvoice->code);
+        $code = $segments[0] . "-" . $segments[1] . "-R" . $revision;
         //$returninvoice->update($requestData);
         $new_returninvoice->update([
             'created_at' => date("Y-m-d h:i:s"),
@@ -220,9 +222,9 @@ class ReturnInvoiceController extends Controller
             'revision' => $revision,
         ]);
 
-        //ROLLBACK Gaurd stock 
+        //ROLLBACK Gaurd stock
         $details = $returninvoice->details()->get();
-        foreach($details as $item){
+        foreach ($details as $item) {
             $product = ProductModel::findOrFail($item->product_id);
             $gaurd_stock = GaurdStock::create([
                 "code" => $returninvoice->code,
@@ -233,7 +235,7 @@ class ReturnInvoiceController extends Controller
                 "pending_out" => ($product->pending_out),
                 "product_id" => $product->product_id,
             ]);
-            
+
             //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
             $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
             $product->pending_in = $gaurd_stock['pending_in'];
@@ -246,7 +248,7 @@ class ReturnInvoiceController extends Controller
         //SAVE DETAIL + GAURD STOCK
         $this->store_detail($request, $new_returninvoice);
 
-        return redirect('sales/return-invoice/'.$new_returninvoice->id)->with('flash_message', 'ReturnInvoice updated!');
+        return redirect('sales/return-invoice/' . $new_returninvoice->id)->with('flash_message', 'ReturnInvoice updated!');
     }
 
     /**
@@ -261,5 +263,17 @@ class ReturnInvoiceController extends Controller
         ReturnInvoice::destroy($id);
 
         return redirect('sales/return-invoice')->with('flash_message', 'ReturnInvoice deleted!');
+    }
+
+    public function pdf($id)
+    {
+        $data = [
+            'table_return_invoice' => ReturnInvoice::select_by_id($id),
+            'table_invoice' => InvoiceModel::select_by_id($id),
+            'table_invoice_detail' => InvoiceDetailModel::select_by_id($id),
+            'table_company' => Company::select_all(),
+        ];
+        $pdf = PDF::loadView('sales/return-invoice/show', $data);
+        return $pdf->stream('test.pdf');
     }
 }

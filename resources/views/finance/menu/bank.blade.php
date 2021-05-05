@@ -13,7 +13,7 @@
         <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/bank-transaction?transaction_code=deposite">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
-            <div><br>ฝากเงินเข้า ธ.</div>
+            <div>CI<br>ฝากเงินเข้า ธ.</div>
           </div>
         </a>  
       </div>
@@ -21,7 +21,7 @@
         <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/bank-transaction?transaction_code=withdraw">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
-            <div><br>เบิกเงินจาก ธ.</div>
+            <div>CO<br>เบิกเงินจาก ธ.</div>
           </div>
         </a> 
       </div>
@@ -29,7 +29,7 @@
         <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/bank-transaction?transaction_code=transfer">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
-            <div>โอนเงิน<br>ระหว่าง ธ.</div>
+            <div>TC<br>โอนเงินระหว่าง ธ.</div>
           </div>
         </a> 
       </div>
@@ -37,7 +37,7 @@
         <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/bank-transaction?transaction_code=withdraw-cheque">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
-            <div>เบิกเงิน<br>ด้วยเช็ค</div> 
+            <div>TX<br>เบิกเงินด้วยเช็ค</div> 
           </div>
         </a> 
       </div>
@@ -45,7 +45,7 @@
         <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/bank-transaction?transaction_code=interest">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
-            <div><br>รายได้จาก ธ.</div>    
+            <div>RV<br>รายได้จาก ธ.</div>    
           </div>
         </a> 
       </div>    
@@ -53,7 +53,7 @@
         <a class="btn btn-outline-info btn-menu  my-3" href="{{url('/')}}/finance/bank-transaction?transaction_code=fee">
           <div class="vertical-center">
             <div class="px-4"><i class="round round-info my-2 ni ni-single-copy-04"></i></div>
-            <div><br>ค่าใช้จ่าย ธ.</div>        
+            <div>EX<br>ค่าใช้จ่าย ธ.</div>        
           </div>
         </a> 
       </div>     

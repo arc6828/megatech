@@ -20,6 +20,7 @@ use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
 use App\GaurdStock;
+use App\Models\Company;
 use PDF;
 
 class ReceiveController extends Controller
@@ -283,6 +284,7 @@ class ReceiveController extends Controller
       $data = [
           //QUOTATION
           'table_purchase_receive' => ReceiveModel::select_by_id($id),
+          'table_company' => Company::select_all(),
           'table_supplier' => SupplierModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),

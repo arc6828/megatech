@@ -1,41 +1,106 @@
-@extends('layouts/argon-dashboard/theme')
+@extends('layouts/print')
 
-@section('title','ReturnOrder '.$returnorder->id)
+@section('title', 'ใบส่งคืนสินค้า')
+
+@section('background-tag', 'bg-warning')
 
 @section('content')
-    <div class="container">
-        <div class="row">
+    <style>
+        td,
+        th {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
 
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">ReturnOrder {{ $returnorder->id }}</div>
-                    <div class="card-body">
+        table.no-padding-cell td,
+        table.no-padding-cell th {
+            padding-bottom: 0px;
+            padding-top: 10px;
+        }
 
-                        <a href="{{ url('/purchase/return-order') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a href="{{ url('/purchase/return-order/' . $returnorder->id . '/edit') }}" title="Edit ReturnOrder"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+        .inline {
+            display: inline-block;
+        }
 
-                        <form method="POST" action="{{ url('purchase/returnorder' . '/' . $returnorder->id) }}" accept-charset="UTF-8" style="display:inline">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-sm" title="Delete ReturnOrder" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                        </form>
-                        <br/>
-                        <br/>
+        .company_name {
+            font-size: xx-large;
+            line-height: 0.7;
+            font-weight: 700;
+        }
 
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th><td>{{ $returnorder->id }}</td>
-                                    </tr>
-                                    <tr><th> Code </th><td> {{ $returnorder->code }} </td></tr><tr><th> Supplier Id </th><td> {{ $returnorder->supplier_id }} </td></tr><tr><th> Purchase Receive Code </th><td> {{ $returnorder->purchase_receive_code }} </td></tr><tr><th> Tax Type Id </th><td> {{ $returnorder->tax_type_id }} </td></tr><tr><th> Purchase Status Id </th><td> {{ $returnorder->purchase_status_id }} </td></tr><tr><th> User Id </th><td> {{ $returnorder->user_id }} </td></tr><tr><th> Remark </th><td> {{ $returnorder->remark }} </td></tr><tr><th> Total Before Vat </th><td> {{ $returnorder->total_before_vat }} </td></tr><tr><th> Vat </th><td> {{ $returnorder->vat }} </td></tr><tr><th> Vat Percent </th><td> {{ $returnorder->vat_percent }} </td></tr><tr><th> Total After Vat </th><td> {{ $returnorder->total_after_vat }} </td></tr><tr><th> Revision </th><td> {{ $returnorder->revision }} </td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+        .sub_company_name {
+            line-height: 0.8;
+        }
 
+    </style>
+    @forelse($table_return_order as $row)
+        <div>
+            @foreach ($table_company as $company)
+                <div class="inline" style="width:30%; text-align:center;">
+                    <div style="padding-right: 10px; padding-left: 10px;">
+                        <img src="{{ url('/') }}/images/megatech-logo-small.jpg" style="width:100%">
                     </div>
+                    <div> <strong>เลขประจำตัวผู้เสียภาษี</strong> {{ $company->number_tex }}</div>
+                </div>
+                <div class="inline" style="width:69%;">
+                    <div class="company_name">{{ $company->thname_company }}</div>
+                    <div class="company_name">{{ $company->enname_company }}</div>
+                    <div class="sub_company_name">{{ $company->address }}30</div>
+                    <div class="sub_company_name">
+                        Tel: {{ $company->tal }}
+                        Fax: {{ $company->fax }}
+                        E-mail: {{ $company->email }}
+                    </div>
+                    <div class="sub_company_name">www.megatechcuttingtool.com</div>
+                </div>
+            @endforeach
+        </div>
+        <div style="text-align:center;">
+            <div class="inline" style="width:30%;  ">
+
+            </div>
+            <div class="inline" style="width:39%;   ">
+                <div style="padding-left : 40px; padding-right:40px;">
+                    <table style="width:100%; text-align:center;">
+                        <tr>
+                            <td style="padding: 0px 10px;">
+                                <div class="company_name" style="border:1px solid; padding: 10px 0px; ">ใบส่งคืนสินค้า</div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+            <div class="inline" style="width:30%;  ">
+                <div class="">
+                    <table class="no-padding-cell" border="1"
+                        style="border-collapse: collapse; width:100%; text-align:center;">
+                        <tr>
+                            <th>เลขที่</th>
+                            <td>{{ $row->code }}</td>
+                        </tr>
+                        <tr>
+                            <th>วันที่</th>
+                            <td>{{ $row->created_at }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            {{-- <div style="margin-top:10px;">
+                <table border="1" style="border-collapse: collapse; width:100%;">
+                    <tr>
+                        <td>
+
+                            <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
+                            <strong>ที่อยู่ :</strong> {{ $row->company_name }} <br>
+                            <strong>โทร :</strong> 02-152-7250
+                            <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> 02-152-7250
+                            <strong style="margin-left:150px;">รหัสลูกค้า :</strong> {{ $row->supplier_code }} <br>
+                        </td>
+                    </tr>
+                </table>
+            </div> --}}
         </div>
-    </div>
+    @empty
+    @endforelse
+
 @endsection

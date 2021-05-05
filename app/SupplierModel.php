@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 class SupplierModel extends Model
 {
 	protected $table = 'tb_supplier';
-    protected $primaryKey = 'supplier_id';
+  protected $primaryKey = 'supplier_id';
 	protected $fillable = ['supplier_code',
 							'supplier_type',
 							'company_name',

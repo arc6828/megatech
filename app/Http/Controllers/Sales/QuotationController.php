@@ -18,6 +18,7 @@ use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
 use App\Functions;
+use App\Models\Company;
 use PDF;
 
 class QuotationController extends Controller
@@ -251,6 +252,7 @@ class QuotationController extends Controller
       $data = [
           //QUOTATION
           'table_quotation' => QuotationModel::select_by_id($id),
+          'table_company' => Company::select_all(),
           //QUOTATION Detail
           'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
           'total_text' => count(QuotationModel::select_by_id($id))>0 ?  Functions::baht_text(QuotationModel::select_by_id($id)[0]->total) : "-",

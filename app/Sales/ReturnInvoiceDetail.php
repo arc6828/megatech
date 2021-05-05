@@ -34,4 +34,5 @@ class ReturnInvoiceDetail extends Model
     public function return_invoice(){
         return $this->belongsTo('App\Sales\ReturnInvoice','return_invoice_id','id');
     }
+    
 }

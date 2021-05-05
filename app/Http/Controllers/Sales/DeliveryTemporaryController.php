@@ -18,7 +18,7 @@ use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
 use App\GaurdStock;
-
+use App\Models\Company;
 use PDF;
 
 class DeliveryTemporaryController extends Controller
@@ -248,6 +248,7 @@ class DeliveryTemporaryController extends Controller
       $data = [
           //QUOTATION
           'table_delivery_temporary' => DeliveryTemporaryModel::select_by_id($id),
+          'table_company' => Company::select_all(),
           'table_customer' => CustomerModel::select_all(),
           'table_delivery_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),

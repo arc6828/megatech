@@ -5,7 +5,6 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Company</div>
@@ -34,14 +33,14 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Thname Company</th>
-                                        <th>Enname Company</th>
-                                        <th>Address</th>
-                                        <th>Tal</th>
-                                        <th>Fax</th>
-                                        <th>Number Tex</th>
-                                        <th>Image</th>
-                                        <th>Email</th>
+                                        <th>ชื่อไทยบริษัท</th>
+                                        <th>ชื่ออังกฤษบริษัท</th>
+                                        <th>ที่อยู่</th>
+                                        <th>เบอร์โทรศัพท์</th>
+                                        <th>เบอร์แฟกซ์</th>
+                                        <th>เลขประจำตัวผู้เสียภาษี </th>
+                                        <th>โลโก้</th>
+                                        <th>อีเมล</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -56,7 +55,7 @@
                                             <td>{{ $item->fax }}</td>
                                             <td>{{ $item->number_tex }}</td>
                                             <td>
-                                                <img src="{{ asset("/storage/{$item->image}") }}">
+                                                <img style="width: 100px" src="{{ asset("/storage/{$item->image}") }}">
                                             </td>
                                             <td>{{ $item->email }}</td>
                                             <td>
@@ -89,5 +88,7 @@
                 </div>
             </div>
         </div>
+        {{-- <div id="example"></div>
+        <script src="{{ asset('js/app.js') }}"></script> --}}
     </div>
 @endsection

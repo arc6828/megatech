@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\Models\Company;
 use Illuminate\Http\Request;
 
@@ -56,9 +54,8 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        
         $requestData = $request->all();
-                if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $requestData['image'] = $request->file('image')
                 ->store('uploads', 'public');
         }
@@ -106,9 +103,9 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-                if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $requestData['image'] = $request->file('image')
                 ->store('uploads', 'public');
         }

@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-use App\CustomerPayment;
-use App\CustomerPaymentDetail;
-use App\CustomerBilling;
-use App\CustomerModel;
-use App\Sales\InvoiceModel;
-use App\CustomerDebt;
-use App\Cheque;
 use App\BankAccount;
 use App\BankTransaction;
+use App\Cheque;
+use App\CustomerDebt;
+use App\CustomerModel;
+use App\CustomerPayment;
+use App\CustomerPaymentDetail;
+use App\Http\Controllers\Controller;
+use App\Sales\InvoiceModel;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 
 class CustomerPaymentController extends Controller
@@ -59,41 +55,38 @@ class CustomerPaymentController extends Controller
      */
     public function create()
     {
-        
+
         /*
         $customer_id = request('customer_id',0);
         $customer = CustomerModel::find($customer_id);
         $table_invoice = InvoiceModel::where('customer_id', $customer_id)
-            ->where('total_debt','>',0)
-            ->get();
-        */
-        $customer_id = request('customer_id',0);
+        ->where('total_debt','>',0)
+        ->get();
+         */
+        $customer_id = request('customer_id', 0);
         $customer = CustomerModel::find($customer_id);
         $invoices = null;
         $debts = null;
-        if( request('filter')=="billing-only"){
+        if (request('filter') == "billing-only") {
             //วางบิลแล้วเท่านั้น 12
-            $invoices = InvoiceModel::where('sales_status_id',12)->where('customer_id',$customer_id)->get();  
-            $debts = []; 
-        }else{
+            $invoices = InvoiceModel::where('sales_status_id', 12)->where('customer_id', $customer_id)->get();
+            $debts = [];
+        } else {
             //ที่ยอดมีหนี้ทั้งหมด
-            $invoices = InvoiceModel::where('total_debt','>',0)->where('customer_id',$customer_id)->get();
-            $debts = CustomerDebt::where('total_debt','>',0)->where('customer_id',$customer_id)->get();
-                   
+            $invoices = InvoiceModel::where('total_debt', '>', 0)->where('customer_id', $customer_id)->get();
+            $debts = CustomerDebt::where('total_debt', '>', 0)->where('customer_id', $customer_id)->get();
+
         }
-            
 
-             
         /*$customer_billings = CustomerBilling::where('customer_billing_id', $customer_billing_id)
-            ->where('total_debt','>',0)
-            ->get();
-            */
+        ->where('total_debt','>',0)
+        ->get();
+         */
 
-            
         $bank_accounts = BankAccount::all();
         $customers = CustomerModel::all();
 
-        return view('customer-payment.create', compact('invoices','customer','bank_accounts','customers','debts') );
+        return view('customer-payment.create', compact('invoices', 'customer', 'bank_accounts', 'customers', 'debts'));
     }
 
     /**
@@ -105,41 +98,38 @@ class CustomerPaymentController extends Controller
      */
     public function store(Request $request)
     {
-        
-        
-        $requestData = $request->except(['transaction_code','date','bank_account_id','amount','remark']);
+
+        $requestData = $request->except(['transaction_code', 'date', 'bank_account_id', 'amount', 'remark']);
         $requestData['doc_no'] = $this->getNewCode("BR");
 
         if ($request->hasFile('payment_file')) {
             $folder = "customer-payment";
             $requestData['payment_file'] = $request->file('payment_file')->store($folder, 'public');
         }
-        
+
         $customer_payment = CustomerPayment::create($requestData);
 
-        
-        if(isset($requestData['invoice_payments']))
-        {
-            //UPDATE INVOICE 
-            if (is_array ($requestData['invoice_payments'])){
-                for( $i=0; $i<count($requestData['invoice_payments']); $i++ ){
+        if (isset($requestData['invoice_payments'])) {
+            //UPDATE INVOICE
+            if (is_array($requestData['invoice_payments'])) {
+                for ($i = 0; $i < count($requestData['invoice_payments']); $i++) {
                     //INVOICE UPDATE
                     $invoice_payment = $requestData['invoice_payments'][$i];
                     $invoice_id = $requestData['invoice_ids'][$i];
                     $invoice = InvoiceModel::find($invoice_id);
                     //SKIP IF ZERO
-                    if($invoice_payment == 0 ){
+                    if ($invoice_payment == 0) {
                         continue;
                     }
-                    if($invoice){
+                    if ($invoice) {
                         //CREATE CUSTOMER PAYMENT
                         CustomerPaymentDetail::create([
                             'doc_id' => $invoice->invoice_id,
                             'customer_payment_id' => $customer_payment->id,
-                            'code' =>  $invoice->invoice_code,
+                            'code' => $invoice->invoice_code,
                             'total_debt' => $invoice->total_debt,
                             'total_payment' => $invoice_payment,
-                            'total_remain' => $invoice->total_debt - $invoice_payment ,
+                            'total_remain' => $invoice->total_debt - $invoice_payment,
                         ]);
 
                         //ADD UP
@@ -171,73 +161,68 @@ class CustomerPaymentController extends Controller
         //         }
         //     }
         // }
-        
 
         //INSERT BANK-ACCOUNT
         $requestData = $request->all();
-        if (is_array ($requestData['amount'])){
-            for( $i=0; $i<count($requestData['amount']); $i++ ){                
-                
+        if (is_array($requestData['amount'])) {
+            for ($i = 0; $i < count($requestData['amount']); $i++) {
+
                 //INSERT
-                if($requestData['amount'][$i]){
+                if ($requestData['amount'][$i]) {
                     BankTransaction::create([
-                        'transaction_code' => $requestData['transaction_code'][$i] ,
+                        'transaction_code' => $requestData['transaction_code'][$i],
                         'date' => $requestData['date'][$i],
                         'bank_account_id' => $requestData['bank_account_id'][$i],
                         'amount' => $requestData['amount'][$i],
                         'remark' => $requestData['remark'][$i],
-                        'user_id' => Auth::id() ,
-                        'cheque_code' => "" ,
-                        'document_code' => $customer_payment->doc_no ,
-                        'code' => "" ,
+                        'user_id' => Auth::id(),
+                        'cheque_code' => "",
+                        'document_code' => $customer_payment->doc_no,
+                        'code' => "",
                     ]);
 
                     //INSERT CHEQUE IF EXISTสร
-                    if( $requestData['transaction_code'][$i] == "deposite-cheque" ){
-                                            
-                    
-                        Cheque::create([                           
-                            
-                            'cheque_type_code' => 'cheque-in' ,
-                            //'doc_no' => '' , 
-                            'cheque_date' => $requestData['date'][$i] ,
-                            //'cheque_type' => '' , 
-                            'cheque_no' => $requestData['remark'][$i] ,
-                            'total' => $requestData['amount'][$i] ,
+                    if ($requestData['transaction_code'][$i] == "deposite-cheque") {
+
+                        Cheque::create([
+
+                            'cheque_type_code' => 'cheque-in',
+                            //'doc_no' => '' ,
+                            'cheque_date' => $requestData['date'][$i],
+                            //'cheque_type' => '' ,
+                            'cheque_no' => $requestData['remark'][$i],
+                            'total' => $requestData['amount'][$i],
                             //'bank_fee' => '' ,
-                            'bank_account_id' => $requestData['bank_account_id'][$i] , 
-                            //'passed_cheque_date' => '' , 
-                            //'reference' => '' , 
-                            'status' => 'pending' , 
-                            'user_id' => Auth::id()
+                            'bank_account_id' => $requestData['bank_account_id'][$i],
+                            //'passed_cheque_date' => '' ,
+                            //'reference' => '' ,
+                            'status' => 'pending',
+                            'user_id' => Auth::id(),
                         ]);
                     }
 
-                }                
+                }
             }
         }
 
-        
-        
         /*
         //FOR CHEQUE -- ADD TO CHEQUE
         if( $requestData['credit'] ){
-            $requestData = $request->all();
-            $requestData['total'] = $requestData['total_cheque'];
-            
-        
-            Cheque::create($requestData);
-        }
-        */
+        $requestData = $request->all();
+        $requestData['total'] = $requestData['total_cheque'];
 
+        Cheque::create($requestData);
+        }
+         */
 
         return redirect('finance/customer-payment')->with('flash_message', 'CustomerPayment added!');
     }
 
-    public function getNewCode($code){
+    public function getNewCode($code)
+    {
         //COUNT BY CURRENT MONTH
         $number = CustomerPayment::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
-        $count =  $number + 1;
+        $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
@@ -284,9 +269,9 @@ class CustomerPaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $customerpayment = CustomerPayment::findOrFail($id);
         $customerpayment->update($requestData);
 
@@ -305,5 +290,10 @@ class CustomerPaymentController extends Controller
         CustomerPayment::destroy($id);
 
         return redirect('customer-payment')->with('flash_message', 'CustomerPayment deleted!');
+    }
+
+    public function pdf($id)
+    {
+
     }
 }
