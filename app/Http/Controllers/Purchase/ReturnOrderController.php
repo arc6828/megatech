@@ -258,6 +258,7 @@ class ReturnOrderController extends Controller
     {
         $data = [
             'table_return_order' => ReturnOrder::select_by_id($id),
+            'table_return_order_details' => ReturnOrderDetail::select_by_product($id),
             'table_company' => Company::select_all(),
         ];
         $pdf = PDF::loadView('purchase/return-order/show', $data);

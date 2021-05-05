@@ -51,6 +51,7 @@ class ReturnOrder extends Model
     {
         return DB::table('return_orders')->get();
     }
+ 
     public static function select_by_id($id)
     {
         return DB::table('return_orders')

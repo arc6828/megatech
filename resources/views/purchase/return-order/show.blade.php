@@ -85,20 +85,95 @@
                     </table>
                 </div>
             </div>
-            {{-- <div style="margin-top:10px;">
-                <table border="1" style="border-collapse: collapse; width:100%;">
+            <div style="margin-top:10px;">
+                <table border="1" style="border-collapse: collapse; width:100%; text-align:center;">
                     <tr>
-                        <td>
-
-                            <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
-                            <strong>ที่อยู่ :</strong> {{ $row->company_name }} <br>
-                            <strong>โทร :</strong> 02-152-7250
-                            <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> 02-152-7250
-                            <strong style="margin-left:150px;">รหัสลูกค้า :</strong> {{ $row->supplier_code }} <br>
+                        <th>ลำดับ</th>
+                        <th>รหัสสินค้า</th>
+                        <th>รายละเอียด</th>
+                        <th>จำนวน</th>
+                        <th>หน่วยละ</th>
+                        <th>จำนวนเงิน</th>
+                    </tr>
+                    @foreach ($table_return_order_details as $row_detail)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $row_detail->product_id }}</td>
+                            <td>{{ $row_detail->product_name }}</td>
+                            <td>{{ $row_detail->amount }}</td>
+                            <td>{{ $row_detail->discount_price }}</td>
+                            <td>{{ $row_detail->amount * $row_detail->discount_price }}</td>
+                        </tr>
+                    @endforeach
+                    @for ($i = 0; $i < 10 - count($table_return_order_details); $i++)
+                        <tr>
+                            <td><br></td>
+                            <td><br></td>
+                            <td><br></td>
+                            <td><br></td>
+                            <td><br></td>
+                            <td><br></td>
+                        </tr>
+                    @endfor
+                    <tr>
+                        <td colspan="3" style="text-align:left;">
+                            <strong>หมายเหตุ</strong><br />
+                            {{ $row->remark != '' ? $row->remark : '-' }}
+                        </td>
+                        <td rowspan="2" colspan="3">
+                            รวมเป็นเงิน {{ $row->total_before_vat }}<br>
+                            ภาษีมูลค่าเพิ่ม 7% {{ $row->vat }}<br>
+                            รวมทั้งสิ้น {{ $row->total_after_vat }}<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            (...)
                         </td>
                     </tr>
                 </table>
-            </div> --}}
+            </div>
+
+            <div style="text-align:center; margin-top:70px;">
+                <div class="inline" style="width:5%;"></div>
+                <div class="inline" style="width:33%;">
+                    _______________________________________<br>
+                    ผู้เสนอราคา<br>
+                    วันที่ {{ date_format(date_create(explode(' ', $row->created_at)[0]), 'd/m/Y') }}
+                </div>
+                <div class="inline" style="width:23%;"></div>
+                <div class="inline" style="width:33%;">
+                    _______________________________________<br>
+                    ผู้อนุมัติ<br>
+                    วันที่ {{ date_format(date_create(explode(' ', $row->updated_at)[0]), 'd/m/Y') }}
+                </div>
+                <div class="inline" style="width:5%;"></div>
+            </div>
+
+            <div class="" style="text-align : center; margin-top:30px;">
+                <div class="">
+                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->purchase_receive_code, 'C128') }}"
+                        alt="barcode" />
+                </div>
+                <div class="">
+                    {{ $row->purchase_receive_code }}
+                </div>
+            </div>
+            {{-- <div style="margin-top:10px;">
+                        <table border="1" style="border-collapse: collapse; width:100%;">
+                            <tr>
+                                <td>
+
+                                    <strong>ลูกค้า :</strong> {{ $row->company_name }} <br>
+                                    <strong>ที่อยู่ :</strong> {{ $row->company_name }} <br>
+                                    <strong>โทร :</strong> 02-152-7250
+                                    <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> 02-152-7250
+                                    <strong style="margin-left:150px;">รหัสลูกค้า :</strong> {{ $row->supplier_code }}
+                                    <br>
+                                </td>
+                            </tr>
+                        </table>
+                    </div> --}}
         </div>
     @empty
     @endforelse

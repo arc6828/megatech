@@ -121,4 +121,8 @@ class ReturnOrderDetailController extends Controller
 
         return redirect('purchase/return-order-detail')->with('flash_message', 'ReturnOrderDetail deleted!');
     }
+    public static function select_all()
+    {
+        return DB::table('return_orders')->get();
+    }
 }
