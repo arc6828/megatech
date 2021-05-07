@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
-use App\Sales\InvoiceModel;
 use App\Checklist;
+use App\CustomerBilling;
 use App\CustomerBillingDetail;
 use App\CustomerModel;
-use App\CustomerBilling;
-use Illuminate\Http\Request;
 use App\Functions;
+use App\Http\Controllers\Controller;
+use App\Models\Company;
+use App\Sales\InvoiceModel;
+use Illuminate\Http\Request;
 use PDF;
 
 class CustomerBillingController extends Controller
@@ -52,23 +51,23 @@ class CustomerBillingController extends Controller
      */
     public function create(Request $request)
     {
-        $end_date = !empty( $request->get('end_date') ) ? request('end_date') : date('Y-m-d');
-        $customer_id = request('customer_id',0);
+        $end_date = !empty($request->get('end_date')) ? request('end_date') : date('Y-m-d');
+        $customer_id = request('customer_id', 0);
         $customer = CustomerModel::find($customer_id);
         $customers = CustomerModel::all();
-        if($customer){
+        if ($customer) {
             Checklist::firstOrCreate(
                 ['customer_id' => $customer->customer_id],
                 ['type' => 'customer']
             );
         }
-        
+
         $table_invoice = InvoiceModel::where('customer_id', $customer_id)
-            ->where('datetime','<=', $end_date )
-            ->where('sales_status_id','<',12) //sales_status_id 12 : วางบิลแล้ว
-            ->where('total_debt','>',0)
+            ->where('datetime', '<=', $end_date)
+            ->where('sales_status_id', '<', 12) //sales_status_id 12 : วางบิลแล้ว
+            ->where('total_debt', '>', 0)
             ->get();
-        return view('customer-billing.create', compact('table_invoice','customer','customers') );
+        return view('customer-billing.create', compact('table_invoice', 'customer', 'customers'));
     }
 
     /**
@@ -88,38 +87,39 @@ class CustomerBillingController extends Controller
         //MAKE a whitelist (checkbox)
         $whitelist = $request->input('checkboxs');
 
-        //CREATE CustomerBillingDetail        
-        $end_date = !empty( $request->get('end_date') ) ? request('end_date') : date('Y-m-d');
+        //CREATE CustomerBillingDetail
+        $end_date = !empty($request->get('end_date')) ? request('end_date') : date('Y-m-d');
         $customer_id = $requestData['customer_id'];
         $customer = CustomerModel::find($customer_id);
-        $table_invoice = InvoiceModel::where('customer_id', $customer_id)        
-            ->where('datetime','<=', $end_date )
-            ->where('sales_status_id','<',12) //sales_status_id 12 : วางบิลแล้ว
-            ->where('total_debt','>',0)
+        $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+            ->where('datetime', '<=', $end_date)
+            ->where('sales_status_id', '<', 12) //sales_status_id 12 : วางบิลแล้ว
+            ->where('total_debt', '>', 0)
             ->get();
-        foreach($table_invoice as $item){
+        foreach ($table_invoice as $item) {
             $customer_billing_detail = new CustomerBillingDetail;
-            $customer_billing_detail->doc_id = $item->invoice_id;            
+            $customer_billing_detail->doc_id = $item->invoice_id;
             $customer_billing_detail->customer_billing_id = $customer_billing->id;
             $customer_billing_detail->code = $item->invoice_code;
             $customer_billing_detail->total_debt = $item->total_debt;
             //CHECK IF NOT IN WHITELIST -> SKIP
-            if(!in_array($item->invoice_code, $whitelist)){
+            if (!in_array($item->invoice_code, $whitelist)) {
                 continue;
             }
             $customer_billing_detail->save();
 
             $item->sales_status_id = 12; //sales_status_id 12 : วางบิลแล้ว
             $item->save();
-        }     
+        }
 
         return redirect('/finance/customer-billing')->with('flash_message', 'CustomerBilling added!');
     }
 
-    public function getNewCode($code){
+    public function getNewCode($code)
+    {
         //COUNT BY CURRENT MONTH
         $number = CustomerBilling::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
-        $count =  $number + 1;
+        $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
@@ -140,18 +140,19 @@ class CustomerBillingController extends Controller
         $customerbilling = CustomerBilling::findOrFail($id);
         $customer = CustomerModel::find($customerbilling->customer_id);
 
-        return view('customer-billing.show', compact('customerbilling','customer'));
+        return view('customer-billing.show', compact('customerbilling', 'customer'));
     }
     public function pdf($id)
     {
-        $customerbilling = CustomerBilling::findOrFail($id);   
-        
-        $total_text = $customerbilling->total > 0  ?  Functions::baht_text($customerbilling->total) : "-";     
+        $customerbilling = CustomerBilling::findOrFail($id);
+        $table_company = Company::select_all();
+
+        $total_text = $customerbilling->total > 0 ? Functions::baht_text($customerbilling->total) : "-";
 
         //return view('customer-billing.show', compact('customerbilling'));
 
-        return  PDF::loadView('customer-billing/pdf', compact('customerbilling','total_text'))->stream('test.pdf');
-        
+        return PDF::loadView('customer-billing/pdf', compact('customerbilling', 'total_text', 'table_company'))->stream('ใบวางบิล.pdf');
+
     }
 
     /**
@@ -178,9 +179,9 @@ class CustomerBillingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $requestData = $request->all();
-        
+
         $customerbilling = CustomerBilling::findOrFail($id);
         $customerbilling->update($requestData);
 

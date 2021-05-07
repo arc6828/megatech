@@ -19,22 +19,36 @@
                     <div class="card-body">
 
                         <!-- <a href="{{ url('/finance/customer-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                            <a href="{{ url('/finance/customer-payment/' . $customerpayment->id . '/edit') }}" title="Edit CustomerPayment"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                <a href="{{ url('/finance/customer-payment/' . $customerpayment->id . '/edit') }}" title="Edit CustomerPayment"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                            <form method="POST" action="{{ url('customerpayment' . '/' . $customerpayment->id) }}" accept-charset="UTF-8" style="display:inline">
-                                {{ method_field('DELETE') }}
-                                {{ csrf_field() }}
-                                <button type="submit" class="btn btn-danger btn-sm" title="Delete CustomerPayment" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                            </form>
-                            <br/>
-                            <br/> -->
+                                <form method="POST" action="{{ url('customerpayment' . '/' . $customerpayment->id) }}" accept-charset="UTF-8" style="display:inline">
+                                    {{ method_field('DELETE') }}
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete CustomerPayment" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                </form>
+                                <br/>
+                                <br/> -->
 
                         <div class="form-group form-row text-center pr-5">
                             <label class="col-lg-3"> รหัสเอกสาร </label>
-                            <small class="col-lg-3 text-left"> {{ $customerpayment->doc_no }} </small>
+                            <small class="col-lg-2 text-left"> {{ $customerpayment->doc_no }} </small>
 
                             <label class="col-lg-3"> วันที่ </label>
-                            <small class="col-lg-3 text-left"> {{ $customerpayment->created_at }} </small>
+                            <small class="col-lg-2 text-left"> {{ $customerpayment->created_at }} </small>
+                            <small class="col-lg-1 text-left">
+                                <a class="btn btn-primary btn-sm btn-print mr-2"
+                                    href="{{ url('/') }}/finance/customer-payment/{{ $customerpayment->id }}/pdf"
+                                    target="_blank" title="พิมพ์">
+                                    <i class="fas fa-print"></i> พิมพ์
+                                </a>
+                            </small>
+                            <small class="col-lg-1 text-left">
+                                <a class="btn btn-warning btn-sm btn-print mr-2"
+                                    href="{{ url('/') }}/finance/customer-payment/{{ $customerpayment->id }}/edit"
+                                    title="แก้ไข">
+                                    <i class="fas fa-edit"></i> แก้ไข
+                                </a>
+                            </small>
                         </div>
                         <div class="form-group form-row text-center pr-5">
                             <label class="col-lg-3"> รหัสลูกค้า </label>
@@ -75,7 +89,7 @@
                 @php
                     $customer_invoices = $customerpayment->customer_invoices;
                     $customer_debts = $customerpayment->customer_debts;
-                    $customer_payment_details = $customerpayment->details()->get();
+                    $customer_payment_details = $customerpayment->customer_payment_details()->get();
                 @endphp
                 <div class="card mb-4">
                     <!-- <div class="card-header">รายละเอียดใบรับชำระเงิน</div> -->
@@ -115,11 +129,11 @@
                                             <td>{{ number_format($row->total_payment, 2) }}</td>
                                             <td>{{ number_format($row->total_remain, 2) }}</td>
                                             <!-- <td class="d-none">
-                                                <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
-                                                
-                                                <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
-                                            </td>
-                                            <td class="d-none">{{ number_format($row->total ? $row->total : 0, 2) }}</td> -->
+                                                    <input style="width:100px;" name="invoice_payments[]" value="{{ $row->total_debt }}">
+                                                    
+                                                    <input type="hidden" name="invoice_ids[]" value="{{ $row->invoice_id }}">
+                                                </td>
+                                                <td class="d-none">{{ number_format($row->total ? $row->total : 0, 2) }}</td> -->
 
                                         </tr>
                                     @endforeach

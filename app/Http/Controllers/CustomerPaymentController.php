@@ -10,9 +10,11 @@ use App\CustomerModel;
 use App\CustomerPayment;
 use App\CustomerPaymentDetail;
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Sales\InvoiceModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class CustomerPaymentController extends Controller
 {
@@ -294,6 +296,9 @@ class CustomerPaymentController extends Controller
 
     public function pdf($id)
     {
+        $customerpayment = CustomerPayment::findOrFail($id);
+        $table_company = Company::select_all();
 
+        return PDF::loadView('customer-payment/pdf', compact('customerpayment', 'table_company'))->stream('ใบรับชำระเงิน.pdf');
     }
 }

@@ -1,19 +1,19 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('level-0-url', url('finance')."?tab=debtor-tab")
-@section('level-0','การเงิน')
+@section('level-0-url', url('finance') . '?tab=debtor-tab')
+@section('level-0', 'การเงิน')
 
 @section('level-1-url', url('finance/customer-billing'))
-@section('level-1','ใบวางบิล')
+@section('level-1', 'ใบวางบิล')
 
 @section('title', 'รายละเอียด')
 
-@section('background-tag','bg-info ')
+@section('background-tag', 'bg-info ')
 
 @section('content')
     <div class="container-fluid">
         <div class="row">
-        
+
 
             <div class="col-md-12">
                 <div class="card mb-4">
@@ -21,98 +21,122 @@
                     <div class="card-body">
 
                         <!-- <a href="{{ url('/finance/customer-billing') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <a class="d-none" href="{{ url('/finance/customer-billing/' . $customerbilling->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                                    <a class="d-none" href="{{ url('/finance/customer-billing/' . $customerbilling->id . '/edit') }}" title="Edit CustomerBilling"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
 
-                        <form method="POST" action="{{ url('customerbilling' . '/' . $customerbilling->id) }}" accept-charset="UTF-8" style="display:inline">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-danger btn-sm d-none" title="Delete CustomerBilling" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                        </form>
-                        <br/>
-                        <br/> -->
-                        <div class="form-row form-group text-center pr-5" >
+                                                    <form method="POST" action="{{ url('customerbilling' . '/' . $customerbilling->id) }}" accept-charset="UTF-8" style="display:inline">
+                                                        {{ method_field('DELETE') }}
+                                                        {{ csrf_field() }}
+                                                        <button type="submit" class="btn btn-danger btn-sm d-none" title="Delete CustomerBilling" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                                                    </form>
+                                                    <br/>
+                                                    <br/> -->
+                        <div class="form-row form-group text-center pr-5">
                             <label class="col-lg-3"> รหัสเอกสาร </label>
-                            <small class="col-lg-3 text-left"> {{ $customerbilling->doc_no }} </small>
-                            
+                            <small class="col-lg-2 text-left"> {{ $customerbilling->doc_no }} </small>
+
                             <label class="col-lg-3"> วันที่ </label>
-                            <small class="col-lg-3 text-left"> {{ $customerbilling->created_at }} </small>
+                            <small class="col-lg-2 text-left"> {{ $customerbilling->created_at }} </small>
+                            <small class="col-lg-1 text-left">
+                                <a class="btn btn-primary btn-sm btn-print mr-2"
+                                    href="{{ url('/') }}/finance/customer-billing/{{ $customerbilling->id }}/pdf"
+                                    target="_blank" title="พิมพ์">
+                                    <i class="fas fa-print"></i> พิมพ์
+                                </a>
+                            </small>
+                            <small class="col-lg-1 text-left">
+                                <a class="btn btn-warning btn-sm btn-print mr-2"
+                                    href="{{ url('/') }}/finance/customer-billing/{{ $customerbilling->id }}/edit"
+                                    title="แก้ไข">
+                                    <i class="fas fa-edit"></i> แก้ไข
+                                </a>
+                            </small>
                         </div>
 
-                        <div class="form-row form-group text-center pr-5" >                            
-                            
+                        <div class="form-row form-group text-center pr-5">
+
                             <label class="col-lg-3"> รหัสลูกค้า </label>
-                            <small class="col-lg-6 text-left"> {{ $customerbilling->customer->customer_code }}  {{ $customerbilling->customer->company_name }} </small>
-                           
-                            
-                            
+                            <small class="col-lg-6 text-left"> {{ $customerbilling->customer->customer_code }}
+                                {{ $customerbilling->customer->company_name }} </small>
+
+
+
                         </div>
 
-                        <div class="form-row form-group text-center pr-5" >                            
+                        <div class="form-row form-group text-center pr-5">
                             <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
                             <small class="col-lg-3 text-left">
                                 {{ isset($customer) ? $customer->user->name : '' }}
                             </small>
                             <label class="col-lg-3"> พนักงานผู้บันทึก </label>
-                            <small class="col-lg-3 text-left"> {{ $customerbilling->user->name }}  </small>
-                            
+                            <small class="col-lg-3 text-left"> {{ $customerbilling->user->name }} </small>
+
                         </div>
 
-                        
+
 
                         <!-- <div class="form-row form-group text-center pr-5" >                            
-                            <label class="col-lg-3">  เงื่อนไขการวางบิล </label>
-                            <small class="col-lg-3 text-left"> {{ $customerbilling->condition_billing }} </small>
-                            
-                            <label class="col-lg-3"> เงื่อนไขการรับเช็ค </label>
-                            <small class="col-lg-3 text-left"> {{ $customerbilling->condition_cheque }}  </small>
-                        </div> -->
+                                                        <label class="col-lg-3">  เงื่อนไขการวางบิล </label>
+                                                        <small class="col-lg-3 text-left"> {{ $customerbilling->condition_billing }} </small>
+                                                        
+                                                        <label class="col-lg-3"> เงื่อนไขการรับเช็ค </label>
+                                                        <small class="col-lg-3 text-left"> {{ $customerbilling->condition_cheque }}  </small>
+                                                    </div> -->
 
-                        <div class="form-row form-group text-center pr-5" >                            
-                            <label class="col-lg-3">  วันที่รับเช็ค </label>
-                            <div class="col-lg-3"> 
-                                <form method="POST" action="{{ url('/finance/customer-billing/' . $customerbilling->id) }}" accept-charset="UTF-8" class="form-horizontal form-inline" enctype="multipart/form-data">
+                        <div class="form-row form-group text-center pr-5">
+                            <label class="col-lg-3"> วันที่รับเช็ค </label>
+                            <div class="col-lg-3">
+                                <form method="POST"
+                                    action="{{ url('/finance/customer-billing/' . $customerbilling->id) }}"
+                                    accept-charset="UTF-8" class="form-horizontal form-inline"
+                                    enctype="multipart/form-data">
                                     {{ method_field('PATCH') }}
-                                    {{ csrf_field() }}       
-                                        
-                                                                                        
-                                        <input class="form-control form-control-sm mr-4" name="date_cheque" type="date" id="date_cheque" value="{{ isset($customerbilling->date_cheque) ? $customerbilling->date_cheque : ''}}" required>                                                    
-                                        <input class="form-control form-control-sm " name="status" type="hidden" id="status" value="wait-for-cheque" >                                                    
-                                        <button type="submit" class="btn btn-sm btn-primary">save</button>                                              
+                                    {{ csrf_field() }}
+
+
+                                    <input class="form-control form-control-sm mr-4" name="date_cheque" type="date"
+                                        id="date_cheque"
+                                        value="{{ isset($customerbilling->date_cheque) ? $customerbilling->date_cheque : '' }}"
+                                        required>
+                                    <input class="form-control form-control-sm " name="status" type="hidden" id="status"
+                                        value="wait-for-cheque">
+                                    <button type="submit" class="btn btn-sm btn-primary">save</button>
 
                                 </form>
                             </div>
-                            
+
                             <label class="col-lg-3"> สถานะ </label>
-                            <div class="col-lg-3"> 
-                                <form method="POST" action="{{ url('/finance/customer-billing/' . $customerbilling->id) }}" accept-charset="UTF-8" class="form-horizontal form-inline" enctype="multipart/form-data">
+                            <div class="col-lg-3">
+                                <form method="POST"
+                                    action="{{ url('/finance/customer-billing/' . $customerbilling->id) }}"
+                                    accept-charset="UTF-8" class="form-horizontal form-inline"
+                                    enctype="multipart/form-data">
                                     {{ method_field('PATCH') }}
-                                    {{ csrf_field() }}    
+                                    {{ csrf_field() }}
                                     <select name="status" id="status2" class="form-control form-control-sm">
                                         <option value="ready">รอวางบิล</option>
-                                        <option value="wait-for-cheque" >รอรับเช็ค-โอน</option>
+                                        <option value="wait-for-cheque">รอรับเช็ค-โอน</option>
                                         <option value="delay">เลื่อน</option>
-                                    </select>     
+                                    </select>
                                     <script>
-                                    
-                                        document.querySelector("#status2").value = "{{$customerbilling->status}}"; 
-                                    
-                                    </script>                           
+                                        document.querySelector("#status2").value = "{{ $customerbilling->status }}";
+
+                                    </script>
                                     <!-- <button type="submit" class="btn btn-sm btn-primary ml-4">save</button>                                               -->
 
                                 </form>
                             </div>
-                        </div>    
-                        @if($customer)
-                            <div class="px-5" >
+                        </div>
+                        @if ($customer)
+                            <div class="px-5">
                                 @include('customer-billing/form-customer-billing')
                             </div>
-                        @endif        
+                        @endif
 
-                        @if($customer)
-                            <div class="px-5" >
+                        @if ($customer)
+                            <div class="px-5">
                                 @include('customer-billing/form-customer-cheque')
                             </div>
-                        @endif            
+                        @endif
 
                     </div>
                 </div>
@@ -138,27 +162,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($customer_billing_details as $row)
-                                    <tr>
-                                        <td> {{ $row->invoice->invoice_code }} </td>
-                                        <td>{{ $row->invoice->datetime }}</td>
-                                        <!-- <td>{{ $row->invoice->Customer->customer_code }}</td> -->
-                                        <td>{{ $row->invoice->external_reference_id }}</td>
-                                        <td>{{ number_format($row->total_debt,2) }}</td>
-                                        <!-- <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td> -->
-                                        <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
-                                    </tr>
+                                    @foreach ($customer_billing_details as $row)
+                                        <tr>
+                                            <td> {{ $row->invoice->invoice_code }} </td>
+                                            <td>{{ $row->invoice->datetime }}</td>
+                                            <!-- <td>{{ $row->invoice->Customer->customer_code }}</td> -->
+                                            <td>{{ $row->invoice->external_reference_id }}</td>
+                                            <td>{{ number_format($row->total_debt, 2) }}</td>
+                                            <!-- <td>{{ number_format($row->invoice->total ? $row->invoice->total : 0, 2) }}</td> -->
+                                            <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
+                                        </tr>
                                     @endforeach
-                                    
+
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td>  </td>
+                                        <td> </td>
                                         <td> </td>
                                         <!-- <td>{{ $row->invoice->Customer->customer_code }}</td> -->
                                         <th> <strong> ยอดเงินรวม </strong> </th>
-                                        <th>  <strong> {{ number_format($customerbilling->total,2) }}  </strong> </th>
-                                        <!-- <td>{{ number_format($row->invoice->total?$row->invoice->total:0,2) }}</td> -->
+                                        <th> <strong> {{ number_format($customerbilling->total, 2) }} </strong> </th>
+                                        <!-- <td>{{ number_format($row->invoice->total ? $row->invoice->total : 0, 2) }}</td> -->
                                         <!-- <td>{{ $row->invoice->User->short_name }}</td> -->
                                     </tr>
                                 </tfoot>
@@ -166,12 +190,12 @@
                             </table>
                         </div>
 
-                   
+
                         <script>
-                        document.addEventListener("DOMContentLoaded", function(event) {
+                            document.addEventListener("DOMContentLoaded", function(event) {
                                 console.log("555");
                                 //$('#table').DataTable().order( [ 0, 'desc' ] ).draw();
-                        });
+                            });
 
                         </script>
 
@@ -182,15 +206,15 @@
                     <!-- <div class="card-header">รายละเอียดใบวางบิล</div> -->
                     <div class="card-body">
 
-                        <div class="form-row form-group text-center pr-5" >                            
-                            <label class="col-lg-3">  หมายเหตุ </label>
+                        <div class="form-row form-group text-center pr-5">
+                            <label class="col-lg-3"> หมายเหตุ </label>
                             <small class="col-lg-3 text-left"> {{ $customerbilling->remark }} </small>
-                            
+
                             <!-- <label class="col-lg-3"> ยอดเงินรวม </label>
-                            <small class="col-lg-3 text-left"> {{ number_format($customerbilling->total,2) }} </small> -->
+                                                        <small class="col-lg-3 text-left"> {{ number_format($customerbilling->total, 2) }} </small> -->
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>

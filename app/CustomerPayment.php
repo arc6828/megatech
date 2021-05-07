@@ -34,7 +34,7 @@ class CustomerPayment extends Model
         return $this->belongsTo('App\User','user_id');
     }
 
-    public function details(){
+    public function customer_payment_details(){
         return $this->hasMany('App\CustomerPaymentDetail','customer_payment_id','id');
     }
 

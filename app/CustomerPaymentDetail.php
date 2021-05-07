@@ -30,6 +30,9 @@ class CustomerPaymentDetail extends Model
     public function invoice(){
         return $this->belongsTo('App\Sales\InvoiceModel','code','invoice_code');
     }
+    public function customer_payment(){
+      return $this->belongsTo('App\CustomerPaymentDetail','customer_payment_id');
+    }
 
 
 }
