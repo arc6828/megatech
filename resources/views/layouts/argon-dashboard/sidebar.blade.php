@@ -6,18 +6,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <div class="custom-file">
-            <input type="file" name="file" class="custom-file-input" id="chooseFile">
-            <label class="custom-file-label" for="chooseFile">Select file</label>
-        </div>
-        <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
-            Upload Files
-        </button>
-        {{-- <input class="form-control" name="image" type="file" id="image"
-            value="{{ isset($company->image) ? $company->image : '' }}">
-        <input class="btn btn-primary" type="submit"> --}}
-        {{-- <img src="{{ asset("/storage/megatech-logo-small.jpg") }} alt="homepage" class="navbar-brand-img" /> --}}
-        {{-- <img src="{{ url('/') }}/images/{{ config('app.name', 'Laravel') }}-logo-small.jpg" alt="homepage" class="navbar-brand-img "  /> --}}
+
+        <img src="{{ asset("/storage/megatech-logo-small.jpg") }} alt="homepage" class="navbar-brand-img" />
+        <img src="{{ url('/') }}/images/{{ config('app.name', 'Laravel') }}-logo-small.jpg" alt="homepage" class="navbar-brand-img "  />
 
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
