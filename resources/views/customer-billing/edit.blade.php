@@ -1,6 +1,14 @@
 @extends('layouts/argon-dashboard/theme')
 
-@section('title',  request('debt_type')   )
+@section('level-0-url', url('finance') . '?tab=debtor-tab')
+@section('level-0', 'การเงิน')
+
+@section('level-1-url', url('finance/customer-billing'))
+@section('level-1', 'ใบวางบิล')
+
+@section('title', 'แก้ไขใบวางบิล')
+
+@section('background-tag', 'bg-info ')
 
 @section('content')
     <div class="container">
@@ -8,11 +16,11 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Edit CustomerBilling #{{ $customerbilling->id }}</div>
+                    {{-- <div class="card-header">Edit CustomerBilling #{{ $customerbilling->id }}</div>
                     <div class="card-body">
                         <a href="{{ url('/finance/customer-billing') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                         <br />
-                        <br />
+                        <br /> --}}
 
                         @if ($errors->any())
                             <ul class="alert alert-danger">

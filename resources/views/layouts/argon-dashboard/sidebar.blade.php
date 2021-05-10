@@ -7,7 +7,7 @@
         </button>
         <!-- Brand -->
 
-        <img src="{{ asset("/storage/megatech-logo-small.jpg") }} alt="homepage" class="navbar-brand-img" />
+        {{-- <img src="{{ asset("/storage/app/uploads/megatech-logo-small.jpg") }} alt="homepage" class="navbar-brand-img" /> --}}
         <img src="{{ url('/') }}/images/{{ config('app.name', 'Laravel') }}-logo-small.jpg" alt="homepage" class="navbar-brand-img "  />
 
         <!-- User -->

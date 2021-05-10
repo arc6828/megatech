@@ -257,8 +257,24 @@ class CustomerPaymentController extends Controller
     public function edit($id)
     {
         $customerpayment = CustomerPayment::findOrFail($id);
+        $customer_id = request('customer_id', 0);
+        $customer = CustomerModel::find($customer_id);
+        $invoices = null;
+        $debts = null;
+        if (request('filter') == "billing-only") {
+            //วางบิลแล้วเท่านั้น 12
+            $invoices = InvoiceModel::where('sales_status_id', 12)->where('customer_id', $customer_id)->get();
+            $debts = [];
+        } else {
+            //ที่ยอดมีหนี้ทั้งหมด
+            $invoices = InvoiceModel::where('total_debt', '>', 0)->where('customer_id', $customer_id)->get();
+            $debts = CustomerDebt::where('total_debt', '>', 0)->where('customer_id', $customer_id)->get();
 
-        return view('customer-payment.edit', compact('customerpayment'));
+        }
+        $bank_accounts = BankAccount::all();
+        $customers = CustomerModel::all();
+
+        return view('customer-payment.edit', compact('customerpayment', 'invoices', 'customer', 'bank_accounts', 'customers', 'debts'));
     }
 
     /**

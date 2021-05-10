@@ -162,11 +162,27 @@ class CustomerBillingController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $customerbilling = CustomerBilling::findOrFail($id);
+        $end_date = !empty($request->get('end_date')) ? request('end_date') : date('Y-m-d');
+        $customer_id = request('customer_id', 0);
+        $customer = CustomerModel::find($customer_id);
+        $customers = CustomerModel::all();
+        if ($customer) {
+            Checklist::firstOrCreate(
+                ['customer_id' => $customer->customer_id],
+                ['type' => 'customer']
+            );
+        }
 
-        return view('customer-billing.edit', compact('customerbilling'));
+        $table_invoice = InvoiceModel::where('customer_id', $customer_id)
+            ->where('datetime', '<=', $end_date)
+            ->where('sales_status_id', '<', 12) //sales_status_id 12 : วางบิลแล้ว
+            ->where('total_debt', '>', 0)
+            ->get();
+        // $table_invoice = InvoiceModel::findOrFail($id);
+        return view('customer-billing.edit', compact('customerbilling', 'table_invoice', 'customer', 'customers'));
     }
 
     /**
@@ -183,6 +199,7 @@ class CustomerBillingController extends Controller
         $requestData = $request->all();
 
         $customerbilling = CustomerBilling::findOrFail($id);
+
         $customerbilling->update($requestData);
 
         return redirect('/finance/customer-billing')->with('flash_message', 'CustomerBilling updated!');

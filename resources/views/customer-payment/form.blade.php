@@ -1,62 +1,152 @@
 <div class="form-group form-row text-center pr-5">
     <label for="doc_no" class="col-lg-3 control-label">{{ 'เลขที่เอกสาร' }}</label>
-    <input class="col-lg-3 form-control form-control-sm" name="doc_no" type="text" id="doc_no" value="{{ isset($customerpayment->doc_no) ? $customerpayment->doc_no : ''}}" readonly>
-    
+    <input class="col-lg-3 form-control form-control-sm" name="doc_no" type="text" id="doc_no"
+        value="{{ isset($customerpayment->doc_no) ? $customerpayment->doc_no : '' }}" readonly>
+
     <label for="code" class="col-lg-3 control-label">{{ 'วันที่' }}</label>
-    <input class="col-lg-3 form-control form-control-sm"  value="{{ isset($customerpayment->created_at) ? $customerpayment->created_at : ''}}"  readonly>
+    <input class="col-lg-3 form-control form-control-sm"
+        value="{{ isset($customerpayment->created_at) ? $customerpayment->created_at : '' }}" readonly>
 </div>
 @php
-    $customer_id = $customer ? $customer->customer_id : '';
-    $customer_code = $customer ? $customer->customer_code : '';
-    $customer_name = $customer ? $customer->company_name : '';
-    $customer_billing_id = '';
-    $customer_billing_doc_no = '';
-    $customer_billing_total = ( $invoices ? $invoices->sum('total_debt') : 0 ) +  ( $debts ? $debts->sum('total_debt') : 0 );
-    
+$customer_id = $customer ? $customer->customer_id : '';
+$customer_code = $customer ? $customer->customer_code : '';
+$customer_name = $customer ? $customer->company_name : '';
+$customer_billing_id = '';
+$customer_billing_doc_no = '';
+$customer_billing_total = ($invoices ? $invoices->sum('total_debt') : 0) + ($debts ? $debts->sum('total_debt') : 0);
+
 @endphp
 <div class="form-group form-row text-center pr-5">
-    <label for="customer_id" class="col-lg-3 control-label">{{ 'รหัสลูกค้า' }}</label> 
-        <a href="{{ url('/customer') }}" class="btn btn-sm btn-light d-none">เลือกลูกค้า</a>        
-        @include('customer-payment/customer_modal')
-    <input class="col-lg-3 form-control form-control-sm" name="customer_id" type="hidden" id="customer_id" value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_id}}" >
-    
+    <label for="customer_id" class="col-lg-3 control-label">{{ 'รหัสลูกค้า' }}</label>
+    <a href="{{ url('/customer') }}" class="btn btn-sm btn-light d-none">เลือกลูกค้า</a>
+    @include('customer-payment/customer_modal')
+    <input class="col-lg-3 form-control form-control-sm" name="customer_id" type="hidden" id="customer_id"
+        value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_id }}">
+
     <div class="col-lg-3  input-group input-group-sm ">
         <div class="input-group-prepend">
             <span class="input-group-text" name="customer_code" id="customer_code"> {{ $customer_code }} </span>
         </div>
-        <input class="form-control form-control-sm"  value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_name}}" disabled>
+        <input class="form-control form-control-sm"
+            value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_name }}"
+            disabled>
         <div class="input-group-append">
-            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal" >
-            <i class="fa fa-plus"></i> เลือก
+            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
+                <i class="fa fa-plus"></i> เลือก
             </button>
         </div>
-    </div> 
+    </div>
 
     <label for="round" class="col-lg-3 control-label">{{ 'ยื่นภาษีในงวด' }}</label>
-    <input class="col-lg-3 form-control form-control-sm" name="round" type="text" id="round" value="{{ isset($customerpayment->round) ? $customerpayment->round : ''}}" >
-    
+    <input class="col-lg-3 form-control form-control-sm" name="round" type="text" id="round"
+        value="{{ isset($customerpayment->round) ? $customerpayment->round : '' }}">
+
 </div>
-<div class="form-group form-row text-center pr-5">    
+<div class="form-group form-row text-center pr-5">
     <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
     <small class="col-lg-3  text-left">
         {{ isset($customer) ? $customer->user->name : '' }}
     </small>
 
     <label for="user_id" class="col-lg-3 control-label">{{ 'พนักงานผู้บันทึก' }}</label>
-    <input class="col-lg-3 form-control form-control-sm d-none" name="user_id" type="number" id="user_id" value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::id() }}" >
-    <input class="col-lg-3 form-control form-control-sm"  value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::user()->name }}" disabled>
-    
+    <input class="col-lg-3 form-control form-control-sm d-none" name="user_id" type="number" id="user_id"
+        value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::id() }}">
+    <input class="col-lg-3 form-control form-control-sm"
+        value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::user()->name }}" disabled>
+
 </div>
 
-<div class="form-group form-row text-center pr-5">    
+<div class="form-group form-row text-center pr-5">
     <label for="remark" class="col-lg-3 control-label">{{ 'หมายเหตุ' }}</label>
-    <textarea class="col-lg-3 form-control form-control-sm" rows="2" name="remark" type="textarea" id="remark" >{{ isset($customerpayment->remark) ? $customerpayment->remark : ''}}</textarea>
-  
-
+    <textarea class="col-lg-3 form-control form-control-sm" rows="2" name="remark" type="textarea"
+        id="remark">{{ isset($customerpayment->remark) ? $customerpayment->remark : '' }}</textarea>
 </div>
+@include('customer-payment/detail')
+@php
+$transaction_code_object = [
+    'discount-fee' => 'ส่วนลด/ค่าธรรมเนียม',
+    'cash-transfer-in' => 'โอนเงินสด',
+    'deposite-cheque' => 'ฝากด้วยเช็ค',
+    'credit' => 'บัตรเครดิต',
+];
+@endphp
 
+<div class="card mb-4">
+    <!-- <div class="card-header">วิธีการชำระเงิน</div> -->
+    <div class="card-body">
+        @include('customer-payment/payment-modal')
+        <h3>วิธีการชำระเงิน</h3>
+        <table class="table table-sm text-center  table-bordered">
+            <thead>
+                <tr>
+                    <th>ประเภทธุรกรรม</th>
+                    <th>วันที่</th>
+                    <th>ธนาคาร</th>
+                    <th>ยอดเงิน</th>
+                    <th>เลขที่เช็ค</th>
+                    <th>หมายเหตุ</th>
+                </tr>
+            </thead>
+            <tbody>
 
-<div class="form-group d-none {{ $errors->has('role') ? 'has-error' : ''}}">
+                @foreach ($transaction_code_object as $key => $value)
+                    <tr>
+                        <td>
+                            <input class="form-control form-control-sm" name="transaction_code[]" type="hidden"
+                                id="transaction_code" value="{{ $key }}">
+                            <input class="form-control form-control-sm" name="" type="text" id=""
+                                value="{{ $value }}" readonly>
+                        </td>
+                        <td>
+                            <input class="form-control form-control-sm payments-date" name="date[]" type="date"
+                                id="date-{{ $key }}" value="">
+                        </td>
+                        <td>
+                            <select class="form-control form-control-sm" name="bank_account_id[]" id="bank_account_id">
+                                @foreach ($bank_accounts as $bank_account)
+                                    <option value="{{ $bank_account->id }}">{{ $bank_account->name }}
+                                        {{ $bank_account->branch }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input class="form-control form-control-sm payments-amount" name="amount[]" type="text"
+                                id="amount-{{ $key }}" step="any" value="" key="{{ $key }}">
+                        </td>
+                        <td>
+                            <input class="form-control form-control-sm " name="cheque[]" type="text"
+                                id="cheque-{{ $key }}" step="any" value="">
+                        </td>
+                        <td>
+                            <input class="form-control form-control-sm" name="remark[]" type="text" id="remark"
+                                value="">
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+            </tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>รวม</th>
+                <th>
+                    <input class="form-control form-control-sm" name="" type="text" id="payment_method_total" value="0"
+                        readonly>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+            </tfoot>
+        </table>
+
+        <div class="form-group form-row mt-4 text-center">
+            <label class="col-lg-3">อัพโหลดไฟล์ชำระเงิน</label>
+            <input class="col-lg-3 form-control form-control-sm" name="payment_file" type="file" id="payment_file"
+                value="">
+            <div class="form-group">
+            </div>
+        </div>
+        {{-- <div class="form-group d-none {{ $errors->has('role') ? 'has-error' : ''}}">
     <label for="role" class="col-lg-3 control-label">{{ 'รหัสแผนก' }}</label>
     <input class="col-lg-3 form-control form-control-sm" name="role" type="text" id="role" value="{{ isset($customerpayment->role) ? $customerpayment->role : Auth::user()->role }}" readonly>
     {!! $errors->first('role', '<p class="help-block">:message</p>') !!}
@@ -118,9 +208,9 @@
     <label for="status" class="col-lg-3 control-label">{{ 'Status' }}</label>
     <input class="col-lg-3 form-control form-control-sm" name="status" type="text" id="status" value="{{ isset($cheque->status) ? $cheque->status : 'pending'}}"  readonly>
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-</div>
+</div> --}}
 
 
-<div class="form-group d-none">
-    <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-</div>
+        <div class="form-group d-none">
+            <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+        </div>

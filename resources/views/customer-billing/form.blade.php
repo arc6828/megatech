@@ -30,9 +30,7 @@
                     <span class="input-group-text" name="customer_code" id="customer_code"> {{ $customer_code }}
                     </span>
                 </div>
-                <input class="form-control form-control-sm"
-                    value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer_id : $customer_name }}"
-                    disabled>
+                <input class="form-control form-control-sm" value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer_id : $customer_name }}" disabled>
                 <div class="input-group-append">
                     <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
                         <i class="fa fa-plus"></i> เลือก

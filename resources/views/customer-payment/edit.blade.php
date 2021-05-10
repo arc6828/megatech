@@ -1,6 +1,12 @@
 @extends('layouts/argon-dashboard/theme')
+@section('level-0-url', url('finance')."?tab=debtor-tab")
+@section('level-0','การเงิน')
 
-@section('title',  'แก้ไขการรับชำระเงิน'  )
+@section('level-1-url', url('finance/customer-payment'))
+@section('level-1','รับชำระเงิน')
+
+@section('title',  'แก้ไขรับชำระเงิน'  )
+@section('background-tag','bg-info ')
 
 @section('content')
     <div class="container">
@@ -8,9 +14,9 @@
 
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">@yield('title') #{{ $customerpayment->id }}</div>
+                    {{-- <div class="card-header">@yield('title') #{{ $customerpayment->id }}</div>
                     <div class="card-body">
-                        <a href="{{ url('/finance/customer-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                        <a href="{{ url('/finance/customer-payment') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a> --}}
                         <br />
                         <br />
 
