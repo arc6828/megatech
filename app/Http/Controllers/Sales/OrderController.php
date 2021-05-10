@@ -282,10 +282,12 @@ class OrderController extends Controller
         //exit();
         return redirect("sales/order/{$id}");
     }
-
+    // select_count_by_current_month
     public function getNewCode()
     {
-        $number = OrderModel::select_count_by_current_month();
+        $number = OrderModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+                            ->where('sales_status_id', '!=', '-1')
+                            ->count();
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
@@ -294,7 +296,7 @@ class OrderController extends Controller
         $order_code = "M-OE{$year}{$month}-{$number}";
         return $order_code;
     }
-
+// getNewCodeCustom อาจจะยกเลิก
     public function getNewCodeCustom($dateString)
     {
         $number = OrderModel::select_count_by_current_month_custom($dateString);

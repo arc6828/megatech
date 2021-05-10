@@ -36,7 +36,7 @@
     @forelse($table_invoice as $row)
 
         <div>
-            @foreach ($table_company as $company)
+           
                 <div class="inline" style="width:30%; text-align:center;">
                     <div style="padding-right: 10px; padding-left: 10px;">
                         <img src="{{ url('/') }}/images/megatech-logo-small.jpg" style="width:100%">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="sub_company_name">www.megatechcuttingtool.com</div>
                 </div>
-            @endforeach
+
         </div>
         <div style="text-align:center;">
 
@@ -153,7 +153,6 @@
             </div>
             <div class="inline" style="width:5%;"></div>
         </div>
-
         <div class="" style="text-align : center; margin-top:30px;">
             <div class="">
                 <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($row->invoice_code, 'C128') }}" alt="barcode" />

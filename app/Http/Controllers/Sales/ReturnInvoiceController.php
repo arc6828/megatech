@@ -11,6 +11,7 @@ use App\Sales\ReturnInvoice;
 use App\Sales\ReturnInvoiceDetail;
 use App\Sales\unused\InvoiceDetailModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class ReturnInvoiceController extends Controller
@@ -267,12 +268,26 @@ class ReturnInvoiceController extends Controller
 
     public function pdf($id)
     {
+
+        $table_return_invoice = ReturnInvoice::join('tb_customer', 'return_invoices.customer_id', '=', 'tb_customer.customer_id')
+            ->where('return_invoices.id', '=', $id)
+            ->select(DB::raw('return_invoices.*', 'tb_customer.*'))
+            ->get();
+
+        $table_invoice = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+            ->where('tb_invoice.invoice_code', '=', $table_return_invoice[0]->invoice_code)
+            ->select(DB::raw('tb_customer.*,tb_invoice.*'))
+            ->get();
+
+        $table_company = Company::first();
+
         $data = [
-            'table_return_invoice' => ReturnInvoice::select_by_id($id),
-            'table_invoice' => InvoiceModel::select_by_id($id),
+            'table_return_invoice' => $table_return_invoice,
+            'table_invoice' => $table_invoice,
             'table_invoice_detail' => InvoiceDetailModel::select_by_id($id),
-            'table_company' => Company::select_all(),
+            'company' => $table_company,
         ];
+        // print_r($data['table_invoice']);
         $pdf = PDF::loadView('sales/return-invoice/show', $data);
         return $pdf->stream('test.pdf');
     }

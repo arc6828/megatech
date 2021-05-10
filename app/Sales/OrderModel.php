@@ -90,13 +90,13 @@ class OrderModel extends Model
         ->get();
 	}
 
-  public static function select_count_by_current_month(){
-    //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
-    return DB::table('tb_order')
-        ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
-        ->where('sales_status_id','!=','-1')
-        ->count();
-  }
+  // public static function select_count_by_current_month(){
+  //   //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
+  //   return DB::table('tb_order')
+  //       ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+  //       ->where('sales_status_id','!=','-1')
+  //       ->count();
+  // }
   
   public static function select_count_by_current_month_custom($date){
     //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
