@@ -96,7 +96,7 @@
                         <strong>ที่อยู่ :</strong> {{ $row->company_name }} <br>
                         <strong>โทร :</strong> 02-152-7250
                         <strong style="margin-left:150px;">แฟ๊กซ์ :</strong> 02-152-7250
-                        <strong style="margin-left:150px;">รหัสลูกค้า :</strong> C0001 <br>
+                        <strong style="margin-left:150px;">รหัสลูกค้า :</strong> {{ $row->customer_code }} <br>
                     </td>
                 </tr>
             </table>

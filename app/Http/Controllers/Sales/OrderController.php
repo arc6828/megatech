@@ -8,6 +8,7 @@ use App\Functions;
 use App\GaurdStock;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Numberun;
 use App\ProductModel;
 use App\Purchase\RequisitionDetailModel;
 use App\Purchase\RequisitionModel;
@@ -286,14 +287,16 @@ class OrderController extends Controller
     public function getNewCode()
     {
         $number = OrderModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
-                            ->where('sales_status_id', '!=', '-1')
-                            ->count();
+            ->where('sales_status_id', '!=', '-1')
+            ->count();
+        $run_number = Numberun::where('id', '3')->value('number_en');
+
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $order_code = "M-OE{$year}{$month}-{$number}";
+        $order_code = "{$run_number}{$year}{$month}-{$number}";
         return $order_code;
     }
 // getNewCodeCustom อาจจะยกเลิก

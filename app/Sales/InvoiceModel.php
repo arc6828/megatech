@@ -104,6 +104,7 @@ class InvoiceModel extends Model
             ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
             ->count();
     }
+  
 
     public static function select_by_id($id)
     {

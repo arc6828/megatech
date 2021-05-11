@@ -58,7 +58,7 @@
                                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                         Edit</button></a>
 
-                                                <form method="POST" action="{{ url('/numberun' . '/' . $item->id) }}"
+                                                {{-- <form method="POST" action="{{ url('/numberun' . '/' . $item->id) }}"
                                                     accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
@@ -66,7 +66,7 @@
                                                         title="Delete Numberun"
                                                         onclick="return confirm(&quot;Confirm delete?&quot;)"><i
                                                             class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                                </form>
+                                                </form> --}}
                                             </td>
                                         </tr>
                                     @endforeach

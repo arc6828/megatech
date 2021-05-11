@@ -19,6 +19,7 @@ use App\ZoneModel;
 use App\ProductModel;
 use App\Functions;
 use App\Models\Company;
+use App\Models\Numberun;
 use PDF;
 
 class QuotationController extends Controller
@@ -162,12 +163,13 @@ class QuotationController extends Controller
 
     public function getNewCode(){
         $number = QuotationModel::select_count_by_current_month();
+        $run_number = Numberun::where('id', '1')->value('number_en');
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $quotation_code = "M-QT{$year}{$month}-{$number}";
+        $quotation_code = "{$run_number}{$year}{$month}-{$number}";
         
         return $quotation_code;
     }

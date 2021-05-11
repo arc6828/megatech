@@ -14,10 +14,10 @@ class Numberun extends Model
     protected $table = 'numberuns';
 
     /**
-    * The database primary key value.
-    *
-    * @var string
-    */
+     * The database primary key value.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id';
 
     /**
@@ -25,7 +25,6 @@ class Numberun extends Model
      *
      * @var array
      */
-    protected $fillable = ['name_doc', 'datetime_doc', 'number_doc','number_en'];
+    protected $fillable = ['name_doc', 'datetime_doc', 'number_doc', 'number_en'];
 
-    
 }

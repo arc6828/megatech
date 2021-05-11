@@ -8,6 +8,7 @@ use App\Functions;
 use App\GaurdStock;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Numberun;
 use App\ProductModel;
 use App\SalesStatusModel;
 use App\Sales\InvoiceDetailModel;
@@ -177,12 +178,13 @@ class InvoiceController extends Controller
     public function getNewCode()
     {
         $number = InvoiceModel::select_count_by_current_month();
+        $run_number = Numberun::where('id', '4')->value('number_en');
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $invoice_code = "M-IV{$year}{$month}-{$number}";
+        $invoice_code = "{$run_number}{$year}{$month}-{$number}";
         return $invoice_code;
     }
 

@@ -6,6 +6,7 @@ use App\Functions;
 use App\GaurdStock;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Numberun;
 use App\ProductModel;
 use App\Sales\InvoiceModel;
 use App\Sales\ReturnInvoice;
@@ -93,12 +94,14 @@ class ReturnInvoiceController extends Controller
             ->whereMonth('created_at', date("m"))
             ->whereYear('created_at', date("Y"))
             ->count();
+        $run_number = Numberun::where('id', '5')->value('number_en');
+
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $code = "RI{$year}{$month}-{$number}";
+        $code = "{$run_number}{$year}{$month}-{$number}";
         return $code;
     }
 
@@ -285,6 +288,7 @@ class ReturnInvoiceController extends Controller
             ->get();
 
         $table_company = Company::firstOrFail();
+
 
         $data = [
             'return_invoice' => $table_return_invoice,
