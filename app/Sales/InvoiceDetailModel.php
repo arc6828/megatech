@@ -16,7 +16,7 @@ class InvoiceDetailModel extends Model
     'invoice_id',
   ];
  
-  public function Invoice(){
+  public function invoice(){
     return $this->belongsTo('App\sales\InvoiceModel','invoice_id');
   }
   public function Product(){
@@ -38,12 +38,13 @@ class InvoiceDetailModel extends Model
         ->get();
 	}
 
-	public static function select_by_id($id){
-    return DB::table('tb_invoice_detail')
-        ->join('tb_product','tb_invoice_detail.product_id','=','tb_product.product_id')
-        ->where('invoice_detail_id', '=' , $id )
-        ->get();
-	}
+	// public static function select_by_id($id){
+  //   return DB::table('tb_invoice_detail')
+  //       ->join('tb_product','tb_invoice_detail.product_id','=','tb_product.product_id')
+  //       ->where('tb_invoice_detail.product_id', '=' , $id )
+  //       ->get();
+  //       // print_r()
+	// }
 
   public static function insert($input){
     DB::table('tb_invoice_detail')->insert($input);

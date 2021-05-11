@@ -150,6 +150,7 @@
                 </table>
             </div>
         </div>
+  
         @php
             $item_per_page = 8;
             $num_page = ceil(count($table_order_detail) / $item_per_page);

@@ -160,6 +160,7 @@
                     </table>
                 </div>
             </div>
+
             @php
                 $item_per_page = 8;
                 $num_page = ceil(count($table_quotation_detail) / $item_per_page);
@@ -299,7 +300,7 @@
 
 @endsection
 
-@section('script')
+{{-- @section('script')
 <script type="text/javascript">
     //var money = document.getElementById("total").innerHTML;
     //var thaibath = ArabicNumberToText(money);
@@ -307,4 +308,4 @@
     //document.getElementById("total_text").innerHTML  = "("+thaibath+")";
 
 </script>
-@endsection
+@endsection --}}

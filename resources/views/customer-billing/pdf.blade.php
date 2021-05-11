@@ -37,7 +37,7 @@
     $row = $customerbilling;
     @endphp
     <div>
-        @foreach ($table_company as $company)
+        @foreach ($company as $company)
             <div class="inline" style="width:30%; text-align:center;">
                 <div style="padding-right: 10px; padding-left: 10px;">
                     <img src="{{ url('/') }}/images/megatech-logo-small.jpg" style="width:100%">

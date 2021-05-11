@@ -145,13 +145,19 @@ class CustomerBillingController extends Controller
     public function pdf($id)
     {
         $customerbilling = CustomerBilling::findOrFail($id);
+        $customer_billing_detail = CustomerBillingDetail::join('tb_invoice', 'tb_invoice.invoice_id', '=', 'customer_billing_details.doc_id')->firstOrFail();
         $table_company = Company::select_all();
-
         $total_text = $customerbilling->total > 0 ? Functions::baht_text($customerbilling->total) : "-";
-
+        $data = [
+            'customerbilling' => $customerbilling,
+            'customer_billing_detail' => $customer_billing_detail,
+            'total_text' => $total_text,
+            'company' => $table_company,
+        ];
         //return view('customer-billing.show', compact('customerbilling'));
-
-        return PDF::loadView('customer-billing/pdf', compact('customerbilling', 'total_text', 'table_company'))->stream('ใบวางบิล.pdf');
+        // print_r($data['customer_billing_detail']);
+        $pdf = PDF::loadView('customer-billing/pdf', $data);
+        return $pdf->stream('ใบวางบิล.pdf');
 
     }
 

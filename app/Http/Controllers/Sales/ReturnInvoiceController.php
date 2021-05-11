@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Sales;
 
+use App\Functions;
 use App\GaurdStock;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
@@ -9,7 +10,6 @@ use App\ProductModel;
 use App\Sales\InvoiceModel;
 use App\Sales\ReturnInvoice;
 use App\Sales\ReturnInvoiceDetail;
-use App\Sales\unused\InvoiceDetailModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -279,15 +279,22 @@ class ReturnInvoiceController extends Controller
             ->select(DB::raw('tb_customer.*,tb_invoice.*'))
             ->get();
 
-        $table_company = Company::first();
+        $table_return_invoice_details = ReturnInvoiceDetail::join('tb_product', 'return_invoice_details.product_id', '=', 'tb_product.product_id')
+            ->where('return_invoice_details.return_invoice_id', '=', $id)
+            ->select(DB::raw('tb_product.*,return_invoice_details.*'))
+            ->get();
+
+        $table_company = Company::firstOrFail();
 
         $data = [
-            'table_return_invoice' => $table_return_invoice,
-            'table_invoice' => $table_invoice,
-            'table_invoice_detail' => InvoiceDetailModel::select_by_id($id),
+            'return_invoice' => $table_return_invoice,
+            'invoice' => $table_invoice,
+            'invoice_detail' => $table_return_invoice_details,
             'company' => $table_company,
+            'total_text' => count($table_return_invoice) > 0 ? Functions::baht_text($table_return_invoice[0]->total_after_vat) : "-",
+
         ];
-        // print_r($data['table_invoice']);
+        // print_r($data['invoice']);
         $pdf = PDF::loadView('sales/return-invoice/show', $data);
         return $pdf->stream('test.pdf');
     }

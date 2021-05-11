@@ -249,6 +249,7 @@ class QuotationController extends Controller
     public function pdf($id)
     {
       QuotationModel::findOrFail($id);
+
       $data = [
           //QUOTATION
           'table_quotation' => QuotationModel::select_by_id($id),
@@ -257,14 +258,9 @@ class QuotationController extends Controller
           'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
           'total_text' => count(QuotationModel::select_by_id($id))>0 ?  Functions::baht_text(QuotationModel::select_by_id($id)[0]->total) : "-",
       ];
-      //return view('sales/quotation/show',$data);
-
 
       $pdf = PDF::loadView('sales/quotation/show',$data);
-      //$pdf->setOption('enable-javascript', true);
-      //$pdf->setOption('javascript-delay', 13500);
-      //$pdf->setOption('enable-smart-shrinking', true);
-      //$pdf->setOption('no-stop-slow-scripts', true);
+
       return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
       //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
     }
