@@ -349,4 +349,4 @@ Route::redirect('register', 'login', 301);
 Auth::routes();
 Route::resource('product-detail', 'ProductDetailController');
 Route::resource('company', 'CompanyController');
-Route::resource('company', 'CompanyController');
+Route::resource('numberun', 'NumberunController');

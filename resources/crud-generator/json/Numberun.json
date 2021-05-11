@@ -1,0 +1,16 @@
+{
+  "fields": [
+    {
+      "name": "name_doc",
+      "type": "string"
+    },
+    {
+      "name": "datetime_doc",
+      "type": "datetime"
+    },
+    {
+      "name": "number_doc",
+      "type": "string"
+    }
+  ]
+}
