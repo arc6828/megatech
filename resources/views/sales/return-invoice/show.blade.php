@@ -53,7 +53,7 @@
                 <div class="sub_company_name">www.megatechcuttingtool.com</div>
             </div>
         </div>
-        <div style="text-align:center;">
+        <div style="text-align:right;">
             <div class="inline" style="width:30%;">
             </div>
             <div class="inline" style="width:39%;">
