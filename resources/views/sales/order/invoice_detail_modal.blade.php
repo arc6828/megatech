@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($order->details as $item )
+                            @foreach($order->order_details as $item )
                             @php 
                                 $invoiced_item = array_key_exists($item->product->product_code,$unchangable_items)?$unchangable_items[$item->product->product_code]:0;
                             @endphp
@@ -62,7 +62,7 @@
                         </thead>
                         <tbody>
                             @foreach($order->invoices as $invoice )
-                                @foreach($invoice->details as $item )
+                                @foreach($invoice->invoice_details as $item )
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{date_format( date_create( explode(" ", $item->invoice->datetime)[0]),"d-m-Y" ) }}</td>

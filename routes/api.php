@@ -71,3 +71,4 @@ Route::get('/bank_detail', 'BankDetailController@index');
 Route::apiResource('issue-stock', 'API\IssueStockController');
 
 // Route::get('/company', 'API\CompanyController@index');
+Route::get('/numberun', 'Api\NumberController@index');

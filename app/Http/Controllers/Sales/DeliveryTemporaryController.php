@@ -64,7 +64,18 @@ class DeliveryTemporaryController extends Controller
         ];
         return view('sales/delivery_temporary/create', $data);
     }
-
+    public function getNewCode()
+    {
+        $number = DeliveryTemporaryModel::select_count_by_current_month();
+        $run_number = Numberun::where('id', '2')->value('number_en');
+        $count = $number + 1;
+        //$year = (date("Y") + 543) % 100;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
+        $delivery_temporary_code = "{$run_number}{$year}{$month}-{$number}";
+        return $delivery_temporary_code;
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -144,7 +155,7 @@ class DeliveryTemporaryController extends Controller
         //DRAFT
         if ($input['sales_status_id'] == 0) {
             //0 means DRAFT -> do not set quotation_code / date
-            $input['delivery_temporary_code'] = "DTDRAFT";
+            $input['delivery_temporary_code'] = $this->getNewCode();
             $input['datetime'] = "";
         }
         $id = DeliveryTemporaryModel::insert($input);
@@ -193,19 +204,6 @@ class DeliveryTemporaryController extends Controller
         }
 
         return redirect("sales/delivery_temporary/{$id}");
-    }
-
-    public function getNewCode()
-    {
-        $number = DeliveryTemporaryModel::select_count_by_current_month();
-        $run_number = Numberun::where('id', '2')->value('number_en');
-        $count = $number + 1;
-        //$year = (date("Y") + 543) % 100;
-        $year = date("y");
-        $month = date("m");
-        $number = sprintf('%05d', $count);
-        $delivery_temporary_code = "{$run_number}{$year}{$month}-{$number}";
-        return $delivery_temporary_code;
     }
 
     /**

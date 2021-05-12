@@ -68,8 +68,14 @@
                 </div>
                 <div class="col-6 col-md-4 ">
                     <a class="btn btn-outline-primary my-3" href="{{ url('/company') }}/">
-                        <div class="px-4"><span class="round round-primary my-2">ก</span></div>
+                        <div class="px-4"><span class="round round-primary my-2">บ</span></div>
                         <div>ข้อมูลบริษัท<br></div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 ">
+                    <a class="btn btn-outline-primary my-3" href="{{ url('/numberun') }}/">
+                        <div class="px-4"><span class="round round-primary my-2">ต</span></div>
+                        <div>ตั้งค่าเลขรันเอกสาร<br></div>
                     </a>
                 </div>
             </div>
