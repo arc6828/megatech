@@ -1,60 +1,129 @@
-import React from 'react';
-import Edit from './Edit';
+import React, { useState } from 'react';
 
-const ExampleList = ({ data }) => {
-  return (
-    <div className="table-responsive">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name Doc</th>
-            <th>number_en</th>
-            <th>Datetime Doc</th>
-            <th>Number Doc</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(data.length > 0) ? data.map((item) => {
-            return (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name_doc}</td>
-                <td>{item.number_en}</td>
-                <td>{item.datetime_doc}</td>
-                <td>{item.number_doc}</td>
-                <td>
-                  <button type="button" className="btn btn-warning  btn-sm" data-toggle="modal" data-target="#editModal">
-                    Edit
-                  </button>
-                  <div className="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-lg">
-                      <div className="modal-content">
-                        <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">Edit</h5>
-                          <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div className="modal-body">
-                          <Edit />
-                        </div>
-                        <div className="modal-footer">
-                          <button type="button" className="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                          <button type="button" className="btn btn-primary btn-sm">Save changes</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            )
-          }) : <tr><td colSpan="5">Loading...</td></tr>}
-        </tbody>
-      </table>
-    </div>
-  )
+const ExampleList = ({ item, id }) => {
+  const [onEdit, setOnEdit] = useState(false);
+
+  const handleOnEdit = () => {
+    setOnEdit(true)
+  }
+
+  const handleSave = id => {
+    setOnEdit(false)
+    if (editValue) {
+      handleEditNumber(editValue, id)
+    } else {
+      setEditValue(item.name_doc)
+    }
+  }
+
+  if (onEdit) {
+    return (
+      <li className="list-group-item">
+        <div className="form-row">
+          <div className="col-sm-2">
+            <input
+              className="form-control form-control-sm"
+              type="text"
+              value={item.name_doc}
+              name="name_doc"
+              id="name_doc"
+              disabled
+            />
+          </div>
+          <div className="col-sm-1">
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              value={item.number_en}
+              name="number_en"
+              id="number_en"
+            />
+          </div>
+          <div className="col-sm-2">
+            <input
+              type="datetime-local"
+              className="form-control form-control-sm"
+              value={item.datetime_doc}
+              name="datetime_doc"
+              id="datetime_doc"
+              disabled
+            />
+          </div>
+          <div className="col-sm-1">
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              value={item.number_doc}
+              name="number_doc"
+              id="number_doc"
+            />
+          </div>
+          <div className="col-sm-2">
+            <button type="submit" className="btn btn-warning btn-sm">
+              save
+            </button>
+          </div>
+        </div>
+      </li>
+
+    )
+  } else {
+    return (
+      <li className="list-group-item">
+        <div className="form-row">
+          <div className="col-sm-2">
+            <input
+              className="form-control form-control-sm"
+              type="text"
+              value={item.name_doc}
+              name="name_doc"
+              id="name_doc"
+              disabled
+            />
+          </div>
+          <div className="col-sm-1">
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              value={item.number_en}
+              name="number_en"
+              id="number_en"
+              disabled
+            />
+          </div>
+          <div className="col-sm-2">
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              value={item.datetime_doc}
+              name="datetime_doc"
+              id="datetime_doc"
+              disabled
+            />
+          </div>
+          <div className="col-sm-1">
+            <input
+              type="text"
+              className="form-control form-control-sm"
+              value={item.number_doc}
+              name="number_doc"
+              id="number_doc"
+              disabled
+            />
+          </div>
+          <div className="col-sm-2">
+            <button type="submit" className="btn btn-warning btn-sm" onClick={handleOnEdit}>
+              edit
+            </button>
+          </div>
+        </div>
+      </li>
+    )
+  }
 }
-
 export default ExampleList
+{/* <label htmlFor="inputEmail4">ชื่อเอกสาร</label>
+        <input className="form-control form-control-sm" type="text" value={editValue} name="editValue" />
+        <button type="submit" className="btn btn-warning" onClick={handleOnEdit}>
+          edit
+        </button> */}

@@ -27,7 +27,20 @@ class NumberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $numberrun = new Numberun;
+        $numberrun->name_doc = $request->name_doc;
+        $numberrun->number_doc = $request->number_doc;
+        $numberrun->datetime_doc = $request->datetime_doc;
+        $numberrun->number_en = $request->number_en;
+
+        $result = $numberrun->save();
+
+        if ($result) {
+            return $numberrun;
+        } else {
+            return ["Result" => "ERROR"];
+        }
     }
 
     /**
@@ -36,9 +49,9 @@ class NumberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($numberrun)
+    public function show($id)
     {
-        return response()->json([$numberrun]);
+        return $id ? Numberun::find($id) : Numberun::all();
     }
 
     /**
@@ -48,9 +61,21 @@ class NumberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $numberrun = Numberun::find($request->id);
+        $numberrun->name_doc = $request->name_doc;
+        $numberrun->number_doc = $request->number_doc;
+        $numberrun->datetime_doc = $request->datetime_doc;
+        $numberrun->number_en = $request->number_en;
+
+        $result = $numberrun->save();
+
+        if ($result) {
+            return $numberrun;
+        } else {
+            return ["Result" => "ERROR"];
+        }
     }
 
     /**

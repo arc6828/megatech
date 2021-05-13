@@ -72,3 +72,6 @@ Route::apiResource('issue-stock', 'API\IssueStockController');
 
 // Route::get('/company', 'API\CompanyController@index');
 Route::get('/numberun', 'Api\NumberController@index');
+Route::get('/numberun/{id}', 'Api\NumberController@show');
+Route::post('/numberun/create', 'Api\NumberController@store');
+Route::put('/update', 'Api\NumberController@update');

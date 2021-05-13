@@ -3,8 +3,11 @@
 @section('title', 'ตั้งค่าการรันเลขเอกสาร')
 
 @section('content')
+    <div id="example"></div>
+    <script src="{{ asset('js/app.js') }}"></script>
+@endsection
 
-    <div class="container-fluid">
+{{-- <div class="container-fluid">
         <div class="row">
 
             <div class="col-md-12">
@@ -68,15 +71,15 @@
                                             <td>{{ date('Y-m', strtotime($item->datetime_doc)) }}</td>
                                             <td>{{ $item->number_doc }}</td>
                                             <td>
-                                                {{-- <a href="{{ url('/numberun/' . $item->id) }}"
+                                                <a href="{{ url('/numberun/' . $item->id) }}"
                                                     title="View Numberun"><button class="btn btn-info btn-sm"><i
-                                                            class="fa fa-eye" aria-hidden="true"></i> View</button></a> --}}
+                                                            class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                                 <a href="{{ url('/numberun/' . $item->id . '/edit') }}"
                                                     title="Edit Numberun"><button class="btn btn-primary btn-sm"><i
                                                             class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                         Edit</button></a>
 
-                                                {{-- <form method="POST" action="{{ url('/numberun' . '/' . $item->id) }}"
+                                               <form method="POST" action="{{ url('/numberun' . '/' . $item->id) }}"
                                                     accept-charset="UTF-8" style="display:inline">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
@@ -84,7 +87,7 @@
                                                         title="Delete Numberun"
                                                         onclick="return confirm(&quot;Confirm delete?&quot;)"><i
                                                             class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                                                </form> --}}
+                                                </form> 
                                             </td>
                                         </tr>
                                     @endforeach
@@ -96,7 +99,4 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-{{-- {{-- <div id="example"></div>
-    <script src="{{ asset('js/app.js') }}"></script> --}}
+    </div> --}}

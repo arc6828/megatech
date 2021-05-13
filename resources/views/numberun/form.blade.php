@@ -13,13 +13,3 @@
 <div class="form-group" style="text-align:right">
     <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
 </div>
-<style>
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        align-content: space-around;
-        align-items: stretch;
-        justify-content: space-between;
-    }
-
-</style>
