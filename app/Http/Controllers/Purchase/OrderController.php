@@ -23,6 +23,7 @@ use App\Purchase\ReceiveModel;
 
 use App\GaurdStock;
 use App\Models\Company;
+use App\Models\Numberun;
 use PDF;
 
 class OrderController extends Controller
@@ -227,6 +228,7 @@ class OrderController extends Controller
 
     public function getNewCode(){
         $number = OrderModel::select_count_by_current_month();
+        $run_number = Numberun::where('number_en', 'M-PO')->value('number_en');
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
