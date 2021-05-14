@@ -89,8 +89,8 @@
         a,
         .card-header,
         th {
-            font-family: 'K2D', sans-serif; !important;
-            font-weight: 500 !important;
+            font-family: 'K2D', sans-serif;!important;
+            font-weight: 700 !important;
         }
 
         .btn {
