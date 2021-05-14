@@ -141,6 +141,10 @@ class CustomerModel extends Model
     public static function select_all()
     {
         return DB::table('tb_customer')->get();
+        // return DB::table('tb_customer')
+        //     ->select('customer_id','customer_code', 'company_name', 'debt_duration',
+        //         'contact_name', 'tax_type_id', 'delivery_type_id')
+        //     ->get();
     }
 
     public static function select_by_user_id($user_id)

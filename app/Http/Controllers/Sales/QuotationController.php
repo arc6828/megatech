@@ -122,11 +122,12 @@ class QuotationController extends Controller
             }
 
         }
+        $run_number = Numberun::where('id', '1')->value('number_en');
 
         //DRAFT
         if ($input['sales_status_id'] == 0) {
             //0 means DRART -> do not set quotation_code / date
-            $input['quotation_code'] = "M-QTDRAFT";
+            $input['quotation_code'] = "{$run_number}DRAFT";
             $input['datetime'] = "";
 
         }
