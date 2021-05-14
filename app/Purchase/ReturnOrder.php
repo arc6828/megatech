@@ -47,11 +47,15 @@ class ReturnOrder extends Model
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
+    public function tax_type()
+    {
+        return $this->belongsTo('App\TaxTypeModel', 'tax_type_id', 'tax_type_id');
+    }
     public static function select_all()
     {
         return DB::table('return_orders')->get();
     }
- 
+
     public static function select_by_id($id)
     {
         return DB::table('return_orders')

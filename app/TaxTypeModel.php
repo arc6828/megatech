@@ -11,7 +11,8 @@ class TaxTypeModel extends Model
     protected $primaryKey = 'tax_type_id';
     protected $fillable = [];
 
-    public static function select_all(){
+    public static function select_all()
+    {
         return DB::table('tb_tax_type')->get();
-	}
+    }
 }
