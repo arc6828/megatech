@@ -47,11 +47,10 @@ class QuotationController extends Controller
      */
     public function create()
     {
-        $table_customer = CustomerModel::get()->limit(100);
 
         $data = [
             //QUOTATION
-            'table_customer' => $table_customer,
+            'table_customer' => CustomerModel::select_all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
             'table_tax_type' => TaxTypeModel::select_all(),
@@ -178,11 +177,12 @@ class QuotationController extends Controller
         //Query
         $quotaion = QuotationModel::findOrFail($id);
         $quotaion_details = $quotaion->details()->get();
+        $run_number = Numberun::where('id', '1')->value('number_en');
 
         //Clone
         $new_quotaion = $quotaion->replicate()->fill([
-            'quotation_code' => "M-QTDRAFT",
-            'datetime' => "M-QTDRAFT",
+            'quotation_code' => "{$run_number}DRAFT",
+            'datetime' => "{$run_number}DRAFT",
             'revision' => "0",
             'sales_status_id' => "0",
         ]);

@@ -93,7 +93,7 @@
 
             <div class="content">
                  <div class="title m-b-md">
-                    <img src="{{ url('/') }}/images/{{ config('app.name', 'Laravel') }}-logo.jpg" style="max-width: 500px; width:100%;">
+                    <img src="{{ url('/images/megatech-logo.jpg') }}" style="width:50%; margin-left: auto; margin-right:auto;">
                 </div>
 
                 <div class="links">

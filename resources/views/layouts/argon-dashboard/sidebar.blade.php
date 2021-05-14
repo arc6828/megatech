@@ -6,9 +6,13 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
+        <img src="{{ url('/images/megatech-logo-small.jpg') }}" alt="Image" width="150px"
+            style="margin-left: auto; margin-right:auto;" />
+            {{-- <img src="{{assets('up')}}" alt="Image" width="150px"
+            style="margin-left: auto; margin-right:auto;" /> --}}
 
         {{-- <img src="{{ asset("/storage/app/uploads/megatech-logo-small.jpg") }} alt="homepage" class="navbar-brand-img" /> --}}
-        <img src="{{ url('/') }}/images/{{ config('app.name', 'Laravel') }}-logo-small.jpg" alt="homepage" class="navbar-brand-img "  />
+        {{-- <img src="{{ asset("/storage/uploads/megatech-logo-small.jpg" alt="homepage" class="navbar-brand-img "  /> --}}
 
         <!-- User -->
         <ul class="nav align-items-center d-md-none">

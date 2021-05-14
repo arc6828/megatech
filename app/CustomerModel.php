@@ -97,7 +97,7 @@ class CustomerModel extends Model
     {
         return $this->hasMany('App\Sales\InvoiceModel', 'customer_id')->whereMonth('datetime', $month);
     }
-    
+
     public function Invoice_on_debt()
     {
         return $this->hasMany('App\Sales\InvoiceModel', 'customer_id')->where('total_debt', '>', 0);
@@ -140,7 +140,7 @@ class CustomerModel extends Model
 
     public static function select_all()
     {
-        return DB::table('tb_customer')->get(); //เพิ่มเติม คิวรี่
+        return DB::table('tb_customer')->select('customer_code', 'company_name')->get();
     }
 
     public static function select_by_user_id($user_id)
