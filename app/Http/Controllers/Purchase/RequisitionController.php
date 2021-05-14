@@ -12,6 +12,7 @@ use App\Purchase\RequisitionDetailStatusModel;
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
+use App\Models\Numberun;
 use App\TaxTypeModel;
 use App\PurchaseStatusModel;
 use App\UserModel;
@@ -128,12 +129,14 @@ class RequisitionController extends Controller
 
     public function getNewCode(){
         $number = RequisitionModel::select_count_by_current_month();
+        $run_number = Numberun::where('id', '6')->value('number_en');
+
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $purchase_requisition_code = "PR{$year}{$month}-{$number}";
+        $purchase_requisition_code = "{$run_number}{$year}{$month}-{$number}";
         return $purchase_requisition_code;
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Purchase;
 use App\GaurdStock;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Numberun;
 use App\ProductModel;
 use App\Purchase\ReceiveModel;
 use App\Purchase\ReturnOrder;
@@ -91,11 +92,13 @@ class ReturnOrderController extends Controller
             ->whereYear('created_at', date("Y"))
             ->count();
         $count = $number + 1;
+        $run_number = Numberun::where('id', '9')->value('number_en');
+
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $code = "RO{$year}{$month}-{$number}";
+        $code = "{$run_number}{$year}{$month}-{$number}";
         return $code;
     }
 

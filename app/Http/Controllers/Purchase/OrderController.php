@@ -228,18 +228,19 @@ class OrderController extends Controller
 
     public function getNewCode(){
         $number = OrderModel::select_count_by_current_month();
-        $run_number = Numberun::where('number_en', 'M-PO')->value('number_en');
+        $run_number = Numberun::where('id', '7')->value('number_en');
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $purchase_order_code = "PO{$year}{$month}-{$number}";
+        $purchase_order_code = "{$run_number}{$year}{$month}-{$number}";
         return $purchase_order_code;
     }
 
     public function getNewCodeCustom($dateString){
       $number = OrderModel::select_count_by_current_month_custom($dateString);
+      $run_number = Numberun::where('id', '7')->value('number_en');
       $count =  $number + 1;
       //$year = (date("Y") + 543) % 100;
       $date=date_create($dateString);
@@ -248,7 +249,7 @@ class OrderController extends Controller
       $year = date_format($date,"y");
       $month = date_format($date,"m");
       $number = sprintf('%05d', $count);
-      $order_code = "PO{$year}{$month}-{$number}";
+      $order_code = "{$run_number}{$year}{$month}-{$number}";
       return $order_code;
     }
 

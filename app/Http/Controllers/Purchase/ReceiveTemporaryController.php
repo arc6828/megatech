@@ -18,7 +18,7 @@ use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
 use App\GaurdStock;
-
+use App\Models\Numberun;
 use PDF;
 
 class ReceiveTemporaryController extends Controller
@@ -98,9 +98,10 @@ class ReceiveTemporaryController extends Controller
       //print_r($input);
       //exit();
       //VOID IF HAS CODE (Revision)
+      
       if( !empty($request->input('receive_temporary_code') ) ){
         switch($request->input('receive_temporary_code')){
-          case "RTDRAFT" : 
+          case "M-RTDRAFT" : 
             $id =   $request->input('receive_temporary_id');
             ReceiveTemporaryModel::destroy($id);
             ReceiveTemporaryDetailModel::where('receive_temporary_id',$id)->delete();
@@ -203,12 +204,13 @@ class ReceiveTemporaryController extends Controller
 
     public function getNewCode(){
         $number = ReceiveTemporaryModel::select_count_by_current_month();
+        $run_number = Numberun::where('id', '10')->value('number_en');
         $count =  $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $receive_temporary_code = "RT{$year}{$month}-{$number}";
+        $receive_temporary_code = "{$run_number}{$year}{$month}-{$number}";
         return $receive_temporary_code;
     }
 
