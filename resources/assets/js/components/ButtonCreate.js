@@ -2,6 +2,7 @@ import React from 'react';
 import Create from './Create';
 
 const ButtonCreate = () => {
+  
   return (
     <div>
       <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#createModal">
@@ -19,13 +20,17 @@ const ButtonCreate = () => {
             <div className="modal-body mx-1.5">
               <Create />
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
           </div>
         </div>
       </div>
       <br />
       <br />
     </div>
-    
+
   )
 }
 

@@ -51,13 +51,13 @@ class QuotationModel extends Model
         ->join('users', 'tb_quotation.staff_id', '=', 'users.id')
         ->get();
   }
-  public static function select_count_by_current_month(){
-      //SELECT count(*) FROM `tb_quotation` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
-      return DB::table('tb_quotation')
-          ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
-          ->where('sales_status_id','!=','-1')
-          ->count();
-	}
+  // public static function select_count_by_current_month(){
+  //     //SELECT count(*) FROM `tb_quotation` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
+  //     return DB::table('tb_quotation')
+          // ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+          // ->where('sales_status_id','!=','-1')
+          // ->count();
+	// }
 
 	public static function select_by_id($id){
     return DB::table('tb_quotation')

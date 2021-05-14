@@ -3,11 +3,7 @@
 @section('title', 'ตั้งค่าการรันเลขเอกสาร')
 
 @section('content')
-    <div id="example"></div>
-    <script src="{{ asset('js/app.js') }}"></script>
-@endsection
-
-{{-- <div class="container-fluid">
+<div class="container-fluid">
         <div class="row">
 
             <div class="col-md-12">
@@ -99,4 +95,8 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
+
+@endsection
+    {{-- <div id="example"></div>
+    <script src="{{ asset('js/app.js') }}"></script> --}}

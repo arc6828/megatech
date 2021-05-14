@@ -18,7 +18,6 @@ export const NumberProvider = (props) => {
     NumberApi.getAll()
       .then(response => {
         setNumbers(response.data);
-        console.log("🚀 ~ file: NumberProvider.js ~ line 28 ~ fetchData ~ response.data", response.data)
       })
       .catch(e => {
         console.log(e);

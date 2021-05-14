@@ -76,6 +76,7 @@ class NumberController extends Controller
         } else {
             return ["Result" => "ERROR"];
         }
+
     }
 
     /**

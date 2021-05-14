@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 
-const ExampleList = ({ item, id }) => {
+const ExampleList = ({ item, id, handleEditNumber }) => {
+
   const [onEdit, setOnEdit] = useState(false);
+  const [editValueEn, setEditValueEn] = useState(item.number_en);
+  const [editValueNumber, setEditValueNumber] = useState(item.number_doc);
 
   const handleOnEdit = () => {
     setOnEdit(true)
@@ -9,10 +12,12 @@ const ExampleList = ({ item, id }) => {
 
   const handleSave = id => {
     setOnEdit(false)
-    if (editValue) {
-      handleEditNumber(editValue, id)
+    if (item.id === id) {
+      handleEditNumber(editValueEn, editValueNumber, id)
+
     } else {
-      setEditValue(item.name_doc)
+      setEditValueEn(item.number_en)
+      setEditValueNumber(item.number_doc)
     }
   }
 
@@ -34,14 +39,15 @@ const ExampleList = ({ item, id }) => {
             <input
               type="text"
               className="form-control form-control-sm"
-              value={item.number_en}
+              value={editValueEn}
+              onChange={e => setEditValueEn(e.target.value)}
               name="number_en"
               id="number_en"
             />
           </div>
           <div className="col-sm-2">
             <input
-              type="datetime-local"
+              type="text"
               className="form-control form-control-sm"
               value={item.datetime_doc}
               name="datetime_doc"
@@ -53,13 +59,14 @@ const ExampleList = ({ item, id }) => {
             <input
               type="text"
               className="form-control form-control-sm"
-              value={item.number_doc}
+              value={editValueNumber}
+              onChange={e => setEditValueNumber(e.target.value)}
               name="number_doc"
               id="number_doc"
             />
           </div>
           <div className="col-sm-2">
-            <button type="submit" className="btn btn-warning btn-sm">
+            <button type="submit" className="btn btn-warning btn-sm" onClick={() => handleSave(id)}>
               save
             </button>
           </div>
@@ -122,8 +129,3 @@ const ExampleList = ({ item, id }) => {
   }
 }
 export default ExampleList
-{/* <label htmlFor="inputEmail4">ชื่อเอกสาร</label>
-        <input className="form-control form-control-sm" type="text" value={editValue} name="editValue" />
-        <button type="submit" className="btn btn-warning" onClick={handleOnEdit}>
-          edit
-        </button> */}
