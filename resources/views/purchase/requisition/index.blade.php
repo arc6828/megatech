@@ -53,7 +53,8 @@
 								{{ $row->purchase_requisition_code }}
 							</a>
 						</td>
-						<td>{{ date_format( date_create(explode(" ",$row->datetime)[0]),"d-m-Y" ) }}</td>
+            <td>{{ date_format($row->datetime),"d-m-Y" ) }}</td>
+						{{-- <td>{{ date_format( date_create(explode(" ",$row->datetime)[0]),"d-m-Y" ) }}</td> --}}
 						<!-- <td>{{ $row->User->short_name }}</td> -->
 						
 						

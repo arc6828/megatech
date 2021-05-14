@@ -300,20 +300,20 @@ class OrderController extends Controller
         return $order_code;
     }
 // getNewCodeCustom อาจจะยกเลิก
-    public function getNewCodeCustom($dateString)
-    {
-        $number = OrderModel::select_count_by_current_month_custom($dateString);
-        $count = $number + 1;
-        //$year = (date("Y") + 543) % 100;
-        $date = date_create($dateString);
-        //echo date_format($date,"Y/m/d H:i:s");
+    // public function getNewCodeCustom($dateString)
+    // {
+    //     $number = OrderModel::select_count_by_current_month_custom($dateString);
+    //     $count = $number + 1;
+    //     //$year = (date("Y") + 543) % 100;
+    //     $date = date_create($dateString);
+    //     //echo date_format($date,"Y/m/d H:i:s");
 
-        $year = date_format($date, "y");
-        $month = date_format($date, "m");
-        $number = sprintf('%05d', $count);
-        $order_code = "M-OE{$year}{$month}-{$number}";
-        return $order_code;
-    }
+    //     $year = date_format($date, "y");
+    //     $month = date_format($date, "m");
+    //     $number = sprintf('%05d', $count);
+    //     $order_code = "M-OE{$year}{$month}-{$number}";
+    //     return $order_code;
+    // }
 
     public function store2(Request $request, $code)
     {
@@ -400,12 +400,13 @@ class OrderController extends Controller
     public function getNewCode2()
     {
         $number = RequisitionModel::select_count_by_current_month();
+        $run_number = Numberun::where('id', '6')->value('number_en');
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $purchase_requisition_code = "PR{$year}{$month}-{$number}";
+        $purchase_requisition_code = "{$run_number}{$year}{$month}-{$number}";
         return $purchase_requisition_code;
     }
 
