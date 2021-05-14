@@ -9,6 +9,7 @@ use App\CustomerModel;
 use App\Functions;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Numberun;
 use App\Sales\InvoiceModel;
 use Illuminate\Http\Request;
 use PDF;
@@ -81,7 +82,7 @@ class CustomerBillingController extends Controller
     {
         //CREATE CustomerBillingDetail
         $requestData = $request->all();
-        $requestData['doc_no'] = $this->getNewCode("BI");
+        $requestData['doc_no'] = $this->getNewCode();
         $customer_billing = CustomerBilling::create($requestData);
 
         //MAKE a whitelist (checkbox)
@@ -115,16 +116,18 @@ class CustomerBillingController extends Controller
         return redirect('/finance/customer-billing')->with('flash_message', 'CustomerBilling added!');
     }
 
-    public function getNewCode($code)
+    public function getNewCode()
     {
         //COUNT BY CURRENT MONTH
         $number = CustomerBilling::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
+        $run_number = Numberun::where('id', '11')->value('number_en');
+
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $code = "{$code}{$year}{$month}-{$number}";
+        $code = "{$run_number}{$year}{$month}-{$number}";
         return $code;
     }
 
