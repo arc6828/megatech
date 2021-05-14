@@ -11,6 +11,7 @@ use App\CustomerPayment;
 use App\CustomerPaymentDetail;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Numberun;
 use App\Sales\InvoiceModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -102,7 +103,7 @@ class CustomerPaymentController extends Controller
     {
 
         $requestData = $request->except(['transaction_code', 'date', 'bank_account_id', 'amount', 'remark']);
-        $requestData['doc_no'] = $this->getNewCode("BR");
+        $requestData['doc_no'] = $this->getNewCode();
 
         if ($request->hasFile('payment_file')) {
             $folder = "customer-payment";
@@ -220,16 +221,18 @@ class CustomerPaymentController extends Controller
         return redirect('finance/customer-payment')->with('flash_message', 'CustomerPayment added!');
     }
 
-    public function getNewCode($code)
+    public function getNewCode()
     {
         //COUNT BY CURRENT MONTH
         $number = CustomerPayment::whereRaw('month(created_at) = month(now()) and year(created_at) = year(now())', [])->count();
+        $run_number = Numberun::where('id', '12')->value('number_en');
+
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
         $month = date("m");
         $number = sprintf('%05d', $count);
-        $code = "{$code}{$year}{$month}-{$number}";
+        $code = "{$run_number}{$year}{$month}-{$number}";
         return $code;
     }
 
