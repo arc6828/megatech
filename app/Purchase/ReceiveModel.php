@@ -70,6 +70,10 @@ class ReceiveModel extends Model
     {
         return $this->belongsTo('App\SupplierModel', 'supplier_id');
     }
+    public function tax_type()
+    {
+        return $this->belongsTo('App\TaxTypeModel', 'tax_type_id', 'tax_type_id');
+    }
 
     public static function select_all()
     {

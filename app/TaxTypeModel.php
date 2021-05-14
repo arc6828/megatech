@@ -15,4 +15,9 @@ class TaxTypeModel extends Model
     {
         return DB::table('tb_tax_type')->get();
     }
+    public function return_order()
+    {
+      return $this->hasMany('App\Purchase\ReturnOrder','tax_type_id');
+
+    }
 }
