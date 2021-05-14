@@ -65,14 +65,14 @@
             <div class="form-row form-group">
 
                 <label for="tax_type_id" class="col-lg-3 control-label">{{ 'ชนิดภาษี' }}</label>
-                <input class="col-lg-3 form-control form-control-sm" name="tax_type_id" type="number" id="tax_type_id" value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type_id : ''}}" >
+                <input class="col-lg-3 form-control form-control-sm" name="tax_type_id" type="number" id="tax_type_id" value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type_id->tax_type_name : ''}}" >
                 <label for="purchase_status_id" class="col-lg-3 control-label">{{ 'สถานะ' }}</label>
                 <input class="col-lg-3 form-control form-control-sm" name="purchase_status_id" type="number" id="purchase_status_id" value="{{ isset($returnorder->purchase_status_id) ? $returnorder->purchase_status_id : ''}}" >
                     
             </div>
             <div class="form-row form-group">
                 <label for="user_id" class="col-lg-3 control-label">{{ 'พนักงานผู้บันทึก' }}</label>
-                <input class="col-lg-3 form-control form-control-sm" name="user_id" type="number" id="user_id" value="{{ isset($returnorder->user_id) ? $returnorder->user_id : ''}}" >        
+                <input class="col-lg-3 form-control form-control-sm" name="user_id" type="number" id="user_id" value="{{ isset($returnorder->user_id) ? $returnorder->user_id->name : ''}}" >        
                     
                     
             </div>
