@@ -82,8 +82,8 @@
         </div>
         <div class="form-group  form-row">
             <label for="tax_type_id" class="control-label   col-lg-3">{{ 'ชนิดภาษี' }}</label>
-            <input class="form-control form-control-sm   col-lg-3" name="tax_type_id" type="hidden" id="tax_type_id" value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type_id : ''}}" > 
-            <input class="form-control form-control-sm   col-lg-3"   type="text"   value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type->tax_type_name : ''}}" readonly > 
+            <input class="form-control form-control-sm   col-lg-3" name="tax_type_id" type="hidden" id="tax_type_id" value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type_id->tax_type_name : ''}}" > 
+            <input class="form-control form-control-sm   col-lg-3"   type="text"   value="{{ isset($returninvoice->tax_type_id) ? $returninvoice->tax_type : ''}}" readonly > 
              
             <label for="sales_status_id" class="control-label   col-lg-3">{{ 'สถานะ' }}</label>
             <input class="form-control form-control-sm   col-lg-3" name="sales_status_id" type="hidden" id="sales_status_id" value="{{ isset($returninvoice->sales_status_id) ? $returninvoice->sales_status_id : ''}}" > 
