@@ -47,10 +47,11 @@ class QuotationController extends Controller
      */
     public function create()
     {
+        $table_customer = CustomerModel::get()->limit(100);
 
         $data = [
             //QUOTATION
-            'table_customer' => CustomerModel::select_all(),
+            'table_customer' => $table_customer,
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
             'table_tax_type' => TaxTypeModel::select_all(),
