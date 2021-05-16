@@ -131,7 +131,7 @@ class CustomerModel extends Model
         return $this->hasMany('App\Purchase\ReceiveModel', 'customer_id');
     }
     //user
-    public function User()
+    public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
     }

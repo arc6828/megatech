@@ -117,7 +117,7 @@
                                                     $short_code = substr($row->code, 0, 2);
                                                 @endphp
                                                 @switch($short_code)
-                                                    @case(" IV")
+                                                    @case("M-IV")
                                                         {{ $row->invoice->customer_billing_detail->customer_billing->doc_no }}
                                                     @break
                                                 @endswitch
