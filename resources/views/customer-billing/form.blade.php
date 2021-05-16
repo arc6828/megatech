@@ -4,7 +4,7 @@
         <div class="form-row form-group text-center pr-5">
             <label for="doc_no" class="col-lg-3 control-label">{{ 'เลขที่เอกสาร' }}</label>
             <input class="col-lg-3 form-control form-control-sm" name="doc_no" type="text" id="doc_no"
-                value="{{ isset($customerbilling->doc_no) ? $customerbilling->doc_no : '' }}">
+                value="{{ isset($customerbilling->doc_no) ? $customerbilling->doc_no : '' }}" readonly>
 
             <label for="code" class="col-lg-3 control-label">{{ 'วันที่' }}</label>
             <input class="col-lg-3 form-control form-control-sm"
@@ -21,16 +21,17 @@
         @endphp
         <div class="form-row form-group text-center pr-5">
             <label for="customer_id" class="col-lg-3 control-label">{{ 'รหัสลูกค้า' }}</label>
-            <input class="form-control form-control-sm" name="customer_id" type="hidden" id="customer_id"
-                value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer_id : $customer_id }}">
             @include('customer-billing/customer_modal')
 
             <div class="col-lg-3  input-group input-group-sm ">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" name="customer_code" id="customer_code"> {{ $customer_code }}
+                    <span class="input-group-text" name="customer_code" id="customer_code">
+                        {{ isset($customerbilling->customer_id) ? $customerbilling->customer->customer_code : $customer_code }}
                     </span>
                 </div>
-                <input class="form-control form-control-sm" value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer_id : $customer_name }}" disabled>
+                <input class="form-control form-control-sm"
+                    value="{{ isset($customerbilling->customer_id) ? $customerbilling->customer->company_name : $customer_name }}"
+                    disabled>
                 <div class="input-group-append">
                     <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
                         <i class="fa fa-plus"></i> เลือก
@@ -45,20 +46,12 @@
         <div class="form-row form-group text-center pr-5">
             <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
             <small class="col-lg-3 text-left ">
-                {{ isset($customer) ? $customer->user->name : '' }}
+                {{ isset($customerbilling->user_id) ? $customerbilling->customer->user->name : '' }}
             </small>
-
-
             <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานผู้บันทึก' }}</label>
-            <input class="form-control form-control-sm" name="user_id" type="hidden" id="user_id"
-                value="{{ isset($customerbilling->user_id) ? $customerbilling->user_id : Auth::id() }}" readonly>
-
             <input class="col-lg-3  form-control form-control-sm"
-                value="{{ isset($customerbilling->user_id) ? $customerbilling->user_id : Auth::user()->name }}"
+                value="{{ isset($customerbilling->user_id) ? $customerbilling->user->name : Auth::user()->name }}"
                 disabled>
-
-
-
         </div>
 
 

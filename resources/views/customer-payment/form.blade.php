@@ -18,17 +18,15 @@ $customer_billing_total = ($invoices ? $invoices->sum('total_debt') : 0) + ($deb
 @endphp
 <div class="form-group form-row text-center pr-5">
     <label for="customer_id" class="col-lg-3 control-label">{{ 'รหัสลูกค้า' }}</label>
-    <a href="{{ url('/customer') }}" class="btn btn-sm btn-light d-none">เลือกลูกค้า</a>
     @include('customer-payment/customer_modal')
-    <input class="col-lg-3 form-control form-control-sm" name="customer_id" type="hidden" id="customer_id"
-        value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_id }}">
-
     <div class="col-lg-3  input-group input-group-sm ">
         <div class="input-group-prepend">
-            <span class="input-group-text" name="customer_code" id="customer_code"> {{ $customer_code }} </span>
+            <span class="input-group-text" name="customer_code" id="customer_code">
+                {{ isset($customerpayment->customer_id) ? $customerpayment->customer->customer_code : $customer_code }}
+            </span>
         </div>
         <input class="form-control form-control-sm"
-            value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer_id : $customer_name }}"
+            value="{{ isset($customerpayment->customer_id) ? $customerpayment->customer->company_name : $customer_name }}"
             disabled>
         <div class="input-group-append">
             <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customerModal">
@@ -45,14 +43,14 @@ $customer_billing_total = ($invoices ? $invoices->sum('total_debt') : 0) + ($deb
 <div class="form-group form-row text-center pr-5">
     <label for="user_id" class="col-lg-3  control-label">{{ 'พนักงานขาย' }}</label>
     <small class="col-lg-3  text-left">
-        {{ isset($customer) ? $customer->user->name : '' }}
+        {{ isset($customerpayment->user_id) ? $customerpayment->customer->user->name : '' }}
     </small>
 
     <label for="user_id" class="col-lg-3 control-label">{{ 'พนักงานผู้บันทึก' }}</label>
     <input class="col-lg-3 form-control form-control-sm d-none" name="user_id" type="number" id="user_id"
         value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::id() }}">
     <input class="col-lg-3 form-control form-control-sm"
-        value="{{ isset($customerpayment->user_id) ? $customerpayment->user_id : Auth::user()->name }}" disabled>
+        value="{{ isset($customerpayment->user_id) ? $customerpayment->user->name : Auth::user()->name }}" disabled>
 
 </div>
 
@@ -146,6 +144,10 @@ $transaction_code_object = [
             <div class="form-group">
             </div>
         </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+        </div>
+
         {{-- <div class="form-group d-none {{ $errors->has('role') ? 'has-error' : ''}}">
     <label for="role" class="col-lg-3 control-label">{{ 'รหัสแผนก' }}</label>
     <input class="col-lg-3 form-control form-control-sm" name="role" type="text" id="role" value="{{ isset($customerpayment->role) ? $customerpayment->role : Auth::user()->role }}" readonly>
@@ -209,8 +211,3 @@ $transaction_code_object = [
     <input class="col-lg-3 form-control form-control-sm" name="status" type="text" id="status" value="{{ isset($cheque->status) ? $cheque->status : 'pending'}}"  readonly>
     {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
 </div> --}}
-
-
-        <div class="form-group d-none">
-            <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-        </div>
