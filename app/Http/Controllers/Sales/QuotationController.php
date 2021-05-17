@@ -179,18 +179,13 @@ class QuotationController extends Controller
         //Query
         $quotaion = QuotationModel::findOrFail($id);
         $quotaion_details = $quotaion->details()->get();
-        $number = QuotationModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
-            ->where('sales_status_id', '!=', '-1')
-            ->count();
+  
         $run_number = Numberun::where('id', '1')->value('number_en');
-        $count = $number + 1;
-        $year = date("y");
-        $month = date("m");
-        $number = sprintf('%05d', $count);
+
         //Clone
         $new_quotaion = $quotaion->replicate()->fill([
             'quotation_code' => "{$run_number}DRAFT",
-            'datetime' => "{$run_number}{$year}{$month}-{$number}DRAFT",
+            'datetime' => "{$run_number}DRAFT",
             'revision' => "0",
             'sales_status_id' => "0",
         ]);
