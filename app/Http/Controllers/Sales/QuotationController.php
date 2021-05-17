@@ -105,15 +105,15 @@ class QuotationController extends Controller
         //VOID IF HAS CODE (Revision)
         if (!empty($request->input('quotation_code'))) {
             switch ($request->input('quotation_code')) {
-                case "M-QTDRAFT":
+                case "M-QTDRAFT": // ลบ M-QTDRAFT อันเก่า 
                     $id = $request->input('quotation_id');
                     QuotationModel::destroy($id);
                     QuotationDetailModel::where('quotation_id', $id)->delete();
                     break;
-                default:
+                default: //   เพิ่ม / แก้ไข detail
                     $q = QuotationModel::where('quotation_code', $request->input('quotation_code'))
                         ->orderBy('datetime', 'desc')->first();
-                    $input['revision'] = $q->revision + 1;
+                    $input['revision'] = $q->revision + 1; 
                     $q->sales_status_id = -1; //-1 means void
                     $q->save();
 
@@ -121,7 +121,8 @@ class QuotationController extends Controller
                     $input['quotation_code'] = $segments[0] . "-" . $segments[1] . "-R" . $input['revision'];
             }
 
-        }
+        } // update
+
         $run_number = Numberun::where('id', '1')->value('number_en');
 
         //DRAFT
@@ -178,12 +179,18 @@ class QuotationController extends Controller
         //Query
         $quotaion = QuotationModel::findOrFail($id);
         $quotaion_details = $quotaion->details()->get();
+        $number = QuotationModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+            ->where('sales_status_id', '!=', '-1')
+            ->count();
         $run_number = Numberun::where('id', '1')->value('number_en');
-
+        $count = $number + 1;
+        $year = date("y");
+        $month = date("m");
+        $number = sprintf('%05d', $count);
         //Clone
         $new_quotaion = $quotaion->replicate()->fill([
             'quotation_code' => "{$run_number}DRAFT",
-            'datetime' => "{$run_number}DRAFT",
+            'datetime' => "{$run_number}{$year}{$month}-{$number}DRAFT",
             'revision' => "0",
             'sales_status_id' => "0",
         ]);
