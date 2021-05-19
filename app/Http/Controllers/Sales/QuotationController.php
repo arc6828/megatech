@@ -316,7 +316,7 @@ class QuotationController extends Controller
     public function revision(Request $request, $id)
     {
         $input = [
-            'quotation_code' =>$request->input('quotation_code'),
+            'quotation_code' => $request->input('quotation_code'),
             'datetime' => date('Y-m-d H:i:s'),
             'customer_id' => $request->input('customer_id'),
             'contact_name' => $request->input('contact_name'),
@@ -353,43 +353,40 @@ class QuotationController extends Controller
                 QuotationDetailModel::create($quotaion_detail); // create qt detail
             }
         }
+        QuotationModel::where('quotation_id', $id)
+            ->orWhere('quotation_code', $id)
+            ->update($input); // Update QT revision = 0
 
         if (!empty($request->input('quotation_code'))) {
 
-            $quotaion = QuotationModel::findOrFail($id);
+            // $quotaion = QuotationModel::findOrFail($id);
             // $quotaion_details = $quotaion->details()->get();
-            print_r(json_encode($quotaion));
-            exit();
-            $new_quotaion = $quotaion->replicate()->fill([
-                'quotation_code' => "$quotaion->quotation_code",
-                'datetime' => date('Y-m-d H:i:s'),
-                'revision' => "0",
-            ]);
+            // print_r(json_encode($quotaion));
+            // exit();
 
-            $new_quotaion->save();
+            // $new_quotaion = $quotaion->replicate()->fill([
+            //     'quotation_code' => "$quotaion->quotation_code",
+            //     'datetime' => date('Y-m-d H:i:s'),
+            //     'revision' => "0",
+            //     // 'sales_status_id' => "-1",
+            // ]);
 
-            // foreach ($quotaion_details as $item) {
-            //     $new_item = $item->replicate()->fill([
-            //         'quotation_id' => $new_quotaion->quotation_id,
-            //     ]);
-            //     $new_item->save();
-            // }
+            // $new_quotaion->save();
 
-            $q = QuotationModel::where('quotation_code', $request->input('quotation_code'))
+            $q = QuotationModel::where('quotation_id', $request->input('quotation_id'))
                 ->orderBy('datetime', 'desc')->first();
-            $input['revision'] = $q->revision + 1;
-            $q->sales_status_id = -1; //-1 means void
+            $input['revision'] = $q->revision + 1; // update revision +1
+            $q->sales_status_id = -1; //-1 means void 
 
-            $q->save();
+            $q->save(); // บันทึกข้อมูล 
             $segments = explode("-", $request->input('quotation_code'));
             echo end($segments);
 
             if ($segments != "R") {
                 $segments = explode("-", $request->input('quotation_code'));
                 $input['quotation_code'] = $segments[0] . "-" . $segments[1] . "-" . $segments[2] . "-R" . $input['revision'];
-            }
+            };
         }
-
         QuotationModel::where('quotation_id', $id)
             ->orWhere('quotation_code', $id)
             ->update($input);
