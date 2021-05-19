@@ -69,9 +69,9 @@ class QuotationDetailModel extends Model
         ->get();
 	}
 
-  public static function insert($input){
-    DB::table('tb_quotation_detail')->insert($input);
-	}
+  // public static function insert($input){
+  //   DB::table('tb_quotation_detail')->insert($input);
+	// }
 
 	public static function update_by_id($input, $id){
     DB::table('tb_quotation_detail')

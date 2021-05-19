@@ -10,7 +10,7 @@
 
 @section('background-tag','bg-warning')
 @section('content')
-<form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to save?')" >
+<form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('สร้างใช่หรือไม่')" >
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/quotation/form')
@@ -41,7 +41,7 @@
 
     //END
     document.querySelector("#department_id").value = "{{ Auth::user()->role}}";
-    document.querySelector("#sales_status_id").value = "0"; //draft
+    document.querySelector("#sales_status_id").value = "0"; //draft 
     document.querySelector("#user_id").value = "{{ Auth::id() }}";
 
     document.querySelector("#total").value = "";
