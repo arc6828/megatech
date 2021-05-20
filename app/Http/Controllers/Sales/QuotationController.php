@@ -378,15 +378,15 @@ class QuotationController extends Controller
             $segments = explode("-", $request->input('quotation_code'));
             $segmentend = end($segments); //"00001"
 
-
             if ($segmentend[0] != "R") {
-                array_push($segments, "-R", $input['revision']); // เพิ่ม R
-                $input['quotation_code'] = join("", $segments); // string
-
+                array_push($segments, "R"); // เพิ่ม R
+                $quotation_code = join("-", $segments); 
+                $input['quotation_code'] = "{$quotation_code}{$input['revision']}";
             } else {
-                array_pop($segments);
-                array_push($segments, "-R", $input['revision']);
-                $input['quotation_code'] = join("", $segments); // string
+                array_pop($segments); // ลบ string
+                array_push($segments, "R"); // เพิ่ม R
+                $quotation_code = join("-", $segments);
+                $input['quotation_code'] = "{$quotation_code}{$input['revision']}"; // string
             }
 
         }
