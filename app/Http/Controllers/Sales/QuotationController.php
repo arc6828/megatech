@@ -31,7 +31,13 @@ class QuotationController extends Controller
         // $table_quotation = (Auth::user()->role === "admin" )?
         //     QuotationModel::select_all() :
         //     QuotationModel::select_all_by_user_id(Auth::id());
-        $table_quotation = QuotationModel::select_all();
+        $table_quotation = QuotationModel::join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
+            ->join('tb_delivery_type', 'tb_quotation.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+            ->join('tb_tax_type', 'tb_quotation.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+            ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'tb_quotation.staff_id', '=', 'users.id')
+            ->get();
+
         $data = [
             //QUOTATION
             'table_quotation' => $table_quotation,
@@ -282,6 +288,7 @@ class QuotationController extends Controller
             'department_id' => $request->input('department_id'),
             'sales_status_id' => $request->input('sales_status_id'),
             'user_id' => $request->input('user_id'),
+            'staff_id' => $request->input('staff_id'),
             'zone_id' => $request->input('zone_id'),
             'remark' => $request->input('remark'),
             'vat_percent' => $request->input('vat_percent', 7),
@@ -330,6 +337,7 @@ class QuotationController extends Controller
             'department_id' => $request->input('department_id'),
             'sales_status_id' => $request->input('sales_status_id'),
             'user_id' => $request->input('user_id'),
+            'staff_id' => $request->input('staff_id'),
             'zone_id' => $request->input('zone_id'),
             'remark' => $request->input('remark'),
             'vat_percent' => $request->input('vat_percent', 7),
@@ -353,43 +361,38 @@ class QuotationController extends Controller
                 QuotationDetailModel::create($quotaion_detail); // create qt detail
             }
         }
+
         QuotationModel::where('quotation_id', $id)
             ->orWhere('quotation_code', $id)
             ->update($input); // Update QT revision = 0
 
         if (!empty($request->input('quotation_code'))) {
 
-            // $quotaion = QuotationModel::findOrFail($id);
-            // $quotaion_details = $quotaion->details()->get();
-            // print_r(json_encode($quotaion));
-            // exit();
-
-            // $new_quotaion = $quotaion->replicate()->fill([
-            //     'quotation_code' => "$quotaion->quotation_code",
-            //     'datetime' => date('Y-m-d H:i:s'),
-            //     'revision' => "0",
-            //     // 'sales_status_id' => "-1",
-            // ]);
-
-            // $new_quotaion->save();
-
             $q = QuotationModel::where('quotation_id', $request->input('quotation_id'))
                 ->orderBy('datetime', 'desc')->first();
             $input['revision'] = $q->revision + 1; // update revision +1
-            $q->sales_status_id = -1; //-1 means void 
+            $q->sales_status_id = -1; //-1 means void
 
-            $q->save(); // บันทึกข้อมูล 
+            $q->save(); // บันทึกข้อมูล
+
             $segments = explode("-", $request->input('quotation_code'));
-            echo end($segments);
+            $segmentend = end($segments); //"00001"
 
-            if ($segments != "R") {
-                $segments = explode("-", $request->input('quotation_code'));
-                $input['quotation_code'] = $segments[0] . "-" . $segments[1] . "-" . $segments[2] . "-R" . $input['revision'];
-            };
+
+            if ($segmentend[0] != "R") {
+                array_push($segments, "-R", $input['revision']); // เพิ่ม R
+                $input['quotation_code'] = join("", $segments); // string
+
+            } else {
+                array_pop($segments);
+                array_push($segments, "-R", $input['revision']);
+                $input['quotation_code'] = join("", $segments); // string
+            }
+
         }
         QuotationModel::where('quotation_id', $id)
             ->orWhere('quotation_code', $id)
-            ->update($input);
+            ->update($input); // update QT revision = 1 && sales_status_id -1
 
         return redirect("sales/quotation/{$id}");
     }
