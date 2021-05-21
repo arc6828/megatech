@@ -65,10 +65,8 @@ Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
             Route::post('/quotation/{id}/duplicate', 'Sales\QuotationController@duplicate');
             Route::get('/quotation/{id}/pdf', 'Sales\QuotationController@pdf');
             Route::put('/quotation/{id}/approve', 'Sales\QuotationController@approve');
-            Route::put('/quotation/{id}/update','Sales\QuotationController@update');
-            Route::put('/quotation/{id}/revision','Sales\QuotationController@revision');
-
-            // Route::put('/quotation/{id}/update','Sales\QuotationController@updateQT');
+            Route::put('/quotation/{id}/update', 'Sales\QuotationController@update');
+            Route::put('/quotation/{id}/revision', 'Sales\QuotationController@revision');
             //Route::delete('/quotation/{id}', 'Sales\QuotationController@destroy');
             Route::resource('/quotation', 'Sales\QuotationController');
             //Route::resource('/quotation/{quotation_id}/quotation_detail', 'Sales\QuotationDetailController');
@@ -354,4 +352,3 @@ Route::resource('product-detail', 'ProductDetailController');
 Route::resource('company', 'CompanyController');
 Route::resource('numberun', 'NumberunController');
 Route::get('image/{filename}', 'HomeController@displayImage')->name('image.displayImage');
-

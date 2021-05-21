@@ -84,9 +84,9 @@ class QuotationModel extends Model
       ->get();
 	}
 
-	// public static function insert($input){
-  //   return DB::table('tb_quotation')->insertGetId($input);
-	// }
+	public static function insert($input){
+    return DB::table('tb_quotation')->insertGetId($input);
+	}
 
 	public static function update_by_id($input, $id){
     DB::table('tb_quotation')
@@ -95,10 +95,10 @@ class QuotationModel extends Model
         ->update($input);
 	}
 
-	// public static function delete_by_id($id){
-  //   DB::table('tb_quotation')
-  //       ->where('quotation_id', '=', $id)
-  //       ->delete();
-	// }
+	public static function delete_by_id($id){
+    DB::table('tb_quotation')
+        ->where('quotation_id', '=', $id)
+        ->delete();
+	}
 
 }

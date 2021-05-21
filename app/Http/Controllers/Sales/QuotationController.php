@@ -27,10 +27,7 @@ class QuotationController extends Controller
      */
     public function index(Request $request)
     {
-        //$table_quotation = QuotationModel::select_by_keyword($q);
-        // $table_quotation = (Auth::user()->role === "admin" )?
-        //     QuotationModel::select_all() :
-        //     QuotationModel::select_all_by_user_id(Auth::id());
+
         $table_quotation = QuotationModel::join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
             ->join('tb_delivery_type', 'tb_quotation.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
             ->join('tb_tax_type', 'tb_quotation.tax_type_id', '=', 'tb_tax_type.tax_type_id')
@@ -53,7 +50,7 @@ class QuotationController extends Controller
      */
     public function create()
     {
-        //ขั้นตอนที่ 1 กรอกข้อมูลลง form
+
         $data = [
             //QUOTATION
             'table_customer' => CustomerModel::select_all(),
@@ -84,6 +81,7 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
+
         //INSERT QUOTATION
         $input = [
             'quotation_code' => $this->getNewCode(),
@@ -152,6 +150,8 @@ class QuotationController extends Controller
         $quotaion = QuotationModel::findOrFail($id);
         $quotaion_details = $quotaion->details()->get();
 
+        $run_number = Numberun::where('id', '1')->value('number_en');
+
         //Clone
         $new_quotaion = $quotaion->replicate()->fill([
             'quotation_code' => $quotaion->quotation_code,
@@ -160,6 +160,7 @@ class QuotationController extends Controller
             'sales_status_id' => "0",
         ]);
         $new_quotaion->save();
+
         //Clone Detail
         foreach ($quotaion_details as $item) {
             $new_item = $item->replicate()->fill([
@@ -380,7 +381,7 @@ class QuotationController extends Controller
 
             if ($segmentend[0] != "R") {
                 array_push($segments, "R"); // เพิ่ม R
-                $quotation_code = join("-", $segments); 
+                $quotation_code = join("-", $segments);
                 $input['quotation_code'] = "{$quotation_code}{$input['revision']}";
             } else {
                 array_pop($segments); // ลบ string
