@@ -64,7 +64,7 @@
 
                 @elseif($row->sales_status_id == 1)
                     <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/revision" method="POST"
-                        onsubmit="return confirm('Do you confirm to save?')">>
+                        onsubmit="return confirm('Do you confirm to save?')">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         @include('sales/quotation/form')
