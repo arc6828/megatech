@@ -42,7 +42,7 @@ class OrderModel extends Model
     return $this->hasMany('App\Sales\QuotationDetailModel','quotation_id');
   }
   public function order_details(){
-    return $this->hasMany('App\Sales\OrderDetail2Model','order_id');
+    return $this->hasMany('App\Sales\OrderDetailModel','order_id');
   }
   // public function details(){
   //   return $this->hasMany('App\Sales\OrderDetail2Model','order_id');

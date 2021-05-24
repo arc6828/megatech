@@ -28,7 +28,7 @@
 </div>
 
 
-<form class="main-form" action="{{ url('/') }}/sales/order" method="POST" onsubmit="return confirm('Do you confirm to save?')" enctype="multipart/form-data">
+<form class="main-form" action="{{ url('/') }}/sales/order" method="POST" onsubmit="return confirm('สร้าง OE ใช่หรือไม่')" enctype="multipart/form-data">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/order/form')

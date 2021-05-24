@@ -74,6 +74,8 @@ Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
 
             Route::get('/order/{id}/pdf', 'Sales\OrderController@pdf');
             Route::resource('/order', 'Sales\OrderController');
+            Route::put('/order/{id}/update', 'Sales\OrderController@update');
+
             Route::get('/order_detail', 'Sales\OrderDetailController@index');
             Route::put('/order_detail/approve', 'Sales\OrderDetailController@approve');
 

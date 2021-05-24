@@ -14,7 +14,7 @@ use App\Purchase\RequisitionDetailModel;
 use App\Purchase\RequisitionModel;
 use App\SalesStatusModel;
 use App\Sales\InvoiceModel;
-use App\Sales\OrderDetail2Model;
+// use App\Sales\OrderDetail2Model;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderModel;
 use App\Sales\QuotationModel;
@@ -87,15 +87,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //INSERT QUOTATION : VALIDATE OVERCREDIT
-        $code = $this->getNewCode();
+        $order_code = $this->getNewCode();
         $datetime = date('Y-m-d H:i:s');
         if (!empty($request->input('datetime_custom'))) {
             $datetime = $request->input('datetime_custom');
-
-            $code = $this->getNewCodeCustom($datetime);
+            // $code = $this->getNewCodeCustom($datetime);
         }
         $input = [
-            'order_code' => $code,
+            'order_code' => $order_code,
             'datetime' => $datetime,
             'external_reference_id' => $request->input('external_reference_id'),
             'customer_id' => $request->input('customer_id'),
@@ -118,45 +117,9 @@ class OrderController extends Controller
             'max_credit' => $request->input('max_credit'),
             'total_debt' => $request->input('total_debt'),
         ];
-        //VOID IF HAS CODE (Revision)
-        if (!empty($request->input('order_code'))) {
-            //REVISION + VOID THE OLD ONE
-            $q = OrderModel::where('order_code', $request->input('order_code'))
-                ->orderBy('datetime', 'desc')->first();
-            $input['revision'] = $q->revision + 1;
-            $input['po_file'] = $q->po_file;
-            $q->sales_status_id = -1; //-1 means void
-            $q->save();
-            //NEW CODE WITH Rx
-            $segments = explode("-", $request->input('order_code'));
-            $input['order_code'] = $segments[0] . "-" . $segments[1] . "-R" . $input['revision'];
-
-            //ROLLBACK STOCK STATS IN PRODUCT AND GAURD STOCK
-            //CREATE GAURD STOCK + UPDATE PRODUCT
-            foreach ($q->order_details as $item) {
-                $product = ProductModel::findOrFail($item['product_id']);
-                $gaurd_stock = GaurdStock::create([
-                    "code" => $item['order_id'],
-                    "type" => "sales_order",
-                    "amount" => $item['amount'],
-                    "amount_in_stock" => ($product->amount_in_stock),
-                    "pending_in" => ($product->pending_in),
-                    "pending_out" => ($product->pending_out - $item['amount']),
-                    "product_id" => $product->product_id,
-                ]);
-
-                //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-                $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-                $product->pending_in = $gaurd_stock['pending_in'];
-                $product->pending_out = $gaurd_stock['pending_out'];
-                $product->save();
-
-            }
-        }
         //CREATE
-        $id = OrderModel::insert($input);
-
-        //UPLOAD FILE P/O
+        $order = OrderModel::create($input);
+        $id = $order->order_id;
         if ($request->hasFile('po_file')) {
             $folder = "customer/po";
 
@@ -166,99 +129,40 @@ class OrderController extends Controller
             $order->update($requestData);
         }
 
+        //UPLOAD FILE P/O
+
         //INSERT ALL NEW QUOTATION DETAIL
-        $list = [];
+        // $list = [];
         //print_r($request->input('product_id_edit'));
         //print_r($request->input('amount_edit'));
         //print_r($request->input('discount_price_edit'));
         //echo $id;
         if (is_array($request->input('product_id_edit'))) {
             for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-                $list[] = [
+                $order_detail = [
                     "product_id" => $request->input('product_id_edit')[$i],
                     "amount" => $request->input('amount_edit')[$i],
                     "discount_price" => $request->input('discount_price_edit')[$i],
                     "order_id" => $id,
                     "delivery_duration" => $request->input('delivery_duration')[$i],
                 ];
+                OrderDetailModel::create($order_detail);
 
                 //UPDATE QUOTATION sales_status_id = 5 which mean complete
-
                 QuotationModel::update_by_id(["sales_status_id" => 5], $request->input('quotation_code_edit')[$i]);
+
                 //UPDATE QUOTATION DETAIL sales_status_id = 5 which mean complete
                 //QuotationModel::update_by_id(["sales_status_id"=>5] , $request->input('discount_price_edit')[$i]);
             }
-        }
-
-        //OE DETAIL
-        OrderDetail2Model::insert($list);
-
-        //PICKING
-        if (empty($request->input('order_code'))) {
-            //CASE CREATE
-            OrderDetailModel::insert($list);
-        } else {
-            //OE ต้องน้อยกว่าเดิม + ต้องไม่น้อยกว่า IV + ห้ามเพิ่มรายการ
-            //CASE REVISION
-            //QUERY order from order_code
-            $q = OrderModel::where('order_code', $request->input('order_code'))
-                ->orderBy('datetime', 'desc')->first();
-            //UPDATE DEATAIL
-            $q->pickings()->update(["order_id" => $id]);
-
-            $order = OrderModel::find($id);
-            //UPDATE INVOICE REFERENCE order_code
-            $invoices = InvoiceModel::where('internal_reference_id', $request->input('order_code'))
-                ->update(["internal_reference_id" => $order->order_code]);
-
-            //UPDATE OrderDetail order_id
-
-            //OE ล่าสุด
-            $current_oe = OrderModel::find($id);
-            $current_oe_details = $current_oe->order_details;
-
-            //OE ก่อนหน้า
-            $previous_oe = OrderModel::where('order_code', $request->input('order_code'))->first();
-            $previous_oe_details = $previous_oe->order_details;
-            //DIFFs
-            $diffs = [];
-            for ($i = 0; $i < count($current_oe_details); $i++) {
-                $diffs[$current_oe_details[$i]->product->product_code] = ($current_oe_details[$i]->amount - $previous_oe_details[$i]->amount);
-            }
-            print_r($diffs);
-            //ขออนุญาติใหม่อีกครั้ง??
-            //$current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->update([order_detail_status_id""=>1]);
-            $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id', [1, 3])->orderBy('order_detail_status_id', 'desc')->get();
-            foreach ($current_pickings as $item) {
-                if ($item->amount + $diffs[$item->product->product_code] >= 0) {
-                    //FINISH IN ONE ORDER
-                    $new_amount = $item->amount + $diffs[$item->product->product_code];
-                    $diffs[$item->product->product_code] += $item->amount;
-                    $item->update(['amount' => $new_amount]);
-                    //UPDATE DIFF, WHERE DIFF NEVER MORE THAN 0 (CLEAR DIFF)
-                    echo "<br>Before if " . $diffs[$item->product->product_code];
-                    if ($diffs[$item->product->product_code] > 0) {
-                        $diffs[$item->product->product_code] = 0;
-                    }
-
-                    echo "<br>After if " . $diffs[$item->product->product_code];
-                } else {
-                    //FINISH WITH SERVERAL ORDERS
-                    $new_amount = $item->amount - $item->amount;
-                    $diffs[$item->product->product_code] += $item->amount;
-                    $item->update(['amount' => $new_amount]);
-
-                    echo "<br>Else : " . $diffs[$item->product->product_code];
-                }
-            }
 
         }
+        $order_details = OrderDetailModel::where('order_id', $id)->get();
 
         //GAURD STOCK
-        foreach ($list as $item) {
+        foreach ($order_details as $item) {
             $product = ProductModel::findOrFail($item['product_id']);
             $gaurd_stock = GaurdStock::create([
-                "code" => $item['order_id'],
+                "code" => $item['order_code'],
                 "type" => "sales_order",
                 "amount" => $item['amount'],
                 "amount_in_stock" => $product->amount_in_stock,
@@ -273,12 +177,111 @@ class OrderController extends Controller
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
 
+            // //VOID IF HAS CODE (Revision)
+            // if (!empty($request->input('order_code'))) {
+            //     //REVISION + VOID THE OLD ONE
+            //     $q = OrderModel::where('order_code', $request->input('order_code'))
+            //         ->orderBy('datetime', 'desc')->first();
+            //     $input['revision'] = $q->revision + 1;
+            //     $input['po_file'] = $q->po_file;
+            //     $q->sales_status_id = -1; //-1 means void
+            //     $q->save();
+            //     //NEW CODE WITH Rx
+            //     $segments = explode("-", $request->input('order_code'));
+            //     $input['order_code'] = $segments[0] . "-" . $segments[1] . "-R" . $input['revision'];
+
+            //     //ROLLBACK STOCK STATS IN PRODUCT AND GAURD STOCK
+            //     //CREATE GAURD STOCK + UPDATE PRODUCT
+            //     foreach ($q->order_details as $item) {
+            //         $product = ProductModel::findOrFail($item['product_id']);
+            //         $gaurd_stock = GaurdStock::create([
+            //             "code" => $item['order_code'],
+            //             "type" => "sales_order",
+            //             "amount" => $item['amount'],
+            //             "amount_in_stock" => ($product->amount_in_stock),
+            //             "pending_in" => ($product->pending_in),
+            //             "pending_out" => ($product->pending_out - $item['amount']),
+            //             "product_id" => $product->product_id,
+            //         ]);
+
+            //         //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+            //         $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+            //         $product->pending_in = $gaurd_stock['pending_in'];
+            //         $product->pending_out = $gaurd_stock['pending_out'];
+            //         $product->save();
+
+            //     }
+            // }
+            // //OE DETAIL
+            // // OrderDetailModel::insert($list);
+
+            // //PICKING
+            // if (empty($request->input('order_code'))) {
+            //     //CASE CREATE
+            //     // OrderDetailModel::insert($list);
+            // } else {
+            //     //OE ต้องน้อยกว่าเดิม + ต้องไม่น้อยกว่า IV + ห้ามเพิ่มรายการ
+            //     //CASE REVISION
+            //     //QUERY order from order_code
+            //     $q = OrderModel::where('order_code', $request->input('order_code'))
+            //         ->orderBy('datetime', 'desc')->first();
+            //     //UPDATE DEATAIL
+            //     $q->pickings()->update(["order_id" => $id]);
+
+            //     $order = OrderModel::find($id);
+            //     //UPDATE INVOICE REFERENCE order_code
+            //     $invoices = InvoiceModel::where('internal_reference_id', $request->input('order_code'))
+            //         ->update(["internal_reference_id" => $order->order_code]);
+
+            //     //UPDATE OrderDetail order_id
+
+            //     //OE ล่าสุด
+            //     $current_oe = OrderModel::find($id);
+            //     $current_oe_details = $current_oe->order_details;
+
+            //     //OE ก่อนหน้า
+            //     $previous_oe = OrderModel::where('order_code', $request->input('order_code'))->first();
+            //     $previous_oe_details = $previous_oe->order_details;
+            //     //DIFFs
+            //     $diffs = [];
+            //     for ($i = 0; $i < count($current_oe_details); $i++) {
+            //         $diffs[$current_oe_details[$i]->product->product_code] = ($current_oe_details[$i]->amount - $previous_oe_details[$i]->amount);
+            //     }
+            //     // print_r($diffs);
+            //     //ขออนุญาติใหม่อีกครั้ง??
+            //     //$current_oe->pickings()->whereIn('order_detail_status_id',[1,3])->update([order_detail_status_id""=>1]);
+            //     $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id', [1, 3])->orderBy('order_detail_status_id', 'desc')->get();
+            //     foreach ($current_pickings as $item) {
+            //         if ($item->amount + $diffs[$item->product->product_code] >= 0) {
+            //             //FINISH IN ONE ORDER
+            //             $new_amount = $item->amount + $diffs[$item->product->product_code];
+            //             $diffs[$item->product->product_code] += $item->amount;
+            //             $item->update(['amount' => $new_amount]);
+            //             //UPDATE DIFF, WHERE DIFF NEVER MORE THAN 0 (CLEAR DIFF)
+            //             echo "<br>Before if " . $diffs[$item->product->product_code];
+            //             if ($diffs[$item->product->product_code] > 0) {
+            //                 $diffs[$item->product->product_code] = 0;
+            //             }
+
+            //             echo "<br>After if " . $diffs[$item->product->product_code];
+            //         } else {
+            //             //FINISH WITH SERVERAL ORDERS
+            //             $new_amount = $item->amount - $item->amount;
+            //             $diffs[$item->product->product_code] += $item->amount;
+            //             $item->update(['amount' => $new_amount]);
+
+            //             echo "<br>Else : " . $diffs[$item->product->product_code];
+            //         }
+            //     }
+
+            // }
+
         }
 
         //PR IF NOT REVISION
-        if (empty($request->input('order_code'))) {
-            $this->store2($request, $code);
-        }
+        // if (empty($request->input('order_code'))) {
+        //     $this->store2($request, $code);
+        // }
 
         //exit();
         return redirect("sales/order/{$id}");
@@ -451,7 +454,7 @@ class OrderController extends Controller
             'table_zone' => ZoneModel::select_all(),
             'order_id' => $id,
             //QUOTATION Detail
-            'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
+            'table_order_detail' => OrderDetailModel::select_by_order_id($id),
             'table_product' => ProductModel::select_all(),
             'mode' => 'show',
         ];
@@ -467,7 +470,7 @@ class OrderController extends Controller
             'order' => OrderModel::findOrFail($id),
             'table_company' => Company::select_all(),
             //QUOTATION Detail
-            'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
+            'table_order_detail' => OrderDetailModel::select_by_order_id($id),
             'total_text' => count(OrderModel::select_by_id($id)) > 0 ? Functions::baht_text(OrderModel::select_by_id($id)[0]->total) : "-",
         ];
         //return view('sales/order/edit',$data);
@@ -512,7 +515,7 @@ class OrderController extends Controller
             'table_zone' => ZoneModel::select_all(),
             'order_id' => $id,
             //QUOTATION Detail
-            'table_order_detail' => OrderDetail2Model::select_by_order_id($id),
+            'table_order_detail' => OrderDetailModel::select_by_order_id($id),
             'table_product' => ProductModel::select_all(),
             'mode' => 'edit',
         ];
@@ -529,8 +532,11 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         //1.INSERT QUOTATION
+        $order = OrderModel::findOrFail($id);
+
         $input = [
-            //'order_code' => $order_code,
+            'order_code' => $order->order_code,
+            'datetime' => date('Y-m-d H:i:s'),
             'external_reference_id' => $request->input('external_reference_id'),
             'customer_id' => $request->input('customer_id'),
             'debt_duration' => $request->input('debt_duration'),
@@ -542,6 +548,7 @@ class OrderController extends Controller
             'department_id' => $request->input('department_id'),
             'sales_status_id' => $request->input('sales_status_id'),
             'user_id' => $request->input('user_id'),
+            'staff_id' => $request->input('staff_id'),
             'zone_id' => $request->input('zone_id'),
             'remark' => $request->input('remark'),
             'vat' => $request->input('vat'),
@@ -551,8 +558,9 @@ class OrderController extends Controller
             'max_credit' => $request->input('max_credit'),
             'total_debt' => $request->input('total_debt'),
         ];
-        OrderModel::update_by_id($input, $id);
-
+        // OrderModel::update_by_id($input, $id);
+        // print_r(json_encode($input));
+        // exit();
         //UPLOAD FILE P/O
         if ($request->hasFile('po_file')) {
             $folder = "customer/po";
@@ -566,61 +574,44 @@ class OrderController extends Controller
         //2.INSERT UPDATE DELETE ORDER DETAIL
         if (is_array($request->input('product_id_edit'))) {
             for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-                $id_edit = $request->input('id_edit')[$i];
-                $a = [
+
+                OrderDetailModel::where('order_id', $id)->delete();
+                // $id_edit = $request->input('id_edit')[$i];
+                $order_detail = [
                     "product_id" => $request->input('product_id_edit')[$i],
                     "amount" => $request->input('amount_edit')[$i],
                     "discount_price" => $request->input('discount_price_edit')[$i],
                     "order_id" => $id,
                     "delivery_duration" => $request->input('delivery_duration')[$i],
                 ];
-                switch ($id_edit) {
-                    case "+":
-                        OrderDetail2Model::insert($a);
-                        echo "+<br>";
-                        break;
-                    default:
-                        if ($id_edit < 0) {
-                            OrderDetail2Model::delete_by_id(abs($id_edit));
-                            echo "-<br>";
-                        } else {
-                            OrderDetail2Model::update_by_id($a, $id_edit);
-                            echo "{$id_edit}<br>";
-                            //print_r($a);
-                        }
-                }
+                OrderDetailModel::create($order_detail);
             }
         }
+        $order_details = OrderDetailModel::where('order_id', $id)->get();
+        //GAURD STOCK
+        foreach ($order_details as $item) {
+            $product = ProductModel::findOrFail($item['product_id']);
+            $gaurd_stock = GaurdStock::create([
+                "code" => $item['order_code'],
+                "type" => "sales_order",
+                "amount" => $item['amount'],
+                "amount_in_stock" => $product->amount_in_stock,
+                "pending_in" => $product->pending_in,
+                "pending_out" => ($product->pending_out + $item['amount']),
+                "product_id" => $product->product_id,
+            ]);
 
-        /*
-        //2.DELETE QUOTATION DETAIL FIRST
-        OrderDetail2Model::delete_by_order_id($id);
-        OrderDetailModel::delete_by_order_id($id);
+            //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+            $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+            $product->pending_in = $gaurd_stock['pending_in'];
+            $product->pending_out = $gaurd_stock['pending_out'];
+            $product->save();
+        }
+        
+        OrderModel::where('order_id', $id)
+            ->orWhere('order_code', $id)
+            ->update($input);
 
-        //3.INSERT ALL NEW QUOTATION DETAIL
-        $list = [];
-        //print_r($request->input('product_id_edit'));
-        //print_r($request->input('amount_edit'));
-        //print_r($request->input('discount_price_edit'));
-        //echo $id;
-        if (is_array ($request->input('product_id_edit'))){
-        for($i=0; $i<count($request->input('product_id_edit')); $i++){
-        $a = [
-        "product_id" => $request->input('product_id_edit')[$i],
-        "amount" => $request->input('amount_edit')[$i],
-        "discount_price" => $request->input('discount_price_edit')[$i],
-        "order_id" => $id,
-        ];
-        if( is_numeric($request->input('id_edit')[$i]) ){
-        $a["order_detail_id"] = $request->input('id_edit')[$i];
-        }
-        $list[] = $a;
-        }
-        }
-
-        OrderDetail2Model::insert($list);
-        OrderDetailModel::insert($list);
-         */
         //4.REDIRECT
         return redirect("sales/order/{$id}/edit");
     }

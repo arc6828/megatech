@@ -38,7 +38,7 @@ class OrderDetailController extends Controller
     $selected_order_detail_ids = $request->input('selected_order_detail_ids');
     $amounts = $request->input('amounts');
     $approve_amounts = $request->input('approve_amounts');
-    $action = $request->input('action',"1");
+    $action = $request->input('action',"1"); // index.blade.php
 
     //CREATE PICKING ID
     $picking_code = "";
