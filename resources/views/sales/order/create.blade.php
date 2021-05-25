@@ -60,7 +60,7 @@
     document.querySelector("#tax_type_id").value = "";
     document.querySelector("#delivery_time").value = "";
     document.querySelector("#department_id").value = "{{ Auth::user()->role }}";
-    document.querySelector("#sales_status_id").value = "7";
+    document.querySelector("#sales_status_id").value = "6";
     document.querySelector("#user_id").value = "{{ Auth::id() }}";
     document.querySelector("#zone_id").value = "";
     document.querySelector("#total").value = "";

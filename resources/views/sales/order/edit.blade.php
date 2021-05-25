@@ -28,7 +28,15 @@
 
         @section('content')
             @forelse($table_order as $row)
-                @if ($row->sales_status_id == 7)
+
+                <form class="d-none" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/approve" id="form-approve"
+                    method="POST" onsubmit="return confirm('อัพเดทสถานะ รอเบิกสินค้า')">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
+                    <button type="submit" class="btn btn-success " id="form-approve-submit" style="width:150px;">Save</button>
+                </form>
+
+                @if ($row->sales_status_id == 6)
                     <form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/update" id="form" method="POST"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
@@ -42,12 +50,85 @@
                                 <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
                                     style="width:150px;">back</a>
                                 <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
+                                    Update
+                                </button>
+                            </div>
+                        @endif
+                    </form>
+                @elseif($row->sales_status_id == 7)
+                    <form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/update" id="form" method="POST"
+                        enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+
+                        @include('sales/order/form')
+
+                        @if ($mode == 'edit')
+
+                            <div class="text-center mt-4">
+                                <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
+                                    style="width:150px;">back</a>
+                                <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
+                                    Update รอเบิก
+                                </button>
+                            </div>
+                        @endif
+                    </form>
+                @elseif($row->sales_status_id == 8)
+                    <form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/revision" id="form"
+                        method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+
+                        @include('sales/order/form')
+
+                        @if ($mode == 'edit')
+
+                            <div class="text-center mt-4">
+                                <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
+                                    style="width:150px;">back</a>
+                                <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
+                                    Revision
+                                </button>
+                            </div>
+                        @endif
+                    </form>
+                @elseif($row->sales_status_id == 9)
+                    <form class="" action="{{ url('/') }}/sales/order" id="form" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        @include('sales/order/form')
+
+                        @if ($mode == 'edit')
+
+                            <div class="text-center mt-4">
+                                <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
+                                    style="width:150px;">back</a>
+                                <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
                                     Save
                                 </button>
                             </div>
                         @endif
+                    </form>
+                @elseif($row->sales_status_id == -1)
+                    <form class="" action="{{ url('/') }}/sales/order" id="form" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        @include('sales/order/form')
+
+                        @if ($mode == 'edit')
+
+                            <div class="text-center mt-4">
+                                <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
+                                    style="width:150px;">back</a>
+                                <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
+                                    Save
+                                </button>
+                            </div>
+                        @endif
+                    </form>
                 @endif
-                </form>
+
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function(event) {

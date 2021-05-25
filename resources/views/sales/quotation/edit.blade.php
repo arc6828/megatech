@@ -48,7 +48,7 @@
                 @if ($row->sales_status_id == 0)
                     <!-- แก้ไข ข้อมูลตอนยังไม่ได้อัพเดท สถานะ ส่งใบเสนอราคา -->
                     <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/update" method="POST"
-                        onsubmit="return confirm('Do you confirm to save?')">>
+                        onsubmit="return confirm('Do you confirm to save?')">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         @include('sales/quotation/form')
