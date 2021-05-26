@@ -7,7 +7,6 @@ use App\Sales\OrderDetailModel;
 use App\Sales\OrderDetailStatusModel;
 use App\Sales\OrderModel;
 use App\Sales\PickingModel;
-use App\SalesStatusModel;
 use Illuminate\Http\Request;
 
 class OrderDetailController extends Controller
@@ -23,10 +22,12 @@ class OrderDetailController extends Controller
             "remark" => $request->input("remark", ""),
             //"company_name" => $request->input("company_name",""),
         ];
-        $table_sales_status = SalesStatusModel::all();
+        // $table_sales_status = SalesStatusModel::all();
+        $table_order_detail_status = OrderDetailStatusModel::all();
+
         $data = [
-            'table_order_detail_status' => OrderDetailStatusModel::select_all(),
-            'table_sales_status' => $table_sales_status,
+            'table_order_detail_status' => $table_order_detail_status,
+            // 'table_sales_status' => $table_sales_status,
             'filter' => $filter,
         ];
         return view('sales/order_detail/index', $data);
@@ -59,16 +60,28 @@ class OrderDetailController extends Controller
                 //CHECK IF APPROVE < amount
                 if ($approve_amounts[$i] < $amounts[$i]) {
                     //insert new order detail
-                    $new_amount = $amounts[$i] - $approve_amounts[$i];
+                    $amounts = $request->input('amounts');
+                    $before_approved_amount = $amounts[$i] - $approve_amounts[$i];
                     //DUPLICATE NEW ITEM FOR REMAINING - DON"T CARE
-                    OrderDetailModel::duplicate_by_id($new_amount, $order_detail_ids[$i]);
+                    // OrderDetailModel::duplicate_by_id($new_amount, $order_detail_ids[$i]);
                     //update by approve amount
+
                     $input_detail = [
-                        "amount" => $approve_amounts[$i],
+                        "amount" => $amounts[$i],
+                        "approve_amounts" => $approve_amounts[$i],
+                        "before_approved_amount" => $before_approved_amount,
                         "picking_code" => $picking_code,
                         "order_detail_status_id" => $action,
                     ];
-                    OrderDetailModel::update_by_id($input_detail, $order_detail_ids[$i]);
+
+                    // OrderDetailModel::update_by_id($input_detail, $order_detail_ids[$i]);
+
+                    // $order_details = OrderDetailModel::where('order_detail_id', 'order_id')->get();
+                    // print_r(json_encode($iorder_detailsd));
+                    // exit();
+                    OrderDetailModel::where('order_detail_id', $request->input('order_detail_ids')[$i])
+                        ->update($input_detail);
+                        
                 } else if ($approve_amounts[$i] == $amounts[$i]) {
                     $input_detail = [
                         //"amount"=>$approve_amounts[$i],
@@ -86,14 +99,21 @@ class OrderDetailController extends Controller
             //CHANGE STATUS ORDER
             $order = OrderDetailModel::where('order_detail_id', $order_detail_ids[$i])->first();
             $order_id = $order->order_id;
-            $count = OrderDetailModel::countWaitApprove($order_id);
+
+            $count = OrderDetailModel::where('order_detail_status_id', 3)
+                ->where('order_id', $order_id)
+                ->count(); // นับจำนวน รออนุมัติ
+
             if ($count == 0) {
                 //NO ONE LEFT : 8 => อนุมัติครบ
                 OrderModel::update_by_id(
                     ["sales_status_id" => "8"],
                     $order_id
                 );
+//                 OrderModel::where('order_id', $order_id)
+                // ]                    ->update($order_id, ["sales_status_id" => "8"]);
             }
+
         }
 
         //OrderDetailModel::update_order_detail_status_id_by_ids($action, $selected_order_detail_ids);

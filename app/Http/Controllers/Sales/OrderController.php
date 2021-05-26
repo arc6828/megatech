@@ -35,10 +35,26 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+      
+        $select_all = OrderModel::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+        // ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+        // ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+            ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'tb_order.staff_id', '=', 'users.id')
+            ->get();
+
+        $select_all_user_id = OrderModel::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+        // ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+        // ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+            ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'tb_order.staff_id', '=', 'users.id')
+            ->where('tb_order.user_id', '=', Auth::user()->id)
+            ->get();
         //$table_order = OrderModel::select_by_keyword($q);
+
         $table_order = (Auth::user()->role === "admin") ?
-        OrderModel::select_all() :
-        OrderModel::select_all_by_user_id(Auth::id());
+        $select_all : $select_all_user_id; // if
+
         $data = [
             //QUOTATION
             'table_order' => $table_order,
@@ -134,6 +150,7 @@ class OrderController extends Controller
         if (is_array($request->input('product_id_edit'))) {
             for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
                 $order_detail = [
+                    "order_detail_status_id" => 0, // draft
                     "product_id" => $request->input('product_id_edit')[$i],
                     "amount" => $request->input('amount_edit')[$i],
                     "discount_price" => $request->input('discount_price_edit')[$i],
@@ -146,8 +163,8 @@ class OrderController extends Controller
                 QuotationModel::where('quotation_code', $request->input('quotation_code_edit')[$i])
                     ->update(["sales_status_id" => 5]);
             }
-
         }
+
         // $order_details = OrderDetailModel::where('order_id', $id)->get();
         // //GAURD STOCK
         // foreach ($order_details as $item) {
@@ -551,6 +568,9 @@ class OrderController extends Controller
         ];
 
         $order_details = OrderDetailModel::where('order_id', $id)->get();
+
+        OrderDetailModel::where('order_id', $id)
+            ->update(["order_detail_status_id" => 3]);
         //GAURD STOCK
 
         foreach ($order_details as $item) {
@@ -689,6 +709,7 @@ class OrderController extends Controller
         OrderModel::where('order_id', $id)
             ->orWhere('order_code', $id)
             ->update($input);
+
         // if (empty($request->input('order_code'))) {
         //     // //CASE CREATE
         //     // OrderDetailModel::insert($list);

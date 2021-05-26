@@ -136,37 +136,37 @@
                     <button class="d-none" id="btn-isbn"></button>
                 </div>
             </div>
-            @foreach ($table_sales_status as $row)
-                @if ($row->sales_status_id == -1)
-                    <form action="{{ url('/') }}/sales/order_detail/approve" method="post" id="form_table"
-                        onsubmit="return validateCheckbox();">
-                        {{ csrf_field() }}
-                        {{ method_field('PUT') }}
 
-                        <div class="table-responsive">
-                            <table class="table table-hover table-sm text-center  table-bordered" id="table-order-detail"
-                                style="width:100%; margin-top:-1px !important;">
+            <form action="{{ url('/') }}/sales/order_detail/approve" method="post" id="form_table"
+                onsubmit="return validateCheckbox();">
+                {{ csrf_field() }}
+                {{ method_field('PUT') }}
 
-                            </table>
-                        </div>
-                        <div class="form-group form-inline text-center">
-                            <div class="col-lg-4 offset-lg-4">
-                                <select name="action" id="action" class="form-control form-control-sm" required>
-                                    @foreach ($table_order_detail_status as $row_order_detail_status)
-                                        <option value="{{ $row_order_detail_status->order_detail_status_id }}">
-                                            {{ $row_order_detail_status->order_detail_status_name }}
-                                        </option>
-                                    @break
-                                    @endforeach
-                                </select>
-                                <button type="summit" id="form_summit_table" class="btn btn-success btn-sm">
-                                    submit
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                @endif
-            @endforeach
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm text-center  table-bordered" id="table-order-detail"
+                        style="width:100%; margin-top:-1px !important;">
+
+                    </table>
+                </div>
+                <div class="form-group form-inline text-center">
+                    <div class="col-lg-4 offset-lg-4">
+                        <select name="action" id="action" class="form-control form-control-sm" required>
+                            @foreach ($table_order_detail_status as $row_order_detail_status)
+                                @if ($row_order_detail_status->order_detail_status_id == 1)
+                                    <option value="{{ $row_order_detail_status->order_detail_status_id }}">
+                                        {{ $row_order_detail_status->order_detail_status_name }}
+                                    </option>
+                                @endif
+                                {{-- @break --}}
+                            @endforeach
+                        </select>
+                        <button type="summit" id="form_summit_table" class="btn btn-success btn-sm">
+                            submit
+                        </button>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
 

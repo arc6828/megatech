@@ -11,8 +11,8 @@ class OrderDetailStatusModel extends Model
   protected $primaryKey = 'order_detail_status_id';
   protected $fillable = [];
   
-  public static function select_all(){
-    return DB::table('tb_order_detail_status')
-          ->get();
-  }
+  // public static function select_all(){
+  //   return DB::table('tb_order_detail_status')
+  //         ->get();
+  // }
 }

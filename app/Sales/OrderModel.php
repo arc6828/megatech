@@ -64,31 +64,31 @@ class OrderModel extends Model
   }
   
   //ที่อนุมัติแล้ว แต่ยังไม่ได้เปิด invoice
-  public static function select_all_by_user_id($user_id){
-    return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-        ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
-        ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
-        ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-        ->join('users', 'tb_order.staff_id', '=', 'users.id')
-        ->join('tb_order_detail','tb_order.order_id','=','tb_order_detail.order_id')
-        ->where('tb_order.user_id', '=', $user_id)        
-        ->whereNotIn('tb_order.sales_status_id', [-1,9])        
-        ->whereNotNull('picking_code')
-        ->whereIn('tb_order_detail.order_detail_status_id', [1])   
-        ->groupBy('order_id')
-        ->havingRaw('COUNT(order_detail_id) > ?', [0])        
-			  ->select( DB::raw('tb_order.*,tb_customer.*,tb_sales_status.*'))
-        ->get();
-	}
+  // public static function select_all_by_user_id($user_id){
+  //   return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+  //       ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+  //       ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+  //       ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+  //       ->join('users', 'tb_order.staff_id', '=', 'users.id')
+  //       ->join('tb_order_detail','tb_order.order_id','=','tb_order_detail.order_id')
+  //       ->where('tb_order.user_id', '=', $user_id)      // auth  
+  //       ->whereNotIn('tb_order.sales_status_id', [-1,9])   // not index     
+  //       ->whereNotNull('picking_code')
+  //       ->whereIn('tb_order_detail.order_detail_status_id', [1])   
+  //       ->groupBy('order_id')
+  //       ->havingRaw('COUNT(order_detail_id) > ?', [0])        
+	// 		    ->select( DB::raw('tb_order.*,tb_customer.*,tb_sales_status.*'))
+  //       ->get();
+	// }
 
-  public static function select_all(){
-    return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-        ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
-        ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
-        ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-        ->join('users', 'tb_order.staff_id', '=', 'users.id')
-        ->get();
-	}
+  // public static function select_all(){
+  //   return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+  //       ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+  //       ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+  //       ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+  //       ->join('users', 'tb_order.staff_id', '=', 'users.id')
+  //       ->get();
+	// }
 
   // public static function select_count_by_current_month(){
   //   //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
