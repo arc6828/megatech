@@ -16,6 +16,7 @@ use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class QuotationController extends Controller
@@ -193,10 +194,17 @@ class QuotationController extends Controller
     public function show($id)
     {
         QuotationModel::findOrFail($id);
+        $table_quotation = QuotationModel::join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
+            ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'users.id', '=', 'tb_quotation.user_id')
+            ->where('tb_quotation.quotation_id', '=', $id)
+            ->orWhere('tb_quotation.quotation_code', '=', $id)
+            ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
+            ->get();
         $data = [
             //QUOTATION
             'quotation' => QuotationModel::findOrFail($id),
-            'table_quotation' => QuotationModel::select_by_id($id),
+            'table_quotation' => $table_quotation,
             'table_customer' => CustomerModel::select_all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
@@ -221,13 +229,25 @@ class QuotationController extends Controller
     {
         QuotationModel::findOrFail($id);
 
+        $table_quotation = QuotationModel::join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
+            ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'users.id', '=', 'tb_quotation.user_id')
+            ->where('tb_quotation.quotation_id', '=', $id)
+            ->orWhere('tb_quotation.quotation_code', '=', $id)
+            ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
+            ->get();
+
+        $table_quotation_detail = QuotationDetailModel::join('tb_product', 'tb_quotation_detail.product_id', '=', 'tb_product.product_id')
+            ->where('quotation_id', '=', $id)
+            ->get();
+
         $data = [
             //QUOTATION
-            'table_quotation' => QuotationModel::select_by_id($id),
-            'table_company' => Company::select_all(),
+            'table_quotation' => $table_quotation,
+            'table_company' => Company::all(),
             //QUOTATION Detail
-            'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
-            'total_text' => count(QuotationModel::select_by_id($id)) > 0 ? Functions::baht_text(QuotationModel::select_by_id($id)[0]->total) : "-",
+            'table_quotation_detail' => $table_quotation_detail,
+            'total_text' => count($table_quotation) > 0 ? Functions::baht_text($table_quotation[0]->total) : "-",
         ];
 
         $pdf = PDF::loadView('sales/quotation/show', $data);
@@ -244,10 +264,17 @@ class QuotationController extends Controller
      */
     public function edit($id)
     {
+        $table_quotation = QuotationModel::join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
+            ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'users.id', '=', 'tb_quotation.user_id')
+            ->where('tb_quotation.quotation_id', '=', $id)
+            ->orWhere('tb_quotation.quotation_code', '=', $id)
+            ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
+            ->get();
         $data = [
             //QUOTATION
             'quotation' => QuotationModel::findOrFail($id),
-            'table_quotation' => QuotationModel::select_by_id($id),
+            'table_quotation' => $table_quotation,
             'table_customer' => CustomerModel::select_all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),

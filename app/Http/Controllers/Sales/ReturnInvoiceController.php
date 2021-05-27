@@ -227,7 +227,7 @@ class ReturnInvoiceController extends Controller
         ]);
 
         //ROLLBACK Gaurd stock
-        $details = $returninvoice->details()->get();
+        $details = $returninvoice->return_invoice_details()->get();
         foreach ($details as $item) {
             $product = ProductModel::findOrFail($item->product_id);
             $gaurd_stock = GaurdStock::create([
