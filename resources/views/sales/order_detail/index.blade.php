@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <form action="{{ url('/') }}/sales/order_detail/approve" method="post" id="form_table"
+            <form action="{{ url('/') }}/sales/order_detail/approve" method="POST" id="form_table"
                 onsubmit="return validateCheckbox();">
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}

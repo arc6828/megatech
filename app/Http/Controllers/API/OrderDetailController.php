@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-use App\Sales\OrderDetailStatusModel;
 use App\Sales\OrderDetailModel;
+use Illuminate\Http\Request;
 
 class OrderDetailController extends Controller
 {
@@ -17,33 +15,33 @@ class OrderDetailController extends Controller
      */
     public function index(Request $request)
     {
-      $order_detail_status_id = $request->input("order_detail_status_id",3);
-      $m_date = $request->input("m_date","");
-      $date_begin =  $request->input("date_begin","");
-      $date_end = $request->input("date_end","");
-      //echo is_null($m_date);
-      $table_order_detail = [];
-      if($m_date !== "" && $m_date != null){
-        //echo "mdate";
-        //echo $m_date;
-        if($m_date === "all"){
-          $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
-        }else{
-          $table_order_detail = OrderDetailModel::select_search($order_detail_status_id,$m_date);
+        $order_detail_status_id = $request->input("order_detail_status_id", 3);
+        $m_date = $request->input("m_date", "");
+        $date_begin = $request->input("date_begin", "");
+        $date_end = $request->input("date_end", "");
+        //echo is_null($m_date);
+        $table_order_detail = [];
+        if ($m_date !== "" && $m_date != null) {
+            //echo "mdate";
+            //echo $m_date;
+            if ($m_date === "all") {
+                $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
+            } else {
+                $table_order_detail = OrderDetailModel::select_search($order_detail_status_id, $m_date);
+            }
+        } else if ($date_begin !== "" && $date_begin != null) {
+            //echo "begin";
+            $table_order_detail = OrderDetailModel::select_search($order_detail_status_id, $date_begin, $date_end);
         }
-      }else if($date_begin !== "" && $date_begin != null){
-        //echo "begin";
-        $table_order_detail = OrderDetailModel::select_search($order_detail_status_id,$date_begin,$date_end);
-      }
-      return response()->json($table_order_detail);
+        return response()->json($table_order_detail);
     }
 
     public function index2(Request $request)
     {
-      $order_detail_status_id = $request->input("order_detail_status_id",3);
-      $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
+        $order_detail_status_id = $request->input("order_detail_status_id", 3);
+        $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
 
-      return response()->json($table_order_detail);
+        return response()->json($table_order_detail);
     }
 
     /**
@@ -57,12 +55,13 @@ class OrderDetailController extends Controller
         //
     }
 
-    public function history_sell_price($customer_id, $product_id){
-      $order_detail = OrderDetailModel::join('tb_order','tb_order_detail.order_id','=','tb_order.order_id')
-        ->where('product_id',$product_id)
-        ->where('customer_id',$customer_id)
-        ->orderBy('datetime','desc')->first();
-      return response()->json($order_detail);
+    public function history_sell_price($customer_id, $product_id)
+    {
+        $order_detail = OrderDetailModel::join('tb_order', 'tb_order_detail.order_id', '=', 'tb_order.order_id')
+            ->where('product_id', $product_id)
+            ->where('customer_id', $customer_id)
+            ->orderBy('datetime', 'desc')->first();
+        return response()->json($order_detail);
     }
 
     /**
