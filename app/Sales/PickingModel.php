@@ -3,35 +3,35 @@
 namespace App\Sales;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class PickingModel extends Model
 {
     protected $table = 'tb_sales_picking';
     protected $primaryKey = 'sales_picking_id';
     protected $fillable = ['picking_code', 'sales_picking_id', 'datetime', 'remark'];
+}
 
-    public static function insert($input)
-    {
-        return DB::table('tb_sales_picking')->insertGetId($input);
-    }
+// public static function insert($input)
+// {
+//     return DB::table('tb_sales_picking')->insertGetId($input);
+// }
 
-    public static function update_by_id($input, $id)
-    {
-        DB::table('tb_sales_picking')
-            ->where('sales_picking_id', $id)
-            ->update($input);
-    }
+// public static function update_by_id($input, $id)
+// {
+//     DB::table('tb_sales_picking')
+//         ->where('sales_picking_id', $id)
+//         ->update($input);
+// }
 
-    public static function select_count_by_current_month()
-    {
-        //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
-        return DB::table('tb_sales_picking')
-            ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
-            ->count();
-    }
+// public static function select_count_by_current_month()
+// {
+//     //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
+//     return DB::table('tb_sales_picking')
+//         ->whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+//         ->count();
+// }
 
-    /*
+/*
 public static function select_all_by_user_id($user_id){
 return DB::table('tb_order')
 ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
@@ -105,5 +105,3 @@ DB::table('tb_order')
 ->delete();
 }
  */
-
-}

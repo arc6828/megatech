@@ -76,7 +76,8 @@ class OrderDetailController extends Controller
 
     public function getNewCode()
     {
-        $number = PickingModel::select_count_by_current_month();
+        $number = PickingModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+            ->count();
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
         $year = date("y");
