@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Sales\PickingDetail;
@@ -26,6 +28,7 @@ class PickingDetailController extends Controller
                 ->orWhere('before_approved_amount', 'LIKE', "%$keyword%")
                 ->orWhere('discount_price', 'LIKE', "%$keyword%")
                 ->orWhere('order_id', 'LIKE', "%$keyword%")
+                ->orWhere('order_code', 'LIKE', "%$keyword%")
                 ->orWhere('order_detail_status_id', 'LIKE', "%$keyword%")
                 ->orWhere('invoice_code', 'LIKE', "%$keyword%")
                 ->orWhere('danger_price', 'LIKE', "%$keyword%")
@@ -61,9 +64,9 @@ class PickingDetailController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $requestData = $request->all();
-
+        
         PickingDetail::create($requestData);
 
         return redirect('picking-detail')->with('flash_message', 'PickingDetail added!');
@@ -107,9 +110,9 @@ class PickingDetailController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        
         $requestData = $request->all();
-
+        
         $pickingdetail = PickingDetail::findOrFail($id);
         $pickingdetail->update($requestData);
 

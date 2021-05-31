@@ -358,4 +358,5 @@ Route::resource('company', 'CompanyController');
 Route::resource('numberun', 'NumberunController');
 Route::get('image/{filename}', 'HomeController@displayImage')->name('image.displayImage');
 
+
 Route::resource('picking-detail', 'Sales\PickingDetailController');

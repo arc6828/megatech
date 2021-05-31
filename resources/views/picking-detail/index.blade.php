@@ -31,14 +31,14 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th><th>Product Id</th><th>Amount</th><th>Approved Amount</th><th>Iv Amount</th><th>Before Approved Amount</th><th>Discount Price</th><th>Order Id</th><th>Order Detail Status Id</th><th>Invoice Code</th><th>Danger Price</th><th>Picking Code</th><th>Sale Status Id</th><th>Quotation Code</th><th>Delivery Duration</th><th>Sales Picking Detail Id</th><th>Actions</th>
+                                        <th>#</th><th>Product Id</th><th>Amount</th><th>Approved Amount</th><th>Iv Amount</th><th>Before Approved Amount</th><th>Discount Price</th><th>Order Id</th><th>Order Code</th><th>Order Detail Status Id</th><th>Invoice Code</th><th>Danger Price</th><th>Picking Code</th><th>Sale Status Id</th><th>Quotation Code</th><th>Delivery Duration</th><th>Sales Picking Detail Id</th><th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($pickingdetail as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->product_id }}</td><td>{{ $item->amount }}</td><td>{{ $item->approved_amount }}</td><td>{{ $item->iv_amount }}</td><td>{{ $item->before_approved_amount }}</td><td>{{ $item->discount_price }}</td><td>{{ $item->order_id }}</td><td>{{ $item->order_detail_status_id }}</td><td>{{ $item->invoice_code }}</td><td>{{ $item->danger_price }}</td><td>{{ $item->picking_code }}</td><td>{{ $item->sale_status_id }}</td><td>{{ $item->quotation_code }}</td><td>{{ $item->delivery_duration }}</td><td>{{ $item->sales_picking_detail_id }}</td>
+                                        <td>{{ $item->product_id }}</td><td>{{ $item->amount }}</td><td>{{ $item->approved_amount }}</td><td>{{ $item->iv_amount }}</td><td>{{ $item->before_approved_amount }}</td><td>{{ $item->discount_price }}</td><td>{{ $item->order_id }}</td><td>{{ $item->order_code }}</td><td>{{ $item->order_detail_status_id }}</td><td>{{ $item->invoice_code }}</td><td>{{ $item->danger_price }}</td><td>{{ $item->picking_code }}</td><td>{{ $item->sale_status_id }}</td><td>{{ $item->quotation_code }}</td><td>{{ $item->delivery_duration }}</td><td>{{ $item->sales_picking_detail_id }}</td>
                                         <td>
                                             <a href="{{ url('/picking-detail/' . $item->id) }}" title="View PickingDetail"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                             <a href="{{ url('/picking-detail/' . $item->id . '/edit') }}" title="Edit PickingDetail"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>

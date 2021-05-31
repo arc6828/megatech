@@ -29,6 +29,10 @@
       "type": "integer"
     },
     {
+      "name": "order_code",
+      "type": "string"
+    },
+    {
       "name": "order_detail_status_id",
       "type": "integer"
     },

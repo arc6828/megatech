@@ -216,7 +216,7 @@
                                 $sum = 0;
                                 $count = 0;
                                 $is_picking = false;
-                                foreach ($order->order_details as $p) {
+                                foreach ($order->pickings as $p) {
                                     if ($p->amount > 0) {
                                         $a[] = $p->order_detail_status_id;
                                         $sum += $p->order_detail_status_id;

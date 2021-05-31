@@ -42,17 +42,12 @@ class OrderModel extends Model
     {
         return $this->hasMany('App\Sales\OrderDetailModel', 'order_id');
     }
-    // public function details(){
-    //   return $this->hasMany('App\Sales\OrderDetail2Model','order_id');
-    // }
+
     public function invoices()
     {
         return $this->hasMany('App\Sales\InvoiceModel', 'internal_reference_id', 'order_code');
     }
-    // public function pickings()
-    // {
-    //     return $this->hasMany('App\Sales\OrderDetailModel', 'order_id');
-    // }
+
     public function pickings()
     {
         return $this->hasMany('App\Sales\PickingModel', 'order_code');
@@ -69,7 +64,12 @@ class OrderModel extends Model
     {
         return $this->belongsTo('App\CustomerModel', 'customer_id');
     }
-
+    // public function details(){
+    //   return $this->hasMany('App\Sales\OrderDetail2Model','order_id');
+    // }// public function pickings()
+    // {
+    //     return $this->hasMany('App\Sales\OrderDetailModel', 'order_id');
+    // }
     //ที่อนุมัติแล้ว แต่ยังไม่ได้เปิด invoice
     // public static function select_all_by_user_id($user_id){
     //   return self::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')

@@ -33,6 +33,11 @@
     <input class="form-control" name="order_id" type="number" id="order_id" value="{{ isset($pickingdetail->order_id) ? $pickingdetail->order_id : ''}}" >
     {!! $errors->first('order_id', '<p class="help-block">:message</p>') !!}
 </div>
+<div class="form-group {{ $errors->has('order_code') ? 'has-error' : ''}}">
+    <label for="order_code" class="control-label">{{ 'Order Code' }}</label>
+    <input class="form-control" name="order_code" type="text" id="order_code" value="{{ isset($pickingdetail->order_code) ? $pickingdetail->order_code : ''}}" >
+    {!! $errors->first('order_code', '<p class="help-block">:message</p>') !!}
+</div>
 <div class="form-group {{ $errors->has('order_detail_status_id') ? 'has-error' : ''}}">
     <label for="order_detail_status_id" class="control-label">{{ 'Order Detail Status Id' }}</label>
     <input class="form-control" name="order_detail_status_id" type="number" id="order_detail_status_id" value="{{ isset($pickingdetail->order_detail_status_id) ? $pickingdetail->order_detail_status_id : ''}}" >

@@ -12,9 +12,8 @@ class CreatePickingDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('picking_details', function (Blueprint $table) {
-            $table->increments('sales_picking_detail_id');
-            $table->timestamps();
+        Schema::create('tb_sales_picking_details', function (Blueprint $table) {
+
             $table->integer('product_id')->nullable();
             $table->integer('amount')->nullable();
             $table->integer('approved_amount')->nullable();
@@ -22,6 +21,7 @@ class CreatePickingDetailsTable extends Migration
             $table->integer('before_approved_amount')->nullable();
             $table->float('discount_price')->nullable();
             $table->integer('order_id')->nullable();
+            $table->string('order_code')->nullable();
             $table->integer('order_detail_status_id')->nullable();
             $table->string('invoice_code')->nullable();
             $table->integer('danger_price')->nullable();
@@ -29,6 +29,8 @@ class CreatePickingDetailsTable extends Migration
             $table->integer('sale_status_id')->nullable();
             $table->string('quotation_code')->nullable();
             $table->string('delivery_duration')->nullable();
+            $table->increments('sales_picking_detail_id');
+            $table->timestamps();
         });
     }
 

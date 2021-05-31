@@ -17,7 +17,7 @@ use App\Sales\InvoiceModel;
 // use App\Sales\OrderDetail2Model;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderModel;
-use App\Sales\PickingModel;
+use App\Sales\PickingDetail;
 use App\Sales\QuotationModel;
 use App\TaxTypeModel;
 use App\UserModel;
@@ -515,6 +515,7 @@ class OrderController extends Controller
             ];
             //4. Update status_id_detail
             OrderDetailModel::where('order_detail_id', $item->order_detail_id)->update($input_detail);
+            // PickingDetail::where('order_id')
 
             //5.Create Gurd Stock
 
@@ -533,21 +534,46 @@ class OrderController extends Controller
             $product->pending_in = $gaurd_stock['pending_in'];
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
+//create PickingDetail
+            $pickking_detail = PickingDetail::create([
+                "product_id" => $product->product_id,
+                "amount" => $item['amount'],
+                "before_approved_amount" => $item->amount,
+                "approved_amount" => 0,
+                "iv_amount" => 0,
+                "discount_price" => $order->discount_price,
+                "order_code" => $order->order_code,
+                "order_detail_status_id" => 3,
+            ]);
+            $pickking_detail->save();
         }
-        // copy order_detail
-        // $pickking = PickingModel::where('order_code', $order->order_code);
-        // print_r($pickking);
-        // exit();
 
-        // $pickking_detail =
-        // $pickking = PickingDetail::create([
-
-        // ])
         // store 2
 
         return redirect("sales/order/{$id}")->with('flash_message', 'popup');
 
     }
+    // public function duplicate($id)
+    // {
+    //     $order = OrderModel::findOrFail($id);
+    //     $order_details = $order->order_details()->get();
+
+    //     $picking = $order_details->replicate()->fill([
+    //         'order_code' => $order->order,
+    //         // 'datetime' => "",
+    //         // 'revision' => "0",
+    //         // 'sales_status_id' => "0",
+    //     ]);
+    //     $picking->save();
+
+    //     //Clone Detail
+    //     foreach ($order_details as $item) {
+    //         $new_item = $item->replicate()->fill([
+    //             'order_code' => $picking->order_code,
+    //         ]);
+    //         $new_item->save();
+    //     }
+    // }
 
     public function revision(Request $request, $id)
     {

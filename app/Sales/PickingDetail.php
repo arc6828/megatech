@@ -11,7 +11,7 @@ class PickingDetail extends Model
      *
      * @var string
      */
-    protected $table = 'picking_details';
+    protected $table = 'tb_sales_picking_details';
 
     /**
      * The database primary key value.
@@ -25,10 +25,16 @@ class PickingDetail extends Model
      *
      * @var array
      */
-    protected $fillable = ['product_id', 'amount', 'approved_amount', 'iv_amount', 'before_approved_amount', 'discount_price', 'order_id', 'order_detail_status_id', 'invoice_code', 'danger_price', 'picking_code', 'sale_status_id', 'quotation_code', 'delivery_duration', 'sales_picking_detail_id'];
-
-    public function picking()
+    protected $fillable = ['product_id', 'amount',
+        'approved_amount', 'iv_amount', 'before_approved_amount',
+        'discount_price', 'order_id', 'order_code', 'order_detail_status_id',
+        'invoice_code', 'danger_price', 'picking_code', 'sale_status_id', 'quotation_code',
+        'delivery_duration', 'sales_picking_detail_id',
+    ];
+    
+    public function pickings()
     {
-        return $this->belongsTo('App\Sales\PickingModel', 'picking_code');
+        return $this->hasMany('App\Sales\PickingModel', 'picking_code');
     }
+
 }
