@@ -49,6 +49,7 @@ Route::apiResource('/product', 'API\ProductController');
 Route::get('/order_detail/customer/{customer_id}/product/{product_id}', 'API\OrderDetailController@history_sell_price');
 Route::get('/order_detail/index2', 'API\OrderDetailController@index2');
 Route::apiResource('/order_detail', 'API\OrderDetailController');
+// Route::apiResource('/picking_detail', 'API\OrderDetailController');
 
 Route::prefix('purchase')->group(function () {
     Route::get('/requisition_detail/supplier/{supplier_id}', 'API\Purchase\RequisitionDetailController@index_by_supplier');

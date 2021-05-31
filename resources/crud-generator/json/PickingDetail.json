@@ -1,0 +1,64 @@
+{
+  "fields": [
+    {
+      "name": "product_id",
+      "type": "integer"
+    },
+    {
+      "name": "amount",
+      "type": "integer"
+    },
+    {
+      "name": "approved_amount",
+      "type": "integer"
+    },
+    {
+      "name": "iv_amount",
+      "type": "integer"
+    },
+    {
+      "name": "before_approved_amount",
+      "type": "integer"
+    },
+    {
+      "name": "discount_price",
+      "type": "float"
+    },
+    {
+      "name": "order_id",
+      "type": "integer"
+    },
+    {
+      "name": "order_detail_status_id",
+      "type": "integer"
+    },
+    {
+      "name": "invoice_code",
+      "type": "string"
+    },
+    {
+      "name": "danger_price",
+      "type": "integer"
+    },
+    {
+      "name": "picking_code",
+      "type": "string"
+    },
+    {
+      "name": "sale_status_id",
+      "type": "integer"
+    },
+    {
+      "name": "quotation_code",
+      "type": "string"
+    },
+    {
+      "name": "delivery_duration",
+      "type": "string"
+    },
+    {
+      "name": "sales_picking_detail_id",
+      "type": "integer"
+    }
+  ]
+}

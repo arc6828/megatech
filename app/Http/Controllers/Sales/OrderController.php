@@ -17,12 +17,14 @@ use App\Sales\InvoiceModel;
 // use App\Sales\OrderDetail2Model;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderModel;
+use App\Sales\PickingModel;
 use App\Sales\QuotationModel;
 use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use Storage;
 
@@ -73,7 +75,13 @@ class OrderController extends Controller
         $quotation_code = $request->input('quotation_code');
 
         if (!empty($quotation_code)) {
-            $tb_quotation = QuotationModel::select_by_id($quotation_code);
+            $tb_quotation = QuotationModel::join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
+                ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+                ->join('users', 'users.id', '=', 'tb_quotation.user_id')
+                ->where('tb_quotation.quotation_code', '=', $quotation_code)
+                ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
+                ->get();
+            // $tb_quotation = QuotationModel::select_by_id($quotation_code); // ยกเลิกการใช้งาน
             $customer_code = (count($tb_quotation) > 0) ? $tb_quotation[0]->customer_code : "";
         } else {
             $customer_code = "";
@@ -308,7 +316,7 @@ class OrderController extends Controller
     {
         //CREATE DICT OF CHANGABLE ITEMS
         $current_oe = OrderModel::findOrFail($id);
-        $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id', [4])->orderBy('order_detail_status_id', 'desc')->get();
+        $current_pickings = $current_oe->order_details()->whereIn('order_detail_status_id', [4])->orderBy('order_detail_status_id', 'desc')->get();
         $unchangable_items = [];
         for ($i = 0; $i < count($current_pickings); $i++) {
             if (isset($unchangable_items[$current_pickings[$i]->product->product_code])) {
@@ -375,7 +383,7 @@ class OrderController extends Controller
     {
         //CREATE DICT OF CHANGABLE ITEMS
         $current_oe = OrderModel::findOrFail($id);
-        $current_pickings = $current_oe->pickings()->whereIn('order_detail_status_id', [4])->orderBy('order_detail_status_id', 'desc')->get();
+        $current_pickings = $current_oe->order_details()->whereIn('order_detail_status_id', [4])->orderBy('order_detail_status_id', 'desc')->get();
         $unchangable_items = [];
         for ($i = 0; $i < count($current_pickings); $i++) {
             if (isset($unchangable_items[$current_pickings[$i]->product->product_code])) {
@@ -526,10 +534,21 @@ class OrderController extends Controller
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
         }
+        // copy order_detail
+        // $pickking = PickingModel::where('order_code', $order->order_code);
+        // print_r($pickking);
+        // exit();
+
+        // $pickking_detail =
+        // $pickking = PickingDetail::create([
+
+        // ])
+        // store 2
 
         return redirect("sales/order/{$id}")->with('flash_message', 'popup');
 
     }
+
     public function revision(Request $request, $id)
     {
         // $order_code = $this->getNewCode();

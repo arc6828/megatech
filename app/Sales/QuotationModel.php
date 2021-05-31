@@ -3,7 +3,6 @@
 namespace App\Sales;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class QuotationModel extends Model
 {
@@ -60,18 +59,18 @@ class QuotationModel extends Model
     // ->count();
     // }
 
-    public static function select_by_id($id)
-    {
-        return DB::table('tb_quotation')
-            ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
-            ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+    // public static function select_by_id($id)
+    // {
+    //     return DB::table('tb_quotation')
+    //         ->join('tb_customer', 'tb_quotation.customer_id', '=', 'tb_customer.customer_id')
+    //         ->join('tb_sales_status', 'tb_quotation.sales_status_id', '=', 'tb_sales_status.sales_status_id')
 
-            ->join('users', 'users.id', '=', 'tb_quotation.user_id')
-            ->where('tb_quotation.quotation_id', '=', $id)
-            ->orWhere('tb_quotation.quotation_code', '=', $id)
-            ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
-            ->get();
-    }
+    //         ->join('users', 'users.id', '=', 'tb_quotation.user_id')
+    //         // ->where('tb_quotation.quotation_id', '=', $id)
+    //         ->where('tb_quotation.quotation_code', '=', $id)
+    //         ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
+    //         ->get();
+    // }
 
     // public static function select_by_keyword($q){
     //   return DB::table('tb_quotation')
