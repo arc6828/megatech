@@ -106,55 +106,55 @@ class OrderDetailModel extends Model
     }
 
     //EXTENSION ABOUT ORDER
-    public static function select_search($order_detail_status_id, $date_begin, $date_end = "")
-    {
-        $tail = "";
-        if ($date_end === "") {
-            $date_end = $date_begin;
-            $tail = " + INTERVAL 1 MONTH";
-        }
-        //echo $order_detail_status_id;
-        //echo "s".$date_begin;
-        //echo "s".$date_end;
-        //echo $tail;
-        return DB::table('tb_order_detail')
-            ->join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
-            ->join('tb_order', 'tb_order.order_id', '=', 'tb_order_detail.order_id')
-            ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-            ->join('tb_order_detail_status', 'tb_order_detail.order_detail_status_id', '=', 'tb_order_detail_status.order_detail_status_id')
-            ->where("tb_order_detail.order_detail_status_id", "=", $order_detail_status_id)
-            ->where("tb_order_detail.amount", ">", 0)
-        //->whereBetween("datetime",">=",[$date_begin,$date_end])
-            ->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
-            ->select(DB::raw('*,DATE(datetime) as date'))
-            ->get();
-    }
+    // public static function select_search($order_detail_status_id, $date_begin, $date_end = "")
+    // {
+    //     $tail = "";
+    //     if ($date_end === "") {
+    //         $date_end = $date_begin;
+    //         $tail = " + INTERVAL 1 MONTH";
+    //     }
+    //     //echo $order_detail_status_id;
+    //     //echo "s".$date_begin;
+    //     //echo "s".$date_end;
+    //     //echo $tail;
+    //     return DB::table('tb_order_detail')
+    //         ->join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
+    //         ->join('tb_order', 'tb_order.order_id', '=', 'tb_order_detail.order_id')
+    //         ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+    //         ->join('tb_order_detail_status', 'tb_order_detail.order_detail_status_id', '=', 'tb_order_detail_status.order_detail_status_id')
+    //         ->where("tb_order_detail.order_detail_status_id", "=", $order_detail_status_id)
+    //         ->where("tb_order_detail.amount", ">", 0)
+    //     //->whereBetween("datetime",">=",[$date_begin,$date_end])
+    //         ->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+    //         ->select(DB::raw('*,DATE(datetime) as date'))
+    //         ->get();
+    // }
 
     //No Filter Date, but status_id
-    public static function select_search2($order_detail_status_id)
-    {
+    // public static function select_search2($order_detail_status_id)
+    // {
 
-        return DB::table('tb_order_detail')
-            ->join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
-            ->join('tb_order', 'tb_order.order_id', '=', 'tb_order_detail.order_id')
-            ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-            ->join('tb_order_detail_status', 'tb_order_detail.order_detail_status_id', '=', 'tb_order_detail_status.order_detail_status_id')
-            ->where("tb_order_detail.order_detail_status_id", "=", $order_detail_status_id)
-            ->where("tb_order_detail.amount", ">", 0)
-        //->whereBetween("datetime",">=",[$date_begin,$date_end])
-        //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
-            ->select(DB::raw('*,DATE(datetime) as date'))
-            ->get();
-    }
+    //     return DB::table('tb_order_detail')
+    //         ->join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
+    //         ->join('tb_order', 'tb_order.order_id', '=', 'tb_order_detail.order_id')
+    //         ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+    //         ->join('tb_order_detail_status', 'tb_order_detail.order_detail_status_id', '=', 'tb_order_detail_status.order_detail_status_id')
+    //         ->where("tb_order_detail.order_detail_status_id", "=", $order_detail_status_id)
+    //         ->where("tb_order_detail.amount", ">", 0)
+    //     //->whereBetween("datetime",">=",[$date_begin,$date_end])
+    //     //->whereRaw("datetime >= '{$date_begin}' AND datetime < '{$date_end}' {$tail}")
+    //         ->select(DB::raw('*,DATE(datetime) as date'))
+    //         ->get();
+    // }
 
-    public static function duplicate_by_id($new_amount, $id)
-    {
-        $sql = "INSERT INTO tb_order_detail ( product_id, amount, approved_amount, discount_price,  order_id, order_detail_status_id )
-      SELECT product_id,{$new_amount},{$new_amount},discount_price,order_id,order_detail_status_id
-      FROM tb_order_detail
-      WHERE order_detail_id = {$id}";
-        return DB::insert($sql);
-    }
+    // public static function duplicate_by_id($new_amount, $id)
+    // {
+    //     $sql = "INSERT INTO tb_order_detail ( product_id, amount, approved_amount, discount_price,  order_id, order_detail_status_id )
+    //   SELECT product_id,{$new_amount},{$new_amount},discount_price,order_id,order_detail_status_id
+    //   FROM tb_order_detail
+    //   WHERE order_detail_id = {$id}";
+    //     return DB::insert($sql);
+    // }
 
     public static function update_order_detail_status_id_by_ids($action, $ids)
     {

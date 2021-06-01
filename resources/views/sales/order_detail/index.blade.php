@@ -157,7 +157,7 @@
                                         {{ $row_order_detail_status->order_detail_status_name }}
                                     </option>
                                 @endif
-                                {{-- @break --}}
+
                             @endforeach
                         </select>
                         <button type="summit" id="form_summit_table" class="btn btn-success btn-sm">
@@ -259,20 +259,20 @@
 
                 var filter = JSON.parse('@json($filter)');
                 var filter_param = $.param(filter);
-                console.log("555", filter, filter.order_detail_status_id, filter_param, url);
-                var url = "{{ url('/') }}/api/order_detail?" + filter_param;
+                console.log("aaaa", filter, filter.sales_picking_detail_id, filter_param, url);
+                var url = "{{ url('/') }}/api/picking_detail?" + filter_param;
 
                 //AJAX
                 $.ajax({
-                    url: "{{ url('/') }}/api/order_detail?" + filter_param,
+                    url: "{{ url('/') }}/api/picking_detail?" + filter_param,
                     type: "GET",
                     dataType: "json",
                 }).done(function(result) {
-                    console.log(result);
+                    console.log("bbbb",result);
                     var dataSet = [];
                     result.forEach(function(element, index) {
                         console.log(element, index, element.picking_code);
-                        var id = element.order_detail_id;
+                        var id = element.sales_picking_detail_id;
                         var order_id = $("#order_id").val();
                         var company_name = element.company_name;
                         if (order_id === element.order_code) {
@@ -317,6 +317,7 @@
                             element.picking_code,
                             element.customer_code,
                         ];
+                        console.log("asdfsdf",row);
                         dataSet.push(row);
                     });
                     console.log(dataSet);

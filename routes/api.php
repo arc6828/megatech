@@ -71,6 +71,9 @@ Route::get('/bank_detail', 'BankDetailController@index');
 
 Route::apiResource('issue-stock', 'API\IssueStockController');
 
+Route::apiResource("picking",'Api\PickingController');
+// Route::get('/picking_detail/customer/{customer_id}/product/{product_id}', 'API\PickingDetailController@history_sell_price');
+Route::apiResource("picking_detail",'Api\PickingDetailController');
 // Route::get('/company', 'API\CompanyController@index');
 Route::get('/numberun', 'Api\NumberController@index');
 Route::get('/numberun/{id}', 'Api\NumberController@show');

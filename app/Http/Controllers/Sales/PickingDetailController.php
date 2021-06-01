@@ -42,7 +42,7 @@ class PickingDetailController extends Controller
             $pickingdetail = PickingDetail::latest()->paginate($perPage);
         }
 
-        return view('picking-detail.index', compact('pickingdetail'));
+        return view('sales/picking_detail/index', compact('pickingdetail'));
     }
 
     /**
@@ -72,6 +72,7 @@ class PickingDetailController extends Controller
         return redirect('picking-detail')->with('flash_message', 'PickingDetail added!');
     }
 
+    
     /**
      * Display the specified resource.
      *

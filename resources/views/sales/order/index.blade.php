@@ -65,13 +65,15 @@
                                             <span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
                                         @break
                                         @case(8)
+                                            <span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
+                                        @break
                                         @case(9)
                                             @php
                                                 $a = [];
                                                 $sum = 0;
                                                 $count = 0;
                                                 $is_picking = false;
-                                                foreach ($row->pickings as $p) {
+                                                foreach ($row->order_details as $p) {
                                                     if ($p->amount > 0) {
                                                         $a[] = $p->order_detail_status_id;
                                                         $sum += $p->order_detail_status_id;
@@ -99,14 +101,14 @@
                                             @endif
 
                                         @break
-                                    @case(-1)
-                                        <span class="badge badge-pill badge-secondary">Void</span>
-                                    @break
-                                    @default
-                                        <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
-                                    @break
-                                    {{-- $row->sales_status_name --}}
-                                @endswitch
+                                        @case(-1)
+                                            <span class="badge badge-pill badge-secondary">Void</span>
+                                        @break
+                                        @default
+                                            <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
+                                @break
+                                {{-- $row->sales_status_name --}}
+                            @endswitch
 
                             </td>
                             <td class="text-left  d-none">
@@ -126,83 +128,82 @@
 
                             </td>
                             <td class="d-none">
-                                <a href="javascript:void(0)" onclick="onDelete( {{ $row->order_id }} )"
-                                    class="text-danger">
+                                <a href="javascript:void(0)" onclick="onDelete( {{ $row->order_id }} )" class="text-danger">
                                     <span class="fa fa-trash"></span>
                                 </a>
                             </td>
-                        </tr>
-                    @endforeach
-                </tbody>
+                            </tr>
+                            @endforeach
+                        </tbody>
 
-            </table>
+                    </table>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a class="btn btn-outline-success " href="{{ url('/') }}/sales"><i class="fa fa-arrow-left"
+                            aria-hidden="true"></i> back</a>
+                    <a href="{{ url('/') }}/sales/order/create" class="btn btn-success">
+                        <i class="fa fa-plus"></i> เพิ่มใบจอง
+                    </a>
+
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function(event) {
+                        $('#table').DataTable({
+                            "paging": false,
+                            "info": false,
+                        }).order([0, 'desc']).draw();
+                        //DATA TABLE SCROLL
+                        var tableCont = document.querySelector('#table');
+                        tableCont.style.cssText = "margin-top : -1px !important; width:100%;";
+                        tableCont.parentNode.style.overflow = 'auto';
+                        tableCont.parentNode.style.maxHeight = '400px';
+                        tableCont.parentNode.addEventListener('scroll', function(e) {
+                            var scrollTop = this.scrollTop;
+                            this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) ' +
+                                'translateZ(' + 1000 + 'px)';
+                            this.querySelector('thead').style.background = "white";
+                            this.querySelector('thead').style.zIndex = "3000";
+                            //this.querySelector('thead').style.marginBottom = "200px";
+                            console.log(scrollTop);
+                        })
+                        //tableCont.parentNode.dispatchEvent(new Event('scroll'));
+                        //END DATA TABLE SCROLL
+                    });
+
+                </script>
+
+            </div>
         </div>
 
-        <div class="text-center mt-4">
-            <a class="btn btn-outline-success " href="{{ url('/') }}/sales"><i class="fa fa-arrow-left"
-                    aria-hidden="true"></i> back</a>
-            <a href="{{ url('/') }}/sales/order/create" class="btn btn-success">
-                <i class="fa fa-plus"></i> เพิ่มใบจอง
-            </a>
+        <div id="outer-form-container" style="display:none;">
+            <form action="#" method="POST" id="form_delete">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <button type="submit">Delete</button>
+            </form>
+            <script>
+                function onEdit() {
+                    console.log("edit", $('#myModal'));
+                    $('#myModal').on('show');
+                }
 
+                function onDelete(id) {
+                    //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+                    //GET FORM BY ID
+                    var form = document.getElementById("form_delete");
+                    //CHANGE ACTION TO SPECIFY ID
+                    form.action = "{{ url('/') }}/sales/order/" + id;
+                    //SUBMIT
+                    var want_to_delete = confirm('Are you sure to delete this order ?');
+                    if (want_to_delete) {
+                        form.submit();
+                    }
+                }
+
+            </script>
         </div>
-        <script>
-            document.addEventListener("DOMContentLoaded", function(event) {
-                $('#table').DataTable({
-                    "paging": false,
-                    "info": false,
-                }).order([0, 'desc']).draw();
-                //DATA TABLE SCROLL
-                var tableCont = document.querySelector('#table');
-                tableCont.style.cssText = "margin-top : -1px !important; width:100%;";
-                tableCont.parentNode.style.overflow = 'auto';
-                tableCont.parentNode.style.maxHeight = '400px';
-                tableCont.parentNode.addEventListener('scroll', function(e) {
-                    var scrollTop = this.scrollTop;
-                    this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) ' +
-                        'translateZ(' + 1000 + 'px)';
-                    this.querySelector('thead').style.background = "white";
-                    this.querySelector('thead').style.zIndex = "3000";
-                    //this.querySelector('thead').style.marginBottom = "200px";
-                    console.log(scrollTop);
-                })
-                //tableCont.parentNode.dispatchEvent(new Event('scroll'));
-                //END DATA TABLE SCROLL
-            });
-
-        </script>
-
-    </div>
-</div>
-
-<div id="outer-form-container" style="display:none;">
-    <form action="#" method="POST" id="form_delete">
-        {{ csrf_field() }}
-        {{ method_field('DELETE') }}
-        <button type="submit">Delete</button>
-    </form>
-    <script>
-        function onEdit() {
-            console.log("edit", $('#myModal'));
-            $('#myModal').on('show');
-        }
-
-        function onDelete(id) {
-            //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-            //GET FORM BY ID
-            var form = document.getElementById("form_delete");
-            //CHANGE ACTION TO SPECIFY ID
-            form.action = "{{ url('/') }}/sales/order/" + id;
-            //SUBMIT
-            var want_to_delete = confirm('Are you sure to delete this order ?');
-            if (want_to_delete) {
-                form.submit();
-            }
-        }
-
-    </script>
-</div>
 
 
-@endsection
+    @endsection

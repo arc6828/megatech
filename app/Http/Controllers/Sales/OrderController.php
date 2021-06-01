@@ -39,15 +39,11 @@ class OrderController extends Controller
     {
 
         $select_all = OrderModel::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-        // ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
-        // ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
             ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
             ->join('users', 'tb_order.staff_id', '=', 'users.id')
             ->get();
 
         $select_all_user_id = OrderModel::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-        // ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
-        // ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
             ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
             ->join('users', 'tb_order.staff_id', '=', 'users.id')
             ->where('tb_order.user_id', '=', Auth::user()->id)
@@ -541,8 +537,9 @@ class OrderController extends Controller
                 "before_approved_amount" => $item->amount,
                 "approved_amount" => 0,
                 "iv_amount" => 0,
-                "discount_price" => $order->discount_price,
+                "discount_price" => $item->discount_price,
                 "order_code" => $order->order_code,
+                "order_id" => $item->order_id,
                 "order_detail_status_id" => 3,
             ]);
             $pickking_detail->save();

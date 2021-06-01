@@ -216,7 +216,7 @@
                                 $sum = 0;
                                 $count = 0;
                                 $is_picking = false;
-                                foreach ($order->pickings as $p) {
+                                foreach ($order->order_details as $p) {
                                     if ($p->amount > 0) {
                                         $a[] = $p->order_detail_status_id;
                                         $sum += $p->order_detail_status_id;
@@ -270,6 +270,7 @@
                             @case(8)
                                 <span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
                             @break
+                            
                             @case(-1)
                                 <span class="badge badge-pill badge-secondary">Void</span>
                             @break

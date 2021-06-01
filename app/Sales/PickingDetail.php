@@ -31,7 +31,15 @@ class PickingDetail extends Model
         'invoice_code', 'danger_price', 'picking_code', 'sale_status_id', 'quotation_code',
         'delivery_duration', 'sales_picking_detail_id',
     ];
-    
+
+    public function product()
+    {
+        return $this->belongsTo('App\ProductModel', 'product_id');
+    }
+    public function order()
+    {
+        return $this->belongsTo('App\Sales\OrderModel', 'order_id');
+    }
     public function pickings()
     {
         return $this->hasMany('App\Sales\PickingModel', 'picking_code');
