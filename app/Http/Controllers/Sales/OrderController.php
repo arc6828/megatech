@@ -500,9 +500,9 @@ class OrderController extends Controller
             ->update($input);
 
         //3.ดึงข้อมูลจาก order_detail
-        $order_details = OrderDetailModel::where('order_id', $id)->get();
+        $order_detail = OrderDetailModel::where('order_id', $id)->get();
 
-        foreach ($order_details as $item) {
+        foreach ($order_detail as $item) {
             $input_detail = [
                 "before_approved_amount" => $item->amount,
                 "approved_amount" => 0,
@@ -540,6 +540,7 @@ class OrderController extends Controller
                 "discount_price" => $item->discount_price,
                 "order_code" => $order->order_code,
                 "order_id" => $item->order_id,
+                "order_detail_id" => $item->order_detail_id,
                 "order_detail_status_id" => 3,
             ]);
             $pickking_detail->save();

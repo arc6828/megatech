@@ -57,28 +57,29 @@ class OrderDetailController extends Controller
                 //incrementapproved_amount (update picking_detail)
                 PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->first()->increment('approved_amount', $approve_amounts[$i]);
 
-                //คิวรี่ picking_detail first
-
                 // picking_detail ดึง order_detail
-                // decrement before_approved_amount (update order_detail)
-                // OrderDetailModel::where('order_detail_id', $order_detail_ids[$i])->first()->decrement('before_approved_amount', $approve_amounts[$i]);
-                // incrementapproved_amount (update order_detail)
-                // OrderDetailModel::where('order_detail_id', $order_detail_ids[$i])->first()->increment('approved_amount', $approve_amounts[$i]);
-                // where order_detail_id
+                $picking_detail = PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->first();
+                $order_detail = OrderDetailModel::where('order_detail_id', $picking_detail->order_detail_id)->first();
 
+                //decrement before_approved_amount (update order_detail)
+                OrderDetailModel::where('order_detail_id', $order_detail->order_detail_id)->first()->decrement('before_approved_amount', $approve_amounts[$i]);
+                //incrementapproved_amount (update order_detail)
+                OrderDetailModel::where('order_detail_id', $order_detail->order_detail_id)->first()->increment('approved_amount', $approve_amounts[$i]);
+                
                 if ($approve_amounts[$i] < $amounts[$i]) {
-                    // foreach ($picking_detail as $item) {
                     //insert picking_code / order_detail_status_id = อนุมัติ (1)
                     $input_detail = [
                         "picking_code" => $picking->picking_code,
                         "order_detail_status_id" => $action,
                     ];
+
                     //Update picking_detail / order_detail
                     PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->update($input_detail);
 
                     // one to many where order_detail_id && order_detail_status_id
-                    OrderDetailModel::where('order_detail_status_id', 3)->update($input_detail);
-                    // }
+                    OrderDetailModel::where('order_detail_id', $picking_detail->order_detail_id)
+                        ->where('order_detail_status_id', 3)
+                        ->update($input_detail);
 
                     //create unsaved copy รออนุมัติ ครั้งต่อไป
                     $picking_detail = PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->first();
@@ -90,7 +91,6 @@ class OrderDetailController extends Controller
                     $new_picking_detail->save(); //save
 
                 } else if ($approve_amounts[$i] == $amounts[$i]) {
-                    // foreach ($picking_detail as $item) {
                     //insert picking_code / order_detail_status_id = อนุมัติ (1)
                     $input_detail = [
                         "picking_code" => $picking->picking_code,
@@ -99,7 +99,7 @@ class OrderDetailController extends Controller
                     //Update picking_detail / order_detail
                     PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->update($input_detail);
                     OrderDetailModel::where('order_detail_status_id', 3)->update($input_detail);
-                    // }
+
                 }
             }
 

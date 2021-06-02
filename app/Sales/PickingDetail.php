@@ -29,7 +29,7 @@ class PickingDetail extends Model
         'approved_amount', 'iv_amount', 'before_approved_amount',
         'discount_price', 'order_id', 'order_code', 'order_detail_status_id',
         'invoice_code', 'danger_price', 'picking_code', 'sale_status_id', 'quotation_code',
-        'delivery_duration', 'sales_picking_detail_id',
+        'delivery_duration', 'sales_picking_detail_id', 'order_detail_id',
     ];
 
     public function product()
