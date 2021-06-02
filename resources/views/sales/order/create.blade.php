@@ -28,7 +28,7 @@
 </div>
 
 
-<form class="main-form" action="{{ url('/') }}/sales/order" method="POST" onsubmit="return confirm('Do you confirm to save?')" enctype="multipart/form-data">
+<form class="main-form" action="{{ url('/') }}/sales/order" method="POST" onsubmit="return confirm('สร้าง OE ใช่หรือไม่')" enctype="multipart/form-data">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/order/form')
@@ -60,7 +60,7 @@
     document.querySelector("#tax_type_id").value = "";
     document.querySelector("#delivery_time").value = "";
     document.querySelector("#department_id").value = "{{ Auth::user()->role }}";
-    document.querySelector("#sales_status_id").value = "7";
+    document.querySelector("#sales_status_id").value = "6";
     document.querySelector("#user_id").value = "{{ Auth::id() }}";
     document.querySelector("#zone_id").value = "";
     document.querySelector("#total").value = "";

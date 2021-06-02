@@ -48,7 +48,7 @@
                 @if ($row->sales_status_id == 0)
                     <!-- แก้ไข ข้อมูลตอนยังไม่ได้อัพเดท สถานะ ส่งใบเสนอราคา -->
                     <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/update" method="POST"
-                        onsubmit="return confirm('Do you confirm to save?')">>
+                        onsubmit="return confirm('Do you confirm to save?')">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         @include('sales/quotation/form')
@@ -77,7 +77,22 @@
                             </div>
                         @endif
                     </form>
-                @elseif($row->sales_status_id == -1)
+                @elseif($row->sales_status_id == 5)
+                    <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/revision" method="POST"
+                        onsubmit="return confirm('Do you confirm to save?')">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+                        @include('sales/quotation/form')
+                        @if ($mode == 'edit')
+                            <div class="text-center mt-4">
+                                <a href="{{ url('/') }}/sales/quotation" class="btn btn-outline-success"
+                                    style="width:150px;">back</a>
+                                <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
+                                    Save </button>
+                            </div>
+                        @endif
+                    </form>
+                @elseif($row->sales_status_id == -1 )
                     <form class="" action="{{ url('/') }}/sales/quotation" id="form" method="POST"
                         onsubmit="return confirm('Do you confirm to save?')">
                         {{ csrf_field() }}
@@ -93,7 +108,7 @@
                     </form>
 
                 @endif
-
+               
                 <script>
                     document.addEventListener("DOMContentLoaded", function(event) {
                         $(".btn-print").attr("href", "{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}");

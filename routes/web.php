@@ -74,8 +74,17 @@ Route::middleware(['auth', 'role:sales,purchase,admin'])->group(function () {
 
             Route::get('/order/{id}/pdf', 'Sales\OrderController@pdf');
             Route::resource('/order', 'Sales\OrderController');
+            
+            Route::put('/order/{id}/update', 'Sales\OrderController@update');
+            Route::put('/order/{id}/approve', 'Sales\OrderController@approve');
+            Route::put('/order/{id}/revision', 'Sales\OrderController@revision');
+
             Route::get('/order_detail', 'Sales\OrderDetailController@index');
             Route::put('/order_detail/approve', 'Sales\OrderDetailController@approve');
+
+            Route::get('/picking_detail', 'Sales\PickingDetailController@index');
+            Route::put('/picking_detail/approve', 'Sales\PickingDetailController@approve');
+
 
             Route::get('/invoice/{id}/pdf', 'Sales\InvoiceController@pdf');
             Route::patch('/invoice/{id}/cancel', 'Sales\InvoiceController@cancel');
@@ -352,3 +361,6 @@ Route::resource('product-detail', 'ProductDetailController');
 Route::resource('company', 'CompanyController');
 Route::resource('numberun', 'NumberunController');
 Route::get('image/{filename}', 'HomeController@displayImage')->name('image.displayImage');
+
+
+// Route::resource('picking-detail', 'Sales\PickingDetailController');
