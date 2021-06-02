@@ -34,50 +34,91 @@ class OrderDetailController extends Controller
     public function approve(Request $request)
     {
         //ดึงข้อมูล picking_detail จาก frontend
-        $order_detail_ids = $request->input('order_detail_ids');
+        $picking_detail_ids = $request->input('order_detail_ids');
+        $selected_order_detail_ids = $request->input('selected_order_detail_ids');
         $approve_amounts = $request->input('approve_amounts');
+        $amounts = $request->input('amounts');
         $action = $request->input('action', "1");
-
-        //ดึงข้อมูลจาก picking_detail
-        $picking_detail = PickingDetail::where('sales_picking_detail_id', $order_detail_ids)->first();
-        $order_id = $picking_detail->order_id;
 
         //Gen code picking_code / create picking
         if ($action == 1) {
             $picking = PickingModel::create([
                 'picking_code' => $this->getNewCode(),
-                'order_code' => $picking_detail->order_code,
+                // 'order_code' => $picking_detail->order_code,
                 "remark" => $request->input('remark', ""),
             ]);
         }
 
-        //decrement before_approved_amount (update)
-        PickingDetail::where('before_approved_amount', $picking_detail->before_approved_amount)->first()->decrement('before_approved_amount', $approve_amounts[0]);
-        //incrementapproved_amount (update)
-        PickingDetail::where('approved_amount', $picking_detail->approved_amount)->first()->increment('approved_amount', $approve_amounts[0]);
+        for ($i = 0; $i < count($picking_detail_ids); $i++) {
 
-        foreach ($picking_detail as $item) {
-            //insert picking_code / order_detail_status_id = อนุมัติ (1)
-            $input_detail = [
-                "picking_code" => $picking->picking_code,
-                "order_detail_status_id" => $action,
-            ];
+            if (in_array($picking_detail_ids[$i], $selected_order_detail_ids)) {
+                //decrement before_approved_amount (update picking_detail)
+                PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->first()->decrement('before_approved_amount', $approve_amounts[$i]);
+                //incrementapproved_amount (update picking_detail)
+                PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->first()->increment('approved_amount', $approve_amounts[$i]);
 
-            //Update picking_detail / order_detail
-            PickingDetail::where('sales_picking_detail_id', $order_detail_ids)->update($input_detail);
-            OrderDetailModel::where('order_detail_status_id', 3)->update($input_detail);
+                //คิวรี่ picking_detail first
+
+                // picking_detail ดึง order_detail
+                // decrement before_approved_amount (update order_detail)
+                // OrderDetailModel::where('order_detail_id', $order_detail_ids[$i])->first()->decrement('before_approved_amount', $approve_amounts[$i]);
+                // incrementapproved_amount (update order_detail)
+                // OrderDetailModel::where('order_detail_id', $order_detail_ids[$i])->first()->increment('approved_amount', $approve_amounts[$i]);
+                // where order_detail_id
+
+                if ($approve_amounts[$i] < $amounts[$i]) {
+                    // foreach ($picking_detail as $item) {
+                    //insert picking_code / order_detail_status_id = อนุมัติ (1)
+                    $input_detail = [
+                        "picking_code" => $picking->picking_code,
+                        "order_detail_status_id" => $action,
+                    ];
+                    //Update picking_detail / order_detail
+                    PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->update($input_detail);
+
+                    // one to many where order_detail_id && order_detail_status_id
+                    OrderDetailModel::where('order_detail_status_id', 3)->update($input_detail);
+                    // }
+
+                    //create unsaved copy รออนุมัติ ครั้งต่อไป
+                    $picking_detail = PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->first();
+
+                    $new_picking_detail = $picking_detail->replicate()->fill([ // copy picking detail
+                        'order_detail_status_id' => 3, // รออนุมัติ
+                    ]);
+
+                    $new_picking_detail->save(); //save
+
+                } else if ($approve_amounts[$i] == $amounts[$i]) {
+                    // foreach ($picking_detail as $item) {
+                    //insert picking_code / order_detail_status_id = อนุมัติ (1)
+                    $input_detail = [
+                        "picking_code" => $picking->picking_code,
+                        "order_detail_status_id" => $action,
+                    ];
+                    //Update picking_detail / order_detail
+                    PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->update($input_detail);
+                    OrderDetailModel::where('order_detail_status_id', 3)->update($input_detail);
+                    // }
+                }
+            }
+
+            //ดึงข้อมูลจาก picking_detail
+            $picking_detail = PickingDetail::where('sales_picking_detail_id', $picking_detail_ids[$i])->first();
+            $order_id = $picking_detail->order_id;
+
+            //CHANGE STATUS ORDER  Update  order sales_status = 8
+            $count = PickingDetail::where('order_detail_status_id', 3) // รออนุมัติ
+                ->where('order_id', $order_id)
+                ->count();
+
+            if ($count == 0) {
+                //NO ONE LEFT : 8 => อนุมัติครบ
+                OrderModel::where('order_id', $order_id)->update(["sales_status_id" => 8]);
+            }
 
         }
 
-        //CHANGE STATUS ORDER  Update  order sales_status = 8
-        $count = PickingDetail::where('order_detail_status_id', 3)
-            ->where('order_id', $order_id)
-            ->count();
-
-        if ($count == 0) {
-            //NO ONE LEFT : 8 => อนุมัติครบ
-            OrderModel::where('order_id', $order_id)->update(["sales_status_id" => 8]);
-        }
         return redirect()->back();
     }
 

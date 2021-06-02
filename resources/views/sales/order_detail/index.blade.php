@@ -300,10 +300,10 @@
 
                             filter.order_detail_status_id == "3" ?
                             " <input type='number' name='approve_amounts[]' value='0' class='d-inline approve_amount " +
-                            amount_class + "' max='" + element.amount + "' data-limit='" +
+                            amount_class + "' max='" + element.before_approved_amount + "' data-limit='" +
                             element.amount + "' data-quantity='" + element.quantity +
                             "' style='max-width:50px;'  required> / <div class='d-inline-block' style='width:40px;'>" +
-                            element.amount + "</div>" :
+                            element.before_approved_amount + "</div>" :
                             " <input type='number' name='approve_amounts[]' value='" + element
                             .amount + "' class='d-inline approve_amount " + amount_class +
                             "' data-limit='" + element.amount + "' data-quantity='" + element
