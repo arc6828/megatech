@@ -328,9 +328,20 @@ class OrderController extends Controller
         // $customer_id = $current_oe->customer_id;
         // $dts = DeliveryTemporaryModel::where('customer_id',$customer_id)->get();
 
+        $table_order = OrderModel::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+            ->join('users', 'users.id', '=', 'tb_order.staff_id')
+            ->where('tb_order.order_id', '=', $id)
+            ->orWhere('tb_order.order_code', '=', $id)
+            ->select(DB::raw('users.*,tb_customer.*, tb_order.*'))
+            ->get();
+
+        $table_order_detail = OrderDetailModel::join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
+            ->where('order_id', '=', $id)
+            ->get();
+
         $data = [
             //QUOTATION
-            'table_order' => OrderModel::select_by_id($id),
+            'table_order' => $table_order,
             'order' => OrderModel::findOrFail($id),
             'unchangable_items' => $unchangable_items,
             'table_customer' => CustomerModel::select_all(),
@@ -343,7 +354,7 @@ class OrderController extends Controller
             'table_zone' => ZoneModel::select_all(),
             'order_id' => $id,
             //QUOTATION Detail
-            'table_order_detail' => OrderDetailModel::select_by_order_id($id),
+            'table_order_detail' => $table_order_detail,
             'table_product' => ProductModel::select_all(),
             'mode' => 'show',
         ];
@@ -352,15 +363,25 @@ class OrderController extends Controller
 
     public function pdf($id)
     {
+        $table_order = OrderModel::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+            ->join('users', 'users.id', '=', 'tb_order.staff_id')
+            ->where('tb_order.order_id', '=', $id)
+            ->orWhere('tb_order.order_code', '=', $id)
+            ->select(DB::raw('users.*,tb_customer.*, tb_order.*'))
+            ->get();
+
+        $table_order_detail = OrderDetailModel::join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
+            ->where('order_id', '=', $id)
+            ->get();
 
         $data = [
             //QUOTATION
-            'table_order' => OrderModel::select_by_id($id),
+            'table_order' => $table_order,
             'order' => OrderModel::findOrFail($id),
-            'table_company' => Company::select_all(),
+            'table_company' => Company::all(),
             //QUOTATION Detail
-            'table_order_detail' => OrderDetailModel::select_by_order_id($id),
-            'total_text' => count(OrderModel::select_by_id($id)) > 0 ? Functions::baht_text(OrderModel::select_by_id($id)[0]->total) : "-",
+            'table_order_detail' => $table_order_detail,
+            'total_text' => count($table_order) > 0 ? Functions::baht_text($table_order[0]->total) : "-",
         ];
         //return view('sales/order/edit',$data);
 
@@ -389,10 +410,18 @@ class OrderController extends Controller
             }
 
         }
-
+        $table_order = OrderModel::join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+            ->join('users', 'users.id', '=', 'tb_order.staff_id')
+            ->where('tb_order.order_id', '=', $id)
+            ->orWhere('tb_order.order_code', '=', $id)
+            ->select(DB::raw('users.*,tb_customer.*, tb_order.*'))
+            ->get();
+        $table_order_detail = OrderDetailModel::join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
+            ->where('order_id', '=', $id)
+            ->get();
         $data = [
             //QUOTATION
-            'table_order' => OrderModel::select_by_id($id),
+            'table_order' => $table_order,
             'order' => $current_oe,
             'unchangable_items' => $unchangable_items,
             'table_customer' => CustomerModel::get(),
@@ -404,7 +433,7 @@ class OrderController extends Controller
             'table_zone' => ZoneModel::select_all(),
             'order_id' => $id,
             //QUOTATION Detail
-            'table_order_detail' => OrderDetailModel::select_by_order_id($id),
+            'table_order_detail' => $table_order_detail,
             'table_product' => ProductModel::select_all(),
             'mode' => 'edit',
         ];

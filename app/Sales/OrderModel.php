@@ -105,39 +105,39 @@ class OrderModel extends Model
     //       ->count();
     // }
 
-    public static function select_count_by_current_month_custom($date)
-    {
-        //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
-        return DB::table('tb_order')
-            ->whereRaw("month(datetime) = month('" . $date . "') and year(datetime) = year('" . $date . "')", [])
-            ->where('sales_status_id', '!=', '-1')
-            ->count();
-    }
+    // public static function select_count_by_current_month_custom($date)
+    // {
+    //     //SELECT count(*) FROM `tb_order` WHERE month(datetime) = month(now()) and year(datetime) = year(now())
+    //     return DB::table('tb_order')
+    //         ->whereRaw("month(datetime) = month('" . $date . "') and year(datetime) = year('" . $date . "')", [])
+    //         ->where('sales_status_id', '!=', '-1')
+    //         ->count();
+    // }
 
-    public static function select_by_id($id)
-    {
-        return DB::table('tb_order')
-            ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-            ->join('users', 'users.id', '=', 'tb_order.staff_id')
-            ->where('tb_order.order_id', '=', $id)
-            ->orWhere('tb_order.order_code', '=', $id)
-            ->select(DB::raw('users.*,tb_customer.*, tb_order.*'))
-            ->get();
-    }
+    // public static function select_by_id($id)
+    // {
+    //     return DB::table('tb_order')
+    //         ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+    //         ->join('users', 'users.id', '=', 'tb_order.staff_id')
+    //         ->where('tb_order.order_id', '=', $id)
+    //         ->orWhere('tb_order.order_code', '=', $id)
+    //         ->select(DB::raw('users.*,tb_customer.*, tb_order.*'))
+    //         ->get();
+    // }
 
-    public static function select_by_keyword($q)
-    {
-        return DB::table('tb_order')
-            ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
-            ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
-            ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
-            ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
-            ->join('users', 'tb_order.user_id', '=', 'users.id')
-            ->select(DB::raw(
-                'tb_order.*, tb_customer.contact_name'
-            ))
-            ->get();
-    }
+    // public static function select_by_keyword($q)
+    // {
+    //     return DB::table('tb_order')
+    //         ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
+    //         ->join('tb_delivery_type', 'tb_order.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+    //         ->join('tb_tax_type', 'tb_order.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+    //         ->join('tb_sales_status', 'tb_order.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+    //         ->join('users', 'tb_order.user_id', '=', 'users.id')
+    //         ->select(DB::raw(
+    //             'tb_order.*, tb_customer.contact_name'
+    //         ))
+    //         ->get();
+    // }
 
     public static function select_by_po($customer_id, $external_reference_id)
     {
@@ -148,25 +148,25 @@ class OrderModel extends Model
             ->get();
     }
 
-    public static function insert($input)
-    {
-        return DB::table('tb_order')->insertGetId($input);
-    }
+    // public static function insert($input)
+    // {
+    //     return DB::table('tb_order')->insertGetId($input);
+    // }
 
-    public static function update_by_id($input, $id)
-    {
-        DB::table('tb_order')
-            ->where('order_id', $id)
-            ->orWhere('order_code', $id)
-            ->update($input);
-    }
+    // public static function update_by_id($input, $id)
+    // {
+    //     DB::table('tb_order')
+    //         ->where('order_id', $id)
+    //         ->orWhere('order_code', $id)
+    //         ->update($input);
+    // }
 
-    public static function delete_by_id($id)
-    {
-        DB::table('tb_order')
-            ->where('order_id', '=', $id)
-            ->orWhere('order_code', $id)
-            ->delete();
-    }
+    // public static function delete_by_id($id)
+    // {
+    //     DB::table('tb_order')
+    //         ->where('order_id', '=', $id)
+    //         ->orWhere('order_code', $id)
+    //         ->delete();
+    // }
 
 }

@@ -20,6 +20,7 @@ use App\UserModel;
 use App\ZoneModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class InvoiceController extends Controller
@@ -32,14 +33,28 @@ class InvoiceController extends Controller
     public function index(Request $request)
     {
         //$table_invoice = InvoiceModel::select_by_keyword($q);
+        $select_all = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+            ->join('tb_delivery_type', 'tb_invoice.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+            ->join('tb_tax_type', 'tb_invoice.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+            ->join('tb_sales_status', 'tb_invoice.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'tb_invoice.staff_id', '=', 'users.id')
+            ->get();
+
+        $select_all_by_user_id = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+            ->join('tb_delivery_type', 'tb_invoice.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+            ->join('tb_tax_type', 'tb_invoice.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+            ->join('tb_sales_status', 'tb_invoice.sales_status_id', '=', 'tb_sales_status.sales_status_id')
+            ->join('users', 'tb_invoice.staff_id', '=', 'users.id')
+            ->where('tb_invoice.user_id', '=', Auth::user()->id)
+            ->get();
+
         $table_invoice = (Auth::user()->role === "admin") ?
-        InvoiceModel::select_all() :
-        InvoiceModel::select_all_by_user_id(Auth::id());
+        $select_all : $select_all_by_user_id; //if
 
         $data = [
             //QUOTATION
             'table_invoice' => $table_invoice,
-            'q' => $request->input('q'),
+            'q' => $request->input('q'), //รับค่า order_code จาก index
         ];
         return view('sales/invoice/index', $data);
     }
@@ -177,7 +192,8 @@ class InvoiceController extends Controller
 
     public function getNewCode()
     {
-        $number = InvoiceModel::select_count_by_current_month();
+        $number = InvoiceModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+            ->count();
         $run_number = Numberun::where('id', '4')->value('number_en');
         $count = $number + 1;
         //$year = (date("Y") + 543) % 100;
@@ -254,9 +270,13 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
+        $table_invoice = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+            ->where('tb_invoice.invoice_id', '=', $id)
+            ->select(DB::raw('tb_customer.*,tb_invoice.*'))
+            ->get();
         $data = [
             //QUOTATION
-            'table_invoice' => InvoiceModel::select_by_id($id),
+            'table_invoice' => $table_invoice,
             'invoice' => InvoiceModel::findOrFail($id),
             'table_customer' => CustomerModel::select_all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
@@ -278,12 +298,16 @@ class InvoiceController extends Controller
     public function pdf($id)
     {
         //no show
+        $table_invoice = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+            ->where('tb_invoice.invoice_id', '=', $id)
+            ->select(DB::raw('tb_customer.*,tb_invoice.*'))
+            ->get();
 
         $data = [
             //QUOTATION
-            'table_invoice' => InvoiceModel::select_by_id($id),
+            'table_invoice' => $table_invoice,
             'table_customer' => CustomerModel::select_all(),
-            'table_company' => Company::select_all(),
+            'table_company' => Company::all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
             'table_tax_type' => TaxTypeModel::select_all(),
@@ -296,7 +320,7 @@ class InvoiceController extends Controller
             'table_invoice_detail' => InvoiceDetailModel::select_by_invoice_id($id),
             'table_product' => ProductModel::select_all(),
 
-            'total_text' => count(InvoiceModel::select_by_id($id)) > 0 ? Functions::baht_text(InvoiceModel::select_by_id($id)[0]->total) : "-",
+            'total_text' => count($table_invoice) > 0 ? Functions::baht_text($table_invoice[0]->total) : "-",
         ];
         //return view('sales/invoice/edit',$data);
 
@@ -313,10 +337,14 @@ class InvoiceController extends Controller
      */
     public function edit($id)
     {
+        $table_invoice = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+            ->where('tb_invoice.invoice_id', '=', $id)
+            ->select(DB::raw('tb_customer.*,tb_invoice.*'))
+            ->get();
         $data = [
             //QUOTATION
             'invoice' => InvoiceModel::findOrFail($id),
-            'table_invoice' => InvoiceModel::select_by_id($id),
+            'table_invoice' => $table_invoice,
             'table_customer' => CustomerModel::select_all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
@@ -406,7 +434,7 @@ class InvoiceController extends Controller
      */
     public function destroy($id)
     {
-        InvoiceModel::delete_by_id($id);
+        InvoiceModel::destroy($id);
         return redirect("sales/invoice");
     }
 }

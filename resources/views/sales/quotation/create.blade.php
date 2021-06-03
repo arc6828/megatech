@@ -10,7 +10,7 @@
 
 @section('background-tag','bg-warning')
 @section('content')
-<form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to save?')" >
+<form class="" action="{{ url('/') }}/sales/quotation" method="POST" onsubmit="return confirm('Do you confirm to create?')" >
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('sales/quotation/form')

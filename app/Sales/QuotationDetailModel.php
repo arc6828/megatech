@@ -27,12 +27,12 @@ class QuotationDetailModel extends Model
     return $this->belongsTo('App\ProductModel','product_id');
   }
 
-  public static function select_all(){
-		return DB::table('tb_quotation_detail')
-      ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
-      ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
-      ->get();
-	}
+  // public static function select_all(){
+	// 	return DB::table('tb_quotation_detail')
+  //     ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+  //     ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
+  //     ->get();
+	// }
 
 	// public static function select_by_quotation_id($quotation_id){
   //   return DB::table('tb_quotation_detail')
@@ -41,59 +41,59 @@ class QuotationDetailModel extends Model
   //       ->get();
 	// }
 
-  public static function select_by_customer_id($customer_id){
-    return DB::table('tb_quotation_detail')
-        ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
-        ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
-        ->where('customer_id', '=' , $customer_id )
-        ->get();
-	}
+  // public static function select_by_customer_id($customer_id){
+  //   return DB::table('tb_quotation_detail')
+  //       ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+  //       ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
+  //       ->where('customer_id', '=' , $customer_id )
+  //       ->get();
+	// }
 
-  public static function select_by_user_id($customer_id,$user_id){
-    //IF ADMIN no need to where user_id
-    return DB::table('tb_quotation_detail')
-        ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
-        ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
-        ->where('user_id', '=' , $user_id )
-        ->where('customer_id', '=' , $customer_id )
-        ->where('tb_quotation.sales_status_id','!=','-1') //NOT VOID
-        ->where('tb_quotation.sales_status_id','!=','0')  //NOT DRAFT
-        ->where('tb_quotation.sales_status_id','!=','5')  //NOT COMPLETED
-        ->get();
-	}
+  // public static function select_by_user_id($customer_id,$user_id){
+  //   //IF ADMIN no need to where user_id
+  //   return DB::table('tb_quotation_detail')
+  //       ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+  //       ->join('tb_quotation','tb_quotation_detail.quotation_id','=','tb_quotation.quotation_id')
+  //       ->where('user_id', '=' , $user_id )
+  //       ->where('customer_id', '=' , $customer_id )
+  //       ->where('tb_quotation.sales_status_id','!=','-1') //NOT VOID
+  //       ->where('tb_quotation.sales_status_id','!=','0')  //NOT DRAFT
+  //       ->where('tb_quotation.sales_status_id','!=','5')  //NOT COMPLETED
+  //       ->get();
+	// }
 
-	public static function select_by_id($id){
-    return DB::table('tb_quotation_detail')
-        ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
-        ->where('quotation_detail_id', '=' , $id )
-        ->get();
-	}
+	// public static function select_by_id($id){
+  //   return DB::table('tb_quotation_detail')
+  //       ->join('tb_product','tb_quotation_detail.product_id','=','tb_product.product_id')
+  //       ->where('quotation_detail_id', '=' , $id )
+  //       ->get();
+	// }
 
-  public static function insert($input){
-    DB::table('tb_quotation_detail')->insert($input);
-	}
+  // public static function insert($input){
+  //   DB::table('tb_quotation_detail')->insert($input);
+	// }
 
-	public static function update_by_id($input, $id){
-    DB::table('tb_quotation_detail')
-        ->where('quotation_detail_id', $id)
-        ->update($input);
-	}
+	// public static function update_by_id($input, $id){
+  //   DB::table('tb_quotation_detail')
+  //       ->where('quotation_detail_id', $id)
+  //       ->update($input);
+	// }
 
-  public static function update_key_by_id($key, $input, $id){
-    DB::table('tb_quotation_detail')
-        ->where('quotation_detail_id', $id)
-        ->update($input);
-	}
+  // public static function update_key_by_id($key, $input, $id){
+  //   DB::table('tb_quotation_detail')
+  //       ->where('quotation_detail_id', $id)
+  //       ->update($input);
+	// }
 
-	public static function delete_by_id($id){
-		DB::table('tb_quotation_detail')
-            ->where('quotation_detail_id', '=', $id)
-            ->delete();
-	}
+	// public static function delete_by_id($id){
+	// 	DB::table('tb_quotation_detail')
+  //           ->where('quotation_detail_id', '=', $id)
+  //           ->delete();
+	// }
 
-  public static function delete_by_quotation_id($quotation_id){
-		DB::table('tb_quotation_detail')
-        ->where('quotation_id', '=', $quotation_id)
-        ->delete();
-	}
+  // public static function delete_by_quotation_id($quotation_id){
+	// 	DB::table('tb_quotation_detail')
+  //       ->where('quotation_id', '=', $quotation_id)
+  //       ->delete();
+	// }
 }
