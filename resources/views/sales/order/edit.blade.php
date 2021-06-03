@@ -30,7 +30,7 @@
             @forelse($table_order as $row)
 
                 <form class="d-none" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/approve" id="form-approve"
-                    method="POST" onsubmit="return confirm('อัพเดทสถานะ รอเบิกสินค้า')">
+                    method="POST" onsubmit="return confirm('Do you confirm to save?')">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <button type="submit" class="btn btn-success " id="form-approve-submit" style="width:150px;">Save</button>
@@ -57,7 +57,7 @@
                     </form>
                 @elseif($row->sales_status_id == 7)
                     <form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/update" id="form" method="POST"
-                        enctype="multipart/form-data">
+                        onsubmit="return confirm('Do you confirm to save?')" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
@@ -69,14 +69,14 @@
                                 <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
                                     style="width:150px;">back</a>
                                 <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
-                                    Update รอเบิก
+                                    Save
                                 </button>
                             </div>
                         @endif
                     </form>
                 @elseif($row->sales_status_id == 8)
                     <form class="" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/revision" id="form"
-                        method="POST" enctype="multipart/form-data">
+                        onsubmit="return confirm('Do you confirm to save?')" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
@@ -88,7 +88,7 @@
                                 <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
                                     style="width:150px;">back</a>
                                 <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
-                                    Revision
+                                    Save
                                 </button>
                             </div>
                         @endif

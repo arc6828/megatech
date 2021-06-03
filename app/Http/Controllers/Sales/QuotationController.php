@@ -201,6 +201,11 @@ class QuotationController extends Controller
             ->orWhere('tb_quotation.quotation_code', '=', $id)
             ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
             ->get();
+
+        $table_quotation_detail = QuotationDetailModel::join('tb_product', 'tb_quotation_detail.product_id', '=', 'tb_product.product_id')
+            ->where('quotation_id', '=', $id)
+            ->get();
+
         $data = [
             //QUOTATION
             'quotation' => QuotationModel::findOrFail($id),
@@ -215,7 +220,7 @@ class QuotationController extends Controller
             'table_zone' => ZoneModel::select_all(),
             'quotation_id' => $id,
             //QUOTATION Detail
-            'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
+            'table_quotation_detail' => $table_quotation_detail,
             'table_product' => ProductModel::select_all(),
             'customer' => CustomerModel::where('customer_id', QuotationModel::findOrFail($id)->customer_id)->first(),
             'customer_json' => CustomerModel::where('customer_id', QuotationModel::findOrFail($id)->customer_id)->first(),
@@ -271,6 +276,9 @@ class QuotationController extends Controller
             ->orWhere('tb_quotation.quotation_code', '=', $id)
             ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
             ->get();
+        $table_quotation_detail = QuotationDetailModel::join('tb_product', 'tb_quotation_detail.product_id', '=', 'tb_product.product_id')
+            ->where('quotation_id', '=', $id)
+            ->get();
         $data = [
             //QUOTATION
             'quotation' => QuotationModel::findOrFail($id),
@@ -285,7 +293,7 @@ class QuotationController extends Controller
             'table_zone' => ZoneModel::select_all(),
             'quotation_id' => $id,
             //QUOTATION Detail
-            'table_quotation_detail' => QuotationDetailModel::select_by_quotation_id($id),
+            'table_quotation_detail' => $table_quotation_detail,
             'table_product' => ProductModel::select_all(),
             'mode' => 'edit',
         ];
