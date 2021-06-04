@@ -35,9 +35,13 @@ class OrderController extends Controller
     public function validate_po(Request $request)
     {
         //$order_detail_status_id = $request->input("order_detail_status_id",3);
+        
         $customer_id = $request->input("customer_id");
         $external_reference_id = $request->input("external_reference_id");
-        $table_order = OrderModel::select_by_po($customer_id, $external_reference_id);
+
+        $table_order = OrderModel::where('customer_id', $customer_id)
+            ->where('external_reference_id', $external_reference_id); //select_by_po
+
         return response()->json($table_order);
     }
 
@@ -66,14 +70,19 @@ class OrderController extends Controller
             ->orWhere('tb_order.order_code', '=', $id)
             ->select(DB::raw('users.*,tb_customer.*, tb_order.*'))
             ->get();
+
         //echo $id . "hello";
         if (count($table_order) > 0) {
             $id = $table_order[0]->order_id;
         }
+        $table_order_detail = OrderDetailModel::join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
+            ->where('order_id', '=', $id)
+            ->where('order_detail_status_id', 1)
+            ->get();
 
         $data = [
             "table_order" => $table_order,
-            "table_order_detail" => OrderDetailModel::select_by_order_id_by_status_id($id, 1), // 1 MEANS APPROVED
+            "table_order_detail" => $table_order_detail, // 1 MEANS APPROVED
         ];
         return response()->json($data);
     }

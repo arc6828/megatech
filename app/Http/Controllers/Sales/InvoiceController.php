@@ -146,6 +146,8 @@ class InvoiceController extends Controller
                     "order_detail_status_id" => 4,
                 ];
                 OrderDetailModel::update_by_id($input_detail2, $request->input('id_edit')[$i]);
+                // OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])
+                //     ->update(["order_detail_status_id" => 4]);
 
                 //CHANGE STATUS ORDER
 

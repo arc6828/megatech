@@ -71,11 +71,11 @@ Route::get('/bank_detail', 'BankDetailController@index');
 
 Route::apiResource('issue-stock', 'API\IssueStockController');
 
-Route::apiResource("picking",'Api\PickingController');
+Route::apiResource("picking",'API\PickingController');
 // Route::get('/picking_detail/customer/{customer_id}/product/{product_id}', 'API\PickingDetailController@history_sell_price');
-Route::apiResource("picking_detail",'Api\PickingDetailController');
+Route::apiResource("picking_detail",'API\PickingDetailController');
 // Route::get('/company', 'API\CompanyController@index');
-Route::get('/numberun', 'Api\NumberController@index');
-Route::get('/numberun/{id}', 'Api\NumberController@show');
-Route::post('/numberun/create', 'Api\NumberController@store');
-Route::put('/update', 'Api\NumberController@update');
+// Route::get('/numberun', 'API\NumberController@index');
+// Route::get('/numberun/{id}', 'API\NumberController@show');
+// Route::post('/numberun/create', 'API\NumberController@store');
+// Route::put('/update', 'API\NumberController@update');
