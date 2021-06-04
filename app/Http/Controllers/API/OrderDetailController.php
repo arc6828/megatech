@@ -18,7 +18,7 @@ class OrderDetailController extends Controller
     {
         // ใช้ตอนเบิกของ
         $order_detail_status_id = $request->input("order_detail_status_id", 3);
-        
+
         $table_order_detail = OrderDetailModel::join('tb_product', 'tb_order_detail.product_id', '=', 'tb_product.product_id')
             ->join('tb_order', 'tb_order.order_id', '=', 'tb_order_detail.order_id')
             ->join('tb_customer', 'tb_order.customer_id', '=', 'tb_customer.customer_id')
@@ -51,13 +51,13 @@ class OrderDetailController extends Controller
 
     }
 
-    // public function index2(Request $request)
-    // {
-    //     $order_detail_status_id = $request->input("order_detail_status_id", 3);
-    //     $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
+    public function index2(Request $request)
+    {
+        $order_detail_status_id = $request->input("order_detail_status_id", 3);
+        $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
 
-    //     return response()->json($table_order_detail);
-    // }
+        return response()->json($table_order_detail);
+    }
 
     /**
      * Store a newly created resource in storage.

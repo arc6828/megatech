@@ -148,7 +148,7 @@
 			//detail
 			//AJAX
 			$.ajax({
-				url: "{{ url('/') }}/api/order_detail/index2?order_detail_status_id=1",
+				url: "{{ url('/') }}/api/order_detail/?order_detail_status_id=1",
 				type: "GET",
 				dataType : "json",
 			})
@@ -165,8 +165,8 @@
 						//element.company_name,
 						element.product_code,
 						element.product_name,
-						element.amount,
-						"<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:50px;' required>",
+						element.approve_amount,
+						"<input name='approve_amounts[]' value='"+element.approve_amount+"' class='form-control form-control-sm' style='max-width:50px;' required>",
 						//0,
 						//0,
 						//0,
@@ -291,12 +291,13 @@
 		onChange(document.querySelector("#vat_percent"));
 
 	}
+
 	function fillOrderDetail(result){
 		//console.log("detail : ",result);
 		var dataSet = [];
 		result.table_order_detail.forEach(function(element,index) {
 			var id = element.order_detail_id;
-			//console.log("ELEMENT id : ",id,element);
+			console.log("ELEMENT id : ",id,element);
 			var row = createRow(id, element);
 			dataSet.push(row);
 		});

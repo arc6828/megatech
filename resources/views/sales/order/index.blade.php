@@ -104,8 +104,11 @@
                                         @case(-1)
                                             <span class="badge badge-pill badge-secondary">Void</span>
                                         @break
+                                        @case(14)
+                                            <span class="badge badge-pill badge-info">เปิด Invoice บางส่วน</span>
+                                        @break
                                         @default
-                                            <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
+                                            <span class="badge badge-pill badge-success">Invด</span>
                                 @break
                                 {{-- $row->sales_status_name --}}
                             @endswitch

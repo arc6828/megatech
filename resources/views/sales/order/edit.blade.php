@@ -110,6 +110,23 @@
                             </div>
                         @endif
                     </form>
+                @elseif($row->sales_status_id == 14)
+                    <form class="" action="{{ url('/') }}/sales/order" id="form" method="POST" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+
+                        @include('sales/order/form')
+
+                        @if ($mode == 'edit')
+
+                            <div class="text-center mt-4">
+                                <a href="{{ url('/') }}/sales/order" class="btn btn-outline-success"
+                                    style="width:150px;">back</a>
+                                <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
+                                    Save
+                                </button>
+                            </div>
+                        @endif
+                    </form>
                 @elseif($row->sales_status_id == -1)
                     <form class="" action="{{ url('/') }}/sales/order" id="form" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}

@@ -117,62 +117,88 @@ class InvoiceController extends Controller
             'total' => $request->input('total_after_vat', 0),
             'total_debt' => $request->input('total_after_vat', 0),
         ];
+
         if ($input['payment_method'] != "credit") {
             $input['total_debt'] = 0;
         }
-        $id = InvoiceModel::insert($input);
 
+        $invoice = InvoiceModel::create($input);
+        $id = $invoice->invoice_id;
         //INSERT ALL NEW QUOTATION DETAIL
-        $list = [];
+        // $list = [];
         //print_r($request->input('product_id_edit'));
         //print_r($request->input('amount_edit'));
         //print_r($request->input('discount_price_edit'));
         //echo $id;
         if (is_array($request->input('product_id_edit'))) {
             for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-                $a = [
+                $invoice_detail = [
                     "product_id" => $request->input('product_id_edit')[$i],
                     "amount" => $request->input('amount_edit')[$i],
                     "discount_price" => $request->input('discount_price_edit')[$i],
                     "invoice_id" => $id,
                 ];
-                if (is_numeric($request->input('id_edit')[$i])) {
-                    //$a["invoice_detail_id"] = $request->input('id_edit')[$i];
-                }
-                $list[] = $a;
 
-                //CHANGE STATUS ORDER DETAIL => 4
-                $input_detail2 = [
-                    "order_detail_status_id" => 4,
-                ];
-                OrderDetailModel::update_by_id($input_detail2, $request->input('id_edit')[$i]);
-                // OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])
-                //     ->update(["order_detail_status_id" => 4]);
+                InvoiceDetailModel::create($invoice_detail);
+                //Update order_detail (4) ออก iv แล้ว
+                OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])
+                    ->update(["order_detail_status_id" => 4]);
 
-                //CHANGE STATUS ORDER
+                //Decreament approve_amount order_detail
+                OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])->first()->decrement('approved_amount', $request->input('amount_edit')[$i]);
+                //Increment iv_amount  order_detail
+                OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])->first()->increment('iv_amount', $request->input('amount_edit')[$i]);
 
+                //ดึงข้อมูลจาก order
                 $order_code = $request->input('internal_reference_id');
-                //$order = OrderModel::where('order_code', $order_code)->first();
-                //$order_id = $order->order_id;
-                $count = OrderDetailModel::countWaitIV($order_code);
-                //if($count == 0){
-                if ($count == 0) {
+                $order = OrderModel::where('order_code', $order_code)->first();
+                $order_id = $order->order_id;
+
+                $sum = OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])
+                    ->where('order_id', $order_id)
+                    ->sum('before_approved_amount');
+                // print_r(json_encode($sum));
+                // exit();
+                if ($sum == 0) {
                     //NO ONE LEFT : 9 => ออก Invoice ครบ
-                    OrderModel::update_by_id(
-                        ["sales_status_id" => "9"],
-                        $order_code
-                    );
+                    OrderModel::where('order_id', $order_id)->update(["sales_status_id" => 9]);
+                } else {
+                    OrderModel::where('order_id', $order_id)->update(["sales_status_id" => 14]);
+
                 }
+                //CHANGE STATUS ORDER DETAIL => 4
+                // $input_detail2 = [
+                //     "order_detail_status_id" => 4,
+                // ];
+                // OrderDetailModel::update_by_id($input_detail2, $request->input('id_edit')[$i]);
+                // // OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])
+                // //     ->update(["order_detail_status_id" => 4]);
+
+                // //CHANGE STATUS ORDER
+
+                // $order_code = $request->input('internal_reference_id');
+                // //
+                // //$order_id = $order->order_id;
+                // $count = OrderDetailModel::countWaitIV($order_code);
+                // //if($count == 0){
+                // if ($count == 0) {
+                //     //NO ONE LEFT : 9 => ออก Invoice ครบ
+                //     OrderModel::update_by_id(
+                //         ["sales_status_id" => "9"],
+                //         $order_code
+                //     );
+                // }
 
             }
         }
-        InvoiceDetailModel::insert($list);
+        // InvoiceDetailModel::insert($list);
+        $invoice_detail = InvoiceDetailModel::where('invoice_id', $id)->get();
 
-        //GAURD STOCK
-        foreach ($list as $item) {
+        // GAURD STOCK
+        foreach ($invoice_detail as $item) {
             $product = ProductModel::findOrFail($item['product_id']);
             $gaurd_stock = GaurdStock::create([
-                "code" => $item['invoice_id'],
+                "code" => $invoice->invoice_code,
                 "type" => "sales_invoice",
                 "amount" => $item['amount'],
                 "amount_in_stock" => ($product->amount_in_stock - $item['amount']),

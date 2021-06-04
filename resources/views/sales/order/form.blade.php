@@ -207,6 +207,9 @@
             <div class="col-lg-3">
                 @if (isset($order))
                     @switch($row->sales_status_id)
+                        @case(6)
+                            <span class="badge badge-pill badge-danger">Draft</span>
+                        @break
                         @case(7)
                             <span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
                         @break
@@ -243,13 +246,14 @@
                             @endif
 
                         @break
+                        @case(14)
+                            <span class="badge badge-pill badge-info">เปิด INVOICE บางส่วน</span>
+                        @break
 
                         @case(-1)
                             <span class="badge badge-pill badge-secondary">Void</span>
                         @break
-                        @case(6)
-                            <span class="badge badge-pill badge-danger">Draft</span>
-                        @break
+
                         @default
                             <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
                         @break
@@ -270,7 +274,7 @@
                             @case(8)
                                 <span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
                             @break
-                            
+
                             @case(-1)
                                 <span class="badge badge-pill badge-secondary">Void</span>
                             @break
@@ -537,8 +541,8 @@
         @if (isset($mode))
             @if ($mode == 'edit')
                 <!-- <div class="form-group text-center">
-        <input class="btn btn-success" type="submit" value="Save">
-        </div> -->
+                        <input class="btn btn-success" type="submit" value="Save">
+                        </div> -->
             @elseif( $mode == "show" )
                 <script>
                     setTimeout(function() {
@@ -554,8 +558,8 @@
             @endif
         @else
             <!-- <div class="form-group text-center">
-        <input class="btn btn-success" type="submit" value="Save">
-        </div>  -->
+                        <input class="btn btn-success" type="submit" value="Save">
+                        </div>  -->
         @endif
 
         <!-- END DISABLE WHEN SHOW -->
