@@ -139,27 +139,27 @@ class OrderModel extends Model
     //         ->get();
     // }
 
-    public static function select_by_po($customer_id, $external_reference_id)
-    {
-        return DB::table('tb_order')
-            ->where('customer_id', $customer_id)
-            ->where('external_reference_id', $external_reference_id)
-        //->select( DB::raw('tb_order.*, tb_customer.contact_name, tb_customer.customer_code'))
-            ->get();
-    }
+    // public static function select_by_po($customer_id, $external_reference_id)
+    // {
+    //     return DB::table('tb_order')
+    //         ->where('customer_id', $customer_id)
+    //         ->where('external_reference_id', $external_reference_id)
+    //     //->select( DB::raw('tb_order.*, tb_customer.contact_name, tb_customer.customer_code'))
+    //         ->get();
+    // }
 
     // public static function insert($input)
     // {
     //     return DB::table('tb_order')->insertGetId($input);
     // }
 
-    // public static function update_by_id($input, $id)
-    // {
-    //     DB::table('tb_order')
-    //         ->where('order_id', $id)
-    //         ->orWhere('order_code', $id)
-    //         ->update($input);
-    // }
+    public static function update_by_id($input, $id)
+    {
+        DB::table('tb_order')
+            ->where('order_id', $id)
+            ->orWhere('order_code', $id)
+            ->update($input);
+    }
 
     // public static function delete_by_id($id)
     // {

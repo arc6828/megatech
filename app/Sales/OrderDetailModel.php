@@ -77,12 +77,12 @@ class OrderDetailModel extends Model
     //     DB::table('tb_order_detail')->insert($input);
     // }
 
-    // public static function update_by_id($input, $id)
-    // {
-    //     DB::table('tb_order_detail')
-    //         ->where('order_detail_id', $id)
-    //         ->update($input);
-    // }
+    public static function update_by_id($input, $id)
+    {
+        DB::table('tb_order_detail')
+            ->where('order_detail_id', $id)
+            ->update($input);
+    }
 
     // public static function update_key_by_id($key, $input, $id)
     // {
