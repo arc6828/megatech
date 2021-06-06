@@ -1,7 +1,7 @@
 <div class="card mt-4" id="table">
     <div class="card-body">
         <style>
-            .input {
+            .input {w
                 max-width: 100px;
                 width: 100%;
             }
@@ -14,7 +14,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", function(event) {
                 var detail = JSON.parse('@json($table_invoice_detail)');
-                console.log("DETAIL : ",detail);
+                //console.log("DETAIL : ",detail);
                 var dataSet = [];
                 detail.forEach(function(element, index) {
                     //console.log(element,index);
@@ -87,7 +87,7 @@
                     .product_id + "' >" +
                     "<input type='hidden' class='id_edit' name='id_edit[]'  value='" + id + "' >",
                     element.product_name,
-                    "<input class='input amount_edit' name='amount_edit[]'  value='" + element.approved_amount +
+                    "<input class='input amount_edit' name='amount_edit[]'  value='" + element.amount +
                     "' >",
                     //element.product_unit,
                     "<input class='input normal_price_edit' name='normal_price_edit[]'  value='" + parseFloat(

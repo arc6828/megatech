@@ -161,6 +161,7 @@ class OrderController extends Controller
                     "order_detail_status_id" => 0, // draft
                     "product_id" => $request->input('product_id_edit')[$i],
                     "amount" => $request->input('amount_edit')[$i],
+                    "quotation_code" => $request->input('quotation_code_edit')[$i],
                     "discount_price" => $request->input('discount_price_edit')[$i],
                     "order_id" => $id,
                     "delivery_duration" => $request->input('delivery_duration')[$i],
@@ -559,7 +560,7 @@ class OrderController extends Controller
             $product->pending_in = $gaurd_stock['pending_in'];
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
-//create PickingDetail
+            //create PickingDetail
             $pickking_detail = PickingDetail::create([
                 "product_id" => $product->product_id,
                 "amount" => $item['amount'],

@@ -17,10 +17,10 @@
     <div class="card">
         <div class="card-body">
             <!-- <div class="mb-4">
-                      <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
-                          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                      </a>
-                    </div> -->
+                                                                      <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
+                                                                          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                                                                      </a>
+                                                                    </div> -->
             <div class="table-responsive table-binvoiceed">
                 <table class="table table-hover text-center table-sm" id="table"
                     style="width:100%; margin-top:-1px !important;">
@@ -53,19 +53,17 @@
                                 <td>{{ number_format($row->total ? $row->total : 0, 2) }}</td>
                                 <td>{{ $row->short_name }}</td>
                                 <td>
+
                                     @switch($row->sales_status_id)
                                         @case(-1)
                                             <span
-                                                class="badge badge-pill badge-secondary">{{ $row->salse_status_name }}</span>
+                                                class="badge badge-pill badge-danger">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
                                         @case(15)
                                             <span
-                                                class="badge badge-pill badge-secondary">{{ $row->salse_status_name }}</span>
+                                                class="badge badge-pill badge-success">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
-                                        {{-- @default
-                                            <span class="badge badge-pill badge-success">Yes</span>
-                                @break --}}
-                                        {{-- $row->sales_status_name --}}
+
                                     @endswitch
 
                                 </td>

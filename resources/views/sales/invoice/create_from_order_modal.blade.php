@@ -226,7 +226,7 @@
 				type: "GET",
 				dataType : "json",
 		}).done(function(result){
-      console.log("RESULT : " , result)
+      console.log("RESULT ff : " , result)
 			fillOrder(result);
       //result = result.table_order[0].order_id;
 			fillOrderDetail(result);
