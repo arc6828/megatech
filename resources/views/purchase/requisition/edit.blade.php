@@ -22,7 +22,7 @@
 
             @forelse($table_purchase_requisition as $row)
                 <form class="" action="{{ url('/') }}/purchase/requisition/{{ $row->purchase_requisition_id }}/update"
-                    id="form" method="POST" onsubmit="return confirm('คุณต้องการเพิ่มจำนวนสั่งซื้อ ?');">
+                    id="form" method="POST" onsubmit="return confirm('Do you confirm to save ?');">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
 

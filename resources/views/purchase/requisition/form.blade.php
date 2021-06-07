@@ -11,12 +11,14 @@
                 <input name="datetime" id="datetime" class="form-control form-control-sm form-control-line" readonly>
             </div>
             <div class="col-lg-2 text-right">
-                @if ($mode == 'show')
-                    @if ($row->purchase_status_id == 1)
-                        <a class="px-2 btn btn-sm btn-primary"
-                            href="{{ url('/') }}/purchase/requisition/{{ $row->purchase_requisition_id }}/edit">
-                            <i class="fas fa-edit"></i> แก้ไข
-                        </a>
+                @if (isset($mode))
+                    @if ($mode == 'show')
+                        @if ($row->purchase_status_id == 1)
+                            <a class="px-2 btn btn-sm btn-primary"
+                                href="{{ url('/') }}/purchase/requisition/{{ $row->purchase_requisition_id }}/edit">
+                                <i class="fas fa-edit"></i> แก้ไข
+                            </a>
+                        @endif
                     @endif
                 @endif
             </div>

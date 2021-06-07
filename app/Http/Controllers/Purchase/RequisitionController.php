@@ -161,6 +161,8 @@ class RequisitionController extends Controller
       //QUOTATION Detail
       'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
       'table_product' => ProductModel::select_all(),
+      'mode' => 'show',
+
     ];
     return view('purchase/requisition/edit', $data);
   }
@@ -193,6 +195,7 @@ class RequisitionController extends Controller
       //QUOTATION Detail
       'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
       'table_product' => ProductModel::select_all(),
+      'mode' => 'edit',
     ];
     return view('purchase/requisition/edit', $data);
   }
