@@ -103,7 +103,7 @@ class RequisitionController extends Controller
         $purchase_detail = [
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
-          "discount_price" => $request->input('discount_price_edit')[$i],
+          // "discount_price" => $request->input('discount_price_edit')[$i],
           "purchase_requisition_id" => $id,
         ];
         //4. Create PR_detail
@@ -238,7 +238,7 @@ class RequisitionController extends Controller
         $purchase_detail = [
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
-          "discount_price" => $request->input('discount_price_edit')[$i],
+          // "discount_price" => $request->input('discount_price_edit')[$i],
           "purchase_requisition_id" => $id,
         ];
         //4. Create PR_detail

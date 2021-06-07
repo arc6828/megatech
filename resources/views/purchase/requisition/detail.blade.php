@@ -144,13 +144,13 @@
         switch (obj.name) {
           case "discount_percent_edit[]":
             //EFFECT TO #discount_price_edit
-            //console.log("EFFECT TO #discount_price_edit");
+            console.log("EFFECT TO #discount_price_edit");
             discount_price_edit.value = normal_price_edit.value - normal_price_edit.value * (discount_percent_edit.value) / 100;
 
             break;
           case "discount_price_edit[]":
             //EFFECT TO #discount_percent_edit
-            //console.log("EFFECT TO #discount_percent_edit");
+            console.log("EFFECT TO #discount_percent_edit");
             discount_percent_edit.value = 100.0 - discount_price_edit.value / normal_price_edit.value * 100;
             break;
         }
