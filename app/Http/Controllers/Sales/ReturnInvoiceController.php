@@ -11,6 +11,7 @@ use App\ProductModel;
 use App\Sales\InvoiceModel;
 use App\Sales\ReturnInvoice;
 use App\Sales\ReturnInvoiceDetail;
+use App\Sales\unused\InvoiceDetailModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -271,10 +272,27 @@ class ReturnInvoiceController extends Controller
         $requestData = $request->all();
         //LOAD OLD DATA
         $returninvoice = ReturnInvoice::findOrFail($id); //1. ดึงข้อมูล Returninvoice จาก Form
-        $new_returninvoice = ReturnInvoice::create($requestData); //2. create new return_invoice
+        // $new_returninvoice = ReturnInvoice::create($requestData); //2. create new return_invoice
+
+        if (is_array($request->input('product_id_edit'))) {
+
+            InvoiceDetailModel::where('invoice_id', $id)->delete(); // clear invoice_detail
+
+            for ($i = 0; $i < count($request->input('product_id_edit')); $i++) { // insert invoice_detail
+                $invoice_detail = [
+                    "product_id" => $request->input('product_id_edit')[$i],
+                    "amount" => $request->input('amount_edit')[$i],
+                    "discount_price" => $request->input('discount_price_edit')[$i],
+                    "quotation_id" => $id,
+                    "delivery_duration" => $request->input('delivery_duration')[$i],
+                ];
+                InvoiceDetailModel::create($invoice_detail); // createinvoice_detail
+            }
+        }
 
         //ROLLBACK Gaurd stock
         $details = $returninvoice->return_invoice_details()->get(); //ดึงข้อมูลจาก invoice_details
+
         foreach ($details as $item) {
             $product = ProductModel::findOrFail($item->product_id);
             $gaurd_stock = GaurdStock::create([
@@ -299,7 +317,7 @@ class ReturnInvoiceController extends Controller
         // //SAVE DETAIL + GAURD STOCK
         // $this->store_detail($request, $new_returninvoice);
 
-        return redirect('sales/return-invoice/' . $new_returninvoice->id)->with('flash_message', 'ReturnInvoice updated!');
+        return redirect("sales/return-invoice/{$id}")->with('flash_message', 'ReturnInvoice updated!');
     }
     public function revision(Request $request, $id)
     {

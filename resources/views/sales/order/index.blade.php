@@ -59,13 +59,16 @@
                                 <td>
                                     @switch($row->sales_status_id)
                                         @case(6)
-                                            <span class="badge badge-pill badge-danger">Draft</span>
+                                            <span
+                                                class="badge badge-pill badge-danger">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
                                         @case(7)
-                                            <span class="badge badge-pill badge-warning">รอเบิกสินค้า</span>
+                                            <span
+                                                class="badge badge-pill badge-warning">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
                                         @case(8)
-                                            <span class="badge badge-pill badge-primary">รอเปิด Invoice</span>
+                                            <span
+                                                class="badge badge-pill badge-primary">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
                                         @case(9)
                                             @php
@@ -102,108 +105,110 @@
 
                                         @break
                                         @case(-1)
-                                            <span class="badge badge-pill badge-secondary">Void</span>
+                                            <span
+                                                class="badge badge-pill badge-secondary">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
-                                        @default
-                                            <span class="badge badge-pill badge-success">Invoice ครบแล้ว</span>
-                                @break
-                                {{-- $row->sales_status_name --}}
-                            @endswitch
-
-                            </td>
-                            <td class="text-left  d-none">
-                                @foreach ($row->order_details as $order_detail)
-                                    @switch($order_detail->order_detail_status_id)
-                                        @case(1)
-                                            <span class="badge badge-pill badge-primary" title="รอเบิกสินค้า">Y</span>
-                                        @break
-                                        @case(3)
-                                            <span class="badge badge-pill badge-warning" title="รอเปิด Invoice">W</span>
-                                        @break
-                                        @case(4)
-                                            <span class="badge badge-pill badge-success" title="Invoice แล้ว">IV</span>
+                                        @case(14)
+                                            <span
+                                                class="badge badge-pill badge-info">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
                                     @endswitch
-                                @endforeach
 
-                            </td>
-                            <td class="d-none">
-                                <a href="javascript:void(0)" onclick="onDelete( {{ $row->order_id }} )" class="text-danger">
-                                    <span class="fa fa-trash"></span>
-                                </a>
-                            </td>
+                                </td>
+                                <td class="text-left  d-none">
+                                    @foreach ($row->order_details as $order_detail)
+                                        @switch($order_detail->order_detail_status_id)
+                                            @case(1)
+                                                <span class="badge badge-pill badge-primary" title="รอเบิกสินค้า">Y</span>
+                                            @break
+                                            @case(3)
+                                                <span class="badge badge-pill badge-warning" title="รอเปิด Invoice">W</span>
+                                            @break
+                                            @case(4)
+                                                <span class="badge badge-pill badge-success" title="Invoice แล้ว">IV</span>
+                                            @break
+                                        @endswitch
+                                    @endforeach
+
+                                </td>
+                                <td class="d-none">
+                                    <a href="javascript:void(0)" onclick="onDelete( {{ $row->order_id }} )"
+                                        class="text-danger">
+                                        <span class="fa fa-trash"></span>
+                                    </a>
+                                </td>
                             </tr>
-                            @endforeach
-                        </tbody>
+                        @endforeach
+                    </tbody>
 
-                    </table>
-                </div>
+                </table>
+            </div>
 
-                <div class="text-center mt-4">
-                    <a class="btn btn-outline-success " href="{{ url('/') }}/sales"><i class="fa fa-arrow-left"
-                            aria-hidden="true"></i> back</a>
-                    <a href="{{ url('/') }}/sales/order/create" class="btn btn-success">
-                        <i class="fa fa-plus"></i> เพิ่มใบจอง
-                    </a>
-
-                </div>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function(event) {
-                        $('#table').DataTable({
-                            "paging": false,
-                            "info": false,
-                        }).order([0, 'desc']).draw();
-                        //DATA TABLE SCROLL
-                        var tableCont = document.querySelector('#table');
-                        tableCont.style.cssText = "margin-top : -1px !important; width:100%;";
-                        tableCont.parentNode.style.overflow = 'auto';
-                        tableCont.parentNode.style.maxHeight = '400px';
-                        tableCont.parentNode.addEventListener('scroll', function(e) {
-                            var scrollTop = this.scrollTop;
-                            this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) ' +
-                                'translateZ(' + 1000 + 'px)';
-                            this.querySelector('thead').style.background = "white";
-                            this.querySelector('thead').style.zIndex = "3000";
-                            //this.querySelector('thead').style.marginBottom = "200px";
-                            console.log(scrollTop);
-                        })
-                        //tableCont.parentNode.dispatchEvent(new Event('scroll'));
-                        //END DATA TABLE SCROLL
-                    });
-
-                </script>
+            <div class="text-center mt-4">
+                <a class="btn btn-outline-success " href="{{ url('/') }}/sales"><i class="fa fa-arrow-left"
+                        aria-hidden="true"></i> back</a>
+                <a href="{{ url('/') }}/sales/order/create" class="btn btn-success">
+                    <i class="fa fa-plus"></i> เพิ่มใบจอง
+                </a>
 
             </div>
-        </div>
-
-        <div id="outer-form-container" style="display:none;">
-            <form action="#" method="POST" id="form_delete">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-                <button type="submit">Delete</button>
-            </form>
             <script>
-                function onEdit() {
-                    console.log("edit", $('#myModal'));
-                    $('#myModal').on('show');
-                }
-
-                function onDelete(id) {
-                    //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
-
-                    //GET FORM BY ID
-                    var form = document.getElementById("form_delete");
-                    //CHANGE ACTION TO SPECIFY ID
-                    form.action = "{{ url('/') }}/sales/order/" + id;
-                    //SUBMIT
-                    var want_to_delete = confirm('Are you sure to delete this order ?');
-                    if (want_to_delete) {
-                        form.submit();
-                    }
-                }
+                document.addEventListener("DOMContentLoaded", function(event) {
+                    $('#table').DataTable({
+                        "paging": false,
+                        "info": false,
+                    }).order([0, 'desc']).draw();
+                    //DATA TABLE SCROLL
+                    var tableCont = document.querySelector('#table');
+                    tableCont.style.cssText = "margin-top : -1px !important; width:100%;";
+                    tableCont.parentNode.style.overflow = 'auto';
+                    tableCont.parentNode.style.maxHeight = '400px';
+                    tableCont.parentNode.addEventListener('scroll', function(e) {
+                        var scrollTop = this.scrollTop;
+                        this.querySelector('thead').style.transform = 'translateY(' + scrollTop + 'px) ' +
+                            'translateZ(' + 1000 + 'px)';
+                        this.querySelector('thead').style.background = "white";
+                        this.querySelector('thead').style.zIndex = "3000";
+                        //this.querySelector('thead').style.marginBottom = "200px";
+                        console.log(scrollTop);
+                    })
+                    //tableCont.parentNode.dispatchEvent(new Event('scroll'));
+                    //END DATA TABLE SCROLL
+                });
 
             </script>
+
         </div>
+    </div>
+
+    <div id="outer-form-container" style="display:none;">
+        <form action="#" method="POST" id="form_delete">
+            {{ csrf_field() }}
+            {{ method_field('DELETE') }}
+            <button type="submit">Delete</button>
+        </form>
+        <script>
+            function onEdit() {
+                console.log("edit", $('#myModal'));
+                $('#myModal').on('show');
+            }
+
+            function onDelete(id) {
+                //--THIS FUNCTION IS USED FOR SUBMIT FORM BY script--//
+
+                //GET FORM BY ID
+                var form = document.getElementById("form_delete");
+                //CHANGE ACTION TO SPECIFY ID
+                form.action = "{{ url('/') }}/sales/order/" + id;
+                //SUBMIT
+                var want_to_delete = confirm('Are you sure to delete this order ?');
+                if (want_to_delete) {
+                    form.submit();
+                }
+            }
+
+        </script>
+    </div>
 
 
-    @endsection
+@endsection
