@@ -231,7 +231,7 @@
             type: "GET",
             dataType: "json",
         }).done(function(result) {
-            console.log("RESULT yyy:", result)
+            //            console.log("RESULT yyy:", result)
             fillOrder(result);
             //result = result.table_order[0].order_id;
             fillOrderDetail(result);
@@ -267,14 +267,14 @@
         document.querySelector("#company_name").value = element.company_name;
         document.querySelector("#payment_method").value = element.payment_method;
         document.querySelector("#payment_method_th").value = (element.payment_method == 'credit' ? 'ขายเชื่อ' :
-        'ขายสด');
+            'ขายสด');
         document.querySelector("#max_credit").value = element.max_credit ? element.max_credit : "0";
 
 
         //document.querySelector("#contact_name").value = element.contact_name;
         var str_time = moment(element.datetime).format('YYYY-MM-DDTHH:mm'); //console.log(str_time);
         var dateControl = document.querySelector('#datetime').value =
-        str_time; //dateControl.value = '2017-06-01T08:30';
+            str_time; //dateControl.value = '2017-06-01T08:30';
         document.querySelector("#debt_duration").value = element.debt_duration;
         //SET BILLING DURATION
         var date = new Date(element.datetime); // Now
@@ -302,11 +302,11 @@
     }
 
     function fillOrderDetail(result) {
-        console.log("detail : ", result);
+        //console.log("detail : ", result);
         var dataSet = [];
         result.table_order_detail.forEach(function(element, index) {
             var id = element.order_detail_id;
-            console.log("ELEMENT id : ", id, element);
+            console.log("ELEMENT id : ", element);
             var row = createRow(id, element);
             dataSet.push(row);
         });

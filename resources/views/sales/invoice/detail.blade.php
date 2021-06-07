@@ -1,7 +1,7 @@
 <div class="card mt-4" id="table">
     <div class="card-body">
         <style>
-            .input {w
+            .input {
                 max-width: 100px;
                 width: 100%;
             }
@@ -80,7 +80,7 @@
 
             //EVENT HANDLER
             function createRow(id, element) {
-                // console.log(element);
+                console.log('detail:invoice', element.);
                 return [
                     element.product_code +
                     "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='" + element
