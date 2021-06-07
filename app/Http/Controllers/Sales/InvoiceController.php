@@ -329,7 +329,6 @@ class InvoiceController extends Controller
       //QUOTATION Detail
       'table_invoice_detail' => $table_invoice_detail,
       'table_product' => ProductModel::select_all(),
-
       'total_text' => count($table_invoice) > 0 ? Functions::baht_text($table_invoice[0]->total) : "-",
     ];
     //return view('sales/invoice/edit',$data);
@@ -412,17 +411,7 @@ class InvoiceController extends Controller
     if ($input['payment_method'] != "credit") {
       $input['total_debt'] = 0;
     }
-    // InvoiceModel::update_by_id($input, $id);
 
-    // //2.DELETE QUOTATION DETAIL FIRST
-    // InvoiceDetailModel::delete_by_invoice_id($id);
-
-    // //3.INSERT ALL NEW QUOTATION DETAIL
-    // $list = [];
-    // //print_r($request->input('product_id_edit'));
-    // //print_r($request->input('amount_edit'));
-    // //print_r($request->input('discount_price_edit'));
-    // //echo $id;
     if (is_array($request->input('product_id_edit'))) {
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
         InvoiceDetailModel::where('invoice_id', $id)->delete();
@@ -436,7 +425,6 @@ class InvoiceController extends Controller
       }
     }
 
-    // InvoiceDetailModel::insert($list);
 
     //4.REDIRECT
     return redirect("sales/invoice/{$id}/edit");

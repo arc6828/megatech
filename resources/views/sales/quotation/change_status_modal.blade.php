@@ -47,7 +47,7 @@
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-sm btn-success"
-                            id="btn-change-status-submit">เปลี่นแปลงสถานะ</button>
+                            id="btn-change-status-submit">เปลี่ยนแปลงสถานะ</button>
                     </div>
                 </form>
             </div>
