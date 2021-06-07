@@ -1,4 +1,4 @@
-<!-- Button trigger modal -->
+<!-- Button trigger modal ยกเลิกการใช้งาน -->
 <style>
 
 .modal-xl {
@@ -293,7 +293,7 @@
 	}
 
 	function fillOrderDetail(result){
-		//console.log("detail : ",result);
+		console.log("detail : ",result);
 		var dataSet = [];
 		result.table_order_detail.forEach(function(element,index) {
 			var id = element.order_detail_id;
