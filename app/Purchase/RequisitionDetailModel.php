@@ -10,7 +10,16 @@ class RequisitionDetailModel extends Model
 
   protected $table = "tb_purchase_requisition_detail";
   protected $primaryKey = 'purchase_requisition_detail_id';
-  protected $fillable = ['product_id', 'amount', 'discount_price', 'purchase_requisition_id'];
+  protected $fillable = [
+    'product_id',
+    'amount',
+    'approved_amount',
+    'before_approved_amount',
+    'discount_price',
+    'purchase_requisition_id',
+    'supplier_amount', 'po_amount',
+    'purchase_requisition_detail_status_id'
+  ];
 
 
   public function Requisition()
@@ -36,13 +45,13 @@ class RequisitionDetailModel extends Model
       ->get();
   }
 
-  public static function select_by_purchase_requisition_id($purchase_requisition_id)
-  {
-    return DB::table('tb_purchase_requisition_detail')
-      ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-      ->where('purchase_requisition_id', '=', $purchase_requisition_id)
-      ->get();
-  }
+  // public static function select_by_purchase_requisition_id($purchase_requisition_id)
+  // {
+  //   return DB::table('tb_purchase_requisition_detail')
+  //     ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+  //     ->where('purchase_requisition_id', '=', $purchase_requisition_id)
+  //     ->get();
+  // }
 
   //EXTENSION OF ORDER
   public static function select_by_purchase_requisition_id_by_status_id($purchase_requisition_id, $purchase_requisition_detail_status_id)

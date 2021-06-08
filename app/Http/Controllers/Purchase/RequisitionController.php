@@ -100,17 +100,19 @@ class RequisitionController extends Controller
     //3. Insert PR_detail
     if (is_array($request->input('product_id_edit'))) {
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        $purchase_detail = [
+        //4. Create PR_detail
+        RequisitionDetailModel::create([
+          "purchase_requisition_detail_status_id" => 3,
+          "approved_amount" => 0,
+          "supplier_amount" => 0,
+          "po_amount" => 0,
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
-          // "discount_price" => $request->input('discount_price_edit')[$i],
+          "before_approved_amount" =>  $request->input('amount_edit')[$i],
           "purchase_requisition_id" => $id,
-        ];
-        //4. Create PR_detail
-        RequisitionDetailModel::create($purchase_detail);
+        ]);
       }
     }
-
     return redirect("purchase/requisition/{$id}");
   }
 
@@ -144,6 +146,11 @@ class RequisitionController extends Controller
       ->select(DB::raw('tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name, tb_customer.customer_code'))
       ->get();
 
+    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+      ->where('purchase_requisition_id', '=', $id)
+      ->groupBy('purchase_requisition_id')
+      ->get();
+
 
     $data = [
       //QUOTATION
@@ -159,7 +166,7 @@ class RequisitionController extends Controller
       'purchase_requisition_id' => $id,
       'mode' => 'show',
       //QUOTATION Detail
-      'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
+      'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
       'table_product' => ProductModel::select_all(),
       'mode' => 'show',
 
@@ -179,6 +186,12 @@ class RequisitionController extends Controller
       ->where('tb_purchase_requisition.purchase_requisition_id', '=', $id)
       ->select(DB::raw('tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name, tb_customer.customer_code'))
       ->get();
+
+    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+      ->where('purchase_requisition_id', '=', $id)
+      ->groupBy('purchase_requisition_id')
+      ->get();
+      
     $data = [
       //QUOTATION
       'table_purchase_requisition' => $table_purchase_requisition,
@@ -193,7 +206,7 @@ class RequisitionController extends Controller
       'purchase_requisition_id' => $id,
       'mode' => 'edit',
       //QUOTATION Detail
-      'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
+      'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
       'table_product' => ProductModel::select_all(),
       'mode' => 'edit',
     ];
@@ -238,13 +251,13 @@ class RequisitionController extends Controller
         $purchase_detail = [
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
-          // "discount_price" => $request->input('discount_price_edit')[$i],
           "purchase_requisition_id" => $id,
         ];
         //4. Create PR_detail
         RequisitionDetailModel::create($purchase_detail);
       }
     }
+
     //5. Update PR
     RequisitionModel::where('purchase_requisition_id', $id)
       ->update($input);
