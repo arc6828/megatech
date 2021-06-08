@@ -159,7 +159,7 @@
 
       var filter = JSON.parse('@json($filter)');
       var filter_param = $.param( filter );
-      var url = "{{ url('/') }}/api/purchase/requisition_detail?"+filter_param;
+      var url = "{{ url('/') }}/api/purchase/requisition_detail/edit_supplier?"+filter_param;
   		console.log("555",filter,filter_param,url);
 
 			//AJAX

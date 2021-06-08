@@ -143,17 +143,22 @@
                         @case(" -1")
                             <span class="badge badge-pill badge-secondary">Void</span>
                         @break
-                        @case(" 0")
-                            <span class="badge badge-pill badge-primary">อนุมัติทั้งหมด / บางส่วน / รอการอนุมัติ</span>
+                        @case(" 3")
+                            <span class="badge badge-pill badge-primary">อนุมัติบางส่วน</span>
                         @break
+                        {{-- @case(" 1")
+                            <span class="badge badge-pill badge-success">อนุมัติทั้งหมด</span>
+                        @break --}}
                         @default
+                            {{-- <span class="badge badge-pill badge-primary">YES</span> --}}
+
                             @if ($purchase_requisition->requisition_details->sum('purchase_requisition_detail_status_id') == $purchase_requisition->requisition_details->count('purchase_requisition_detail_status_id'))
                                 <span class="badge badge-pill badge-success">อนุมัติทั้งหมด</span>
                             @elseif(
                                 $purchase_requisition->requisition_details->sum("purchase_requisition_detail_status_id") ==
                                 $purchase_requisition->requisition_details->count("purchase_requisition_detail_status_id")*3 )
                                 <span class="badge badge-pill badge-info">รอการอนุมัติ</span>
-                            @elseif(
+                               @elseif(
                                 $purchase_requisition->requisition_details->sum("purchase_requisition_detail_status_id") ==
                                 $purchase_requisition->requisition_details->count("purchase_requisition_detail_status_id")*2 )
                                 <span class="badge badge-pill badge-danger">ไม่อนุมัติ</span>

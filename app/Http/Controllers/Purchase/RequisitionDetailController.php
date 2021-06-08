@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Purchase\RequisitionDetailModel;
 use App\Purchase\RequisitionDetailStatusModel;
-
+use App\Purchase\RequisitionModel;
 use App\SupplierModel;
 
 class RequisitionDetailController extends Controller
@@ -52,10 +52,34 @@ class RequisitionDetailController extends Controller
           $new_purchase_detail = $purchase_detail->replicate()->fill([
             'purchase_requisition_detail_status_id' => $action,
           ]);
+
           $new_purchase_detail->save();
+        } elseif ($approve_amounts[$i] == $amounts[$i]) {
+          //update RequisitionDetailModel
+          RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+            ->update(['purchase_requisition_detail_status_id' => $action]);
         }
       }
+
+      //update
+      $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
+      $purchase_id = $purchase_detail->purchase_requisition_id;
+
+      $sum = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids)
+        ->where('purchase_requisition_id', $purchase_id)
+        ->sum('before_approved_amount');
+
+      if ($sum == 0) {
+        //NO ONE LEFT : 9 => ออก Invoice ครบ
+        RequisitionModel::where('purchase_requisition_id', $purchase_id)
+          ->update(["purchase_status_id" => 1]);
+      } else {
+        RequisitionModel::where('purchase_requisition_id', $purchase_id)
+          ->update(["purchase_status_id" => 3]);
+      }
     }
+
+
     return redirect()->back();
   }
 
@@ -63,10 +87,11 @@ class RequisitionDetailController extends Controller
   {
     $filter = (object)[
       "purchase_requisition_detail_status_id" => $request->input("purchase_requisition_detail_status_id", 1),
-      "m_date" => $request->input("m_date", "" . date('Y') . "-" . date('m') . "-" . "01"),
+      "m_date" => $request->input("m_date", "" . date('Y') . "-" . date('m') . "-" . "06"),
       "date_begin" =>  $request->input("date_begin", ""),
       "date_end" => $request->input("date_end", ""),
     ];
+    
     $data = [
       'table_purchase_requisition_detail_status' => RequisitionDetailStatusModel::select_all(),
       'table_supplier' => SupplierModel::orderBy('supplier_code', 'asc')->get(),

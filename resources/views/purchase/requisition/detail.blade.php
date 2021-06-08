@@ -142,7 +142,6 @@
                         status = "รออนุมัติ";
                         element.purchase_requisition_detail_status_id = 3;
                         break;
-
                 }
                 return [
                     "<input type='hidden' class='id_edit' name='id_edit[]'  value='" + id + "' >" +
@@ -152,9 +151,9 @@
                     element.product_name,
 
                     "<input class='input amount_edit' name='amount_edit[]'  value='" + element.amount + "' >",
-                    "" + (element.amount_wait ? element.amount_wait : 0) + "",
+                    "" + (element.before_approved_amount ? element.before_approved_amount : 0) + "",
                     "" + (element.amount_no ? element.amount_no : 0) + "",
-                    "" + (element.amount_yes ? element.amount_yes : 0) + "",
+                    "" + (element.approved_amount ? element.approved_amount : 0) + "",
 
                     //element.product_unit,
                     //"<input class='input normal_price_edit' name='normal_price_edit[]'  value='"+element.normal_price+"' disabled>",

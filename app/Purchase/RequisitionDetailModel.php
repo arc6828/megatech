@@ -135,6 +135,8 @@ class RequisitionDetailModel extends Model
       ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
       ->leftJoin('tb_supplier', 'tb_purchase_requisition_detail.supplier_id', '=', 'tb_supplier.supplier_id')
       ->whereIn("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $whitelist)
+      ->where("tb_purchase_requisition_detail.amount", ">", 0)
+      ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
       // ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
       //->whereBetween("datetime",">=",[$date_begin,$date_end])
       ->whereRaw("datetime >= '{$date_begin}' {$tail} AND datetime <= '{$date_end}' {$tail2} ")
