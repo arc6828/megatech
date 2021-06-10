@@ -35,54 +35,66 @@ class RequisitionDetailController extends Controller
     $approve_amounts = $request->input('approve_amounts');
     $action = $request->input('action', "1");
 
-    //IF PARTIAL APPROVE
     for ($i = 0; $i < count($purchase_requisition_detail_ids); $i++) {
       //CHECK IF IS CHECKED LIST
-      RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
-        ->decrement('before_approved_amount', $approve_amounts[$i]);
-      RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
-        ->increment('approved_amount', $approve_amounts[$i]);
-
       if (in_array($purchase_requisition_detail_ids[$i], $selected_purchase_requisition_detail_ids)) {
-        //CHECK IF APPROVE < amount
-        if ($approve_amounts[$i] < $amounts[$i]) {
-          //create unsaved copy รออนุมัติ ครั้งต่อไป
-          $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
-          // copy new_purchase_detail
-          $new_purchase_detail = $purchase_detail->replicate()->fill([
-            'purchase_requisition_detail_status_id' => $action,
-          ]);
 
-          $new_purchase_detail->save();
-        } elseif ($approve_amounts[$i] == $amounts[$i]) {
-          //update RequisitionDetailModel
-          RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
-            ->update(['purchase_requisition_detail_status_id' => $action]);
-        }
-      }
+        RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+          ->decrement('before_approved_amount', $approve_amounts[$i]);
+        RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+          ->increment('approved_amount', $approve_amounts[$i]);
 
-      //update
-      $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
-      $purchase_id = $purchase_detail->purchase_requisition_id;
-
-      $sum = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids)
-        ->where('purchase_requisition_id', $purchase_id)
-        ->sum('before_approved_amount');
-
-      if ($sum == 0) {
-        //NO ONE LEFT : 9 => ออก Invoice ครบ
-        RequisitionModel::where('purchase_requisition_id', $purchase_id)
-          ->update(["purchase_status_id" => 1]);
-      } else {
-        RequisitionModel::where('purchase_requisition_id', $purchase_id)
-          ->update(["purchase_status_id" => 3]);
+        RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+          ->update(['purchase_requisition_detail_status_id' => $action]);
       }
     }
-
-
     return redirect()->back();
   }
+  // $sum = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids)
+  //   ->where('purchase_requisition_id', $purchase_id)
+  //   ->sum('before_approved_amount');
 
+  // if ($sum == 0) {
+  //   RequisitionModel::where('purchase_requisition_id', $purchase_id)
+  //     ->update(["purchase_status_id" => 1]);
+  // } else {
+  //   RequisitionModel::where('purchase_requisition_id', $purchase_id)
+  //     ->update(["purchase_status_id" => 3]);
+  // }
+
+  //   $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
+
+  //   RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_detail->purchase_requisition_detail_id)->first()
+  //     ->update(['supplier_amount' => $purchase_detail->approved_amount]);
+
+  //   //CHECK IF APPROVE < amount PARTIAL APPROVE
+  //   if ($approve_amounts[$i] < $amounts[$i]) {
+  //     //create unsaved copy รออนุมัติ ครั้งต่อไป
+  //     $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
+  //     // copy new_purchase_detail
+  //     $new_purchase_detail = $purchase_detail->replicate()->fill([
+  //       'purchase_requisition_detail_status_id' => $action,
+  //     ]);
+  //     $new_purchase_detail->save();
+  //   } elseif ($approve_amounts[$i] == $amounts[$i]) {
+  //     //update RequisitionDetailModel
+  //     RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+  //       ->update(['purchase_requisition_detail_status_id' => $action]);
+  //   }
+  // }
+
+  //update RequisitionModel
+  // $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
+  // $purchase_id = $purchase_detail->purchase_requisition_id;
+
+  // $count = RequisitionDetailModel::where('purchase_requisition_detail_status_id', 3) // รออนุมัติ
+  //   ->where('purchase_requisition_id', $purchase_id)
+  //   ->count();
+
+  // if ($count == 0) {
+  //   RequisitionModel::where('purchase_requisition_id', $purchase_id)
+  //     ->update(["purchase_status_id" => 3]);
+  // }
   public function edit_supplier(Request $request)
   {
     $filter = (object)[
@@ -91,7 +103,7 @@ class RequisitionDetailController extends Controller
       "date_begin" =>  $request->input("date_begin", ""),
       "date_end" => $request->input("date_end", ""),
     ];
-    
+
     $data = [
       'table_purchase_requisition_detail_status' => RequisitionDetailStatusModel::select_all(),
       'table_supplier' => SupplierModel::orderBy('supplier_code', 'asc')->get(),
@@ -104,7 +116,7 @@ class RequisitionDetailController extends Controller
   {
     $purchase_requisition_detail_ids = $request->input('purchase_requisition_detail_ids');
     $selected_purchase_requisition_detail_ids = $request->input('selected_purchase_requisition_detail_ids');
-    $amounts = $request->input('amounts');
+    // $amounts = $request->input('amounts');
     $approve_amounts = $request->input('approve_amounts');
     $action = $request->input('action', "1"); //SELECT COMPANY
 
@@ -112,19 +124,30 @@ class RequisitionDetailController extends Controller
     for ($i = 0; $i < count($purchase_requisition_detail_ids); $i++) {
       //CHECK IF IS CHECKED LIST
       if (in_array($purchase_requisition_detail_ids[$i], $selected_purchase_requisition_detail_ids)) {
-        //CHECK IF APPROVE < amount
-        if ($approve_amounts[$i] < $amounts[$i]) {
-          //insert new purchase_requisition detail
-          $new_amount = $amounts[$i] - $approve_amounts[$i];
-          RequisitionDetailModel::duplicate_by_id($new_amount, $purchase_requisition_detail_ids[$i]);
-          //update by approve amount
-          RequisitionDetailModel::update_by_id(["amount" => $approve_amounts[$i]], $purchase_requisition_detail_ids[$i]);
-        }
+
+        RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+          ->decrement('approved_amount', $approve_amounts[$i]);
+        //decrement supplier_amount 
+        RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+          ->increment('supplier_amount', $approve_amounts[$i]);
+
+        RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first()
+          ->update([
+            'supplier_id' => $action,
+            'purchase_requisition_detail_status_id' => 4,
+          ]);
+        // if ($approve_amounts[$i] < $amounts[$i]) {
+        //   $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
+        //   $new_purchase_detail = $purchase_detail->replicate()->fill([
+        //     'purchase_requisition_detail_status_id' => 1,
+        //   ]);
+        //   $new_purchase_detail->save();
+        // }
       }
+
+      //  UPDATE BY SELECTED ITEM : 4 means DEFINED SUPPLIER
+
     }
-    //UPDATE BY SELECTED ITEM : 4 means DEFINED SUPPLIER
-    $purchase_requisition_detail_status = 4;
-    RequisitionDetailModel::update_purchase_requisition_detail_status_id_by_ids2($action, $selected_purchase_requisition_detail_ids, $purchase_requisition_detail_status);
     return redirect()->back();
   }
 }

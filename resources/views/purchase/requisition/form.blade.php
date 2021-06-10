@@ -143,22 +143,17 @@
                         @case(" -1")
                             <span class="badge badge-pill badge-secondary">Void</span>
                         @break
-                        @case(" 3")
-                            <span class="badge badge-pill badge-primary">อนุมัติบางส่วน</span>
+                        @case(" 0")
+                            <span class="badge badge-pill badge-primary">อนุมัติทั้งหมด / บางส่วน / รอการอนุมัติ</span>
                         @break
-                        {{-- @case(" 1")
-                            <span class="badge badge-pill badge-success">อนุมัติทั้งหมด</span>
-                        @break --}}
                         @default
-                            {{-- <span class="badge badge-pill badge-primary">YES</span> --}}
-
                             @if ($purchase_requisition->requisition_details->sum('purchase_requisition_detail_status_id') == $purchase_requisition->requisition_details->count('purchase_requisition_detail_status_id'))
                                 <span class="badge badge-pill badge-success">อนุมัติทั้งหมด</span>
                             @elseif(
                                 $purchase_requisition->requisition_details->sum("purchase_requisition_detail_status_id") ==
                                 $purchase_requisition->requisition_details->count("purchase_requisition_detail_status_id")*3 )
                                 <span class="badge badge-pill badge-info">รอการอนุมัติ</span>
-                               @elseif(
+                            @elseif(
                                 $purchase_requisition->requisition_details->sum("purchase_requisition_detail_status_id") ==
                                 $purchase_requisition->requisition_details->count("purchase_requisition_detail_status_id")*2 )
                                 <span class="badge badge-pill badge-danger">ไม่อนุมัติ</span>
@@ -170,20 +165,7 @@
             </div>
         </div>
 
-        <div class="form-group form-inline d-none">
 
-            <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
-            <div class="col-lg-3 d-none">
-                <select name="zone_id" id="zone_id" class="form-control form-control-sm">
-                    <option value="">None</option>
-                    @foreach ($table_zone as $row_zone)
-                        <option value="{{ $row_zone->zone_id }}">
-                            {{ $row_zone->zone_name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
     </div>
 </div>
 

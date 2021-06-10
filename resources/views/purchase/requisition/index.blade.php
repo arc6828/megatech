@@ -55,16 +55,15 @@
                                         {{ $row->purchase_requisition_code }}
                                     </a>
                                 </td>
-                                {{-- <td>{{ date_format($row->datetime),"d-m-Y" ) }}</td> --}}
                                 <td>{{ date_format(date_create(explode(' ', $row->datetime)[0]), 'd-m-Y') }}</td>
-                                <!-- <td>{{ $row->User->short_name }}</td> -->
                                 <td>
                                     @switch($row->purchase_status_id)
                                         @case(" -1")
                                             <span class="badge badge-pill badge-secondary">Void</span>
                                         @break
-                                        @case(" 3")
-                                            <span class="badge badge-pill badge-primary">อนุมัติบางส่วน</span>
+                                        @case(" 0")
+                                            <span class="badge badge-pill badge-primary">อนุมัติทั้งหมด / บางส่วน /
+                                                รอการอนุมัติ</span>
                                         @break
                                         @default
                                             @if ($row->requisition_details->sum('purchase_requisition_detail_status_id') == $row->requisition_details->count('purchase_requisition_detail_status_id'))
@@ -80,7 +79,6 @@
                                             @endif
                                     @endswitch
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>

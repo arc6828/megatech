@@ -8,9 +8,9 @@
 
 @section('navbar-menu')
     <!-- <div style="margin:21px;">
-                  <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
-                  <button class="btn btn-success d-none" type="submit" onclick="document.getElementById('form').submit();">Update</button>
-                </div> -->
+                      <a class="btn btn-outline-primary" href="{{ url('/') }}/purchase">back</a>
+                      <button class="btn btn-success d-none" type="submit" onclick="document.getElementById('form').submit();">Update</button>
+                    </div> -->
 @endsection
 
 @section('breadcrumb-menu')
@@ -19,17 +19,17 @@
 
 @section('content')
 
-    <div class="card">
+    <div class="card d-none" >
         <div class="card-body">
             <!-- <div class="mb-4">
-                      <a href="{{ url('/purchase') }}" title="Back" class="pb-4">
-                        <button class="btn btn-warning btn-sm">
-                          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                        </button>
-                      </a>
-                    </div> -->
+                          <a href="{{ url('/purchase') }}" title="Back" class="pb-4">
+                            <button class="btn btn-warning btn-sm">
+                              <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                            </button>
+                          </a>
+                        </div> -->
             <form method="get" action="">
-                <div class="form-group form-inline">
+                {{-- <div class="form-group form-inline">
                     <label class="col-lg-2 offset-lg-1">สถานะ</label>
                     <div class="col-lg-3">
                         <select name="purchase_requisition_detail_status_id" id="purchase_requisition_detail_status_id"
@@ -50,7 +50,7 @@
                         <input type="text" name="approve_date" class="form-control form-control-sm"
                             value="{{ date('d-m-Y') }}" disabled readonly>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group form-inline  d-none">
                     <label class="col-lg-2 offset-lg-1">เลือกช่วงเวลา</label>
@@ -80,7 +80,7 @@
                 </div>
                 <div><button type="submit" style="display:none;" id="form-submit">submit</button></div>
             </form>
-            <script>
+            {{-- <script>
                 function onSubmit() {
                     var purchase_requisition_detail_status_id = document.getElementById(
                         "purchase_requisition_detail_status_id");
@@ -106,7 +106,7 @@
                     document.getElementById("form-submit").click();
                 }
 
-            </script>
+            </script> --}}
         </div>
     </div>
     <div class="mt-4 card">
@@ -167,7 +167,7 @@
                 var filter = JSON.parse('@json($filter)');
                 var filter_param = $.param(filter);
                 var url = "{{ url('/') }}/api/purchase/requisition_detail?" + filter_param;
-                console.log("555", filter, filter_param, url);
+                //console.log(filter, filter_param, url);
 
                 //AJAX
                 $.ajax({
@@ -179,7 +179,7 @@
                     var dataSet = [];
                     var product_codes = [];
                     result.forEach(function(element, index) {
-                        console.log(element, index);
+                        //console.log(element, index);
 
                         var id = element.purchase_requisition_detail_id;
                         var willing_amount = parseInt(element.pending_out) - (parseInt(element

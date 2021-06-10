@@ -22,33 +22,17 @@ class RequisitionDetailController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function index(Request $request)
-  { //FOR SOMEONE
-
-    $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id", 3);
-    // $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-    //   ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
-    //   ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
-    //   ->leftJoin('tb_supplier', 'tb_purchase_requisition_detail.supplier_id', '=', 'tb_supplier.supplier_id')
-    //   ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $purchase_requisition_detail_status_id)
-    //   ->where("tb_purchase_requisition_detail.amount", ">", 0)
-    //   ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
-    //   ->select(DB::raw('*,DATE(datetime) as date'))
-    //   ->orderBy('date', 'asc')
-    //   ->get();
-    $m_date = $request->input("m_date", "");
-    $date_begin =  $request->input("date_begin", "");
-    $date_end = $request->input("date_end", "");
-    //echo is_null($m_date);
-    $table_purchase_requisition_detail = [];
-    if ($m_date !== "" && $m_date != null) {
-      //echo "mdate";
-      //echo $m_date;
-      $table_purchase_requisition_detail = RequisitionDetailModel::select_search($purchase_requisition_detail_status_id, $m_date);
-    } else if ($date_begin !== "" && $date_begin != null) {
-      //echo "begin";
-      $table_purchase_requisition_detail = RequisitionDetailModel::select_search($purchase_requisition_detail_status_id, $date_begin, $date_end);
-    }
-    // $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id", 3);
+  {
+    //ใช้ตอน อนุมัติใบเสนอซื้อ
+    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+      ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
+      ->leftJoin('tb_supplier', 'tb_purchase_requisition_detail.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where("tb_purchase_requisition_detail.amount", ">", 0)
+      ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
+      ->select(DB::raw('*,DATE(datetime) as date'))
+      ->orderBy('date', 'asc')
+      ->get();
 
     return response()->json($table_purchase_requisition_detail);
   }
@@ -72,17 +56,17 @@ class RequisitionDetailController extends Controller
   }
   public function edit_supplier(Request $request)
   {
-    $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id", 3);
+    //ใช้ตอน กำหนดเจ้าหนี้ใบเสนอซื้อ
     $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
       ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
       ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
       ->leftJoin('tb_supplier', 'tb_purchase_requisition_detail.supplier_id', '=', 'tb_supplier.supplier_id')
-      ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $purchase_requisition_detail_status_id)
-      ->where("tb_purchase_requisition_detail.amount", ">", 0)
-      // ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
+      ->where("tb_purchase_requisition_detail.approved_amount", ">", 0)
+      ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
       ->select(DB::raw('*,DATE(datetime) as date'))
       ->orderBy('date', 'asc')
       ->get();
+
     return response()->json($table_purchase_requisition_detail);
   }
 

@@ -17,8 +17,10 @@ class RequisitionDetailModel extends Model
     'before_approved_amount',
     'discount_price',
     'purchase_requisition_id',
-    'supplier_amount', 'po_amount',
-    'purchase_requisition_detail_status_id'
+    'supplier_amount', 
+    'po_amount',
+    'purchase_requisition_detail_status_id',
+    'supplier_id'
   ];
 
 
@@ -105,45 +107,45 @@ class RequisitionDetailModel extends Model
   }
 
   //EXTENSION ABOUT ORDER
-  public static function select_search($purchase_requisition_detail_status_id, $date_begin, $date_end = "")
-  {
-    $tail = "";
-    if ($date_end === "") {
-      $date_end = $date_begin;
-      //$date_begin = "".date("Y-m-d");
-      // $date_end = "".date("Y-m-d") . " +  INTERVAL 1 DAY ";
-      $date_end = date("Y-m-d");
+  // public static function select_search($purchase_requisition_detail_status_id, $date_begin, $date_end = "")
+  // {
+  //   $tail = "";
+  //   if ($date_end === "") {
+  //     $date_end = $date_begin;
+  //     //$date_begin = "".date("Y-m-d");
+  //     // $date_end = "".date("Y-m-d") . " +  INTERVAL 1 DAY ";
+  //     $date_end = date("Y-m-d");
 
-      $tail = " - INTERVAL 12 MONTH ";
-      $tail2 = " + INTERVAL 1 DAY ";
-      //$tail = "";
-      // echo $date_begin;
-      // echo $date_end ;
-      // exit();
-    }
-    //echo $purchase_requisition_detail_status_id;
-    //echo "s".$date_begin;
-    //echo "s".$date_end;
-    //echo $tail;
-    $whitelist = [$purchase_requisition_detail_status_id];
-    if ($purchase_requisition_detail_status_id == 1) {
-      $whitelist[] = 4;
-    }
-    return DB::table('tb_purchase_requisition_detail')
-      ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
-      ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
-      ->leftJoin('tb_supplier', 'tb_purchase_requisition_detail.supplier_id', '=', 'tb_supplier.supplier_id')
-      ->whereIn("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $whitelist)
-      ->where("tb_purchase_requisition_detail.amount", ">", 0)
-      ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
-      // ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
-      //->whereBetween("datetime",">=",[$date_begin,$date_end])
-      ->whereRaw("datetime >= '{$date_begin}' {$tail} AND datetime <= '{$date_end}' {$tail2} ")
-      ->select(DB::raw('*,DATE(datetime) as date'))
-      ->orderBy('date', 'asc')
-      ->get();
-  }
+  //     $tail = " - INTERVAL 12 MONTH ";
+  //     $tail2 = " + INTERVAL 1 DAY ";
+  //     //$tail = "";
+  //     // echo $date_begin;
+  //     // echo $date_end ;
+  //     // exit();
+  //   }
+  //   //echo $purchase_requisition_detail_status_id;
+  //   //echo "s".$date_begin;
+  //   //echo "s".$date_end;
+  //   //echo $tail;
+  //   $whitelist = [$purchase_requisition_detail_status_id];
+  //   if ($purchase_requisition_detail_status_id == 1) {
+  //     $whitelist[] = 4;
+  //   }
+  //   return DB::table('tb_purchase_requisition_detail')
+  //     ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+  //     ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+  //     ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
+  //     ->leftJoin('tb_supplier', 'tb_purchase_requisition_detail.supplier_id', '=', 'tb_supplier.supplier_id')
+  //     ->whereIn("tb_purchase_requisition_detail.purchase_requisition_detail_status_id", $whitelist)
+  //     ->where("tb_purchase_requisition_detail.amount", ">", 0)
+  //     ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
+  //     // ->where("tb_purchase_requisition_detail.purchase_requisition_detail_status_id","=",$purchase_requisition_detail_status_id)
+  //     //->whereBetween("datetime",">=",[$date_begin,$date_end])
+  //     ->whereRaw("datetime >= '{$date_begin}' {$tail} AND datetime <= '{$date_end}' {$tail2} ")
+  //     ->select(DB::raw('*,DATE(datetime) as date'))
+  //     ->orderBy('date', 'asc')
+  //     ->get();
+  // }
 
   public static function select_search2($purchase_requisition_detail_status_id)
   {
