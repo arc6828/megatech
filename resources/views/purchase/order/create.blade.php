@@ -38,7 +38,7 @@
     document.querySelector("#tax_type_id").value = "";
     document.querySelector("#delivery_time").value = "";
     document.querySelector("#department_id").value = "{{ Auth::user()->role }}";
-    document.querySelector("#purchase_status_id").value = "1";
+    document.querySelector("#purchase_status_id").value = "5";
     document.querySelector("#user_id").value = "{{ Auth::id() }}";
     document.querySelector("#zone_id").value = "1";
     document.querySelector("#total").value = "";

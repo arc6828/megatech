@@ -75,7 +75,7 @@ class OrderDetailController extends Controller
     public function history_purchase_price($supplier_id, $product_id){
       $order_detail = OrderDetailModel::join('tb_purchase_order','tb_purchase_order_detail.purchase_order_id','=','tb_purchase_order.purchase_order_id')
         ->where('product_id',$product_id)
-        ->where('supplier_id',$supplier_id)
+        // ->where('supplier_id',$supplier_id)
         ->orderBy('datetime','desc')->first();
       return response()->json($order_detail);
     }

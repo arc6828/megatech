@@ -155,7 +155,7 @@
                 element.product_code,
                 element.product_name + " / " + element.grade,
                 element.amount,
-                "<input type='number' name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:100px;' readonly required>",
+                "<input type='number' name='approve_amounts[]' value='"+element.supplier_amount+"' class='form-control form-control-sm' style='max-width:100px;' readonly required>",
                 //0,
                 //0,
                 //0,

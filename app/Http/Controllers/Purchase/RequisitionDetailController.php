@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Purchase;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Purchase\OrderDetailModel;
 use App\Purchase\RequisitionDetailModel;
 use App\Purchase\RequisitionDetailStatusModel;
 use App\Purchase\RequisitionModel;
@@ -136,6 +136,17 @@ class RequisitionDetailController extends Controller
             'supplier_id' => $action,
             'purchase_requisition_detail_status_id' => 4,
           ]);
+
+        $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
+
+        $order_detail = OrderDetailModel::create([
+          "product_id" => $purchase_detail->product_id,
+          "amount" => $purchase_detail->supplier_amount,
+          "requisition_detail_id" => $purchase_detail->purchase_requisition_detail_id,
+          "supplier_id" => $purchase_detail->supplier_id,
+          "purchase_order_detail_status_id" => 5,
+        ]);
+        $order_detail->save();
         // if ($approve_amounts[$i] < $amounts[$i]) {
         //   $purchase_detail = RequisitionDetailModel::where('purchase_requisition_detail_id', $purchase_requisition_detail_ids[$i])->first();
         //   $new_purchase_detail = $purchase_detail->replicate()->fill([
