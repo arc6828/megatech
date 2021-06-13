@@ -207,7 +207,7 @@
                             element.product_code,
                             element.product_name,
                             element.before_approved_amount,
-                            "<input type='number' name='approve_amounts[]' value='0'" +
+                           "<input type='number' name='approve_amounts[]' value=''" +
                             "' max='" + element.before_approved_amount +
                             "' class='form-control form-control-sm' style='width:100px;' required>",
 

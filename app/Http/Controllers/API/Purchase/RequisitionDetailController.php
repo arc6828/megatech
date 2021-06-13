@@ -41,8 +41,14 @@ class RequisitionDetailController extends Controller
   {
     //USE FOR RC SELECTION
     //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
-    $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id", 4);
-    $table_purchase_requisition_detail = RequisitionDetailModel::select_search2($purchase_requisition_detail_status_id);
+    //แสดงผลใน model order/create
+    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+      ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+      ->join('tb_purchase_order_detail', 'tb_purchase_order_detail.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+      ->whereNull('tb_purchase_order_detail.purchase_order_id')
+      ->where("tb_purchase_requisition_detail.po_amount", "=", 0)
+      ->get();
     return response()->json($table_purchase_requisition_detail);
   }
 
@@ -50,10 +56,17 @@ class RequisitionDetailController extends Controller
   {
     //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
     //FOR RECEIVE STEP - 5 => RECEIVE FROM SUPPLIER
-    $purchase_requisition_detail_status_id = $request->input("purchase_requisition_detail_status_id", 4);
-    $table_purchase_requisition_detail = RequisitionDetailModel::select_search_by_supplier_id($purchase_requisition_detail_status_id, $supplier_id);
+    //แสดงผลหน้า order/create
+    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+      ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+      ->join('tb_purchase_order_detail', 'tb_purchase_order_detail.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+      ->whereNull('tb_purchase_order_detail.purchase_order_id')
+      ->where("tb_purchase_requisition_detail.po_amount", "=", 0)
+      ->get();
     return response()->json($table_purchase_requisition_detail);
   }
+
   public function edit_supplier(Request $request)
   {
     //ใช้ตอน กำหนดเจ้าหนี้ใบเสนอซื้อ
@@ -61,8 +74,8 @@ class RequisitionDetailController extends Controller
       ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
       ->join('tb_purchase_requisition_detail_status', 'tb_purchase_requisition_detail.purchase_requisition_detail_status_id', '=', 'tb_purchase_requisition_detail_status.purchase_requisition_detail_status_id')
       ->leftJoin('tb_supplier', 'tb_purchase_requisition_detail.supplier_id', '=', 'tb_supplier.supplier_id')
-      ->where("tb_purchase_requisition_detail.approved_amount", ">", 0)
-      ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
+      // ->where("tb_purchase_requisition_detail.approved_amount", ">", 0)
+      // ->where("tb_purchase_requisition_detail.before_approved_amount", ">", 0)
       ->select(DB::raw('*,DATE(datetime) as date'))
       ->orderBy('date', 'asc')
       ->get();
