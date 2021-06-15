@@ -144,7 +144,7 @@
             //AJAX
             if (!$.fn.DataTable.isDataTable('#table-order-detail')) {
                 $.ajax({
-                    url: "{{ url('/') }}/api/purchase/order_detail/index_create",
+                    url: "{{ url('/') }}/api/purchase/order_detail/index_create/",
                     type: "GET",
                     dataType: "json",
                 }).done(function(result) {
