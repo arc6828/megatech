@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($order->details as $item )
+                            @foreach($order->order_details as $item )
                            
                             <tr>
                                 <td>{{$loop->iteration}}</td>

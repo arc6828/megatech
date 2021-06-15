@@ -73,44 +73,32 @@ class RequisitionController extends Controller
   public function store(Request $request)
   {
     //1. Gen new code PR
-    $input = [
-      'purchase_requisition_code' => $this->getNewCode(),
-      'external_reference_id' => $request->input('external_reference_id'),
-      'customer_id' => $request->input('customer_id'),
-      'debt_duration' => $request->input('debt_duration'),
-      'billing_duration' => $request->input('billing_duration'),
-      'payment_condition' => $request->input('payment_condition', ""),
-      'delivery_type_id' => $request->input('delivery_type_id'),
-      'tax_type_id' => $request->input('tax_type_id'),
-      'delivery_time' => $request->input('delivery_time'),
-      'department_id' => $request->input('department_id'),
-      'purchase_status_id' => 1,
-      'user_id' => $request->input('user_id'),
-      'zone_id' => $request->input('zone_id'),
-      'remark' => $request->input('remark'),
-      'vat_percent' => $request->input('vat_percent', 7),
-      'total' => $request->input('total', 0),
-    ];
-
+    $input = $request->all();
+    $input['purchase_requisition_code'] = $this->getNewCode();
+    $input['purchase_status_id'] = 1;
+    $input['vat_percent'] = $request->input('vat_percent', 7);
+    $input['total'] = $request->input('total', 0);
 
     //2.create PR
     $purchase = RequisitionModel::create($input);
     $id = $purchase->purchase_requisition_id;
 
-    //3. Insert PR_detail
+    //3. Insert PR_detail Loop
     if (is_array($request->input('product_id_edit'))) {
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        $purchase_detail = [
+        //4. Create PR_detail
+        RequisitionDetailModel::create([
+          "purchase_requisition_detail_status_id" => 3,
+          "approved_amount" => 0,
+          "supplier_amount" => 0,
+          "po_amount" => 0,
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
-          // "discount_price" => $request->input('discount_price_edit')[$i],
+          "before_approved_amount" =>  $request->input('amount_edit')[$i],
           "purchase_requisition_id" => $id,
-        ];
-        //4. Create PR_detail
-        RequisitionDetailModel::create($purchase_detail);
+        ]);
       }
     }
-
     return redirect("purchase/requisition/{$id}");
   }
 
@@ -144,6 +132,12 @@ class RequisitionController extends Controller
       ->select(DB::raw('tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name, tb_customer.customer_code'))
       ->get();
 
+    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+      ->where('purchase_requisition_id', '=', $id)
+      // ->groupBy('tb_purchase_requisition_detail.product_id')
+      // ->select(DB::raw('*,sum(tb_purchase_requisition_detail.amount) as sum_amount,sum(tb_purchase_requisition_detail.before_approved_amount) as sum_before_approved_amount'))
+      ->get();
+
 
     $data = [
       //QUOTATION
@@ -159,7 +153,7 @@ class RequisitionController extends Controller
       'purchase_requisition_id' => $id,
       'mode' => 'show',
       //QUOTATION Detail
-      'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
+      'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
       'table_product' => ProductModel::select_all(),
       'mode' => 'show',
 
@@ -179,6 +173,12 @@ class RequisitionController extends Controller
       ->where('tb_purchase_requisition.purchase_requisition_id', '=', $id)
       ->select(DB::raw('tb_purchase_requisition.*, tb_customer.contact_name, tb_customer.company_name, tb_customer.customer_code'))
       ->get();
+
+    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+      ->where('purchase_requisition_id', '=', $id)
+      // ->groupBy('tb_purchase_requisition_detail.product_id')
+      ->get();
+
     $data = [
       //QUOTATION
       'table_purchase_requisition' => $table_purchase_requisition,
@@ -193,7 +193,7 @@ class RequisitionController extends Controller
       'purchase_requisition_id' => $id,
       'mode' => 'edit',
       //QUOTATION Detail
-      'table_purchase_requisition_detail' => RequisitionDetailModel::select_by_purchase_requisition_id($id),
+      'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
       'table_product' => ProductModel::select_all(),
       'mode' => 'edit',
     ];
@@ -210,48 +210,66 @@ class RequisitionController extends Controller
   public function update(Request $request, $id)
   {
     //1. ดึงข้อมูลจาก form PR
-    $input = [
-      //'purchase_requisition_code' => $purchase_requisition_code,
-      'external_reference_id' => $request->input('external_reference_id'),
-      'customer_id' => $request->input('customer_id'),
-      'debt_duration' => $request->input('debt_duration'),
-      'billing_duration' => $request->input('billing_duration'),
-      'payment_condition' => $request->input('payment_condition', ""),
-      'delivery_type_id' => $request->input('delivery_type_id'),
-      'tax_type_id' => $request->input('tax_type_id'),
-      'delivery_time' => $request->input('delivery_time'),
-      'department_id' => $request->input('department_id'),
-      'purchase_status_id' => $request->input('purchase_status_id'),
-      'user_id' => $request->input('user_id'),
-      'zone_id' => $request->input('zone_id'),
-      'remark' => $request->input('remark'),
-      'vat_percent' => $request->input('vat_percent', 7),
-      'total' => $request->input('total', 0),
-    ];
+    $input = $request->all();
+    $input['vat_percent'] = $request->input('vat_percent', 7);
+    $input['total'] = $request->input('total', 0);
+    // $input = [
+    //   //'purchase_requisition_code' => $purchase_requisition_code,
+    //   'external_reference_id' => $request->input('external_reference_id'),
+    //   'customer_id' => $request->input('customer_id'),
+    //   'debt_duration' => $request->input('debt_duration'),
+    //   'billing_duration' => $request->input('billing_duration'),
+    //   'payment_condition' => $request->input('payment_condition', ""),
+    //   'delivery_type_id' => $request->input('delivery_type_id'),
+    //   'tax_type_id' => $request->input('tax_type_id'),
+    //   'delivery_time' => $request->input('delivery_time'),
+    //   'department_id' => $request->input('department_id'),
+    //   'purchase_status_id' => $request->input('purchase_status_id'),
+    //   'user_id' => $request->input('user_id'),
+    //   'zone_id' => $request->input('zone_id'),
+    //   'remark' => $request->input('remark'),
+    //   'vat_percent' => $request->input('vat_percent', 7),
+    //   'total' => $request->input('total', 0),
+    // ];
 
     if (is_array($request->input('product_id_edit'))) {
+
       //2. Clear PR_detail
       RequisitionDetailModel::where('purchase_requisition_id', $id)->delete();
 
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        // print_r($request->input('product_id_edit'));
+
         //3.Insert PR_detail
         $purchase_detail = [
+          "purchase_requisition_detail_status_id" => 3,
+          "approved_amount" => 0,
+          "supplier_amount" => 0,
+          "po_amount" => 0,
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
-          // "discount_price" => $request->input('discount_price_edit')[$i],
+          "before_approved_amount" =>  $request->input('amount_edit')[$i],
           "purchase_requisition_id" => $id,
         ];
+
         //4. Create PR_detail
         RequisitionDetailModel::create($purchase_detail);
       }
+      // exit();
     }
+
+
     //5. Update PR
-    RequisitionModel::where('purchase_requisition_id', $id)
-      ->update($input);
+    $purchase = RequisitionModel::findOrFail($id);
+    $purchase->update($input);
+
+    // RequisitionModel::where('purchase_requisition_id', $id)
+    //   ->update($input);
 
     //4.REDIRECT
     return redirect("purchase/requisition/{$id}/edit");
   }
+
   public function revision(Request $request, $id)
   {
     //VOID IF HAS CODE (Revision)

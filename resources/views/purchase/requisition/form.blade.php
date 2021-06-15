@@ -165,20 +165,7 @@
             </div>
         </div>
 
-        <div class="form-group form-inline d-none">
 
-            <label class="col-lg-2 offset-lg-1 d-none">เขตการขาย</label>
-            <div class="col-lg-3 d-none">
-                <select name="zone_id" id="zone_id" class="form-control form-control-sm">
-                    <option value="">None</option>
-                    @foreach ($table_zone as $row_zone)
-                        <option value="{{ $row_zone->zone_id }}">
-                            {{ $row_zone->zone_name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
     </div>
 </div>
 

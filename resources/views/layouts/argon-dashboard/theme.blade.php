@@ -136,7 +136,7 @@
         @include('layouts/argon-dashboard/topnav')
         <!-- Header -->
         <div class="header bg-gradient-primary pt-lg-6">
-            <div class="container-fluid">
+            {{-- <div class="container-fluid">
                 <div class="header-body">
                     <!-- Card stats -->
                     <div class="row  d-none">
@@ -226,7 +226,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <!-- Page content -->
         <div class="container-fluid pt-5">

@@ -80,13 +80,13 @@
 		var product = JSON.parse(obj.getAttribute("json"));
 		product["amount"] = document.querySelector("#amount_create"+product.product_id).value;
 		product["discount_price"] = product.promotion_price? product.promotion_price : product.normal_price;
-		//console.log("CLICK PRODUCT : ", product, amount);
+		console.log("CLICK PRODUCT : ", product, amount);
 
 		var table = $('#table-invoice-detail').DataTable();
 		var row = createRow("new", product);
 		table.row.add(row).draw( false );
 		refreshDetailTableEvent();
 		document.querySelector("#btn-close").click();
-		//console.log("CLICK");
+		console.log("CLICK");
 	}
 </script>
