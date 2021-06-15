@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+  return $request->user();
 });
 
 //QUOTATION
@@ -48,21 +48,26 @@ Route::apiResource('/product', 'API\ProductController');
 
 Route::get('/order_detail/customer/{customer_id}/product/{product_id}', 'API\OrderDetailController@history_sell_price');
 Route::get('/order_detail/index2', 'API\OrderDetailController@index2');
+
 Route::apiResource('/order_detail', 'API\OrderDetailController');
 // Route::apiResource('/picking_detail', 'API\OrderDetailController');
 
 Route::prefix('purchase')->group(function () {
-    Route::get('/requisition_detail/supplier/{supplier_id}', 'API\Purchase\RequisitionDetailController@index_by_supplier');
-    Route::get('/requisition_detail/index2', 'API\Purchase\RequisitionDetailController@index2');
-    Route::get('/requisition_detail/edit_supplier', 'API\Purchase\RequisitionDetailController@edit_supplier');
+  Route::get('/requisition_detail/supplier/{supplier_id}', 'API\Purchase\RequisitionDetailController@index_by_supplier');
+  Route::get('/requisition_detail/index2', 'API\Purchase\RequisitionDetailController@index2');
+  Route::get('/requisition_detail/edit_supplier', 'API\Purchase\RequisitionDetailController@edit_supplier');
 
-    Route::apiResource('/requisition_detail', 'API\Purchase\RequisitionDetailController');
-    //PO - Detail
-    Route::get('/order_detail/supplier/{supplier_id}', 'API\Purchase\OrderDetailController@supplier');
-    Route::get('/order_detail/supplier/{supplier_id}/product/{product_id}', 'API\Purchase\OrderDetailController@history_purchase_price');
-    Route::get('/order_detail/order_code/{order_code}', 'API\Purchase\OrderDetailController@order_code');
-    Route::get('/order_detail/index2', 'API\Purchase\OrderDetailController@index2');
-    Route::apiResource('/order_detail', 'API\Purchase\OrderDetailController');
+  Route::apiResource('/requisition_detail', 'API\Purchase\RequisitionDetailController');
+  //PO - Detail 
+  Route::get('/order_detail/index_create/supplier/{supplier_id}', 'API\Purchase\OrderDetailController@index_create');
+  Route::get('/order_detail/supplier/{supplier_id}', 'API\Purchase\OrderDetailController@supplier');
+  Route::get('/order_detail/supplier/{supplier_id}/product/{product_id}', 'API\Purchase\OrderDetailController@history_purchase_price');
+  Route::get('/order_detail/order_code/{order_code}', 'API\Purchase\OrderDetailController@order_code');
+  Route::get('/order_detail/index_create/', 'API\Purchase\OrderDetailController@index_create');
+
+  // Route::get('/order_detail/index2', 'API\Purchase\OrderDetailController@index2');
+
+  Route::apiResource('/order_detail', 'API\Purchase\OrderDetailController');
 });
 
 Route::get('/account', 'AccountController@getAccount');
@@ -73,9 +78,9 @@ Route::get('/bank_detail', 'BankDetailController@index');
 
 Route::apiResource('issue-stock', 'API\IssueStockController');
 
-Route::apiResource("picking",'API\PickingController');
+Route::apiResource("picking", 'API\PickingController');
 // Route::get('/picking_detail/customer/{customer_id}/product/{product_id}', 'API\PickingDetailController@history_sell_price');
-Route::apiResource("picking_detail",'API\PickingDetailController');
+Route::apiResource("picking_detail", 'API\PickingDetailController');
 // Route::get('/company', 'API\CompanyController@index');
 // Route::get('/numberun', 'API\NumberController@index');
 // Route::get('/numberun/{id}', 'API\NumberController@show');

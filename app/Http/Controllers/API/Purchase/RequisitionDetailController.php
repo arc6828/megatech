@@ -37,35 +37,35 @@ class RequisitionDetailController extends Controller
     return response()->json($table_purchase_requisition_detail);
   }
 
-  public function index2(Request $request)
-  {
-    //USE FOR RC SELECTION
-    //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
-    //แสดงผลใน model order/create
-    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
-      ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
-      ->join('tb_purchase_order_detail', 'tb_purchase_order_detail.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
-      ->whereNull('tb_purchase_order_detail.purchase_order_id')
-      ->where("tb_purchase_requisition_detail.po_amount", "=", 0)
-      ->get();
-    return response()->json($table_purchase_requisition_detail);
-  }
+  // public function index2(Request $request)
+  // {
+  //   //USE FOR RC SELECTION
+  //   //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
+  //   //แสดงผลใน model order/create
+  //   $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+  //     ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+  //     ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+  //     ->join('tb_purchase_order_detail', 'tb_purchase_order_detail.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+  //     ->whereNull('tb_purchase_order_detail.purchase_order_id')
+  //     ->where("tb_purchase_requisition_detail.po_amount", "=", 0)
+  //     ->get();
+  //   return response()->json($table_purchase_requisition_detail);
+  // }
 
-  public function index_by_supplier(Request $request, $supplier_id)
-  {
-    //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
-    //FOR RECEIVE STEP - 5 => RECEIVE FROM SUPPLIER
-    //แสดงผลหน้า order/create
-    $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
-      ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
-      ->join('tb_purchase_order_detail', 'tb_purchase_order_detail.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
-      ->whereNull('tb_purchase_order_detail.purchase_order_id')
-      ->where("tb_purchase_requisition_detail.po_amount", "=", 0)
-      ->get();
-    return response()->json($table_purchase_requisition_detail);
-  }
+  // public function index_by_supplier(Request $request, $supplier_id)
+  // {
+  //   //FOR PO STEP - DEFAULT IS 4 => DEFINED SUPPLIER
+  //   //FOR RECEIVE STEP - 5 => RECEIVE FROM SUPPLIER
+  //   //แสดงผลหน้า order/create
+  //   $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+  //     ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+  //     ->join('tb_supplier', 'tb_supplier.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+  //     ->join('tb_purchase_order_detail', 'tb_purchase_order_detail.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
+  //     // ->whereNull('tb_purchase_order_detail.purchase_order_id')
+  //     // ->where("tb_purchase_requisition_detail.po_amount", "=", 0)
+  //     ->get();
+  //   return response()->json($table_purchase_requisition_detail);
+  // }
 
   public function edit_supplier(Request $request)
   {

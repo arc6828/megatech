@@ -32,6 +32,10 @@ class OrderDetailModel extends Model
     return $this->belongsTo('App\ProductModel', 'product_id');
   }
 
+  public function supplier()
+  {
+    return $this->belongsTo('App\SupplierModel', 'supplier_id');
+  }
 
 
   public static function select_all()

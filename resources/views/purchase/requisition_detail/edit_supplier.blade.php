@@ -197,7 +197,7 @@
                             //element.purchase_requisition_detail_status_name,
                             element.product_code,
                             element.product_name,
-                            element.approved_amount,
+                            element.amount,
                             "<input type='number' name='approve_amounts[]' value='" +element.supplier_amount+
                             "' max='" + element.approved_amount +
                             "' class='form-control form-control-sm' style='max-width:100px;' " +

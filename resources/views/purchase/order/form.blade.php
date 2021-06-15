@@ -355,22 +355,14 @@
         fillPurchase_order(supplier_id);
     }
 
-    function fillPurchase_order(supplier_id) {
-        //console.log(order_id);
-        $.ajax({
-            url: "{{ url('/') }}/api/purchase/requisition_detail/supplier/" + supplier_id,
-            type: "GET",
-            dataType: "json",
-        }).done(function(result) {
-            fillOrder(result);
-            fillOrderDetail(result);
-            //ALL ABOUT EVENT
-            refreshDetailTableEvent();
-            //AVOID TO EDIT
-            //$('#table-purchase_order-detail input').prop('readonly', true);
-
-        }); //END AJAX
-
+    async function fillPurchase_order(supplier_id) {
+        //fetch data
+        let response = await fetch(
+            `{{ url('/') }}/api/purchase/order_detail/index_create/supplier/" + supplier_id`);
+        //done fetch data
+        let result = await response.json();
+        await fillOrder(result);
+        await fillOrderDetail(result);
         document.querySelector("#btn-close-order").click();
 
     }
@@ -401,9 +393,6 @@
 
             onChange(document.querySelector("#vat_percent"));
         }
-
-
-
     }
 
     function fillOrderDetail(result) {
@@ -418,7 +407,8 @@
             if (element.purchase_requisition_detail_status_id == 4) {
                 let product_id = element.product_id;
                 let supplier_id = document.querySelector("#supplier_id").value;
-                let link = "{{ url('/') }}/api/purchase/order_detail/supplier/" + supplier_id +
+                let link = "{{ url('/') }}/api/purchase/order_detail/supplier/" +
+                    supplier_id +
                     "/product/" + product_id;
 
                 fetch(link)
@@ -432,7 +422,8 @@
                             }
                         @endif
                         //START
-                        let row = createRow("+", element, element.purchase_requisition_detail_id);
+                        let row = createRow("+", element, element
+                            .purchase_requisition_detail_id);
                         //dataSet.push(row);
                         table.row.add(row);
 
