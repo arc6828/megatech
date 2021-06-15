@@ -358,7 +358,7 @@
     async function fillPurchase_order(supplier_id) {
         //fetch data
         let response = await fetch(
-            `{{ url('/') }}/api/purchase/order_detail/index_create/supplier/" + supplier_id`);
+            `{{ url('/') }}/api/purchase/order_detail/index_create/supplier/${supplier_id}`);
         //done fetch data
         let result = await response.json();
         await fillOrder(result);
