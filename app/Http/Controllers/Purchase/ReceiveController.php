@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Purchase;
 
 use App\DeliveryTypeModel;
@@ -22,421 +23,399 @@ use PDF;
 
 class ReceiveController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        //$table_purchase_receive = ReceiveModel::select_by_keyword($q);
-        $data = [
-            //QUOTATION
-            'table_purchase_receive' => ReceiveModel::select_all(),
-            'q' => $request->input('q'),
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index(Request $request)
+  {
+    //$table_purchase_receive = ReceiveModel::select_by_keyword($q);
+    $table_purchase_receive = ReceiveModel::join('tb_supplier', 'tb_purchase_receive.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->join('tb_delivery_type', 'tb_purchase_receive.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
+      ->join('tb_tax_type', 'tb_purchase_receive.tax_type_id', '=', 'tb_tax_type.tax_type_id')
+      ->join('tb_purchase_status', 'tb_purchase_receive.purchase_status_id', '=', 'tb_purchase_status.purchase_status_id')
+      ->join('users', 'tb_purchase_receive.user_id', '=', 'users.id')
+      ->get();
+    $data = [
+      //QUOTATION
+      'table_purchase_receive' => $table_purchase_receive,
+      'q' => $request->input('q'),
+    ];
+    return view('purchase/receive/index', $data);
+  }
+
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    $data = [
+      //QUOTATION
+      'table_supplier' => SupplierModel::all(),
+      'table_delivery_type' => DeliveryTypeModel::select_all(),
+      'table_department' => DepartmentModel::select_all(),
+      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
+      //'table_purchase_user' => UserModel::select_by_role('purchase_receive'),
+      'table_purchase_user' => UserModel::all(),
+      //'table_purchase_receive_user' => UserModel::select_all(),
+      'table_zone' => ZoneModel::select_all(),
+      //QUOTATION DETAIL
+      'table_purchase_receive_detail' => [],
+      'table_product' => ProductModel::select_all(),
+    ];
+    return view('purchase/receive/create', $data);
+  }
+
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $input = $request->all();
+    $purchase_receive_code = $this->getNewCode();
+
+    $input['purchase_receive_code'] = $purchase_receive_code;
+    $input['datetime'] = date('Y-m-d H:i:s');
+    $input['purchase_status_id'] = 4;
+    $input['vat_percent'] = $request->input('vat_percent', 7);
+    $input['total_before_vat'] = $request->input('total_before_vat', 0);
+    $input['total'] = $request->input('total_after_vat', 0);
+    $input['total_debt'] = $request->input('total_after_vat', 0);
+
+    // $input = [
+    //     'purchase_receive_code' => $this->getNewCode(),
+    //     'external_reference_doc' => $request->input('external_reference_doc'),
+    //     'internal_reference_doc' => $request->input('internal_reference_doc'),
+    //     'supplier_id' => $request->input('supplier_id'),
+    //     'debt_duration' => $request->input('debt_duration'),
+    //     'billing_duration' => $request->input('billing_duration'),
+    //     'payment_condition' => $request->input('payment_condition', ""),
+    //     'delivery_type_id' => $request->input('delivery_type_id'),
+    //     'tax_type_id' => $request->input('tax_type_id'),
+    //     'delivery_time' => $request->input('delivery_time'),
+    //     'department_id' => $request->input('department_id'),
+    //     //'purchase_status_id' => $request->input('purchase_status_id'),
+    //     'purchase_status_id' => 4, //4 means ปิดการซื้อเรียบร้อย
+    //     'user_id' => $request->input('user_id'),
+    //     'zone_id' => $request->input('zone_id'),
+    //     'remark' => $request->input('remark'),
+    //     'vat_percent' => $request->input('vat_percent', 7),
+
+    //     //'vat' => $request->input('vat',0),
+    //     'total_before_vat' => $request->input('total_before_vat', 0),
+    //     'total' => $request->input('total_after_vat', 0),
+    //     'total_debt' => $request->input('total_after_vat', 0),
+    // ];
+
+    //UPLOAD
+    $receive = ReceiveModel::create($input);
+    $id = $receive->purchase_receive_id;
+
+    //UPLOAD FILE P/O
+    $receive = ReceiveModel::findOrFail($id);
+    if ($request->hasFile('file')) {
+      $folder = "supplier/iv";
+
+      $requestData['file'] = $request->file('file')->store($folder, 'public');
+      $requestData['external_reference_doc'] = $request->input('external_reference_doc');
+      $receive->update($requestData);
+    }
+
+    if (is_array($request->input('product_id_edit'))) {
+      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        $receive_detail = [
+          "product_id" => $request->input('product_id_edit')[$i],
+          "amount" => $request->input('amount_receive_edit')[$i],
+          "discount_price" => $request->input('discount_price_edit')[$i],
+          "purchase_receive_id" => $id,
+          "purchase_order_detail_id" => $request->input('purchase_order_detail_id_edit')[$i],
         ];
-        return view('purchase/receive/index', $data);
+        ReceiveDetailModel::create($receive_detail);
+
+        OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])
+          ->update(["purchase_order_detail_status_id" => 6]);
+        OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first()->decrement('amount_pending_in',  $request->input('amount_receive_edit')[$i]);
+        OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first()->increment('amount_pending_rc',  $request->input('amount_receive_edit')[$i]);
+      }
+    }
+    $receive_detail = ReceiveDetailModel::where('purchase_receive_id', $id)->get();
+    // //GAURD STOCK
+    foreach ($receive_detail as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $receive->purchase_receive_code,
+        "type" => "purchase_receive",
+        "amount" => $item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+        "pending_in" => ($product->pending_in - $item['amount']),
+        "pending_out" => ($product->pending_out),
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $data = [
-            //QUOTATION
-            'table_supplier' => SupplierModel::all(),
-            'table_delivery_type' => DeliveryTypeModel::select_all(),
-            'table_department' => DepartmentModel::select_all(),
-            'table_tax_type' => TaxTypeModel::select_all(),
-            'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
-            //'table_purchase_user' => UserModel::select_by_role('purchase_receive'),
-            'table_purchase_user' => UserModel::all(),
-            //'table_purchase_receive_user' => UserModel::select_all(),
-            'table_zone' => ZoneModel::select_all(),
-            //QUOTATION DETAIL
-            'table_purchase_receive_detail' => [],
-            'table_product' => ProductModel::select_all(),
-        ];
-        return view('purchase/receive/create', $data);
+    return redirect("purchase/receive/{$id}");
+  }
+
+  public function getNewCode()
+  {
+    $number = ReceiveModel::select_count_by_current_month();
+    $run_number = Numberun::where('id', '8')->value('number_en');
+    $count = $number + 1;
+    //$year = (date("Y") + 543) % 100;
+    $year = date("y");
+    $month = date("m");
+    $number = sprintf('%05d', $count);
+    $purchase_receive_code = "{$run_number}{$year}{$month}-{$number}";
+    return $purchase_receive_code;
+  }
+
+  public function cancel($id)
+  {
+    //
+    $purchase_receive = ReceiveModel::findOrFail($id);
+    //VOID
+    $purchase_receive->purchase_status_id = -1; //-1 MEANS Void
+    $purchase_receive->vat = 0;
+    $purchase_receive->total_debt = 0;
+    $purchase_receive->total_before_vat = 0;
+    $purchase_receive->total = 0;
+
+    $purchase_receive->save();
+
+    //FIND OE
+    $order = OrderModel::where('purchase_order_code', $purchase_receive->internal_reference_doc)->firstOrFail();
+    //RE STATUS OE
+    if ($order->purchase_status_id == 4) { //4 : ปิดการซื้อเรียบร้อย
+      $order->update(["purchase_status_id" => "3"]); //3 : รอรับสินค้า
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //INSERT QUOTATION
-        $input = [
-            'purchase_receive_code' => $this->getNewCode(),
-            'external_reference_doc' => $request->input('external_reference_doc'),
-            'internal_reference_doc' => $request->input('internal_reference_doc'),
-            'supplier_id' => $request->input('supplier_id'),
-            'debt_duration' => $request->input('debt_duration'),
-            'billing_duration' => $request->input('billing_duration'),
-            'payment_condition' => $request->input('payment_condition', ""),
-            'delivery_type_id' => $request->input('delivery_type_id'),
-            'tax_type_id' => $request->input('tax_type_id'),
-            'delivery_time' => $request->input('delivery_time'),
-            'department_id' => $request->input('department_id'),
-            //'purchase_status_id' => $request->input('purchase_status_id'),
-            'purchase_status_id' => 4, //4 means ปิดการซื้อเรียบร้อย
-            'user_id' => $request->input('user_id'),
-            'zone_id' => $request->input('zone_id'),
-            'remark' => $request->input('remark'),
-            'vat_percent' => $request->input('vat_percent', 7),
+    $list = $purchase_receive->purchase_receive_details()->get();
 
-            //'vat' => $request->input('vat',0),
-            'total_before_vat' => $request->input('total_before_vat', 0),
-            'total' => $request->input('total_after_vat', 0),
-            'total_debt' => $request->input('total_after_vat', 0),
-        ];
+    //RE STATUS OE DETAIL IN PICKING
+    //$pickings = $order->pickings()->get();
+    foreach ($list as $p) {
+      //UPDATE AMOUNT_PENDING_IN
+      $order_detail = OrderDetailModel::findOrFail($p->purchase_order_detail_id);
+      //->where('product_id',$p->product_id)
+      // ->where('purchase_order_detail_id',$p->purchase_order_detail_id)
+      // ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
+      // ;
+      // print_r($order->order_details()->get());
+      // print_r($p);
 
-        //UPLOAD
-        $id = ReceiveModel::insert($input);
+      $order_detail->increment('amount_pending_in', $p->amount);
 
-        //UPLOAD FILE P/O
-        $receive = ReceiveModel::findOrFail($id);
-        //UPLOAD FILE P/O
-        if ($request->hasFile('file')) {
-            $folder = "supplier/iv";
+      //UPDATE STATUS
+      $order_detail->update(["purchase_order_detail_status_id" => "5"]); //6 รับสินค้าแล้ว -> 5 ออก PO แล้ว
 
-            $requestData['file'] = $request->file('file')->store($folder, 'public');
-            $requestData['external_reference_doc'] = $request->input('external_reference_doc');
-            //$requestData['file'] = "sss.jpg";
-            $receive->update($requestData);
-        }
-
-        //INSERT ALL NEW QUOTATION DETAIL
-        $list = [];
-        //print_r($request->input('product_id_edit'));
-        //print_r($request->input('amount_edit'));
-        //print_r($request->input('discount_price_edit'));
-        //echo $id;
-        if (is_array($request->input('product_id_edit'))) {
-            for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-                $a = [
-                    "product_id" => $request->input('product_id_edit')[$i],
-                    "amount" => $request->input('amount_receive_edit')[$i],
-                    "discount_price" => $request->input('discount_price_edit')[$i],
-                    "purchase_receive_id" => $id,
-                    "purchase_order_detail_id" => $request->input('purchase_order_detail_id_edit')[$i],
-                ];
-                if (is_numeric($request->input('id_edit')[$i])) {
-                    //$a["purchase_receive_detail_id"] = $request->input('id_edit')[$i];
-                }
-                $amount_receive = $request->input('amount_receive_edit')[$i];
-                if ($amount_receive > 0) {
-                    $list[] = $a;
-
-                    //UPDATE PO Detail  : amount_pending_in, status if amount_pending_in
-                    $order_detail_id = $request->input('id_edit')[$i];
-                    $amount_receive = $request->input('amount_receive_edit')[$i];
-                    $amount_pending_in = $request->input('amount_pending_edit')[$i];
-                    if ($amount_pending_in == $amount_receive) {
-                        //STATUS 6 MEANS RECEIVED
-                        OrderDetailModel::update_by_id(["purchase_order_detail_status_id" => 6], $order_detail_id);
-                    }
-                    //THIS MEANS COMPLETE
-                    OrderDetailModel::decreaseAmountPendingIn($amount_receive, $order_detail_id);
-                }
-            }
-        }
-        ReceiveDetailModel::insert($list);
-
-        //CHECK if ALL RECEIVED, UPDATE STATUS PO : 4 => ปิดการซื้อเรียบร้อย
-        $purchase_order_code = $request->input('internal_reference_doc');
-        echo $purchase_order_code;
-
-        $purchase_order = OrderModel::where('purchase_order_code', $purchase_order_code)->first();
-        $purchase_order_id = $purchase_order->purchase_order_id;
-        $count = OrderDetailModel::countNotReceive($purchase_order_id);
-        if ($count == 0) {
-            //NO ONE LEFT : 4 => ปิดการซื้อเรียบร้อย
-            OrderModel::update_by_id(
-                ["purchase_status_id" => "4"],
-                $purchase_order_id
-            );
-        }
-
-        //GAURD STOCK
-        foreach ($list as $item) {
-            $product = ProductModel::findOrFail($item['product_id']);
-            $gaurd_stock = GaurdStock::create([
-                "code" => $item['purchase_receive_id'],
-                "type" => "purchase_receive",
-                "amount" => $item['amount'],
-                "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-                "pending_in" => ($product->pending_in - $item['amount']),
-                "pending_out" => ($product->pending_out),
-                "product_id" => $product->product_id,
-            ]);
-
-            //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-            $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-            $product->pending_in = $gaurd_stock['pending_in'];
-            $product->pending_out = $gaurd_stock['pending_out'];
-            $product->save();
-
-        }
-
-        return redirect("purchase/receive/{$id}");
+      $p->discount_price = 0;
+      $p->save();
     }
 
-    public function getNewCode()
-    {
-        $number = ReceiveModel::select_count_by_current_month();
-        $run_number = Numberun::where('id', '8')->value('number_en');
-        $count = $number + 1;
-        //$year = (date("Y") + 543) % 100;
-        $year = date("y");
-        $month = date("m");
-        $number = sprintf('%05d', $count);
-        $purchase_receive_code = "{$run_number}{$year}{$month}-{$number}";
-        return $purchase_receive_code;
+    //GAURD STOCK - CHECK
+    foreach ($list as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $id,
+        "type" => "purchase_receive_cancel",
+        "amount" => $item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+        "pending_in" => ($product->pending_in + $item['amount']),
+        "pending_out" => ($product->pending_out),
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
     }
 
-    public function cancel($id)
-    {
-        //
-        $purchase_receive = ReceiveModel::findOrFail($id);
-        //VOID
-        $purchase_receive->purchase_status_id = -1; //-1 MEANS Void
-        $purchase_receive->vat = 0;
-        $purchase_receive->total_debt = 0;
-        $purchase_receive->total_before_vat = 0;
-        $purchase_receive->total = 0;
+    return redirect("purchase/receive/{$id}");
+  }
 
-        $purchase_receive->save();
+  public function pdf($id)
+  {
+    //no show
+    $data = [
+      //QUOTATION
+      'table_purchase_receive' => ReceiveModel::select_by_id($id),
+      'table_company' => Company::select_all(),
+      'table_supplier' => SupplierModel::all(),
+      'table_delivery_type' => DeliveryTypeModel::select_all(),
+      'table_department' => DepartmentModel::select_all(),
+      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::select_all(),
+      'purchase_receive_id' => $id,
+      //QUOTATION Detail
+      'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
+      'table_product' => ProductModel::select_all(),
+    ];
+    //return view('purchase/receive/edit',$data);
 
-        //FIND OE
-        $order = OrderModel::where('purchase_order_code', $purchase_receive->internal_reference_doc)->firstOrFail();
-        //RE STATUS OE
-        if ($order->purchase_status_id == 4) { //4 : ปิดการซื้อเรียบร้อย
-            $order->update(["purchase_status_id" => "3"]); //3 : รอรับสินค้า
-        }
+    $pdf = PDF::loadView('purchase/receive/show', $data);
+    return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
+    //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
+  }
 
-        $list = $purchase_receive->purchase_receive_details()->get();
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
 
-        //RE STATUS OE DETAIL IN PICKING
-        //$pickings = $order->pickings()->get();
-        foreach ($list as $p) {
-            //UPDATE AMOUNT_PENDING_IN
-            $order_detail = OrderDetailModel::findOrFail($p->purchase_order_detail_id);
-            //->where('product_id',$p->product_id)
-            // ->where('purchase_order_detail_id',$p->purchase_order_detail_id)
-            // ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
-            // ;
-            // print_r($order->order_details()->get());
-            // print_r($p);
+    $data = [
+      //QUOTATION
+      'table_purchase_receive' => ReceiveModel::select_by_id($id),
+      'purchase_receive' => ReceiveModel::findOrFail($id),
+      'table_supplier' => SupplierModel::all(),
+      'table_delivery_type' => DeliveryTypeModel::select_all(),
+      'table_department' => DepartmentModel::select_all(),
+      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::select_all(),
+      'purchase_receive_id' => $id,
+      'mode' => 'show',
+      //QUOTATION Detail
+      'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
+      'table_product' => ProductModel::select_all(),
+    ];
+    //echo $data["mode"];
+    //exit();
+    return view('purchase/receive/edit', $data);
+  }
 
-            $order_detail->increment('amount_pending_in', $p->amount);
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    $data = [
+      //QUOTATION
+      'table_purchase_receive' => ReceiveModel::select_by_id($id),
+      'purchase_receive' => ReceiveModel::findOrFail($id),
+      'table_supplier' => SupplierModel::all(),
+      'table_delivery_type' => DeliveryTypeModel::select_all(),
+      'table_department' => DepartmentModel::select_all(),
+      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::select_all(),
+      'purchase_receive_id' => $id,
+      'mode' => 'edit',
+      //QUOTATION Detail
+      'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
+      'table_product' => ProductModel::select_all(),
+    ];
+    return view('purchase/receive/edit', $data);
+  }
 
-            //UPDATE STATUS
-            $order_detail->update(["purchase_order_detail_status_id" => "5"]); //6 รับสินค้าแล้ว -> 5 ออก PO แล้ว
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    // //1.INSERT QUOTATION
+    // $input = [
+    //   //'purchase_receive_code' => $purchase_receive_code,
+    //   'external_reference_doc' => $request->input('external_reference_doc'),
+    //   'supplier_id' => $request->input('supplier_id'),
+    //   'debt_duration' => $request->input('debt_duration'),
+    //   'billing_duration' => $request->input('billing_duration'),
+    //   'payment_condition' => $request->input('payment_condition',""),
+    //   'delivery_type_id' => $request->input('delivery_type_id'),
+    //   'tax_type_id' => $request->input('tax_type_id'),
+    //   'delivery_time' => $request->input('delivery_time'),
+    //   'department_id' => $request->input('department_id'),
+    //   'purchase_status_id' => $request->input('purchase_status_id'),
+    //   'user_id' => $request->input('user_id'),
+    //   'zone_id' => $request->input('zone_id'),
+    //   'remark' => $request->input('remark'),
+    //   'vat_percent' => $request->input('vat_percent',7),
+    //   'total' => $request->input('total',0),
+    // ];
+    // ReceiveModel::update_by_id($input,$id);
 
-            $p->discount_price = 0;
-            $p->save();
+    // //2.DELETE QUOTATION DETAIL FIRST
+    // ReceiveDetailModel::delete_by_purchase_receive_id($id);
 
-        }
+    // //3.INSERT ALL NEW QUOTATION DETAIL
+    // $list = [];
+    // //print_r($request->input('product_id_edit'));
+    // //print_r($request->input('amount_edit'));
+    // //print_r($request->input('discount_price_edit'));
+    // //echo $id;
+    // if (is_array ($request->input('product_id_edit'))){
+    //   for($i=0; $i<count($request->input('product_id_edit')); $i++){
+    //     $list[] = [
+    //         "product_id" => $request->input('product_id_edit')[$i],
+    //         "amount" => $request->input('amount_edit')[$i],
+    //         "discount_price" => $request->input('discount_price_edit')[$i],
+    //         "purchase_receive_id" => $id,
+    //     ];
+    //   }
+    // }
 
-        //GAURD STOCK - CHECK
-        foreach ($list as $item) {
-            $product = ProductModel::findOrFail($item['product_id']);
-            $gaurd_stock = GaurdStock::create([
-                "code" => $id,
-                "type" => "purchase_receive_cancel",
-                "amount" => $item['amount'],
-                "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-                "pending_in" => ($product->pending_in + $item['amount']),
-                "pending_out" => ($product->pending_out),
-                "product_id" => $product->product_id,
-            ]);
+    // ReceiveDetailModel::insert($list);
 
-            //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-            $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-            $product->pending_in = $gaurd_stock['pending_in'];
-            $product->pending_out = $gaurd_stock['pending_out'];
-            $product->save();
+    $receive = ReceiveModel::findOrFail($id);
 
-        }
+    //UPLOAD FILE P/O
+    if ($request->hasFile('file')) {
+      $folder = "supplier/iv";
 
-        return redirect("purchase/receive/{$id}");
+      $requestData['file'] = $request->file('file')->store($folder, 'public');
+      $requestData['external_reference_doc'] = $request->input('external_reference_doc');
+      //$requestData['file'] = "sss.jpg";
+      $receive->update($requestData);
     }
+    $requestData['external_reference_doc'] = $request->input('external_reference_doc');
+    //exit();
+    //UPDATE PR Detail
 
-    public function pdf($id)
-    {
-        //no show
-        $data = [
-            //QUOTATION
-            'table_purchase_receive' => ReceiveModel::select_by_id($id),
-            'table_company' => Company::select_all(),
-            'table_supplier' => SupplierModel::all(),
-            'table_delivery_type' => DeliveryTypeModel::select_all(),
-            'table_department' => DepartmentModel::select_all(),
-            'table_tax_type' => TaxTypeModel::select_all(),
-            'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
-            'table_purchase_user' => UserModel::all(),
-            'table_zone' => ZoneModel::select_all(),
-            'purchase_receive_id' => $id,
-            //QUOTATION Detail
-            'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
-            'table_product' => ProductModel::select_all(),
-        ];
-        //return view('purchase/receive/edit',$data);
+    // $requestData['external_reference_doc'] = '555';
+    $receive->update($requestData);
 
-        $pdf = PDF::loadView('purchase/receive/show', $data);
-        return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
-        //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
-    }
+    //4.REDIRECT
+    return redirect("purchase/receive/{$id}/edit");
+  }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-        $data = [
-            //QUOTATION
-            'table_purchase_receive' => ReceiveModel::select_by_id($id),
-            'purchase_receive' => ReceiveModel::findOrFail($id),
-            'table_supplier' => SupplierModel::all(),
-            'table_delivery_type' => DeliveryTypeModel::select_all(),
-            'table_department' => DepartmentModel::select_all(),
-            'table_tax_type' => TaxTypeModel::select_all(),
-            'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
-            'table_purchase_user' => UserModel::all(),
-            'table_zone' => ZoneModel::select_all(),
-            'purchase_receive_id' => $id,
-            'mode' => 'show',
-            //QUOTATION Detail
-            'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
-            'table_product' => ProductModel::select_all(),
-        ];
-        //echo $data["mode"];
-        //exit();
-        return view('purchase/receive/edit', $data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $data = [
-            //QUOTATION
-            'table_purchase_receive' => ReceiveModel::select_by_id($id),
-            'purchase_receive' => ReceiveModel::findOrFail($id),
-            'table_supplier' => SupplierModel::all(),
-            'table_delivery_type' => DeliveryTypeModel::select_all(),
-            'table_department' => DepartmentModel::select_all(),
-            'table_tax_type' => TaxTypeModel::select_all(),
-            'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
-            'table_purchase_user' => UserModel::all(),
-            'table_zone' => ZoneModel::select_all(),
-            'purchase_receive_id' => $id,
-            'mode' => 'edit',
-            //QUOTATION Detail
-            'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
-            'table_product' => ProductModel::select_all(),
-        ];
-        return view('purchase/receive/edit', $data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        // //1.INSERT QUOTATION
-        // $input = [
-        //   //'purchase_receive_code' => $purchase_receive_code,
-        //   'external_reference_doc' => $request->input('external_reference_doc'),
-        //   'supplier_id' => $request->input('supplier_id'),
-        //   'debt_duration' => $request->input('debt_duration'),
-        //   'billing_duration' => $request->input('billing_duration'),
-        //   'payment_condition' => $request->input('payment_condition',""),
-        //   'delivery_type_id' => $request->input('delivery_type_id'),
-        //   'tax_type_id' => $request->input('tax_type_id'),
-        //   'delivery_time' => $request->input('delivery_time'),
-        //   'department_id' => $request->input('department_id'),
-        //   'purchase_status_id' => $request->input('purchase_status_id'),
-        //   'user_id' => $request->input('user_id'),
-        //   'zone_id' => $request->input('zone_id'),
-        //   'remark' => $request->input('remark'),
-        //   'vat_percent' => $request->input('vat_percent',7),
-        //   'total' => $request->input('total',0),
-        // ];
-        // ReceiveModel::update_by_id($input,$id);
-
-        // //2.DELETE QUOTATION DETAIL FIRST
-        // ReceiveDetailModel::delete_by_purchase_receive_id($id);
-
-        // //3.INSERT ALL NEW QUOTATION DETAIL
-        // $list = [];
-        // //print_r($request->input('product_id_edit'));
-        // //print_r($request->input('amount_edit'));
-        // //print_r($request->input('discount_price_edit'));
-        // //echo $id;
-        // if (is_array ($request->input('product_id_edit'))){
-        //   for($i=0; $i<count($request->input('product_id_edit')); $i++){
-        //     $list[] = [
-        //         "product_id" => $request->input('product_id_edit')[$i],
-        //         "amount" => $request->input('amount_edit')[$i],
-        //         "discount_price" => $request->input('discount_price_edit')[$i],
-        //         "purchase_receive_id" => $id,
-        //     ];
-        //   }
-        // }
-
-        // ReceiveDetailModel::insert($list);
-
-        $receive = ReceiveModel::findOrFail($id);
-
-        //UPLOAD FILE P/O
-        if ($request->hasFile('file')) {
-            $folder = "supplier/iv";
-
-            $requestData['file'] = $request->file('file')->store($folder, 'public');
-            $requestData['external_reference_doc'] = $request->input('external_reference_doc');
-            //$requestData['file'] = "sss.jpg";
-            $receive->update($requestData);
-        }
-        $requestData['external_reference_doc'] = $request->input('external_reference_doc');
-        //exit();
-        //UPDATE PR Detail
-
-        // $requestData['external_reference_doc'] = '555';
-        $receive->update($requestData);
-
-        //4.REDIRECT
-        return redirect("purchase/receive/{$id}/edit");
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        ReceiveModel::delete_by_id($id);
-        return redirect("purchase/receive");
-    }
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    ReceiveModel::delete_by_id($id);
+    return redirect("purchase/receive");
+  }
 }

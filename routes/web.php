@@ -121,7 +121,6 @@
           //Route::resource('/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
 
           Route::get('/order/{id}/pdf', 'Purchase\OrderController@pdf');
-          Route::put('/order/{id}/update', 'Purchase\OrderController@update');
           Route::resource('/order', 'Purchase\OrderController');
           //Route::resource('/purchase_order/{purchase_order_id}/purchase_order_detail', 'Purchase\PurchaseOrderDetailController');
 

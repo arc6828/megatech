@@ -59,7 +59,7 @@
 							element.company_name,
 							//element.contact_name,
 							"<button type='button' " +
-									"class='btn btn-warning btn-sm d-none'" +
+									"class='btn btn-warning btn-sm'" +
 									"onClick='select_item("+element.supplier_id+",`"+element.company_name+"`,`"+element.supplier_code+"`)' "
 									+">เลือก</button>",
 						];
@@ -111,7 +111,7 @@
       if(  ! $.fn.DataTable.isDataTable('#table-receive-detail') ){
         var supplier_id = "";
         $.ajax({
-            url: "{{ url('/') }}/api/purchase/order_detail/index2?order_detail_status_id=5",
+            url: "{{ url('/') }}/api/purchase/order_detail/index2",
             type: "GET",
             dataType : "json",
         }).done(function(result){
@@ -129,7 +129,7 @@
                 element.product_code,
                 element.product_name,
                 element.amount,
-                "<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required>",
+                "<input name='approve_amounts[]' value='"+element.amount+"' class='form-control form-control-sm' style='max-width:40px;' required readonly >",
                 //0,
                 //0,
                 //0,

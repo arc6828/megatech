@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API\Purchase;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 use App\Http\Controllers\Controller;
 
 use App\Purchase\OrderDetailStatusModel;
@@ -53,10 +55,15 @@ class OrderDetailController extends Controller
 
   public function index2(Request $request)
   {
-    //USE FOR RC
-    $order_detail_status_id = $request->input("order_detail_status_id", 3);
-    $table_order_detail = OrderDetailModel::select_search2($order_detail_status_id);
 
+    //USE FOR RC
+    $table_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_order', 'tb_purchase_order.purchase_order_id', '=', 'tb_purchase_order_detail.purchase_order_id')
+      ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where("tb_purchase_order_detail.purchase_order_detail_status_id", "!=", "6")
+      ->where("tb_purchase_order.purchase_status_id", "!=", "-1")
+      ->select(DB::raw('*,DATE(datetime) as date'))
+      ->get();
     return response()->json($table_order_detail);
   }
 
@@ -75,11 +82,19 @@ class OrderDetailController extends Controller
   public function supplier(Request $request, $supplier_id)
   {
     $order_detail_status_id = $request->input("purchase_order_detail_status_id");
+
     $condition = [
       ["tb_purchase_order_detail.purchase_order_detail_status_id", $order_detail_status_id],
       ["tb_purchase_order.supplier_id", $supplier_id],
     ];
-    $table_order_detail = OrderDetailModel::getByCondition($condition);
+
+    $table_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_order', 'tb_purchase_order.purchase_order_id', '=', 'tb_purchase_order_detail.purchase_order_id')
+      ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where($condition)
+      ->select(DB::raw('*,DATE(datetime) as date'))
+      ->get();
+
 
     return response()->json($table_order_detail);
   }
