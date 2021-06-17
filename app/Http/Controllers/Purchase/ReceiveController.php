@@ -47,7 +47,7 @@ class ReceiveController extends Controller
     {
         $data = [
             //QUOTATION
-            'table_supplier' => SupplierModel::select_all(),
+            'table_supplier' => SupplierModel::all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
             'table_tax_type' => TaxTypeModel::select_all(),
@@ -245,7 +245,7 @@ class ReceiveController extends Controller
 
         }
 
-        //GAURD STOCK     - CHECK
+        //GAURD STOCK - CHECK
         foreach ($list as $item) {
             $product = ProductModel::findOrFail($item['product_id']);
             $gaurd_stock = GaurdStock::create([
@@ -276,7 +276,7 @@ class ReceiveController extends Controller
             //QUOTATION
             'table_purchase_receive' => ReceiveModel::select_by_id($id),
             'table_company' => Company::select_all(),
-            'table_supplier' => SupplierModel::select_all(),
+            'table_supplier' => SupplierModel::all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
             'table_tax_type' => TaxTypeModel::select_all(),
@@ -308,7 +308,7 @@ class ReceiveController extends Controller
             //QUOTATION
             'table_purchase_receive' => ReceiveModel::select_by_id($id),
             'purchase_receive' => ReceiveModel::findOrFail($id),
-            'table_supplier' => SupplierModel::select_all(),
+            'table_supplier' => SupplierModel::all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
             'table_tax_type' => TaxTypeModel::select_all(),
@@ -338,7 +338,7 @@ class ReceiveController extends Controller
             //QUOTATION
             'table_purchase_receive' => ReceiveModel::select_by_id($id),
             'purchase_receive' => ReceiveModel::findOrFail($id),
-            'table_supplier' => SupplierModel::select_all(),
+            'table_supplier' => SupplierModel::all(),
             'table_delivery_type' => DeliveryTypeModel::select_all(),
             'table_department' => DepartmentModel::select_all(),
             'table_tax_type' => TaxTypeModel::select_all(),

@@ -12,6 +12,7 @@ class OrderDetailModel extends Model
   protected $fillable = [
     'purchase_order_detail_status_id',
     'amount_pending_in',
+    'amount_pending_rc',
     'product_id',
     'amount',
     'discount_price',

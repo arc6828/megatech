@@ -99,8 +99,7 @@ class ReturnInvoiceController extends Controller
                     "total" => $totals[$i],
                     "return_invoice_id" => $returninvoice->id,
                 ];
-                // print_r(json_encode($return_details));
-                // exit();
+
                 ReturnInvoiceDetail::create($return_details); //Create return invoice_detail
             }
         }
@@ -124,31 +123,7 @@ class ReturnInvoiceController extends Controller
             $product->pending_out = $gaurd_stock['pending_out'];
             $product->save();
         }
-        //GAURD STOCK UPDATE
-        // foreach ($return_details as $item) {
-        //     // if ($item['amount'] == 0) {
-        //     //     continue;
-        //     // }
-        //     $product = ProductModel::findOrFail($item['product_id']);
-        //     print_r(json_encode($product));
-        //     exit();
-        //     // $gaurd_stock = GaurdStock::create([
-        //     //     "code" => $returninvoice->code,
-        //     //     "type" => "sales_return_invoice",
-        //     //     "amount" => $item['amount'],
-        //     //     "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-        //     //     "pending_in" => $product->pending_in,
-        //     //     "pending_out" => ($product->pending_out),
-        //     //     "product_id" => $product->product_id,
-        //     // ]);
-
-        //     // //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-        //     // $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-        //     // $product->pending_in = $gaurd_stock['pending_in'];
-        //     // $product->pending_out = $gaurd_stock['pending_out'];
-        //     // $product->save();
-        // }
-
+  
         return redirect('sales/return-invoice/' . $returninvoice->id)->with('flash_message', 'ReturnInvoice added!');
     }
 
@@ -168,52 +143,6 @@ class ReturnInvoiceController extends Controller
         $code = "{$run_number}{$year}{$month}-{$number}";
         return $code;
     }
-
-    // public function store_detail(Request $request, $returninvoice)
-    // {
-    //     //CREATE RETURN INVOICE DETAIL
-    //     $details = [];
-    //     $products = $request->input('product_ids');
-    //     $amounts = $request->input('amounts');
-    //     $discount_prices = $request->input('discount_prices');
-    //     $totals = $request->input('totals');
-    //     if (is_array($products)) {
-    //         for ($i = 0; $i < count($products); $i++) {
-    //             $details[] = [
-    //                 "product_id" => $products[$i],
-    //                 "amount" => $amounts[$i],
-    //                 "discount_price" => $discount_prices[$i],
-    //                 "total" => $totals[$i],
-    //                 "return_invoice_id" => $returninvoice->id,
-    //             ];
-    //         }
-    //     }
-    //     ReturnInvoiceDetail::insert($details);
-
-    //     //GAURD STOCK UPDATE
-    //     foreach ($details as $item) {
-    //         if ($item['amount'] == 0) {
-    //             continue;
-    //         }
-    //         $product = ProductModel::findOrFail($item['product_id']);
-    //         $gaurd_stock = GaurdStock::create([
-    //             "code" => $returninvoice->code,
-    //             "type" => "sales_return_invoice",
-    //             "amount" => $item['amount'],
-    //             "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-    //             "pending_in" => $product->pending_in,
-    //             "pending_out" => ($product->pending_out),
-    //             "product_id" => $product->product_id,
-    //         ]);
-
-    //         //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-    //         $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-    //         $product->pending_in = $gaurd_stock['pending_in'];
-    //         $product->pending_out = $gaurd_stock['pending_out'];
-    //         $product->save();
-    //     }
-
-    // }
 
     /**
      * Display the specified resource.

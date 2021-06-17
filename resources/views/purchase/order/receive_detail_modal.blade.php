@@ -37,7 +37,7 @@
                                 <td>{{$item->product->product_code}}</td>
                                 <td>{{$item->product->product_name}}</td>
                                 <td>{{ $item->amount }}</td>
-                                <td>{{ $item->amount -  $item->amount_pending_in }}</td>
+                                <td>{{ $item->amount_pending_rc }}</td>
                                 <td>{{ $item->amount_pending_in }}</td>
                             </tr>
                             @endforeach

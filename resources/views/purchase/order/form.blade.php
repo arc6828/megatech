@@ -422,8 +422,7 @@
                             }
                         @endif
                         //START
-                        let row = createRow("+", element, element
-                            .purchase_requisition_detail_id);
+                        let row = createRow("+", element, element.purchase_order_detail_id);
                         //dataSet.push(row);
                         table.row.add(row);
 
