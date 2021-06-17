@@ -108,6 +108,7 @@ class OrderController extends Controller
 
         $new_order_detail = [
           "amount_pending_in" => $request->input('amount_edit')[$i],
+          "amount_pending_rc" => 0,
           "discount_price" => $request->input('discount_price_edit')[$i],
           "purchase_order_id" => $id,
           "delivery_duration" => $request->input('delivery_duration')[$i],
@@ -177,6 +178,12 @@ class OrderController extends Controller
   public function pdf($id)
   {
     //no show
+    $table_purchase_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_requisition_detail', 'tb_purchase_order_detail.requisition_detail_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_detail_id')
+      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+      ->where('purchase_order_id', '=', $id)
+      ->select('tb_purchase_order_detail.*', 'tb_product.*', 'tb_purchase_requisition.purchase_requisition_code')
+      ->get();
     $data = [
       //QUOTATION
       'table_purchase_order' => OrderModel::select_by_id($id),
@@ -190,7 +197,7 @@ class OrderController extends Controller
       'table_zone' => ZoneModel::select_all(),
       'purchase_order_id' => $id,
       //QUOTATION Detail
-      'table_purchase_order_detail' => OrderDetailModel::select_by_purchase_order_id($id),
+      'table_purchase_order_detail' => $table_purchase_order_detail,
       'table_product' => ProductModel::select_all(),
     ];
     //return view('purchase/order/edit',$data);
@@ -228,6 +235,12 @@ class OrderController extends Controller
     }
     //print_r($unchangable_items);
 
+    $table_purchase_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_requisition_detail', 'tb_purchase_order_detail.requisition_detail_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_detail_id')
+      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+      ->where('purchase_order_id', '=', $id)
+      ->select('tb_purchase_order_detail.*', 'tb_product.*', 'tb_purchase_requisition.purchase_requisition_code')
+      ->get();
 
     $data = [
       //QUOTATION
@@ -244,7 +257,7 @@ class OrderController extends Controller
       'purchase_order_id' => $id,
       'mode' => 'show',
       //QUOTATION Detail
-      'table_purchase_order_detail' => OrderDetailModel::select_by_purchase_order_id($id),
+      'table_purchase_order_detail' => $table_purchase_order_detail,
       'table_product' => ProductModel::select_all(),
     ];
     return view('purchase/order/edit', $data);
@@ -278,7 +291,12 @@ class OrderController extends Controller
     }
     //print_r($unchangable_items);
 
-
+    $table_purchase_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_requisition_detail', 'tb_purchase_order_detail.requisition_detail_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_detail_id')
+      ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
+      ->where('purchase_order_id', '=', $id)
+      ->select('tb_purchase_order_detail.*', 'tb_product.*', 'tb_purchase_requisition.purchase_requisition_code')
+      ->get();
     $data = [
       //QUOTATION
       'table_purchase_order' => OrderModel::select_by_id($id),
@@ -294,8 +312,8 @@ class OrderController extends Controller
       'purchase_order_id' => $id,
       'mode' => 'edit',
       //QUOTATION Detail
-      'table_purchase_order_detail' => OrderDetailModel::select_by_purchase_order_id($id),
-      'table_product' => ProductModel::select_all(),
+      'table_purchase_order_detail' => $table_purchase_order_detail,
+      'table_product' => ProductModel::all(),
     ];
     return view('purchase/order/edit', $data);
   }
@@ -312,7 +330,6 @@ class OrderController extends Controller
     //1.INSERT QUOTATION
     $input = $request->all();
 
-    // $input['purchase_status_id'] = 3;
     $input['billing_duration'] = $request->input('billing_duration', "0");
     $input['payment_condition'] = $request->input('payment_condition', "0");
     $input['delivery_time'] = $request->input('delivery_time', "0");
@@ -326,9 +343,7 @@ class OrderController extends Controller
       // OrderDetailModel::where('purchase_order_id', $id)->delete();
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
         $new_order_detail = [
-          // "amount_pending_in" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
-          // "purchase_order_id" => $id,
           "delivery_duration" => $request->input('delivery_duration')[$i],
         ];
         $order_detail = OrderDetailModel::findOrFail($request->input('purchase_order_detail_id_edit')[$i]);
