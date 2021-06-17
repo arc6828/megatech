@@ -112,12 +112,11 @@ class OrderController extends Controller
           "purchase_order_id" => $id,
           "delivery_duration" => $request->input('delivery_duration')[$i],
         ];
-
         OrderDetailModel::whereNull('purchase_order_id')->update($new_order_detail);
         //Decreament supplier_amount RequisitionDetailModel
-        RequisitionDetailModel::where('purchase_requisition_detail_id', $request->input('requisition_detail_id_edit')[$i])->first()->decrement('supplier_amount', $request->input('amount_edit')[$i]);
+        RequisitionDetailModel::where('supplier_id', $order->supplier_id)->first()->decrement('supplier_amount', $request->input('amount_edit')[$i]);
         //Increment po_amount  RequisitionDetailModel
-        RequisitionDetailModel::where('purchase_requisition_detail_id', $request->input('requisition_detail_id_edit')[$i])->first()->increment('po_amount', $request->input('amount_edit')[$i]);
+        RequisitionDetailModel::where('supplier_id', $order->supplier_id)->first()->increment('po_amount', $request->input('amount_edit')[$i]);
       }
     }
 
