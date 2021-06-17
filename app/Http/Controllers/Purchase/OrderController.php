@@ -327,13 +327,13 @@ class OrderController extends Controller
       // OrderDetailModel::where('purchase_order_id', $id)->delete();
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
         $new_order_detail = [
-          "amount_pending_in" => $request->input('amount_edit')[$i],
+          // "amount_pending_in" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
-          "purchase_order_id" => $id,
+          // "purchase_order_id" => $id,
           "delivery_duration" => $request->input('delivery_duration')[$i],
         ];
-        $order_detail = OrderDetailModel::findOrFail($request->);
-        OrderDetailModel::update($order_detail);
+        $order_detail = OrderDetailModel::findOrFail($request->input('purchase_order_detail_id_edit')[$i]);
+        $order_detail->update($new_order_detail);
       }
     }
 

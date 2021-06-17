@@ -13,12 +13,12 @@
 		<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
 			 	var detail = JSON.parse('@json($table_purchase_order_detail)');
-				//console.log("DETAIL : ",detail);
+				console.log("DETAIL : ",detail);
 				var dataSet = [];
 				detail.forEach(function(element,index) {
 					//console.log(element,index);
 					var id = element.purchase_order_detail_id;
-					var row = createRow(id, element, element.requisition_detail_id);
+					var row = createRow(id, element, element.purchase_order_detail_id);
 					dataSet.push(row);
 				});
 				//console.log(dataSet);
@@ -60,7 +60,7 @@
 			});//END DOMContentLoaded
 
       //EVENT HANDLER
-      function createRow(id,element, requisition_detail_id){
+      function createRow(id,element, purchase_order_detail_id){
         var discount_percent_edit = 100 - element.discount_price / element.normal_price * 100;
         //var checked = (discount_percent_edit > element.max_discount_percent? "checked" : "")
         var checked = true;
@@ -117,7 +117,7 @@
         return [
           element.purchase_requisition_code +
           "<input type='hidden' class='id_edit' name='id_edit[]'  value='"+id+"' >" +
-          "<input type='hidden' class='requisition_detail_id_edit' name='requisition_detail_id_edit[]'  value='"+requisition_detail_id+"' >",
+          "<input type='hidden' class='purchase_order_detail_id_edit' name='purchase_order_detail_id_edit[]'  value='"+purchase_order_detail_id+"' >",
           element.product_code+"<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='"+element.product_id+"' >",
           element.product_name,		  
           ""+select,

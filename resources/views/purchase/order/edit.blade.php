@@ -17,8 +17,8 @@
 
             @forelse($table_purchase_order as $row)
 
-                <form class="" action="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}/update" id="form"
-                    method="POST" onsubmit="return confirm('Do you confirm to save?')">
+                <form class="" action="{{ url('/') }}/purchase/order/{{ $row->purchase_order_id }}" id="form" method="POST"
+                    onsubmit="return confirm('Do you confirm to save?')">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     @include('purchase/order/form' , ["method"=>"edit"] )
