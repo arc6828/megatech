@@ -56,7 +56,7 @@ class DeliveryTemporaryController extends Controller
             'table_tax_type' => TaxTypeModel::select_all(),
             'table_sales_status' => SalesStatusModel::select_by_category('delivery_temporary'),
             //'table_sales_user' => UserModel::select_by_role('sales'),
-            'table_sales_user' => UserModel::select_all(),
+            'table_sales_user' => UserModel::all(),
             'table_zone' => ZoneModel::select_all(),
             //QUOTATION DETAIL
             'table_delivery_temporary_detail' => [],

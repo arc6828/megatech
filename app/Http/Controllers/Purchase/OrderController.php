@@ -82,7 +82,7 @@ class OrderController extends Controller
     $input = $request->all();
     $purchase_order_code = $this->getNewCode();
     $input['datetime'] = date('Y-m-d H:i:s');
-    
+
     if (!empty($request->input('datetime_custom'))) {
       $datetime = $request->input('datetime_custom');
       $purchase_order_code = $this->getNewCodeCustom($datetime);
@@ -121,7 +121,7 @@ class OrderController extends Controller
       }
     }
 
-    $order_detail = OrderDetailModel::where('purchase_order_detail_id', $id)->get();
+    $order_detail = $order->order_details()->get();
 
     foreach ($order_detail as $item) {
       $product = ProductModel::findOrFail($item['product_id']);
@@ -141,8 +141,6 @@ class OrderController extends Controller
       $product->pending_out = $gaurd_stock['pending_out'];
       $product->save();
     }
-
-
 
     return redirect("purchase/order/{$id}");
   }
@@ -264,8 +262,8 @@ class OrderController extends Controller
 
     //CREATE DICT OF UNCHANGABLE ITEMS
     $current_oe = OrderModel::findOrFail($id);
+
     $receives = $current_oe->receives()->where('purchase_status_id', '>', '0')->get();
-    //
     // print_r($receives);
     // exit();
     $unchangable_items = [];
@@ -314,49 +312,62 @@ class OrderController extends Controller
   {
     //1.INSERT QUOTATION
     $input = $request->all();
+
+    // $input['purchase_status_id'] = 3;
+    $input['billing_duration'] = $request->input('billing_duration', "0");
+    $input['payment_condition'] = $request->input('payment_condition', "0");
+    $input['delivery_time'] = $request->input('delivery_time', "0");
     $input['vat_percent'] = $request->input('vat_percent', 7);
-    $input['total'] = $request->input('total', 0);
-    // $input = [
-    //   //'purchase_order_code' => $purchase_order_code,
-    //   'external_reference_doc' => $request->input('external_reference_doc'),
-    //   'supplier_id' => $request->input('supplier_id'),
-    //   'debt_duration' => $request->input('debt_duration'),
-    //   'billing_duration' => $request->input('billing_duration'),
-    //   'payment_condition' => $request->input('payment_condition', ""),
-    //   'delivery_type_id' => $request->input('delivery_type_id'),
-    //   'tax_type_id' => $request->input('tax_type_id'),
-    //   'delivery_time' => $request->input('delivery_time'),
-    //   'department_id' => $request->input('department_id'),
-    //   'purchase_status_id' => $request->input('purchase_status_id'),
-    //   'user_id' => $request->input('user_id'),
-    //   'zone_id' => $request->input('zone_id'),
-    //   'remark' => $request->input('remark'),
-    //   'vat_percent' => $request->input('vat_percent', 7),
-    //   'total' => $request->input('total', 0),
-    // ];
+    $input['total_before_vat'] = $request->input('total_before_vat', 0);
+    $input['total'] = $request->input('total_after_vat', 0);
 
     //2.INSERT UPDATE DELETE ORDER DETAIL
     if (is_array($request->input('product_id_edit'))) {
 
-      OrderDetailModel::where('purchase_order_id', $id)->delete();
+      // OrderDetailModel::where('purchase_order_id', $id)->delete();
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        $order_detail = [
-          "product_id" => $request->input('product_id_edit')[$i],
-          "amount" => $request->input('amount_edit')[$i],
+        $new_order_detail = [
+          "amount_pending_in" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
           "purchase_order_id" => $id,
-          "purchase_order_detail_status_id" => 5, //5 : ออก PO แล้ว
-          "requisition_detail_id" =>  $request->input('requisition_detail_id')[$i],
+          "delivery_duration" => $request->input('delivery_duration')[$i],
         ];
-        OrderDetailModel::create($order_detail);
+        $order_detail = OrderDetailModel::findOrFail($request->);
+        OrderDetailModel::update($order_detail);
       }
     }
-    //UPDATE PR Detail
 
-    $purchase = OrderModel::findOrFail($id);
-    $purchase->update($input);
-    //4.REDIRECT
-    return redirect("purchase/order/{$id}/edit");
+    $order = OrderModel::findOrFail($id);
+    $order->update($input);
+
+    //$order_detail = $order->order_details()->get();
+    // print_r(json_encode($order_detail));
+    // exit();
+    // foreach ($order_detail as $item) {
+    //   $product = ProductModel::findOrFail($item['product_id']);
+    //   $gaurd_stock = GaurdStock::create([
+    //     "code" => $order->purchase_order_code,
+    //     "type" => "purchase_order",
+    //     "amount" => $item['amount'],
+    //     "amount_in_stock" => ($product->amount_in_stock),
+    //     "pending_in" => ($product->pending_in - $item['amount']),
+    //     "pending_out" => ($product->pending_out),
+    //     "product_id" => $product->product_id,
+    //   ]);
+
+    //   //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+    //   $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+    //   $product->pending_in = $gaurd_stock['pending_in'];
+    //   $product->pending_out = $gaurd_stock['pending_out'];
+    //   $product->save();
+    // }
+
+
+    //   //UPDATE PR Detail
+
+    //   // $purchase->update($input);
+    //   //4.REDIRECT
+    return redirect("purchase/order/{$id}")->with('flash_message', 'ReturnInvoice updated!');;
   }
   // public function revision(Request $request)
   // {
@@ -400,7 +411,7 @@ class OrderController extends Controller
 
   //     }
   //   }
-  // }
+  //}
 
   /**
    * Remove the specified resource from storage.
