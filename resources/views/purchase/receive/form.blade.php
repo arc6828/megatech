@@ -169,7 +169,7 @@
             </div>
             <label class="col-lg-2">พนักงานผู้บันทึก</label>
             <div class="col-lg-3">
-                <select name="user_id" id="user_id" class="form-control form-control-sm" required>
+                <select name="user_id" id="user_id" class="form-control form-control-sm" required readonly>
                     <option value="">None</option>
                     @foreach ($table_purchase_user as $row_purchase_user)
                         <option value="{{ $row_purchase_user->id }}">
@@ -357,36 +357,13 @@
         }
 
         async function fillPurchase_receivePO(purchase_order_code) {
-            console.log(supplier_id, "{{ url('/') }}/api/purchase/order_detail/order_code/" +
-                purchase_order_code + "?purchase_order_detail_status_id=5");
             let response = await fetch(
-                `{{ url('/') }}/api/purchase/order_detail/order_code/"+purchase_order_code+"?purchase_order_detail_status_id=5`
+                `{{ url('/') }}/api/purchase/order_detail/order_code/${purchase_order_code}?purchase_order_detail_status_id=5`
             );
             let result = await response.json();
             await fillReceive(result);
             await fillReceiveDetail(result);
             await refreshDetailTableEvent();
-            //           document.querySelector("#btn-close-receive").click();
-
-            /* $.ajax({
-                 url: "{{ url('/') }}/api/purchase/order_detail/order_code/"+purchase_order_code+"?purchase_order_detail_status_id=5",
-                 type: "GET",
-                 dataType : "json",
-             }).done(function(result){
-               fillReceive(result);
-               fillReceiveDetail(result);
-               //ALL ABOUT EVENT
-               refreshDetailTableEvent();
-               //AVOID TO EDIT
-               //$('#table-purchase_receive-detail input').prop('readonly', true);
-
-
-               $("#isbn").focus();
-
-             }); //END AJAX*/
-
-            //document.querySelector("#btn-close-receive").click();
-
         }
 
 
@@ -397,24 +374,31 @@
             fillPurchase_receive(supplier_id);
         }
 
-        function fillPurchase_receive(supplier_id) {
-            console.log(supplier_id, "{{ url('/') }}/api/purchase/order_detail/supplier/" + supplier_id +
-                "?purchase_order_detail_status_id=5");
+        async function fillPurchase_receive(supplier_id) {
+            let response = await fetch(
+                `{{ url('/') }}/api/purchase/order_detail/supplier/${supplier_id}?purchase_order_detail_status_id=5`
+            );
+            let result = await response.json();
+            await fillReceive(result);
+            await fillReceiveDetail(result);
+            await refreshDetailTableEvent();
+            /* console.log(supplier_id, "{{ url('/') }}/api/purchase/order_detail/supplier/" + supplier_id +
+                 "?purchase_order_detail_status_id=5");
 
-            $.ajax({
-                url: "{{ url('/') }}/api/purchase/order_detail/supplier/" + supplier_id +
-                    "?purchase_order_detail_status_id=5",
-                type: "GET",
-                dataType: "json",
-            }).done(function(result) {
-                fillReceive(result);
-                fillReceiveDetail(result);
-                //ALL ABOUT EVENT
-                refreshDetailTableEvent();
-                //AVOID TO EDIT
-                //$('#table-purchase_receive-detail input').prop('readonly', true);
+             $.ajax({
+                 url: "{{ url('/') }}/api/purchase/order_detail/supplier/" + supplier_id +
+                     "?purchase_order_detail_status_id=5",
+                 type: "GET",
+                 dataType: "json",
+             }).done(function(result) {
+                 fillReceive(result);
+                 fillReceiveDetail(result);
+                 //ALL ABOUT EVENT
+                 refreshDetailTableEvent();
+                 //AVOID TO EDIT
+                 //$('#table-purchase_receive-detail input').prop('readonly', true);
 
-            }); //END AJAX
+             }); //END AJAX*/
 
             //document.querySelector("#btn-close-receive").click();
 
@@ -479,7 +463,6 @@
         }
 
         function showProduct() {}
-
     </script>
 
 
@@ -501,7 +484,6 @@
                     };
 
                 }, 500);
-
             </script>
         @elseif( $mode == "create" )
             <div class="form-group text-center mt-2">

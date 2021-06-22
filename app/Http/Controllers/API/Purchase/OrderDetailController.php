@@ -74,8 +74,12 @@ class OrderDetailController extends Controller
       ["tb_purchase_order_detail.purchase_order_detail_status_id", $order_detail_status_id],
       ["tb_purchase_order.purchase_order_code", $order_code],
     ];
-    $table_order_detail = OrderDetailModel::getByCondition($condition);
-
+    $table_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
+      ->join('tb_purchase_order', 'tb_purchase_order.purchase_order_id', '=', 'tb_purchase_order_detail.purchase_order_id')
+      ->join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where($condition)
+      ->select(DB::raw('*,DATE(datetime) as date'))
+      ->get();
     return response()->json($table_order_detail);
   }
 

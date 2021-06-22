@@ -19,6 +19,7 @@ use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 
 class ReceiveController extends Controller
@@ -89,31 +90,6 @@ class ReceiveController extends Controller
     $input['total'] = $request->input('total_after_vat', 0);
     $input['total_debt'] = $request->input('total_after_vat', 0);
 
-    // $input = [
-    //     'purchase_receive_code' => $this->getNewCode(),
-    //     'external_reference_doc' => $request->input('external_reference_doc'),
-    //     'internal_reference_doc' => $request->input('internal_reference_doc'),
-    //     'supplier_id' => $request->input('supplier_id'),
-    //     'debt_duration' => $request->input('debt_duration'),
-    //     'billing_duration' => $request->input('billing_duration'),
-    //     'payment_condition' => $request->input('payment_condition', ""),
-    //     'delivery_type_id' => $request->input('delivery_type_id'),
-    //     'tax_type_id' => $request->input('tax_type_id'),
-    //     'delivery_time' => $request->input('delivery_time'),
-    //     'department_id' => $request->input('department_id'),
-    //     //'purchase_status_id' => $request->input('purchase_status_id'),
-    //     'purchase_status_id' => 4, //4 means ปิดการซื้อเรียบร้อย
-    //     'user_id' => $request->input('user_id'),
-    //     'zone_id' => $request->input('zone_id'),
-    //     'remark' => $request->input('remark'),
-    //     'vat_percent' => $request->input('vat_percent', 7),
-
-    //     //'vat' => $request->input('vat',0),
-    //     'total_before_vat' => $request->input('total_before_vat', 0),
-    //     'total' => $request->input('total_after_vat', 0),
-    //     'total_debt' => $request->input('total_after_vat', 0),
-    // ];
-
     //UPLOAD
     $receive = ReceiveModel::create($input);
     $id = $receive->purchase_receive_id;
@@ -143,10 +119,16 @@ class ReceiveController extends Controller
           ->update(["purchase_order_detail_status_id" => 6]);
         OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first()->decrement('amount_pending_in',  $request->input('amount_receive_edit')[$i]);
         OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first()->increment('amount_pending_rc',  $request->input('amount_receive_edit')[$i]);
+        
+        $purchase_detail = OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first();
+        $purchase_order_id = $purchase_detail->purchase_order_id;
+        OrderModel::where('purchase_order_id', $purchase_order_id)->update(["purchase_status_id" => 4]);
+      
       }
     }
+
     $receive_detail = ReceiveDetailModel::where('purchase_receive_id', $id)->get();
-    // //GAURD STOCK
+    // GAURD STOCK
     foreach ($receive_detail as $item) {
       $product = ProductModel::findOrFail($item['product_id']);
       $gaurd_stock = GaurdStock::create([
@@ -171,7 +153,8 @@ class ReceiveController extends Controller
 
   public function getNewCode()
   {
-    $number = ReceiveModel::select_count_by_current_month();
+    $number = ReceiveModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+      ->count();
     $run_number = Numberun::where('id', '8')->value('number_en');
     $count = $number + 1;
     //$year = (date("Y") + 543) % 100;
@@ -204,18 +187,9 @@ class ReceiveController extends Controller
 
     $list = $purchase_receive->purchase_receive_details()->get();
 
-    //RE STATUS OE DETAIL IN PICKING
-    //$pickings = $order->pickings()->get();
     foreach ($list as $p) {
       //UPDATE AMOUNT_PENDING_IN
       $order_detail = OrderDetailModel::findOrFail($p->purchase_order_detail_id);
-      //->where('product_id',$p->product_id)
-      // ->where('purchase_order_detail_id',$p->purchase_order_detail_id)
-      // ->where('purchase_order_detail_status_id','6') //6 รับสินค้าแล้ว
-      // ;
-      // print_r($order->order_details()->get());
-      // print_r($p);
-
       $order_detail->increment('amount_pending_in', $p->amount);
 
       //UPDATE STATUS
@@ -229,7 +203,7 @@ class ReceiveController extends Controller
     foreach ($list as $item) {
       $product = ProductModel::findOrFail($item['product_id']);
       $gaurd_stock = GaurdStock::create([
-        "code" => $id,
+        "code" => $purchase_receive->purchase_receive_code,
         "type" => "purchase_receive_cancel",
         "amount" => $item['amount'],
         "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
@@ -245,16 +219,20 @@ class ReceiveController extends Controller
       $product->save();
     }
 
-    return redirect("purchase/receive/{$id}");
+    return redirect("purchase/receive/{$id}/edit");
   }
 
   public function pdf($id)
   {
     //no show
+    $table_purchase_receive = ReceiveModel::join('tb_supplier', 'tb_purchase_receive.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_purchase_receive.purchase_receive_id', '=', $id)
+      ->select(DB::raw('tb_purchase_receive.*, tb_supplier.company_name, tb_supplier.supplier_code'))
+      ->get();
     $data = [
       //QUOTATION
-      'table_purchase_receive' => ReceiveModel::select_by_id($id),
-      'table_company' => Company::select_all(),
+      'table_purchase_receive' =>   $table_purchase_receive,
+      'table_company' => Company::all(),
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::select_all(),
       'table_department' => DepartmentModel::select_all(),
@@ -283,9 +261,14 @@ class ReceiveController extends Controller
   public function show($id)
   {
 
+    $table_purchase_receive = ReceiveModel::join('tb_supplier', 'tb_purchase_receive.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_purchase_receive.purchase_receive_id', '=', $id)
+      ->select(DB::raw('tb_purchase_receive.*, tb_supplier.company_name, tb_supplier.supplier_code'))
+      ->get();
+
     $data = [
       //QUOTATION
-      'table_purchase_receive' => ReceiveModel::select_by_id($id),
+      'table_purchase_receive' => $table_purchase_receive,
       'purchase_receive' => ReceiveModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::select_all(),
@@ -313,9 +296,14 @@ class ReceiveController extends Controller
    */
   public function edit($id)
   {
+    $table_purchase_receive = ReceiveModel::join('tb_supplier', 'tb_purchase_receive.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_purchase_receive.purchase_receive_id', '=', $id)
+      ->select(DB::raw('tb_purchase_receive.*, tb_supplier.company_name, tb_supplier.supplier_code'))
+      ->get();
+
     $data = [
       //QUOTATION
-      'table_purchase_receive' => ReceiveModel::select_by_id($id),
+      'table_purchase_receive' => $table_purchase_receive,
       'purchase_receive' => ReceiveModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::select_all(),
@@ -330,6 +318,7 @@ class ReceiveController extends Controller
       'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
       'table_product' => ProductModel::select_all(),
     ];
+
     return view('purchase/receive/edit', $data);
   }
 
@@ -342,66 +331,29 @@ class ReceiveController extends Controller
    */
   public function update(Request $request, $id)
   {
+
     // //1.INSERT QUOTATION
-    // $input = [
-    //   //'purchase_receive_code' => $purchase_receive_code,
-    //   'external_reference_doc' => $request->input('external_reference_doc'),
-    //   'supplier_id' => $request->input('supplier_id'),
-    //   'debt_duration' => $request->input('debt_duration'),
-    //   'billing_duration' => $request->input('billing_duration'),
-    //   'payment_condition' => $request->input('payment_condition',""),
-    //   'delivery_type_id' => $request->input('delivery_type_id'),
-    //   'tax_type_id' => $request->input('tax_type_id'),
-    //   'delivery_time' => $request->input('delivery_time'),
-    //   'department_id' => $request->input('department_id'),
-    //   'purchase_status_id' => $request->input('purchase_status_id'),
-    //   'user_id' => $request->input('user_id'),
-    //   'zone_id' => $request->input('zone_id'),
-    //   'remark' => $request->input('remark'),
-    //   'vat_percent' => $request->input('vat_percent',7),
-    //   'total' => $request->input('total',0),
-    // ];
-    // ReceiveModel::update_by_id($input,$id);
+    $input = $request->all();
+    $input['datetime'] = date('Y-m-d H:i:s');
+    $input['total'] = $request->input('total_after_vat', 0);
+    $input['vat_percent'] = $request->input('vat_percent', 7);
 
-    // //2.DELETE QUOTATION DETAIL FIRST
-    // ReceiveDetailModel::delete_by_purchase_receive_id($id);
-
-    // //3.INSERT ALL NEW QUOTATION DETAIL
-    // $list = [];
-    // //print_r($request->input('product_id_edit'));
-    // //print_r($request->input('amount_edit'));
-    // //print_r($request->input('discount_price_edit'));
-    // //echo $id;
-    // if (is_array ($request->input('product_id_edit'))){
-    //   for($i=0; $i<count($request->input('product_id_edit')); $i++){
-    //     $list[] = [
-    //         "product_id" => $request->input('product_id_edit')[$i],
-    //         "amount" => $request->input('amount_edit')[$i],
-    //         "discount_price" => $request->input('discount_price_edit')[$i],
-    //         "purchase_receive_id" => $id,
-    //     ];
-    //   }
-    // }
-
-    // ReceiveDetailModel::insert($list);
-
-    $receive = ReceiveModel::findOrFail($id);
 
     //UPLOAD FILE P/O
+    $receive = ReceiveModel::findOrFail($id);
+
     if ($request->hasFile('file')) {
       $folder = "supplier/iv";
-
       $requestData['file'] = $request->file('file')->store($folder, 'public');
       $requestData['external_reference_doc'] = $request->input('external_reference_doc');
       //$requestData['file'] = "sss.jpg";
       $receive->update($requestData);
     }
-    $requestData['external_reference_doc'] = $request->input('external_reference_doc');
-    //exit();
-    //UPDATE PR Detail
 
-    // $requestData['external_reference_doc'] = '555';
-    $receive->update($requestData);
+    $input['external_reference_doc'] = $request->input('external_reference_doc');
+
+    $receive = ReceiveModel::findOrFail($id);
+    $receive->update($input);
 
     //4.REDIRECT
     return redirect("purchase/receive/{$id}/edit");
@@ -415,7 +367,7 @@ class ReceiveController extends Controller
    */
   public function destroy($id)
   {
-    ReceiveModel::delete_by_id($id);
+    ReceiveModel::destroy($id);
     return redirect("purchase/receive");
   }
 }
