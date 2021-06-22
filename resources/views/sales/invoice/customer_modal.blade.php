@@ -308,6 +308,7 @@
             var id = element.order_detail_id;
             console.log("ELEMENT id : ", element);
             var row = createRow(id, element);
+            console.log("🚀 ~ file: customer_modal.blade.php ~ line 311 ~ result.table_order_detail.forEach ~ row", row)
             dataSet.push(row);
         });
         console.log(dataSet);

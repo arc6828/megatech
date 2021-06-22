@@ -16,11 +16,7 @@
 
     <div class="card">
         <div class="card-body">
-            <!-- <div class="mb-4">
-                                                                      <a href="{{ url('/sales') }}" title="Back" class="btn btn-warning btn-sm" >
-                                                                          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                                                                      </a>
-                                                                    </div> -->
+
             <div class="table-responsive table-binvoiceed">
                 <table class="table table-hover text-center table-sm" id="table"
                     style="width:100%; margin-top:-1px !important;">
@@ -103,7 +99,6 @@
                     })
                     //END DATA TABLE SCROLL
                 });
-
             </script>
 
         </div>
@@ -134,7 +129,6 @@
                     form.submit();
                 }
             }
-
         </script>
     </div>
 

@@ -14,7 +14,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", function(event) {
                 var detail = JSON.parse('@json($table_invoice_detail)');
-                //console.log("DETAIL : ",detail);
+                console.log("DETAIL : ",detail);
                 var dataSet = [];
                 detail.forEach(function(element, index) {
                     //console.log(element,index);

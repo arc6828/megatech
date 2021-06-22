@@ -1,52 +1,60 @@
 @extends('layouts/argon-dashboard/theme')
 
 @section('level-0-url', url('sales'))
-@section('level-0','การขาย')
+@section('level-0', 'การขาย')
 
 @section('level-1-url', url('sales/return-invoice'))
-@section('level-1','ใบรับคืนสินค้า')
+@section('level-1', 'ใบรับคืนสินค้า')
 
 
-@if( $mode == "edit" )
-  @section('level-2-url', url('sales/return-invoice/'.$returninvoice->id ))
-  @section('level-2','รายละเอียด')
-@endif
+    @if ($mode == 'edit')
+        @section('level-2-url', url('sales/return-invoice/' . $returninvoice->id))
+        @section('level-2', 'รายละเอียด')
+        @endif
 
-@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+        @section('title', $mode == 'edit' ? 'แก้ไข' : 'รายละเอียด')
 
-@section('background-tag','bg-warning')
+        @section('background-tag', 'bg-warning')
 
-@section('content')
-    <div class="container">
-        <div class="row">
+        @section('content')
+            <div class="container">
+                <div class="row">
 
-            <div class="col-md-12">
-                <div class="">
-                    <!-- <div class="card-header d-none">Edit ReturnInvoice #{{ $returninvoice->id }}</div> -->
-                    <div class="">
-                        <!-- <a href="{{ url('/sales/return-invoice') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br /> -->
+                    <div class="col-md-12">
+                        <div class="">
+                            <!-- <div class="card-header d-none">Edit ReturnInvoice #{{ $returninvoice->id }}</div> -->
+                            <div class="">
+                                <!-- <a href="{{ url('/sales/return-invoice') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                                                                                    <br />
+                                                                                    <br /> -->
 
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                                @if ($errors->any())
+                                    <ul class="alert alert-danger">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
 
-                        <form method="POST" action="{{ url('/sales/return-invoice/' . $returninvoice->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            {{ csrf_field() }}
+                                <form class="d-none" action="{{ url('/sales/return-invoice/' . $returninvoice->id) }}/cancel"
+                                    id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to void?')">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PATCH') }}
+                                    <button type="submit" class="btn btn-success " id="form-cancel-submit"
+                                        style="width:150px;">Save</button>
+                                </form>
+                                <form method="POST" action="{{ url('/sales/return-invoice/' . $returninvoice->id) }}"
+                                    accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                    {{ method_field('PATCH') }}
+                                    {{ csrf_field() }}
 
-                            @include ('sales.return-invoice.form', ['formMode' => 'edit'])
+                                    @include ('sales.return-invoice.form', ['formMode' => 'edit'])
 
-                        </form>
+                                </form>
 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
+        @endsection
