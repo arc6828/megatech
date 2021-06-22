@@ -96,6 +96,8 @@
           Route::resource('/delivery_temporary', 'Sales\DeliveryTemporaryController');
           //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');
           Route::get('/return-invoice/{id}/pdf', 'Sales\ReturnInvoiceController@pdf');
+          Route::patch('/return-invoice/{id}/cancel', 'Sales\ReturnInvoiceController@cancel');
+
           Route::resource('return-invoice', 'Sales\ReturnInvoiceController');
 
           Route::resource('return-invoice-detail', 'Sales\ReturnInvoiceDetailController');
@@ -115,8 +117,8 @@
           Route::put('/requisition_detail/update_supplier', 'Purchase\RequisitionDetailController@update_supplier');
           //Route::resource('/purchase_requisition/{purchase_requisition_id}/purchase_requisition_detail', 'Purchase\PurchaseRequisitionDetailController');
 
-          Route::patch('/receive/{id}/cancel', 'Purchase\ReceiveController@cancel');
           Route::get('/receive/{id}/pdf', 'Purchase\ReceiveController@pdf');
+          Route::patch('/receive/{id}/cancel', 'Purchase\ReceiveController@cancel');
           Route::resource('/receive', 'Purchase\ReceiveController');
           //Route::resource('/purchase_receive/{purchase_receive_id}/purchase_receive_detail', 'Purchase\PurchaseReceiveDetailController');
 
@@ -128,6 +130,7 @@
           Route::put('/order_detail/approve', 'Purchase\OrderDetailController@approve');
 
           Route::get('/return-order/{id}/pdf', 'Purchase\ReturnOrderController@pdf');
+          Route::patch('/return-order/{id}/cancel', 'Purchase\ReturnOrderController@cancel');
           Route::resource('return-order', 'Purchase\ReturnOrderController');
           Route::resource('return-order-detail', 'Purchase\ReturnOrderDetailController');
 

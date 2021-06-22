@@ -33,10 +33,10 @@ class ReturnOrder extends Model
         return $this->hasMany('App\Purchase\ReturnOrderDetail', 'return_order_id', 'id');
     }
 
-    public function details()
-    {
-        return $this->hasMany('App\Sales\ReturnInvoiceDetail', 'return_invoice_id', 'id');
-    }
+    // public function details()
+    // {
+    //     return $this->hasMany('App\Sales\ReturnInvoiceDetail', 'return_invoice_id', 'id');
+    // }
 
     public function supplier()
     {

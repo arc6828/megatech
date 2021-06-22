@@ -98,7 +98,7 @@ class QuotationController extends Controller
       'tax_type_id' => $request->input('tax_type_id'),
       'delivery_time' => $request->input('delivery_time'),
       'department_id' => $request->input('department_id'),
-      'sales_status_id' => $request->input('sales_status_id'),
+      'sales_status_id' => $request->input('sales_status_id', 0),
       'user_id' => $request->input('user_id'),
       'staff_id' => $request->input('staff_id'),
       'zone_id' => $request->input('zone_id'),

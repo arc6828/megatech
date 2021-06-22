@@ -1,16 +1,11 @@
 <div class="card mb-4">
     <div class="card-body">
-        <!-- <div class="form-row form-group">
-            <div class="form-group col-lg-3">
-                <a href="{{ url('/purchase/return-order') }}" title="Back"><button type="button" class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>                        
-            </div>
-        </div> -->
         @if (isset($returnorder))
             <div class="form-row form-group form-group my-4">
                 <div class="col-lg-4  text-left pl-5">
-                    <!-- <a href="{{ url('/purchase/return-order') }}" title="Back" class="btn btn-warning btn-sm" >
-                    <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-                </a> -->
+                    <a href="{{ url('/purchase/return-order') }}" title="Back" class="btn btn-warning btn-sm d-none">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+                    </a>
                 </div>
                 <div class="col-lg-4">
                     @if (isset($mode))
@@ -61,8 +56,8 @@
                 <input class="col-lg-3 form-control form-control-sm" name="code" type="text" id="code"
                     value="{{ isset($returnorder->code) ? $returnorder->code : '' }}" readonly>
                 <label for="supplier_id" class="col-lg-3 control-label">{{ 'รหัสเจ้าหนี้' }}</label>
-                <input class="col-lg-3 form-control form-control-sm d-none" name="supplier_id" type="number" id="supplier_id"
-                    value="{{ isset($returnorder->supplier_id) ? $returnorder->supplier_id : '' }}">
+                <input class="col-lg-3 form-control form-control-sm d-none" name="supplier_id" type="number"
+                    id="supplier_id" value="{{ isset($returnorder->supplier_id) ? $returnorder->supplier_id : '' }}">
                 <input class="form-control form-control-sm   col-lg-3" type="text"
                     value="{{ isset($returnorder->supplier_id) ? $returnorder->supplier->supplier_code : '' }}"
                     readonly>
@@ -81,10 +76,11 @@
             <div class="form-row form-group">
 
                 <label for="tax_type_id" class="col-lg-3 control-label">{{ 'ชนิดภาษี' }}</label>
-                <input class="col-lg-3 form-control form-control-sm" name="tax_type_id" type="hidden" 
-                    id="tax_type_id" value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type_id : '' }}">
+                <input class="col-lg-3 form-control form-control-sm" name="tax_type_id" type="hidden" id="tax_type_id"
+                    value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type_id : '' }}">
                 <input class="form-control form-control-sm   col-lg-3" type="text"
-                    value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type->tax_type_name : '' }}" readonly >
+                    value="{{ isset($returnorder->tax_type_id) ? $returnorder->tax_type->tax_type_name : '' }}"
+                    readonly>
 
                 <label for="purchase_status_id" class="col-lg-3 control-label">{{ 'สถานะ' }}</label>
                 <input class="col-lg-3 form-control form-control-sm" name="purchase_status_id" type="hidden"
@@ -168,8 +164,8 @@
     </div>
 
     <!-- <div class="form-group text-center">
-            <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-        </div> -->
+                <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+            </div> -->
 
 
     @if (isset($mode))
@@ -184,7 +180,6 @@
                 for (var item of elements) {
                     item.setAttribute("disabled", "");
                 };
-
             </script>
         @endif
     @else
@@ -258,5 +253,4 @@
 
 
         }
-
     </script>

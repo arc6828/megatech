@@ -1,52 +1,53 @@
 @extends('layouts/argon-dashboard/theme')
 
 @section('level-0-url', url('purchase'))
-@section('level-0','การซื้อ')
+@section('level-0', 'การซื้อ')
 
 @section('level-1-url', url('purchase/return-order'))
-@section('level-1','ใบส่งคืนสินค้า')
+@section('level-1', 'ใบส่งคืนสินค้า')
 
-@if( $mode == "edit" )
-  @section('level-2-url', url('purchase/return-order/'.$returnorder->id ))
-  @section('level-2','รายละเอียด')
-@endif
+    @if ($mode == 'edit')
+        @section('level-2-url', url('purchase/return-order/' . $returnorder->id))
+        @section('level-2', 'รายละเอียด')
+        @endif
 
 
-@section('title', $mode == "edit" ? 'แก้ไข' : 'รายละเอียด')
+        @section('title', $mode == 'edit' ? 'แก้ไข' : 'รายละเอียด')
 
-@section('background-tag','bg-success')
+        @section('background-tag', 'bg-success')
 
-@section('content')
-    <div class="container">
-        <div class="row">
+        @section('content')
+            <div class="container">
+                <div class="row">
 
-            <div class="col-md-12">
-                <div class="">
-                    <!-- <div class="card-header">Edit ReturnOrder #{{ $returnorder->id }}</div> -->
-                    <div class="">
-                        <!-- <a href="{{ url('/purchase/return-order') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br /> -->
+                    <div class="col-md-12">
+                        <div class="">
 
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                            @if ($errors->any())
+                                <ul class="alert alert-danger">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                            <form class="d-none" action="{{ url('/purchase/return-order/' . $returnorder->id) }}/cancel"
+                                id="form-cancel" method="POST" onsubmit="return confirm('Do you confirm to void?')">
+                                {{ csrf_field() }}
+                                {{ method_field('PATCH') }}
+                                <button type="submit" class="btn btn-success " id="form-cancel-submit"
+                                    style="width:150px;">Save</button>
+                            </form>
+                            <form method="POST" action="{{ url('/purchase/return-order/' . $returnorder->id) }}"
+                                accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                {{ method_field('PATCH') }}
+                                {{ csrf_field() }}
 
-                        <form method="POST" action="{{ url('/purchase/return-order/' . $returnorder->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-                            {{ method_field('PATCH') }}
-                            {{ csrf_field() }}
+                                @include ('purchase.return-order.form', ['formMode' => 'edit'])
 
-                            @include ('purchase.return-order.form', ['formMode' => 'edit'])
+                            </form>
 
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
+        @endsection
