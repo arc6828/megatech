@@ -172,7 +172,7 @@
 
 @include('purchase/requisition/detail')
 
-<div class="card mt-4">
+<div class="card mt-4 d-none">
     <div class="card-body">
         <div class="row">
             <div class="col-lg-3">
@@ -185,8 +185,8 @@
                 <div class="form-group form-inline">
                     <input type="hidden" name="total" id="total" class="form-control form-control-sm form-control-line">
                     <label class="col-lg-6">หมายเหตุ</label>
-                    <label class="col-lg-3 d-none">ยอดรวมก่อนภาษี</label>
-                    <div class="col-lg-3  d-none">
+                    <label class="col-lg-3 ">ยอดรวมก่อนภาษี</label>
+                    <div class="col-lg-3 ">
                         <input type="number" name="total_before_vat" id="total_before_vat"
                             class="form-control form-control-sm form-control-line roundnum" readonly disabled>
                     </div>
@@ -196,19 +196,19 @@
                         <input name="remark" id="remark" class="form-control form-control-sm form-control-line">
 
                     </label>
-                    <label class="col-lg-3  d-none">
+                    <label class="col-lg-3">
                         ภาษีมูลค่าเพิ่ม
                         <input type="number" name="vat_percent" id="vat_percent" onkeyup="onChange(this)"
                             onChange="onChange(this)" class="form-control form-control-sm form-control-line roundnum"
                             style="width: 50px; margin: 10px;"> %
                     </label>
-                    <div class="col-lg-3  d-none">
+                    <div class="col-lg-3">
                         <input type="number" step="0.01" name="vat" id="vat" onkeyup="onChange(this)"
                             onChange="onChange(this)" class="form-control form-control-sm form-control-line  roundnum"
                             readonly disabled>
                     </div>
                 </div>
-                <div class="form-group form-inline  d-none">
+                <div class="form-group form-inline">
                     <label class="col-lg-6">
 
                     </label>
