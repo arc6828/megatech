@@ -14,7 +14,7 @@
         <script>
             document.addEventListener("DOMContentLoaded", function(event) {
                 var detail = JSON.parse('@json($table_invoice_detail)');
-                console.log("DETAIL : ",detail);
+                console.log("DETAIL : ", detail);
                 var dataSet = [];
                 detail.forEach(function(element, index) {
                     //console.log(element,index);
@@ -80,25 +80,24 @@
 
             //EVENT HANDLER
             function createRow(id, element) {
-                console.log('detail:invoice', element.);
+                console.log(element);
                 return [
                     element.product_code +
-                    "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='" + element
-                    .product_id + "' >" +
+                    "<input type='hidden' class='product_id_edit' name='product_id_edit[]'  value='" + element.product_id +
+                    "' >" +
                     "<input type='hidden' class='id_edit' name='id_edit[]'  value='" + id + "' >",
                     element.product_name,
-                    "<input class='input amount_edit' name='amount_edit[]'  value='" + element.amount +
-                    "' >",
+                    "<input class='input amount_edit' name='amount_edit[]'  value='" + element.amount + "' >",
                     //element.product_unit,
-                    "<input class='input normal_price_edit' name='normal_price_edit[]'  value='" + parseFloat(
-                        element.normal_price).toFixed(2) + "' disabled>",
+                    "<input class='input normal_price_edit' name='normal_price_edit[]'  value='" + parseFloat(element
+                        .normal_price).toFixed(2) + "' disabled>",
                     "<input type='number' step='any' class='input discount_percent_edit' name='discount_percent_edit[]' max=" +
                     element.max_discount_percent + "  value='" + parseFloat(100 - element.discount_price / element
                         .normal_price * 100).toFixed(2) + "'>",
-                    "<input class='input discount_price_edit' name='discount_price_edit[]'  value='" + parseFloat(
-                        element.discount_price).toFixed(2) + "'>",
-                    "<input class='input total_edit' name='total_edit[]'  value='" + parseFloat(element
-                        .discount_price * element.amount).toFixed(2) + "' disabled>",
+                    "<input class='input discount_price_edit' name='discount_price_edit[]'  value='" + parseFloat(element
+                        .discount_price).toFixed(2) + "'>",
+                    "<input class='input total_edit' name='total_edit[]'  value='" + parseFloat(element.discount_price *
+                        element.amount).toFixed(2) + "' disabled>",
                     "<a href='javascript:void(0)' class='text-danger btn-delete-detail' style='padding-right:10px;' title='delete' >" +
                     "<span class='fa fa-trash'></span>" +
                     "</a>",
@@ -175,7 +174,6 @@
                 calculateNumber();
                 onChange(document.getElementById("vat_percent"));
             }
-
         </script>
 
         <div class="text-center">

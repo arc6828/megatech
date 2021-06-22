@@ -109,7 +109,7 @@ class ReturnInvoiceController extends Controller
       $product = ProductModel::findOrFail($item->product_id);
       $gaurd_stock = GaurdStock::create([ //Create gaurd_stock
         "code" => $returninvoice->code,
-        "type" => "sales_return_invoice_cancel",
+        "type" => "sales_return_invoice",
         "amount" => $item->amount,
         "amount_in_stock" => ($product->amount_in_stock + $item->amount),
         "pending_in" => $product->pending_in,
@@ -170,7 +170,7 @@ class ReturnInvoiceController extends Controller
       $product = ProductModel::findOrFail($item['product_id']);
       $gaurd_stock = GaurdStock::create([
         "code" => $returninvoice->code,
-        "type" => "purchase_return_order_cancel",
+        "type" => "sales_return_invoice_cancel",
         "amount" => $item['amount'],
         "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
         "pending_in" => ($product->pending_in + $item['amount']),
