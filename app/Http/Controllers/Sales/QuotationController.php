@@ -56,16 +56,16 @@ class QuotationController extends Controller
     $data = [
       //QUOTATION
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
       //'table_sales_user' => UserModel::select_by_role('sales'),
-      'table_sales_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_sales_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       //QUOTATION DETAIL
       'table_quotation_detail' => [],
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
 
       'customer' => !empty(request('customer_id')) ? CustomerModel::where('customer_id', request('customer_id'))->firstOrFail() : null,
       //'customer_json' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
@@ -85,29 +85,16 @@ class QuotationController extends Controller
   {
 
     //INSERT QUOTATION
-    $input = [
-      'quotation_code' => $this->getNewCode(),
-      'datetime' => date('Y-m-d H:i:s'),
-      'customer_id' => $request->input('customer_id'),
-      'contact_name' => $request->input('contact_name'),
-      'debt_duration' => $request->input('debt_duration'),
-      'billing_duration' => $request->input('billing_duration'),
-      'payment_condition' => $request->input('payment_condition', ""),
-      'reason' => $request->input('reason'),
-      'delivery_type_id' => $request->input('delivery_type_id'),
-      'tax_type_id' => $request->input('tax_type_id'),
-      'delivery_time' => $request->input('delivery_time'),
-      'department_id' => $request->input('department_id'),
-      'sales_status_id' => $request->input('sales_status_id', 0),
-      'user_id' => $request->input('user_id'),
-      'staff_id' => $request->input('staff_id'),
-      'zone_id' => $request->input('zone_id'),
-      'remark' => $request->input('remark'),
-      'vat_percent' => $request->input('vat_percent', 7),
-      'vat' => $request->input('vat', 0),
-      'total_before_vat' => $request->input('total_before_vat', 0),
-      'total' => $request->input('total_after_vat', 0),
-    ];
+    $input = $request->all();
+    $input["quotation_code"] = $this->getNewCode();
+    $input['datetime'] = date('Y-m-d H:i:s');
+    $input["revision"] = 0;
+    $input["sales_status_id"] = 0;
+    $input["vat_percent"] = 7;
+    $input["sales_status_id"] = 0;
+    $input["total_before_vat"] = 0;
+    $input["total_after_vat"] = 0;
+
 
     $quotaion = QuotationModel::create($input); // create qt
     $id = $quotaion->quotation_id;
@@ -212,17 +199,17 @@ class QuotationController extends Controller
       'quotation' => QuotationModel::findOrFail($id),
       'table_quotation' => $table_quotation,
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
       //'table_sales_user' => UserModel::select_by_role('sales'),
-      'table_sales_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_sales_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       'quotation_id' => $id,
       //QUOTATION Detail
       'table_quotation_detail' => $table_quotation_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
       'customer' => CustomerModel::where('customer_id', QuotationModel::findOrFail($id)->customer_id)->first(),
       'customer_json' => CustomerModel::where('customer_id', QuotationModel::findOrFail($id)->customer_id)->first(),
 
@@ -285,17 +272,17 @@ class QuotationController extends Controller
       'quotation' => QuotationModel::findOrFail($id),
       'table_quotation' => $table_quotation,
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
       'table_sales_user' => UserModel::select_by_role('sales'),
-      'table_sales_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_sales_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       'quotation_id' => $id,
       //QUOTATION Detail
       'table_quotation_detail' => $table_quotation_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
       'mode' => 'edit',
     ];
     return view('sales/quotation/edit', $data);
@@ -311,97 +298,75 @@ class QuotationController extends Controller
   public function update(Request $request, $id)
   {
     //1.INSERT QUOTATION
-    $input = [
-      //'quotation_code' => $quotation_code,
-      'customer_id' => $request->input('customer_id'),
-      'contact_name' => $request->input('contact_name'),
-      'debt_duration' => $request->input('debt_duration'),
-      'billing_duration' => $request->input('billing_duration'),
-      'reason' => $request->input('reason'),
-      'payment_condition' => $request->input('payment_condition', ""),
-      'delivery_type_id' => $request->input('delivery_type_id'),
-      'tax_type_id' => $request->input('tax_type_id'),
-      'delivery_time' => $request->input('delivery_time'),
-      'department_id' => $request->input('department_id'),
-      'sales_status_id' => $request->input('sales_status_id'),
-      'user_id' => $request->input('user_id'),
-      'staff_id' => $request->input('staff_id'),
-      'zone_id' => $request->input('zone_id'),
-      'remark' => $request->input('remark'),
-      'vat_percent' => $request->input('vat_percent', 7),
-      'vat' => $request->input('vat', 0),
-      'total_before_vat' => $request->input('total_before_vat', 0),
-      'total' => $request->input('total_after_vat', 0),
-    ];
+    $input = $request->all();
+
     //2.INSERT UPDATE DELETE QUOTATION DETAIL
     if (is_array($request->input('product_id_edit'))) {
 
-      QuotationDetailModel::where('quotation_id', $id)->delete(); // clear  detail
+      QuotationDetailModel::where('quotation_id', $id)->delete();
 
-      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) { // insert qt detail
-        $quotaion_detail = [
+      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        QuotationDetailModel::create([
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
           "quotation_id" => $id,
           "delivery_duration" => $request->input('delivery_duration')[$i],
-        ];
-        QuotationDetailModel::create($quotaion_detail); // create qt detail
+        ]);
       }
     }
-    QuotationModel::where('quotation_id', $id)
-      ->orWhere('quotation_code', $id)
-      ->update($input); // update qt draft
+    $quotation = QuotationModel::findOrFail($id);
+    $quotation->update($input);
 
     //3.REDIRECT
     return redirect("sales/quotation/{$id}");
   }
 
+  public function approve($id)
+  {
+
+    //รหัสเอกสาร
+    //วันที่และเวลา
+    //สถานะ
+    $quotaion = QuotationModel::findOrFail($id);
+
+    $input = [
+      'quotation_code' => $quotaion->quotation_code,
+      'datetime' => date('Y-m-d H:i:s'),
+      'sales_status_id' => 1,
+    ];
+    // QuotationModel::update_by_id($input, $id);
+    QuotationModel::where('quotation_id', $id)
+      ->orWhere('quotation_code', $id)
+      ->update($input);
+
+    //3.REDIRECT
+    return redirect("sales/quotation/{$id}")->with('flash_message', 'popup');
+  }
+
   public function revision(Request $request, $id)
   {
-    $input = [
-      'quotation_code' => $request->input('quotation_code'),
-      'datetime' => date('Y-m-d H:i:s'),
-      'customer_id' => $request->input('customer_id'),
-      'contact_name' => $request->input('contact_name'),
-      'debt_duration' => $request->input('debt_duration'),
-      'billing_duration' => $request->input('billing_duration'),
-      'reason' => $request->input('reason'),
-      'payment_condition' => $request->input('payment_condition', ""),
-      'delivery_type_id' => $request->input('delivery_type_id'),
-      'tax_type_id' => $request->input('tax_type_id'),
-      'delivery_time' => $request->input('delivery_time'),
-      'department_id' => $request->input('department_id'),
-      'sales_status_id' => $request->input('sales_status_id'),
-      'user_id' => $request->input('user_id'),
-      'staff_id' => $request->input('staff_id'),
-      'zone_id' => $request->input('zone_id'),
-      'remark' => $request->input('remark'),
-      'vat_percent' => $request->input('vat_percent', 7),
-      'vat' => $request->input('vat', 0),
-      'total_before_vat' => $request->input('total_before_vat', 0),
-      'total' => $request->input('total_after_vat', 0),
-    ];
+    $input = $request->all();
+    $input['datetime'] = date('Y-m-d H:i:s');
 
-    $quotaion = QuotationModel::create($input); // create qt
+    // create qt
+    $quotaion = QuotationModel::create($input);
     $id = $quotaion->quotation_id;
 
     if (is_array($request->input('product_id_edit'))) {
-      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) { // insert qt detail
-        $quotaion_detail = [
+      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        QuotationDetailModel::create([
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
           "quotation_id" => $id,
           "delivery_duration" => $request->input('delivery_duration')[$i],
-        ];
-        QuotationDetailModel::create($quotaion_detail); // create qt detail
+        ]);
       }
     }
 
-    QuotationModel::where('quotation_id', $id)
-      ->orWhere('quotation_code', $id)
-      ->update($input); // Update QT revision = 0
+    $quotation = QuotationModel::findOrFail($id);
+    $quotation->update($input);
 
     if (!empty($request->input('quotation_code'))) {
 
@@ -426,33 +391,11 @@ class QuotationController extends Controller
         $input['quotation_code'] = "{$quotation_code}{$input['revision']}"; // string
       }
     }
-    QuotationModel::where('quotation_id', $id)
-      ->orWhere('quotation_code', $id)
-      ->update($input); // update QT revision = 1 && sales_status_id -1
+    // update QT revision = 1 && sales_status_id -1
+    $quotation = QuotationModel::findOrFail($id);
+    $quotation->update($input);
 
     return redirect("sales/quotation/{$id}");
-  }
-
-  public function approve(Request $request, $id)
-  {
-
-    //รหัสเอกสาร
-    //วันที่และเวลา
-    //สถานะ
-    $quotaion = QuotationModel::findOrFail($id);
-
-    $input = [
-      'quotation_code' => $quotaion->quotation_code,
-      'datetime' => date('Y-m-d H:i:s'),
-      'sales_status_id' => 1,
-    ];
-    // QuotationModel::update_by_id($input, $id);
-    QuotationModel::where('quotation_id', $id)
-      ->orWhere('quotation_code', $id)
-      ->update($input);
-
-    //3.REDIRECT
-    return redirect("sales/quotation/{$id}")->with('flash_message', 'popup');
   }
 
   /**

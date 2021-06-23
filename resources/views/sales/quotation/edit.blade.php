@@ -47,8 +47,8 @@
 
                 @if ($row->sales_status_id == 0)
                     <!-- แก้ไข ข้อมูลตอนยังไม่ได้อัพเดท สถานะ ส่งใบเสนอราคา -->
-                    <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/update" method="POST"
-                        onsubmit="return confirm('Do you confirm to save?')">
+                    <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/update" id="form"
+                        method="POST" onsubmit="return confirm('Do you confirm to save?')">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         @include('sales/quotation/form')
@@ -63,8 +63,8 @@
                     </form>
 
                 @elseif($row->sales_status_id == 1)
-                    <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/revision" method="POST"
-                        onsubmit="return confirm('Do you confirm to save?')">
+                    <form class="" action="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/revision" id="form"
+                        method="POST" onsubmit="return confirm('Do you confirm to save?')">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         @include('sales/quotation/form')
@@ -73,12 +73,12 @@
                                 <a href="{{ url('/') }}/sales/quotation" class="btn btn-outline-success"
                                     style="width:150px;">back</a>
                                 <button type="submit" class="btn btn-success" id="form-submit" style="width:150px;">
-                                    revision </button>
+                                    Save </button>
                             </div>
                         @endif
                     </form>
                 @else
-                    <form class="" action="{{ url('/') }}/sales/quotation" method="POST">
+                    <form class="" action="{{ url('/') }}/sales/quotation" id="form" method="POST">
                         {{ csrf_field() }}
                         @include('sales/quotation/form')
                         @if ($mode == 'edit')

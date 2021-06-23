@@ -45,21 +45,61 @@
                             onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i>
                             Delete</button>
                     </form>
-                    
-                    <form class="" action="{{ url('/') }}/sales/delivery_temporary" id="form" method="POST">
-                        {{ csrf_field() }}
+                    @if ($row->sales_status_id == 6)
+                        <form class=""
+                            action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/update" id="form"
+                            method="POST" onsubmit="return confirm('Do you confirm to save?')">
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
 
-                        @include('sales/delivery_temporary/form')
-                        @if ($row->sales_status_id != 11)
-                            @if ($mode == 'edit')
-                                <div class="text-center mt-4">
-                                    <a href="{{ url('/') }}/sales/delivery_temporary" class="btn btn-outline-primary"
-                                        style="width:150px;">back</a>
-                                    <button type="submit" class="btn btn-primary " id="form-submit" style="width:150px;">Save</button>
-                                </div>
+                            @include('sales/delivery_temporary/form')
+                            @if ($row->sales_status_id != 11)
+                                @if ($mode == 'edit')
+                                    <div class="text-center mt-4">
+                                        <a href="{{ url('/') }}/sales/delivery_temporary" class="btn btn-outline-success"
+                                            style="width:150px;">back</a>
+                                        <button type="submit" class="btn btn-success " id="form-submit"
+                                            style="width:150px;">Save</button>
+                                    </div>
+                                @endif
                             @endif
-                        @endif
-                    </form>
+                        </form>
+                    @elseif($row->sales_status_id == 10)
+                        <form class=""
+                            action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/revision"
+                            id="form" method="POST" onsubmit="return confirm('Do you confirm to save?')">
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
+
+                            @include('sales/delivery_temporary/form')
+                            @if ($row->sales_status_id != 11)
+                                @if ($mode == 'edit')
+                                    <div class="text-center mt-4">
+                                        <a href="{{ url('/') }}/sales/delivery_temporary" class="btn btn-outline-success"
+                                            style="width:150px;">back</a>
+                                        <button type="submit" class="btn btn-success " id="form-submit"
+                                            style="width:150px;">Save</button>
+                                    </div>
+                                @endif
+                            @endif
+                        </form>
+                    @else
+                        <form class="" action="{{ url('/') }}/sales/delivery_temporary/" id="form" method="POST">
+                            {{ csrf_field() }}
+
+                            @include('sales/delivery_temporary/form')
+                            @if ($row->sales_status_id != 11)
+                                @if ($mode == 'edit')
+                                    <div class="text-center mt-4">
+                                        <a href="{{ url('/') }}/sales/delivery_temporary" class="btn btn-outline-primary"
+                                            style="width:150px;">back</a>
+                                        <button type="submit" class="btn btn-primary " id="form-submit"
+                                            style="width:150px;">Save</button>
+                                    </div>
+                                @endif
+                            @endif
+                        </form>
+                    @endif
                     <script>
                         document.addEventListener("DOMContentLoaded", function(event) {
                             $(".btn-print").attr("href",

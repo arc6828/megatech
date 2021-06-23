@@ -50,16 +50,16 @@ class RequisitionController extends Controller
     $data = [
       //QUOTATION
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
-      'table_purchase_user' => UserModel::select_all(),
-      //'table_purchase_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_purchase_user' => UserModel::all(),
+      //'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       //QUOTATION DETAIL
       'table_purchase_requisition_detail' => [],
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     return view('purchase/requisition/create', $data);
   }
@@ -144,17 +144,17 @@ class RequisitionController extends Controller
       'table_purchase_requisition' => $table_purchase_requisition,
       'purchase_requisition' => RequisitionModel::findOrFail($id),
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
-      'table_purchase_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_requisition_id' => $id,
       'mode' => 'show',
       //QUOTATION Detail
       'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
       'mode' => 'show',
 
     ];
@@ -184,17 +184,17 @@ class RequisitionController extends Controller
       'table_purchase_requisition' => $table_purchase_requisition,
       'purchase_requisition' => RequisitionModel::findOrFail($id),
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
-      'table_purchase_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_requisition_id' => $id,
       'mode' => 'edit',
       //QUOTATION Detail
       'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
       'mode' => 'edit',
     ];
     return view('purchase/requisition/edit', $data);

@@ -53,16 +53,16 @@ class ReceiveTemporaryController extends Controller
       $data = [
           //QUOTATION
           'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::select_all(),
-          'table_department' => DepartmentModel::select_all(),
-          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_receive_type' => DeliveryTypeModel::all(),
+          'table_department' => DepartmentModel::all(),
+          'table_tax_type' => TaxTypeModel::all(),
           'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
           //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::select_all(),
-          'table_zone' => ZoneModel::select_all(),
+          'table_purchase_user' => UserModel::all(),
+          'table_zone' => ZoneModel::all(),
           //QUOTATION DETAIL
           'table_receive_temporary_detail' => [],
-          'table_product' => ProductModel::select_all(),
+          'table_product' => ProductModel::all(),
       ];
       return view('purchase/receive_temporary/create',$data);
     }
@@ -227,17 +227,17 @@ class ReceiveTemporaryController extends Controller
           'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
           'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
           'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::select_all(),
-          'table_department' => DepartmentModel::select_all(),
-          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_receive_type' => DeliveryTypeModel::all(),
+          'table_department' => DepartmentModel::all(),
+          'table_tax_type' => TaxTypeModel::all(),
           'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
           //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::select_all(),
-          'table_zone' => ZoneModel::select_all(),
+          'table_purchase_user' => UserModel::all(),
+          'table_zone' => ZoneModel::all(),
           'receive_temporary_id'=> $id,
           //QUOTATION Detail
           'table_receive_temporary_detail' => ReceiveTemporaryDetailModel::select_by_receive_temporary_id($id),
-          'table_product' => ProductModel::select_all(),
+          'table_product' => ProductModel::all(),
           'mode'=>'show',
       ];
       return view('purchase/receive_temporary/edit',$data);
@@ -251,17 +251,17 @@ class ReceiveTemporaryController extends Controller
           //QUOTATION
           'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
           'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::select_all(),
-          'table_department' => DepartmentModel::select_all(),
-          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_receive_type' => DeliveryTypeModel::all(),
+          'table_department' => DepartmentModel::all(),
+          'table_tax_type' => TaxTypeModel::all(),
           'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
           //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::select_all(),
-          'table_zone' => ZoneModel::select_all(),
+          'table_purchase_user' => UserModel::all(),
+          'table_zone' => ZoneModel::all(),
           'receive_temporary_id'=> $id,
           //QUOTATION Detail
           'table_receive_temporary_detail' => ReceiveTemporaryDetailModel::select_by_receive_temporary_id($id),
-          'table_product' => ProductModel::select_all(),
+          'table_product' => ProductModel::all(),
       ];
       //return view('purchase/receive_temporary/edit',$data);
 
@@ -315,17 +315,17 @@ class ReceiveTemporaryController extends Controller
           'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
           'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
           'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::select_all(),
-          'table_department' => DepartmentModel::select_all(),
-          'table_tax_type' => TaxTypeModel::select_all(),
+          'table_receive_type' => DeliveryTypeModel::all(),
+          'table_department' => DepartmentModel::all(),
+          'table_tax_type' => TaxTypeModel::all(),
           'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
           //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::select_all(),
-          'table_zone' => ZoneModel::select_all(),
+          'table_purchase_user' => UserModel::all(),
+          'table_zone' => ZoneModel::all(),
           'receive_temporary_id'=> $id,
           //QUOTATION Detail
           'table_receive_temporary_detail' => ReceiveTemporaryDetailModel::select_by_receive_temporary_id($id),
-          'table_product' => ProductModel::select_all(),
+          'table_product' => ProductModel::all(),
           'mode'=>'edit',
       ];
       return view('purchase/receive_temporary/edit',$data);

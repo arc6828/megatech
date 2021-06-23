@@ -18,9 +18,9 @@
                 </div>
                 <div class="col-lg-4 text-right">
                     @if ($mode == 'edit')
-                        @if ($row->sales_status_id == 0)
-                            <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)"
-                                onclick="approved()" title="สร้าง">
+                        @if ($row->sales_status_id == 6)
+                            <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)" onclick="approved()"
+                                title="สร้าง">
                                 <i class="fas fa-check"></i> สร้างใบส่งของชั่วคราว
                             </a>
                             <a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)"
@@ -210,16 +210,18 @@
                 @if (isset($delivery_temporary))
                     @switch($delivery_temporary->sales_status_id)
                         @case(-1)
-                            <span class="badge badge-pill badge-secondary">Void</span>
+                            <span
+                                class="badge badge-pill badge-secondary">{{ $delivery_temporary->sales_status->sales_status_name }}</span>
                         @break
-                        @case(0)
-                            <span class="badge badge-pill badge-primary">Draft</span>
+                        @case(6)
+                            <span
+                                class="badge badge-pill badge-primary">{{ $delivery_temporary->sales_status->sales_status_name }}</span>
                         @break
                         @case(10)
-                            <span class="badge badge-pill badge-warning">เปิดใบส่งของชั่วคราว</span>
+                            <span class="badge badge-pill badge-warning">{{ $delivery_temporary->sales_status->sales_status_name }}</span>
                         @break
                         @case(11)
-                            <span class="badge badge-pill badge-success">ปิดใบส่งของชั่วคราว</span>
+                            <span class="badge badge-pill badge-success">{{ $delivery_temporary->sales_status->sales_status_name }}</span>
                         @break
                     @endswitch
                 @endif
