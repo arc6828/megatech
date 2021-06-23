@@ -102,16 +102,16 @@ class DeliveryTemporaryController extends Controller
    */
   public function store(Request $request)
   {
-
     $input = $request->all();
-    $input["delivery_temporary_code"] = $this->getNewCode();
+    $input['delivery_temporary_code'] = $this->getNewCode();
     $input['datetime'] = date('Y-m-d H:i:s');
     $input["revision"] = 0;
-    $input["sales_status_id"] = 6;
     $input["vat_percent"] = 7;
     $input["sales_status_id"] = 0;
     $input["total_before_vat"] = 0;
     $input["total_after_vat"] = 0;
+    $input['sales_status_id'] = 6;
+
 
     $delivery_temporary = DeliveryTemporaryModel::create($input);
     $id = $delivery_temporary->delivery_temporary_id;
@@ -367,7 +367,7 @@ class DeliveryTemporaryController extends Controller
 
     if (!empty($request->input('delivery_temporary_code'))) {
 
-      $q = DeliveryTemporaryModel::where('delivery_temporary_code', $request->input('delivery_temporary_code'))
+      $q = DeliveryTemporaryModel::where('delivery_temporary_id', $request->input('delivery_temporary_id'))
         ->orderBy('datetime', 'desc')->first();
       $input['revision'] = $q->revision + 1;
       $q->sales_status_id = -1; //-1 means void
@@ -389,6 +389,8 @@ class DeliveryTemporaryController extends Controller
 
     $delivery_temporary = DeliveryTemporaryModel::findOrFail($id);
     $delivery_temporary->update($input);
+
+    return redirect("sales/delivery_temporary/{$id}");
   }
 
   /**
