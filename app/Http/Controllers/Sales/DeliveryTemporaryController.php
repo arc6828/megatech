@@ -120,10 +120,9 @@ class DeliveryTemporaryController extends Controller
         ]);
       }
     }
-    //IF NOT DRAFT
     //GAURD STOCK
     $list = $delivery_temporary->delivery_temporary_details()->get();
-    
+
     foreach ($list as $item) {
       $product = ProductModel::findOrFail($item['product_id']);
       $gaurd_stock = GaurdStock::create([
@@ -146,7 +145,36 @@ class DeliveryTemporaryController extends Controller
 
     return redirect("sales/delivery_temporary/{$id}");
   }
+  public function cancel($id)
+  {
+    //
+    $delivery_temporary = DeliveryTemporaryModel::findOrFail($id);
+    $delivery_temporary->sales_status_id = 11; //11 MEANS Cancelled
+    $delivery_temporary->save();
+    $list = $delivery_temporary->delivery_temporary_details;
 
+    //GAURD STOCK
+    foreach ($list as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $delivery_temporary->delivery_temporary_code,
+        "type" => "sales_dt_cancel",
+        "amount" => $item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+        "pending_in" => $product->pending_in,
+        "pending_out" => $product->pending_out,
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
+    }
+
+    return redirect("sales/delivery_temporary/{$id}/edit");
+  }
   /**
    * Display the specified resource.
    *
@@ -204,37 +232,27 @@ class DeliveryTemporaryController extends Controller
     //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
   }
 
-  public function cancel($id)
+
+  public function approve(Request $request, $id)
   {
-    //
+
+    //รหัสเอกสาร
+    //วันที่และเวลา
+    //สถานะ
     $delivery_temporary = DeliveryTemporaryModel::findOrFail($id);
-    $delivery_temporary->sales_status_id = 11; //11 MEANS Cancelled
-    $delivery_temporary->save();
-    $list = $delivery_temporary->delivery_temporary_details;
 
-    //GAURD STOCK
-    foreach ($list as $item) {
-      $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $id,
-        "type" => "sales_dt_cancel",
-        "amount" => $item['amount'],
-        "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-        "pending_in" => $product->pending_in,
-        "pending_out" => $product->pending_out,
-        "product_id" => $product->product_id,
-      ]);
+    $input = [
+      'delivery_temporary_code' => $delivery_temporary->delivery_temporary_code,
+      'datetime' => date('Y-m-d H:i:s'),
+      'sales_status_id' => 10,
+    ];
+    DeliveryTemporaryModel::where('delivery_temporary_id', $id)
+      ->orWhere('delivery_temporary_code', $id)
+      ->update($input);
 
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
-      $product->save();
-    }
-
-    return redirect("sales/delivery_temporary/{$id}/edit");
+    //3.REDIRECT
+    return redirect("sales/delivery_temporary/{$id}")->with('flash_message', 'popup');
   }
-
   /**
    * Show the form for editing the specified resource.
    *
@@ -291,33 +309,34 @@ class DeliveryTemporaryController extends Controller
       'vat_percent' => $request->input('vat_percent', 7),
       'total' => $request->input('total_after_vat', 0),
     ];
-    DeliveryTemporaryModel::update_by_id($input, $id);
+    // DeliveryTemporaryModel::update_by_id($input, $id);
 
-    //2.DELETE QUOTATION DETAIL FIRST
-    DeliveryTemporaryDetailModel::delete_by_delivery_temporary_id($id);
+    // //2.DELETE QUOTATION DETAIL FIRST
+    // DeliveryTemporaryDetailModel::delete_by_delivery_temporary_id($id);
 
-    //3.INSERT ALL NEW QUOTATION DETAIL
-    $list = [];
-    //print_r($request->input('product_id_edit'));
-    //print_r($request->input('amount_edit'));
-    //print_r($request->input('discount_price_edit'));
-    //echo $id;
+    // //3.INSERT ALL NEW QUOTATION DETAIL
+    // $list = [];
+    // //print_r($request->input('product_id_edit'));
+    // //print_r($request->input('amount_edit'));
+    // //print_r($request->input('discount_price_edit'));
+    // //echo $id;
     if (is_array($request->input('product_id_edit'))) {
+      DeliveryTemporaryDetailModel::where('delivery_temporary_id', $id)->delete();
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        $a = [
+        DeliveryTemporaryDetailModel::create([
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
           "delivery_temporary_id" => $id,
-        ];
-        if (is_numeric($request->input('id_edit')[$i])) {
-          //$a["delivery_temporary_detail_id"] = $request->input('id_edit')[$i];
-        }
-        $list[] = $a;
+          "delivery_duration" => "-",
+        ]);
       }
     }
+    DeliveryTemporaryModel::where('delivery_temporary_id', $id)
+      ->orWhere('delivery_temporary_code', $id)
+      ->update($input);
 
-    DeliveryTemporaryDetailModel::insert($list);
+    // DeliveryTemporaryDetailModel::insert($list);
     //print_r($list);
 
     //4.REDIRECT
@@ -385,7 +404,7 @@ class DeliveryTemporaryController extends Controller
    */
   public function destroy($id)
   {
-    DeliveryTemporaryModel::delete_by_id($id);
+    DeliveryTemporaryModel::destroy($id);
     return redirect("sales/delivery_temporary");
   }
 }

@@ -92,6 +92,8 @@
           Route::resource('/invoice', 'Sales\InvoiceController');
 
           Route::get('/delivery_temporary/{id}/pdf', 'Sales\DeliveryTemporaryController@pdf');
+          Route::put('/delivery_temporary/{id}/approve', 'Sales\DeliveryTemporaryController@approve');
+
           Route::patch('/delivery_temporary/{id}/cancel', 'Sales\DeliveryTemporaryController@cancel');
           Route::resource('/delivery_temporary', 'Sales\DeliveryTemporaryController');
           //Route::resource('/invoice/{invoice_id}/invoice_detail', 'Sales\InvoiceDetailController');

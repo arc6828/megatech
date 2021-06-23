@@ -17,8 +17,8 @@
     {{ method_field('POST') }}
     @include('sales/delivery_temporary/form')
     <div class="text-center mt-5">
-      <a class="btn btn-outline-primary " href="{{ url('/') }}/sales/delivery_temporary">back</a>
-      <button type="submit" class="btn btn-primary " id="form-submit">Save</button>
+      <a class="btn btn-outline-success " href="{{ url('/') }}/sales/delivery_temporary">back</a>
+      <button type="submit" class="btn btn-success " id="form-submit">Save</button>
 
     </div>
 </form>

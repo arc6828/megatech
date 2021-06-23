@@ -98,8 +98,8 @@
 		</script>
 
     <div class="text-center">
-      <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
-      <a href="{{ url('/') }}/sales/delivery_temporary/create" class="btn btn-primary">
+      <a class="btn btn-outline-success" href="{{ url('/') }}/sales">back</a>
+      <a href="{{ url('/') }}/sales/delivery_temporary/create" class="btn btn-success">
       	<i class="fa fa-plus"></i> เพิ่มใบส่งของชั่วคราว
       </a>
     </div>
