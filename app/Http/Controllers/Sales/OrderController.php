@@ -84,18 +84,18 @@ class OrderController extends Controller
         }
         $data = [
             //QUOTATION
-            'table_customer' => CustomerModel::select_all(),
-            'table_delivery_type' => DeliveryTypeModel::select_all(),
-            'table_department' => DepartmentModel::select_all(),
-            'table_tax_type' => TaxTypeModel::select_all(),
+            'table_customer' => CustomerModel::all(),
+            'table_delivery_type' => DeliveryTypeModel::all(),
+            'table_department' => DepartmentModel::all(),
+            'table_tax_type' => TaxTypeModel::all(),
             'table_sales_status' => SalesStatusModel::select_by_category('order'),
             //'table_sales_user' => UserModel::select_by_role('sales'),
-            'table_sales_user' => UserModel::select_all(),
-            'table_zone' => ZoneModel::select_all(),
+            'table_sales_user' => UserModel::all(),
+            'table_zone' => ZoneModel::all(),
             'customer_code' => $customer_code,
             //QUOTATION DETAIL
             'table_order_detail' => [],
-            'table_product' => ProductModel::select_all(),
+            'table_product' => ProductModel::all(),
         ];
         return view('sales/order/create', $data);
     }
@@ -116,7 +116,7 @@ class OrderController extends Controller
             $datetime = $request->input('datetime_custom');
             // $code = $this->getNewCodeCustom($datetime);
         }
-
+        
         $input = [
             'order_code' => $order_code,
             'datetime' => $datetime,
@@ -346,17 +346,17 @@ class OrderController extends Controller
             'order' => OrderModel::findOrFail($id),
             'unchangable_items' => $unchangable_items,
             'table_customer' => CustomerModel::select_all(),
-            'table_delivery_type' => DeliveryTypeModel::select_all(),
-            'table_department' => DepartmentModel::select_all(),
-            'table_tax_type' => TaxTypeModel::select_all(),
+            'table_delivery_type' => DeliveryTypeModel::all(),
+            'table_department' => DepartmentModel::all(),
+            'table_tax_type' => TaxTypeModel::all(),
             'table_sales_status' => SalesStatusModel::select_by_category('order'),
             //'table_sales_user' => UserModel::select_by_role('sales'),
-            'table_sales_user' => UserModel::select_all(),
-            'table_zone' => ZoneModel::select_all(),
+            'table_sales_user' => UserModel::all(),
+            'table_zone' => ZoneModel::all(),
             'order_id' => $id,
             //QUOTATION Detail
             'table_order_detail' => $table_order_detail,
-            'table_product' => ProductModel::select_all(),
+            'table_product' => ProductModel::all(),
             'mode' => 'show',
         ];
         return view('sales/order/edit', $data);
@@ -426,16 +426,16 @@ class OrderController extends Controller
             'order' => $current_oe,
             'unchangable_items' => $unchangable_items,
             'table_customer' => CustomerModel::get(),
-            'table_delivery_type' => DeliveryTypeModel::select_all(),
-            'table_department' => DepartmentModel::select_all(),
-            'table_tax_type' => TaxTypeModel::select_all(),
+            'table_delivery_type' => DeliveryTypeModel::all(),
+            'table_department' => DepartmentModel::all(),
+            'table_tax_type' => TaxTypeModel::all(),
             'table_sales_status' => SalesStatusModel::select_by_category('order'),
             'table_sales_user' => UserModel::get(),
-            'table_zone' => ZoneModel::select_all(),
+            'table_zone' => ZoneModel::all(),
             'order_id' => $id,
             //QUOTATION Detail
             'table_order_detail' => $table_order_detail,
-            'table_product' => ProductModel::select_all(),
+            'table_product' => ProductModel::all(),
             'mode' => 'edit',
         ];
         return view('sales/order/edit', $data);

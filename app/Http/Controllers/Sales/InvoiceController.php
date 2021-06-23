@@ -70,16 +70,16 @@ class InvoiceController extends Controller
     $data = [
       //QUOTATION
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('order'),
       //'table_sales_user' => UserModel::select_by_role('sales'),
       'table_sales_user' => UserModel::all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_zone' => ZoneModel::all(),
       //QUOTATION DETAIL
       'table_invoice_detail' => [],
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     return view('sales/invoice/create', $data);
   }
@@ -285,17 +285,17 @@ class InvoiceController extends Controller
       'table_invoice' => $table_invoice,
       'invoice' => InvoiceModel::findOrFail($id),
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('invoice'),
       //'table_sales_user' => UserModel::select_by_role('sales'),
-      'table_sales_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_sales_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       'invoice_id' => $id,
       //QUOTATION Detail
       'table_invoice_detail' => $table_invoice_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
       'mode' => 'show',
     ];
     return view('sales/invoice/edit', $data);
@@ -318,17 +318,17 @@ class InvoiceController extends Controller
       'table_invoice' => $table_invoice,
       'table_customer' => CustomerModel::select_all(),
       'table_company' => Company::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('order'),
       //'table_sales_user' => UserModel::select_by_role('sales'),
-      'table_sales_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_sales_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       'invoice_id' => $id,
       //QUOTATION Detail
       'table_invoice_detail' => $table_invoice_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
       'total_text' => count($table_invoice) > 0 ? Functions::baht_text($table_invoice[0]->total) : "-",
     ];
     //return view('sales/invoice/edit',$data);
@@ -359,17 +359,17 @@ class InvoiceController extends Controller
       'invoice' => InvoiceModel::findOrFail($id),
       'table_invoice' => $table_invoice,
       'table_customer' => CustomerModel::select_all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('order'),
       //'table_sales_user' => UserModel::select_by_role('sales'),
-      'table_sales_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_sales_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       'invoice_id' => $id,
       //QUOTATION Detail
       'table_invoice_detail' => $table_invoice_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
       'mode' => 'edit',
     ];
     return view('sales/invoice/edit', $data);

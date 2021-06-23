@@ -55,17 +55,17 @@ class OrderController extends Controller
     $data = [
       //QUOTATION
       'table_supplier' => SupplierModel::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
       //'table_purchase_user' => UserModel::select_by_role('purchase_order'),
       'table_purchase_user' => UserModel::all(),
-      //'table_purchase_order_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      //'table_purchase_order_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       //QUOTATION DETAIL
       'table_purchase_order_detail' => [],
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     return view('purchase/order/create', $data);
   }
@@ -189,16 +189,16 @@ class OrderController extends Controller
       'table_purchase_order' => OrderModel::select_by_id($id),
       'table_supplier' => SupplierModel::all(),
       'table_company' => Company::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
       'table_purchase_user' => UserModel::all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_order_id' => $id,
       //QUOTATION Detail
       'table_purchase_order_detail' => $table_purchase_order_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     //return view('purchase/order/edit',$data);
 
@@ -248,17 +248,17 @@ class OrderController extends Controller
       'order' => $current_oe,
       'unchangable_items' => $unchangable_items,
       'table_supplier' => SupplierModel::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
       'table_purchase_user' => UserModel::all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_order_id' => $id,
       'mode' => 'show',
       //QUOTATION Detail
       'table_purchase_order_detail' => $table_purchase_order_detail,
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     return view('purchase/order/edit', $data);
   }
@@ -303,12 +303,12 @@ class OrderController extends Controller
       'order' => $current_oe,
       'unchangable_items' => $unchangable_items,
       'table_supplier' => SupplierModel::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
       'table_purchase_user' => UserModel::all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_order_id' => $id,
       'mode' => 'edit',
       //QUOTATION Detail

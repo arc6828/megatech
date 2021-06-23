@@ -56,17 +56,17 @@ class ReceiveController extends Controller
     $data = [
       //QUOTATION
       'table_supplier' => SupplierModel::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
       //'table_purchase_user' => UserModel::select_by_role('purchase_receive'),
       'table_purchase_user' => UserModel::all(),
-      //'table_purchase_receive_user' => UserModel::select_all(),
-      'table_zone' => ZoneModel::select_all(),
+      //'table_purchase_receive_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
       //QUOTATION DETAIL
       'table_purchase_receive_detail' => [],
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     return view('purchase/receive/create', $data);
   }
@@ -234,16 +234,16 @@ class ReceiveController extends Controller
       'table_purchase_receive' =>   $table_purchase_receive,
       'table_company' => Company::all(),
       'table_supplier' => SupplierModel::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
       'table_purchase_user' => UserModel::all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_receive_id' => $id,
       //QUOTATION Detail
       'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     //return view('purchase/receive/edit',$data);
 
@@ -271,17 +271,17 @@ class ReceiveController extends Controller
       'table_purchase_receive' => $table_purchase_receive,
       'purchase_receive' => ReceiveModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
       'table_purchase_user' => UserModel::all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_receive_id' => $id,
       'mode' => 'show',
       //QUOTATION Detail
       'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
     //echo $data["mode"];
     //exit();
@@ -306,17 +306,17 @@ class ReceiveController extends Controller
       'table_purchase_receive' => $table_purchase_receive,
       'purchase_receive' => ReceiveModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
-      'table_delivery_type' => DeliveryTypeModel::select_all(),
-      'table_department' => DepartmentModel::select_all(),
-      'table_tax_type' => TaxTypeModel::select_all(),
+      'table_delivery_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
       'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
       'table_purchase_user' => UserModel::all(),
-      'table_zone' => ZoneModel::select_all(),
+      'table_zone' => ZoneModel::all(),
       'purchase_receive_id' => $id,
       'mode' => 'edit',
       //QUOTATION Detail
       'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
-      'table_product' => ProductModel::select_all(),
+      'table_product' => ProductModel::all(),
     ];
 
     return view('purchase/receive/edit', $data);

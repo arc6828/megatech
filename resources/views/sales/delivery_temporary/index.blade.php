@@ -42,16 +42,16 @@
 						<td>
 							@switch($row->sales_status_id)							
 								@case(-1)
-									<span class="badge badge-pill badge-secondary">Void</span>
+									<span class="badge badge-pill badge-secondary">{{ $row->sales_status_name }}</span>
 									@break
-								@case(0)
-									<span class="badge badge-pill badge-primary">Draft</span>
+								@case(6)
+									<span class="badge badge-pill badge-primary">{{ $row->sales_status_name }}</span>
 									@break
 								@case(10)
-									<span class="badge badge-pill badge-warning">เปิดใบส่งของชั่วคราว</span>
+									<span class="badge badge-pill badge-warning">{{ $row->sales_status_name }}</span>
 									@break
 								@case(11)
-									<span class="badge badge-pill badge-success">ปิดใบส่งของชั่วคราว</span>
+									<span class="badge badge-pill badge-success">{{ $row->sales_status_name }}</span>
 									@break								
 							@endswitch
 							
@@ -98,8 +98,8 @@
 		</script>
 
     <div class="text-center">
-      <a class="btn btn-outline-primary" href="{{ url('/') }}/sales">back</a>
-      <a href="{{ url('/') }}/sales/delivery_temporary/create" class="btn btn-primary">
+      <a class="btn btn-outline-success" href="{{ url('/') }}/sales">back</a>
+      <a href="{{ url('/') }}/sales/delivery_temporary/create" class="btn btn-success">
       	<i class="fa fa-plus"></i> เพิ่มใบส่งของชั่วคราว
       </a>
     </div>
