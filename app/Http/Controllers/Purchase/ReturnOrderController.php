@@ -156,9 +156,9 @@ class ReturnOrderController extends Controller
 
     $returnorder->save();
 
-    //FIND OE
+    //FIND RC
     $receive = ReceiveModel::where('purchase_receive_code', $returnorder->purchase_receive_code)->firstOrFail();
-    //RE STATUS OE
+    //RE STATUS RC
     if ($receive->purchase_status_id == 4) { //4 : ปิดการซื้อเรียบร้อย
       $receive->update(["purchase_status_id" => "3"]); //3 : รอรับสินค้า
     }
@@ -188,50 +188,6 @@ class ReturnOrderController extends Controller
     return redirect("purchase/return-order/{$id}/edit");
   }
 
-  // public function store_detail(Request $request, $returnorder)
-  // {
-  //CREATE RETURN INVOICE DETAIL
-  // $details = [];
-  // $products = $request->input('product_ids');
-  // $amounts = $request->input('amounts');
-  // $discount_prices = $request->input('discount_prices');
-  // $totals = $request->input('totals');
-  // if (is_array($products)) {
-  //   for ($i = 0; $i < count($products); $i++) {
-  //     $details[] = [
-  //       "product_id" => $products[$i],
-  //       "amount" => $amounts[$i],
-  //       "discount_price" => $discount_prices[$i],
-  //       "total" => $totals[$i],
-  //       "return_order_id" => $returnorder->id,
-  //     ];
-  //   }
-  // }
-  // ReturnOrderDetail::insert($details);
-
-  //GAURD STOCK UPDATE
-  // foreach ($details as $item) {
-  //   if ($item['amount'] == 0) {
-  //     continue;
-  //   }
-  //   $product = ProductModel::findOrFail($item['product_id']);
-  //   $gaurd_stock = GaurdStock::create([
-  //     "code" => $returnorder->code,
-  //     "type" => "purchase_return_order",
-  //     "amount" => $item['amount'],
-  //     "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-  //     "pending_in" => $product->pending_in,
-  //     "pending_out" => ($product->pending_out),
-  //     "product_id" => $product->product_id,
-  //   ]);
-
-  //   //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-  //   $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-  //   $product->pending_in = $gaurd_stock['pending_in'];
-  //   $product->pending_out = $gaurd_stock['pending_out'];
-  //   $product->save();
-  // }
-  // }
 
   /**
    * Display the specified resource.
@@ -279,13 +235,17 @@ class ReturnOrderController extends Controller
     $requestData = $request->all();
     $returnorder = ReturnOrder::findOrFail($id);
 
+    $products = $request->input('product_ids');
 
-    if (is_array($request->input('product_id_edit'))) {
-      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+
+    if (is_array($products)) {
+      for ($i = 0; $i < count($products); $i++) {
+
         $new_return_details = [
           "amount" =>  $request->input('amounts')[$i],
         ];
-        $return_details = ReturnOrderDetail::findOrFail($request->input('return_order_detail_id_edit')[$i]);
+
+        $return_details = ReturnOrderDetail::findOrFail($request->input('return_order_detail_id_edits')[$i]);
         $return_details->update($new_return_details);
       }
     }
@@ -293,11 +253,12 @@ class ReturnOrderController extends Controller
 
     //ROLLBACK Gaurd stock
     $return_details = $returnorder->return_order_details()->get();
+
     foreach ($return_details as $item) {
       $product = ProductModel::findOrFail($item['product_id']);
       $gaurd_stock = GaurdStock::create([
         "code" => $returnorder->code,
-        "type" => "purchase_return_order_update",
+        "type" => "purchase_return_order_cancel",
         "amount" => $item['amount'],
         "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
         "pending_in" => $product->pending_in,
@@ -346,9 +307,14 @@ class ReturnOrderController extends Controller
   }
   public function pdf($id)
   {
+    $table_return_order = ReturnOrder::join('tb_supplier', 'return_orders.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('return_orders.id', '=', $id)
+      ->get();
+    $table_return_order_details = ReturnOrderDetail::join('tb_product', 'return_order_details.product_id', '=', 'tb_product.product_id')
+      ->get();
     $data = [
-      'table_return_order' => ReturnOrder::select_by_id($id),
-      'table_return_order_details' => ReturnOrderDetail::select_by_product($id),
+      'table_return_order' => $table_return_order,
+      'table_return_order_details' => ReturnOrderDetail::$$table_return_order_details,
       'table_company' => Company::select_all(),
     ];
     $pdf = PDF::loadView('purchase/return-order/show', $data);

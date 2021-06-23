@@ -242,23 +242,18 @@ class ReturnInvoiceController extends Controller
   {
 
     $requestData = $request->all();
-    //LOAD OLD DATA
-    $returninvoice = ReturnInvoice::findOrFail($id); //1. ดึงข้อมูล Returninvoice จาก Form
-    // $new_returninvoice = ReturnInvoice::create($requestData); //2. create new return_invoice
+    $returninvoice = ReturnInvoice::findOrFail($id);
 
-    if (is_array($request->input('product_id_edit'))) {
+    $products = $request->input('product_ids');
 
-      InvoiceDetailModel::where('invoice_id', $id)->delete(); // clear invoice_detail
 
-      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) { // insert invoice_detail
-        $invoice_detail = [
-          "product_id" => $request->input('product_id_edit')[$i],
-          "amount" => $request->input('amount_edit')[$i],
-          "discount_price" => $request->input('discount_price_edit')[$i],
-          "quotation_id" => $id,
-          "delivery_duration" => $request->input('delivery_duration')[$i],
+    if (is_array($products)) {
+      for ($i = 0; $i < count($products); $i++) { // insert invoice_detail
+        $new_invoice_detail = [
+          "amount" => $request->input('amounts')[$i],
         ];
-        InvoiceDetailModel::create($invoice_detail); // createinvoice_detail
+        $invoice_detail = ReturnInvoiceDetail::findOrFail($request->input('return_invoice_detail_id_edits')[$i]);
+        $invoice_detail->update($new_invoice_detail);
       }
     }
 
@@ -283,11 +278,10 @@ class ReturnInvoiceController extends Controller
       $product->pending_out = $gaurd_stock['pending_out'];
       $product->save();
     }
-    //DELAY FOR TIMESTAMP
-    // sleep(1);
 
-    // //SAVE DETAIL + GAURD STOCK
-    // $this->store_detail($request, $new_returninvoice);
+    $returninvoice = ReturnInvoice::findOrFail($id);
+    $returninvoice->update($requestData);
+ 
 
     return redirect("sales/return-invoice/{$id}")->with('flash_message', 'ReturnInvoice updated!');
   }

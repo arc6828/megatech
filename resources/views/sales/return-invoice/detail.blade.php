@@ -25,8 +25,12 @@
             @endphp
             @foreach ($returninvoicedetail as $item)
                 <tr>
-                    <td><input type="hidden" class="input product_ids" name="product_ids[]"
-                            value="{{ $item->product_id }}" /> {{ $item->product->product_code }}</td>
+                    <td>
+                        <input type="hidden" class="input product_ids" name="return_invoice_detail_id_edits[]"
+                            value="{{ $item->id }}" />
+                        <input type="hidden" class="input product_ids" name="product_ids[]"
+                            value="{{ $item->product_id }}" /> {{ $item->product->product_code }}
+                    </td>
                     <td>{{ $item->product->product_name }}</td>
                     @if (isset($mode))
                         <td><input type="number" class="input amounts" name="amounts[]" value="{{ $item->amount }}"
@@ -99,5 +103,4 @@
 
         onChange();
     }
-
 </script>

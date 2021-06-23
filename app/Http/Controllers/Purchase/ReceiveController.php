@@ -332,7 +332,6 @@ class ReceiveController extends Controller
   public function update(Request $request, $id)
   {
 
-    // //1.INSERT QUOTATION
     $input = $request->all();
     $input['datetime'] = date('Y-m-d H:i:s');
     $input['total'] = $request->input('total_after_vat', 0);
