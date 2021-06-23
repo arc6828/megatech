@@ -85,7 +85,7 @@
 			</div>
 			
 			<div class="col-6 col-md-3">
-				<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/purchase/receive-temporary">
+				<a class="btn btn-outline-success btn-menu my-3" href="{{url('/')}}/purchase/receive_temporary">
 					<div class="vertical-center">
 							<div class="px-4"><span class="round round-success my-2">
 							<!-- <i class="ni ni-single-copy-04"></i> -->

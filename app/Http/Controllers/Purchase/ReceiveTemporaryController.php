@@ -52,7 +52,7 @@ class ReceiveTemporaryController extends Controller
     {
       $data = [
           //QUOTATION
-          'table_supplier' => SupplierModel::select_all(),
+          'table_supplier' => SupplierModel::all(),
           'table_receive_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
@@ -226,7 +226,7 @@ class ReceiveTemporaryController extends Controller
           //QUOTATION
           'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
           'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
-          'table_supplier' => SupplierModel::select_all(),
+          'table_supplier' => SupplierModel::all(),
           'table_receive_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
@@ -250,7 +250,7 @@ class ReceiveTemporaryController extends Controller
       $data = [
           //QUOTATION
           'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
-          'table_supplier' => SupplierModel::select_all(),
+          'table_supplier' => SupplierModel::all(),
           'table_receive_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),
@@ -314,7 +314,7 @@ class ReceiveTemporaryController extends Controller
           //QUOTATION
           'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
           'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
-          'table_supplier' => SupplierModel::select_all(),
+          'table_supplier' => SupplierModel::all(),
           'table_receive_type' => DeliveryTypeModel::select_all(),
           'table_department' => DepartmentModel::select_all(),
           'table_tax_type' => TaxTypeModel::select_all(),

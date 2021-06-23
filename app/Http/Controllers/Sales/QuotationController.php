@@ -144,34 +144,34 @@ class QuotationController extends Controller
     return $quotation_code;
   }
 
-  public function duplicate($id)
-  {
-    // echo "hello";
-    // exit();
-    //Query
-    $quotaion = QuotationModel::findOrFail($id);
-    $quotaion_details = $quotaion->details()->get();
+  // public function duplicate($id)
+  // {
+  //   // echo "hello";
+  //   // exit();
+  //   //Query
+  //   $quotaion = QuotationModel::findOrFail($id);
+  //   $quotaion_details = $quotaion->details()->get();
 
-    $run_number = Numberun::where('id', '1')->value('number_en');
+  //   $run_number = Numberun::where('id', '1')->value('number_en');
 
-    //Clone
-    $new_quotaion = $quotaion->replicate()->fill([
-      'quotation_code' => $quotaion->quotation_code,
-      'datetime' => "",
-      'revision' => "0",
-      'sales_status_id' => "0",
-    ]);
-    $new_quotaion->save();
+  //   //Clone
+  //   $new_quotaion = $quotaion->replicate()->fill([
+  //     'quotation_code' => $quotaion->quotation_code,
+  //     'datetime' => "",
+  //     'revision' => "0",
+  //     'sales_status_id' => "0",
+  //   ]);
+  //   $new_quotaion->save();
 
-    //Clone Detail
-    foreach ($quotaion_details as $item) {
-      $new_item = $item->replicate()->fill([
-        'quotation_id' => $new_quotaion->quotation_id,
-      ]);
-      $new_item->save();
-    }
-    return redirect("sales/quotation/{$new_quotaion->quotation_id}")->with('flash_message', 'popup');
-  }
+  //   //Clone Detail
+  //   foreach ($quotaion_details as $item) {
+  //     $new_item = $item->replicate()->fill([
+  //       'quotation_id' => $new_quotaion->quotation_id,
+  //     ]);
+  //     $new_item->save();
+  //   }
+  //   return redirect("sales/quotation/{$new_quotaion->quotation_id}")->with('flash_message', 'popup');
+  // }
 
   public function change_status(Request $request, $id)
   {
