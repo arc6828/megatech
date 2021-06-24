@@ -32,19 +32,19 @@
                     </form>
                     <form class="d-none"
                         action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/approve"
-                        id="form-approve" method="POST" onsubmit="return confirm('ต้องการสร้างใบส่งของชั่วคราว ?')">
+                        id="form-approve" method="POST" onsubmit="return confirm('ต้องการเปิดใบส่งของชั่วคราว ?')">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <button type="submit" class="btn btn-success " id="form-approve-submit" style="width:150px;">Save</button>
                     </form>
-                    <form method="POST" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}"
+                    {{-- <form method="POST" action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}"
                         accept-charset="UTF-8" style="display:none">
                         {{ method_field('DELETE') }}
                         {{ csrf_field() }}
                         <button type="submit" id="form-delete-submit" class="btn btn-danger btn-sm" title="Delete"
                             onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i>
                             Delete</button>
-                    </form>
+                    </form> --}}
                     @if ($row->sales_status_id == 6)
                         <form class=""
                             action="{{ url('/') }}/sales/delivery_temporary/{{ $row->delivery_temporary_id }}/update" id="form"

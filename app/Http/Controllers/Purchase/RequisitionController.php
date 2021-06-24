@@ -30,10 +30,8 @@ class RequisitionController extends Controller
    */
   public function index(Request $request)
   {
-    //$table_purchase_requisition = RequisitionModel::select_by_keyword($q);
     $data = [
       //QUOTATION
-      //'table_purchase_requisition' => RequisitionModel::select_all(),
       'table_purchase_requisition' => RequisitionModel::all(),
       'q' => $request->input('q')
     ];

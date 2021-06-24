@@ -12,13 +12,13 @@
 
 @section('content')
 
-<form class="" action="{{ url('/') }}/purchase/receive_temporary" method="POST">
+<form class="" action="{{ url('/') }}/purchase/receive_temporary" method="POST" onsubmit="return confirm('ต้องการสร้างใบรับของชั่วคราว ?')">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('purchase/receive_temporary/form')
     <div class="text-center mt-5">
-      <a class="btn btn-outline-primary " href="{{ url('/') }}/purchase/receive_temporary">back</a>
-      <button type="submit" class="btn btn-primary " id="form-submit">Save</button>
+      <a class="btn btn-outline-success " href="{{ url('/') }}/purchase/receive_temporary">back</a>
+      <button type="submit" class="btn btn-success " id="form-submit">Save</button>
 
     </div>
 </form>
