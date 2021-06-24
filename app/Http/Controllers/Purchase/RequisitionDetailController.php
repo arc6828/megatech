@@ -31,7 +31,7 @@ class RequisitionDetailController extends Controller
   {
     $purchase_requisition_detail_ids = $request->input('purchase_requisition_detail_ids');
     $selected_purchase_requisition_detail_ids = $request->input('selected_purchase_requisition_detail_ids');
-    $amounts = $request->input('amounts');
+    // $amounts = $request->input('amounts');
     $approve_amounts = $request->input('approve_amounts');
     $action = $request->input('action', "1");
 

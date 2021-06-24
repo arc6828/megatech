@@ -211,24 +211,7 @@ class RequisitionController extends Controller
     $input = $request->all();
     $input['vat_percent'] = $request->input('vat_percent', 7);
     $input['total'] = $request->input('total', 0);
-    // $input = [
-    //   //'purchase_requisition_code' => $purchase_requisition_code,
-    //   'external_reference_id' => $request->input('external_reference_id'),
-    //   'customer_id' => $request->input('customer_id'),
-    //   'debt_duration' => $request->input('debt_duration'),
-    //   'billing_duration' => $request->input('billing_duration'),
-    //   'payment_condition' => $request->input('payment_condition', ""),
-    //   'delivery_type_id' => $request->input('delivery_type_id'),
-    //   'tax_type_id' => $request->input('tax_type_id'),
-    //   'delivery_time' => $request->input('delivery_time'),
-    //   'department_id' => $request->input('department_id'),
-    //   'purchase_status_id' => $request->input('purchase_status_id'),
-    //   'user_id' => $request->input('user_id'),
-    //   'zone_id' => $request->input('zone_id'),
-    //   'remark' => $request->input('remark'),
-    //   'vat_percent' => $request->input('vat_percent', 7),
-    //   'total' => $request->input('total', 0),
-    // ];
+  
 
     if (is_array($request->input('product_id_edit'))) {
 
