@@ -139,6 +139,9 @@
           Route::resource('return-order-detail', 'Purchase\ReturnOrderDetailController');
 
           Route::get('/receive_temporary/{id}/pdf', 'Purchase\ReceiveTemporaryController@pdf');
+          Route::put('/receive_temporary/{id}/approve', 'Purchase\ReceiveTemporaryController@approve');
+          Route::put('/receive_temporary/{id}/update', 'Purchase\ReceiveTemporaryController@update');
+          Route::put('/receive_temporary/{id}/revision', 'Purchase\ReceiveTemporaryController@revision');
           Route::patch('/receive_temporary/{id}/cancel', 'Purchase\ReceiveTemporaryController@cancel');
           Route::resource('/receive_temporary', 'Purchase\ReceiveTemporaryController');
         });

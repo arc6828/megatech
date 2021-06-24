@@ -23,10 +23,10 @@
                                 title="สร้าง">
                                 <i class="fas fa-check"></i> สร้างใบส่งของชั่วคราว
                             </a>
-                            <a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)"
+                            {{-- <a class="px-2 btn btn-sm btn-danger" href="javascript:void(0)"
                                 onclick="document.querySelector('#form-delete-submit').click();" title="ลบทิ้ง">
                                 <i class="fas fa-trash"></i> ลบทิ้ง
-                            </a>
+                            </a> --}}
                         @endif
 
                         @if ($row->sales_status_id == 10)

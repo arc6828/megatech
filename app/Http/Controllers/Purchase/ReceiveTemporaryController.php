@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers\Purchase;
 
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,387 +24,361 @@ use PDF;
 
 class ReceiveTemporaryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-      //$table_receive_temporary = ReceiveTemporaryModel::select_by_keyword($q);
-      $table_receive_temporary = (Auth::user()->role === "admin" )?
-          ReceiveTemporaryModel::select_all() :
-          ReceiveTemporaryModel::select_all_by_user_id(Auth::id());
+  /**
+   * Display a listing of the resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index(Request $request)
+  {
+    $select_all = ReceiveTemporaryModel::join('tb_supplier', 'tb_receive_temporary.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->join('tb_purchase_status', 'tb_receive_temporary.purchase_status_id', '=', 'tb_purchase_status.purchase_status_id')
+      ->join('users', 'tb_receive_temporary.staff_id', '=', 'users.id')
+      ->get();
+    $select_all_by_user_id = ReceiveTemporaryModel::join('tb_supplier', 'tb_receive_temporary.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->join('tb_purchase_status', 'tb_receive_temporary.purchase_status_id', '=', 'tb_purchase_status.purchase_status_id')
+      ->join('users', 'tb_receive_temporary.staff_id', '=', 'users.id')
+      ->where('tb_receive_temporary.user_id', '=', Auth::user()->id)
+      ->get();
 
-      $data = [
-        //QUOTATION
-        'table_receive_temporary' => $table_receive_temporary,
-        'q' => $request->input('q')
-      ];
-      return view('purchase/receive_temporary/index',$data);
-    }
+    $table_receive_temporary = (Auth::user()->role === "admin") ?
+      $select_all : $select_all_by_user_id;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      $data = [
-          //QUOTATION
-          'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::all(),
-          'table_department' => DepartmentModel::all(),
-          'table_tax_type' => TaxTypeModel::all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
-          //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::all(),
-          'table_zone' => ZoneModel::all(),
-          //QUOTATION DETAIL
-          'table_receive_temporary_detail' => [],
-          'table_product' => ProductModel::all(),
-      ];
-      return view('purchase/receive_temporary/create',$data);
-    }
+    $data = [
+      'table_receive_temporary' => $table_receive_temporary,
+      'q' => $request->input('q')
+    ];
+    return view('purchase/receive_temporary/index', $data);
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-      //INSERT QUOTATION
-      $input = [
-          'receive_temporary_code' => $this->getNewCode(),
-          'supplier_id' => $request->input('supplier_id'),
-          'debt_duration' => $request->input('debt_duration',"0"),
-          'billing_duration' => $request->input('billing_duration',"0"),
-          'payment_condition' => $request->input('payment_condition',""),
-          'receive_type_id' => $request->input('receive_type_id'),
-          'tax_type_id' => $request->input('tax_type_id'),
-          'receive_time' => $request->input('receive_time',"0"),
-          'department_id' => $request->input('department_id'),
-          //'purchase_status_id' => 10, //default is 10 สร้างใบส่งของชั่วคราว          
-          'purchase_status_id' => $request->input('purchase_status_id'), //default is 0 DRAFT
-          'user_id' => $request->input('user_id'),
-          'staff_id' => $request->input('staff_id'),
-          'zone_id' => $request->input('zone_id','0'),
-          'remark' => $request->input('remark'),
-          'vat_percent' => $request->input('vat_percent',7),
-          'total' => $request->input('total_after_vat',0),
-      ];
-      //print_r($input);
-      //exit();
-      //VOID IF HAS CODE (Revision)
-      
-      if( !empty($request->input('receive_temporary_code') ) ){
-        switch($request->input('receive_temporary_code')){
-          case "M-RTDRAFT" : 
-            $id =   $request->input('receive_temporary_id');
-            ReceiveTemporaryModel::destroy($id);
-            ReceiveTemporaryDetailModel::where('receive_temporary_id',$id)->delete();
-            break;
-          default :
-            $q = ReceiveTemporaryModel::where('receive_temporary_code',$request->input('receive_temporary_code') )
-              ->orderBy('datetime','desc')->first();
-            $input['revision'] = $q->revision +1 ;
-            $q->purchase_status_id = -1; //-1 means void
-            $q->save();
-            
-            $segments = explode("-",$request->input('receive_temporary_code'));
-            $input['receive_temporary_code'] = $segments[0]."-".$segments[1]."-R".$input['revision'];
+  /**
+   * Show the form for creating a new resource.
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function create()
+  {
+    $data = [
+      'table_supplier' => SupplierModel::all(),
+      'table_receive_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
+      'table_receive_temporary_detail' => [],
+      'table_product' => ProductModel::all(),
+    ];
+    return view('purchase/receive_temporary/create', $data);
+  }
 
-            //ROLLBACK STOCK STATS IN PRODUCT AND GAURD STOCK
-            //CREATE GAURD STOCK + UPDATE PRODUCT      
-            foreach($q->receive_temporary_details as $item){
-              $product = ProductModel::findOrFail($item['product_id']);
-              $gaurd_stock = GaurdStock::create([
-                "code" => $item['receive_temporary_id'],
-                "type" => "purchase_dt_void",
-                "amount" => $item['amount'],
-                "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-                "pending_in" => ($product->pending_in  ),
-                "pending_out" => ($product->pending_out),
-                "product_id" => $product->product_id,
-              ]);
-              
-              //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-              $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-              $product->pending_in = $gaurd_stock['pending_in'];
-              $product->pending_out = $gaurd_stock['pending_out'];
-              $product->save();
+  /**
+   * Store a newly created resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
+  public function store(Request $request)
+  {
+    $input = $request->all();
+    $input['receive_temporary_code'] = $this->getNewCode();
+    $input['datetime'] = date('Y-m-d H:i:s');
+    $input['purchase_status_id'] = 5;
+    $input['vat_percent'] = $request->input('vat_percent', 7);
+    $input['total'] = $request->input('total', 0);
 
-            }  
-        }
-        
-        
-        
-      }else{
-        $id =   $request->input('receive_temporary_id');
-        ReceiveTemporaryModel::destroy($id);
-        ReceiveTemporaryDetailModel::where('receive_temporary_id',$id)->delete();
-      }
-      //DRAFT
-      if($input['purchase_status_id'] == 0 )
-      {
-        //0 means DRAFT -> do not set quotation_code / date
-        $input['receive_temporary_code'] = "RTDRAFT";
-        $input['datetime'] = "";
-      }
-      $id = ReceiveTemporaryModel::insert($input);
+    $receive_temporary = ReceiveTemporaryModel::create($input);
+    $id = $receive_temporary->receive_temporary_id;
 
-      //INSERT ALL NEW QUOTATION DETAIL
-      $list = [];
-      //print_r($request->input('product_id_edit'));
-      //print_r($request->input('amount_edit'));
-      //print_r($request->input('discount_price_edit'));
-      //echo $id;
-      if (is_array ($request->input('product_id_edit'))){
-        for($i=0; $i<count($request->input('product_id_edit')); $i++){
-          $list[] = [
-              "product_id" => $request->input('product_id_edit')[$i],
-              "amount" => $request->input('amount_edit')[$i],
-              "discount_price" => $request->input('discount_price_edit')[$i],
-              "receive_temporary_id" => $id,
-              "receive_duration" => "-",
-          ];
-        }
-      }
-      ReceiveTemporaryDetailModel::insert($list);
-
-      //IF NOT DRAFT
-      if($input['purchase_status_id'] > 0 )
-      {
-        //GAURD STOCK      
-        foreach($list as $item){
-          $product = ProductModel::findOrFail($item['product_id']);
-          $gaurd_stock = GaurdStock::create([
-            "code" => $id,
-            "type" => "purchase_dt_create",
-            "amount" => $item['amount'],
-            "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-            "pending_in" => $product->pending_in,
-            "pending_out" => $product->pending_out,
-            "product_id" => $product->product_id,
-          ]);
-          
-          //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-          $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-          $product->pending_in = $gaurd_stock['pending_in'];
-          $product->pending_out = $gaurd_stock['pending_out'];
-          $product->save();
-
-        }
-      }
-
-      return redirect("purchase/receive_temporary/{$id}");
-    }
-
-    public function getNewCode(){
-        $number = ReceiveTemporaryModel::select_count_by_current_month();
-        $run_number = Numberun::where('id', '10')->value('number_en');
-        $count =  $number + 1;
-        //$year = (date("Y") + 543) % 100;
-        $year = date("y");
-        $month = date("m");
-        $number = sprintf('%05d', $count);
-        $receive_temporary_code = "{$run_number}{$year}{$month}-{$number}";
-        return $receive_temporary_code;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-      $data = [
-          //QUOTATION
-          'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
-          'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
-          'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::all(),
-          'table_department' => DepartmentModel::all(),
-          'table_tax_type' => TaxTypeModel::all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
-          //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::all(),
-          'table_zone' => ZoneModel::all(),
-          'receive_temporary_id'=> $id,
-          //QUOTATION Detail
-          'table_receive_temporary_detail' => ReceiveTemporaryDetailModel::select_by_receive_temporary_id($id),
-          'table_product' => ProductModel::all(),
-          'mode'=>'show',
-      ];
-      return view('purchase/receive_temporary/edit',$data);
-    }
-
-    public function pdf($id)
-    {
-        //no show
-
-      $data = [
-          //QUOTATION
-          'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
-          'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::all(),
-          'table_department' => DepartmentModel::all(),
-          'table_tax_type' => TaxTypeModel::all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
-          //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::all(),
-          'table_zone' => ZoneModel::all(),
-          'receive_temporary_id'=> $id,
-          //QUOTATION Detail
-          'table_receive_temporary_detail' => ReceiveTemporaryDetailModel::select_by_receive_temporary_id($id),
-          'table_product' => ProductModel::all(),
-      ];
-      //return view('purchase/receive_temporary/edit',$data);
-
-      $pdf = PDF::loadView('purchase/receive_temporary/show',$data);
-      return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
-      //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
-    }
-
-    public function cancel($id)
-    {
-      //
-      $receive_temporary = ReceiveTemporaryModel::findOrFail($id);
-      $receive_temporary->purchase_status_id = 11; //11 MEANS Cancelled
-      $receive_temporary->save();      
-      $list = $receive_temporary->receive_temporary_details;
-      
-      //GAURD STOCK      
-      foreach($list as $item){
-        $product = ProductModel::findOrFail($item['product_id']);
-        $gaurd_stock = GaurdStock::create([
-          "code" => $id,
-          "type" => "purchase_dt_cancel",
-          "amount" => $item['amount'],
-          "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-          "pending_in" => $product->pending_in,
-          "pending_out" => $product->pending_out,
-          "product_id" => $product->product_id,
+    if (is_array($request->input('product_id_edit'))) {
+      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        ReceiveTemporaryDetailModel::create([
+          "product_id" => $request->input('product_id_edit')[$i],
+          "amount" => $request->input('amount_edit')[$i],
+          "discount_price" => $request->input('discount_price_edit')[$i],
+          "receive_temporary_id" => $id,
+          "receive_duration" => "-",
         ]);
-        
-        //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-        $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-        $product->pending_in = $gaurd_stock['pending_in'];
-        $product->pending_out = $gaurd_stock['pending_out'];
-        $product->save();
-
       }
-
-      return redirect("purchase/receive_temporary/{$id}/edit");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-      $data = [
-          //QUOTATION
-          'table_receive_temporary' => ReceiveTemporaryModel::select_by_id($id),
-          'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
-          'table_supplier' => SupplierModel::all(),
-          'table_receive_type' => DeliveryTypeModel::all(),
-          'table_department' => DepartmentModel::all(),
-          'table_tax_type' => TaxTypeModel::all(),
-          'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
-          //'table_purchase_user' => UserModel::select_by_role('purchase'),
-          'table_purchase_user' => UserModel::all(),
-          'table_zone' => ZoneModel::all(),
-          'receive_temporary_id'=> $id,
-          //QUOTATION Detail
-          'table_receive_temporary_detail' => ReceiveTemporaryDetailModel::select_by_receive_temporary_id($id),
-          'table_product' => ProductModel::all(),
-          'mode'=>'edit',
-      ];
-      return view('purchase/receive_temporary/edit',$data);
+    $list = $receive_temporary->receive_temporary_details()->get();
+    //GAURD STOCK      
+    foreach ($list as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $receive_temporary->receive_temporary_code,
+        "type" => "purchase_dt_create",
+        "amount" => $item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+        "pending_in" => $product->pending_in,
+        "pending_out" => $product->pending_out,
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-      //1.INSERT QUOTATION
-      $input = [
-        //'receive_temporary_code' => $receive_temporary_code,
-        'supplier_id' => $request->input('supplier_id'),
-        'debt_duration' => $request->input('debt_duration'),
-        'billing_duration' => $request->input('billing_duration'),
-        'payment_condition' => $request->input('payment_condition',""),
-        'receive_type_id' => $request->input('receive_type_id'),
-        'tax_type_id' => $request->input('tax_type_id'),
-        'receive_time' => $request->input('receive_time'),
-        'department_id' => $request->input('department_id'),
-        'purchase_status_id' => $request->input('purchase_status_id'),
-        'user_id' => $request->input('user_id'),
-        'zone_id' => $request->input('zone_id'),
-        'remark' => $request->input('remark'),
-        'vat_percent' => $request->input('vat_percent',7),
-        'total' => $request->input('total_after_vat',0),
-      ];
-      ReceiveTemporaryModel::update_by_id($input,$id);
+    return redirect("purchase/receive_temporary/{$id}");
+  }
+  public function approve($id)
+  {
 
-      //2.DELETE QUOTATION DETAIL FIRST
-      ReceiveTemporaryDetailModel::delete_by_receive_temporary_id($id);
+    $receive_temporary = ReceiveTemporaryModel::findOrFail($id);
+    $input = [
+      'receive_temporary_code' => $receive_temporary->receive_temporary_code,
+      'datetime' => date('Y-m-d H:i:s'),
+      'purchase_status_id' => 10,
+    ];
+    $receive_temporary->update($input);
 
-      //3.INSERT ALL NEW QUOTATION DETAIL
-      $list = [];
-      //print_r($request->input('product_id_edit'));
-      //print_r($request->input('amount_edit'));
-      //print_r($request->input('discount_price_edit'));
-      //echo $id;
-      if (is_array ($request->input('product_id_edit'))){
-        for($i=0; $i<count($request->input('product_id_edit')); $i++){
-          $a = [
-              "product_id" => $request->input('product_id_edit')[$i],
-              "amount" => $request->input('amount_edit')[$i],
-              "discount_price" => $request->input('discount_price_edit')[$i],
-              "receive_temporary_id" => $id,
-          ];
-          if( is_numeric($request->input('id_edit')[$i]) ){
-            //$a["receive_temporary_detail_id"] = $request->input('id_edit')[$i];
-          }
-          $list[] = $a;
+    //3.REDIRECT
+    return redirect("purchase/receive_temporary/{$id}")->with('flash_message', 'popup');
+  }
+
+  public function getNewCode()
+  {
+    $number = ReceiveTemporaryModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
+      ->where('purchase_status_id', '!=', '-1')
+      ->count();
+    $run_number = Numberun::where('id', '10')->value('number_en');
+    $count =  $number + 1;
+    //$year = (date("Y") + 543) % 100;
+    $year = date("y");
+    $month = date("m");
+    $number = sprintf('%05d', $count);
+    $receive_temporary_code = "{$run_number}{$year}{$month}-{$number}";
+    return $receive_temporary_code;
+  }
+
+  /**
+   * Display the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function show($id)
+  {
+    $table_receive_temporary = ReceiveTemporaryModel::join('tb_supplier', 'tb_receive_temporary.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_receive_temporary.receive_temporary_id', '=', $id)
+      ->select(DB::raw('tb_supplier.*,tb_receive_temporary.*'))
+      ->get();
+
+    $table_receive_temporary_detail = ReceiveTemporaryDetailModel::join('tb_product', 'tb_receive_temporary_detail.product_id', '=', 'tb_product.product_id')
+      ->where('receive_temporary_id', '=', $id)
+      ->get();
+    $data = [
+      //QUOTATION
+      'table_receive_temporary' => $table_receive_temporary,
+      'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
+      'table_supplier' => SupplierModel::all(),
+      'table_receive_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
+      //'table_purchase_user' => UserModel::select_by_role('purchase'),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
+      'receive_temporary_id' => $id,
+      //QUOTATION Detail
+      'table_receive_temporary_detail' => $table_receive_temporary_detail,
+      'table_product' => ProductModel::all(),
+      'mode' => 'show',
+    ];
+    return view('purchase/receive_temporary/edit', $data);
+  }
+
+  public function pdf($id)
+  {
+    //no show
+    $table_receive_temporary = ReceiveTemporaryModel::join('tb_supplier', 'tb_receive_temporary.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_receive_temporary.receive_temporary_id', '=', $id)
+      ->select(DB::raw('tb_supplier.*,tb_receive_temporary.*'))
+      ->get();
+    $table_receive_temporary_detail = ReceiveTemporaryDetailModel::join('tb_product', 'tb_receive_temporary_detail.product_id', '=', 'tb_product.product_id')
+      ->where('receive_temporary_id', '=', $id)
+      ->get();
+    $data = [
+      //QUOTATION
+      'table_receive_temporary' => $table_receive_temporary,
+      'table_supplier' => SupplierModel::all(),
+      'table_receive_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
+      //'table_purchase_user' => UserModel::select_by_role('purchase'),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
+      'receive_temporary_id' => $id,
+      //QUOTATION Detail
+      'table_receive_temporary_detail' => $table_receive_temporary_detail,
+      'table_product' => ProductModel::all(),
+    ];
+    //return view('purchase/receive_temporary/edit',$data);
+
+    $pdf = PDF::loadView('purchase/receive_temporary/show', $data);
+    return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
+    //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
+  }
+
+  public function cancel($id)
+  {
+    //
+    $receive_temporary = ReceiveTemporaryModel::findOrFail($id);
+    $receive_temporary->purchase_status_id = 11; //11 MEANS Cancelled
+    $receive_temporary->save();
+    $list = $receive_temporary->receive_temporary_details()->get();
+
+    //GAURD STOCK      
+    foreach ($list as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $receive_temporary->receive_temporary_code,
+        "type" => "purchase_dt_cancel",
+        "amount" => $item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
+        "pending_in" => $product->pending_in,
+        "pending_out" => $product->pending_out,
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
+    }
+
+    return redirect("purchase/receive_temporary/{$id}/edit");
+  }
+
+  /**
+   * Show the form for editing the specified resource.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function edit($id)
+  {
+    $table_receive_temporary = ReceiveTemporaryModel::join('tb_supplier', 'tb_receive_temporary.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_receive_temporary.receive_temporary_id', '=', $id)
+      ->select(DB::raw('tb_supplier.*,tb_receive_temporary.*'))
+      ->get();
+    $table_receive_temporary_detail = ReceiveTemporaryDetailModel::join('tb_product', 'tb_receive_temporary_detail.product_id', '=', 'tb_product.product_id')
+      ->where('receive_temporary_id', '=', $id)
+      ->get();
+    $data = [
+      //QUOTATION
+      'table_receive_temporary' => $table_receive_temporary,
+      'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
+      'table_supplier' => SupplierModel::all(),
+      'table_receive_type' => DeliveryTypeModel::all(),
+      'table_department' => DepartmentModel::all(),
+      'table_tax_type' => TaxTypeModel::all(),
+      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
+      //'table_purchase_user' => UserModel::select_by_role('purchase'),
+      'table_purchase_user' => UserModel::all(),
+      'table_zone' => ZoneModel::all(),
+      'receive_temporary_id' => $id,
+      //QUOTATION Detail
+      'table_receive_temporary_detail' => $table_receive_temporary_detail,
+      'table_product' => ProductModel::all(),
+      'mode' => 'edit',
+    ];
+    return view('purchase/receive_temporary/edit', $data);
+  }
+
+  /**
+   * Update the specified resource in storage.
+   *
+   * @param  \Illuminate\Http\Request  $request
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request, $id)
+  {
+    $input = $request->all();
+
+    if (is_array($request->input('product_id_edit'))) {
+      ReceiveTemporaryDetailModel::where('receive_temporary_detail_id', $id)->delete();
+      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        ReceiveTemporaryDetailModel::create([
+          "product_id" => $request->input('product_id_edit')[$i],
+          "amount" => $request->input('amount_edit')[$i],
+          "discount_price" => $request->input('discount_price_edit')[$i],
+          "receive_temporary_id" => $id,
+        ]);
+      }
+    }
+    $receive_temporary = ReceiveTemporaryModel::findOrFail($id);
+    $receive_temporary->update($input);
+
+    //4.REDIRECT
+    return redirect("purchase/receive_temporary/{$id}");
+  }
+
+  public function revision(Request $request, $id)
+  {
+
+    $input = $request->all();
+    $input['datetime'] = date('Y-m-d H:i:s');
+
+    $receive_temporary = ReceiveTemporaryModel::create($input);
+    $id =    $receive_temporary->receive_temporary_id;
+
+    if (!empty($request->input('receive_temporary_code'))) {
+      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        ReceiveTemporaryDetailModel::create([
+          "product_id" => $request->input('product_id_edit')[$i],
+          "amount" => $request->input('amount_edit')[$i],
+          "discount_price" => $request->input('discount_price_edit')[$i],
+          "receive_temporary_id" => $id,
+          "receive_duration" => "-",
+        ]);
+      }
+      $receive_temporary = ReceiveTemporaryModel::findOrFail($id);
+      $receive_temporary->update($input);
+
+      if (!empty($request->input('receive_temporary_code'))) {
+
+        $q = ReceiveTemporaryModel::where('receive_temporary_id', $request->input('receive_temporary_id'))
+          ->orderBy('datetime', 'desc')->first();
+        $input['revision'] = $q->revision + 1;
+        $q->purchase_status_id = -1; //-1 means void
+        $q->save();
+        $segments = explode("-", $request->input('receive_temporary_code'));
+        $segmentend = end($segments); //"00001"
+
+        if ($segmentend[0] != "R") {
+          array_push($segments, "R"); // เพิ่ม R
+          $receive_temporary_code = join("-", $segments);
+          $input['receive_temporary_code'] = "{$receive_temporary_code}{$input['revision']}";
+        } else {
+          array_pop($segments); // ลบ string
+          array_push($segments, "R"); // เพิ่ม R
+          $receive_temporary_code = join("-", $segments);
+          $input['receive_temporary_code'] = "{$receive_temporary_code}{$input['revision']}"; // string
         }
       }
-
-      ReceiveTemporaryDetailModel::insert($list);
-      //print_r($list);
-
-      //4.REDIRECT
-      return redirect("purchase/receive_temporary/{$id}/edit");
     }
+    $receive_temporary = ReceiveTemporaryModel::findOrFail($id);
+    $receive_temporary->update($input);
+    return redirect("purchase/receive_temporary/{$id}");
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-      ReceiveTemporaryModel::delete_by_id($id);
-      return redirect("purchase/receive_temporary");
-    }
-
-
-
-
+  /**
+   * Remove the specified resource from storage.
+   *
+   * @param  int  $id
+   * @return \Illuminate\Http\Response
+   */
+  public function destroy($id)
+  {
+    ReceiveTemporaryModel::destroy($id);
+    return redirect("purchase/receive_temporary");
+  }
 }
