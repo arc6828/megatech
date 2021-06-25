@@ -48,17 +48,4 @@ class ReturnInvoice extends Model
     public function staff(){
         return $this->belongsTo('App\User','staff_id');
     }
-    // public static function select_all()
-    // {
-    //     return DB::table('return_invoices')->get();
-    // }
-
-    // public static function select_by_id($id)
-    // { ยกเลิกการใช้งาน
-    //     return DB::table('return_invoices')
-    //       ->join('tb_customer','return_invoices.customer_id','=', 'tb_customer.customer_id')
-    //       ->where('return_invoices.id', '=' , $id )
-    //       ->select(DB::raw('return_invoices.*','tb_customer.*'))
-    //       ->get();
-    // }
 }

@@ -30,17 +30,7 @@ class PickingDetailController extends Controller
 
     return response()->json($table_pickking_detail);
   }
-  // public function history_sell_price($customer_id, $product_id)
-  // {
-  //     // quotation เรียกใช้งาน จังหวะ ตอนลูกค้าเปิดใบเสนอราคา
-  //     $pickking_detail = PickingDetail::join('tb_order', 'tb_sales_picking_details.order_id', '=', 'tb_order.order_id')
-
-  //         ->where('product_id', $product_id)
-  //         ->where('customer_id', $customer_id)
-  //         ->orderBy('datetime', 'desc')->first();
-
-  //     return response()->json($pickking_detail);
-  // }
+ 
 
   /**
    * Show the form for creating a new resource.
