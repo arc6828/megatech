@@ -33,7 +33,7 @@ class InvoiceController extends Controller
    */
   public function index(Request $request)
   {
-    //$table_invoice = InvoiceModel::select_by_keyword($q);
+
     $select_all = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
       ->join('tb_delivery_type', 'tb_invoice.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
       ->join('tb_tax_type', 'tb_invoice.tax_type_id', '=', 'tb_tax_type.tax_type_id')
@@ -53,7 +53,6 @@ class InvoiceController extends Controller
       $select_all : $select_all_by_user_id; //if
 
     $data = [
-      //QUOTATION
       'table_invoice' => $table_invoice,
       'q' => $request->input('q'), //รับค่า order_code จาก index
     ];
@@ -68,16 +67,13 @@ class InvoiceController extends Controller
   public function create()
   {
     $data = [
-      //QUOTATION
-      'table_customer' => CustomerModel::select_all(),
+      'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('order'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'order')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
-      //QUOTATION DETAIL
       'table_invoice_detail' => [],
       'table_product' => ProductModel::all(),
     ];
@@ -92,32 +88,13 @@ class InvoiceController extends Controller
    */
   public function store(Request $request)
   {
-    //INSERT QUOTATION
-    $input = [
-      'invoice_code' => $this->getNewCode(),
-      'external_reference_id' => $request->input('external_reference_id'),
-      'internal_reference_id' => $request->input('internal_reference_id'),
-      'customer_id' => $request->input('customer_id'),
-      'debt_duration' => $request->input('debt_duration', "0"),
-      'billing_duration' => $request->input('billing_duration', "0"),
-      'payment_condition' => $request->input('payment_condition', ""),
-      'payment_method' => $request->input('payment_method', ""),
-      'max_credit' => $request->input('max_credit', ""),
-      'delivery_type_id' => $request->input('delivery_type_id'),
-      'tax_type_id' => $request->input('tax_type_id'),
-      'delivery_time' => $request->input('delivery_time'),
-      'department_id' => $request->input('department_id'),
-      'sales_status_id' => 15,
-      'user_id' => $request->input('user_id'),
-      'staff_id' => $request->input('staff_id'),
-      'zone_id' => $request->input('zone_id'),
-      'remark' => $request->input('remark'),
-      'vat_percent' => $request->input('vat_percent', 7),
-      'vat' => $request->input('vat', 0),
-      'total_before_vat' => $request->input('total_before_vat', 0),
-      'total' => $request->input('total_after_vat', 0),
-      'total_debt' => $request->input('total_after_vat', 0),
-    ];
+    $input = $request->all();
+    $input['invoice_code'] = $this->getNewCode();
+    $input["sales_status_id"] = 15;
+    $input["vat_percent"] = 7;
+    $input["vat"] = 0;
+    $input["total_before_vat"] = 0;
+    $input["total_debt"] = 0;
 
     if ($input['payment_method'] != "credit") {
       $input['total_debt'] = 0;
@@ -126,18 +103,16 @@ class InvoiceController extends Controller
     $invoice = InvoiceModel::create($input);
     $id = $invoice->invoice_id;
 
-    //INSERT ALL NEW INVOICE DETAIL
 
     if (is_array($request->input('product_id_edit'))) {
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        $invoice_detail = [
+        InvoiceDetailModel::create([
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
           "invoice_id" => $id,
-        ];
+        ]);
 
-        InvoiceDetailModel::create($invoice_detail);
         //Update order_detail (4) ออก iv แล้ว
         OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])
           ->update(["order_detail_status_id" => 4]);
@@ -155,8 +130,7 @@ class InvoiceController extends Controller
         $sum = OrderDetailModel::where('order_detail_id', $request->input('id_edit')[$i])
           ->where('order_id', $order_id)
           ->sum('before_approved_amount');
-        // print_r(json_encode($sum));
-        // exit();
+
         if ($sum == 0) {
           //NO ONE LEFT : 9 => ออก Invoice ครบ
           OrderModel::where('order_id', $order_id)->update(["sales_status_id" => 9]);
@@ -192,8 +166,7 @@ class InvoiceController extends Controller
 
   public function getNewCode()
   {
-    $number = InvoiceModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
-      ->count();
+    $number = InvoiceModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])->count();
     $run_number = Numberun::where('id', '4')->value('number_en');
     $count = $number + 1;
     //$year = (date("Y") + 543) % 100;
@@ -205,18 +178,15 @@ class InvoiceController extends Controller
   }
 
   public function cancel($id)
-  {
-    //
-    $invoice = InvoiceModel::findOrFail($id);
+  { 
     //VOID
+    $invoice = InvoiceModel::findOrFail($id);
     $invoice->sales_status_id = -1; //-1 MEANS Void
     $invoice->vat = 0;
     $invoice->total_debt = 0;
     $invoice->total_before_vat = 0;
     $invoice->total = 0;
     $invoice->save();
-
-
 
     //FIND OE
     $order = OrderModel::where('order_code', $invoice->internal_reference_id)->firstOrFail();
@@ -238,8 +208,6 @@ class InvoiceController extends Controller
 
       $p->discount_price = 0;
       $p->save();
-      // print_r(json_encode($list));
-      // exit();
     }
 
     //GAURD STOCK
@@ -277,23 +245,22 @@ class InvoiceController extends Controller
       ->where('tb_invoice.invoice_id', '=', $id)
       ->select(DB::raw('tb_customer.*,tb_invoice.*'))
       ->get();
+
     $table_invoice_detail = InvoiceDetailModel::join('tb_product', 'tb_invoice_detail.product_id', '=', 'tb_product.product_id')
       ->where('invoice_id', '=', $id)
       ->get();
+
     $data = [
-      //QUOTATION
       'table_invoice' => $table_invoice,
       'invoice' => InvoiceModel::findOrFail($id),
-      'table_customer' => CustomerModel::select_all(),
+      'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('invoice'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'invoice')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'invoice_id' => $id,
-      //QUOTATION Detail
       'table_invoice_detail' => $table_invoice_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'show',
@@ -314,19 +281,16 @@ class InvoiceController extends Controller
       ->get();
 
     $data = [
-      //QUOTATION
       'table_invoice' => $table_invoice,
-      'table_customer' => CustomerModel::select_all(),
+      'table_customer' => CustomerModel::all(),
       'table_company' => Company::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('order'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'order')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'invoice_id' => $id,
-      //QUOTATION Detail
       'table_invoice_detail' => $table_invoice_detail,
       'table_product' => ProductModel::all(),
       'total_text' => count($table_invoice) > 0 ? Functions::baht_text($table_invoice[0]->total) : "-",
@@ -355,19 +319,17 @@ class InvoiceController extends Controller
       ->get();
 
     $data = [
-      //QUOTATION
       'invoice' => InvoiceModel::findOrFail($id),
       'table_invoice' => $table_invoice,
       'table_customer' => CustomerModel::select_all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('order'),
+      'table_sales_status' => SalesStatusModel::where('category', 'order')->get(),
       //'table_sales_user' => UserModel::select_by_role('sales'),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'invoice_id' => $id,
-      //QUOTATION Detail
       'table_invoice_detail' => $table_invoice_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'edit',
@@ -384,47 +346,10 @@ class InvoiceController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //1.INSERT QUOTATION
-    $input = [
-      //'invoice_code' => $invoice_code,
-      'external_reference_id' => $request->input('external_reference_id'),
-      'internal_reference_id' => $request->input('internal_reference_id'),
-      'customer_id' => $request->input('customer_id'),
-      'debt_duration' => $request->input('debt_duration'),
-      'billing_duration' => $request->input('billing_duration'),
-      'payment_condition' => $request->input('payment_condition', ""),
-      'payment_method' => $request->input('payment_method', ""),
-      'max_credit' => $request->input('max_credit', ""),
-      'delivery_type_id' => $request->input('delivery_type_id'),
-      'tax_type_id' => $request->input('tax_type_id'),
-      'delivery_time' => $request->input('delivery_time'),
-      'department_id' => $request->input('department_id'),
-      'sales_status_id' => $request->input('sales_status_id'),
-      'user_id' => $request->input('user_id'),
-      'zone_id' => $request->input('zone_id'),
-      'remark' => $request->input('remark'),
-      'vat_percent' => $request->input('vat_percent', 7),
-      //'total' => $request->input('total_before_vat',0),
-      'total' => $request->input('total_after_vat', 0),
-      'total_debt' => $request->input('total_after_vat', 0),
-    ];
-    if ($input['payment_method'] != "credit") {
-      $input['total_debt'] = 0;
-    }
 
-    if (is_array($request->input('product_id_edit'))) {
-      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        InvoiceDetailModel::where('invoice_id', $id)->delete();
-        $invoice_detail = [
-          "product_id" => $request->input('product_id_edit')[$i],
-          "amount" => $request->input('amount_edit')[$i],
-          "discount_price" => $request->input('discount_price_edit')[$i],
-          "invoice_id" => $id,
-        ];
-        InvoiceDetailModel::create($invoice_detail);
-      }
-    }
-
+    $input = $request->all();
+    $invoice = InvoiceModel::findOrFail($id);
+    $invoice->update($input);
 
     //4.REDIRECT
     return redirect("sales/invoice/{$id}/edit");

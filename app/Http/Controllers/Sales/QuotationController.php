@@ -54,22 +54,16 @@ class QuotationController extends Controller
   {
 
     $data = [
-      //QUOTATION
       'table_customer' => CustomerModel::select_all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'quotation')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
-      //QUOTATION DETAIL
       'table_quotation_detail' => [],
       'table_product' => ProductModel::all(),
-
       'customer' => !empty(request('customer_id')) ? CustomerModel::where('customer_id', request('customer_id'))->firstOrFail() : null,
-      //'customer_json' => !empty(request('customer_id'))? CustomerModel::where('customer_id',request('customer_id'))->first(): '',
-      //'customer_json' => json_encode(CustomerModel::findOrFail(request('customer_id'))),
     ];
 
     return view('sales/quotation/create', $data);
@@ -84,7 +78,6 @@ class QuotationController extends Controller
   public function store(Request $request)
   {
 
-    //INSERT QUOTATION
     $input = $request->all();
     $input["quotation_code"] = $this->getNewCode();
     $input['datetime'] = date('Y-m-d H:i:s');
@@ -96,20 +89,18 @@ class QuotationController extends Controller
     $input["total_after_vat"] = 0;
 
 
-    $quotaion = QuotationModel::create($input); // create qt
+    $quotaion = QuotationModel::create($input);
     $id = $quotaion->quotation_id;
 
-    //INSERT ALL NEW QUOTATION DETAIL
     if (is_array($request->input('product_id_edit'))) {
-      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) { // insert qt detail
-        $quotaion_detail = [
+      for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
+        QuotationDetailModel::create([
           "product_id" => $request->input('product_id_edit')[$i],
           "amount" => $request->input('amount_edit')[$i],
           "discount_price" => $request->input('discount_price_edit')[$i],
           "quotation_id" => $id,
           "delivery_duration" => $request->input('delivery_duration')[$i],
-        ];
-        QuotationDetailModel::create($quotaion_detail); // create qt detail
+        ]);
       }
     }
 
@@ -162,9 +153,7 @@ class QuotationController extends Controller
 
   public function change_status(Request $request, $id)
   {
-    // echo "hello";
-    // exit();
-    //Query
+
     $quotaion = QuotationModel::findOrFail($id);
     $quotaion->sales_status_id = $request->input("sales_status_id");
     $quotaion->reason = $request->input("reason");
@@ -195,19 +184,16 @@ class QuotationController extends Controller
       ->get();
 
     $data = [
-      //QUOTATION
       'quotation' => QuotationModel::findOrFail($id),
       'table_quotation' => $table_quotation,
       'table_customer' => CustomerModel::select_all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'quotation')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'quotation_id' => $id,
-      //QUOTATION Detail
       'table_quotation_detail' => $table_quotation_detail,
       'table_product' => ProductModel::all(),
       'customer' => CustomerModel::where('customer_id', QuotationModel::findOrFail($id)->customer_id)->first(),
@@ -235,10 +221,8 @@ class QuotationController extends Controller
       ->get();
 
     $data = [
-      //QUOTATION
       'table_quotation' => $table_quotation,
       'table_company' => Company::all(),
-      //QUOTATION Detail
       'table_quotation_detail' => $table_quotation_detail,
       'total_text' => count($table_quotation) > 0 ? Functions::baht_text($table_quotation[0]->total) : "-",
     ];
@@ -264,23 +248,22 @@ class QuotationController extends Controller
       ->orWhere('tb_quotation.quotation_code', '=', $id)
       ->select(DB::raw('users.*,tb_customer.*, tb_quotation.*,tb_sales_status.*'))
       ->get();
+
     $table_quotation_detail = QuotationDetailModel::join('tb_product', 'tb_quotation_detail.product_id', '=', 'tb_product.product_id')
       ->where('quotation_id', '=', $id)
       ->get();
+
     $data = [
-      //QUOTATION
       'quotation' => QuotationModel::findOrFail($id),
       'table_quotation' => $table_quotation,
       'table_customer' => CustomerModel::select_all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('quotation'),
-      'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'quotation')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'quotation_id' => $id,
-      //QUOTATION Detail
       'table_quotation_detail' => $table_quotation_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'edit',
@@ -297,10 +280,8 @@ class QuotationController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //1.INSERT QUOTATION
     $input = $request->all();
 
-    //2.INSERT UPDATE DELETE QUOTATION DETAIL
     if (is_array($request->input('product_id_edit'))) {
 
       QuotationDetailModel::where('quotation_id', $id)->delete();
@@ -325,9 +306,6 @@ class QuotationController extends Controller
   public function approve($id)
   {
 
-    //รหัสเอกสาร
-    //วันที่และเวลา
-    //สถานะ
     $quotaion = QuotationModel::findOrFail($id);
 
     $input = [
@@ -335,10 +313,8 @@ class QuotationController extends Controller
       'datetime' => date('Y-m-d H:i:s'),
       'sales_status_id' => 1,
     ];
-    // QuotationModel::update_by_id($input, $id);
-    QuotationModel::where('quotation_id', $id)
-      ->orWhere('quotation_code', $id)
-      ->update($input);
+    
+    $quotaion->update($input);
 
     //3.REDIRECT
     return redirect("sales/quotation/{$id}")->with('flash_message', 'popup');

@@ -65,21 +65,19 @@ class DeliveryTemporaryController extends Controller
   public function create()
   {
     $data = [
-      //QUOTATION
       'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('delivery_temporary'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'delivery_temporary')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
-      //QUOTATION DETAIL
       'table_delivery_temporary_detail' => [],
       'table_product' => ProductModel::all(),
     ];
     return view('sales/delivery_temporary/create', $data);
   }
+
   public function getNewCode()
   {
     $number = DeliveryTemporaryModel::whereRaw('month(datetime) = month(now()) and year(datetime) = year(now())', [])
@@ -154,7 +152,6 @@ class DeliveryTemporaryController extends Controller
   }
   public function cancel($id)
   {
-    //
     $delivery_temporary = DeliveryTemporaryModel::findOrFail($id);
     $delivery_temporary->sales_status_id = 11; //11 MEANS Cancelled
     $delivery_temporary->save();
@@ -198,20 +195,18 @@ class DeliveryTemporaryController extends Controller
     $table_delivery_temporary_detail = DeliveryTemporaryDetailModel::join('tb_product', 'tb_delivery_temporary_detail.product_id', '=', 'tb_product.product_id')
       ->where('delivery_temporary_id', '=', $id)
       ->get();
+
     $data = [
-      //QUOTATION
       'table_delivery_temporary' => $table_delivery_temporary,
       'delivery_temporary' => DeliveryTemporaryModel::findOrFail($id),
       'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('delivery_temporary'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'delivery_temporary')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'delivery_temporary_id' => $id,
-      //QUOTATION Detail
       'table_delivery_temporary_detail' => $table_delivery_temporary_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'show',
@@ -232,7 +227,6 @@ class DeliveryTemporaryController extends Controller
       ->get();
 
     $data = [
-      //QUOTATION
       'table_delivery_temporary' =>  $table_delivery_temporary,
       'table_company' => Company::all(),
       'table_customer' => CustomerModel::all(),
@@ -240,15 +234,12 @@ class DeliveryTemporaryController extends Controller
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
       'table_sales_status' => SalesStatusModel::select_by_category('delivery_temporary'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'delivery_temporary_id' => $id,
-      //QUOTATION Detail
       'table_delivery_temporary_detail' => $table_delivery_temporary_detail,
       'table_product' => ProductModel::all(),
     ];
-    //return view('sales/delivery_temporary/edit',$data);
 
     $pdf = PDF::loadView('sales/delivery_temporary/show', $data);
     return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
@@ -266,9 +257,8 @@ class DeliveryTemporaryController extends Controller
       'datetime' => date('Y-m-d H:i:s'),
       'sales_status_id' => 10,
     ];
-    DeliveryTemporaryModel::where('delivery_temporary_id', $id)
-      ->orWhere('delivery_temporary_code', $id)
-      ->update($input);
+
+    $delivery_temporary->update($input);
 
     //3.REDIRECT
     return redirect("sales/delivery_temporary/{$id}")->with('flash_message', 'popup');
@@ -291,19 +281,16 @@ class DeliveryTemporaryController extends Controller
       ->get();
 
     $data = [
-      //QUOTATION
       'table_delivery_temporary' => $table_delivery_temporary,
       'delivery_temporary' => DeliveryTemporaryModel::findOrFail($id),
       'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_sales_status' => SalesStatusModel::select_by_category('delivery_temporary'),
-      //'table_sales_user' => UserModel::select_by_role('sales'),
+      'table_sales_status' => SalesStatusModel::where('category', 'delivery_temporary')->get(),
       'table_sales_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'delivery_temporary_id' => $id,
-      //QUOTATION Detail
       'table_delivery_temporary_detail' => $table_delivery_temporary_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'edit',
