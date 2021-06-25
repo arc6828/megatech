@@ -27,24 +27,6 @@ class ReturnOrderController extends Controller
   {
     $keyword = $request->get('search');
     $perPage = 25;
-
-    // if (!empty($keyword)) {
-    //     $returnorder = ReturnOrder::where('code', 'LIKE', "%$keyword%")
-    //         ->orWhere('supplier_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('purchase_receive_code', 'LIKE', "%$keyword%")
-    //         ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('purchase_status_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('user_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('remark', 'LIKE', "%$keyword%")
-    //         ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
-    //         ->orWhere('vat', 'LIKE', "%$keyword%")
-    //         ->orWhere('vat_percent', 'LIKE', "%$keyword%")
-    //         ->orWhere('total_after_vat', 'LIKE', "%$keyword%")
-    //         ->orWhere('revision', 'LIKE', "%$keyword%")
-    //         ->latest()->paginate($perPage);
-    // } else {
-    //     $returnorder = ReturnOrder::latest()->paginate($perPage);
-    // }
     $returnorder = ReturnOrder::latest()->get();
 
     return view('purchase.return-order.index', compact('returnorder'));
@@ -90,14 +72,13 @@ class ReturnOrderController extends Controller
 
     if (is_array($products)) {
       for ($i = 0; $i < count($products); $i++) {
-        $return_details = [
+        ReturnOrderDetail::create([
           "product_id" => $products[$i],
           "amount" => $amounts[$i],
           "discount_price" => $discount_prices[$i],
           "total" => $totals[$i],
           "return_order_id" => $returnorder->id,
-        ];
-        ReturnOrderDetail::create($return_details);
+        ]);
       }
     }
     $return_details = $returnorder->return_order_details()->get();
@@ -120,9 +101,6 @@ class ReturnOrderController extends Controller
       $product->pending_out = $gaurd_stock['pending_out'];
       $product->save();
     }
-    // ReturnOrderDetail::insert($details);
-
-    // $this->store_detail($request, $returnorder);
 
     return redirect('purchase/return-order/' . $returnorder->id)->with('flash_message', 'ReturnOrder added!');
   }

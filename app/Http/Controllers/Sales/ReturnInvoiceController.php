@@ -27,24 +27,6 @@ class ReturnInvoiceController extends Controller
   {
     $keyword = $request->get('search');
     $perPage = 25;
-
-    // if (!empty($keyword)) {
-    //     $returninvoice = ReturnInvoice::where('code', 'LIKE', "%$keyword%")
-    //         ->orWhere('customer_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('invoice_code', 'LIKE', "%$keyword%")
-    //         ->orWhere('tax_type_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('sales_status_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('user_id', 'LIKE', "%$keyword%")
-    //         ->orWhere('remark', 'LIKE', "%$keyword%")
-    //         ->orWhere('total_before_vat', 'LIKE', "%$keyword%")
-    //         ->orWhere('vat', 'LIKE', "%$keyword%")
-    //         ->orWhere('vat_percent', 'LIKE', "%$keyword%")
-    //         ->orWhere('total_after_vat', 'LIKE', "%$keyword%")
-    //         ->orWhere('revision', 'LIKE', "%$keyword%")
-    //         ->latest()->paginate($perPage);
-    // } else {
-    //     $returninvoice = ReturnInvoice::latest()->paginate($perPage);
-    // }
     $returninvoice = ReturnInvoice::latest()->get();
 
     return view('sales.return-invoice.index', compact('returninvoice'));
@@ -92,15 +74,13 @@ class ReturnInvoiceController extends Controller
 
     if (is_array($products)) {
       for ($i = 0; $i < count($products); $i++) {
-        $return_details = [ //Insert invoice detail foreach
+        ReturnInvoiceDetail::create([ //Insert invoice detail foreach
           "product_id" => $products[$i],
           "amount" => $amounts[$i],
           "discount_price" => $discount_prices[$i],
           "total" => $totals[$i],
           "return_invoice_id" => $returninvoice->id,
-        ];
-
-        ReturnInvoiceDetail::create($return_details); //Create return invoice_detail
+        ]);
       }
     }
     $return_details = $returninvoice->return_invoice_details()->get(); //ดึงข้อมูลจาก invoice_detail
@@ -238,6 +218,38 @@ class ReturnInvoiceController extends Controller
    *
    * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
    */
+  public function pdf($id)
+  {
+
+    $table_return_invoice = ReturnInvoice::join('tb_customer', 'return_invoices.customer_id', '=', 'tb_customer.customer_id')
+      ->where('return_invoices.id', '=', $id)
+      ->select(DB::raw('return_invoices.*', 'tb_customer.*'))
+      ->get();
+
+    $table_invoice = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
+      ->where('tb_invoice.invoice_code', '=', $table_return_invoice[0]->invoice_code)
+      ->select(DB::raw('tb_customer.*,tb_invoice.*'))
+      ->get();
+
+    $table_return_invoice_details = ReturnInvoiceDetail::join('tb_product', 'return_invoice_details.product_id', '=', 'tb_product.product_id')
+      ->where('return_invoice_details.return_invoice_id', '=', $id)
+      ->select(DB::raw('tb_product.*,return_invoice_details.*'))
+      ->get();
+
+    $table_company = Company::firstOrFail();
+
+    $data = [
+      'return_invoice' => $table_return_invoice,
+      'invoice' => $table_invoice,
+      'invoice_detail' => $table_return_invoice_details,
+      'company' => $table_company,
+      'total_text' => count($table_return_invoice) > 0 ? Functions::baht_text($table_return_invoice[0]->total_after_vat) : "-",
+
+    ];
+    // print_r($data['invoice']);
+    $pdf = PDF::loadView('sales/return-invoice/show', $data);
+    return $pdf->stream('test.pdf');
+  }
   public function update(Request $request, $id)
   {
 
@@ -281,7 +293,7 @@ class ReturnInvoiceController extends Controller
 
     $returninvoice = ReturnInvoice::findOrFail($id);
     $returninvoice->update($requestData);
- 
+
 
     return redirect("sales/return-invoice/{$id}")->with('flash_message', 'ReturnInvoice updated!');
   }
@@ -318,38 +330,5 @@ class ReturnInvoiceController extends Controller
     ReturnInvoice::destroy($id);
 
     return redirect('sales/return-invoice')->with('flash_message', 'ReturnInvoice deleted!');
-  }
-
-  public function pdf($id)
-  {
-
-    $table_return_invoice = ReturnInvoice::join('tb_customer', 'return_invoices.customer_id', '=', 'tb_customer.customer_id')
-      ->where('return_invoices.id', '=', $id)
-      ->select(DB::raw('return_invoices.*', 'tb_customer.*'))
-      ->get();
-
-    $table_invoice = InvoiceModel::join('tb_customer', 'tb_invoice.customer_id', '=', 'tb_customer.customer_id')
-      ->where('tb_invoice.invoice_code', '=', $table_return_invoice[0]->invoice_code)
-      ->select(DB::raw('tb_customer.*,tb_invoice.*'))
-      ->get();
-
-    $table_return_invoice_details = ReturnInvoiceDetail::join('tb_product', 'return_invoice_details.product_id', '=', 'tb_product.product_id')
-      ->where('return_invoice_details.return_invoice_id', '=', $id)
-      ->select(DB::raw('tb_product.*,return_invoice_details.*'))
-      ->get();
-
-    $table_company = Company::firstOrFail();
-
-    $data = [
-      'return_invoice' => $table_return_invoice,
-      'invoice' => $table_invoice,
-      'invoice_detail' => $table_return_invoice_details,
-      'company' => $table_company,
-      'total_text' => count($table_return_invoice) > 0 ? Functions::baht_text($table_return_invoice[0]->total_after_vat) : "-",
-
-    ];
-    // print_r($data['invoice']);
-    $pdf = PDF::loadView('sales/return-invoice/show', $data);
-    return $pdf->stream('test.pdf');
   }
 }
