@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Purchase;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 use App\Purchase\OrderModel;
@@ -36,10 +37,8 @@ class OrderController extends Controller
    */
   public function index(Request $request)
   {
-    //$table_purchase_order = OrderModel::select_by_keyword($q);
     $data = [
-      //QUOTATION
-      'table_purchase_order' => OrderModel::select_all(),
+      'table_purchase_order' => OrderModel::all(),
       'q' => $request->input('q')
     ];
     return view('purchase/order/index', $data);
@@ -53,17 +52,13 @@ class OrderController extends Controller
   public function create()
   {
     $data = [
-      //QUOTATION
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
-      //'table_purchase_user' => UserModel::select_by_role('purchase_order'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_order')->get(),
       'table_purchase_user' => UserModel::all(),
-      //'table_purchase_order_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
-      //QUOTATION DETAIL
       'table_purchase_order_detail' => [],
       'table_product' => ProductModel::all(),
     ];
@@ -105,7 +100,6 @@ class OrderController extends Controller
     if (is_array($request->input('product_id_edit'))) {
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
         //6.update order_detail
-
         $new_order_detail = [
           "amount_pending_in" => $request->input('amount_edit')[$i],
           "amount_pending_rc" => 0,
@@ -164,10 +158,7 @@ class OrderController extends Controller
     $number = OrderModel::select_count_by_current_month_custom($dateString);
     $run_number = Numberun::where('id', '7')->value('number_en');
     $count =  $number + 1;
-    //$year = (date("Y") + 543) % 100;
     $date = date_create($dateString);
-    //echo date_format($date,"Y/m/d H:i:s");
-
     $year = date_format($date, "y");
     $month = date_format($date, "m");
     $number = sprintf('%05d', $count);
@@ -177,31 +168,31 @@ class OrderController extends Controller
 
   public function pdf($id)
   {
-    //no show
+    $table_purchase_order = OrderModel::join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_purchase_order.purchase_order_id', '=', $id)
+      ->select(DB::raw('tb_purchase_order.*, tb_supplier.company_name, tb_supplier.supplier_code'))
+      ->get();
     $table_purchase_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
       ->join('tb_purchase_requisition_detail', 'tb_purchase_order_detail.requisition_detail_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_detail_id')
       ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
       ->where('purchase_order_id', '=', $id)
       ->select('tb_purchase_order_detail.*', 'tb_product.*', 'tb_purchase_requisition.purchase_requisition_code')
       ->get();
+
     $data = [
-      //QUOTATION
-      'table_purchase_order' => OrderModel::select_by_id($id),
+      'table_purchase_order' => $table_purchase_order,
       'table_supplier' => SupplierModel::all(),
       'table_company' => Company::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_order')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_order_id' => $id,
-      //QUOTATION Detail
       'table_purchase_order_detail' => $table_purchase_order_detail,
       'table_product' => ProductModel::all(),
     ];
-    //return view('purchase/order/edit',$data);
-
 
     $pdf = PDF::loadView('purchase/order/show', $data);
     return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
@@ -235,6 +226,12 @@ class OrderController extends Controller
     }
     //print_r($unchangable_items);
 
+
+    $table_purchase_order = OrderModel::join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_purchase_order.purchase_order_id', '=', $id)
+      ->select(DB::raw('tb_purchase_order.*, tb_supplier.company_name, tb_supplier.supplier_code'))
+      ->get();
+
     $table_purchase_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
       ->join('tb_purchase_requisition_detail', 'tb_purchase_order_detail.requisition_detail_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_detail_id')
       ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
@@ -243,20 +240,18 @@ class OrderController extends Controller
       ->get();
 
     $data = [
-      //QUOTATION
-      'table_purchase_order' => OrderModel::select_by_id($id),
+      'table_purchase_order' => $table_purchase_order,
       'order' => $current_oe,
       'unchangable_items' => $unchangable_items,
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_order')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_order_id' => $id,
       'mode' => 'show',
-      //QUOTATION Detail
       'table_purchase_order_detail' => $table_purchase_order_detail,
       'table_product' => ProductModel::all(),
     ];
@@ -291,27 +286,31 @@ class OrderController extends Controller
     }
     //print_r($unchangable_items);
 
+    $table_purchase_order = OrderModel::join('tb_supplier', 'tb_purchase_order.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('tb_purchase_order.purchase_order_id', '=', $id)
+      ->select(DB::raw('tb_purchase_order.*, tb_supplier.company_name, tb_supplier.supplier_code'))
+      ->get();
+
     $table_purchase_order_detail = OrderDetailModel::join('tb_product', 'tb_purchase_order_detail.product_id', '=', 'tb_product.product_id')
       ->join('tb_purchase_requisition_detail', 'tb_purchase_order_detail.requisition_detail_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_detail_id')
       ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
       ->where('purchase_order_id', '=', $id)
       ->select('tb_purchase_order_detail.*', 'tb_product.*', 'tb_purchase_requisition.purchase_requisition_code')
       ->get();
+
     $data = [
-      //QUOTATION
-      'table_purchase_order' => OrderModel::select_by_id($id),
+      'table_purchase_order' => $table_purchase_order,
       'order' => $current_oe,
       'unchangable_items' => $unchangable_items,
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_order')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_order_id' => $id,
       'mode' => 'edit',
-      //QUOTATION Detail
       'table_purchase_order_detail' => $table_purchase_order_detail,
       'table_product' => ProductModel::all(),
     ];
@@ -327,8 +326,8 @@ class OrderController extends Controller
    */
   public function update(Request $request, $id)
   {
-    //1.INSERT QUOTATION
     $input = $request->all();
+    $input['datetime'] = date('Y-m-d H:i:s');
 
     $input['billing_duration'] = $request->input('billing_duration', "0");
     $input['payment_condition'] = $request->input('payment_condition', "0");
@@ -337,10 +336,8 @@ class OrderController extends Controller
     $input['total_before_vat'] = $request->input('total_before_vat', 0);
     $input['total'] = $request->input('total_after_vat', 0);
 
-    //2.INSERT UPDATE DELETE ORDER DETAIL
     if (is_array($request->input('product_id_edit'))) {
 
-      // OrderDetailModel::where('purchase_order_id', $id)->delete();
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
         $new_order_detail = [
           "discount_price" => $request->input('discount_price_edit')[$i],
@@ -354,33 +351,6 @@ class OrderController extends Controller
     $order = OrderModel::findOrFail($id);
     $order->update($input);
 
-    //$order_detail = $order->order_details()->get();
-    // print_r(json_encode($order_detail));
-    // exit();
-    // foreach ($order_detail as $item) {
-    //   $product = ProductModel::findOrFail($item['product_id']);
-    //   $gaurd_stock = GaurdStock::create([
-    //     "code" => $order->purchase_order_code,
-    //     "type" => "purchase_order",
-    //     "amount" => $item['amount'],
-    //     "amount_in_stock" => ($product->amount_in_stock),
-    //     "pending_in" => ($product->pending_in - $item['amount']),
-    //     "pending_out" => ($product->pending_out),
-    //     "product_id" => $product->product_id,
-    //   ]);
-
-    //   //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-    //   $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-    //   $product->pending_in = $gaurd_stock['pending_in'];
-    //   $product->pending_out = $gaurd_stock['pending_out'];
-    //   $product->save();
-    // }
-
-
-    //   //UPDATE PR Detail
-
-    //   // $purchase->update($input);
-    //   //4.REDIRECT
     return redirect("purchase/order/{$id}")->with('flash_message', 'ReturnInvoice updated!');;
   }
   // public function revision(Request $request)

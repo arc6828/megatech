@@ -46,16 +46,13 @@ class RequisitionController extends Controller
   public function create()
   {
     $data = [
-      //QUOTATION
-      'table_customer' => CustomerModel::select_all(),
+      'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_requisition')->get(),
       'table_purchase_user' => UserModel::all(),
-      //'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
-      //QUOTATION DETAIL
       'table_purchase_requisition_detail' => [],
       'table_product' => ProductModel::all(),
     ];
@@ -77,14 +74,11 @@ class RequisitionController extends Controller
     $input['vat_percent'] = $request->input('vat_percent', 7);
     $input['total'] = $request->input('total', 0);
 
-    //2.create PR
     $purchase = RequisitionModel::create($input);
     $id = $purchase->purchase_requisition_id;
 
-    //3. Insert PR_detail Loop
     if (is_array($request->input('product_id_edit'))) {
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        //4. Create PR_detail
         RequisitionDetailModel::create([
           "purchase_requisition_detail_status_id" => 3,
           "approved_amount" => 0,
@@ -109,7 +103,6 @@ class RequisitionController extends Controller
     $run_number = Numberun::where('id', '6')->value('number_en');
 
     $count =  $number + 1;
-    //$year = (date("Y") + 543) % 100;
     $year = date("y");
     $month = date("m");
     $number = sprintf('%05d', $count);
@@ -132,25 +125,21 @@ class RequisitionController extends Controller
 
     $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
       ->where('purchase_requisition_id', '=', $id)
-      // ->groupBy('tb_purchase_requisition_detail.product_id')
-      // ->select(DB::raw('*,sum(tb_purchase_requisition_detail.amount) as sum_amount,sum(tb_purchase_requisition_detail.before_approved_amount) as sum_before_approved_amount'))
       ->get();
 
 
     $data = [
-      //QUOTATION
       'table_purchase_requisition' => $table_purchase_requisition,
       'purchase_requisition' => RequisitionModel::findOrFail($id),
-      'table_customer' => CustomerModel::select_all(),
+      'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_requisition')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_requisition_id' => $id,
       'mode' => 'show',
-      //QUOTATION Detail
       'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'show',
@@ -174,23 +163,20 @@ class RequisitionController extends Controller
 
     $table_purchase_requisition_detail = RequisitionDetailModel::join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
       ->where('purchase_requisition_id', '=', $id)
-      // ->groupBy('tb_purchase_requisition_detail.product_id')
       ->get();
 
     $data = [
-      //QUOTATION
       'table_purchase_requisition' => $table_purchase_requisition,
       'purchase_requisition' => RequisitionModel::findOrFail($id),
-      'table_customer' => CustomerModel::select_all(),
+      'table_customer' => CustomerModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_requisition')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_requisition_id' => $id,
       'mode' => 'edit',
-      //QUOTATION Detail
       'table_purchase_requisition_detail' => $table_purchase_requisition_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'edit',
@@ -211,18 +197,12 @@ class RequisitionController extends Controller
     $input = $request->all();
     $input['vat_percent'] = $request->input('vat_percent', 7);
     $input['total'] = $request->input('total', 0);
-  
+
 
     if (is_array($request->input('product_id_edit'))) {
-
-      //2. Clear PR_detail
       RequisitionDetailModel::where('purchase_requisition_id', $id)->delete();
-
       for ($i = 0; $i < count($request->input('product_id_edit')); $i++) {
-        // print_r($request->input('product_id_edit'));
-
-        //3.Insert PR_detail
-        $purchase_detail = [
+        RequisitionDetailModel::create([
           "purchase_requisition_detail_status_id" => 3,
           "approved_amount" => 0,
           "supplier_amount" => 0,
@@ -231,40 +211,33 @@ class RequisitionController extends Controller
           "amount" => $request->input('amount_edit')[$i],
           "before_approved_amount" =>  $request->input('amount_edit')[$i],
           "purchase_requisition_id" => $id,
-        ];
-
-        //4. Create PR_detail
-        RequisitionDetailModel::create($purchase_detail);
+        ]);
       }
-      // exit();
     }
-
 
     //5. Update PR
     $purchase = RequisitionModel::findOrFail($id);
     $purchase->update($input);
 
-    // RequisitionModel::where('purchase_requisition_id', $id)
-    //   ->update($input);
 
     //4.REDIRECT
     return redirect("purchase/requisition/{$id}/edit");
   }
 
-  public function revision(Request $request, $id)
-  {
-    //VOID IF HAS CODE (Revision)
-    if (!empty($request->input('purchase_requisition_code'))) {
-      $q = RequisitionModel::where('purchase_requisition_code', $request->input('purchase_requisition_code'))
-        ->orderBy('datetime', 'desc')->first();
-      $input['revision'] = $q->revision + 1;
-      $q->purchase_status_id = -1; //-1 means void
-      $q->save();
+  // public function revision(Request $request, $id)
+  // {
+  //   //VOID IF HAS CODE (Revision)
+  //   if (!empty($request->input('purchase_requisition_code'))) {
+  //     $q = RequisitionModel::where('purchase_requisition_code', $request->input('purchase_requisition_code'))
+  //       ->orderBy('datetime', 'desc')->first();
+  //     $input['revision'] = $q->revision + 1;
+  //     $q->purchase_status_id = -1; //-1 means void
+  //     $q->save();
 
-      $segments = explode("-", $request->input('purchase_requisition_code'));
-      $input['purchase_requisition_code'] = $segments[0] . "-" . $segments[1] . "-R" . $input['revision'];
-    }
-  }
+  //     $segments = explode("-", $request->input('purchase_requisition_code'));
+  //     $input['purchase_requisition_code'] = $segments[0] . "-" . $segments[1] . "-R" . $input['revision'];
+  //   }
+  // }
 
   /**
    * Remove the specified resource from storage.

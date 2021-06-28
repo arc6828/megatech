@@ -59,20 +59,20 @@
 							</a>
 						</td>
 						<td>{{ date_format(date_create(explode(" ", $row->datetime)[0]),"d-m-Y") }}</td>
-						<td>{{ $row->supplier_code }}</td>
-						<td>{{ $row->company_name }}</td>
+						<td>{{ $row->supplier->supplier_code }}</td>
+						<td>{{ $row->supplier->company_name }}</td>
 						<td class="text-right">{{ number_format($row->total?$row->total:0, 2) }}</td>
 						<!-- <td>{{ $row->short_name }}</td> -->
 						<td>
 						@switch($row->purchase_status_id)
 							@case(3) 
-								<span class="badge badge-pill badge-warning">{{ $row->purchase_status_name }}</span>
+								<span class="badge badge-pill badge-warning">{{ $row->purchase_status->purchase_status_name }}</span>
 								@break
 							@case(4) 
-								<span class="badge badge-pill badge-success">{{ $row->purchase_status_name }}</span>
+								<span class="badge badge-pill badge-success">{{ $row->purchase_status->purchase_status_name }}</span>
 								@break
 							@case(-1)
-								<span class="badge badge-pill badge-secondary">{{ $row->purchase_status_name }}</span>
+								<span class="badge badge-pill badge-secondary">{{ $row->purchase_status->purchase_status_name }}</span>
 								@break						
 						@endswitch
 						</td>

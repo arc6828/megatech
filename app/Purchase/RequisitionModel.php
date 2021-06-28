@@ -32,10 +32,6 @@ class RequisitionModel extends Model
   {
     return $this->hasMany('App\Purchase\RequisitionDetailModel', 'purchase_requisition_id');
   }
-  // public function RequisitionDetail()
-  // {
-  //   return $this->hasMany('App\Purchase\RequisitionDetailModel', 'purchase_requisition_id');
-  // }
   public function User()
   {
     return $this->belongsTo('App\User', 'user_id');
