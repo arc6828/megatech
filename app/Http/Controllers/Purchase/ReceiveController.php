@@ -31,7 +31,6 @@ class ReceiveController extends Controller
    */
   public function index(Request $request)
   {
-    //$table_purchase_receive = ReceiveModel::select_by_keyword($q);
     $table_purchase_receive = ReceiveModel::join('tb_supplier', 'tb_purchase_receive.supplier_id', '=', 'tb_supplier.supplier_id')
       ->join('tb_delivery_type', 'tb_purchase_receive.delivery_type_id', '=', 'tb_delivery_type.delivery_type_id')
       ->join('tb_tax_type', 'tb_purchase_receive.tax_type_id', '=', 'tb_tax_type.tax_type_id')
@@ -54,17 +53,13 @@ class ReceiveController extends Controller
   public function create()
   {
     $data = [
-      //QUOTATION
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_order'),
-      //'table_purchase_user' => UserModel::select_by_role('purchase_receive'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_order')->get(),
       'table_purchase_user' => UserModel::all(),
-      //'table_purchase_receive_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
-      //QUOTATION DETAIL
       'table_purchase_receive_detail' => [],
       'table_product' => ProductModel::all(),
     ];
@@ -115,15 +110,13 @@ class ReceiveController extends Controller
         ];
         ReceiveDetailModel::create($receive_detail);
 
-        OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])
-          ->update(["purchase_order_detail_status_id" => 6]);
+        OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->update(["purchase_order_detail_status_id" => 6]);
         OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first()->decrement('amount_pending_in',  $request->input('amount_receive_edit')[$i]);
         OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first()->increment('amount_pending_rc',  $request->input('amount_receive_edit')[$i]);
-        
+
         $purchase_detail = OrderDetailModel::where('purchase_order_detail_id', $request->input('id_edit')[$i])->first();
         $purchase_order_id = $purchase_detail->purchase_order_id;
         OrderModel::where('purchase_order_id', $purchase_order_id)->update(["purchase_status_id" => 4]);
-      
       }
     }
 
@@ -224,25 +217,26 @@ class ReceiveController extends Controller
 
   public function pdf($id)
   {
-    //no show
     $table_purchase_receive = ReceiveModel::join('tb_supplier', 'tb_purchase_receive.supplier_id', '=', 'tb_supplier.supplier_id')
       ->where('tb_purchase_receive.purchase_receive_id', '=', $id)
       ->select(DB::raw('tb_purchase_receive.*, tb_supplier.company_name, tb_supplier.supplier_code'))
       ->get();
+
+    $table_purchase_receive_detail = ReceiveDetailModel::join('tb_product', 'tb_purchase_receive_detail.product_id', '=', 'tb_product.product_id')
+      ->where('purchase_receive_id', '=', $id)
+      ->get();
     $data = [
-      //QUOTATION
       'table_purchase_receive' =>   $table_purchase_receive,
       'table_company' => Company::all(),
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_requisition')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_receive_id' => $id,
-      //QUOTATION Detail
-      'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
+      'table_purchase_receive_detail' => $table_purchase_receive_detail,
       'table_product' => ProductModel::all(),
     ];
     //return view('purchase/receive/edit',$data);
@@ -266,21 +260,23 @@ class ReceiveController extends Controller
       ->select(DB::raw('tb_purchase_receive.*, tb_supplier.company_name, tb_supplier.supplier_code'))
       ->get();
 
+    $table_purchase_receive_detail = ReceiveDetailModel::join('tb_product', 'tb_purchase_receive_detail.product_id', '=', 'tb_product.product_id')
+      ->where('purchase_receive_id', '=', $id)
+      ->get();
+
     $data = [
-      //QUOTATION
       'table_purchase_receive' => $table_purchase_receive,
       'purchase_receive' => ReceiveModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_requisition')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_receive_id' => $id,
       'mode' => 'show',
-      //QUOTATION Detail
-      'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
+      'table_purchase_receive_detail' => $table_purchase_receive_detail,
       'table_product' => ProductModel::all(),
     ];
     //echo $data["mode"];
@@ -300,22 +296,22 @@ class ReceiveController extends Controller
       ->where('tb_purchase_receive.purchase_receive_id', '=', $id)
       ->select(DB::raw('tb_purchase_receive.*, tb_supplier.company_name, tb_supplier.supplier_code'))
       ->get();
-
+    $table_purchase_receive_detail = ReceiveDetailModel::join('tb_product', 'tb_purchase_receive_detail.product_id', '=', 'tb_product.product_id')
+      ->where('purchase_receive_id', '=', $id)
+      ->get();
     $data = [
-      //QUOTATION
       'table_purchase_receive' => $table_purchase_receive,
       'purchase_receive' => ReceiveModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
       'table_delivery_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('purchase_requisition'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'purchase_requisition')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'purchase_receive_id' => $id,
       'mode' => 'edit',
-      //QUOTATION Detail
-      'table_purchase_receive_detail' => ReceiveDetailModel::select_by_purchase_receive_id($id),
+      'table_purchase_receive_detail' => $table_purchase_receive_detail,
       'table_product' => ProductModel::all(),
     ];
 

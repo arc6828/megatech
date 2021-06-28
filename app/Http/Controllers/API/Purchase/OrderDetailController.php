@@ -25,7 +25,7 @@ class OrderDetailController extends Controller
       ->join('tb_purchase_requisition_detail', 'tb_purchase_order_detail.supplier_id', '=', 'tb_purchase_requisition_detail.supplier_id')
       ->join('tb_purchase_requisition', 'tb_purchase_requisition.purchase_requisition_id', '=', 'tb_purchase_requisition_detail.purchase_requisition_id')
       ->whereNull('tb_purchase_order_detail.purchase_order_id')
-      ->where("tb_purchase_requisition_detail.po_amount", "=", 0)
+      ->groupBy('tb_purchase_order_detail.product_id')
       ->get();
     return response()->json($order_detail);
   }

@@ -21,10 +21,10 @@ class PurchaseStatusModel extends Model
   //   return DB::table('tb_purchase_status')->get();
   // }
 
-  public static function select_by_category($category)
-  {
-    return DB::table('tb_purchase_status')
-      ->where('category', $category)
-      ->get();
-  }
+  // public static function select_by_category($category)
+  // {
+  //   return DB::table('tb_purchase_status')
+  //     ->where('category', $category)
+  //     ->get();
+  // }
 }

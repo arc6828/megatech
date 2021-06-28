@@ -105,7 +105,7 @@ class RequisitionDetailController extends Controller
     ];
 
     $data = [
-      'table_purchase_requisition_detail_status' => RequisitionDetailStatusModel::select_all(),
+      'table_purchase_requisition_detail_status' => RequisitionDetailStatusModel::all(),
       'table_supplier' => SupplierModel::orderBy('supplier_code', 'asc')->get(),
       'filter' => $filter,
     ];

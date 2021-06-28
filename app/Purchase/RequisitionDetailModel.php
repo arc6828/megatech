@@ -41,71 +41,71 @@ class RequisitionDetailModel extends Model
 
 
 
-  public static function select_all()
-  {
-    return DB::table('tb_purchase_requisition_detail')
-      ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-      ->get();
-  }
+  // public static function select_all()
+  // {
+  //   return DB::table('tb_purchase_requisition_detail')
+  //     ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+  //     ->get();
+  // }
 
-  // public static function select_by_purchase_requisition_id($purchase_requisition_id)
+  // // public static function select_by_purchase_requisition_id($purchase_requisition_id)
+  // // {
+  // //   return DB::table('tb_purchase_requisition_detail')
+  // //     ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+  // //     ->where('purchase_requisition_id', '=', $purchase_requisition_id)
+  // //     ->get();
+  // // }
+
+  // //EXTENSION OF ORDER
+  // public static function select_by_purchase_requisition_id_by_status_id($purchase_requisition_id, $purchase_requisition_detail_status_id)
   // {
   //   return DB::table('tb_purchase_requisition_detail')
   //     ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
   //     ->where('purchase_requisition_id', '=', $purchase_requisition_id)
+  //     ->where('purchase_requisition_detail_status_id', '=', $purchase_requisition_detail_status_id)
   //     ->get();
   // }
 
-  //EXTENSION OF ORDER
-  public static function select_by_purchase_requisition_id_by_status_id($purchase_requisition_id, $purchase_requisition_detail_status_id)
-  {
-    return DB::table('tb_purchase_requisition_detail')
-      ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-      ->where('purchase_requisition_id', '=', $purchase_requisition_id)
-      ->where('purchase_requisition_detail_status_id', '=', $purchase_requisition_detail_status_id)
-      ->get();
-  }
-
-  public static function select_by_id($id)
-  {
-    return DB::table('tb_purchase_requisition_detail')
-      ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
-      ->where('purchase_requisition_detail_id', '=', $id)
-      ->get();
-  }
-
-  // public static function insert($input)
+  // public static function select_by_id($id)
   // {
-  //   DB::table('tb_purchase_requisition_detail')->insert($input);
+  //   return DB::table('tb_purchase_requisition_detail')
+  //     ->join('tb_product', 'tb_purchase_requisition_detail.product_id', '=', 'tb_product.product_id')
+  //     ->where('purchase_requisition_detail_id', '=', $id)
+  //     ->get();
   // }
 
-  public static function update_by_id($input, $id)
-  {
-    DB::table('tb_purchase_requisition_detail')
-      ->where('purchase_requisition_detail_id', $id)
-      ->update($input);
-  }
+  // // public static function insert($input)
+  // // {
+  // //   DB::table('tb_purchase_requisition_detail')->insert($input);
+  // // }
 
-  public static function update_key_by_id($key, $input, $id)
-  {
-    DB::table('tb_purchase_requisition_detail')
-      ->where('purchase_requisition_detail_id', $id)
-      ->update($input);
-  }
+  // public static function update_by_id($input, $id)
+  // {
+  //   DB::table('tb_purchase_requisition_detail')
+  //     ->where('purchase_requisition_detail_id', $id)
+  //     ->update($input);
+  // }
 
-  public static function delete_by_id($id)
-  {
-    DB::table('tb_purchase_requisition_detail')
-      ->where('purchase_requisition_detail_id', '=', $id)
-      ->delete();
-  }
+  // public static function update_key_by_id($key, $input, $id)
+  // {
+  //   DB::table('tb_purchase_requisition_detail')
+  //     ->where('purchase_requisition_detail_id', $id)
+  //     ->update($input);
+  // }
 
-  public static function delete_by_purchase_requisition_id($purchase_requisition_id)
-  {
-    DB::table('tb_purchase_requisition_detail')
-      ->where('purchase_requisition_id', '=', $purchase_requisition_id)
-      ->delete();
-  }
+  // public static function delete_by_id($id)
+  // {
+  //   DB::table('tb_purchase_requisition_detail')
+  //     ->where('purchase_requisition_detail_id', '=', $id)
+  //     ->delete();
+  // }
+
+  // public static function delete_by_purchase_requisition_id($purchase_requisition_id)
+  // {
+  //   DB::table('tb_purchase_requisition_detail')
+  //     ->where('purchase_requisition_id', '=', $purchase_requisition_id)
+  //     ->delete();
+  // }
 
   //EXTENSION ABOUT ORDER
   // public static function select_search($purchase_requisition_detail_status_id, $date_begin, $date_end = "")
@@ -194,20 +194,20 @@ class RequisitionDetailModel extends Model
   //   return $item->purchase_requisition_detail_id;
   // }
 
-  public static function update_purchase_requisition_detail_status_id_by_ids($action, $ids)
-  {
-    DB::table('tb_purchase_requisition_detail')
-      ->whereIn('purchase_requisition_detail_id', $ids)
-      ->update(['purchase_requisition_detail_status_id' => $action]);
-  }
+  // public static function update_purchase_requisition_detail_status_id_by_ids($action, $ids)
+  // {
+  //   DB::table('tb_purchase_requisition_detail')
+  //     ->whereIn('purchase_requisition_detail_id', $ids)
+  //     ->update(['purchase_requisition_detail_status_id' => $action]);
+  // }
 
-  public static function update_purchase_requisition_detail_status_id_by_ids2($action, $ids, $purchase_requisition_detail_status_id)
-  {
-    DB::table('tb_purchase_requisition_detail')
-      ->whereIn('purchase_requisition_detail_id', $ids)
-      ->update([
-        'supplier_id' => $action,
-        'purchase_requisition_detail_status_id' => $purchase_requisition_detail_status_id,
-      ]);
-  }
+  // public static function update_purchase_requisition_detail_status_id_by_ids2($action, $ids, $purchase_requisition_detail_status_id)
+  // {
+  //   DB::table('tb_purchase_requisition_detail')
+  //     ->whereIn('purchase_requisition_detail_id', $ids)
+  //     ->update([
+  //       'supplier_id' => $action,
+  //       'purchase_requisition_detail_status_id' => $purchase_requisition_detail_status_id,
+  //     ]);
+  // }
 }

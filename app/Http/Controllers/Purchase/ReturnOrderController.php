@@ -182,6 +182,21 @@ class ReturnOrderController extends Controller
 
     return view('purchase.return-order.edit', compact('returnorder', 'returnorderdetail', 'mode'));
   }
+  public function pdf($id)
+  {
+    $table_return_order = ReturnOrder::join('tb_supplier', 'return_orders.supplier_id', '=', 'tb_supplier.supplier_id')
+      ->where('return_orders.id', '=', $id)
+      ->get();
+    $table_return_order_details = ReturnOrderDetail::join('tb_product', 'return_order_details.product_id', '=', 'tb_product.product_id')
+      ->get();
+    $data = [
+      'table_return_order' => $table_return_order,
+      'table_return_order_details' => ReturnOrderDetail::$$table_return_order_details,
+      'table_company' => Company::select_all(),
+    ];
+    $pdf = PDF::loadView('purchase/return-order/show', $data);
+    return $pdf->stream('test.pdf');
+  }
 
   /**
    * Show the form for editing the specified resource.
@@ -282,20 +297,5 @@ class ReturnOrderController extends Controller
     ReturnOrder::destroy($id);
 
     return redirect('purchase/return-order')->with('flash_message', 'ReturnOrder deleted!');
-  }
-  public function pdf($id)
-  {
-    $table_return_order = ReturnOrder::join('tb_supplier', 'return_orders.supplier_id', '=', 'tb_supplier.supplier_id')
-      ->where('return_orders.id', '=', $id)
-      ->get();
-    $table_return_order_details = ReturnOrderDetail::join('tb_product', 'return_order_details.product_id', '=', 'tb_product.product_id')
-      ->get();
-    $data = [
-      'table_return_order' => $table_return_order,
-      'table_return_order_details' => ReturnOrderDetail::$$table_return_order_details,
-      'table_company' => Company::select_all(),
-    ];
-    $pdf = PDF::loadView('purchase/return-order/show', $data);
-    return $pdf->stream('test.pdf');
   }
 }

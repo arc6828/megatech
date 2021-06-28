@@ -63,7 +63,7 @@ class ReceiveTemporaryController extends Controller
       'table_receive_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'receive_temporary')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'table_receive_temporary_detail' => [],
@@ -147,7 +147,6 @@ class ReceiveTemporaryController extends Controller
       ->count();
     $run_number = Numberun::where('id', '10')->value('number_en');
     $count =  $number + 1;
-    //$year = (date("Y") + 543) % 100;
     $year = date("y");
     $month = date("m");
     $number = sprintf('%05d', $count);
@@ -171,20 +170,18 @@ class ReceiveTemporaryController extends Controller
     $table_receive_temporary_detail = ReceiveTemporaryDetailModel::join('tb_product', 'tb_receive_temporary_detail.product_id', '=', 'tb_product.product_id')
       ->where('receive_temporary_id', '=', $id)
       ->get();
+
     $data = [
-      //QUOTATION
       'table_receive_temporary' => $table_receive_temporary,
       'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
       'table_receive_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
-      //'table_purchase_user' => UserModel::select_by_role('purchase'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'receive_temporary')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'receive_temporary_id' => $id,
-      //QUOTATION Detail
       'table_receive_temporary_detail' => $table_receive_temporary_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'show',
@@ -203,22 +200,19 @@ class ReceiveTemporaryController extends Controller
       ->where('receive_temporary_id', '=', $id)
       ->get();
     $data = [
-      //QUOTATION
+    
       'table_receive_temporary' => $table_receive_temporary,
       'table_supplier' => SupplierModel::all(),
       'table_receive_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
-      //'table_purchase_user' => UserModel::select_by_role('purchase'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'receive_temporary')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'receive_temporary_id' => $id,
-      //QUOTATION Detail
       'table_receive_temporary_detail' => $table_receive_temporary_detail,
       'table_product' => ProductModel::all(),
     ];
-    //return view('purchase/receive_temporary/edit',$data);
 
     $pdf = PDF::loadView('purchase/receive_temporary/show', $data);
     return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
@@ -272,19 +266,17 @@ class ReceiveTemporaryController extends Controller
       ->where('receive_temporary_id', '=', $id)
       ->get();
     $data = [
-      //QUOTATION
+
       'table_receive_temporary' => $table_receive_temporary,
       'receive_temporary' => ReceiveTemporaryModel::findOrFail($id),
       'table_supplier' => SupplierModel::all(),
       'table_receive_type' => DeliveryTypeModel::all(),
       'table_department' => DepartmentModel::all(),
       'table_tax_type' => TaxTypeModel::all(),
-      'table_purchase_status' => PurchaseStatusModel::select_by_category('receive_temporary'),
-      //'table_purchase_user' => UserModel::select_by_role('purchase'),
+      'table_purchase_status' => PurchaseStatusModel::where('category', 'receive_temporary')->get(),
       'table_purchase_user' => UserModel::all(),
       'table_zone' => ZoneModel::all(),
       'receive_temporary_id' => $id,
-      //QUOTATION Detail
       'table_receive_temporary_detail' => $table_receive_temporary_detail,
       'table_product' => ProductModel::all(),
       'mode' => 'edit',
