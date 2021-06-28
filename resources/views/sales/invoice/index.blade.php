@@ -55,6 +55,7 @@
                                             <span
                                                 class="badge badge-pill badge-danger">{{ $row->sales_status->sales_status_name }}</span>
                                         @break
+                                        
                                         @case(15)
                                             <span
                                                 class="badge badge-pill badge-success">{{ $row->sales_status->sales_status_name }}</span>

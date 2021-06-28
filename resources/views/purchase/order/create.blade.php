@@ -13,7 +13,7 @@
 
 @section('content')
 
-<form class="" action="{{ url('/') }}/purchase/order" method="POST">
+<form class="" action="{{ url('/') }}/purchase/order" method="POST" onsubmit="return confirm('คุณต้องการสร้าง ใบสั่งซื้อ ?')">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('purchase/order/form' , ["method"=>"create"])

@@ -43,7 +43,8 @@
                     </ul>
                 @endif
 
-                <form method="POST" action="{{ url('/purchase/return-order') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                <form method="POST" action="{{ url('/purchase/return-order') }}" accept-charset="UTF-8" class="form-horizontal" 
+                enctype="multipart/form-data" onsubmit="return confirm('คุณต้องการสร้าง ใบส่งคืนสินค้า ?')">
                     {{ csrf_field() }}
 
                     @include ('purchase.return-order.form', ['formMode' => 'create'])

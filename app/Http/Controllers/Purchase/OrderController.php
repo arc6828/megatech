@@ -119,20 +119,20 @@ class OrderController extends Controller
 
     foreach ($order_detail as $item) {
       $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $order->purchase_order_code,
-        "type" => "purchase_order",
-        "amount" => $item['amount'],
-        "amount_in_stock" => ($product->amount_in_stock),
-        "pending_in" => ($product->pending_in + $item['amount']),
-        "pending_out" => ($product->pending_out),
-        "product_id" => $product->product_id,
-      ]);
+      // $gaurd_stock = GaurdStock::create([
+      //   "code" => $order->purchase_order_code,
+      //   "type" => "purchase_order",
+      //   "amount" => $item['amount'],
+      //   "amount_in_stock" => ($product->amount_in_stock),
+      //   "pending_in" => ($product->pending_in + $item['amount']),
+      //   "pending_out" => ($product->pending_out),
+      //   "product_id" => $product->product_id,
+      // ]);
 
       //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
+      // $product->amount_in_stock = $product->amount_in_stock;
+      $product->pending_in = ($product->pending_in + $item['amount']);
+      // $product->pending_out = ($product->pending_out);
       $product->save();
     }
 

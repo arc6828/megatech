@@ -127,7 +127,7 @@ class ReceiveController extends Controller
       $gaurd_stock = GaurdStock::create([
         "code" => $receive->purchase_receive_code,
         "type" => "purchase_receive",
-        "amount" => $item['amount'],
+        "amount" => -1*$item['amount'],
         "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
         "pending_in" => ($product->pending_in - $item['amount']),
         "pending_out" => ($product->pending_out),
@@ -212,7 +212,7 @@ class ReceiveController extends Controller
       $product->save();
     }
 
-    return redirect("purchase/receive/{$id}/edit");
+    return redirect("purchase/receive/{$id}");
   }
 
   public function pdf($id)

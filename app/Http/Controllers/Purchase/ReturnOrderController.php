@@ -62,6 +62,7 @@ class ReturnOrderController extends Controller
     $requestData = $request->all();
     $requestData["code"] = $this->getNewCode();
     $requestData["revision"] = 0;
+    $requestData["purchase_status_id"] = 5;
 
     $products = $request->input('product_ids');
     $amounts = $request->input('amounts');
@@ -80,26 +81,6 @@ class ReturnOrderController extends Controller
           "return_order_id" => $returnorder->id,
         ]);
       }
-    }
-    $return_details = $returnorder->return_order_details()->get();
-
-    foreach ($return_details as $item) {
-      $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $returnorder->code,
-        "type" => "purchase_return_order",
-        "amount" => $item['amount'],
-        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-        "pending_in" => $product->pending_in,
-        "pending_out" => ($product->pending_out),
-        "product_id" => $product->product_id,
-      ]);
-
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
-      $product->save();
     }
 
     return redirect('purchase/return-order/' . $returnorder->id)->with('flash_message', 'ReturnOrder added!');
@@ -198,6 +179,36 @@ class ReturnOrderController extends Controller
     return $pdf->stream('test.pdf');
   }
 
+  public function approve($id)
+  {
+    $returnorder = ReturnOrder::findOrFail($id);
+    $input = [
+      'purchase_status_id' => 14,
+    ];
+    $returnorder->update($input);
+    $return_details = $returnorder->return_order_details()->get();
+
+    foreach ($return_details as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $returnorder->code,
+        "type" => "purchase_return_order",
+        "amount" => -1*$item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+        "pending_in" => $product->pending_in,
+        "pending_out" => ($product->pending_out),
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
+    }
+    return redirect("purchase/return-order/{$id}")->with('flash_message', 'popup');
+  }
+
   /**
    * Show the form for editing the specified resource.
    *
@@ -230,7 +241,6 @@ class ReturnOrderController extends Controller
 
     $products = $request->input('product_ids');
 
-
     if (is_array($products)) {
       for ($i = 0; $i < count($products); $i++) {
 
@@ -242,29 +252,7 @@ class ReturnOrderController extends Controller
         $return_details->update($new_return_details);
       }
     }
-    //LOAD OLD DATA
 
-    //ROLLBACK Gaurd stock
-    $return_details = $returnorder->return_order_details()->get();
-
-    foreach ($return_details as $item) {
-      $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $returnorder->code,
-        "type" => "purchase_return_order_cancel",
-        "amount" => $item['amount'],
-        "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
-        "pending_in" => $product->pending_in,
-        "pending_out" => ($product->pending_out),
-        "product_id" => $product->product_id,
-      ]);
-
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
-      $product->save();
-    }
     $returnorder = ReturnOrder::findOrFail($id);
     $returnorder->update($requestData);
 

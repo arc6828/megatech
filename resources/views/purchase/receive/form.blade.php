@@ -190,7 +190,10 @@
                 @if (isset($purchase_receive))
                     @switch($purchase_receive->purchase_status_id)
                         @case(-1)
-                            <span class="badge badge-pill badge-secondary">Void</span>
+                            <span class="badge badge-pill badge-secondary">{{$purchase_receive->purchase_status->purchase_status_name}}</span>
+                        @break
+                        @case(4)
+                            <span class="badge badge-pill badge-success">{{$purchase_receive->purchase_status->purchase_status_name}}</span>
                         @break
                         @default
                             <span class="badge badge-pill badge-success">Yes</span>

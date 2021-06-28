@@ -64,6 +64,8 @@ class ReturnInvoiceController extends Controller
     $requestData = $request->all();
     $requestData["code"] = $this->getNewCode(); //Gen new code
     $requestData["revision"] = 0;
+    $requestData["sales_status_id"] = 6;
+
 
     $products = $request->input('product_ids');
     $amounts = $request->input('amounts');
@@ -83,27 +85,7 @@ class ReturnInvoiceController extends Controller
         ]);
       }
     }
-    $return_details = $returninvoice->return_invoice_details()->get(); //ดึงข้อมูลจาก invoice_detail
-
-    foreach ($return_details as $item) {
-      $product = ProductModel::findOrFail($item->product_id);
-      $gaurd_stock = GaurdStock::create([ //Create gaurd_stock
-        "code" => $returninvoice->code,
-        "type" => "sales_return_invoice",
-        "amount" => $item->amount,
-        "amount_in_stock" => ($product->amount_in_stock + $item->amount),
-        "pending_in" => $product->pending_in,
-        "pending_out" => ($product->pending_out),
-        "product_id" => $product->product_id,
-      ]);
-
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
-      $product->save();
-    }
-
+   
     return redirect('sales/return-invoice/' . $returninvoice->id)->with('flash_message', 'ReturnInvoice added!');
   }
 
@@ -125,7 +107,7 @@ class ReturnInvoiceController extends Controller
   }
   public function cancel($id)
   {
-    //
+    
     $returninvoice = ReturnInvoice::findOrFail($id);
     //VOID
     $returninvoice->sales_status_id = -1; //-1 MEANS Void
@@ -151,7 +133,7 @@ class ReturnInvoiceController extends Controller
       $gaurd_stock = GaurdStock::create([
         "code" => $returninvoice->code,
         "type" => "sales_return_invoice_cancel",
-        "amount" => $item['amount'],
+        "amount" => -1*$item['amount'],
         "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
         "pending_in" => ($product->pending_in + $item['amount']),
         "pending_out" => ($product->pending_out),
@@ -196,12 +178,6 @@ class ReturnInvoiceController extends Controller
   {
     $returninvoice = ReturnInvoice::findOrFail($id);
 
-    // $keyword = $request->get('search');
-    // $returninvoice = InvoiceModel::firstOrNew(['invoice_code'=> $keyword]);
-    // $returninvoice->total_before_vat = 0;
-    // $returninvoice->total_after_vat = 0;
-    // $returninvoice->vat = 0;
-    //$returninvoice->sales_status_id = 0;
     $returninvoicedetail = $returninvoice->return_invoice_details()->get();
     $mode = "edit";
 
@@ -258,7 +234,6 @@ class ReturnInvoiceController extends Controller
 
     $products = $request->input('product_ids');
 
-
     if (is_array($products)) {
       for ($i = 0; $i < count($products); $i++) { // insert invoice_detail
         $new_invoice_detail = [
@@ -269,33 +244,40 @@ class ReturnInvoiceController extends Controller
       }
     }
 
-    //ROLLBACK Gaurd stock
-    $details = $returninvoice->return_invoice_details()->get(); //ดึงข้อมูลจาก invoice_details
+    $returninvoice = ReturnInvoice::findOrFail($id);
+    $returninvoice->update($requestData);
 
-    foreach ($details as $item) {
+    return redirect("sales/return-invoice/{$id}")->with('flash_message', 'ReturnInvoice updated!');
+    
+  }
+  public function approve($id)
+  {
+    $returninvoice = ReturnInvoice::findOrFail($id);
+    $input = [
+      'sales_status_id' => 15,
+    ];
+    $returninvoice->update($input);
+    $return_details = $returninvoice->return_invoice_details()->get(); //ดึงข้อมูลจาก invoice_detail
+
+    foreach ($return_details as $item) {
       $product = ProductModel::findOrFail($item->product_id);
-      $gaurd_stock = GaurdStock::create([
+      $gaurd_stock = GaurdStock::create([ //Create gaurd_stock
         "code" => $returninvoice->code,
-        "type" => "sales_return_invoice_cancel",
+        "type" => "sales_return_invoice",
         "amount" => $item->amount,
-        "amount_in_stock" => ($product->amount_in_stock - $item->amount),
+        "amount_in_stock" => ($product->amount_in_stock + $item->amount),
         "pending_in" => $product->pending_in,
         "pending_out" => ($product->pending_out),
         "product_id" => $product->product_id,
       ]);
 
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out Update guard_stock
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
       $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
       $product->pending_in = $gaurd_stock['pending_in'];
       $product->pending_out = $gaurd_stock['pending_out'];
       $product->save();
     }
-
-    $returninvoice = ReturnInvoice::findOrFail($id);
-    $returninvoice->update($requestData);
-
-
-    return redirect("sales/return-invoice/{$id}")->with('flash_message', 'ReturnInvoice updated!');
+    return redirect("sales/return-invoice/{$id}")->with('flash_message', 'popup');
   }
   public function revision(Request $request, $id)
   {

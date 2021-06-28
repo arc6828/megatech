@@ -147,7 +147,7 @@ class InvoiceController extends Controller
       $gaurd_stock = GaurdStock::create([
         "code" => $invoice->invoice_code,
         "type" => "sales_invoice",
-        "amount" => $item['amount'],
+        "amount" => -1*$item['amount'],
         "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
         "pending_in" => $product->pending_in,
         "pending_out" => ($product->pending_out - $item['amount']),

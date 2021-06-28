@@ -27,6 +27,12 @@
                             @endif
                         @elseif($mode=="edit")
                             @if (isset($returnorder->purchase_status_id))
+                                @if ($returnorder->purchase_status_id == 5)
+                                    <a class="px-2 btn btn-sm btn-success" href="javascript:void(0)"
+                                        onclick="approved()">
+                                        <i class="fas fa-check"></i> อนุมัติ
+                                    </a>
+                                @endif
                                 @if ($returnorder->purchase_status_id > 0)
                                     <a href="javascript:void(0)"
                                         onclick="document.querySelector('#form-cancel-submit').click(); "
@@ -89,11 +95,17 @@
                 <div class="col-lg-3">
                     @if (isset($returnorder->purchase_status_id))
                         @switch($returnorder->purchase_status_id)
-                            @case(" -1")
-                                <span class="badge badge-pill badge-secondary">Void</span>
+                            @case(-1)
+                                <span class="badge badge-pill badge-secondary">{{$returnorder->purchase_status->purchase_status_name}}</span>
+                            @break
+                             @case(5)
+                                <span class="badge badge-pill badge-primary">{{$returnorder->purchase_status->purchase_status_name}}</span>
+                            @break
+                               @case(14)
+                                <span class="badge badge-pill badge-success">{{$returnorder->purchase_status->purchase_status_name}}</span>
                             @break
                             @default
-                                <span class="badge badge-pill badge-success">Yes</span>
+                                <span class="badge badge-pill badge-success d-none">Yes</span>
                             @break
                         @endswitch
 
@@ -164,8 +176,8 @@
     </div>
 
     <!-- <div class="form-group text-center">
-                <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
-            </div> -->
+                        <input class="btn btn-primary" type="submit" value="{{ $formMode === 'edit' ? 'Update' : 'Create' }}">
+                    </div> -->
 
 
     @if (isset($mode))
@@ -249,8 +261,18 @@
             //     //console.log(element);
             //     //element.value = parseFloat(element.value).toFixed(2)
             // });
+        }
 
+        function approved() {
 
+            let elements = document.querySelector("#form-approve").children;
+
+            console.log("want to approved", elements);
+            for (var item of elements) {
+                item.removeAttribute("disabled");
+            };
+
+            document.querySelector("#form-approve-submit").click();
 
         }
     </script>
