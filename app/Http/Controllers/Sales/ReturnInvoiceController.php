@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Functions;
 use App\GaurdStock;
+
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Numberun;
@@ -11,9 +14,8 @@ use App\ProductModel;
 use App\Sales\InvoiceModel;
 use App\Sales\ReturnInvoice;
 use App\Sales\ReturnInvoiceDetail;
-use App\Sales\unused\InvoiceDetailModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+// use App\Sales\unused\InvoiceDetailModel;
+
 use PDF;
 
 class ReturnInvoiceController extends Controller

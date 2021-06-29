@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\Functions;
 use App\GaurdStock;
-use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Numberun;
 use App\ProductModel;
@@ -19,9 +22,7 @@ use App\Sales\OrderModel;
 use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
 use PDF;
 
 class InvoiceController extends Controller

@@ -125,28 +125,6 @@ class DeliveryTemporaryController extends Controller
         ]);
       }
     }
-    //GAURD STOCK
-    $list = $delivery_temporary->delivery_temporary_details()->get();
-
-    foreach ($list as $item) {
-      $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $delivery_temporary->delivery_temporary_code,
-        "type" => "sales_dt_create",
-        "amount" => -1*$item['amount'],
-        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-        "pending_in" => $product->pending_in,
-        "pending_out" => $product->pending_out,
-        "product_id" => $product->product_id,
-      ]);
-
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
-      $product->save();
-    }
-
 
     return redirect("sales/delivery_temporary/{$id}");
   }
@@ -259,6 +237,28 @@ class DeliveryTemporaryController extends Controller
     ];
 
     $delivery_temporary->update($input);
+
+    //GAURD STOCK
+    $list = $delivery_temporary->delivery_temporary_details()->get();
+
+    foreach ($list as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $delivery_temporary->delivery_temporary_code,
+        "type" => "sales_dt_create",
+        "amount" => -1*$item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+        "pending_in" => $product->pending_in,
+        "pending_out" => $product->pending_out,
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
+    }
 
     //3.REDIRECT
     return redirect("sales/delivery_temporary/{$id}")->with('flash_message', 'popup');

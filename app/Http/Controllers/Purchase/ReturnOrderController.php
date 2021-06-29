@@ -7,12 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Numberun;
 use App\ProductModel;
-use App\Purchase\OrderDetailModel;
-use App\Purchase\ReceiveDetailModel;
+// use App\Purchase\OrderDetailModel;
+// use App\Purchase\ReceiveDetailModel;
 use App\Purchase\ReceiveModel;
 use App\Purchase\ReturnOrder;
 use App\Purchase\ReturnOrderDetail;
-use App\SupplierModel;
+// use App\SupplierModel;
 use Illuminate\Http\Request;
 use PDF;
 

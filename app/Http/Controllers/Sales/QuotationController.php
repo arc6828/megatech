@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\Functions;
-use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Numberun;
 use App\ProductModel;
@@ -16,8 +18,6 @@ use App\Sales\QuotationModel;
 use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use PDF;
 
 class QuotationController extends Controller

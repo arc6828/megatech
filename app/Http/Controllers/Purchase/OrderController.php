@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Purchase\OrderModel;
 use App\Purchase\OrderDetailModel;
-use App\Purchase\OrderDetailStatusModel;
+// use App\Purchase\OrderDetailStatusModel;
 use App\Purchase\RequisitionDetailModel;
 
 use App\SupplierModel;
@@ -19,11 +19,8 @@ use App\PurchaseStatusModel;
 use App\UserModel;
 use App\ZoneModel;
 use App\ProductModel;
-use App\Purchase\ReceiveModel;
-
-
-
-use App\GaurdStock;
+// use App\Purchase\ReceiveModel;
+// use App\GaurdStock;
 use App\Models\Company;
 use App\Models\Numberun;
 use PDF;
@@ -119,20 +116,7 @@ class OrderController extends Controller
 
     foreach ($order_detail as $item) {
       $product = ProductModel::findOrFail($item['product_id']);
-      // $gaurd_stock = GaurdStock::create([
-      //   "code" => $order->purchase_order_code,
-      //   "type" => "purchase_order",
-      //   "amount" => $item['amount'],
-      //   "amount_in_stock" => ($product->amount_in_stock),
-      //   "pending_in" => ($product->pending_in + $item['amount']),
-      //   "pending_out" => ($product->pending_out),
-      //   "product_id" => $product->product_id,
-      // ]);
-
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      // $product->amount_in_stock = $product->amount_in_stock;
       $product->pending_in = ($product->pending_in + $item['amount']);
-      // $product->pending_out = ($product->pending_out);
       $product->save();
     }
 
@@ -145,7 +129,6 @@ class OrderController extends Controller
       ->count();
     $run_number = Numberun::where('id', '7')->value('number_en');
     $count =  $number + 1;
-    //$year = (date("Y") + 543) % 100;
     $year = date("y");
     $month = date("m");
     $number = sprintf('%05d', $count);

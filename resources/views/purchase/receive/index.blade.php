@@ -49,6 +49,10 @@
                                             <span
                                                 class="badge badge-pill badge-secondary">{{ $row->purchase_status->purchase_status_name }}</span>
                                         @break
+                                        @case(3)
+                                            <span
+                                                class="badge badge-pill badge-warning">{{ $row->purchase_status->purchase_status_name }}</span>
+                                        @break
                                         @case(4)
                                             <span
                                                 class="badge badge-pill badge-success">{{ $row->purchase_status->purchase_status_name }}</span>

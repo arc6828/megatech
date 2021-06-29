@@ -1,20 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\Functions;
-use App\GaurdStock;
-use App\Http\Controllers\Controller;
+// use App\GaurdStock;
 use App\Models\Company;
 use App\Models\Numberun;
 use App\ProductModel;
-use App\Purchase\RequisitionDetailModel;
-use App\Purchase\RequisitionModel;
+// use App\Purchase\RequisitionDetailModel;
+// use App\Purchase\RequisitionModel;
 use App\SalesStatusModel;
-use App\Sales\InvoiceModel;
+// use App\Sales\InvoiceModel;
 // use App\Sales\OrderDetail2Model;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderModel;
@@ -23,11 +26,9 @@ use App\Sales\QuotationModel;
 use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
 use PDF;
-use Storage;
+// use Storage;
 
 class OrderController extends Controller
 {

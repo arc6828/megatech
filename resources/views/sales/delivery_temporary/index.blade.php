@@ -51,7 +51,7 @@
 									<span class="badge badge-pill badge-warning">{{ $row->sales_status_name }}</span>
 									@break
 								@case(11)
-									<span class="badge badge-pill badge-success">{{ $row->sales_status_name }}</span>
+									<span class="badge badge-pill badge-danger">{{ $row->sales_status_name }}</span>
 									@break								
 							@endswitch
 							

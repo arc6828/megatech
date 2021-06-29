@@ -71,7 +71,7 @@
                                             @switch($item->type)
                                                 @case("sales_invoice")
                                                 @case("sales_invoice_cancel")
-                                                     {{ $item->code }}      
+                                                    {{ $item->code }}      
                                                     @if($item->type != "sales_invoice")
                                                         <span class="text-danger"> (VOID)</span>
                                                     @endif   
@@ -79,78 +79,55 @@
                                                         $positive = $item->type == "sales_invoice" ? false : true;
                                                     @endphp                                             
                                                     @break
-                                                {{-- @case("sales_dt_create")
-                                                    @php 
-                                                        $positive = false;
-                                                    @endphp  
-                                                    {{ $item->code }}         
-                                                    @break
+                                                @case("sales_return_invoice")                                                    
+                                                @case("sales_return_invoice_cancel")                                                    
+                                                  {{ $item->code }}      
+                                                  @if($item->type != "sales_return_invoice")
+                                                      <span class="text-danger"> (ยกเลิกใบรับคืนสินค้า)</span>
+                                                  @endif   
+                                                  @php 
+                                                      $positive = $item->type == "sales_return_invoice" ? true : false;
+                                                  @endphp                                             
+                                                  @break
+                                                @case("sales_dt_create")
                                                 @case("sales_dt_cancel")
-                                                    @php 
-                                                        $positive = true;
-                                                    @endphp  
-                                                    {{ $item->code }}         
-                                                    @break
-                                                @case("sales_dt_void")
-                                                    @php 
-                                                        $positive = true;
-                                                    @endphp  
-                                                    {{ isset($item->delivery_temporary)? $item->delivery_temporary->delivery_temporary_code : $item->code }}
-                                                    @break --}}
-                                                @case("purchase_receive")                                                                                           
-                                                @case("purchase_receive_cancel")   
                                                      {{ $item->code }}      
-                                                    @if($item->type != "purchase_receive")
-                                                        <span class="text-danger"> (VOID)</span>
+                                                    @if($item->type != "sales_dt_create")
+                                                        <span class="text-danger"> (ยกเลิกใบส่งของชั่วคราว)</span>
                                                     @endif   
                                                     @php 
-                                                        $positive = $item->type == "purchase_receive" ? false : true;
+                                                        $positive = $item->type == "sales_dt_create" ? false : true;
                                                     @endphp                                             
-                                                    @break                                                                                      
-                                                    {{-- @php 
-                                                        $positive = $item->type == "purchase_receive" ? true : false;
-                                                    @endphp
-                                                     {{ $item->code }}      
+                                                    @break
+                                                @case("purchase_receive")                                                                                           
+                                                @case("purchase_receive_cancel")   
+                                                    {{ $item->code }}      
                                                     @if($item->type != "purchase_receive")
-                                                        <span class="text-danger"> (VOID)</span>
-                                                    @endif 
-                                                    @break
-                                                     --}}
-                                                @case("sales_return_invoice")                                                    
+                                                        <span class="text-danger"> (ยกเลิกใบรับ-ซื้อสินค้า)</span>
+                                                    @endif   
                                                     @php 
-                                                        $positive = true;
-                                                    @endphp  
-                                                    {{ $item->code }}         
-                                                    @break
-                                                @case("sales_return_invoice_cancel")                                                    
+                                                        $positive = $item->type == "purchase_receive" ? true : false;
+                                                    @endphp                                             
+                                                    @break   
+                                                @case("purchase_return_order")                                                                                           
+                                                @case("purchase_return_order_cancel")   
+                                                    {{ $item->code }}      
+                                                    @if($item->type != "purchase_return_order")
+                                                        <span class="text-danger"> (ยกเลิกใบส่งคืนสินค้า)</span>
+                                                    @endif   
                                                     @php 
-                                                        $positive = false;
-                                                    @endphp  
-                                                    {{ $item->code }}         
-                                                    @break
-                                                @case("purchase_return_order")                                                    
+                                                        $positive = $item->type == "purchase_return_order" ? false : true;
+                                                    @endphp                                             
+                                                    @break                                                                       
+                                                @case("purchase_rt_create")
+                                                @case("purchase_rt_cancel")
+                                                     {{ $item->code }}      
+                                                    @if($item->type != "purchase_rt_create")
+                                                        <span class="text-danger"> (ยกเลิกใบส่งของชั่วคราว)</span>
+                                                    @endif   
                                                     @php 
-                                                        $positive = false;
-                                                    @endphp  
-                                                    {{ $item->code }}         
-                                                    @break
-                                                @case("purchase_return_order_cancel")                                                    
-                                                    @php 
-                                                        $positive = false;
-                                                    @endphp  
-                                                    {{ $item->code }}         
-                                                    @break
-                                                 @case("purchase_dt_create")
-                                                    @php 
-                                                        $positive = true;
-                                                    @endphp  
-                                                    {{ $item->code }}         
-                                                    @break
-                                                @case("purchase_dt_cancel")
-                                                    @php 
-                                                        $positive = false;
-                                                    @endphp  
-                                                    {{ isset($item->receive_temporary)? $item->receive_temporary->purchase_receive_code : $item->code }}
+                                                        $positive = $item->type == "purchase_rt_create" ? false : true;
+                                                    @endphp                                             
                                                     @break
                                                 @case("issue_stock")
                                                 @case("issue_stock_cancel")                                                        

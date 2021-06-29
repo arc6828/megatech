@@ -192,6 +192,9 @@
                         @case(-1)
                             <span class="badge badge-pill badge-secondary">{{$purchase_receive->purchase_status->purchase_status_name}}</span>
                         @break
+                        @case(3)
+                            <span class="badge badge-pill badge-warning">{{$purchase_receive->purchase_status->purchase_status_name}}</span>
+                        @break
                         @case(4)
                             <span class="badge badge-pill badge-success">{{$purchase_receive->purchase_status->purchase_status_name}}</span>
                         @break

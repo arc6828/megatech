@@ -221,7 +221,7 @@
                             <span class="badge badge-pill badge-warning">{{ $delivery_temporary->sales_status->sales_status_name }}</span>
                         @break
                         @case(11)
-                            <span class="badge badge-pill badge-success">{{ $delivery_temporary->sales_status->sales_status_name }}</span>
+                            <span class="badge badge-pill badge-danger">{{ $delivery_temporary->sales_status->sales_status_name }}</span>
                         @break
                     @endswitch
                 @endif
