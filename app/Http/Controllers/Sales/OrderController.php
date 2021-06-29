@@ -1,20 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\Functions;
-use App\GaurdStock;
-use App\Http\Controllers\Controller;
+// use App\GaurdStock;
 use App\Models\Company;
 use App\Models\Numberun;
 use App\ProductModel;
-use App\Purchase\RequisitionDetailModel;
-use App\Purchase\RequisitionModel;
+// use App\Purchase\RequisitionDetailModel;
+// use App\Purchase\RequisitionModel;
 use App\SalesStatusModel;
-use App\Sales\InvoiceModel;
+// use App\Sales\InvoiceModel;
 // use App\Sales\OrderDetail2Model;
 use App\Sales\OrderDetailModel;
 use App\Sales\OrderModel;
@@ -23,11 +26,9 @@ use App\Sales\QuotationModel;
 use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
 use PDF;
-use Storage;
+// use Storage;
 
 class OrderController extends Controller
 {
@@ -457,18 +458,18 @@ class OrderController extends Controller
       OrderDetailModel::where('order_detail_id', $item->order_detail_id)->update($input_detail);
 
       $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $order->order_code,
-        "type" => "sales_order",
-        "amount" => $item['amount'],
-        "amount_in_stock" => $product->amount_in_stock,
-        "pending_in" => $product->pending_in,
-        "pending_out" => ($product->pending_out + $item['amount']),
-        "product_id" => $product->product_id,
-      ]);
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
+      // $gaurd_stock = GaurdStock::create([
+      //   "code" => $order->order_code,
+      //   "type" => "sales_order",
+      //   "amount" => $item['amount'],
+      //   "amount_in_stock" => $product->amount_in_stock,
+      //   "pending_in" => $product->pending_in,
+      //   "pending_out" => ($product->pending_out + $item['amount']),
+      //   "product_id" => $product->product_id,
+      // ]);
+      // $product->amount_in_stock = $product->amount_in_stock;
+      // $product->pending_in = $product->pending_in;
+      $product->pending_out =  ($product->pending_out + $item['amount']);
       $product->save();
 
       $pickking_detail = PickingDetail::create([

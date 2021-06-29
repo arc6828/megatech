@@ -37,6 +37,13 @@
                                 <button type="submit" class="btn btn-success " id="form-cancel-submit"
                                     style="width:150px;">Save</button>
                             </form>
+                            <form class="d-none" action="{{ url('/') }}/purchase/return-order/{{ $returnorder->id }}/approve"
+                                id="form-approve" method="POST" onsubmit="return confirm('ต้องการอนุมัติ ใบส่งสินค้าคืน ?')">
+                                {{ csrf_field() }}
+                                {{ method_field('PUT') }}
+                                <button type="submit" class="btn btn-success " id="form-approve-submit"
+                                    style="width:150px;">Save</button>
+                            </form>
                             <form method="POST" action="{{ url('/purchase/return-order/' . $returnorder->id) }}"
                                 accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
                                 {{ method_field('PATCH') }}

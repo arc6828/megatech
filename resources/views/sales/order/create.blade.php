@@ -26,7 +26,7 @@
 
 
     <form class="main-form" action="{{ url('/') }}/sales/order" method="POST"
-        onsubmit="return confirm('Do you confirm to create?')" enctype="multipart/form-data">
+        onsubmit="return confirm('คุณต้องการสร้างใบจอง ?')" enctype="multipart/form-data">
         {{ csrf_field() }}
         {{ method_field('POST') }}
         @include('sales/order/form')

@@ -13,7 +13,6 @@
 		<script>
 			document.addEventListener("DOMContentLoaded", function(event) {
 			 	var detail = JSON.parse('@json($table_receive_temporary_detail)');
-				//console.log("DETAIL : ",detail);
 				var dataSet = [];
 				detail.forEach(function(element,index) {
 					//console.log(element,index);
@@ -25,13 +24,11 @@
 
 				$('#table-receive_temporary-detail').DataTable({
 					"ordering": false,
-					//"pageLength": 50,
 					paging : false,
 					searching : false,
 					"data": dataSet,
 					"info": false,
 					"columns": [
-							//{ title: "#" },
 							{ title: "รหัสสินค้า" },
 							{ title: "ชื่อสินค้า" },
 							{ title: "จำนวน" },

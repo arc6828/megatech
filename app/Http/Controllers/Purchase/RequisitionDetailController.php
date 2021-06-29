@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Purchase\OrderDetailModel;
 use App\Purchase\RequisitionDetailModel;
 use App\Purchase\RequisitionDetailStatusModel;
-use App\Purchase\RequisitionModel;
+// use App\Purchase\RequisitionModel;
 use App\SupplierModel;
 
 class RequisitionDetailController extends Controller

@@ -18,7 +18,6 @@
 
             <div class="col-md-12">
                 <div class="card mb-4">
-                    <div class="card-header d-none">Create New ReturnInvoice</div>
                     <div class="card-body">
                         
 
@@ -44,7 +43,8 @@
                     </div>
                 </div>
 
-                <form method="POST" action="{{ url('/sales/return-invoice') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                <form method="POST" action="{{ url('/sales/return-invoice') }}" accept-charset="UTF-8" class="form-horizontal"
+                 enctype="multipart/form-data" onsubmit="return confirm('ต้องการสร้างใบรับคืนสินค้า ?')">
                     {{ csrf_field() }}
 
                     @include ('sales.return-invoice.form', ['formMode' => 'create'])

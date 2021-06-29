@@ -22,12 +22,7 @@
 
                     <div class="col-md-12">
                         <div class="">
-                            <!-- <div class="card-header d-none">Edit ReturnInvoice #{{ $returninvoice->id }}</div> -->
                             <div class="">
-                                <!-- <a href="{{ url('/sales/return-invoice') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                                                                                    <br />
-                                                                                    <br /> -->
-
                                 @if ($errors->any())
                                     <ul class="alert alert-danger">
                                         @foreach ($errors->all() as $error)
@@ -43,13 +38,18 @@
                                     <button type="submit" class="btn btn-success " id="form-cancel-submit"
                                         style="width:150px;">Save</button>
                                 </form>
+                                <form class="d-none" action="{{ url('/') }}/sales/return-invoice/{{ $returninvoice->id }}/approve"
+                                    id="form-approve" method="POST" onsubmit="return confirm('ต้องการอนุมัติ ใบรับสินค้าคืน ?')">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
+                                    <button type="submit" class="btn btn-success " id="form-approve-submit"
+                                        style="width:150px;">Save</button>
+                                </form>
                                 <form method="POST" action="{{ url('/sales/return-invoice/' . $returninvoice->id) }}"
-                                    accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+                                    accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" onsubmit="return confirm('Do you confirm to save ?')">
                                     {{ method_field('PATCH') }}
                                     {{ csrf_field() }}
-
                                     @include ('sales.return-invoice.form', ['formMode' => 'edit'])
-
                                 </form>
 
                             </div>

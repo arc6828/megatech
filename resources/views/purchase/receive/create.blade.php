@@ -28,7 +28,7 @@
     </div>
   </div>
 </div>
-<form class="" action="{{ url('/') }}/purchase/receive" id="form" method="POST" enctype="multipart/form-data">
+<form class="" action="{{ url('/') }}/purchase/receive" id="form" method="POST" enctype="multipart/form-data" onsubmit="return confirm('คุณต้องการสร้าง ใบรับ-ซื้อสินค้า ?')">
     {{ csrf_field() }}
     {{ method_field('POST') }}
     @include('purchase/receive/form', ["mode"=>"create"])

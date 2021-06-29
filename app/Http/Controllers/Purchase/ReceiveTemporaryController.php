@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Purchase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use App\Purchase\ReceiveTemporaryModel;
 use App\Purchase\ReceiveTemporaryDetailModel;
-
 use App\SupplierModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
@@ -102,27 +101,6 @@ class ReceiveTemporaryController extends Controller
       }
     }
 
-    $list = $receive_temporary->receive_temporary_details()->get();
-    //GAURD STOCK      
-    foreach ($list as $item) {
-      $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $receive_temporary->receive_temporary_code,
-        "type" => "purchase_dt_create",
-        "amount" => $item['amount'],
-        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-        "pending_in" => $product->pending_in,
-        "pending_out" => $product->pending_out,
-        "product_id" => $product->product_id,
-      ]);
-
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
-      $product->save();
-    }
-
     return redirect("purchase/receive_temporary/{$id}");
   }
   public function approve($id)
@@ -135,6 +113,27 @@ class ReceiveTemporaryController extends Controller
       'purchase_status_id' => 10,
     ];
     $receive_temporary->update($input);
+
+    $list = $receive_temporary->receive_temporary_details()->get();
+    //GAURD STOCK      
+    foreach ($list as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $receive_temporary->receive_temporary_code,
+        "type" => "purchase_rt_create",
+        "amount" => -1*$item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+        "pending_in" => $product->pending_in,
+        "pending_out" => $product->pending_out,
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
+    }
 
     //3.REDIRECT
     return redirect("purchase/receive_temporary/{$id}")->with('flash_message', 'popup');
@@ -232,7 +231,7 @@ class ReceiveTemporaryController extends Controller
       $product = ProductModel::findOrFail($item['product_id']);
       $gaurd_stock = GaurdStock::create([
         "code" => $receive_temporary->receive_temporary_code,
-        "type" => "purchase_dt_cancel",
+        "type" => "purchase_rt_cancel",
         "amount" => $item['amount'],
         "amount_in_stock" => ($product->amount_in_stock + $item['amount']),
         "pending_in" => $product->pending_in,

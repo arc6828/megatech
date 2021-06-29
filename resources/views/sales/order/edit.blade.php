@@ -30,7 +30,7 @@
             @forelse($table_order as $row)
 
                 <form class="d-none" action="{{ url('/') }}/sales/order/{{ $row->order_id }}/approve" id="form-approve"
-                    method="POST" onsubmit="return confirm('ต้องการอนุมัติ Order ?')">
+                    method="POST" onsubmit="return confirm('คุณต้องการอนุมัติ ใบจอง ?')">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <button type="submit" class="btn btn-success " id="form-approve-submit" style="width:150px;">Save</button>

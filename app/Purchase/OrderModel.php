@@ -34,18 +34,11 @@ class OrderModel extends Model
   ];
 
 
-  // public function OrderDetail()
-  // {
-  //   return $this->hasMany('App\Purchase\OrderDetailModel', 'purchase_order_id');
-  // }
   public function order_details()
   {
     return $this->hasMany('App\Purchase\OrderDetailModel', 'purchase_order_id');
   }
-  // public function details()
-  // {
-  //   return $this->hasMany('App\Purchase\OrderDetailModel', 'purchase_order_id');
-  // }
+
   public function receives()
   {
     return $this->hasMany('App\Purchase\ReceiveModel', 'internal_reference_doc', 'purchase_order_code');

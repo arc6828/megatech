@@ -15,16 +15,12 @@ class PurchaseStatusModel extends Model
   {
     return $this->hasMany('App\Purchase\RequisitionModel', 'purchase_status_id');
   }
-
-  // public static function select_all()
-  // {
-  //   return DB::table('tb_purchase_status')->get();
-  // }
-
-  // public static function select_by_category($category)
-  // {
-  //   return DB::table('tb_purchase_status')
-  //     ->where('category', $category)
-  //     ->get();
-  // }
+  public function receive()
+  {
+    return $this->hasMany('App\Purchase\ReceiveModel', 'purchase_status_id');
+  }
+  public function return_order()
+  {
+    return $this->hasMany('App\Purchase\ReturnOrder', 'purchase_status_id');
+  }
 }

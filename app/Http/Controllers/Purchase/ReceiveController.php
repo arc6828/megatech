@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Purchase;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
 
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
 use App\GaurdStock;
-use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Numberun;
 use App\ProductModel;
@@ -18,8 +21,7 @@ use App\SupplierModel;
 use App\TaxTypeModel;
 use App\UserModel;
 use App\ZoneModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use PDF;
 
 class ReceiveController extends Controller
@@ -198,7 +200,7 @@ class ReceiveController extends Controller
       $gaurd_stock = GaurdStock::create([
         "code" => $purchase_receive->purchase_receive_code,
         "type" => "purchase_receive_cancel",
-        "amount" => $item['amount'],
+        "amount" => -1*$item['amount'],
         "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
         "pending_in" => ($product->pending_in + $item['amount']),
         "pending_out" => ($product->pending_out),
@@ -212,7 +214,7 @@ class ReceiveController extends Controller
       $product->save();
     }
 
-    return redirect("purchase/receive/{$id}/edit");
+    return redirect("purchase/receive/{$id}");
   }
 
   public function pdf($id)
@@ -341,7 +343,6 @@ class ReceiveController extends Controller
       $folder = "supplier/iv";
       $requestData['file'] = $request->file('file')->store($folder, 'public');
       $requestData['external_reference_doc'] = $request->input('external_reference_doc');
-      //$requestData['file'] = "sss.jpg";
       $receive->update($requestData);
     }
 

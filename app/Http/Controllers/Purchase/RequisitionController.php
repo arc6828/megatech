@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 use App\Purchase\RequisitionModel;
 use App\Purchase\RequisitionDetailModel;
-use App\Purchase\RequisitionDetailStatusModel;
+// use App\Purchase\RequisitionDetailStatusModel;
 //use App;
 
 use App\CustomerModel;

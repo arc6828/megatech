@@ -48,4 +48,8 @@ class ReturnInvoice extends Model
     public function staff(){
         return $this->belongsTo('App\User','staff_id');
     }
+    public function sales_status()
+    {
+      return $this->belongsTo('App\SalesStatusModel', 'sales_status_id');
+    }
 }
