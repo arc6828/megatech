@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -68,26 +69,20 @@ class ReturnInvoiceController extends Controller
     $requestData["revision"] = 0;
     $requestData["sales_status_id"] = 6;
 
-
-    $products = $request->input('product_ids');
-    $amounts = $request->input('amounts');
-    $discount_prices = $request->input('discount_prices');
-    $totals = $request->input('totals');
-
     $returninvoice = ReturnInvoice::create($requestData); //Create return invoice
 
-    if (is_array($products)) {
-      for ($i = 0; $i < count($products); $i++) {
+    if (is_array($request->input('product_ids'))) {
+      for ($i = 0; $i < count($request->input('product_ids')); $i++) {
         ReturnInvoiceDetail::create([ //Insert invoice detail foreach
-          "product_id" => $products[$i],
-          "amount" => $amounts[$i],
-          "discount_price" => $discount_prices[$i],
-          "total" => $totals[$i],
+          "product_id" => $request->input('product_ids')[$i],
+          "amount" => $request->input('amounts')[$i],
+          "discount_price" =>  $request->input('discount_prices')[$i],
+          "total" => $request->input('totals')[$i],
           "return_invoice_id" => $returninvoice->id,
         ]);
       }
     }
-   
+
     return redirect('sales/return-invoice/' . $returninvoice->id)->with('flash_message', 'ReturnInvoice added!');
   }
 
@@ -109,7 +104,7 @@ class ReturnInvoiceController extends Controller
   }
   public function cancel($id)
   {
-    
+
     $returninvoice = ReturnInvoice::findOrFail($id);
     //VOID
     $returninvoice->sales_status_id = -1; //-1 MEANS Void
@@ -135,7 +130,7 @@ class ReturnInvoiceController extends Controller
       $gaurd_stock = GaurdStock::create([
         "code" => $returninvoice->code,
         "type" => "sales_return_invoice_cancel",
-        "amount" => -1*$item['amount'],
+        "amount" => -1 * $item['amount'],
         "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
         "pending_in" => ($product->pending_in + $item['amount']),
         "pending_out" => ($product->pending_out),
@@ -234,10 +229,8 @@ class ReturnInvoiceController extends Controller
     $requestData = $request->all();
     $returninvoice = ReturnInvoice::findOrFail($id);
 
-    $products = $request->input('product_ids');
-
-    if (is_array($products)) {
-      for ($i = 0; $i < count($products); $i++) { // insert invoice_detail
+    if (is_array($request->input('product_ids'))) {
+      for ($i = 0; $i < count($request->input('product_ids')); $i++) { // insert invoice_detail
         $new_invoice_detail = [
           "amount" => $request->input('amounts')[$i],
         ];
@@ -250,7 +243,6 @@ class ReturnInvoiceController extends Controller
     $returninvoice->update($requestData);
 
     return redirect("sales/return-invoice/{$id}")->with('flash_message', 'ReturnInvoice updated!');
-    
   }
   public function approve($id)
   {

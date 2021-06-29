@@ -225,44 +225,7 @@ class DeliveryTemporaryController extends Controller
   }
 
 
-  public function approve($id)
-  {
 
-    $delivery_temporary = DeliveryTemporaryModel::findOrFail($id);
-
-    $input = [
-      'delivery_temporary_code' => $delivery_temporary->delivery_temporary_code,
-      'datetime' => date('Y-m-d H:i:s'),
-      'sales_status_id' => 10,
-    ];
-
-    $delivery_temporary->update($input);
-
-    //GAURD STOCK
-    $list = $delivery_temporary->delivery_temporary_details()->get();
-
-    foreach ($list as $item) {
-      $product = ProductModel::findOrFail($item['product_id']);
-      $gaurd_stock = GaurdStock::create([
-        "code" => $delivery_temporary->delivery_temporary_code,
-        "type" => "sales_dt_create",
-        "amount" => -1*$item['amount'],
-        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
-        "pending_in" => $product->pending_in,
-        "pending_out" => $product->pending_out,
-        "product_id" => $product->product_id,
-      ]);
-
-      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
-      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
-      $product->pending_in = $gaurd_stock['pending_in'];
-      $product->pending_out = $gaurd_stock['pending_out'];
-      $product->save();
-    }
-
-    //3.REDIRECT
-    return redirect("sales/delivery_temporary/{$id}")->with('flash_message', 'popup');
-  }
   /**
    * Show the form for editing the specified resource.
    *
@@ -328,7 +291,44 @@ class DeliveryTemporaryController extends Controller
     //4.REDIRECT
     return redirect("sales/delivery_temporary/{$id}");
   }
+  public function approve($id)
+  {
 
+    $delivery_temporary = DeliveryTemporaryModel::findOrFail($id);
+
+    $input = [
+      'delivery_temporary_code' => $delivery_temporary->delivery_temporary_code,
+      'datetime' => date('Y-m-d H:i:s'),
+      'sales_status_id' => 10,
+    ];
+
+    $delivery_temporary->update($input);
+
+    //GAURD STOCK
+    $list = $delivery_temporary->delivery_temporary_details()->get();
+
+    foreach ($list as $item) {
+      $product = ProductModel::findOrFail($item['product_id']);
+      $gaurd_stock = GaurdStock::create([
+        "code" => $delivery_temporary->delivery_temporary_code,
+        "type" => "sales_dt_create",
+        "amount" => -1 * $item['amount'],
+        "amount_in_stock" => ($product->amount_in_stock - $item['amount']),
+        "pending_in" => $product->pending_in,
+        "pending_out" => $product->pending_out,
+        "product_id" => $product->product_id,
+      ]);
+
+      //PRODUCT UPDATE : amount_in_stock , pending_in , pending_out
+      $product->amount_in_stock = $gaurd_stock['amount_in_stock'];
+      $product->pending_in = $gaurd_stock['pending_in'];
+      $product->pending_out = $gaurd_stock['pending_out'];
+      $product->save();
+    }
+
+    //3.REDIRECT
+    return redirect("sales/delivery_temporary/{$id}")->with('flash_message', 'popup');
+  }
   public function revision(Request $request, $id)
   {
     $input = $request->all();

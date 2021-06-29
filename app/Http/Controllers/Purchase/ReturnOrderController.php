@@ -173,7 +173,7 @@ class ReturnOrderController extends Controller
     $data = [
       'table_return_order' => $table_return_order,
       'table_return_order_details' => ReturnOrderDetail::$$table_return_order_details,
-      'table_company' => Company::select_all(),
+      'table_company' => Company::all(),
     ];
     $pdf = PDF::loadView('purchase/return-order/show', $data);
     return $pdf->stream('test.pdf');
