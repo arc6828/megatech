@@ -20,32 +20,7 @@ class GaurdStockController extends Controller
     {
         $product_id = $request->get('product_id');
         $since = $request->get('since',date('Y-m-d'));
-        // $hidden = $request->get('hidden');
-        // $perPage = 25;
-
-        // if (!empty($keyword)) {
-        //     if(empty($hidden)){
-        //         $whitelist = [
-        //             'sales_invoice',
-        //             'purchase_receive',
-        //             'sales_dt_create', 'sales_dt_cancel', 'sales_dt_void',
-        //             'sales_return_invoice', 'sales_return_invoice_cancel',
-        //             'purchase_return_order', 'purchase_return_order_cancel',
-        //             'issue_stock', 'issue_stock_cancel',
-        //             'receive_final', 'receive_final_cancel',
-        //         ];
-        //         $gaurdstock = GaurdStock::where('product_id',  $keyword)                
-        //         ->whereIn('type', $whitelist) //"type" => "",
-        //         ->latest()->paginate($perPage);
-        //     }else{
-        //         $gaurdstock = GaurdStock::where('product_id',  $keyword)
-        //         //->whereIn('type',['sales_invocie','purchase_receive'])
-        //         ->latest()->paginate($perPage);
-        //     }
-            
-        // } else {
-        //     $gaurdstock = GaurdStock::latest()->paginate($perPage);
-        // }
+    
 
         $product = ProductModel::where('product_id',$product_id)->firstOrFail();
         $whitelist = [
@@ -60,13 +35,13 @@ class GaurdStockController extends Controller
         ];
         $gaurdstock = GaurdStock::where('product_id',  $product_id)   
             ->whereDate('created_at','>=',$since)             
-            ->whereIn('type', $whitelist) //"type" => "",
+            // ->whereIn('type', $whitelist) //"type" => "",
             ->oldest()->get();
         $mode = "gaurd-stock";
 
         $last = GaurdStock::where('product_id',  $product_id)   
             ->whereDate('created_at','<',$since)             
-            ->whereIn('type', $whitelist) //"type" => "",
+            // ->whereIn('type', $whitelist) //"type" => "",
             ->latest()->first();
         if( isset($last) ){
             $product->amount_in_stock_default = $last->amount_in_stock;
