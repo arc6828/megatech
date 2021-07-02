@@ -155,9 +155,6 @@ class RequisitionDetailController extends Controller
         //   $new_purchase_detail->save();
         // }
       }
-
-      //  UPDATE BY SELECTED ITEM : 4 means DEFINED SUPPLIER
-
     }
     return redirect()->back();
   }
