@@ -29,7 +29,8 @@ class QuotationModel extends Model
     'external_reference_doc',
     'total',
     'staff_id',
-    'revision'
+    'revision',
+    'file'
   ];
 
   public function quotation_details()

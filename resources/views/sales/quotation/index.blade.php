@@ -53,10 +53,10 @@
                                         target="_blank">{{ $row->short_name }}</a></td>
                                 <td>
                                     @if ($row->sales_status_id == 1)
-                                        <a href="#"
-                                            href2="{{ url('/') }}/sales/order/create?quotation_code={{ $row->quotation_code }}"
-                                            title="{{ $row->sales_status_name }}" class="btn btn-primary btn-sm d-none">
-                                            รอเปิด Order
+                                        <a  
+                                            href="{{ url('/') }}/sales/quotation/{{ $row->quotation_id }}/pdf"
+                                            title="{{ $row->sales_status_name }}" class="btn btn-success btn-sm">
+                                            Export PDF
                                         </a>
                                         <span class="badge badge-pill badge-primary">{{ $row->sales_status_name }}</span>
                                     @elseif( $row->sales_status_id == 4 )

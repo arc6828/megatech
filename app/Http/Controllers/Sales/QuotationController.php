@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Sales;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 use App\CustomerModel;
 use App\DeliveryTypeModel;
 use App\DepartmentModel;
@@ -228,7 +229,6 @@ class QuotationController extends Controller
     ];
 
     $pdf = PDF::loadView('sales/quotation/show', $data);
-
     return $pdf->stream('test.pdf'); //แบบนี้จะ stream มา preview
     //return $pdf->download('test.pdf'); //แบบนี้จะดาวโหลดเลย
   }
@@ -303,7 +303,7 @@ class QuotationController extends Controller
     return redirect("sales/quotation/{$id}");
   }
 
-  public function approve($id)
+  public function approve(Request $request, $id)
   {
 
     $quotaion = QuotationModel::findOrFail($id);
@@ -312,10 +312,10 @@ class QuotationController extends Controller
       'quotation_code' => $quotaion->quotation_code,
       'datetime' => date('Y-m-d H:i:s'),
       'sales_status_id' => 1,
+      'file' => $this->pdf($id),
     ];
-    
-    $quotaion->update($input);
 
+    $quotaion->update($input);
     //3.REDIRECT
     return redirect("sales/quotation/{$id}")->with('flash_message', 'popup');
   }
